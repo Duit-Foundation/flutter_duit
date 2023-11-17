@@ -8,25 +8,53 @@ import "package:flutter_duit/src/utils/index.dart";
 import "index.dart";
 
 const testPayload = {
-  "type": "Row",
-  "uncontrolled": false,
+  "type": "Column",
   "id": "1",
-  "attributes": {"mainAxisAlignment": "spaceEvenly"},
-  "action": {},
   "children": [
     {
-      "type": "Text",
+      "type": "Row",
       "uncontrolled": false,
       "id": "2",
-      "attributes": {"data": "keyany1", "textAlign" : "start"},
       "action": {},
+      "children": [
+        {
+          "type": "Text",
+          "uncontrolled": false,
+          "id": "3",
+          "attributes": {"data": "keyany1", "textAlign" : "start"},
+          "action": {},
+        },
+        {
+          "type": "Text",
+          "uncontrolled": true,
+          "id": "4",
+          "attributes": {"data": "keyany2", "textAlign" : "start"},
+          "action": {},
+        }
+      ]
     },
     {
-      "type": "Text",
-      "uncontrolled": true,
-      "id": "3",
-      "attributes": {"data": "keyany2", "textAlign" : "start"},
+      "type": "Row",
+      "uncontrolled": false,
+      "id": "5",
+      "attributes": {"mainAxisAlignment": "spaceEvenly"},
       "action": {},
+      "children": [
+        {
+          "type": "Text",
+          "uncontrolled": false,
+          "id": "6",
+          "attributes": {"data": "keyany1", "textAlign" : "start"},
+          "action": {},
+        },
+        {
+          "type": "Text",
+          "uncontrolled": true,
+          "id": "7",
+          "attributes": {"data": "keyany2", "textAlign" : "start"},
+          "action": {},
+        }
+      ]
     }
   ]
 };

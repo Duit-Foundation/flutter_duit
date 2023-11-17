@@ -3,6 +3,7 @@ import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
+import 'package:flutter_duit/src/ui/widgets/column.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 import 'index.dart';
@@ -21,9 +22,17 @@ mixin WidgetFabric {
             arr.add(children);
           }
 
-          return Column(
-            children: arr,
-          );
+          if (data.uncontrolled) {
+            return DUITColumn(
+              attributes: data.attributes,
+              children: arr,
+            );
+          } else {
+            return DUITControlledColumn(
+              controller: data.viewController,
+              children: arr,
+            );
+          }
         }
       case DUITElementType.row:
         {
