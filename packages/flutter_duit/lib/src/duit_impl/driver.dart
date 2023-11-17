@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
@@ -157,7 +158,7 @@ final class DUITDriver implements UIDriver {
   void updateAttributes(String id, JSONObject json) {
     final controller = _viewControllers[id];
     if (controller != null) {
-      final attributes = AttributeParser.parse(controller.type, json);
+      final attributes = ViewAttributeWrapper.createAttributes(controller.type, json);
       controller.updateState(attributes);
     }
   }

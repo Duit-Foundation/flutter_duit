@@ -19,6 +19,6 @@ sealed class AttributeParser {
         RowAttributes(),
     };
 
-    return Attributes(payload: payload);
+    return ViewAttributeWrapper(payload: payload);
   }
 }

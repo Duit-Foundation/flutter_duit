@@ -14,7 +14,7 @@ sealed class DUITElement<T> with WidgetFabric {
   final DUITElementType type;
   final bool uncontrolled;
   abstract UIElementController<T>? viewController;
-  abstract Attributes<T>? attributes;
+  abstract ViewAttributeWrapper<T>? attributes;
 
   DUITElement({
     required this.type,
@@ -152,8 +152,8 @@ sealed class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.text:
         {
-          final payload = TextAttributes.fromJson(attributes);
-          final attrs = Attributes.create<T>(payload as T);
+          final attrs =
+              ViewAttributeWrapper.createAttributes<T>(type, attributes);
           return TextUIElement(
             type: type,
             id: id,
@@ -226,7 +226,7 @@ sealed class DUITElement<T> with WidgetFabric {
   static UIElementController<T>? _createAndAttachController<T>(
       String id,
       bool uncontrolled,
-      Attributes<T>? attributes,
+      ViewAttributeWrapper<T>? attributes,
       ServerAction? action,
       UIDriver driver,
       DUITElementType type) {
@@ -263,7 +263,7 @@ final class ElevatedButtonUIElement<ElevatedButtonAttributes>
   DUITElement child;
 
   @override
-  Attributes<ElevatedButtonAttributes>? attributes;
+  ViewAttributeWrapper<ElevatedButtonAttributes>? attributes;
 
   @override
   UIElementController<ElevatedButtonAttributes>? viewController;
@@ -287,7 +287,7 @@ final class CenterUIElement<CenterAttributes>
   DUITElement child;
 
   @override
-  Attributes<CenterAttributes>? attributes;
+  ViewAttributeWrapper<CenterAttributes>? attributes;
 
   @override
   UIElementController<CenterAttributes>? viewController;
@@ -311,7 +311,7 @@ final class ColoredBoxUIElement<ColoredBoxAttributes>
   DUITElement child;
 
   @override
-  Attributes<ColoredBoxAttributes>? attributes;
+  ViewAttributeWrapper<ColoredBoxAttributes>? attributes;
 
   @override
   UIElementController<ColoredBoxAttributes>? viewController;
@@ -334,7 +334,7 @@ final class ColumnUIElement<ColumnAttributes>
   List<DUITElement> children = const [];
 
   @override
-  Attributes<ColumnAttributes>? attributes;
+  ViewAttributeWrapper<ColumnAttributes>? attributes;
 
   @override
   UIElementController<ColumnAttributes>? viewController;
@@ -357,7 +357,7 @@ final class RowUIElement<RowAttributes> extends DUITElement<RowAttributes>
   List<DUITElement> children = const [];
 
   @override
-  Attributes<RowAttributes>? attributes;
+  ViewAttributeWrapper<RowAttributes>? attributes;
 
   @override
   UIElementController<RowAttributes>? viewController;
@@ -380,7 +380,7 @@ final class SizedBoxUIElement<SizedBoxAttributes>
   DUITElement child;
 
   @override
-  Attributes<SizedBoxAttributes>? attributes;
+  ViewAttributeWrapper<SizedBoxAttributes>? attributes;
 
   @override
   UIElementController<SizedBoxAttributes>? viewController;
@@ -400,7 +400,7 @@ final class TextUIElement<TextAttributes> extends DUITElement<TextAttributes> {
   //<editor-fold desc="Properties and ctor">
 
   @override
-  Attributes<TextAttributes>? attributes;
+  ViewAttributeWrapper<TextAttributes>? attributes;
 
   @override
   UIElementController<TextAttributes>? viewController;
@@ -424,7 +424,7 @@ final class TextFieldUIElement<TextFieldAttrPayload>
     extends DUITElement<TextFieldAttrPayload> {
   //<editor-fold desc="Properties and ctor">
   @override
-  Attributes<TextFieldAttrPayload>? attributes;
+  ViewAttributeWrapper<TextFieldAttrPayload>? attributes;
 
   @override
   UIElementController<TextFieldAttrPayload>? viewController;

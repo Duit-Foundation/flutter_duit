@@ -10,7 +10,7 @@ final class ViewController<T>
     implements UIElementController<T> {
   //<editor-fold desc="Properties and ctor">
   @override
-  Attributes<T>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
   ServerAction? action;
@@ -36,7 +36,7 @@ final class ViewController<T>
 
   //<editor-fold desc="Methods">
   @override
-  void updateState(Attributes<T> newAttrs) {
+  void updateState(ViewAttributeWrapper<T> newAttrs) {
     if (attributes != null) {
       attributes?.payload = newAttrs.payload;
     } else {

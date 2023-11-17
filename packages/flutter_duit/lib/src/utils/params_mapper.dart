@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-extension ParamsMapper on dynamic {
-  TextAlign? toTextAlign() {
-    switch (this) {
+class ParamsMapper {
+  static TextAlign? convertToTextAlign(String value) {
+    switch (value) {
       case "left":
         TextAlign.left;
       case "right":
@@ -21,8 +21,8 @@ extension ParamsMapper on dynamic {
     return null;
   }
 
-  FontWeight? toFontWeight() {
-    switch (this) {
+  static FontWeight? convertToFontWeight(int value) {
+    switch (value) {
       case 100:
         FontWeight.w100;
       case 200:
@@ -46,8 +46,8 @@ extension ParamsMapper on dynamic {
     return null;
   }
 
-  TextOverflow? toTextOverflow() {
-    switch (this) {
+  static TextOverflow? convertToTextOverflow(String value) {
+    switch (value) {
       case "fade":
         TextOverflow.fade;
       case "ellipsis":
@@ -61,20 +61,20 @@ extension ParamsMapper on dynamic {
     return null;
   }
 
-  TextStyle toTextStyle() {
+  static TextStyle convertToTextStyle(JSONObject json) {
     return TextStyle(
-      color: ColorUtils.tryParseColor(this["color"]),
-      fontFamily: this["fontFamily"],
-      fontWeight: this["fontWeight"].toFontWeight(),
-      fontSize: this["fontSize"],
-      letterSpacing: this["letterSpacing"],
-      wordSpacing: this["wordSpacing"],
-      height: this["height"],
+      color: ColorUtils.tryParseColor(json["color"]),
+      fontFamily: json["fontFamily"],
+      fontWeight: convertToFontWeight(json["fontWeight"]),
+      fontSize: json["fontSize"],
+      letterSpacing: json["letterSpacing"],
+      wordSpacing: json["wordSpacing"],
+      height: json["height"],
     );
   }
 
-  TextDirection? toTextDirection() {
-    switch (this) {
+  static TextDirection? convertToTextDirection(String value) {
+    switch (value) {
       case "rtl":
         TextDirection.rtl;
       case "ltr":

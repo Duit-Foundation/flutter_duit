@@ -6,9 +6,10 @@ import 'package:flutter_duit/src/ui/models/el_type.dart';
 ///Base class for ViewController objects
 abstract interface class UIElementController<T> {
   ///Typed attributes object (view properties)
-  abstract Attributes<T>? attributes;
+  abstract ViewAttributeWrapper<T>? attributes;
   ///Id for current controller, same with [DUITElement] id
   abstract String id;
+  ///Element type
   abstract DUITElementType type;
   ///Related action
   abstract ServerAction? action;
@@ -20,7 +21,7 @@ abstract interface class UIElementController<T> {
   void performRelatedAction();
 
   ///Receive new attributes and set it to widget via setState method
-  void updateState(Attributes<T> newState);
+  void updateState(ViewAttributeWrapper<T> newState);
 
   ///[ChangeNotifier] addListener method
   void addListener(VoidCallback listener);
