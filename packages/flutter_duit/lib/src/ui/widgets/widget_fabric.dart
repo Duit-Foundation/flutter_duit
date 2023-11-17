@@ -35,9 +35,17 @@ mixin WidgetFabric {
             arr.add(children);
           }
 
-          return Row(
-            children: arr,
-          );
+          if (data.uncontrolled) {
+            return DUITRow(
+              attributes: data.attributes,
+              children: arr,
+            );
+          } else {
+            return DUITControlledRow(
+              controller: data.viewController,
+              children: arr,
+            );
+          }
         }
       case DUITElementType.coloredBox:
         {
@@ -72,11 +80,9 @@ mixin WidgetFabric {
           final it = model as TextUIElement;
 
           return model.uncontrolled
-              ? DUITText(
-                  attributes: it.attributes)
+              ? DUITText(attributes: it.attributes)
               : DUITControlledText(
-                  controller:
-                      it.viewController,
+                  controller: it.viewController,
                 );
         }
       case DUITElementType.textField:

@@ -8,7 +8,7 @@ base class ViewAttributeWrapper<T> {
     required this.payload,
   });
 
-  static ViewAttributeWrapper<T> createAttributes<T>(DUITElementType type, JSONObject json) {
+  static ViewAttributeWrapper<T> createAttributes<T>(DUITElementType type, JSONObject? json) {
     return AttributeParser.parse(type, json);
   }
 

@@ -7,37 +7,28 @@ import "package:flutter_duit/src/utils/index.dart";
 
 import "index.dart";
 
-const data = {
+const testPayload = {
+  "type": "Row",
+  "uncontrolled": false,
   "id": "1",
-  "type": "Column",
+  "attributes": {"mainAxisAlignment": "spaceEvenly"},
+  "action": {},
   "children": [
     {
+      "type": "Text",
+      "uncontrolled": false,
       "id": "2",
-      "type": "Row",
-      "children": [
-        {"type": "Text", "value": "text1", "id": "3"},
-        {"type": "Text", "value": "text2", "id": "4"},
-        {
-          "type": "SizedBox",
-          "id": "10",
-          "child": {
-            "type": "ColoredBox",
-            "id": "5",
-            "child": {"type": "Text", "value": "text2", "id": "6"},
-          },
-        },
-      ],
+      "attributes": {"data": "keyany1", "textAlign" : "start"},
+      "action": {},
     },
-  ],
-};
-
-const data2 = {
-  "type": "Text",
-  "uncontrolled": false,
-  "data": "TEST TEXT",
-  "id": "4123df",
-  "attributes": {"data": "keyany"},
-  "action": {},
+    {
+      "type": "Text",
+      "uncontrolled": true,
+      "id": "3",
+      "attributes": {"data": "keyany2", "textAlign" : "start"},
+      "action": {},
+    }
+  ]
 };
 
 abstract final interface

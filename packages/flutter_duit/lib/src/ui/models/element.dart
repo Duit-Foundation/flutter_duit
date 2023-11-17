@@ -26,7 +26,8 @@ sealed class DUITElement<T> with WidgetFabric {
     final type = convert(json["type"]);
     final id = json["id"];
     final bool uncontrolled = json["uncontrolled"] ?? true;
-    final attributes = json["attributes"];
+    final attributes =
+        ViewAttributeWrapper.createAttributes<T>(type, json["attributes"]);
     //TODO исправить!!!!
     final serverAction = ServerAction(event: '');
     assert(id != null, "Id and type cannot be null");
@@ -152,20 +153,18 @@ sealed class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.text:
         {
-          final attrs =
-              ViewAttributeWrapper.createAttributes<T>(type, attributes);
           return TextUIElement(
             type: type,
             id: id,
             viewController: _createAndAttachController<T>(
               id,
               uncontrolled,
-              attrs,
+              attributes,
               serverAction,
               driver,
               type,
             ),
-            attributes: attrs,
+            attributes: attributes,
             uncontrolled: uncontrolled,
           );
         }

@@ -26,18 +26,18 @@ final class ServerAction {
     this.dependsOn = const [],
   });
 
-  factory ServerAction.fromJSON(JSONObject json) {
+  factory ServerAction.fromJSON(JSONObject? json) {
     List<ActionDependency> deps = [];
 
-    if (json["dependsOn"] != null) {
-      json["dependsOn"].forEach((el) {
+    if (json?["dependsOn"] != null) {
+      json?["dependsOn"].forEach((el) {
         final it = ActionDependency.fromJSON(el);
         deps.add(it);
       });
     }
 
     return ServerAction(
-      event: json["event"] ?? "",
+      event: json?["event"] ?? "",
       dependsOn: deps,
     );
   }

@@ -1,14 +1,16 @@
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 
-import 'jsono.dart';
 
 sealed class AttributeParser {
-  static parse(DUITElementType type, JSONObject json) {
+  static parse(DUITElementType type, JSONObject? json) {
+    if (json == null) return ViewAttributeWrapper(payload: null);
+
     final payload = switch (type) {
       DUITElementType.text => TextAttributes.fromJson(json),
+      DUITElementType.row => RowAttributes.fromJson(json),
       DUITElementType.column ||
-      DUITElementType.row ||
       DUITElementType.center ||
       DUITElementType.elevatedButton ||
       DUITElementType.textField ||
@@ -16,7 +18,7 @@ sealed class AttributeParser {
       DUITElementType.coloredBox ||
       DUITElementType.column ||
       DUITElementType.empty =>
-        RowAttributes(),
+        EmptyAttributes(),
     };
 
     return ViewAttributeWrapper(payload: payload);

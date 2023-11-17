@@ -2,66 +2,74 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 class ParamsMapper {
-  static TextAlign? convertToTextAlign(String value) {
+  static TextAlign? convertToTextAlign(String? value) {
+    if (value == null) return null;
+
     switch (value) {
       case "left":
-        TextAlign.left;
+        return TextAlign.left;
       case "right":
-        TextAlign.right;
+        return TextAlign.right;
       case "center":
-        TextAlign.center;
+        return TextAlign.center;
       case "justify":
-        TextAlign.justify;
+        return TextAlign.justify;
       case "end":
-        TextAlign.end;
+        return TextAlign.end;
       case "start":
-        TextAlign.start;
+        return TextAlign.start;
     }
 
     return null;
   }
 
-  static FontWeight? convertToFontWeight(int value) {
+  static FontWeight? convertToFontWeight(int? value) {
+    if (value == null) return null;
+
     switch (value) {
       case 100:
-        FontWeight.w100;
+        return FontWeight.w100;
       case 200:
-        FontWeight.w200;
+        return FontWeight.w200;
       case 300:
-        FontWeight.w300;
+        return FontWeight.w300;
       case 400:
-        FontWeight.w400;
+        return FontWeight.w400;
       case 500:
-        FontWeight.w500;
+        return FontWeight.w500;
       case 600:
-        FontWeight.w600;
+        return FontWeight.w600;
       case 700:
-        FontWeight.w700;
+        return FontWeight.w700;
       case 800:
-        FontWeight.w800;
+        return FontWeight.w800;
       case 900:
-        FontWeight.w900;
+        return FontWeight.w900;
     }
 
     return null;
   }
 
-  static TextOverflow? convertToTextOverflow(String value) {
+  static TextOverflow? convertToTextOverflow(String? value) {
+    if (value == null) return null;
+
     switch (value) {
       case "fade":
-        TextOverflow.fade;
+        return TextOverflow.fade;
       case "ellipsis":
-        TextOverflow.ellipsis;
+        return TextOverflow.ellipsis;
       case "clip":
-        TextOverflow.clip;
+        return TextOverflow.clip;
       case "visible":
-        TextOverflow.visible;
+        return TextOverflow.visible;
     }
 
     return null;
   }
 
-  static TextStyle convertToTextStyle(JSONObject json) {
+  static TextStyle? convertToTextStyle(JSONObject? json) {
+    if (json == null) return null;
+
     return TextStyle(
       color: ColorUtils.tryParseColor(json["color"]),
       fontFamily: json["fontFamily"],
@@ -73,12 +81,97 @@ class ParamsMapper {
     );
   }
 
-  static TextDirection? convertToTextDirection(String value) {
+  static TextDirection? convertToTextDirection(String? value) {
+    if (value == null) return null;
+
     switch (value) {
       case "rtl":
-        TextDirection.rtl;
+        return TextDirection.rtl;
       case "ltr":
-        TextDirection.ltr;
+        return TextDirection.ltr;
+    }
+
+    return null;
+  }
+
+  static MainAxisAlignment? convertToMainAxisAlignment(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "center":
+        return MainAxisAlignment.center;
+      case "start":
+        return MainAxisAlignment.start;
+      case "end":
+        return MainAxisAlignment.end;
+      case "spaceAround":
+        return MainAxisAlignment.spaceAround;
+      case "spaceEvenly":
+        return MainAxisAlignment.spaceEvenly;
+      case "spaceBetween":
+        return MainAxisAlignment.spaceBetween;
+    }
+
+    return null;
+  }
+
+  static CrossAxisAlignment? convertToCrossAxisAlignment(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "center":
+        return CrossAxisAlignment.center;
+      case "baseline":
+        return CrossAxisAlignment.baseline;
+      case "stretch":
+        return CrossAxisAlignment.stretch;
+      case "start":
+        return CrossAxisAlignment.start;
+      case "end":
+        return CrossAxisAlignment.end;
+    }
+
+    return null;
+  }
+
+  static Clip? convertToClip(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "hardEdge":
+        return Clip.hardEdge;
+      case "antiAlias":
+        return Clip.antiAlias;
+      case "antiAliasWithSaveLayer":
+        return Clip.antiAliasWithSaveLayer;
+      case "none":
+        return Clip.none;
+    }
+
+    return null;
+  }
+
+  static MainAxisSize? convertToMainAxisSize(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "min":
+        return MainAxisSize.min;
+      case "max":
+        return MainAxisSize.max;
+    }
+
+    return null;
+  }
+
+  static VerticalDirection? convertToVerticalDirection(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "up":
+        return VerticalDirection.up;
+      case "down":
+        return VerticalDirection.down;
     }
 
     return null;

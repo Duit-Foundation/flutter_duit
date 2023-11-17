@@ -51,15 +51,13 @@ class _DUITControlledTextState extends State<DUITControlledText> {
   @override
   void didChangeDependencies() {
     widget.controller?.addListener(() {
-      setState(() {
-        final newData =
-            widget.controller?.attributes?.payload as TextAttributes?;
+      final newState = widget.controller?.attributes?.payload as TextAttributes?;
 
-        if (newData != null) {
-          final mergedAttrs = attributes?.copyWith(newData);
-          attributes = mergedAttrs;
-        }
-      });
+      if (newState != null) {
+        setState(() {
+          attributes = attributes?.copyWith(newState);
+        });
+      }
     });
     super.didChangeDependencies();
   }
