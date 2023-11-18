@@ -3,43 +3,43 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/utils/state_mapper.dart";
 
-class DUITSizedBox extends StatelessWidget {
+class DUITColoredBox extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
   final Widget child;
 
-  const DUITSizedBox({
+  const DUITColoredBox({
     super.key,
-    required this.attributes,
+    this.attributes,
     required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes?.payload as SizedBoxAttributes?;
-    return SizedBox(
-      width: state?.width,
-      height: state?.height,
+    final state = attributes?.payload as ColoredBoxAttributes?;
+    return ColoredBox(
+      color: state?.color ?? Colors.black,
       child: child,
     );
   }
 }
 
-class DUITControlledSizedBox extends StatefulWidget {
+class DUITControlledColoredBox extends StatefulWidget {
   final UIElementController? controller;
   final Widget child;
 
-  const DUITControlledSizedBox({
+  const DUITControlledColoredBox({
     super.key,
-    required this.controller,
     required this.child,
+    required this.controller,
   });
 
   @override
-  State<DUITControlledSizedBox> createState() => _DUITControlledSizedBoxState();
+  State<DUITControlledColoredBox> createState() =>
+      _DUITControlledColoredBoxState();
 }
 
-class _DUITControlledSizedBoxState extends State<DUITControlledSizedBox>
-    with StateMapper<DUITControlledSizedBox, SizedBoxAttributes> {
+class _DUITControlledColoredBoxState extends State<DUITControlledColoredBox>
+    with StateMapper<DUITControlledColoredBox, ColoredBoxAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -48,9 +48,8 @@ class _DUITControlledSizedBoxState extends State<DUITControlledSizedBox>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: attributes?.width,
-      height: attributes?.height,
+    return ColoredBox(
+      color: attributes?.color ?? Colors.black,
       child: widget.child,
     );
   }

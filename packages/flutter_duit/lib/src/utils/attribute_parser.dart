@@ -10,12 +10,10 @@ sealed class AttributeParser {
       DUITElementType.column => ColumnAttributes.fromJson(json ?? {}),
       DUITElementType.sizedBox => SizedBoxAttributes.fromJson(json ?? {}),
       DUITElementType.center => CenterAttributes.fromJson(json ?? {}),
-      DUITElementType.elevatedButton ||
-      DUITElementType.textField ||
-      DUITElementType.coloredBox ||
-      DUITElementType.column ||
-      DUITElementType.empty =>
-        EmptyAttributes(),
+      DUITElementType.coloredBox => ColoredBoxAttributes.fromJson(json ?? {}),
+      DUITElementType.elevatedButton =>
+        ElevatedButtonAttributes.fromJson(json ?? {}),
+      DUITElementType.textField || DUITElementType.empty => EmptyAttributes(),
     };
 
     return ViewAttributeWrapper(payload: payload);

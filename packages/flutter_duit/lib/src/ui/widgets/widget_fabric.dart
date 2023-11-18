@@ -3,7 +3,6 @@ import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
-import 'package:flutter_duit/src/utils/index.dart';
 
 import 'index.dart';
 import 'text_field.dart';
@@ -60,10 +59,18 @@ mixin WidgetFabric {
           final it = model as ColoredBoxUIElement;
 
           final child = getWidgetFromElement(it.child);
-          return ColoredBox(
-            color: ColorUtils.tryParseColor(Colors.red),
-            child: child,
-          );
+
+          if (it.uncontrolled) {
+            return DUITColoredBox(
+              attributes: it.attributes,
+              child: child,
+            );
+          } else {
+            return DUITControlledColoredBox(
+              controller: it.viewController,
+              child: child,
+            );
+          }
         }
       case DUITElementType.center:
         {
@@ -113,8 +120,6 @@ mixin WidgetFabric {
         }
       case DUITElementType.textField:
         {
-          assert(model.viewController != null);
-
           return DUITTextField(
             controller: model.viewController!
                 as UIElementController<TextFieldAttributes>,
@@ -122,16 +127,17 @@ mixin WidgetFabric {
         }
       case DUITElementType.elevatedButton:
         {
-          assert(model.viewController != null);
+          final it = model as ElevatedButtonUIElement;
+          final child = getWidgetFromElement(it.child);
 
-          final data = model as ElevatedButtonUIElement;
-
-          final child = getWidgetFromElement(data.child);
-
-          return DUITButton(
-            controller: model.viewController!,
+          return DUITControlledButton(
+            controller: it.viewController!,
             child: child,
           );
+        }
+      case DUITElementType.empty:
+        {
+          return const DUITEmptyView();
         }
       default:
         {

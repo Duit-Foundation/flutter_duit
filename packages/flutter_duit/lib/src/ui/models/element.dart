@@ -134,7 +134,7 @@ sealed class DUITElement<T> with WidgetFabric {
         {
           assert(json["child"] != null, "Child of SizedBox must not be null");
           final child = DUITElement.fromJson(json["child"], driver);
-
+          
           return SizedBoxUIElement(
             type: type,
             id: id,
@@ -209,6 +209,10 @@ sealed class DUITElement<T> with WidgetFabric {
             attributes: attributes,
             uncontrolled: uncontrolled,
           );
+        }
+      case DUITElementType.empty:
+        {
+          return EmptyUIElement();
         }
       default:
         {
@@ -436,5 +440,19 @@ final class TextFieldUIElement<TextFieldAttrPayload>
     required this.viewController,
   });
 //</editor-fold>
+}
+
+final class EmptyUIElement<EmptyAttributes>
+    extends DUITElement<EmptyAttributes> {
+  @override
+  ViewAttributeWrapper<EmptyAttributes>? attributes;
+
+  @override
+  UIElementController<EmptyAttributes>? viewController;
+
+  EmptyUIElement({
+    super.type = DUITElementType.empty,
+    super.id = "",
+  });
 }
 //</editor-fold>

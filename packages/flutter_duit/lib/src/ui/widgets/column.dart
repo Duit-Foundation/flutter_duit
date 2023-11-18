@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 class DUITColumn extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
@@ -27,8 +28,8 @@ class DUITColumn extends StatelessWidget {
   }
 }
 
-class DUITControlledColumn<ColumnAttributes> extends StatefulWidget {
-  final UIElementController<ColumnAttributes>? controller;
+class DUITControlledColumn extends StatefulWidget {
+  final UIElementController? controller;
   final List<Widget> children;
 
   const DUITControlledColumn({
@@ -41,34 +42,12 @@ class DUITControlledColumn<ColumnAttributes> extends StatefulWidget {
   State<DUITControlledColumn> createState() => _DUITControlledColumnState();
 }
 
-class _DUITControlledColumnState extends State<DUITControlledColumn> {
-  late ColumnAttributes? attributes;
-
+class _DUITControlledColumnState extends State<DUITControlledColumn>
+    with StateMapper<DUITControlledColumn, ColumnAttributes> {
   @override
   void initState() {
-    attributes = widget.controller?.attributes?.payload as ColumnAttributes?;
+    attachStateToController(widget.controller);
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    widget.controller?.addListener(() {
-      final newState =
-          widget.controller?.attributes?.payload as ColumnAttributes?;
-
-      if (newState != null) {
-        setState(() {
-          attributes = attributes?.copyWith(newState);
-        });
-      }
-    });
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    widget.controller?.dispose();
-    super.dispose();
   }
 
   @override

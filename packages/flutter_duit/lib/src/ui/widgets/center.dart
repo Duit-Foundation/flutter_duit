@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 class DUITCenter extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
@@ -23,8 +24,8 @@ class DUITCenter extends StatelessWidget {
   }
 }
 
-class DUITControlledCenter<CenterAttributes> extends StatefulWidget {
-  final UIElementController<CenterAttributes>? controller;
+class DUITControlledCenter extends StatefulWidget {
+  final UIElementController? controller;
   final Widget child;
 
   const DUITControlledCenter({
@@ -37,34 +38,12 @@ class DUITControlledCenter<CenterAttributes> extends StatefulWidget {
   State<DUITControlledCenter> createState() => _DUITControlledCenterState();
 }
 
-class _DUITControlledCenterState extends State<DUITControlledCenter> {
-  late CenterAttributes? attributes;
-
+class _DUITControlledCenterState extends State<DUITControlledCenter>
+    with StateMapper<DUITControlledCenter, CenterAttributes> {
   @override
   void initState() {
-    attributes = widget.controller?.attributes?.payload as CenterAttributes?;
+    attachStateToController(widget.controller);
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    widget.controller?.addListener(() {
-      final newState =
-          widget.controller?.attributes?.payload as CenterAttributes?;
-
-      if (newState != null) {
-        setState(() {
-          attributes = attributes?.copyWith(newState);
-        });
-      }
-    });
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    widget.controller?.dispose();
-    super.dispose();
   }
 
   @override

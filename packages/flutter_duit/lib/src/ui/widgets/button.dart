@@ -1,35 +1,35 @@
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
-final class DUITButton extends StatefulWidget {
+final class DUITControlledButton extends StatefulWidget {
   final UIElementController controller;
   final Widget? child;
 
-  const DUITButton({
+  const DUITControlledButton({
     super.key,
     required this.controller,
     this.child,
   });
 
   @override
-  State<DUITButton> createState() => _DUITButtonState();
+  State<DUITControlledButton> createState() => _DUITControlledButtonState();
 }
 
-class _DUITButtonState extends State<DUITButton> {
+class _DUITControlledButtonState extends State<DUITControlledButton>
+    with StateMapper<DUITControlledButton, ElevatedButtonAttributes> {
   @override
   void initState() {
+    attachStateToController(widget.controller);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      autofocus: attributes?.autofocus ?? false,
+      clipBehavior: attributes?.clipBehavior ?? Clip.none,
       onPressed: widget.controller.performRelatedAction,
       child: widget.child,
     );

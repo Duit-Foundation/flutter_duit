@@ -11,16 +11,16 @@ enum DUITElementType {
   ///Keys: ElevatedButton, 4
   elevatedButton,
 
-  ///Keys: TextField, 5
+  ///Keys: TextField, 6
   textField,
 
-  ///Keys: Center, 5
+  ///Keys: Center, 7
   center,
 
-  ///Keys: ColoredBox, 5
+  ///Keys: ColoredBox, 8
   coloredBox,
 
-  ///Keys: SizedBox, 5
+  ///Keys: SizedBox, 9
   sizedBox,
 
   ///Keys: Empty, 0
@@ -42,6 +42,12 @@ DUITElementType convert(dynamic type) {
         return DUITElementType.textField;
       case "ElevatedButton":
         return DUITElementType.elevatedButton;
+      case "SizedBox":
+        return DUITElementType.sizedBox;
+      case "ColoredBox":
+        return DUITElementType.coloredBox;
+      case "Center":
+        DUITElementType.center;
       case "Empty":
         return DUITElementType.column;
     }
@@ -55,12 +61,18 @@ DUITElementType convert(dynamic type) {
         return DUITElementType.row;
       case 3:
         return DUITElementType.text;
-      case 4:
+      case 6:
         return DUITElementType.textField;
-      case 5:
+      case 4:
         return DUITElementType.elevatedButton;
+      case 9:
+        return DUITElementType.sizedBox;
+      case 5:
+        return DUITElementType.coloredBox;
+      case 7:
+        return DUITElementType.center;
       case 0:
-        return DUITElementType.column;
+        return DUITElementType.empty;
     }
   }
 

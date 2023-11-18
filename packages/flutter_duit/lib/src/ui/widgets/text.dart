@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 final class DUITText extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
@@ -27,8 +28,8 @@ final class DUITText extends StatelessWidget {
   }
 }
 
-final class DUITControlledText<TextAttributes> extends StatefulWidget {
-  final UIElementController<TextAttributes>? controller;
+final class DUITControlledText extends StatefulWidget {
+  final UIElementController? controller;
 
   const DUITControlledText({
     super.key,
@@ -39,33 +40,12 @@ final class DUITControlledText<TextAttributes> extends StatefulWidget {
   State<DUITControlledText> createState() => _DUITControlledTextState();
 }
 
-class _DUITControlledTextState extends State<DUITControlledText> {
-  late TextAttributes? attributes;
-
+class _DUITControlledTextState extends State<DUITControlledText>
+    with StateMapper<DUITControlledText, TextAttributes> {
   @override
   void initState() {
-    attributes = widget.controller?.attributes?.payload as TextAttributes?;
+    attachStateToController(widget.controller);
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    widget.controller?.addListener(() {
-      final newState = widget.controller?.attributes?.payload as TextAttributes?;
-
-      if (newState != null) {
-        setState(() {
-          attributes = attributes?.copyWith(newState);
-        });
-      }
-    });
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    widget.controller?.dispose();
-    super.dispose();
   }
 
   @override
