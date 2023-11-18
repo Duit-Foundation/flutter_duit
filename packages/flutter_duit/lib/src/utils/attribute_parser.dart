@@ -8,10 +8,10 @@ sealed class AttributeParser {
       DUITElementType.text => TextAttributes.fromJson(json ?? {}),
       DUITElementType.row => RowAttributes.fromJson(json ?? {}),
       DUITElementType.column => ColumnAttributes.fromJson(json ?? {}),
-      DUITElementType.center ||
+      DUITElementType.sizedBox => SizedBoxAttributes.fromJson(json ?? {}),
+      DUITElementType.center => CenterAttributes.fromJson(json ?? {}),
       DUITElementType.elevatedButton ||
       DUITElementType.textField ||
-      DUITElementType.sizedBox ||
       DUITElementType.coloredBox ||
       DUITElementType.column ||
       DUITElementType.empty =>

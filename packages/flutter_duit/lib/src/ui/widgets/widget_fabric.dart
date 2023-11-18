@@ -3,7 +3,6 @@ import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
-import 'package:flutter_duit/src/ui/widgets/column.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 import 'index.dart';
@@ -14,53 +13,53 @@ mixin WidgetFabric {
     switch (model.type) {
       case DUITElementType.column:
         {
-          final data = model as ColumnUIElement;
+          final it = model as ColumnUIElement;
           List<Widget> arr = [];
 
-          for (var element in data.children) {
+          for (var element in it.children) {
             final children = getWidgetFromElement(element);
             arr.add(children);
           }
 
-          if (data.uncontrolled) {
+          if (it.uncontrolled) {
             return DUITColumn(
-              attributes: data.attributes,
+              attributes: it.attributes,
               children: arr,
             );
           } else {
             return DUITControlledColumn(
-              controller: data.viewController,
+              controller: it.viewController,
               children: arr,
             );
           }
         }
       case DUITElementType.row:
         {
-          final data = model as RowUIElement;
+          final it = model as RowUIElement;
           List<Widget> arr = [];
 
-          for (var element in data.children) {
+          for (var element in it.children) {
             final children = getWidgetFromElement(element);
             arr.add(children);
           }
 
-          if (data.uncontrolled) {
+          if (it.uncontrolled) {
             return DUITRow(
-              attributes: data.attributes,
+              attributes: it.attributes,
               children: arr,
             );
           } else {
             return DUITControlledRow(
-              controller: data.viewController,
+              controller: it.viewController,
               children: arr,
             );
           }
         }
       case DUITElementType.coloredBox:
         {
-          final data = model as ColoredBoxUIElement;
+          final it = model as ColoredBoxUIElement;
 
-          final child = getWidgetFromElement(data.child);
+          final child = getWidgetFromElement(it.child);
           return ColoredBox(
             color: ColorUtils.tryParseColor(Colors.red),
             child: child,
@@ -68,21 +67,39 @@ mixin WidgetFabric {
         }
       case DUITElementType.center:
         {
-          final data = model as CenterUIElement;
+          final it = model as CenterUIElement;
 
-          final child = getWidgetFromElement(data.child);
-          return Center(
-            child: child,
-          );
+          final child = getWidgetFromElement(it.child);
+
+          if (it.uncontrolled) {
+            return DUITCenter(
+              attributes: it.attributes,
+              child: child,
+            );
+          } else {
+            return DUITControlledCenter(
+              controller: it.viewController,
+              child: child,
+            );
+          }
         }
       case DUITElementType.sizedBox:
         {
-          final data = model as SizedBoxUIElement;
+          final it = model as SizedBoxUIElement;
 
-          final child = getWidgetFromElement(data.child);
-          return SizedBox(
-            child: child,
-          );
+          final child = getWidgetFromElement(it.child);
+
+          if (it.uncontrolled) {
+            return DUITSizedBox(
+              attributes: it.attributes,
+              child: child,
+            );
+          } else {
+            return DUITControlledSizedBox(
+              controller: it.viewController,
+              child: child,
+            );
+          }
         }
       case DUITElementType.text:
         {
