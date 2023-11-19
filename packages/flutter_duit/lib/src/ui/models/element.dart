@@ -134,7 +134,7 @@ sealed class DUITElement<T> with WidgetFabric {
         {
           assert(json["child"] != null, "Child of SizedBox must not be null");
           final child = DUITElement.fromJson(json["child"], driver);
-          
+
           return SizedBoxUIElement(
             type: type,
             id: id,
@@ -181,33 +181,31 @@ sealed class DUITElement<T> with WidgetFabric {
             attributes: attributes,
             viewController: _createAndAttachController(
               id,
-              uncontrolled,
+              false,
               attributes,
               serverAction,
               driver,
               type,
             ),
             child: child,
-            uncontrolled: uncontrolled,
+            uncontrolled: false,
           );
         }
       case DUITElementType.textField:
         {
-          assert(uncontrolled != false, "TextField must not be uncontrolled");
-
           return TextFieldUIElement(
             type: type,
             id: id,
             viewController: _createAndAttachController(
               id,
-              uncontrolled,
+              false,
               attributes,
               serverAction,
               driver,
               type,
             ),
             attributes: attributes,
-            uncontrolled: uncontrolled,
+            uncontrolled: false,
           );
         }
       case DUITElementType.empty:
@@ -423,14 +421,14 @@ final class TextUIElement<TextAttributes> extends DUITElement<TextAttributes> {
 //</editor-fold>
 }
 
-final class TextFieldUIElement<TextFieldAttrPayload>
-    extends DUITElement<TextFieldAttrPayload> {
+final class TextFieldUIElement<TextFieldAttributes>
+    extends DUITElement<TextFieldAttributes> {
   //<editor-fold desc="Properties and ctor">
   @override
-  ViewAttributeWrapper<TextFieldAttrPayload>? attributes;
+  ViewAttributeWrapper<TextFieldAttributes>? attributes;
 
   @override
-  UIElementController<TextFieldAttrPayload>? viewController;
+  UIElementController<TextFieldAttributes>? viewController;
 
   TextFieldUIElement({
     required super.type,

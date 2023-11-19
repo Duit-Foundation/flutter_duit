@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 
@@ -120,9 +118,10 @@ mixin WidgetFabric {
         }
       case DUITElementType.textField:
         {
+          final it = model as TextFieldUIElement;
+
           return DUITTextField(
-            controller: model.viewController!
-                as UIElementController<TextFieldAttributes>,
+            controller: it.viewController,
           );
         }
       case DUITElementType.elevatedButton:

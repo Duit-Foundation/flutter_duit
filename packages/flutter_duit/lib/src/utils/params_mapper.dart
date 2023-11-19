@@ -176,4 +176,116 @@ class ParamsMapper {
 
     return null;
   }
+
+  static InputDecoration? convertToInputDecoration(JSONObject? json) {
+    if (json == null) return null;
+
+    return InputDecoration(
+      labelText: json["labelText"],
+      labelStyle: ParamsMapper.convertToTextStyle(json["labelStyle"]),
+      floatingLabelStyle: ParamsMapper.convertToTextStyle(json["labelStyle"]),
+      helperText: json["helperText"],
+      helperMaxLines: json["helperMaxLines"],
+      helperStyle: ParamsMapper.convertToTextStyle(json["helperStyle"]),
+      hintText: json["hintText"],
+      hintStyle: ParamsMapper.convertToTextStyle(json["hintStyle"]),
+      hintMaxLines: json["hintMaxLines"],
+      errorText: json["errorText"],
+      errorMaxLines: json["errorMaxLines"],
+      errorStyle: ParamsMapper.convertToTextStyle(json["errorStyle"]),
+      enabledBorder: ParamsMapper.convertToInputBorder(json["enabledBorder"]),
+      border: ParamsMapper.convertToInputBorder(json["border"]),
+      errorBorder: ParamsMapper.convertToInputBorder(json["errorBorder"]),
+      focusedBorder: ParamsMapper.convertToInputBorder(json["focusedBorder"]),
+      focusedErrorBorder:
+          ParamsMapper.convertToInputBorder(json["focusedErrorBorder"]),
+      enabled: json["enabled"] ?? true,
+      isCollapsed: json["isCollapsed"] ?? false,
+      isDense: json["isDense"],
+      suffixText: json["suffixText"],
+      suffixStyle: ParamsMapper.convertToTextStyle(json["suffixStyle"]),
+      prefixText: json["prefixText"],
+      prefixStyle: ParamsMapper.convertToTextStyle(json["prefixStyle"]),
+      counterText: json["counterText"],
+      counterStyle: ParamsMapper.convertToTextStyle(json["prefixStyle"]),
+      alignLabelWithHint: json["alignLabelWithHint"],
+      filled: json["filled"],
+      fillColor: ColorUtils.tryParseColor(json["fillColor"]),
+      contentPadding: convertToEdgeInsets(json["contentPadding"]),
+    );
+  }
+
+  static TextInputType convertToTextInputType(String? value) {
+    if (value == null) return TextInputType.text;
+    // TextInputType.
+    switch (value) {
+      case "text":
+        return TextInputType.text;
+      case "name":
+        return TextInputType.name;
+      case "none":
+        return TextInputType.none;
+      case "url":
+        return TextInputType.url;
+      case "emailAddress":
+        return TextInputType.emailAddress;
+      case "datetime":
+        return TextInputType.datetime;
+      case "streetAddress":
+        return TextInputType.streetAddress;
+      case "number":
+        return TextInputType.number;
+      case "phone":
+        return TextInputType.phone;
+      case "multiline":
+        return TextInputType.multiline;
+    }
+
+    return TextInputType.text;
+  }
+
+  static InputBorder? convertToInputBorder(JSONObject? json) {
+    if (json == null) return null;
+
+    final type = json["type"] as String;
+    final borderOptions = json["options"];
+
+    switch (type) {
+      case "outline":
+        return OutlineInputBorder(
+          gapPadding: borderOptions?["gapPadding"] ?? 4.0,
+          borderRadius:
+              BorderRadius.circular(borderOptions?["borderRadius"] ?? 4),
+        );
+      case "underline":
+        return const UnderlineInputBorder();
+    }
+
+    return null;
+  }
+
+  static EdgeInsets convertToEdgeInsets(dynamic insets) {
+    if (insets == null) return EdgeInsets.zero;
+
+    if (insets is num) {
+      return EdgeInsets.all(insets.toDouble());
+    }
+
+    if (insets is List<num>) {
+      if (insets.length == 2) {
+        return EdgeInsets.symmetric(
+            vertical: insets[0].toDouble(), horizontal: insets[1].toDouble());
+      }
+
+      if (insets.length == 4) {
+        return EdgeInsets.only(
+            left: insets[0].toDouble(),
+            top: insets[1].toDouble(),
+            right: insets[2].toDouble(),
+            bottom: insets[3].toDouble());
+      }
+    }
+
+    return EdgeInsets.zero;
+  }
 }

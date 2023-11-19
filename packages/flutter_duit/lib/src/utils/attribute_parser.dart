@@ -4,6 +4,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 sealed class AttributeParser {
   static parse(DUITElementType type, JSONObject? json) {
+
     final payload = switch (type) {
       DUITElementType.text => TextAttributes.fromJson(json ?? {}),
       DUITElementType.row => RowAttributes.fromJson(json ?? {}),
@@ -11,6 +12,7 @@ sealed class AttributeParser {
       DUITElementType.sizedBox => SizedBoxAttributes.fromJson(json ?? {}),
       DUITElementType.center => CenterAttributes.fromJson(json ?? {}),
       DUITElementType.coloredBox => ColoredBoxAttributes.fromJson(json ?? {}),
+      DUITElementType.textField => TextFieldAttributes.fromJson(json ?? {}),
       DUITElementType.elevatedButton =>
         ElevatedButtonAttributes.fromJson(json ?? {}),
       DUITElementType.textField || DUITElementType.empty => EmptyAttributes(),

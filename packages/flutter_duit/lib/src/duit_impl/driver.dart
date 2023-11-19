@@ -2,62 +2,12 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
+import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 import "index.dart";
-
-const testPayload = {
-  "type": "Column",
-  "id": "1",
-  "children": [
-    {
-      "type": "Row",
-      "uncontrolled": false,
-      "id": "2",
-      "action": {},
-      "children": [
-        {
-          "type": "Text",
-          "uncontrolled": false,
-          "id": "3",
-          "attributes": {"data": "keyany1", "textAlign" : "start"},
-          "action": {},
-        },
-        {
-          "type": "Text",
-          "uncontrolled": true,
-          "id": "4",
-          "attributes": {"data": "keyany2", "textAlign" : "start"},
-          "action": {},
-        }
-      ]
-    },
-    {
-      "type": "Row",
-      "uncontrolled": false,
-      "id": "5",
-      "attributes": {"mainAxisAlignment": "spaceEvenly"},
-      "action": {},
-      "children": [
-        {
-          "type": "Text",
-          "uncontrolled": false,
-          "id": "6",
-          "attributes": {"data": "keyany1", "textAlign" : "start"},
-          "action": {},
-        },
-        {
-          "type": "Text",
-          "uncontrolled": true,
-          "id": "7",
-          "attributes": {"data": "keyany2", "textAlign" : "start"},
-          "action": {},
-        }
-      ]
-    }
-  ]
-};
+import "view_template.dart";
 
 abstract final interface
 
@@ -72,7 +22,7 @@ class UIDriver {
 
   Widget? build();
 
-  void execute(ServerAction action);
+  Future<void> execute(ServerAction action);
 
   void dispose();
 }
@@ -147,24 +97,24 @@ final class DUITDriver implements UIDriver {
   }
 
   @override
-  void execute(ServerAction action) {
+  Future<void> execute(ServerAction action) async {
     final payload = {};
 
-    if (action.dependsOn.isNotEmpty) {
-      for (var dependency in action.dependsOn) {
+    final dependencies = action.dependsOn;
+
+    if (dependencies.isNotEmpty) {
+      for (final dependency in dependencies) {
         final controller = _viewControllers[dependency.id];
         if (controller != null) {
-          //TODO
-          final state = controller.attributes;
-          if (state != null) {
-            final value = state.payload[dependency.target];
-            payload[dependency.target] = value;
+          if (controller.attributes?.payload is AttendedModel) {
+            final model = controller.attributes?.payload as AttendedModel;
+            payload[dependency.target] = model.collect();
           }
         }
       }
     }
 
-    transport?.execute(action.event, payload);
+    await transport?.execute(action.event, payload);
   }
 
   @override
@@ -177,7 +127,8 @@ final class DUITDriver implements UIDriver {
   void updateAttributes(String id, JSONObject json) {
     final controller = _viewControllers[id];
     if (controller != null) {
-      final attributes = ViewAttributeWrapper.createAttributes(controller.type, json);
+      final attributes = ViewAttributeWrapper.createAttributes(
+          controller.type, json);
       controller.updateState(attributes);
     }
   }
