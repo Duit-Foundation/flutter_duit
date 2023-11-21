@@ -5,7 +5,7 @@ import type { CenterAttributes } from "../attributes";
 import { BaseAction } from "../lib/action";
 
 export class CenterUiElement extends SingleChildLayout {
-  type = DuitElementType.coloredBox as const;
+  type = DuitElementType.center as const;
   attributes: CenterAttributes;
 
   constructor(attrs: CenterAttributes, id?: string, action?: BaseAction, controlled?: boolean) {

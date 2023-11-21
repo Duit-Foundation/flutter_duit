@@ -5,7 +5,7 @@ import type { SizedBoxAttributes } from "../attributes/sized_box_attributes";
 import { BaseAction } from "../lib/action";
 
 export class SizedBoxUiElement extends SingleChildLayout {
-  type = DuitElementType.coloredBox as const;
+  type = DuitElementType.sizedBox as const;
   attributes: SizedBoxAttributes;
 
   constructor(attrs: SizedBoxAttributes, id?: string, action?: BaseAction, controlled?: boolean) {
