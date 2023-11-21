@@ -1,4 +1,4 @@
 export enum MainAxisSize {
- max="max",
- min="min",   
+    max = "max",
+    min = "min",
 }

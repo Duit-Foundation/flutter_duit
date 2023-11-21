@@ -1,12 +1,5 @@
-import { ColoredBoxUiElement, ColumnUiElement, RowUiElement, TextUiElement } from "../widget_models";
+import { ColoredBoxUiElement, ColumnUiElement, RowUiElement, SizedBoxUiElement, TextUiElement } from "../widget_models";
 import DuitElementType from "./element_type";
 
-export type DuitLayoutElement = ColumnUiElement | RowUiElement | ColoredBoxUiElement;
+export type DuitLayoutElement = ColumnUiElement | RowUiElement | ColoredBoxUiElement | SizedBoxUiElement;
 export type DuitElement = TextUiElement | DuitLayoutElement;
-
-export type Xx = {
-    [DuitElementType.column]: ColumnUiElement;
-    [DuitElementType.row]: RowUiElement;
-    [DuitElementType.coloredBox]: ColoredBoxUiElement;
-    [DuitElementType.text]: TextUiElement;
-}

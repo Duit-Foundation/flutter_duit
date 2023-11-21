@@ -1,3 +1,5 @@
+import { Color } from "../utils/color";
+
 export interface ColoredBoxAttributes {
-    color: string | number[];
+    color: Color;
 }
