@@ -1,9 +1,7 @@
-import DuitElementType from "../element_type";
+import DuitElementType from "../lib/element_type";
 import { DuitWidget } from "./child";
 
-interface TextAttributes {
-    data?: string;
-  }
+import type { TextAttributes } from "../attributes";
   
   export class TextUiElement extends DuitWidget {
     type = DuitElementType.text as const;

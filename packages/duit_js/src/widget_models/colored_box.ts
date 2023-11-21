@@ -1,9 +1,7 @@
 import { SingleChildLayout } from "./child";
-import DuitElementType from "../element_type";
+import DuitElementType from "../lib/element_type";
 
-interface ColoredBoxAttributes {
-    color?: string;
-  }
+import type { ColoredBoxAttributes } from "../attributes";
   
   export class ColoredBoxUiElement extends SingleChildLayout {
     type = DuitElementType.coloredBox as const;

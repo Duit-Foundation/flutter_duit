@@ -1,6 +1,7 @@
+import { ColoredBoxUiElement, ColumnUiElement } from "../widget_models";
 import type {DuitElement, DuitLayoutElement } from "./element";
 import DuitElementType from "./element_type";
-import { ColoredBoxUiElement, ColumnUiElement } from "./widget_models";
+
 
 export default class UIBuilder {
     private root?: DuitLayoutElement;

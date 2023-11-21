@@ -1,11 +1,13 @@
 import { randomUUID } from "crypto";
-import { DuitElement } from "../element";
-import { Nullable } from "../nullable";
+import { DuitElement } from "../lib/element";
+import { Nullable } from "../utils/nullable";
 
 export class DuitWidget {
   id: string;
-  
-  constructor(id?: string) {
+  controlled;
+
+  constructor(id?: string, controlled?: boolean) {
+    this.controlled = controlled ?? false;
     if (id) {
       this.id = id;
     } else {
@@ -14,37 +16,27 @@ export class DuitWidget {
   }
 }
 
-class DuitLayout extends DuitWidget {
-  constructor(id?: string) {
-    super(id);
-  }
-
-  closeTree() {
-    return this;
-  }
-}
-
-export class SingleChildLayout extends DuitLayout {
+export class SingleChildLayout extends DuitWidget {
   protected child: Nullable<DuitElement>;
 
-  constructor(id?: string) {
-    super(id);
+  constructor(id?: string, controlled?: boolean) {
+    super(id, controlled);
   }
 
-  addChild(child: DuitElement): DuitElement {
+  addChild<T extends DuitElement>(child: T) {
     this.child = child;
     return child;
   }
 }
 
-export class MultiChildLayout extends DuitLayout {
+export class MultiChildLayout extends DuitWidget {
   protected children: Nullable<DuitElement[]> = [];
 
-  constructor(id?: string) {
-    super(id);
+  constructor(id?: string, controlled?: boolean) {
+    super(id, controlled);
   }
 
-  addChild(child: DuitElement): DuitElement {
+  addChild<T extends DuitElement>(child: T) {
     this.children?.push(child);
     return child;
   }

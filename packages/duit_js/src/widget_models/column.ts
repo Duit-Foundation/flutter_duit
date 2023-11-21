@@ -1,6 +1,7 @@
 import { MultiChildLayout } from "./child";
-import DuitElementType from "../element_type";
-import { FlexAttributes } from "./flex_attributes";
+import DuitElementType from "../lib/element_type";
+
+import type { FlexAttributes } from "../attributes";
 
 export class ColumnUiElement extends MultiChildLayout {
     type = DuitElementType.column as const;
