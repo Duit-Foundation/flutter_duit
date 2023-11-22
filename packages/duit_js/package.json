@@ -1,11 +1,15 @@
 {
   "name": "duit_js",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "author": "lesleysin",
   "type": "commonjs",
   "license": "MIT",
