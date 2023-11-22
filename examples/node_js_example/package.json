@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm ci && node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "duit_js": "file:../../packages/duit_js",
+    "express": "^4.18.2",
     "socket.io": "^4.7.2"
   }
 }
