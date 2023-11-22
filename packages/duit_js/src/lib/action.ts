@@ -35,4 +35,8 @@ export class HttpAction extends BaseAction {
     }
 }
 
-export class WebSocketAction extends BaseAction { }
+export class WebSocketAction extends BaseAction {
+    constructor(event: string, depndsOn: ActionDependency[] = []) {
+        super(event, depndsOn);
+    }
+}

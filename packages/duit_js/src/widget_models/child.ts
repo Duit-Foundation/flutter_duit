@@ -27,9 +27,9 @@ export class SingleChildLayout extends DuitTreeElement {
     super(id, action, controlled);
   }
 
-  addChild<T extends DuitElement>(child: T) {
+  addChild<T extends DuitElement>(child: T): this {
     this.child = child;
-    return child;
+    return this;
   }
 }
 
@@ -40,8 +40,8 @@ export class MultiChildLayout extends DuitTreeElement {
     super(id, action, controlled);
   }
 
-  addChild<T extends DuitElement>(child: T) {
+  addChild<T extends DuitElement>(child: T): this {
     this.children?.push(child);
-    return child;
+    return this;
   }
 }
