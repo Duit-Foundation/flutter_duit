@@ -2,8 +2,8 @@ import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 final class SizedBoxAttributes implements DUITAttributes<SizedBoxAttributes> {
-  double? width;
-  double? height;
+  num? width;
+  num? height;
 
   SizedBoxAttributes({
     this.height,

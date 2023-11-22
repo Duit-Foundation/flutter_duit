@@ -17,8 +17,8 @@ class DUITSizedBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = attributes?.payload as SizedBoxAttributes?;
     return SizedBox(
-      width: state?.width,
-      height: state?.height,
+      width: state?.width?.toDouble(),
+      height: state?.height?.toDouble(),
       child: child,
     );
   }
@@ -49,8 +49,8 @@ class _DUITControlledSizedBoxState extends State<DUITControlledSizedBox>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: attributes?.width,
-      height: attributes?.height,
+      width: attributes?.width?.toDouble(),
+      height: attributes?.height?.toDouble(),
       child: widget.child,
     );
   }

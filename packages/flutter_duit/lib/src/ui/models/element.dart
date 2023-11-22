@@ -3,6 +3,7 @@ import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/duit_impl/index.dart';
 import 'package:flutter_duit/src/ui/index.dart';
+import 'package:flutter_duit/src/ui/widgets/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 import 'child.dart';
@@ -12,26 +13,25 @@ sealed class DUITElement<T> with WidgetFabric {
   //<editor-fold desc="Properties and ctor">
   final String id;
   final DUITElementType type;
-  final bool uncontrolled;
+  final bool controlled;
   abstract UIElementController<T>? viewController;
   abstract ViewAttributeWrapper<T>? attributes;
 
   DUITElement({
     required this.type,
     required this.id,
-    this.uncontrolled = true,
+    this.controlled = false,
   });
 
   factory DUITElement.fromJson(JSONObject json, UIDriver driver) {
     final type = convert(json["type"]);
     final id = json["id"];
-    final bool uncontrolled = json["uncontrolled"] ?? true;
+    final bool controlled = json["controlled"] ?? false;
     final attributes =
         ViewAttributeWrapper.createAttributes<T>(type, json["attributes"]);
-    //TODO исправить!!!!
-    final serverAction = ServerAction(event: '');
-    assert(id != null, "Id and type cannot be null");
-    // assert(attributes != null, "Attributes cannot be null");
+    final ServerAction? serverAction =
+        json["action"] != null ? ServerAction.fromJSON(json["action"]) : null;
+    assert(id != null, "Id cannot be null");
 
     switch (type) {
       case DUITElementType.row:
@@ -52,13 +52,13 @@ sealed class DUITElement<T> with WidgetFabric {
             attributes: attributes,
             viewController: _createAndAttachController(
               id,
-              uncontrolled,
+              controlled,
               attributes,
               serverAction,
               driver,
               type,
             ),
-            uncontrolled: uncontrolled,
+            controlled: controlled,
           );
         }
       case DUITElementType.column:
@@ -77,10 +77,10 @@ sealed class DUITElement<T> with WidgetFabric {
             id: id,
             children: arr,
             attributes: attributes,
-            uncontrolled: uncontrolled,
+            controlled: controlled,
             viewController: _createAndAttachController(
               id,
-              uncontrolled,
+              controlled,
               attributes,
               serverAction,
               driver,
@@ -90,7 +90,6 @@ sealed class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.center:
         {
-          assert(json["child"] != null, "Child of ColoredBox must not be null");
           final child = DUITElement.fromJson(json["child"], driver);
 
           return CenterUIElement(
@@ -100,18 +99,17 @@ sealed class DUITElement<T> with WidgetFabric {
             attributes: attributes,
             viewController: _createAndAttachController(
               id,
-              uncontrolled,
+              controlled,
               attributes,
               serverAction,
               driver,
               type,
             ),
-            uncontrolled: uncontrolled,
+            controlled: controlled,
           );
         }
       case DUITElementType.coloredBox:
         {
-          assert(json["child"] != null, "Child of ColoredBox must not be null");
           final child = DUITElement.fromJson(json["child"], driver);
 
           return ColoredBoxUIElement(
@@ -121,18 +119,17 @@ sealed class DUITElement<T> with WidgetFabric {
             attributes: attributes,
             viewController: _createAndAttachController(
               id,
-              uncontrolled,
+              controlled,
               attributes,
               serverAction,
               driver,
               type,
             ),
-            uncontrolled: uncontrolled,
+            controlled: controlled,
           );
         }
       case DUITElementType.sizedBox:
         {
-          assert(json["child"] != null, "Child of SizedBox must not be null");
           final child = DUITElement.fromJson(json["child"], driver);
 
           return SizedBoxUIElement(
@@ -142,13 +139,13 @@ sealed class DUITElement<T> with WidgetFabric {
             attributes: attributes,
             viewController: _createAndAttachController(
               id,
-              uncontrolled,
+              controlled,
               attributes,
               serverAction,
               driver,
               type,
             ),
-            uncontrolled: uncontrolled,
+            controlled: controlled,
           );
         }
       case DUITElementType.text:
@@ -158,21 +155,18 @@ sealed class DUITElement<T> with WidgetFabric {
             id: id,
             viewController: _createAndAttachController<T>(
               id,
-              uncontrolled,
+              controlled,
               attributes,
               serverAction,
               driver,
               type,
             ),
             attributes: attributes,
-            uncontrolled: uncontrolled,
+            controlled: controlled,
           );
         }
       case DUITElementType.elevatedButton:
         {
-          assert(json["child"] != null, "Child of SizedBox must not be null");
-          assert(
-              uncontrolled != false, "ElevatedButton must not be uncontrolled");
           final child = DUITElement.fromJson(json["child"], driver);
 
           return ElevatedButtonUIElement(
@@ -188,7 +182,7 @@ sealed class DUITElement<T> with WidgetFabric {
               type,
             ),
             child: child,
-            uncontrolled: false,
+            controlled: true,
           );
         }
       case DUITElementType.textField:
@@ -205,7 +199,7 @@ sealed class DUITElement<T> with WidgetFabric {
               type,
             ),
             attributes: attributes,
-            uncontrolled: false,
+            controlled: false,
           );
         }
       case DUITElementType.empty:
@@ -226,12 +220,12 @@ sealed class DUITElement<T> with WidgetFabric {
   //<editor-fold desc="Methods">
   static UIElementController<T>? _createAndAttachController<T>(
       String id,
-      bool uncontrolled,
+      bool controlled,
       ViewAttributeWrapper<T>? attributes,
       ServerAction? action,
       UIDriver driver,
       DUITElementType type) {
-    final controller = switch (uncontrolled) {
+    final controller = switch (controlled) {
       true => null,
       false => ViewController<T>(
           id: id,
@@ -272,7 +266,7 @@ final class ElevatedButtonUIElement<ElevatedButtonAttributes>
   ElevatedButtonUIElement({
     required super.type,
     required super.id,
-    required super.uncontrolled,
+    required super.controlled,
     required this.viewController,
     required this.attributes,
     required this.child,
@@ -296,7 +290,7 @@ final class CenterUIElement<CenterAttributes>
   CenterUIElement({
     required super.type,
     required super.id,
-    required super.uncontrolled,
+    required super.controlled,
     required this.viewController,
     required this.attributes,
     required this.child,
@@ -320,7 +314,7 @@ final class ColoredBoxUIElement<ColoredBoxAttributes>
   ColoredBoxUIElement({
     required super.type,
     required super.id,
-    required super.uncontrolled,
+    required super.controlled,
     required this.attributes,
     required this.viewController,
     required this.child,
@@ -343,7 +337,7 @@ final class ColumnUIElement<ColumnAttributes>
   ColumnUIElement({
     required super.type,
     required super.id,
-    required super.uncontrolled,
+    required super.controlled,
     required this.viewController,
     required this.attributes,
     required this.children,
@@ -366,7 +360,7 @@ final class RowUIElement<RowAttributes> extends DUITElement<RowAttributes>
   RowUIElement({
     required super.type,
     required super.id,
-    required super.uncontrolled,
+    required super.controlled,
     required this.viewController,
     required this.attributes,
     required this.children,
@@ -389,7 +383,7 @@ final class SizedBoxUIElement<SizedBoxAttributes>
   SizedBoxUIElement({
     required super.type,
     required super.id,
-    required super.uncontrolled,
+    required super.controlled,
     required this.viewController,
     required this.attributes,
     required this.child,
@@ -409,14 +403,14 @@ final class TextUIElement<TextAttributes> extends DUITElement<TextAttributes> {
   TextUIElement({
     required super.type,
     required super.id,
-    required super.uncontrolled,
+    required super.controlled,
     required this.viewController,
     required this.attributes,
   });
 
   @override
   String toString() {
-    return 'TextUIElement{attributes: $attributes, viewController: $viewController, uncontrolled: $uncontrolled}';
+    return 'TextUIElement{attributes: $attributes, viewController: $viewController, uncontrolled: $controlled}';
   }
 //</editor-fold>
 }
@@ -433,7 +427,7 @@ final class TextFieldUIElement<TextFieldAttributes>
   TextFieldUIElement({
     required super.type,
     required super.id,
-    required super.uncontrolled,
+    required super.controlled,
     required this.attributes,
     required this.viewController,
   });

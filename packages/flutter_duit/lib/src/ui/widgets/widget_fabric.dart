@@ -18,7 +18,7 @@ mixin WidgetFabric {
             arr.add(children);
           }
 
-          if (it.uncontrolled) {
+          if (it.controlled) {
             return DUITColumn(
               attributes: it.attributes,
               children: arr,
@@ -40,7 +40,7 @@ mixin WidgetFabric {
             arr.add(children);
           }
 
-          if (it.uncontrolled) {
+          if (it.controlled) {
             return DUITRow(
               attributes: it.attributes,
               children: arr,
@@ -58,7 +58,7 @@ mixin WidgetFabric {
 
           final child = getWidgetFromElement(it.child);
 
-          if (it.uncontrolled) {
+          if (it.controlled) {
             return DUITColoredBox(
               attributes: it.attributes,
               child: child,
@@ -76,7 +76,7 @@ mixin WidgetFabric {
 
           final child = getWidgetFromElement(it.child);
 
-          if (it.uncontrolled) {
+          if (it.controlled) {
             return DUITCenter(
               attributes: it.attributes,
               child: child,
@@ -94,7 +94,7 @@ mixin WidgetFabric {
 
           final child = getWidgetFromElement(it.child);
 
-          if (it.uncontrolled) {
+          if (it.controlled) {
             return DUITSizedBox(
               attributes: it.attributes,
               child: child,
@@ -110,7 +110,7 @@ mixin WidgetFabric {
         {
           final it = model as TextUIElement;
 
-          return model.uncontrolled
+          return model.controlled
               ? DUITText(attributes: it.attributes)
               : DUITControlledText(
                   controller: it.viewController,

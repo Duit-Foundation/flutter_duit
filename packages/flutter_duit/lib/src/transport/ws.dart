@@ -35,7 +35,6 @@ final class WSTransport extends Transport implements Streamer {
     await for (final event in _controller.stream) {
       _controller.close();
       _controller = StreamController<Map<String, dynamic>>.broadcast();
-      print(event);
       return event;
     }
 

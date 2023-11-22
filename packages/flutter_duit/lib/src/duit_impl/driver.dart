@@ -7,11 +7,8 @@ import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 import "index.dart";
-import "view_template.dart";
 
-abstract final interface
-
-class UIDriver {
+abstract interface class UIDriver {
   abstract final String layoutSource;
   abstract final TransportType transportType;
   abstract Transport? transport;
@@ -47,7 +44,7 @@ final class DUITDriver implements UIDriver {
   void attachController(String id, UIElementController controller) {
     final hasController = _viewControllers.containsKey(id);
     assert(!hasController,
-    "ViewController with id already exists. You cannot attach controller to driver because it  contains element for id ($id)");
+        "ViewController with id already exists. You cannot attach controller to driver because it  contains element for id ($id)");
 
     _viewControllers[id] = controller;
   }
@@ -80,7 +77,7 @@ final class DUITDriver implements UIDriver {
   @override
   Future<DUITAbstractTree?> init() async {
     transport = _getTransport(transportType);
-    final json = await transport!.connect();
+    final json = await transport?.connect();
     assert(json != null);
 
     if (transport is! HttpTransport) {
@@ -127,8 +124,8 @@ final class DUITDriver implements UIDriver {
   void updateAttributes(String id, JSONObject json) {
     final controller = _viewControllers[id];
     if (controller != null) {
-      final attributes = ViewAttributeWrapper.createAttributes(
-          controller.type, json);
+      final attributes =
+          ViewAttributeWrapper.createAttributes(controller.type, json);
       controller.updateState(attributes);
     }
   }

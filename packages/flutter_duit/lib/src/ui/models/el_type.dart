@@ -47,7 +47,7 @@ DUITElementType convert(dynamic type) {
       case "ColoredBox":
         return DUITElementType.coloredBox;
       case "Center":
-        DUITElementType.center;
+        return DUITElementType.center;
       case "Empty":
         return DUITElementType.column;
     }
