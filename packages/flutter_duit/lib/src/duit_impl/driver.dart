@@ -2,15 +2,17 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
+import "package:flutter_duit/src/transport/options.dart";
 import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 import "index.dart";
+import "widgets_update_set.dart";
 
 abstract interface class UIDriver {
-  abstract final String layoutSource;
-  abstract final TransportType transportType;
+  abstract final String source;
+  abstract final TransportOptions transportOptions;
   abstract Transport? transport;
 
   void attachController(String id, UIElementController controller);
@@ -26,18 +28,18 @@ abstract interface class UIDriver {
 
 final class DUITDriver implements UIDriver {
   @override
-  final String layoutSource;
-  @override
-  final TransportType transportType;
+  final String source;
   @override
   Transport? transport;
+  @override
+  TransportOptions transportOptions;
 
   DUITAbstractTree? _layout;
   Map<String, UIElementController> _viewControllers = {};
 
-  DUITDriver({
-    required this.layoutSource,
-    this.transportType = TransportType.http,
+  DUITDriver(
+    this.source, {
+    required this.transportOptions,
   });
 
   @override
@@ -53,30 +55,38 @@ final class DUITDriver implements UIDriver {
     switch (type) {
       case TransportType.http:
         {
-          return HttpTransport(layoutSource);
+          return HttpTransport(source);
         }
       case TransportType.grpc:
       case TransportType.ws:
         {
-          return WSTransport(layoutSource);
+          return WSTransport(source);
         }
       default:
         {
-          return WSTransport(layoutSource);
+          return WSTransport(source);
         }
     }
   }
 
   void _resolveUpdates(JSONObject json) {
-    final updates = json["updates"] as Map<String, dynamic>;
-    updates.forEach((key, value) {
+    final updSet = WidgetsUpdateSet.fromJson(json);
+    if (updSet != null) {
+      updSet.updates.forEach((key, value) {
+        updateAttributes(key, value);
+      });
+    }
+  }
+
+  void _resolveUpdatesWithModel(WidgetsUpdateSet updateSet) {
+    updateSet.updates.forEach((key, value) {
       updateAttributes(key, value);
     });
   }
 
   @override
   Future<DUITAbstractTree?> init() async {
-    transport = _getTransport(transportType);
+    transport = _getTransport(transportOptions.type);
     final json = await transport?.connect();
     assert(json != null);
 
@@ -95,7 +105,7 @@ final class DUITDriver implements UIDriver {
 
   @override
   Future<void> execute(ServerAction action) async {
-    final payload = {};
+    final Map<String, dynamic> payload = {};
 
     final dependencies = action.dependsOn;
 
@@ -111,7 +121,10 @@ final class DUITDriver implements UIDriver {
       }
     }
 
-    await transport?.execute(action.event, payload);
+    final res = await transport?.execute(action, payload);
+    if (res != null) {
+      _resolveUpdatesWithModel(res);
+    }
   }
 
   @override

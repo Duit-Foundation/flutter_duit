@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_duit/src/duit_impl/widgets_update_set.dart';
+
 import 'streamer.dart';
 import 'transport.dart';
 
@@ -42,9 +44,16 @@ final class WSTransport extends Transport implements Streamer {
   }
 
   @override
-  FutureOr<void> execute(event, payload) {
-    // TODO: implement execute
-    throw UnimplementedError();
+  FutureOr<WidgetsUpdateSet?> execute(action, payload) {
+    final data = {
+      "event": action.event,
+      "payload": payload,
+    };
+
+    final str = jsonEncode(data);
+    ws.add(str);
+
+    return null;
   }
 
   @override

@@ -20,7 +20,7 @@ function createDynamicDuitView() {
    const builder = DuitView.builder();
 
    //create child elements tree
-   const sizedBoxWithCentredText = new RowUiElement({ mainAxisAlignment: "spaceEvenly" }).addChild(new SizedBoxUiElement({ width: 100, height: 400 }).addChild(new ColoredBoxUiElement({ color: "#DCDCDC" }).addChild(new CenterUiElement({}).addChild(new TextUiElement({ data: "1123" }))))).addChild(new SizedBoxUiElement({ width: 120, height: 300 }).addChild(new ColoredBoxUiElement({ color: "#9e2f2f" }).addChild(new CenterUiElement({}).addChild(new ElevatedButtonUiElement({}, "button1", new WebSocketAction("event1", [])).addChild(new TextUiElement({ data: "1" }))))))
+   const sizedBoxWithCentredText = new RowUiElement({ mainAxisAlignment: "spaceEvenly" }).addChild(new SizedBoxUiElement({ width: 100, height: 400 }).addChild(new ColoredBoxUiElement({ color: "#DCDCDC" }).addChild(new CenterUiElement({}).addChild(new TextUiElement({ data: "1123" }))))).addChild(new SizedBoxUiElement({ width: 120, height: 300 }).addChild(new ColoredBoxUiElement({ color: "#9e2f2f" }).addChild(new CenterUiElement({}).addChild(new ElevatedButtonUiElement({}, "button1", new WebSocketAction("event1", [])).addChild(new TextUiElement({ data: "button" }))))))
 
    //create view root and assing child/children to him
    builder.createRootOfExactType(DuitElementType.column, {}).addChild(sizedBoxWithCentredText);
@@ -32,7 +32,8 @@ function createDynamicDuitView() {
 
 webSocketServer.on('connection', ws => {
    ws.on('message', m => {
-      webSocketServer.clients.forEach(client => client.send(m));
+      // webSocketServer.clients.forEach(client => client.send(m));
+      console.log(JSON.parse(m));
    });
 
    ws.on("error", e => ws.send(e));

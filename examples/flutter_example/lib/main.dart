@@ -32,8 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 @override
   Widget build(BuildContext context) {
-    final driver = DUITDriver(
-        layoutSource: "ws://localhost:8999", transportType: TransportType.ws);
+    final driver = DUITDriver("ws://localhost:8999", transportOptions: WebSocketTransportOptions());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

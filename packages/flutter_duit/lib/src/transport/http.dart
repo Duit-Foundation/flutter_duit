@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:flutter_duit/src/duit_impl/index.dart';
+import 'package:flutter_duit/src/duit_impl/widgets_update_set.dart';
 import 'package:http/http.dart' as http;
 
 import 'transport.dart';
@@ -22,9 +24,38 @@ final class HttpTransport extends Transport {
   }
 
   @override
-  FutureOr<void> execute(event, payload) {
-    // TODO: implement execute
-    throw UnimplementedError();
+  FutureOr<WidgetsUpdateSet?> execute(action, payload) async {
+    String method = switch (action.meta) {
+      null => "GET",
+      HttpActionMetainfo() => action.meta!.method,
+    };
+
+    switch (method) {
+      case "GET":
+        {
+          Uri uri;
+
+          if (payload.isNotEmpty) {
+            var urlString = "${action.event}?";
+            payload.forEach((key, value) {
+              urlString += "$key=$value";
+            });
+            uri = Uri.parse(urlString);
+          } else {
+            uri = Uri.parse(action.event);
+          }
+
+          await client.get(uri);
+        }
+      case "POST":
+        {}
+      case "DELETE":
+        {}
+      case "PATCH":
+        {}
+    }
+
+    return null;
   }
 
   @override
