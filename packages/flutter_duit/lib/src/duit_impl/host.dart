@@ -5,10 +5,12 @@ import 'driver.dart';
 class UIHostContainer extends StatefulWidget {
   final Widget? placeholder;
   final DUITDriver driver;
+  final BuildContext context;
 
   const UIHostContainer({
     super.key,
     required this.driver,
+    required this.context,
     this.placeholder,
   });
 
@@ -29,6 +31,12 @@ class _UIHostContainerState extends State<UIHostContainer> {
       }
     });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    widget.driver.context = context;
+    super.didChangeDependencies();
   }
 
   @override

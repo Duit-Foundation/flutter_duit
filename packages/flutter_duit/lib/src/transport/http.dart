@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter_duit/src/duit_impl/index.dart';
-import 'package:flutter_duit/src/duit_impl/widgets_update_set.dart';
+import 'package:flutter_duit/src/duit_impl/event.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 import 'package:http/http.dart' as http;
 
 import 'transport.dart';
@@ -24,7 +25,7 @@ final class HttpTransport extends Transport {
   }
 
   @override
-  FutureOr<WidgetsUpdateSet?> execute(action, payload) async {
+  FutureOr<ServerEvent?> execute(action, payload, headers) async {
     String method = switch (action.meta) {
       null => "GET",
       HttpActionMetainfo() => action.meta!.method,
@@ -45,14 +46,53 @@ final class HttpTransport extends Transport {
             uri = Uri.parse(action.event);
           }
 
-          await client.get(uri);
+          try {
+            final json = await client.get(uri);
+            final data = jsonDecode(json.body) as JSONObject;
+            return ServerEvent.fromJson(data);
+          } catch (e) {
+            rethrow;
+          }
         }
       case "POST":
-        {}
+        {
+          try {
+            final json = await client.post(
+              Uri.parse(action.event),
+              body: payload,
+            );
+            final data = jsonDecode(json.body) as JSONObject;
+            return ServerEvent.fromJson(data);
+          } catch (e) {
+            rethrow;
+          }
+        }
       case "DELETE":
-        {}
+        {
+          try {
+            final json = await client.delete(
+              Uri.parse(action.event),
+              body: payload,
+            );
+            final data = jsonDecode(json.body) as JSONObject;
+            return ServerEvent.fromJson(data);
+          } catch (e) {
+            rethrow;
+          }
+        }
       case "PATCH":
-        {}
+        {
+          try {
+            final json = await client.patch(
+              Uri.parse(action.event),
+              body: payload,
+            );
+            final data = jsonDecode(json.body) as JSONObject;
+            return ServerEvent.fromJson(data);
+          } catch (e) {
+            rethrow;
+          }
+        }
     }
 
     return null;

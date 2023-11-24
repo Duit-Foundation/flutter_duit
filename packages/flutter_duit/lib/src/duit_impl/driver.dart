@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
@@ -8,7 +10,7 @@ import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 import "index.dart";
-import "widgets_update_set.dart";
+import "event.dart";
 
 abstract interface class UIDriver {
   abstract final String source;
@@ -36,6 +38,11 @@ final class DUITDriver implements UIDriver {
 
   DUITAbstractTree? _layout;
   Map<String, UIElementController> _viewControllers = {};
+  late BuildContext _context;
+
+  set context(BuildContext value) {
+    _context = value;
+  }
 
   DUITDriver(
     this.source, {
@@ -69,19 +76,19 @@ final class DUITDriver implements UIDriver {
     }
   }
 
-  void _resolveUpdates(JSONObject json) {
-    final updSet = WidgetsUpdateSet.fromJson(json);
-    if (updSet != null) {
-      updSet.updates.forEach((key, value) {
-        updateAttributes(key, value);
-      });
-    }
-  }
+  FutureOr<void> _resolveEvent(JSONObject? json) async {
+    final event = ServerEvent.fromJson(json);
 
-  void _resolveUpdatesWithModel(WidgetsUpdateSet updateSet) {
-    updateSet.updates.forEach((key, value) {
-      updateAttributes(key, value);
-    });
+    if (event != null) {
+      switch (event.type) {
+        case ServerEventType.update:
+          final updEvent = event as UpdateEvent;
+          updEvent.updates.forEach((key, value) {
+            updateAttributes(key, value);
+          });
+          break;
+      }
+    }
   }
 
   @override
@@ -90,9 +97,9 @@ final class DUITDriver implements UIDriver {
     final json = await transport?.connect();
     assert(json != null);
 
-    if (transport is! HttpTransport) {
+    if (transport is Streamer) {
       final streamer = transport as Streamer;
-      streamer.eventStream.listen(_resolveUpdates);
+      streamer.eventStream.listen(_resolveEvent);
     }
 
     return _layout = await DUITAbstractTree(json: json!, driver: this).parse();
@@ -121,10 +128,15 @@ final class DUITDriver implements UIDriver {
       }
     }
 
-    final res = await transport?.execute(action, payload);
-    if (res != null) {
-      _resolveUpdatesWithModel(res);
+    Map<String, dynamic> headers = {};
+
+    if (transportOptions is HttpTransportOptions) {
+      final opts = transportOptions as HttpTransportOptions;
+      headers = opts.defaultHeaders;
     }
+
+    await transport?.execute(action, payload, headers);
+    //TODO: event handling
   }
 
   @override
