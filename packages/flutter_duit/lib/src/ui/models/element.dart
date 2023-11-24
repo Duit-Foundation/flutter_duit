@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/duit_impl/index.dart';
+import 'package:flutter_duit/src/duit_impl/registry.dart';
 import 'package:flutter_duit/src/ui/index.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
@@ -9,11 +10,12 @@ import 'package:flutter_duit/src/utils/index.dart';
 import 'child.dart';
 import 'el_type.dart';
 
-sealed class DUITElement<T> with WidgetFabric {
+abstract base class DUITElement<T> with WidgetFabric {
   //<editor-fold desc="Properties and ctor">
   final String id;
   final DUITElementType type;
   final bool controlled;
+  final String? tag;
   abstract UIElementController<T>? viewController;
   abstract ViewAttributeWrapper<T>? attributes;
 
@@ -21,12 +23,14 @@ sealed class DUITElement<T> with WidgetFabric {
     required this.type,
     required this.id,
     this.controlled = false,
+    this.tag,
   });
 
   factory DUITElement.fromJson(JSONObject json, UIDriver driver) {
     final type = convert(json["type"]);
     final id = json["id"];
     final bool controlled = json["controlled"] ?? false;
+    final tag = json["tag"];
     final attributes =
         ViewAttributeWrapper.createAttributes<T>(type, json["attributes"]);
     final ServerAction? serverAction =
@@ -50,7 +54,7 @@ sealed class DUITElement<T> with WidgetFabric {
             id: id,
             children: arr,
             attributes: attributes,
-            viewController: _createAndAttachController(
+            viewController: createAndAttachController(
               id,
               controlled,
               attributes,
@@ -78,7 +82,7 @@ sealed class DUITElement<T> with WidgetFabric {
             children: arr,
             attributes: attributes,
             controlled: controlled,
-            viewController: _createAndAttachController(
+            viewController: createAndAttachController(
               id,
               controlled,
               attributes,
@@ -97,7 +101,7 @@ sealed class DUITElement<T> with WidgetFabric {
             id: id,
             child: child,
             attributes: attributes,
-            viewController: _createAndAttachController(
+            viewController: createAndAttachController(
               id,
               controlled,
               attributes,
@@ -117,7 +121,7 @@ sealed class DUITElement<T> with WidgetFabric {
             id: id,
             child: child,
             attributes: attributes,
-            viewController: _createAndAttachController(
+            viewController: createAndAttachController(
               id,
               controlled,
               attributes,
@@ -137,7 +141,7 @@ sealed class DUITElement<T> with WidgetFabric {
             id: id,
             child: child,
             attributes: attributes,
-            viewController: _createAndAttachController(
+            viewController: createAndAttachController(
               id,
               controlled,
               attributes,
@@ -153,7 +157,7 @@ sealed class DUITElement<T> with WidgetFabric {
           return TextUIElement(
             type: type,
             id: id,
-            viewController: _createAndAttachController<T>(
+            viewController: createAndAttachController<T>(
               id,
               controlled,
               attributes,
@@ -173,7 +177,7 @@ sealed class DUITElement<T> with WidgetFabric {
             type: type,
             id: id,
             attributes: attributes,
-            viewController: _createAndAttachController(
+            viewController: createAndAttachController(
               id,
               true,
               attributes,
@@ -190,7 +194,7 @@ sealed class DUITElement<T> with WidgetFabric {
           return TextFieldUIElement(
             type: type,
             id: id,
-            viewController: _createAndAttachController(
+            viewController: createAndAttachController(
               id,
               true,
               attributes,
@@ -206,6 +210,18 @@ sealed class DUITElement<T> with WidgetFabric {
         {
           return EmptyUIElement();
         }
+      case DUITElementType.custom:
+        {
+          if (tag != null) {
+            final mapper = DuitRegistry.getModelMapper(tag);
+            if (mapper != null) {
+              return mapper.call(json["data"], driver) as DUITElement<T>;
+            } else {
+              return EmptyUIElement();
+            }
+          }
+          return EmptyUIElement();
+        }
       default:
         {
           throw ArgumentError(
@@ -218,7 +234,7 @@ sealed class DUITElement<T> with WidgetFabric {
   //</editor-fold>
 
   //<editor-fold desc="Methods">
-  static UIElementController<T>? _createAndAttachController<T>(
+  static UIElementController<T>? createAndAttachController<T>(
       String id,
       bool controlled,
       ViewAttributeWrapper<T>? attributes,
@@ -251,6 +267,18 @@ sealed class DUITElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class CustomDUITElement<T> extends DUITElement<T> {
+  @override
+  ViewAttributeWrapper<T>? attributes;
+
+  @override
+  UIElementController<T>? viewController;
+
+  CustomDUITElement({
+    required super.id,
+  }) : super(type: DUITElementType.custom);
+}
+
 final class ElevatedButtonUIElement<ElevatedButtonAttributes>
     extends DUITElement<ElevatedButtonAttributes> implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
