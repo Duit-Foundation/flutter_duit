@@ -8,12 +8,14 @@ abstract interface class TransportOptions {
 final class HttpTransportOptions extends TransportOptions {
   @override
   TransportType type = TransportType.http;
-  Map<String, dynamic> defaultHeaders;
-  HttpActionMetainfo initialRequestMetainfo;
+  String? baseUrl;
+  Map<String, String> defaultHeaders;
+  HttpActionMetainfo? initialRequestMetainfo;
 
   HttpTransportOptions({
-    required this.initialRequestMetainfo,
+    this.initialRequestMetainfo,
     this.defaultHeaders = const {},
+    this.baseUrl,
   });
 }
 

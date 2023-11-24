@@ -26,13 +26,13 @@ abstract class ServerEvent {
   static ServerEvent? fromJson(JSONObject? json) {
     if (json == null) return null;
 
-    final type = json["type"] as String;
+    final type = json["type"];
 
     final event = switch (type) {
       "update" => UpdateEvent.fromJson(json),
       // "navigate" => NavigateEvent.fromJson(json),
       // "openUrl" => OpenUrlEvent.fromJson(json),
-      String() => null,
+      String() || Object() || null => null,
     };
 
     if (event != null) {
@@ -58,6 +58,7 @@ final class UpdateEvent extends ServerEvent {
   }
 }
 
+//<editor-fold desc="unimplemented">
 // final class NavigateEvent extends ServerEvent {
 //   @override
 //   ServerEventType type = ServerEventType.navigate;
@@ -95,3 +96,4 @@ final class UpdateEvent extends ServerEvent {
 //     );
 //   }
 // }
+//</editor-fold>

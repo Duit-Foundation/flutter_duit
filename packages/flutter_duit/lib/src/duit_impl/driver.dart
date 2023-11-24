@@ -62,7 +62,10 @@ final class DUITDriver implements UIDriver {
     switch (type) {
       case TransportType.http:
         {
-          return HttpTransport(source);
+          return HttpTransport(
+            source,
+            options: transportOptions as HttpTransportOptions,
+          );
         }
       case TransportType.grpc:
       case TransportType.ws:
@@ -71,12 +74,15 @@ final class DUITDriver implements UIDriver {
         }
       default:
         {
-          return WSTransport(source);
+          return HttpTransport(
+            source,
+            options: transportOptions as HttpTransportOptions,
+          );
         }
     }
   }
 
-  FutureOr<void> _resolveEvent(JSONObject? json) async {
+  FutureOr<void> _resolveEventFromJson(JSONObject? json) async {
     final event = ServerEvent.fromJson(json);
 
     if (event != null) {
@@ -91,6 +97,17 @@ final class DUITDriver implements UIDriver {
     }
   }
 
+  FutureOr<void> _resolveEvent(ServerEvent event) async {
+    switch (event.type) {
+      case ServerEventType.update:
+        final updEvent = event as UpdateEvent;
+        updEvent.updates.forEach((key, value) {
+          updateAttributes(key, value);
+        });
+        break;
+    }
+  }
+
   @override
   Future<DUITAbstractTree?> init() async {
     transport = _getTransport(transportOptions.type);
@@ -99,7 +116,7 @@ final class DUITDriver implements UIDriver {
 
     if (transport is Streamer) {
       final streamer = transport as Streamer;
-      streamer.eventStream.listen(_resolveEvent);
+      streamer.eventStream.listen(_resolveEventFromJson);
     }
 
     return _layout = await DUITAbstractTree(json: json!, driver: this).parse();
@@ -135,8 +152,11 @@ final class DUITDriver implements UIDriver {
       headers = opts.defaultHeaders;
     }
 
-    await transport?.execute(action, payload, headers);
-    //TODO: event handling
+    final event = await transport?.execute(action, payload, headers);
+    //case with http request
+    if (event != null) {
+      _resolveEvent(event);
+    }
   }
 
   @override

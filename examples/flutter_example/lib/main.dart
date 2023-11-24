@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 @override
   Widget build(BuildContext context) {
-    final driver = DUITDriver("ws://localhost:8999", transportOptions: WebSocketTransportOptions());
+    final driver = DUITDriver("/layout", transportOptions: HttpTransportOptions(defaultHeaders: {"Content-Type": "application/json"}, baseUrl: "http://localhost:8999"));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: [
               UIHostContainer(
+                context: context,
                 driver: driver,
                 placeholder: const CircularProgressIndicator(),
               ),

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:flutter_duit/src/duit_impl/index.dart';
+import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/duit_impl/event.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 import 'package:http/http.dart' as http;
@@ -10,16 +10,31 @@ import 'transport.dart';
 
 final class HttpTransport extends Transport {
   final client = http.Client();
+  final HttpTransportOptions options;
 
-  HttpTransport(super.url);
+  HttpTransport(
+    super.url, {
+    required this.options,
+  });
+
+  String _prepareUrl(String url) {
+    String urlString = "";
+    if (options.baseUrl != null) {
+      urlString += options.baseUrl!;
+    }
+
+    return urlString += url;
+  }
 
   @override
   Future<Map<String, dynamic>?> connect() async {
     assert(url.isNotEmpty, "Invalid url: $url}");
 
-    final res = await client.get(Uri.parse(url));
-    final result =
-        jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
+    final urlString = _prepareUrl(url);
+
+    final res =
+        await client.get(Uri.parse(urlString), headers: options.defaultHeaders);
+    final result = jsonDecode(res.body) as Map<String, dynamic>;
 
     return result;
   }
@@ -35,20 +50,21 @@ final class HttpTransport extends Transport {
       case "GET":
         {
           Uri uri;
+          var urlString = _prepareUrl(action.event);
 
           if (payload.isNotEmpty) {
-            var urlString = "${action.event}?";
+            urlString += "?";
             payload.forEach((key, value) {
               urlString += "$key=$value";
             });
             uri = Uri.parse(urlString);
           } else {
-            uri = Uri.parse(action.event);
+            uri = Uri.parse(urlString);
           }
 
           try {
-            final json = await client.get(uri);
-            final data = jsonDecode(json.body) as JSONObject;
+            final res = await client.get(uri);
+            final data = jsonDecode(res.body) as Map<String, dynamic>;
             return ServerEvent.fromJson(data);
           } catch (e) {
             rethrow;
@@ -56,12 +72,13 @@ final class HttpTransport extends Transport {
         }
       case "POST":
         {
+          final urlString = _prepareUrl(action.event);
           try {
-            final json = await client.post(
-              Uri.parse(action.event),
+            final res = await client.post(
+              Uri.parse(urlString),
               body: payload,
             );
-            final data = jsonDecode(json.body) as JSONObject;
+            final data = jsonDecode(res.body) as Map<String, dynamic>;
             return ServerEvent.fromJson(data);
           } catch (e) {
             rethrow;
@@ -69,12 +86,13 @@ final class HttpTransport extends Transport {
         }
       case "DELETE":
         {
+          final urlString = _prepareUrl(action.event);
           try {
-            final json = await client.delete(
-              Uri.parse(action.event),
+            final res = await client.delete(
+              Uri.parse(urlString),
               body: payload,
             );
-            final data = jsonDecode(json.body) as JSONObject;
+            final data = jsonDecode(res.body) as Map<String, dynamic>;
             return ServerEvent.fromJson(data);
           } catch (e) {
             rethrow;
@@ -82,9 +100,10 @@ final class HttpTransport extends Transport {
         }
       case "PATCH":
         {
+          final urlString = _prepareUrl(action.event);
           try {
             final json = await client.patch(
-              Uri.parse(action.event),
+              Uri.parse(urlString),
               body: payload,
             );
             final data = jsonDecode(json.body) as JSONObject;

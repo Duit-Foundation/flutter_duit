@@ -31,7 +31,7 @@ export class HttpAction extends BaseAction {
 
     constructor(event: string, meta: HttpActionMetainfo, depndsOn: ActionDependency[] = []) {
         super(event, depndsOn);
-        this.meta = meta;
+        this.meta = meta ?? {};
     }
 }
 

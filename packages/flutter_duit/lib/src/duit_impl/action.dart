@@ -8,7 +8,7 @@ final class HttpActionMetainfo {
   static HttpActionMetainfo? fromJson(JSONObject? json) {
     if (json == null) return null;
 
-    return HttpActionMetainfo(method: json["method"]);
+    return HttpActionMetainfo(method: json["method"] ?? "GET");
   }
 }
 
