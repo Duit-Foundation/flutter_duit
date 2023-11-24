@@ -18,17 +18,15 @@ mixin WidgetFabric {
             arr.add(children);
           }
 
-          if (it.controlled) {
-            return DUITColumn(
-              attributes: it.attributes,
-              children: arr,
-            );
-          } else {
-            return DUITControlledColumn(
-              controller: it.viewController,
-              children: arr,
-            );
-          }
+          return it.controlled
+              ? DUITControlledColumn(
+                  controller: it.viewController,
+                  children: arr,
+                )
+              : DUITColumn(
+                  attributes: it.attributes,
+                  children: arr,
+                );
         }
       case DUITElementType.row:
         {
@@ -40,17 +38,15 @@ mixin WidgetFabric {
             arr.add(children);
           }
 
-          if (it.controlled) {
-            return DUITRow(
-              attributes: it.attributes,
-              children: arr,
-            );
-          } else {
-            return DUITControlledRow(
-              controller: it.viewController,
-              children: arr,
-            );
-          }
+          return it.controlled
+              ? DUITControlledRow(
+                  controller: it.viewController,
+                  children: arr,
+                )
+              : DUITRow(
+                  attributes: it.attributes,
+                  children: arr,
+                );
         }
       case DUITElementType.coloredBox:
         {
@@ -58,17 +54,15 @@ mixin WidgetFabric {
 
           final child = getWidgetFromElement(it.child);
 
-          if (it.controlled) {
-            return DUITColoredBox(
-              attributes: it.attributes,
-              child: child,
-            );
-          } else {
-            return DUITControlledColoredBox(
-              controller: it.viewController,
-              child: child,
-            );
-          }
+          return it.controlled
+              ? DUITControlledColoredBox(
+                  controller: it.viewController,
+                  child: child,
+                )
+              : DUITColoredBox(
+                  attributes: it.attributes,
+                  child: child,
+                );
         }
       case DUITElementType.center:
         {
@@ -76,17 +70,15 @@ mixin WidgetFabric {
 
           final child = getWidgetFromElement(it.child);
 
-          if (it.controlled) {
-            return DUITCenter(
-              attributes: it.attributes,
-              child: child,
-            );
-          } else {
-            return DUITControlledCenter(
-              controller: it.viewController,
-              child: child,
-            );
-          }
+          return it.controlled
+              ? DUITControlledCenter(
+                  controller: it.viewController,
+                  child: child,
+                )
+              : DUITCenter(
+                  attributes: it.attributes,
+                  child: child,
+                );
         }
       case DUITElementType.sizedBox:
         {
@@ -94,27 +86,25 @@ mixin WidgetFabric {
 
           final child = getWidgetFromElement(it.child);
 
-          if (it.controlled) {
-            return DUITSizedBox(
-              attributes: it.attributes,
-              child: child,
-            );
-          } else {
-            return DUITControlledSizedBox(
-              controller: it.viewController,
-              child: child,
-            );
-          }
+          return it.controlled
+              ? DUITControlledSizedBox(
+                  controller: it.viewController,
+                  child: child,
+                )
+              : DUITSizedBox(
+                  attributes: it.attributes,
+                  child: child,
+                );
         }
       case DUITElementType.text:
         {
           final it = model as TextUIElement;
 
-          return model.controlled
-              ? DUITText(attributes: it.attributes)
-              : DUITControlledText(
+          return it.controlled
+              ? DUITControlledText(
                   controller: it.viewController,
-                );
+                )
+              : DUITText(attributes: it.attributes);
         }
       case DUITElementType.textField:
         {

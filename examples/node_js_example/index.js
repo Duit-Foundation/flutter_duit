@@ -1,7 +1,7 @@
 const http = require("http");
 const express = require("express");
 const WebSocket = require("ws");
-const { DuitView, DuitElementType, Widgets, ColoredBoxUiElement } = require("duit_js");
+const { DuitView, DuitElementType, Widgets, ColoredBoxUiElement, UpdateEvent } = require("duit_js");
 const { WebSocketAction } = require("duit_js");
 const { SizedBoxUiElement } = require("duit_js");
 const { TextUiElement } = require("duit_js");
@@ -18,9 +18,9 @@ app.get("/layout", function (req, res) {
    res.status(200).send(layout);
 });
 
-app.get("/test1", function (req, res) {
+app.use("/test1", function (req, res) {
    console.log("ACTION OK")
-   res.status(200).send({"ok": "molodec"});
+   res.status(200).send(JSON.stringify(new UpdateEvent({ "mainRow": {mainAxisAlignment: "spaceEvenly"} })));
 });
 
 const server = http.createServer(app);
@@ -32,7 +32,7 @@ function createDynamicDuitViewHttp() {
    const builder = DuitView.builder();
 
    //create child elements tree
-   const sizedBoxWithCentredText = new RowUiElement({ mainAxisAlignment: "spaceEvenly" }).addChild(new SizedBoxUiElement({ width: 100, height: 400 }).addChild(new ColoredBoxUiElement({ color: "#DCDCDC" }).addChild(new CenterUiElement({}).addChild(new TextUiElement({ data: "1123" }))))).addChild(new SizedBoxUiElement({ width: 120, height: 300 }).addChild(new ColoredBoxUiElement({ color: "#9e2f2f" }).addChild(new CenterUiElement({}).addChild(new ElevatedButtonUiElement({}, "button1", new HttpAction("/test1", {})).addChild(new TextUiElement({ data: "button" }))))))
+   const sizedBoxWithCentredText = new RowUiElement({ mainAxisAlignment: "end" }, "mainRow", undefined, true).addChild(new SizedBoxUiElement({ width: 100, height: 400 }).addChild(new ColoredBoxUiElement({ color: "#DCDCDC" }).addChild(new CenterUiElement({}).addChild(new TextUiElement({ data: "1123" }))))).addChild(new SizedBoxUiElement({ width: 120, height: 300 }).addChild(new ColoredBoxUiElement({ color: "#9e2f2f" }).addChild(new CenterUiElement({}).addChild(new ElevatedButtonUiElement({}, "button1", new HttpAction("/test1", {})).addChild(new TextUiElement({ data: "button" }))))))
 
    //create view root and assing child/children to him
    builder.createRootOfExactType(DuitElementType.column, {}).addChild(sizedBoxWithCentredText);

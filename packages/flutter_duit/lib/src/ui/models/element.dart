@@ -175,7 +175,7 @@ sealed class DUITElement<T> with WidgetFabric {
             attributes: attributes,
             viewController: _createAndAttachController(
               id,
-              false,
+              true,
               attributes,
               serverAction,
               driver,
@@ -192,14 +192,14 @@ sealed class DUITElement<T> with WidgetFabric {
             id: id,
             viewController: _createAndAttachController(
               id,
-              false,
+              true,
               attributes,
               serverAction,
               driver,
               type,
             ),
             attributes: attributes,
-            controlled: false,
+            controlled: true,
           );
         }
       case DUITElementType.empty:
@@ -226,8 +226,8 @@ sealed class DUITElement<T> with WidgetFabric {
       UIDriver driver,
       DUITElementType type) {
     final controller = switch (controlled) {
-      true => null,
-      false => ViewController<T>(
+      false => null,
+      true => ViewController<T>(
           id: id,
           driver: driver,
           action: action,
