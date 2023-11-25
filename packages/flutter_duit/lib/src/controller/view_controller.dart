@@ -24,12 +24,16 @@ final class ViewController<T>
   @override
   DUITElementType type;
 
+  @override
+  String? tag;
+
   ViewController({
     required this.id,
     required this.driver,
     required this.type,
     this.action,
     this.attributes,
+    this.tag,
   });
 
   //</editor-fold>

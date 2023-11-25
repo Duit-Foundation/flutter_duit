@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_duit/src/duit_impl/registry.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 
@@ -126,6 +127,15 @@ mixin WidgetFabric {
         }
       case DUITElementType.empty:
         {
+          return const DUITEmptyView();
+        }
+      case DUITElementType.custom:
+        {
+          if (model.tag != null) {
+            final renderer = DUITRegistry.getRenderer(model.tag!);
+            return renderer?.call(model) ?? const DUITEmptyView();
+          }
+
           return const DUITEmptyView();
         }
       default:

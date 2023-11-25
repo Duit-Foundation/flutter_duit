@@ -25,6 +25,9 @@ enum DUITElementType {
 
   ///Keys: Empty, 0
   empty,
+
+  ///Keys: Custom, 10
+  custom,
 }
 
 DUITElementType convert(dynamic type) {
@@ -49,7 +52,11 @@ DUITElementType convert(dynamic type) {
       case "Center":
         return DUITElementType.center;
       case "Empty":
-        return DUITElementType.column;
+        return DUITElementType.empty;
+      case "Custom":
+        return DUITElementType.custom;
+      default:
+        return DUITElementType.empty;
     }
   }
 
@@ -73,6 +80,8 @@ DUITElementType convert(dynamic type) {
         return DUITElementType.center;
       case 0:
         return DUITElementType.empty;
+      default:
+        return DUITElementType.custom;
     }
   }
 

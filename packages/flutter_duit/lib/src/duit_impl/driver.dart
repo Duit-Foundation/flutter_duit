@@ -1,15 +1,12 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
-import "package:flutter_duit/src/attributes/index.dart";
-import "package:flutter_duit/src/controller/index.dart";
+import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/transport/index.dart";
-import "package:flutter_duit/src/transport/options.dart";
 import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
-import "index.dart";
 import "event.dart";
 
 abstract interface class UIDriver {
@@ -169,8 +166,11 @@ final class DUITDriver implements UIDriver {
   void updateAttributes(String id, JSONObject json) {
     final controller = _viewControllers[id];
     if (controller != null) {
-      final attributes =
-          ViewAttributeWrapper.createAttributes(controller.type, json);
+      final attributes = ViewAttributeWrapper.createAttributes(
+        controller.type,
+        json,
+        controller.tag,
+      );
       controller.updateState(attributes);
     }
   }

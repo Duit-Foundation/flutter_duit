@@ -8,6 +8,7 @@ enum DuitElementType {
     textField = "TextField",
     elevatedButton = "ElevatedButton",
     empty = "Empty",
+    custom = "Custom",
   }
 
 export default DuitElementType;
