@@ -4,7 +4,20 @@ import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 sealed class AttributeParser {
-  static parse(DUITElementType type, JSONObject? json) {
+  static _parseCustomWidgetAttributes(JSONObject? json, String? tag) {
+    assert(tag != null, "Custom widget must have specified tag");
+
+    if (tag is String) {
+      final attributesMapper = DUITRegistry.getAttributesMapper(tag);
+      if (attributesMapper != null) {
+        return attributesMapper(tag, json);
+      } else {
+        return EmptyAttributes();
+      }
+    }
+  }
+
+  static parse(DUITElementType type, JSONObject? json, String? tag) {
     final payload = switch (type) {
       DUITElementType.text => TextAttributes.fromJson(json ?? {}),
       DUITElementType.row => RowAttributes.fromJson(json ?? {}),
@@ -16,18 +29,7 @@ sealed class AttributeParser {
       DUITElementType.elevatedButton =>
         ElevatedButtonAttributes.fromJson(json ?? {}),
       DUITElementType.empty => EmptyAttributes(),
-      DUITElementType.custom => () {
-          final customType = json?["type"];
-
-          if (customType is String) {
-            final mapper = DuitRegistry.getAttributesMapper(type as String);
-            if (mapper != null) {
-              return mapper(customType, json?["data"]);
-            } else {
-              return EmptyAttributes();
-            }
-          }
-        },
+      DUITElementType.custom => _parseCustomWidgetAttributes(json, tag),
     };
 
     return ViewAttributeWrapper(payload: payload);

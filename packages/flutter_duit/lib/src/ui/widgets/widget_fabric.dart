@@ -132,7 +132,7 @@ mixin WidgetFabric {
       case DUITElementType.custom:
         {
           if (model.tag != null) {
-            final renderer = DuitRegistry.getRenderer(model.tag!);
+            final renderer = DUITRegistry.getRenderer(model.tag!);
             return renderer?.call(model) ?? const DUITEmptyView();
           }
 

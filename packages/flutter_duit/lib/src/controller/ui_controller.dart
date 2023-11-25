@@ -7,15 +7,20 @@ import 'package:flutter_duit/src/ui/models/el_type.dart';
 abstract interface class UIElementController<T> {
   ///Typed attributes object (view properties)
   abstract ViewAttributeWrapper<T>? attributes;
+
   ///Id for current controller, same with [DUITElement] id
   abstract String id;
+
   ///Element type
   abstract DUITElementType type;
+
   ///Related action
   abstract ServerAction? action;
+
   ///Reference to the [DUITDriver] instance
   abstract UIDriver driver;
 
+  abstract String? tag;
 
   ///Perform the action
   void performRelatedAction();

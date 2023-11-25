@@ -1,19 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-typedef ModelMapper = DUITElement Function(JSONObject json, UIDriver driver);
-typedef AttributesMapper = ViewAttributeWrapper Function(
-    String type, JSONObject? json);
+typedef ModelMapper = DUITElement Function(
+  String id,
+  bool controlled,
+  ViewAttributeWrapper attributes,
+  UIElementController? controller,
+);
 typedef Renderer = Widget Function(DUITElement model);
+typedef AttributesMapper = DUITAttributes Function(
+    String type, JSONObject? json);
 
-final class DuitRegistry {
+sealed class DUITRegistry {
   static final Map<String, (ModelMapper, Renderer, AttributesMapper)>
       _registry = {};
 
-  static register(
+  static void register(
     String key,
     ModelMapper modelMapper,
     Renderer renderer,

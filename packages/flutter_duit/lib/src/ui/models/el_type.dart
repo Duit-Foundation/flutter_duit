@@ -53,8 +53,10 @@ DUITElementType convert(dynamic type) {
         return DUITElementType.center;
       case "Empty":
         return DUITElementType.empty;
-      default:
+      case "Custom":
         return DUITElementType.custom;
+      default:
+        return DUITElementType.empty;
     }
   }
 

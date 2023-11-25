@@ -2,12 +2,8 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
-import "package:flutter_duit/src/controller/index.dart";
-import "package:flutter_duit/src/duit_impl/registry.dart";
 import "package:flutter_duit/src/transport/index.dart";
 import "package:flutter_duit/src/ui/models/attended_model.dart";
-import "package:flutter_duit/src/ui/models/element.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
@@ -27,54 +23,6 @@ abstract interface class UIDriver {
   Future<void> execute(ServerAction action);
 
   void dispose();
-}
-
-final class Custom1<T> extends DUITElement<T> {
-  @override
-  ViewAttributeWrapper<T>? attributes;
-
-  @override
-  UIElementController<T>? viewController;
-
-  Custom1({
-    required super.id,
-    required this.attributes,
-    required this.viewController,
-  }) : super(
-          type: DUITElementType.custom,
-          tag: "Custom1",
-        );
-}
-
-ViewAttributeWrapper mapperCustom1(String type, JSONObject? json) {
-  return ViewAttributeWrapper(payload: {});
-}
-
-DUITElement modelMapperCustom1(JSONObject json, UIDriver driver) {
-  final id = json["id"];
-  final type = json["type"];
-  final controlled = json["controlled"];
-  final attributes = mapperCustom1(type, json["attributes"]);
-  final action = ServerAction.fromJSON(json["action"]);
-  final controller = DUITElement.createAndAttachController(
-    id,
-    controlled,
-    attributes,
-    action,
-    driver,
-    DUITElementType.custom,
-  );
-  return Custom1(
-      id: json["id"], attributes: attributes, viewController: controller);
-}
-
-void test() {
-  DuitRegistry.register(
-    "Custom1",
-    modelMapperCustom1,
-    (_) => const Text("МОЙ ЖЁППУ"),
-    mapperCustom1,
-  );
 }
 
 final class DUITDriver implements UIDriver {
@@ -218,8 +166,11 @@ final class DUITDriver implements UIDriver {
   void updateAttributes(String id, JSONObject json) {
     final controller = _viewControllers[id];
     if (controller != null) {
-      final attributes =
-          ViewAttributeWrapper.createAttributes(controller.type, json);
+      final attributes = ViewAttributeWrapper.createAttributes(
+        controller.type,
+        json,
+        controller.tag,
+      );
       controller.updateState(attributes);
     }
   }

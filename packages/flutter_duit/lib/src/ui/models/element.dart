@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/duit_impl/index.dart';
-import 'package:flutter_duit/src/duit_impl/registry.dart';
 import 'package:flutter_duit/src/ui/index.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
@@ -32,7 +31,7 @@ abstract base class DUITElement<T> with WidgetFabric {
     final bool controlled = json["controlled"] ?? false;
     final tag = json["tag"];
     final attributes =
-        ViewAttributeWrapper.createAttributes<T>(type, json["attributes"]);
+        ViewAttributeWrapper.createAttributes<T>(type, json["attributes"], tag);
     final ServerAction? serverAction =
         json["action"] != null ? ServerAction.fromJSON(json["action"]) : null;
     assert(id != null, "Id cannot be null");
@@ -61,6 +60,7 @@ abstract base class DUITElement<T> with WidgetFabric {
               serverAction,
               driver,
               type,
+              tag,
             ),
             controlled: controlled,
           );
@@ -89,6 +89,7 @@ abstract base class DUITElement<T> with WidgetFabric {
               serverAction,
               driver,
               type,
+              tag,
             ),
           );
         }
@@ -108,6 +109,7 @@ abstract base class DUITElement<T> with WidgetFabric {
               serverAction,
               driver,
               type,
+              tag,
             ),
             controlled: controlled,
           );
@@ -128,6 +130,7 @@ abstract base class DUITElement<T> with WidgetFabric {
               serverAction,
               driver,
               type,
+              tag,
             ),
             controlled: controlled,
           );
@@ -148,6 +151,7 @@ abstract base class DUITElement<T> with WidgetFabric {
               serverAction,
               driver,
               type,
+              tag,
             ),
             controlled: controlled,
           );
@@ -164,6 +168,7 @@ abstract base class DUITElement<T> with WidgetFabric {
               serverAction,
               driver,
               type,
+              tag,
             ),
             attributes: attributes,
             controlled: controlled,
@@ -184,6 +189,7 @@ abstract base class DUITElement<T> with WidgetFabric {
               serverAction,
               driver,
               type,
+              tag,
             ),
             child: child,
             controlled: true,
@@ -201,6 +207,7 @@ abstract base class DUITElement<T> with WidgetFabric {
               serverAction,
               driver,
               type,
+              tag,
             ),
             attributes: attributes,
             controlled: true,
@@ -213,9 +220,23 @@ abstract base class DUITElement<T> with WidgetFabric {
       case DUITElementType.custom:
         {
           if (tag != null) {
-            final mapper = DuitRegistry.getModelMapper(tag);
+            final mapper = DUITRegistry.getModelMapper(tag);
             if (mapper != null) {
-              return mapper.call(json["data"], driver) as DUITElement<T>;
+              final controller = createAndAttachController(
+                id,
+                true,
+                attributes,
+                serverAction,
+                driver,
+                type,
+                tag,
+              );
+              return mapper.call(
+                id,
+                controlled,
+                attributes,
+                controller,
+              ) as DUITElement<T>;
             } else {
               return EmptyUIElement();
             }
@@ -240,7 +261,8 @@ abstract base class DUITElement<T> with WidgetFabric {
       ViewAttributeWrapper<T>? attributes,
       ServerAction? action,
       UIDriver driver,
-      DUITElementType type) {
+      DUITElementType type,
+      String? tag) {
     final controller = switch (controlled) {
       false => null,
       true => ViewController<T>(
@@ -249,6 +271,7 @@ abstract base class DUITElement<T> with WidgetFabric {
           action: action,
           attributes: attributes,
           type: type,
+          tag: tag,
         )
     };
 
@@ -279,17 +302,17 @@ final class CustomDUITElement<T> extends DUITElement<T> {
   }) : super(type: DUITElementType.custom);
 }
 
-final class ElevatedButtonUIElement<ElevatedButtonAttributes>
-    extends DUITElement<ElevatedButtonAttributes> implements SingleChildLayout {
+final class ElevatedButtonUIElement<T>
+    extends DUITElement<T> implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   DUITElement child;
 
   @override
-  ViewAttributeWrapper<ElevatedButtonAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<ElevatedButtonAttributes>? viewController;
+  UIElementController<T>? viewController;
 
   ElevatedButtonUIElement({
     required super.type,
@@ -303,17 +326,17 @@ final class ElevatedButtonUIElement<ElevatedButtonAttributes>
 //</editor-fold>
 }
 
-final class CenterUIElement<CenterAttributes>
-    extends DUITElement<CenterAttributes> implements SingleChildLayout {
+final class CenterUIElement<T>
+    extends DUITElement<T> implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   DUITElement child;
 
   @override
-  ViewAttributeWrapper<CenterAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<CenterAttributes>? viewController;
+  UIElementController<T>? viewController;
 
   CenterUIElement({
     required super.type,
@@ -327,17 +350,17 @@ final class CenterUIElement<CenterAttributes>
 //</editor-fold>
 }
 
-final class ColoredBoxUIElement<ColoredBoxAttributes>
-    extends DUITElement<ColoredBoxAttributes> implements SingleChildLayout {
+final class ColoredBoxUIElement<T>
+    extends DUITElement<T> implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   DUITElement child;
 
   @override
-  ViewAttributeWrapper<ColoredBoxAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<ColoredBoxAttributes>? viewController;
+  UIElementController<T>? viewController;
 
   ColoredBoxUIElement({
     required super.type,
@@ -350,17 +373,17 @@ final class ColoredBoxUIElement<ColoredBoxAttributes>
 //</editor-fold>
 }
 
-final class ColumnUIElement<ColumnAttributes>
-    extends DUITElement<ColumnAttributes> implements MultiChildLayout {
+final class ColumnUIElement<T>
+    extends DUITElement<T> implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   List<DUITElement> children = const [];
 
   @override
-  ViewAttributeWrapper<ColumnAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<ColumnAttributes>? viewController;
+  UIElementController<T>? viewController;
 
   ColumnUIElement({
     required super.type,

@@ -1,7 +1,14 @@
+import 'package:example/src/registry_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
 void main() {
+  DUITRegistry.register(
+    "ExampleCustomWidget",
+    modelMapperExample,
+    exampleRenerer,
+    exapleAttributeMapper,
+  );
   runApp(const MyApp());
 }
 
@@ -29,10 +36,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-@override
+  @override
   Widget build(BuildContext context) {
-    final driver = DUITDriver("/layout", transportOptions: HttpTransportOptions(defaultHeaders: {"Content-Type": "application/json"}, baseUrl: "http://localhost:8999"));
+    final driver = DUITDriver("/layout",
+        transportOptions: HttpTransportOptions(
+          defaultHeaders: {"Content-Type": "application/json"},
+          baseUrl: "http://localhost:8999",
+        ));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
