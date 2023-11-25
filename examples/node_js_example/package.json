@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm ci && node index.js"
+    "dev": "nodemon ./index.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,5 +12,8 @@
     "duit_js": "file:../../packages/duit_js",
     "express": "^4.18.2",
     "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

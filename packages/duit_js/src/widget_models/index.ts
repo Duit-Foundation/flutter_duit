@@ -6,3 +6,4 @@ export { SizedBoxUiElement } from "./sized_box";
 export { CenterUiElement } from "./center";
 export { ElevatedButtonUiElement } from "./elevated_button";
 export { TextFieldUiElement } from "./text_field_attributes";
+export * from "./custom";
