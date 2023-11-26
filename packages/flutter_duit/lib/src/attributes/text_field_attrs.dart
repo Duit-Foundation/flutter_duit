@@ -21,11 +21,6 @@ final class TextFieldAttributes extends AttendedModel<String>
       enabled,
       autofocus;
   int? maxLines, minLines, maxLength;
-  InputBorder? border,
-      errorBorder,
-      enabledBorder,
-      focusedBorder,
-      focusedErrorBorder;
 
   TextFieldAttributes({
     this.decoration,
@@ -46,11 +41,6 @@ final class TextFieldAttributes extends AttendedModel<String>
     this.minLines,
     this.readOnly,
     this.showCursor,
-    this.border,
-    this.errorBorder,
-    this.focusedBorder,
-    this.focusedErrorBorder,
-    this.enabledBorder,
   }) : super(value: "");
 
   factory TextFieldAttributes.fromJson(JSONObject json) {
@@ -60,12 +50,6 @@ final class TextFieldAttributes extends AttendedModel<String>
       keyboardType: ParamsMapper.convertToTextInputType(json["keyboardType"]),
       textAlign: ParamsMapper.convertToTextAlign(json['textAlign']),
       textDirection: ParamsMapper.convertToTextDirection(json['textDirection']),
-      border: ParamsMapper.convertToInputBorder(json['border']),
-      enabledBorder: ParamsMapper.convertToInputBorder(json['enabledBorder']),
-      errorBorder: ParamsMapper.convertToInputBorder(json['errorBorder']),
-      focusedErrorBorder:
-          ParamsMapper.convertToInputBorder(json['focusedErrorBorder']),
-      focusedBorder: ParamsMapper.convertToInputBorder(json['focusedBorder']),
       obscuringCharacter: json['obscuringCharacter'],
       obscureText: json['obscureText'],
       autocorrect: json['autocorrect'],

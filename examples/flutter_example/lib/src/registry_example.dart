@@ -33,12 +33,13 @@ class ExampleCustomWidgetAttributes
   }
 }
 
-DUITAttributes exapleAttributeMapper(String type, Map<String, dynamic>? json) {
+DUITAttributes exampleAttributeMapper(String type, Map<String, dynamic>? json) {
   return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random");
 }
 
 Widget exampleRenerer(DUITElement model) {
-  return Text(model.id);
+  final data = model.attributes?.payload as ExampleCustomWidgetAttributes?;
+  return Text(data?.random ?? "no random");
 }
 
 DUITElement modelMapperExample(

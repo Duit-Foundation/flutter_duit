@@ -63,7 +63,10 @@ final class HttpTransport extends Transport {
           }
 
           try {
-            final res = await client.get(uri);
+            final res = await client.get(uri, headers: {
+              ...options.defaultHeaders,
+              ...headers ?? {},
+            });
             final data = jsonDecode(res.body) as Map<String, dynamic>;
             return ServerEvent.fromJson(data);
           } catch (e) {
@@ -76,7 +79,11 @@ final class HttpTransport extends Transport {
           try {
             final res = await client.post(
               Uri.parse(urlString),
-              body: payload,
+              body: jsonEncode(payload),
+              headers: {
+                ...options.defaultHeaders,
+                ...headers ?? {},
+              },
             );
             final data = jsonDecode(res.body) as Map<String, dynamic>;
             return ServerEvent.fromJson(data);
@@ -90,7 +97,11 @@ final class HttpTransport extends Transport {
           try {
             final res = await client.delete(
               Uri.parse(urlString),
-              body: payload,
+              body: jsonEncode(payload),
+              headers: {
+                ...options.defaultHeaders,
+                ...headers ?? {},
+              },
             );
             final data = jsonDecode(res.body) as Map<String, dynamic>;
             return ServerEvent.fromJson(data);
@@ -104,7 +115,11 @@ final class HttpTransport extends Transport {
           try {
             final json = await client.patch(
               Uri.parse(urlString),
-              body: payload,
+              body: jsonEncode(payload),
+              headers: {
+                ...options.defaultHeaders,
+                ...headers ?? {},
+              },
             );
             final data = jsonDecode(json.body) as JSONObject;
             return ServerEvent.fromJson(data);

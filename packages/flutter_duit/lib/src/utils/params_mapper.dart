@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 class ParamsMapper {
+  //<editor-fold desc="Text">
   static TextAlign? convertToTextAlign(String? value) {
     if (value == null) return null;
 
@@ -70,11 +71,13 @@ class ParamsMapper {
   static TextStyle? convertToTextStyle(JSONObject? json) {
     if (json == null) return null;
 
+    final size = json["fontSize"] as num?;
+
     return TextStyle(
       color: ColorUtils.tryParseColor(json["color"]),
       fontFamily: json["fontFamily"],
       fontWeight: convertToFontWeight(json["fontWeight"]),
-      fontSize: json["fontSize"],
+      fontSize: size?.toDouble(),
       letterSpacing: json["letterSpacing"],
       wordSpacing: json["wordSpacing"],
       height: json["height"],
@@ -94,6 +97,9 @@ class ParamsMapper {
     return null;
   }
 
+  //</editor-fold>
+
+  //<editor-fold desc="Flex and container props">
   static MainAxisAlignment? convertToMainAxisAlignment(String? value) {
     if (value == null) return null;
 
@@ -164,6 +170,9 @@ class ParamsMapper {
     return null;
   }
 
+  //</editor-fold>
+
+  //<editor-fold desc="Basic">
   static VerticalDirection? convertToVerticalDirection(String? value) {
     if (value == null) return null;
 
@@ -177,6 +186,9 @@ class ParamsMapper {
     return null;
   }
 
+  //</editor-fold>
+
+  //<editor-fold desc="Decoration">
   static InputDecoration? convertToInputDecoration(JSONObject? json) {
     if (json == null) return null;
 
@@ -244,26 +256,56 @@ class ParamsMapper {
     return TextInputType.text;
   }
 
+  static convertToBorderStyle(JSONObject? json) {
+    if (json == null) return BorderStyle.solid;
+
+    switch (json["style"]) {
+      case "solid":
+        return BorderStyle.solid;
+      case "none":
+        return BorderStyle.none;
+    }
+  }
+
+  static BorderSide convertToBorderSide(JSONObject? json) {
+    if (json == null) return BorderSide.none;
+
+    final width = json["width"] as num?;
+
+    return BorderSide(
+      color: ColorUtils.tryParseColor(json["color"]),
+      width: width?.toDouble() ?? 1.0,
+      style: convertToBorderStyle(json["style"]),
+    );
+  }
+
   static InputBorder? convertToInputBorder(JSONObject? json) {
     if (json == null) return null;
 
     final type = json["type"] as String;
     final borderOptions = json["options"];
+    final borderSide = convertToBorderSide(borderOptions["borderSide"]);
 
     switch (type) {
       case "outline":
         return OutlineInputBorder(
+          borderSide: borderSide,
           gapPadding: borderOptions?["gapPadding"] ?? 4.0,
           borderRadius:
               BorderRadius.circular(borderOptions?["borderRadius"] ?? 4),
         );
       case "underline":
-        return const UnderlineInputBorder();
+        return UnderlineInputBorder(
+          borderSide: borderSide,
+        );
     }
 
     return null;
   }
 
+  //</editor-fold>
+
+  //<editor-fold desc="Shape and insets">
   static EdgeInsets convertToEdgeInsets(dynamic insets) {
     if (insets == null) return EdgeInsets.zero;
 
@@ -288,4 +330,5 @@ class ParamsMapper {
 
     return EdgeInsets.zero;
   }
+//</editor-fold>
 }

@@ -18,11 +18,13 @@ class DUITTextField extends StatefulWidget {
 class _DUITTextFieldState extends State<DUITTextField>
     with StateMapper<DUITTextField, TextFieldAttributes> {
   late final TextEditingController textEditingController;
+  late final FocusNode focusNode;
 
   @override
   void initState() {
     attachStateToController(widget.controller);
     textEditingController = TextEditingController();
+    focusNode = FocusNode();
     textEditingController.addListener(() {
       final text = textEditingController.text;
       final data =
@@ -35,12 +37,17 @@ class _DUITTextFieldState extends State<DUITTextField>
   @override
   void dispose() {
     textEditingController.dispose();
+    focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: focusNode,
+      onTapOutside: (_) {
+        focusNode.unfocus();
+      },
       controller: textEditingController,
       decoration: attributes?.decoration,
       style: attributes?.style,
