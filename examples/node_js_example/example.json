@@ -1,0 +1,112 @@
+{
+    "controlled": false,
+    "id": "d5e031ea-bd57-4e5f-82ce-1a804846e7d7",
+    "children": [
+        {
+            "controlled": true,
+            "id": "mainRow",
+            "children": [
+                {
+                    "controlled": false,
+                    "id": "bff2eaa2-1230-4205-8545-1c83f28fb22b",
+                    "type": "SizedBox",
+                    "attributes": {
+                        "width": 300,
+                        "height": 250
+                    },
+                    "child": {
+                        "controlled": false,
+                        "id": "23c838d8-6fa0-41b1-8a37-661fb20d3397",
+                        "type": "ColoredBox",
+                        "attributes": {
+                            "color": "#DCDCDC"
+                        },
+                        "child": {
+                            "controlled": false,
+                            "id": "4ef634c2-92a9-47a9-844f-c0933752f67a",
+                            "children": [
+                                {
+                                    "controlled": false,
+                                    "id": "9ecff2a3-3d9b-45f6-b4a8-85fa4af7c88d",
+                                    "children": [
+                                        {
+                                            "controlled": false,
+                                            "id": "839459a9-8004-4c7a-85d0-4428f2424c6e",
+                                            "type": "Text",
+                                            "attributes": {
+                                                "data": "Акция!",
+                                                "textAlign": "center",
+                                                "style": {
+                                                    "fontSize": 26,
+                                                    "color": "#FFFFFF"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "controlled": false,
+                                            "id": "f5c97ae0-951e-40b8-9f25-1e70bfaae361",
+                                            "type": "Text",
+                                            "attributes": {
+                                                "data": "ТОЛЬКО СЕГОДНЯ И БОЛЬШЕ НИКОГДА!!!!!!!!",
+                                                "textAlign": "center",
+                                                "style": {
+                                                    "fontSize": 21,
+                                                    "color": "#3d1717"
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "type": "Column",
+                                    "attributes": {}
+                                },
+                                {
+                                    "controlled": false,
+                                    "id": "1ad2112a-64a1-4f5d-92ca-c473f5a3ac16",
+                                    "children": [
+                                        {
+                                            "controlled": false,
+                                            "id": "c065cdf2-975d-4ce5-82ab-d65940e73903",
+                                            "type": "Text",
+                                            "attributes": {
+                                                "data": "КУПИ 3 ПИРОЖКА ПО ЦЕНЕ 4!"
+                                            }
+                                        },
+                                        {
+                                            "controlled": false,
+                                            "id": "f374be03-fce4-4877-84fe-b8041698f476",
+                                            "type": "Text",
+                                            "attributes": {
+                                                "data": "АКЦИЯ ЧТО НАДО!"
+                                            }
+                                        }
+                                    ],
+                                    "type": "Column",
+                                    "attributes": {}
+                                }
+                            ],
+                            "type": "Column",
+                            "attributes": {
+                                "mainAxisAlignment": "spaceEvenly"
+                            }
+                        }
+                    }
+                }
+            ],
+            "type": "Row",
+            "attributes": {
+                "mainAxisAlignment": "center"
+            }
+        },
+        {
+            "controlled": false,
+            "id": "4163df29-ec05-4c8d-8315-0815a8e56b23",
+            "type": "Custom",
+            "attributes": {
+                "random": "pidor"
+            },
+            "tag": "1"
+        }
+    ],
+    "type": "Column",
+    "attributes": {}
+}

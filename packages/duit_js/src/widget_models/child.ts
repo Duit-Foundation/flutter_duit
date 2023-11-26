@@ -31,6 +31,7 @@ export class SingleChildLayout extends DuitTreeElement {
     this.child = child;
     return this;
   }
+
 }
 
 export class MultiChildLayout extends DuitTreeElement {
@@ -42,6 +43,11 @@ export class MultiChildLayout extends DuitTreeElement {
 
   addChild<T extends DuitElement>(child: T): this {
     this.children?.push(child);
+    return this;
+  }
+
+  addChildren<T extends DuitElement>(children: T[] = []): this {
+    children.forEach((child) => this.children?.push(child));
     return this;
   }
 }

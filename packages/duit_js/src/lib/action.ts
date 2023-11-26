@@ -12,16 +12,16 @@ interface HttpActionMetainfo {
 }
 
 export class BaseAction {
-    depensOn: ActionDependency[];
+    dependsOn: ActionDependency[];
 
     /**
      * Url (for http) of event name (for ws)
      */
     event: string;
 
-    constructor(event: string, depndsOn: ActionDependency[] = []) {
+    constructor(event: string, dependsOn: ActionDependency[] = []) {
         this.event = event;
-        this.depensOn = depndsOn;
+        this.dependsOn = dependsOn;
     }
 }
 
@@ -29,14 +29,14 @@ export class BaseAction {
 export class HttpAction extends BaseAction {
     meta: HttpActionMetainfo;
 
-    constructor(event: string, meta: HttpActionMetainfo, depndsOn: ActionDependency[] = []) {
-        super(event, depndsOn);
+    constructor(event: string, meta: HttpActionMetainfo, dependsOn: ActionDependency[] = []) {
+        super(event, dependsOn);
         this.meta = meta ?? {};
     }
 }
 
 export class WebSocketAction extends BaseAction {
-    constructor(event: string, depndsOn: ActionDependency[] = []) {
-        super(event, depndsOn);
+    constructor(event: string, dependsOn: ActionDependency[] = []) {
+        super(event, dependsOn);
     }
 }

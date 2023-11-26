@@ -7,7 +7,7 @@ void main() {
     "ExampleCustomWidget",
     modelMapperExample,
     exampleRenerer,
-    exapleAttributeMapper,
+    exampleAttributeMapper,
   );
   runApp(const MyApp());
 }
