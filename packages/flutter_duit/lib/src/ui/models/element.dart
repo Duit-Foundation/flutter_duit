@@ -25,7 +25,9 @@ abstract base class DUITElement<T> with WidgetFabric {
     this.tag,
   });
 
-  factory DUITElement.fromJson(JSONObject json, UIDriver driver) {
+  factory DUITElement.fromJson(JSONObject? json, UIDriver driver) {
+    if (json == null) return EmptyUIElement(); 
+
     final type = convert(json["type"]);
     final id = json["id"];
     final bool controlled = json["controlled"] ?? false;
@@ -302,8 +304,8 @@ final class CustomDUITElement<T> extends DUITElement<T> {
   }) : super(type: DUITElementType.custom);
 }
 
-final class ElevatedButtonUIElement<T>
-    extends DUITElement<T> implements SingleChildLayout {
+final class ElevatedButtonUIElement<T> extends DUITElement<T>
+    implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   DUITElement child;
@@ -326,8 +328,8 @@ final class ElevatedButtonUIElement<T>
 //</editor-fold>
 }
 
-final class CenterUIElement<T>
-    extends DUITElement<T> implements SingleChildLayout {
+final class CenterUIElement<T> extends DUITElement<T>
+    implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   DUITElement child;
@@ -350,8 +352,8 @@ final class CenterUIElement<T>
 //</editor-fold>
 }
 
-final class ColoredBoxUIElement<T>
-    extends DUITElement<T> implements SingleChildLayout {
+final class ColoredBoxUIElement<T> extends DUITElement<T>
+    implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   DUITElement child;
@@ -373,8 +375,8 @@ final class ColoredBoxUIElement<T>
 //</editor-fold>
 }
 
-final class ColumnUIElement<T>
-    extends DUITElement<T> implements MultiChildLayout {
+final class ColumnUIElement<T> extends DUITElement<T>
+    implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   List<DUITElement> children = const [];

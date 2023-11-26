@@ -41,11 +41,7 @@ final class ViewController<T>
   //<editor-fold desc="Methods">
   @override
   void updateState(ViewAttributeWrapper<T> newAttrs) {
-    if (attributes != null) {
-      attributes?.payload = newAttrs.payload;
-    } else {
-      attributes = newAttrs;
-    }
+    attributes = newAttrs;
     notifyListeners();
   }
 

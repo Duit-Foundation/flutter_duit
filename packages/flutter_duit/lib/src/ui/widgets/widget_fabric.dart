@@ -4,7 +4,6 @@ import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 
 import 'index.dart';
-import 'text_field.dart';
 
 mixin WidgetFabric {
   Widget getWidgetFromElement(DUITElement model) {

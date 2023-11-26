@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
-import "package:flutter_duit/src/utils/index.dart";
+import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DUITControlledButton extends StatefulWidget {
   final UIElementController controller;
@@ -18,7 +18,7 @@ final class DUITControlledButton extends StatefulWidget {
 }
 
 class _DUITControlledButtonState extends State<DUITControlledButton>
-    with StateMapper<DUITControlledButton, ElevatedButtonAttributes> {
+    with ViewControllerChangeListener<DUITControlledButton, ElevatedButtonAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

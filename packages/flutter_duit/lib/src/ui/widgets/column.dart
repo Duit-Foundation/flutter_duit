@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
-import "package:flutter_duit/src/utils/index.dart";
+import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DUITColumn extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
@@ -43,7 +43,7 @@ class DUITControlledColumn extends StatefulWidget {
 }
 
 class _DUITControlledColumnState extends State<DUITControlledColumn>
-    with StateMapper<DUITControlledColumn, ColumnAttributes> {
+    with ViewControllerChangeListener<DUITControlledColumn, ColumnAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

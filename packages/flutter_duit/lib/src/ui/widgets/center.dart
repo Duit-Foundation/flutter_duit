@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
-import "package:flutter_duit/src/utils/index.dart";
+import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DUITCenter extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
@@ -39,7 +39,7 @@ class DUITControlledCenter extends StatefulWidget {
 }
 
 class _DUITControlledCenterState extends State<DUITControlledCenter>
-    with StateMapper<DUITControlledCenter, CenterAttributes> {
+    with ViewControllerChangeListener<DUITControlledCenter, CenterAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

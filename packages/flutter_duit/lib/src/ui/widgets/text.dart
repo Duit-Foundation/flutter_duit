@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
-import "package:flutter_duit/src/utils/index.dart";
+import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DUITText extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
@@ -41,7 +41,7 @@ final class DUITControlledText extends StatefulWidget {
 }
 
 class _DUITControlledTextState extends State<DUITControlledText>
-    with StateMapper<DUITControlledText, TextAttributes> {
+    with ViewControllerChangeListener<DUITControlledText, TextAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

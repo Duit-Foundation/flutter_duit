@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
-import "package:flutter_duit/src/utils/index.dart";
+import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DUITTextField extends StatefulWidget {
   final UIElementController? controller;
@@ -16,7 +16,7 @@ class DUITTextField extends StatefulWidget {
 }
 
 class _DUITTextFieldState extends State<DUITTextField>
-    with StateMapper<DUITTextField, TextFieldAttributes> {
+    with ViewControllerChangeListener<DUITTextField, TextFieldAttributes> {
   late final TextEditingController textEditingController;
   late final FocusNode focusNode;
 

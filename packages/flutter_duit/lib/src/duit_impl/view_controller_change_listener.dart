@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 
-mixin StateMapper<T extends StatefulWidget, AttrType extends DUITAttributes>
+mixin ViewControllerChangeListener<T extends StatefulWidget, AttrType extends DUITAttributes>
     on State<T> {
   AttrType? attributes;
   UIElementController? _controller;

@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
-import "package:flutter_duit/src/utils/state_mapper.dart";
+import 'package:flutter_duit/src/duit_impl/index.dart';
 
 class DUITRow extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
@@ -43,7 +43,7 @@ class DUITControlledRow extends StatefulWidget {
 }
 
 class _DUITControlledRowState extends State<DUITControlledRow>
-    with StateMapper<DUITControlledRow, RowAttributes> {
+    with ViewControllerChangeListener<DUITControlledRow, RowAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);
