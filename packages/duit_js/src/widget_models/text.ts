@@ -1,10 +1,10 @@
 import DuitElementType from "../lib/element_type";
-import { DuitTreeElement } from "./child";
+import { DuitLeafElement } from "./child";
 
 import type { TextAttributes } from "../attributes";
 import { BaseAction } from "../lib/action";
 
-export class TextUiElement extends DuitTreeElement {
+export class TextUiElement extends DuitLeafElement {
   type = DuitElementType.text as const;
   attributes: TextAttributes;
 

@@ -4,7 +4,7 @@ import { Nullable } from "../utils/nullable";
 import { ID } from "../utils/id";
 import { BaseAction } from "../lib/action";
 
-export class DuitTreeElement {
+export class DuitLeafElement {
   protected id: ID;
   protected controlled: boolean;
   protected action: Nullable<BaseAction>;
@@ -20,7 +20,7 @@ export class DuitTreeElement {
   }
 }
 
-export class SingleChildLayout extends DuitTreeElement {
+export class SingleChildLayout extends DuitLeafElement {
   protected child: Nullable<DuitElement>;
 
   constructor(id?: string, action?: BaseAction, controlled?: boolean) {
@@ -34,7 +34,7 @@ export class SingleChildLayout extends DuitTreeElement {
 
 }
 
-export class MultiChildLayout extends DuitTreeElement {
+export class MultiChildLayout extends DuitLeafElement {
   protected children: Nullable<DuitElement[]> = [];
 
   constructor(id?: string, action?: BaseAction, controlled?: boolean) {
@@ -46,6 +46,7 @@ export class MultiChildLayout extends DuitTreeElement {
     return this;
   }
 
+  addChildren<T extends DuitElement>(...children: T[]): this
   addChildren<T extends DuitElement>(children: T[] = []): this {
     children.forEach((child) => this.children?.push(child));
     return this;

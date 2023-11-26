@@ -1,8 +1,8 @@
 import { BaseAction } from "../lib/action";
 import DuitElementType from "../lib/element_type";
-import { DuitTreeElement, MultiChildLayout, SingleChildLayout } from "./child";
+import { DuitLeafElement, MultiChildLayout, SingleChildLayout } from "./child";
 
-export class CustomTreeElement<T> extends DuitTreeElement {
+export class CustomTreeElement<T> extends DuitLeafElement {
     type = DuitElementType.custom as const;
     attributes: T;
     tag: string;

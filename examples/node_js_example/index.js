@@ -56,7 +56,7 @@ function createDynamicDuitViewHttp() {
 
    //create child elements tree
    const sizedBoxWithCentredText = new RowUiElement({ mainAxisAlignment: "center" }, "mainRow", undefined, true)
-      .addChild(new SizedBoxUiElement({ width: 300, height: 450 })
+      .addChild(new SizedBoxUiElement({ width: 300 })
          .addChild(new ColoredBoxUiElement({ color: "#DCDCDC" })
             .addChild(new ColumnUiElement({mainAxisAlignment: "spaceEvenly"})
                .addChild(new ColumnUiElement({})
@@ -80,9 +80,13 @@ function createDynamicDuitViewHttp() {
                )
                .addChild(new ColumnUiElement({})
                .addChildren([
+                  new SizedBoxUiElement({height: 24,}),
                   new TextUiElement({data: "КУПИ 3 ПИРОЖКА ПО ЦЕНЕ 4!"}),
+                  new SizedBoxUiElement({height: 24}),
                   customWidget,
+                  new SizedBoxUiElement({height: 24,}),
                   new TextUiElement({data: "АКЦИЯ ЧТО НАДО!"}),
+                  new SizedBoxUiElement({height: 24,}),
                   new SizedBoxUiElement({width: 250, height: 45})
                      .addChild(new TextFieldUiElement({
                      maxLines: 1,
@@ -110,8 +114,10 @@ function createDynamicDuitViewHttp() {
                         },
                      }
                      }, "input")),
-                     new ElevatedButtonUiElement({}, undefined, new HttpAction("/action1", {method: "POST"}, [{id: "input", target: "input_value"}]))
-                        .addChild(new TextUiElement({data: "Подтвертить"}))
+                  new SizedBoxUiElement({height: 24,}),
+                  new ElevatedButtonUiElement({}, undefined, new HttpAction("/action1", {method: "POST"}, [{id: "input", target: "input_value"}]))
+                        .addChild(new TextUiElement({data: "Подтвертить"})),
+                  new SizedBoxUiElement({height: 24,}),
                ])
                )
             )
