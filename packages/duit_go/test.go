@@ -1,4 +1,4 @@
-package duitgo
+package duit_go
 
 import "fmt"
 
