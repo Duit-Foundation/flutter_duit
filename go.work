@@ -1,0 +1,5 @@
+go 1.20
+
+use ./examples/go_example
+use ./packages/duit_go
+
