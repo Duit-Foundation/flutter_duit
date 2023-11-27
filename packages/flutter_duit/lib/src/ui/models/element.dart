@@ -26,7 +26,7 @@ abstract base class DUITElement<T> with WidgetFabric {
   });
 
   factory DUITElement.fromJson(JSONObject? json, UIDriver driver) {
-    if (json == null) return EmptyUIElement(); 
+    if (json == null) return EmptyUIElement();
 
     final type = convert(json["type"]);
     final id = json["id"];
@@ -215,6 +215,34 @@ abstract base class DUITElement<T> with WidgetFabric {
             controlled: true,
           );
         }
+      case DUITElementType.stack:
+        {
+          List<DUITElement> arr = [];
+
+          if (json["children"] != null) {
+            json["children"].forEach((element) {
+              final child = DUITElement.fromJson(element, driver);
+              arr.add(child);
+            });
+          }
+
+          return StackUIElement(
+            type: type,
+            id: id,
+            viewController: createAndAttachController(
+              id,
+              true,
+              attributes,
+              serverAction,
+              driver,
+              type,
+              tag,
+            ),
+            attributes: attributes,
+            controlled: true,
+            children: arr,
+          );
+        }
       case DUITElementType.empty:
         {
           return EmptyUIElement();
@@ -292,6 +320,27 @@ abstract base class DUITElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class StackUIElement<T> extends DUITElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DUITElement> children = const [];
+
+  @override
+  ViewAttributeWrapper<T>? attributes;
+
+  @override
+  UIElementController<T>? viewController;
+
+  StackUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required this.viewController,
+    required this.attributes,
+    required this.children,
+  });
+}
+
 final class CustomDUITElement<T> extends DUITElement<T> {
   @override
   ViewAttributeWrapper<T>? attributes;
