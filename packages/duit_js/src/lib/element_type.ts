@@ -9,6 +9,7 @@ enum DuitElementType {
     elevatedButton = "ElevatedButton",
     empty = "Empty",
     custom = "Custom",
+    stack = "Stack",
   }
 
 export default DuitElementType;
