@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'driver.dart';
 
-class UIHostContainer extends StatefulWidget {
+class DuitViewHost extends StatefulWidget {
   final Widget? placeholder;
-  final DUITDriver driver;
+  final UIDriver driver;
   final BuildContext context;
 
-  const UIHostContainer({
+  const DuitViewHost({
     super.key,
     required this.driver,
     required this.context,
@@ -15,36 +15,29 @@ class UIHostContainer extends StatefulWidget {
   });
 
   @override
-  State<UIHostContainer> createState() => _UIHostContainerState();
+  State<DuitViewHost> createState() => _DuitViewHostState();
 }
 
-class _UIHostContainerState extends State<UIHostContainer> {
-  Widget? _widget;
+class _DuitViewHostState extends State<DuitViewHost> {
 
   @override
   void initState() {
-    widget.driver.init().then((res) {
-      if (res != null) {
-        setState(() {
-          _widget = res.render();
-        });
-      }
-    });
+    widget.driver.init();
     super.initState();
   }
 
   @override
-  void didChangeDependencies() {
-    widget.driver.context = context;
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_widget == null) {
-      return widget.placeholder ?? const SizedBox.shrink();
-    } else {
-      return _widget!;
-    }
+    return StreamBuilder(
+        stream: widget.driver.stream,
+        builder: (context, snapshot) {
+          widget.driver.context = context;
+
+          if (snapshot.data != null) {
+            return snapshot.data!.render();
+          } else {
+            return widget.placeholder ?? const SizedBox.shrink();
+          }
+        });
   }
 }

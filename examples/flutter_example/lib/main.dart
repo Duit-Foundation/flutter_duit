@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SafeArea(
           child: Column(
             children: [
-              UIHostContainer(
+              DuitViewHost(
                 context: context,
                 driver: driver,
                 placeholder: const CircularProgressIndicator(),

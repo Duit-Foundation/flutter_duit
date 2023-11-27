@@ -13,16 +13,22 @@ abstract interface class UIDriver {
   abstract final String source;
   abstract final TransportOptions transportOptions;
   abstract Transport? transport;
+  abstract BuildContext _context;
+  abstract StreamController<DUITAbstractTree?> _streamController;
 
   void attachController(String id, UIElementController controller);
 
-  Future<DUITAbstractTree?> init();
+  Future<void> init();
 
   Widget? build();
 
   Future<void> execute(ServerAction action);
 
   void dispose();
+
+  set context(BuildContext value);
+
+  Stream<DUITAbstractTree?> get stream;
 }
 
 final class DUITDriver implements UIDriver {
@@ -32,14 +38,21 @@ final class DUITDriver implements UIDriver {
   Transport? transport;
   @override
   TransportOptions transportOptions;
+  @override
+  late StreamController<DUITAbstractTree?> _streamController;
+  @override
+  late BuildContext _context;
 
   DUITAbstractTree? _layout;
   Map<String, UIElementController> _viewControllers = {};
-  late BuildContext _context;
 
+  @override
   set context(BuildContext value) {
     _context = value;
   }
+
+  @override
+  Stream<DUITAbstractTree?> get stream => _streamController.stream;
 
   DUITDriver(
     this.source, {
@@ -106,7 +119,8 @@ final class DUITDriver implements UIDriver {
   }
 
   @override
-  Future<DUITAbstractTree?> init() async {
+  Future<void> init() async {
+    _streamController = StreamController();
     transport = _getTransport(transportOptions.type);
     final json = await transport?.connect();
     assert(json != null);
@@ -116,7 +130,8 @@ final class DUITDriver implements UIDriver {
       streamer.eventStream.listen(_resolveEventFromJson);
     }
 
-    return _layout = await DUITAbstractTree(json: json!, driver: this).parse();
+    _layout = await DUITAbstractTree(json: json!, driver: this).parse();
+    _streamController.sink.add(_layout);
   }
 
   @override
@@ -161,6 +176,7 @@ final class DUITDriver implements UIDriver {
     transport?.dispose();
     _viewControllers = {};
     _layout = null;
+    _streamController.close();
   }
 
   void updateAttributes(String id, JSONObject json) {
