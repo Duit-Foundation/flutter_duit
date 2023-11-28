@@ -1,4 +1,4 @@
-package core
+package duit
 
 import "encoding/json"
 
@@ -25,13 +25,9 @@ func (b *UiBuilder) CreateRoot() *DuitElement {
 	return b.root
 }
 
-func (b *UiBuilder) CreateRootOfExactType(elType DuitElementType, data *DuitElementConstructorParams) *DuitElement {
+func (b *UiBuilder) CreateRootOfExactType(elType DuitElementType) *DuitElement {
 	b.root = &DuitElement{
 		ElementType: elType,
-		Id:          data.Id,
-		Controlled:  data.Controlled,
-		Tag:         data.Tag,
-		Action:      &data.Action,
 	}
 
 	return b.root
