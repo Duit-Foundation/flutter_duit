@@ -1,7 +1,7 @@
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-base class ViewAttributeWrapper<T> {
+final class ViewAttributeWrapper<T> {
   T payload;
 
   ViewAttributeWrapper({
