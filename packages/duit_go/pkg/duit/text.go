@@ -1,10 +1,12 @@
 package duit
 
+import "github.com/lesleysin/duit/packages/duit_go/internal/core"
+
 type TextAttributes struct {
 	Data string `json:"data"`
 }
 
-func TextUiElement(id string, attributes *TextAttributes, controlled bool, action interface{}) *DuitElement {
+func TextUiElement(attributes *TextAttributes, id string, controlled bool, action *core.Action) *DuitElement {
 	var newElem DuitElement
-	return newElem.New(Text, id)
+	return newElem.New(Text, id, "", attributes, action, controlled)
 }
