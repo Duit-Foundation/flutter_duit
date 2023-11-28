@@ -100,6 +100,75 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Flex and container props">
+  static StackFit convertToStackFit(String? value) {
+    if (value == null) return StackFit.loose;
+
+    switch (value) {
+      case "expand":
+        return StackFit.expand;
+      case "passthrough":
+        return StackFit.passthrough;
+      case "loose":
+        return StackFit.loose;
+    }
+
+    return StackFit.loose;
+  }
+
+  static AlignmentGeometry convertToAlignment(String? value) {
+    if (value == null) return Alignment.topLeft;
+
+    switch (value) {
+      case "topCenter":
+        return Alignment.topCenter;
+      case "topLeft":
+        return Alignment.topLeft;
+      case "topRight":
+        return Alignment.topRight;
+      case "bottomCenter":
+        return Alignment.bottomCenter;
+      case "bottomLeft":
+        return Alignment.bottomLeft;
+      case "bottomRight":
+        return Alignment.bottomRight;
+      case "center":
+        return Alignment.center;
+      case "centerLeft":
+        return Alignment.centerLeft;
+      case "centerRight":
+        return Alignment.centerRight;
+    }
+
+    return Alignment.topLeft;
+  }
+
+  static AlignmentGeometry convertToAlignmentDirectional(String? value) {
+    if (value == null) return AlignmentDirectional.topStart;
+
+    switch (value) {
+      case "topStart":
+        return AlignmentDirectional.topStart;
+      case "topCenter":
+        return AlignmentDirectional.topCenter;
+      case "topEnd":
+        return AlignmentDirectional.topEnd;
+      case "bottomCenter":
+        return AlignmentDirectional.bottomCenter;
+      case "bottomEnd":
+        return AlignmentDirectional.bottomEnd;
+      case "bottomStart":
+        return AlignmentDirectional.bottomStart;
+      case "center":
+        return AlignmentDirectional.center;
+      case "centerStart":
+        return AlignmentDirectional.centerStart;
+      case "centerEnd":
+        return AlignmentDirectional.centerEnd;
+    }
+
+    return AlignmentDirectional.topStart;
+  }
+
   static MainAxisAlignment? convertToMainAxisAlignment(String? value) {
     if (value == null) return null;
 
@@ -140,8 +209,8 @@ class ParamsMapper {
     return null;
   }
 
-  static Clip? convertToClip(String? value) {
-    if (value == null) return null;
+  static Clip convertToClip(String? value) {
+    if (value == null) return Clip.hardEdge;
 
     switch (value) {
       case "hardEdge":
@@ -154,7 +223,7 @@ class ParamsMapper {
         return Clip.none;
     }
 
-    return null;
+    return Clip.hardEdge;
   }
 
   static MainAxisSize? convertToMainAxisSize(String? value) {

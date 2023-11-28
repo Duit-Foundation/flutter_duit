@@ -8,3 +8,4 @@ export 'sized_box_attrs.dart';
 export 'attributes.dart';
 export 'empty_attrs.dart';
 export 'flexible.dart';
+export 'stack_attrs.dart';

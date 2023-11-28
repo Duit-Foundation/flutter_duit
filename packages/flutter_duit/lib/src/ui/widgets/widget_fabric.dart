@@ -124,6 +124,26 @@ mixin WidgetFabric {
             child: child,
           );
         }
+      case DUITElementType.stack:
+        {
+          final it = model as RowUIElement;
+          List<Widget> arr = [];
+
+          for (var element in it.children) {
+            final children = getWidgetFromElement(element);
+            arr.add(children);
+          }
+
+          return it.controlled
+              ? DUITControlledStack(
+                  controller: it.viewController,
+                  children: arr,
+                )
+              : DUITStack(
+                  attributes: it.attributes,
+                  children: arr,
+                );
+        }
       case DUITElementType.empty:
         {
           return const DUITEmptyView();

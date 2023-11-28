@@ -28,6 +28,9 @@ enum DUITElementType {
 
   ///Keys: Custom, 10
   custom,
+
+  ///Keys: Stack, 11
+  stack
 }
 
 DUITElementType convert(dynamic type) {
@@ -53,6 +56,8 @@ DUITElementType convert(dynamic type) {
         return DUITElementType.center;
       case "Empty":
         return DUITElementType.empty;
+      case "Stack":
+        return DUITElementType.stack;
       case "Custom":
         return DUITElementType.custom;
       default:

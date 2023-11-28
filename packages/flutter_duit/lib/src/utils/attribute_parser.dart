@@ -28,6 +28,7 @@ sealed class AttributeParser {
       DUITElementType.textField => TextFieldAttributes.fromJson(json ?? {}),
       DUITElementType.elevatedButton =>
         ElevatedButtonAttributes.fromJson(json ?? {}),
+      DUITElementType.stack => StackAttributes.fromJson(json ?? {}),
       DUITElementType.empty => EmptyAttributes(),
       DUITElementType.custom => _parseCustomWidgetAttributes(json, tag),
     };
