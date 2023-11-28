@@ -1,4 +1,5 @@
 import { CenterUiElement, ColoredBoxUiElement, ColumnUiElement, RowUiElement, SizedBoxUiElement, StackUiElement, TextFieldUiElement, TextUiElement } from "../widget_models";
+import { ExpandedUiElement } from "../widget_models/expanded";
 
 export type DuitLayoutElement =
     ColumnUiElement
@@ -6,7 +7,8 @@ export type DuitLayoutElement =
     | ColoredBoxUiElement
     | SizedBoxUiElement
     | CenterUiElement
-    | StackUiElement;
+    | StackUiElement
+    | ExpandedUiElement;
     
 export type DuitElement =
     TextUiElement
