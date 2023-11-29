@@ -7,14 +7,14 @@ import (
 
 type DuitView struct{}
 
-func (view *DuitView) Static(filePath string) (*DuitElement, error) {
+func (view *DuitView) Static(filePath string) (*DuitElementModel, error) {
 	jsonObj, err := os.ReadFile(filePath)
 
 	if err != nil {
 		return nil, err
 	}
 
-	var root *DuitElement
+	var root *DuitElementModel
 
 	err = json.Unmarshal(jsonObj, root)
 

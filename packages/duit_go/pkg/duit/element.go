@@ -2,7 +2,6 @@ package duit
 
 import (
 	"github.com/google/uuid"
-	"github.com/lesleysin/duit/packages/duit_go/internal/core"
 )
 
 // 0 - cannot have children
@@ -24,18 +23,23 @@ var childMapper = map[DuitElementType]uint8{
 	Stack:          2,
 }
 
-type DuitElement struct {
-	ElementType DuitElementType `json:"type"`
-	Id          string          `json:"id"`
-	Controlled  bool            `json:"controlled"`
-	Attributes  interface{}     `json:"attributes"`
-	Action      *core.Action    `json:"action,omitempty"`
-	Tag         string          `json:"tag,omitempty"`
-	Child       *DuitElement    `json:"child,omitempty"`
-	Children    []*DuitElement  `json:"children,omitempty"`
+type DuitCustomWidget interface {
+	CreateElement(elemType string, elemId string, tag string, attributes interface{}, action *Action, controlled bool) *DuitElementModel
 }
 
-// New creates a new instance of DuitElement.
+type DuitElementModel struct {
+	DuitCustomWidget
+	ElementType DuitElementType     `json:"type"`
+	Id          string              `json:"id"`
+	Controlled  bool                `json:"controlled"`
+	Attributes  interface{}         `json:"attributes"`
+	Action      *Action             `json:"action,omitempty"`
+	Tag         string              `json:"tag,omitempty"`
+	Child       *DuitElementModel   `json:"child,omitempty"`
+	Children    []*DuitElementModel `json:"children,omitempty"`
+}
+
+// CreateElement creates a new instance of DuitElement.
 //
 // It takes the following parameters:
 // - elemType: the type of the element
@@ -46,7 +50,7 @@ type DuitElement struct {
 // - controlled: a boolean indicating whether the element is controlled
 //
 // It returns a pointer to the newly created DuitElement.
-func (e *DuitElement) New(elemType DuitElementType, elemId string, tag string, attributes interface{}, action *core.Action, controlled bool) *DuitElement {
+func (element *DuitElementModel) CreateElement(elemType DuitElementType, elemId string, tag string, attributes interface{}, action *Action, controlled bool) *DuitElementModel {
 	var id string
 	var isControlled bool
 
@@ -62,20 +66,20 @@ func (e *DuitElement) New(elemType DuitElementType, elemId string, tag string, a
 		isControlled = controlled
 	}
 
-	e.Id = id
-	e.ElementType = elemType
-	e.Action = action
-	e.Attributes = attributes
-	e.Tag = tag
-	e.Controlled = isControlled
-	return e
+	element.Id = id
+	element.ElementType = elemType
+	element.Action = action
+	element.Attributes = attributes
+	element.Tag = tag
+	element.Controlled = isControlled
+	return element
 }
 
 // AddChild adds a child element to the DuitElement.
 //
 // The child parameter is the element to be added as a child.
 // The function returns the modified DuitElement.
-func (element *DuitElement) AddChild(child *DuitElement) *DuitElement {
+func (element *DuitElementModel) AddChild(child *DuitElementModel) *DuitElementModel {
 	childProp := childMapper[element.ElementType]
 
 	switch childProp {
@@ -94,7 +98,7 @@ func (element *DuitElement) AddChild(child *DuitElement) *DuitElement {
 // It returns a *DuitElement, which is the modified DuitElement.
 //
 // If DuitElement may contains only one child element, last element of slice will be added as child
-func (element *DuitElement) AddChildren(children []*DuitElement) *DuitElement {
+func (element *DuitElementModel) AddChildren(children []*DuitElementModel) *DuitElementModel {
 	childProp := childMapper[element.ElementType]
 
 	switch childProp {
