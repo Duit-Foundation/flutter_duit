@@ -144,6 +144,21 @@ mixin WidgetFabric {
                   children: arr,
                 );
         }
+      case DUITElementType.expanded:
+        {
+          final it = model as ExpandedUiElement;
+          final child = getWidgetFromElement(it.child);
+
+          return it.controlled
+              ? DUITControlledExpanded(
+                  controller: it.viewController!,
+                  child: child,
+                )
+              : DUITExpanded(
+                  attributes: it.attributes,
+                  child: child,
+                );
+        }
       case DUITElementType.empty:
         {
           return const DUITEmptyView();

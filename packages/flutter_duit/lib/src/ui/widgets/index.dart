@@ -9,3 +9,4 @@ export 'empty.dart';
 export 'colored_box.dart';
 export 'text_field.dart';
 export 'stack.dart';
+export 'expanded.dart';
