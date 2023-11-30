@@ -231,7 +231,7 @@ abstract base class DUITElement<T> with WidgetFabric {
             id: id,
             viewController: createAndAttachController(
               id,
-              true,
+              controlled,
               attributes,
               serverAction,
               driver,
@@ -239,8 +239,29 @@ abstract base class DUITElement<T> with WidgetFabric {
               tag,
             ),
             attributes: attributes,
-            controlled: true,
+            controlled: controlled,
             children: arr,
+          );
+        }
+      case DUITElementType.expanded:
+        {
+          final child = DUITElement.fromJson(json["child"], driver);
+
+          return ExpandedUiElement(
+            type: type,
+            id: id,
+            attributes: attributes,
+            viewController: createAndAttachController(
+              id,
+              controlled,
+              attributes,
+              serverAction,
+              driver,
+              type,
+              tag,
+            ),
+            child: child,
+            controlled: true,
           );
         }
       case DUITElementType.empty:
@@ -254,7 +275,7 @@ abstract base class DUITElement<T> with WidgetFabric {
             if (mapper != null) {
               final controller = createAndAttachController(
                 id,
-                true,
+                controlled,
                 attributes,
                 serverAction,
                 driver,
@@ -320,6 +341,30 @@ abstract base class DUITElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class ExpandedUiElement<T> extends DUITElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DUITElement child;
+
+  @override
+  ViewAttributeWrapper<T>? attributes;
+
+  @override
+  UIElementController<T>? viewController;
+
+  ExpandedUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required this.viewController,
+    required this.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class StackUIElement<T> extends DUITElement<T>
     implements MultiChildLayout {
   @override
