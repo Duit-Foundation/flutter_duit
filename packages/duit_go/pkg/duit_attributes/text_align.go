@@ -9,4 +9,5 @@ const (
 	Justify TextAlign = "justify"
 	Start   TextAlign = "start"
 	End     TextAlign = "end"
+	Test    TextAlign = "test"
 )
