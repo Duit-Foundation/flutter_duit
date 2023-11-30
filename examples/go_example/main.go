@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"goexample/internal"
 
-	"github.com/lesleysin/duit/packages/duit_go/pkg/duit"
-	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_attributes"
-	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_core"
-	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_widget"
+	"github.com/lesleysin/duit_go/pkg/duit"
+	"github.com/lesleysin/duit_go/pkg/duit_attributes"
+	"github.com/lesleysin/duit_go/pkg/duit_core"
+	"github.com/lesleysin/duit_go/pkg/duit_widget"
 )
 
 func main() {

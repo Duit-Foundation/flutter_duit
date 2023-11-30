@@ -1,11 +1,11 @@
 package internal
 
 import (
-	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_core"
+	"github.com/lesleysin/duit_go/pkg/duit_core"
 )
 
 type CustomWidget struct {
-	duit_core.DuitCustomWidget
+	duit_core.Action
 }
 
 type CustomWidgetAttrs struct {
