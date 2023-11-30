@@ -1,4 +1,4 @@
-package duit
+package duit_core
 
 type DuitElementType string
 

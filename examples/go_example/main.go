@@ -1,28 +1,32 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"goexample/internal"
+
+	"github.com/lesleysin/duit/packages/duit_go/pkg/duit"
+	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_attributes"
+	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_core"
+	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_widget"
 )
 
-type Nested struct {
-	id  string `json:"id"`
-	num int    `json:"num"`
-}
-
-type Test struct {
-	n    Nested   `json:"n"`
-	narr []Nested `json:"narr"`
-}
-
 func main() {
-	var x = Test{
-		n: Nested{
-			id:  "1",
-			num: 1,
-		},
-		narr: nil,
+	var view duit.DuitView
+
+	builder := view.Builder()
+	root := builder.CreateRootOfExactType(duit_core.Column, nil, "", "")
+
+	ch := duit_widget.TextUiElement(&duit_attributes.TextAttributes{}, "", false, nil)
+	ch2 := duit_widget.TextUiElement(&duit_attributes.TextAttributes{}, "", false, nil)
+
+	root.AddChild(ch).AddChild(ch2).AddChild(internal.CustomWidgetUiElement())
+
+	x, err := builder.Build()
+
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
-	json, _ := json.Marshal(x)
-	fmt.Println(string(json))
+
+	fmt.Println(x)
 }

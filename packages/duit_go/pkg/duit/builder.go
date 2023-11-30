@@ -1,34 +1,35 @@
 package duit
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"errors"
+
+	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_core"
+)
 
 type UiBuilder struct {
-	root *DuitElement
+	root *duit_core.DuitElementModel
 }
 
-func (builder *UiBuilder) Build() string {
-	json, err := json.Marshal(builder.root)
+func (builder *UiBuilder) Build() (string, error) {
+	json, err := json.Marshal(*builder.root)
 
 	if err != nil {
-
-		println(err)
-		return ""
+		return "", errors.New("Failed to build JSON: " + err.Error())
 	}
 
-	return string(json)
+	return string(json), nil
 }
 
-func (b *UiBuilder) CreateRoot() *DuitElement {
-	b.root = &DuitElement{
-		ElementType: Column,
+func (builder *UiBuilder) CreateRoot() *duit_core.DuitElementModel {
+	builder.root = &duit_core.DuitElementModel{
+		ElementType: duit_core.Column,
 	}
-	return b.root
+	return builder.root
 }
 
-func (b *UiBuilder) CreateRootOfExactType(elType DuitElementType) *DuitElement {
-	b.root = &DuitElement{
-		ElementType: elType,
-	}
+func (builder *UiBuilder) CreateRootOfExactType(elType duit_core.DuitElementType, attributes interface{}, id string, tag string) *duit_core.DuitElementModel {
+	builder.root = new(duit_core.DuitElementModel).CreateElement(elType, id, tag, attributes, nil, false)
 
-	return b.root
+	return builder.root
 }
