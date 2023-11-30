@@ -3,10 +3,12 @@ package duit
 import (
 	"encoding/json"
 	"errors"
+
+	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_core"
 )
 
 type UiBuilder struct {
-	root *DuitElementModel
+	root *duit_core.DuitElementModel
 }
 
 func (builder *UiBuilder) Build() (string, error) {
@@ -19,15 +21,15 @@ func (builder *UiBuilder) Build() (string, error) {
 	return string(json), nil
 }
 
-func (builder *UiBuilder) CreateRoot() *DuitElementModel {
-	builder.root = &DuitElementModel{
-		ElementType: Column,
+func (builder *UiBuilder) CreateRoot() *duit_core.DuitElementModel {
+	builder.root = &duit_core.DuitElementModel{
+		ElementType: duit_core.Column,
 	}
 	return builder.root
 }
 
-func (builder *UiBuilder) CreateRootOfExactType(elType DuitElementType, attributes interface{}, id string, tag string) *DuitElementModel {
-	builder.root = new(DuitElementModel).CreateElement(elType, id, tag, attributes, nil, false)
+func (builder *UiBuilder) CreateRootOfExactType(elType duit_core.DuitElementType, attributes interface{}, id string, tag string) *duit_core.DuitElementModel {
+	builder.root = new(duit_core.DuitElementModel).CreateElement(elType, id, tag, attributes, nil, false)
 
 	return builder.root
 }

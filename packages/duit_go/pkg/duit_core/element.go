@@ -1,4 +1,4 @@
-package duit
+package duit_core
 
 import (
 	"github.com/google/uuid"

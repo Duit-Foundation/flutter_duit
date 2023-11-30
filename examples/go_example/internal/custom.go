@@ -1,17 +1,19 @@
 package internal
 
-import "github.com/lesleysin/duit/packages/duit_go/pkg/duit"
+import (
+	"github.com/lesleysin/duit/packages/duit_go/pkg/duit_core"
+)
 
 type CustomWidget struct {
-	duit.DuitCustomWidget
+	duit_core.DuitCustomWidget
 }
 
 type CustomWidgetAttrs struct {
-	Duit int
+	Duit int `json:"duit"`
 }
 
-func (widget *CustomWidget) CreateElement(elemType duit.DuitElementType, elemId string, tag string, attributes *CustomWidgetAttrs, action *duit.Action, controlled bool) *duit.DuitElementModel {
-	model := new(duit.DuitElementModel)
+func (widget *CustomWidget) CreateElement(elemType duit_core.DuitElementType, elemId string, tag string, attributes *CustomWidgetAttrs, action *duit_core.Action, controlled bool) *duit_core.DuitElementModel {
+	model := new(duit_core.DuitElementModel)
 	model.ElementType = elemType
 	model.Id = elemId
 	model.Tag = tag
@@ -20,6 +22,6 @@ func (widget *CustomWidget) CreateElement(elemType duit.DuitElementType, elemId 
 	return model
 }
 
-func CustomWidgetUiElement() *duit.DuitElementModel {
-	return new(CustomWidget).CreateElement(duit.Custom, "", "CustomWidget", &CustomWidgetAttrs{Duit: 100500}, nil, false)
+func CustomWidgetUiElement() *duit_core.DuitElementModel {
+	return new(CustomWidget).CreateElement(duit_core.Custom, "", "CustomWidget", &CustomWidgetAttrs{Duit: 100500}, nil, false)
 }

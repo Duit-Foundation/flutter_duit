@@ -1,4 +1,4 @@
-package duit
+package duit_core
 
 type Action struct {
 	Event     string      `json:"event"`
