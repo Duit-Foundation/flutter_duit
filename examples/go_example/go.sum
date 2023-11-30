@@ -1,2 +1,4 @@
-github.com/lesleysin/duit v0.0.0-20231127142042-7390ed3de03c h1:KKe19GwSNAOAY9czG7RSuK+0bynJ20ujUjA6zXDp55A=
-github.com/lesleysin/duit v0.0.0-20231127142042-7390ed3de03c/go.mod h1:aCt81GFddJcH5X8hRuflM+oY9B7b4rISm3KePODADdA=
+github.com/google/uuid v1.4.0 h1:MtMxsa51/r9yyhkyLsVeVt0B+BGQZzpQiTQ4eHZ8bc4=
+github.com/google/uuid v1.4.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/lesleysin/duit/packages/duit_go v0.0.0-20231130091214-7004e695b444 h1:aR2NVr2FyjJCTkqv7NBEcX3PhjxTpeSEtNUlInsZnsI=
+github.com/lesleysin/duit/packages/duit_go v0.0.0-20231130091214-7004e695b444/go.mod h1:fY9sJHC+GI1M3TWaok3996s3GENuiIjCOSytyQ2w2oU=
