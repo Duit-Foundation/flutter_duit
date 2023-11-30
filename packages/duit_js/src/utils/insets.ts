@@ -1,1 +1,0 @@
-export type EdgeInsets = number | [number, number] | [number, number, number, number]
