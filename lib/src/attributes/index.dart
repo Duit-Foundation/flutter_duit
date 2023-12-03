@@ -10,3 +10,4 @@ export 'empty_attrs.dart';
 export 'flexible.dart';
 export 'stack_attrs.dart';
 export 'expanded_attrs.dart';
+export 'padding_attributes.dart';

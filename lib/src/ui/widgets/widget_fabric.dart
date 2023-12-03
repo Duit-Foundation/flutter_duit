@@ -159,6 +159,21 @@ mixin WidgetFabric {
                   child: child,
                 );
         }
+      case DUITElementType.padding:
+        {
+          final it = model as PaddingUiElement;
+          final child = getWidgetFromElement(it.child);
+
+          return it.controlled
+              ? DUITControlledPadding(
+                  controller: it.viewController!,
+                  child: child,
+                )
+              : DUITPadding(
+                  attributes: it.attributes,
+                  child: child,
+                );
+        }
       case DUITElementType.empty:
         {
           return const DUITEmptyView();
