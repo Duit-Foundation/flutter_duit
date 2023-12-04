@@ -8,9 +8,10 @@ abstract base class Transport {
   
   Transport(this.url);
 
-  FutureOr<ServerEvent?> execute(ServerAction action, Map<String, dynamic> payload, Map<String, dynamic>? headers);
+  FutureOr<ServerEvent?> execute(ServerAction action, Map<String, dynamic> payload);
 
   Future<Map<String, dynamic>?> connect();
 
   void dispose();
+
 }

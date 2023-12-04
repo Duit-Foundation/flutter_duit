@@ -77,10 +77,12 @@ final class DUITDriver implements UIDriver {
             options: transportOptions as HttpTransportOptions,
           );
         }
-      case TransportType.grpc:
       case TransportType.ws:
         {
-          return WSTransport(source);
+          return WSTransport(
+            source,
+            options: transportOptions as WebSocketTransportOptions,
+          );
         }
       default:
         {
@@ -157,14 +159,7 @@ final class DUITDriver implements UIDriver {
       }
     }
 
-    Map<String, dynamic> headers = {};
-
-    if (transportOptions is HttpTransportOptions) {
-      final opts = transportOptions as HttpTransportOptions;
-      headers = opts.defaultHeaders;
-    }
-
-    final event = await transport?.execute(action, payload, headers);
+    final event = await transport?.execute(action, payload);
     //case with http request
     if (event != null) {
       _resolveEvent(event);

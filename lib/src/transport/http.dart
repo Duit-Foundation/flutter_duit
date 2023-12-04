@@ -34,12 +34,11 @@ final class HttpTransport extends Transport {
 
     final res =
         await client.get(Uri.parse(urlString), headers: options.defaultHeaders);
-    final result = jsonDecode(res.body) as Map<String, dynamic>;
-    return result;
+    return jsonDecode(res.body) as Map<String, dynamic>;
   }
 
   @override
-  FutureOr<ServerEvent?> execute(action, payload, headers) async {
+  FutureOr<ServerEvent?> execute(action, payload) async {
     String method = switch (action.meta) {
       null => "GET",
       HttpActionMetainfo() => action.meta!.method,
@@ -64,7 +63,6 @@ final class HttpTransport extends Transport {
           try {
             final res = await client.get(uri, headers: {
               ...options.defaultHeaders,
-              ...headers ?? {},
             });
             final data = jsonDecode(res.body) as Map<String, dynamic>;
             return ServerEvent.fromJson(data);
@@ -81,7 +79,6 @@ final class HttpTransport extends Transport {
               body: jsonEncode(payload),
               headers: {
                 ...options.defaultHeaders,
-                ...headers ?? {},
               },
             );
             final data = jsonDecode(res.body) as Map<String, dynamic>;
@@ -99,7 +96,6 @@ final class HttpTransport extends Transport {
               body: jsonEncode(payload),
               headers: {
                 ...options.defaultHeaders,
-                ...headers ?? {},
               },
             );
             final data = jsonDecode(res.body) as Map<String, dynamic>;
@@ -117,7 +113,6 @@ final class HttpTransport extends Transport {
               body: jsonEncode(payload),
               headers: {
                 ...options.defaultHeaders,
-                ...headers ?? {},
               },
             );
             final data = jsonDecode(json.body) as JSONObject;
