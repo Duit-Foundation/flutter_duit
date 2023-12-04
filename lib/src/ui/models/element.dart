@@ -285,6 +285,27 @@ abstract base class DUITElement<T> with WidgetFabric {
             controlled: controlled,
           );
         }
+      case DUITElementType.positioned:
+        {
+          final child = DUITElement.fromJson(json["child"], driver);
+
+          return PositionedUiElement(
+            type: type,
+            id: id,
+            attributes: attributes,
+            viewController: createAndAttachController(
+              id,
+              controlled,
+              attributes,
+              serverAction,
+              driver,
+              type,
+              tag,
+            ),
+            child: child,
+            controlled: controlled,
+          );
+        }
       case DUITElementType.empty:
         {
           return EmptyUIElement();
@@ -362,6 +383,30 @@ abstract base class DUITElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class PositionedUiElement<T> extends DUITElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DUITElement child;
+
+  @override
+  ViewAttributeWrapper<T>? attributes;
+
+  @override
+  UIElementController<T>? viewController;
+
+  PositionedUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required this.viewController,
+    required this.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class PaddingUiElement<T> extends DUITElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">

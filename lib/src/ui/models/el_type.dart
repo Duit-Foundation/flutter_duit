@@ -36,7 +36,10 @@ enum DUITElementType {
   expanded,
 
   ///Keys: Padding, 13
-  padding
+  padding,
+
+  ///Keys: Positioned, 14
+  positioned,
 }
 
 DUITElementType convert(dynamic type) {
@@ -68,6 +71,8 @@ DUITElementType convert(dynamic type) {
         return DUITElementType.expanded;
       case "Padding":
         return DUITElementType.padding;
+      case "Positioned":
+        return DUITElementType.positioned;
       case "Custom":
         return DUITElementType.custom;
       default:
