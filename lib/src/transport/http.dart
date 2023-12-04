@@ -35,7 +35,6 @@ final class HttpTransport extends Transport {
     final res =
         await client.get(Uri.parse(urlString), headers: options.defaultHeaders);
     final result = jsonDecode(res.body) as Map<String, dynamic>;
-
     return result;
   }
 

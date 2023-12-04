@@ -38,11 +38,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final driver = DUITDriver("/layout",
+    final driver = DUITDriver("/form1",
         transportOptions: HttpTransportOptions(
           defaultHeaders: {"Content-Type": "application/json"},
           baseUrl: "http://localhost:8999",
         ));
+    // final driver = DUITDriver("ws://localhost:8999",
+    //     transportOptions: WebSocketTransportOptions());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

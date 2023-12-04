@@ -65,7 +65,7 @@ packages:
   flutter_duit:
     dependency: "direct main"
     description:
-      path: "../../packages/flutter_duit"
+      path: ".."
       relative: true
     source: path
     version: "0.0.1"
