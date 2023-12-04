@@ -1,12 +1,12 @@
-import 'package:example/src/registry_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
+import './src/registry_example.dart';
 
 void main() {
   DUITRegistry.register(
     "ExampleCustomWidget",
     modelMapperExample,
-    exampleRenerer,
+    exampleRenderer,
     exampleAttributeMapper,
   );
   runApp(const MyApp());

@@ -37,7 +37,7 @@ DUITAttributes exampleAttributeMapper(String type, Map<String, dynamic>? json) {
   return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random");
 }
 
-Widget exampleRenerer(DUITElement model) {
+Widget exampleRenderer(DUITElement model) {
   final data = model.attributes?.payload as ExampleCustomWidgetAttributes?;
   return Text(data?.random ?? "no random");
 }
