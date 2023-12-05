@@ -174,6 +174,21 @@ mixin WidgetFabric {
                   child: child,
                 );
         }
+      case DUITElementType.decoratedBox:
+        {
+          final it = model as DecoratedBoxUiElement;
+          final child = getWidgetFromElement(it.child);
+
+          return it.controlled
+              ? DUITControlledDecoratedBox(
+                  controller: it.viewController!,
+                  child: child,
+                )
+              : DUITDecoratedBox(
+                  attributes: it.attributes,
+                  child: child,
+                );
+        }
       case DUITElementType.empty:
         {
           return const DUITEmptyView();

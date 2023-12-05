@@ -11,3 +11,4 @@ export 'text_field.dart';
 export 'stack.dart';
 export 'expanded.dart';
 export 'padding.dart';
+export 'decorated_box.dart';

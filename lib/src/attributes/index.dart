@@ -12,3 +12,4 @@ export 'stack_attrs.dart';
 export 'expanded_attrs.dart';
 export 'padding_attributes.dart';
 export 'positioned_attributes.dart';
+export 'decorated_box_attributes.dart';

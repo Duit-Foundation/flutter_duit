@@ -258,6 +258,111 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Decoration">
+  static BoxShape convertToBoxShape(String? value) {
+    if (value == null) return BoxShape.rectangle;
+
+    switch (value) {
+      case "circle":
+        return BoxShape.circle;
+      case "rectangle":
+        return BoxShape.rectangle;
+    }
+
+    return BoxShape.rectangle;
+  }
+
+  static Offset convertToOffset(JSONObject? json) {
+    if (json == null) return Offset.zero;
+
+    return Offset(json["dx"] ?? 0.0, json["dy"] ?? 0.0);
+  }
+
+  static BlurStyle convertToBlurStyle(String? value) {
+    if (value == null) return BlurStyle.normal;
+
+    switch (value) {
+      case "normal":
+        return BlurStyle.normal;
+      case "solid":
+        return BlurStyle.solid;
+      case "outer":
+        return BlurStyle.outer;
+      case "inner":
+        return BlurStyle.inner;
+    }
+
+    return BlurStyle.normal;
+  }
+
+  static List<BoxShadow>? convertToBoxShadow(JSONObject? json) {
+    if (json == null) return null;
+
+    List<BoxShadow> arr = [];
+
+    json.forEach((key, value) {
+      final shadow = value as Map<String, dynamic>;
+      final boxShadow = BoxShadow(
+        color: ColorUtils.tryParseColor(shadow["color"]),
+        blurRadius: shadow["blurRadius"],
+        spreadRadius: shadow["spreadRadius"],
+        offset: convertToOffset(json["offset"]),
+        blurStyle: convertToBlurStyle(shadow["blurStyle"]),
+      );
+      arr.add(boxShadow);
+    });
+
+    return arr;
+  }
+
+  static Gradient? convertToGradient(JSONObject? json) {
+    if (json == null) return null;
+
+    final stops = json["stops"];
+    final rotationAngle = json["rotationAngle"] as num?;
+    final colors = json["colors"];
+    final begin = json["begin"] ?? Alignment.centerLeft;
+    final end = json["end"] ?? Alignment.centerRight;
+
+    final List<Color> dColors = [];
+
+    if (colors != null) {
+      colors.forEach((_, value) {
+        dColors.add(ColorUtils.tryParseColor(value));
+      });
+    }
+
+    return LinearGradient(
+      begin: begin,
+      end: end,
+      colors: dColors,
+      stops: stops,
+      transform: rotationAngle != null
+          ? GradientRotation(rotationAngle.toDouble())
+          : null,
+    );
+  }
+
+  static Decoration? convertToDecoration(JSONObject? json) {
+    if (json == null) return null;
+
+    return BoxDecoration(
+      color: ColorUtils.tryParseColor(json["color"]),
+      border: convertToBorder(json["border"]),
+      borderRadius: BorderRadius.circular(json["borderRadius"] ?? 4),
+      shape: convertToBoxShape(json["shape"]),
+      boxShadow: convertToBoxShadow(json["boxShadow"]),
+      gradient: convertToGradient(json["gradient"]),
+    );
+  }
+
+  static Border? convertToBorder(JSONObject? json) {
+    if (json == null) return null;
+
+    return Border.fromBorderSide(
+      convertToBorderSide(json),
+    );
+  }
+
   static InputDecoration? convertToInputDecoration(JSONObject? json) {
     if (json == null) return null;
 
