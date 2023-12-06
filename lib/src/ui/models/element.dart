@@ -327,6 +327,26 @@ abstract base class DUITElement<T> with WidgetFabric {
             controlled: controlled,
           );
         }
+      case DUITElementType.checkbox:
+        {
+          //controlled by default
+          //extends AttendedModel
+          return CheckboxUIElement(
+            type: type,
+            id: id,
+            attributes: attributes,
+            viewController: createAndAttachController(
+              id,
+              true,
+              attributes,
+              serverAction,
+              driver,
+              type,
+              tag,
+            ),
+            controlled: true,
+          );
+        }
       case DUITElementType.empty:
         {
           return EmptyUIElement();
@@ -627,17 +647,16 @@ final class ColumnUIElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class RowUIElement<RowAttributes> extends DUITElement<RowAttributes>
-    implements MultiChildLayout {
+final class RowUIElement<T> extends DUITElement<T> implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   List<DUITElement> children = const [];
 
   @override
-  ViewAttributeWrapper<RowAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<RowAttributes>? viewController;
+  UIElementController<T>? viewController;
 
   RowUIElement({
     required super.type,
@@ -650,17 +669,17 @@ final class RowUIElement<RowAttributes> extends DUITElement<RowAttributes>
 //</editor-fold>
 }
 
-final class SizedBoxUIElement<SizedBoxAttributes>
-    extends DUITElement<SizedBoxAttributes> implements SingleChildLayout {
+final class SizedBoxUIElement<T> extends DUITElement<T>
+    implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   DUITElement child;
 
   @override
-  ViewAttributeWrapper<SizedBoxAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<SizedBoxAttributes>? viewController;
+  UIElementController<T>? viewController;
 
   SizedBoxUIElement({
     required super.type,
@@ -673,14 +692,14 @@ final class SizedBoxUIElement<SizedBoxAttributes>
 //</editor-fold>
 }
 
-final class TextUIElement<TextAttributes> extends DUITElement<TextAttributes> {
+final class TextUIElement<T> extends DUITElement<T> {
   //<editor-fold desc="Properties and ctor">
 
   @override
-  ViewAttributeWrapper<TextAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<TextAttributes>? viewController;
+  UIElementController<T>? viewController;
 
   TextUIElement({
     required super.type,
@@ -697,14 +716,31 @@ final class TextUIElement<TextAttributes> extends DUITElement<TextAttributes> {
 //</editor-fold>
 }
 
-final class TextFieldUIElement<TextFieldAttributes>
-    extends DUITElement<TextFieldAttributes> {
+final class CheckboxUIElement<T> extends DUITElement<T> {
   //<editor-fold desc="Properties and ctor">
   @override
-  ViewAttributeWrapper<TextFieldAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<TextFieldAttributes>? viewController;
+  UIElementController<T>? viewController;
+
+  CheckboxUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required this.attributes,
+    required this.viewController,
+  });
+//</editor-fold>
+}
+
+final class TextFieldUIElement<T> extends DUITElement<T> {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  ViewAttributeWrapper<T>? attributes;
+
+  @override
+  UIElementController<T>? viewController;
 
   TextFieldUIElement({
     required super.type,
@@ -716,13 +752,12 @@ final class TextFieldUIElement<TextFieldAttributes>
 //</editor-fold>
 }
 
-final class EmptyUIElement<EmptyAttributes>
-    extends DUITElement<EmptyAttributes> {
+final class EmptyUIElement<T> extends DUITElement<T> {
   @override
-  ViewAttributeWrapper<EmptyAttributes>? attributes;
+  ViewAttributeWrapper<T>? attributes;
 
   @override
-  UIElementController<EmptyAttributes>? viewController;
+  UIElementController<T>? viewController;
 
   EmptyUIElement({
     super.type = DUITElementType.empty,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/duit_impl/registry.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
+import 'package:flutter_duit/src/ui/widgets/checkbox.dart';
 
 import 'index.dart';
 
@@ -188,6 +189,12 @@ mixin WidgetFabric {
                   attributes: it.attributes,
                   child: child,
                 );
+        }
+      case DUITElementType.checkbox:
+        {
+          return DUITCheckbox(
+            controller: model.viewController,
+          );
         }
       case DUITElementType.empty:
         {

@@ -441,6 +441,51 @@ class ParamsMapper {
     }
   }
 
+  static VisualDensity convertToVisualDensity(JSONObject? json) {
+    if (json == null) return const VisualDensity();
+
+    return VisualDensity(
+      horizontal: json["horizontal"],
+      vertical: json["vertical"],
+    );
+  }
+
+  static MaterialStateProperty<Color>? convertToMSPColor(JSONObject? json) {
+    if (json == null) return null;
+
+    return MaterialStateProperty.resolveWith((states) {
+      if (states.contains(MaterialState.disabled)) {
+        return ColorUtils.tryParseColor(json[MaterialState.disabled.name]);
+      }
+
+      if (states.contains(MaterialState.selected)) {
+        return ColorUtils.tryParseColor(json[MaterialState.selected.name]);
+      }
+
+      if (states.contains(MaterialState.error)) {
+        return ColorUtils.tryParseColor(json[MaterialState.error.name]);
+      }
+
+      if (states.contains(MaterialState.pressed)) {
+        return ColorUtils.tryParseColor(json[MaterialState.pressed.name]);
+      }
+
+      if (states.contains(MaterialState.hovered)) {
+        return ColorUtils.tryParseColor(json[MaterialState.hovered.name]);
+      }
+
+      if (states.contains(MaterialState.focused)) {
+        return ColorUtils.tryParseColor(json[MaterialState.focused.name]);
+      }
+
+      if (states.contains(MaterialState.dragged)) {
+        return ColorUtils.tryParseColor(json[MaterialState.dragged.name]);
+      }
+
+      return Colors.black;
+    });
+  }
+
   static BorderSide convertToBorderSide(JSONObject? json) {
     if (json == null) return BorderSide.none;
 

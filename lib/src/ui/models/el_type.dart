@@ -43,6 +43,9 @@ enum DUITElementType {
 
   ///Keys: DecoratedBox, 15
   decoratedBox,
+
+  ///Keys: Checkbox, 16
+  checkbox,
 }
 
 DUITElementType convert(dynamic type) {
@@ -78,6 +81,8 @@ DUITElementType convert(dynamic type) {
         return DUITElementType.positioned;
       case "DecoratedBox":
         return DUITElementType.decoratedBox;
+      case "CheckBox":
+        return DUITElementType.checkbox;
       case "Custom":
         return DUITElementType.custom;
       default:

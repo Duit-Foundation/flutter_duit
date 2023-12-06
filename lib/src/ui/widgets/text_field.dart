@@ -30,6 +30,7 @@ class _DUITTextFieldState extends State<DUITTextField>
       final data =
           widget.controller?.attributes?.payload as TextFieldAttributes?;
       data?.update(text);
+      widget.controller?.performRelatedAction();
     });
     super.initState();
   }
