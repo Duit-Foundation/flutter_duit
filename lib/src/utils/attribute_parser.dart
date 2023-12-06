@@ -35,6 +35,7 @@ sealed class AttributeParser {
       DUITElementType.decoratedBox =>
         DecoratedBoxAttributes.fromJson(json ?? {}),
       DUITElementType.checkbox => CheckboxAttributes.fromJson(json ?? {}),
+      DUITElementType.container => ContainerAttributes.fromJson(json ?? {}),
       DUITElementType.empty => EmptyAttributes(),
       DUITElementType.custom => _parseCustomWidgetAttributes(json, tag),
     };

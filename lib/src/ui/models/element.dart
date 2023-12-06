@@ -347,6 +347,27 @@ abstract base class DUITElement<T> with WidgetFabric {
             controlled: true,
           );
         }
+      case DUITElementType.container:
+        {
+          final child = DUITElement.fromJson(json["child"], driver);
+
+          return ContainerUiElement(
+            type: type,
+            id: id,
+            attributes: attributes,
+            viewController: createAndAttachController(
+              id,
+              controlled,
+              attributes,
+              serverAction,
+              driver,
+              type,
+              tag,
+            ),
+            child: child,
+            controlled: controlled,
+          );
+        }
       case DUITElementType.empty:
         {
           return EmptyUIElement();
@@ -424,6 +445,30 @@ abstract base class DUITElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class ContainerUiElement<T> extends DUITElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DUITElement child;
+
+  @override
+  ViewAttributeWrapper<T>? attributes;
+
+  @override
+  UIElementController<T>? viewController;
+
+  ContainerUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required this.viewController,
+    required this.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class DecoratedBoxUiElement<T> extends DUITElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">

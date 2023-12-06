@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/duit_impl/registry.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
-import 'package:flutter_duit/src/ui/widgets/checkbox.dart';
 
 import 'index.dart';
 
@@ -195,6 +194,21 @@ mixin WidgetFabric {
           return DUITCheckbox(
             controller: model.viewController,
           );
+        }
+      case DUITElementType.container:
+        {
+          final it = model as ContainerUiElement;
+          final child = getWidgetFromElement(it.child);
+
+          return it.controlled
+              ? DUITControlledContainer(
+                  controller: it.viewController!,
+                  child: child,
+                )
+              : DUITContainer(
+                  attributes: it.attributes,
+                  child: child,
+                );
         }
       case DUITElementType.empty:
         {

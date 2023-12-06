@@ -100,6 +100,19 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Flex and container props">
+  static BoxConstraints? convertToBoxConstraints(JSONObject? json) {
+    if (json == null) return null;
+
+    return BoxConstraints(
+      minWidth: NumUtils.toDoubleWithNullReplacement(json["minWidth"], 0.0),
+      maxWidth: NumUtils.toDoubleWithNullReplacement(
+          json["maxWidth"], double.infinity),
+      minHeight: NumUtils.toDoubleWithNullReplacement(json["minHeight"], 0.0),
+      maxHeight: NumUtils.toDoubleWithNullReplacement(
+          json["maxHeight"], double.infinity),
+    );
+  }
+
   static StackFit convertToStackFit(String? value) {
     if (value == null) return StackFit.loose;
 

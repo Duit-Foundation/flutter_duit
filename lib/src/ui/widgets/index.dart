@@ -12,3 +12,5 @@ export 'stack.dart';
 export 'expanded.dart';
 export 'padding.dart';
 export 'decorated_box.dart';
+export 'container.dart';
+export 'checkbox.dart';

@@ -14,4 +14,12 @@ final class NumUtils {
 
     return null;
   }
+
+  static double toDoubleWithNullReplacement(dynamic value, double replacement) {
+    if (value is num) {
+      return value.toDouble();
+    }
+
+    return replacement;
+  }
 }
