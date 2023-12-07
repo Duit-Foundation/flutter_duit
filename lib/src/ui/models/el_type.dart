@@ -49,6 +49,9 @@ enum DUITElementType {
 
   ///Keys: Container, 17
   container,
+
+  ///Keys: Image, 18
+  image,
 }
 
 DUITElementType convert(dynamic type) {
@@ -56,6 +59,8 @@ DUITElementType convert(dynamic type) {
 
   if (type is String) {
     switch (type) {
+      case "Image":
+        return DUITElementType.image;
       case "Column":
         return DUITElementType.column;
       case "Row":

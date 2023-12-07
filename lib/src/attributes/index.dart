@@ -15,3 +15,4 @@ export 'positioned_attributes.dart';
 export 'decorated_box_attributes.dart';
 export 'checkbox_attributes.dart';
 export 'container_attributes.dart';
+export 'image_attributes.dart';

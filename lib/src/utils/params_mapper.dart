@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
@@ -255,6 +257,159 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Basic">
+  static FilterQuality convertToFilterQuality(String? value) {
+    if (value == null) return FilterQuality.low;
+
+    switch (value) {
+      case "none":
+        return FilterQuality.none;
+      case "low":
+        return FilterQuality.low;
+      case "medium":
+        return FilterQuality.medium;
+      case "high":
+        return FilterQuality.high;
+    }
+
+    return FilterQuality.low;
+  }
+
+  static ImageRepeat convertToImageRepeat(String? value) {
+    if (value == null) return ImageRepeat.noRepeat;
+
+    switch (value) {
+      case "noRepeat":
+        return ImageRepeat.noRepeat;
+      case "repeat":
+        return ImageRepeat.repeat;
+      case "repeatX":
+        return ImageRepeat.repeatX;
+      case "repeatY":
+        return ImageRepeat.repeatY;
+    }
+
+    return ImageRepeat.noRepeat;
+  }
+
+  static Uint8List convertToUint8List(dynamic value) {
+    if (value == null) return Uint8List(0);
+
+    if (value is Uint8List) {
+      return value;
+    }
+
+    if (value is List<int>) {
+      return Uint8List.fromList(value);
+    }
+
+    return Uint8List(0);
+  }
+
+  static ImageType convertToImageType(String? value) {
+    if (value == null) return ImageType.network;
+
+    switch (value) {
+      case "asset":
+        return ImageType.asset;
+      case "network":
+        return ImageType.network;
+      case "memory":
+        return ImageType.memory;
+    }
+
+    return ImageType.network;
+  }
+
+  static BoxFit? convertToBoxFit(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "fill":
+        return BoxFit.fill;
+      case "contain":
+        return BoxFit.contain;
+      case "cover":
+        return BoxFit.cover;
+      case "fitHeight":
+        return BoxFit.fitHeight;
+      case "fitWidth":
+        return BoxFit.fitWidth;
+      case "none":
+        return BoxFit.none;
+      case "scaleDown":
+        return BoxFit.scaleDown;
+    }
+
+    return null;
+  }
+
+  static BlendMode convertToBlendMode(String? value) {
+    if (value == null) return BlendMode.src;
+
+    switch (value) {
+      case "clear":
+        return BlendMode.clear;
+      case "src":
+        return BlendMode.src;
+      case "dst":
+        return BlendMode.dst;
+      case "srcOver":
+        return BlendMode.srcOver;
+      case "dstOver":
+        return BlendMode.dstOver;
+      case "srcIn":
+        return BlendMode.srcIn;
+      case "dstIn":
+        return BlendMode.dstIn;
+      case "srcOut":
+        return BlendMode.srcOut;
+      case "dstOut":
+        return BlendMode.dstOut;
+      case "srcATop":
+        return BlendMode.srcATop;
+      case "dstATop":
+        return BlendMode.dstATop;
+      case "xor":
+        return BlendMode.xor;
+      case "plus":
+        return BlendMode.plus;
+      case "modulate":
+        return BlendMode.modulate;
+      case "screen":
+        return BlendMode.screen;
+      case "overlay":
+        return BlendMode.overlay;
+      case "darken":
+        return BlendMode.darken;
+      case "lighten":
+        return BlendMode.lighten;
+      case "colorDodge":
+        return BlendMode.colorDodge;
+      case "colorBurn":
+        return BlendMode.colorBurn;
+      case "hardLight":
+        return BlendMode.hardLight;
+      case "softLight":
+        return BlendMode.softLight;
+      case "difference":
+        return BlendMode.difference;
+      case "exclusion":
+        return BlendMode.exclusion;
+      case "multiply":
+        return BlendMode.multiply;
+      case "hue":
+        return BlendMode.hue;
+      case "saturation":
+        return BlendMode.saturation;
+      case "color":
+        return BlendMode.color;
+      case "luminosity":
+        return BlendMode.luminosity;
+    }
+
+    return BlendMode.src;
+  }
+
   static VerticalDirection? convertToVerticalDirection(String? value) {
     if (value == null) return null;
 

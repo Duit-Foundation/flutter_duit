@@ -210,6 +210,18 @@ mixin WidgetFabric {
                   child: child,
                 );
         }
+      case DUITElementType.image:
+        {
+          final it = model as ImageUIElement;
+
+          return it.controlled
+              ? DUITControlledImage(
+                  controller: it.viewController!,
+                )
+              : DUITImage(
+                  attributes: it.attributes,
+                );
+        }
       case DUITElementType.empty:
         {
           return const DUITEmptyView();

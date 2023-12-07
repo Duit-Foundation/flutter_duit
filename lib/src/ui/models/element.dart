@@ -347,6 +347,24 @@ abstract base class DUITElement<T> with WidgetFabric {
             controlled: true,
           );
         }
+      case DUITElementType.image:
+        {
+          return ImageUIElement(
+            type: type,
+            id: id,
+            attributes: attributes,
+            viewController: createAndAttachController(
+              id,
+              controlled,
+              attributes,
+              serverAction,
+              driver,
+              type,
+              tag,
+            ),
+            controlled: controlled,
+          );
+        }
       case DUITElementType.container:
         {
           final child = DUITElement.fromJson(json["child"], driver);
@@ -788,6 +806,24 @@ final class TextFieldUIElement<T> extends DUITElement<T> {
   UIElementController<T>? viewController;
 
   TextFieldUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required this.attributes,
+    required this.viewController,
+  });
+//</editor-fold>
+}
+
+final class ImageUIElement<T> extends DUITElement<T> {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  ViewAttributeWrapper<T>? attributes;
+
+  @override
+  UIElementController<T>? viewController;
+
+  ImageUIElement({
     required super.type,
     required super.id,
     required super.controlled,
