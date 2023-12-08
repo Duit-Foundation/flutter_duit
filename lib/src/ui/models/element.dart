@@ -9,9 +9,16 @@ import 'package:flutter_duit/src/utils/index.dart';
 import 'child.dart';
 import 'el_type.dart';
 
+/// Represents a DUIT element in the DUIT element tree.
+///
+/// The [DUITElement] class represents an individual DUIT element in the DUIT element tree.
+/// It holds information about the element's type, properties, and child elements.
+/// The [DUITElement] class provides methods for rendering the element to a Flutter widget and handling interactions.
 abstract base class DUITElement<T> with WidgetFabric {
   //<editor-fold desc="Properties and ctor">
   final String id;
+
+  /// The type of the DUIT element.
   final DUITElementType type;
   final bool controlled;
   final String? tag;
@@ -28,15 +35,14 @@ abstract base class DUITElement<T> with WidgetFabric {
   factory DUITElement.fromJson(JSONObject? json, UIDriver driver) {
     if (json == null) return EmptyUIElement();
 
-    final type = convert(json["type"]);
-    final id = json["id"];
+    final DUITElementType type = inferTypeFromValue(json["type"]);
+    final String id = json["id"];
     final bool controlled = json["controlled"] ?? false;
-    final tag = json["tag"];
-    final attributes =
+    final String? tag = json["tag"];
+    final ViewAttributeWrapper<T> attributes =
         ViewAttributeWrapper.createAttributes<T>(type, json["attributes"], tag);
     final ServerAction? serverAction =
         json["action"] != null ? ServerAction.fromJSON(json["action"]) : null;
-    assert(id != null, "Id cannot be null");
 
     switch (type) {
       case DUITElementType.row:
@@ -428,6 +434,12 @@ abstract base class DUITElement<T> with WidgetFabric {
   //</editor-fold>
 
   //<editor-fold desc="Methods">
+
+  /// Creates and attaches a controller to a specific element in the DUIT element tree.
+  ///
+  /// The [createAndAttachController] function is used to create and attach a controller to a specific element in the DUIT element tree.
+  ///
+  /// Returns the attached controller or null if the element is not controlled.
   static UIElementController<T>? createAndAttachController<T>(
       String id,
       bool controlled,
@@ -455,6 +467,9 @@ abstract base class DUITElement<T> with WidgetFabric {
     return controller;
   }
 
+  /// Renders the DUIT element to a Flutter widget.
+  ///
+  /// Returns the rendered Flutter widget.
   Widget renderView() {
     return getWidgetFromElement(this);
   }

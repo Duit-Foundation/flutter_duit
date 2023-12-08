@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
 
+/// Utility class for working with colors in Flutter.
 final class ColorUtils {
+  /// Tries to parse a color from the given input.
+  ///
+  /// The `color` parameter can be a [Color] object or a valid HEX color string.
+  ///
+  /// If `color` is a [Color] object, it is returned as is.
+  ///
+  /// If `color` is a HEX color string, it is parsed and converted to a [Color] instance.
+  /// The HEX color string can start with or without the '#' symbol.
+  ///
+  /// Throws an [ArgumentError] if the HEX color string is invalid.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// Color color1 = ColorUtils.tryParseColor(Colors.blue);
+  /// Color color2 = ColorUtils.tryParseColor("#FF0000");
+  /// ```
   static Color tryParseColor(dynamic color) {
     if (color is Color) return color;
 

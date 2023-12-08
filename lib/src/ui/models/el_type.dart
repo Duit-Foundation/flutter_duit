@@ -1,60 +1,66 @@
 enum DUITElementType {
-  ///Keys: Column, 1
+  ///Keys: Column
   column,
 
-  ///Keys: Row, 2
+  ///Keys: Row
   row,
 
-  ///Keys: Text, 3
+  ///Keys: Text
   text,
 
-  ///Keys: ElevatedButton, 4
+  ///Keys: ElevatedButton
   elevatedButton,
 
-  ///Keys: TextField, 6
+  ///Keys: TextField
   textField,
 
-  ///Keys: Center, 7
+  ///Keys: Center
   center,
 
-  ///Keys: ColoredBox, 8
+  ///Keys: ColoredBox
   coloredBox,
 
-  ///Keys: SizedBox, 9
+  ///Keys: SizedBox
   sizedBox,
 
-  ///Keys: Empty, 0
+  ///Keys: Empty
   empty,
 
-  ///Keys: Custom, 10
+  ///Keys: Custom
   custom,
 
-  ///Keys: Stack, 11
+  ///Keys: Stack
   stack,
 
-  ///Keys: Expanded, 12
+  ///Keys: Expanded
   expanded,
 
-  ///Keys: Padding, 13
+  ///Keys: Padding
   padding,
 
-  ///Keys: Positioned, 14
+  ///Keys: Positioned
   positioned,
 
-  ///Keys: DecoratedBox, 15
+  ///Keys: DecoratedBox
   decoratedBox,
 
-  ///Keys: Checkbox, 16
+  ///Keys: Checkbox
   checkbox,
 
-  ///Keys: Container, 17
+  ///Keys: Container
   container,
 
-  ///Keys: Image, 18
+  ///Keys: Image
   image,
 }
 
-DUITElementType convert(dynamic type) {
+/// Infers the type of a value based on its runtime type.
+///
+/// The [inferTypeFromValue] function is used to infer the type of a value based on its runtime type.
+/// It takes in the [value] parameter, which represents the value to infer the type from.
+///
+/// Returns the inferred type of the value.
+DUITElementType inferTypeFromValue(dynamic type) {
   if (type == null) return DUITElementType.empty;
 
   if (type is String) {
@@ -97,31 +103,6 @@ DUITElementType convert(dynamic type) {
         return DUITElementType.custom;
       default:
         return DUITElementType.empty;
-    }
-  }
-
-  if (type is int) {
-    switch (type) {
-      case 1:
-        return DUITElementType.column;
-      case 2:
-        return DUITElementType.row;
-      case 3:
-        return DUITElementType.text;
-      case 6:
-        return DUITElementType.textField;
-      case 4:
-        return DUITElementType.elevatedButton;
-      case 9:
-        return DUITElementType.sizedBox;
-      case 5:
-        return DUITElementType.coloredBox;
-      case 7:
-        return DUITElementType.center;
-      case 0:
-        return DUITElementType.empty;
-      default:
-        return DUITElementType.custom;
     }
   }
 

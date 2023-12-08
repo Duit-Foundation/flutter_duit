@@ -3,8 +3,14 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
+/// A utility class for mapping parameter values to their corresponding Flutter widget properties.
 class ParamsMapper {
   //<editor-fold desc="Text">
+
+  /// Converts a string value to a [TextAlign] value.
+  ///
+  /// Returns the corresponding [TextAlign] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
   static TextAlign? convertToTextAlign(String? value) {
     if (value == null) return null;
 
@@ -26,6 +32,10 @@ class ParamsMapper {
     return null;
   }
 
+  /// Converts an integer value to a [FontWeight] value.
+  ///
+  /// Returns the corresponding [FontWeight] value for the given integer [value].
+  /// If [value] is `null`, returns `null`.
   static FontWeight? convertToFontWeight(int? value) {
     if (value == null) return null;
 
@@ -53,6 +63,10 @@ class ParamsMapper {
     return null;
   }
 
+  /// Converts a string value to a [TextOverflow] value.
+  ///
+  /// Returns the corresponding [TextOverflow] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
   static TextOverflow? convertToTextOverflow(String? value) {
     if (value == null) return null;
 
@@ -70,6 +84,24 @@ class ParamsMapper {
     return null;
   }
 
+  /// Converts a map of style values to a [TextStyle] object.
+  ///
+  /// Returns a [TextStyle] object with the properties specified in the given [styleMap].
+  /// The [styleMap] should be a map with the following keys:
+  /// - 'fontSize': the font size as a double value.
+  /// - 'fontWeight': the font weight as an integer value.
+  /// - 'fontStyle': the font style as a [FontStyle] value (e.g., 'normal', 'italic').
+  /// - 'letterSpacing': the letter spacing as a double value.
+  /// - 'wordSpacing': the word spacing as a double value.
+  /// - 'color': the color as a [Color] value.
+  /// - 'backgroundColor': the background color as a [Color] value.
+  /// - 'decoration': the text decoration as a [TextDecoration] value.
+  /// - 'decorationColor': the decoration color as a [Color] value.
+  /// - 'decorationStyle': the decoration style as a [TextDecorationStyle] value.
+  /// - 'decorationThickness': the decoration thickness as a double value.
+  ///
+  /// If any of the properties are missing or invalid, they will be ignored.
+  /// If [styleMap] is `null` or empty, returns `null`.
   static TextStyle? convertToTextStyle(JSONObject? json) {
     if (json == null) return null;
 
@@ -86,6 +118,11 @@ class ParamsMapper {
     );
   }
 
+  /// Converts a string value to a [TextDirection] value.
+  ///
+  /// Returns the corresponding [TextDirection] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid text direction, returns [TextDirection.ltr] as the default.
   static TextDirection? convertToTextDirection(String? value) {
     if (value == null) return null;
 
@@ -102,6 +139,18 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Flex and container props">
+
+  /// Converts a map of constraint values to a [BoxConstraints] object.
+  ///
+  /// Returns a [BoxConstraints] object with the properties specified in the given [constraintsMap].
+  /// The [constraintsMap] should be a map with the following keys:
+  /// - 'minWidth': the minimum width as a double value.
+  /// - 'maxWidth': the maximum width as a double value.
+  /// - 'minHeight': the minimum height as a double value.
+  /// - 'maxHeight': the maximum height as a double value.
+  ///
+  /// If any of the properties are missing or invalid, they will be ignored.
+  /// If [constraintsMap] is `null` or empty, returns `null`.
   static BoxConstraints? convertToBoxConstraints(JSONObject? json) {
     if (json == null) return null;
 
@@ -115,6 +164,11 @@ class ParamsMapper {
     );
   }
 
+  /// Converts a string value to a [StackFit] value.
+  ///
+  /// Returns the corresponding [StackFit] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid stack fit, returns [StackFit.loose] as the default.
   static StackFit convertToStackFit(String? value) {
     if (value == null) return StackFit.loose;
 
@@ -130,6 +184,11 @@ class ParamsMapper {
     return StackFit.loose;
   }
 
+  /// Converts a string value to an [Alignment] value.
+  ///
+  /// Returns the corresponding [Alignment] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid alignment, returns [Alignment.center] as the default.
   static AlignmentGeometry convertToAlignment(String? value) {
     if (value == null) return Alignment.topLeft;
 
@@ -157,6 +216,11 @@ class ParamsMapper {
     return Alignment.topLeft;
   }
 
+  /// Converts a string value to an [AlignmentDirectional] value.
+  ///
+  /// Returns the corresponding [AlignmentDirectional] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid alignment, returns [AlignmentDirectional.centerStart] as the default.
   static AlignmentGeometry convertToAlignmentDirectional(String? value) {
     if (value == null) return AlignmentDirectional.topStart;
 
@@ -184,6 +248,11 @@ class ParamsMapper {
     return AlignmentDirectional.topStart;
   }
 
+  /// Converts a string value to a [MainAxisAlignment] value.
+  ///
+  /// Returns the corresponding [MainAxisAlignment] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid main axis alignment, returns [MainAxisAlignment.start] as the default.
   static MainAxisAlignment? convertToMainAxisAlignment(String? value) {
     if (value == null) return null;
 
@@ -205,6 +274,11 @@ class ParamsMapper {
     return null;
   }
 
+  /// Converts a string value to a [CrossAxisAlignment] value.
+  ///
+  /// Returns the corresponding [CrossAxisAlignment] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid cross axis alignment, returns [CrossAxisAlignment.start] as the default.
   static CrossAxisAlignment? convertToCrossAxisAlignment(String? value) {
     if (value == null) return null;
 
@@ -224,6 +298,11 @@ class ParamsMapper {
     return null;
   }
 
+  /// Converts a string value to a [Clip] value.
+  ///
+  /// Returns the corresponding [Clip] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid clip value, returns [Clip.none] as the default.
   static Clip convertToClip(String? value) {
     if (value == null) return Clip.hardEdge;
 
@@ -241,6 +320,11 @@ class ParamsMapper {
     return Clip.hardEdge;
   }
 
+  /// Converts a string value to a [MainAxisSize] value.
+  ///
+  /// Returns the corresponding [MainAxisSize] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid main axis size, returns [MainAxisSize.max] as the default.
   static MainAxisSize? convertToMainAxisSize(String? value) {
     if (value == null) return null;
 
@@ -257,6 +341,12 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Basic">
+
+  /// Converts a string value to a [FilterQuality] value.
+  ///
+  /// Returns the corresponding [FilterQuality] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid filter quality, returns [FilterQuality.low] as the default.
   static FilterQuality convertToFilterQuality(String? value) {
     if (value == null) return FilterQuality.low;
 
@@ -274,6 +364,11 @@ class ParamsMapper {
     return FilterQuality.low;
   }
 
+// Converts a string value to an [ImageRepeat] value.
+  ///
+  /// Returns the corresponding [ImageRepeat] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid image repeat value, returns [ImageRepeat.noRepeat] as the default.
   static ImageRepeat convertToImageRepeat(String? value) {
     if (value == null) return ImageRepeat.noRepeat;
 
@@ -291,6 +386,11 @@ class ParamsMapper {
     return ImageRepeat.noRepeat;
   }
 
+  /// Converts a list of integers to a [Uint8List].
+  ///
+  /// Returns a [Uint8List] containing the values from the given [list].
+  /// If [list] is `null`, returns `null`.
+  /// If any value in the [list] is not a valid unsigned 8-bit integer (0-255), it will be clamped to that range.
   static Uint8List convertToUint8List(dynamic value) {
     if (value == null) return Uint8List(0);
 
@@ -305,6 +405,11 @@ class ParamsMapper {
     return Uint8List(0);
   }
 
+  /// Converts a string value to an [ImageType] value.
+  ///
+  /// Returns the corresponding [ImageType] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid image type, returns [ImageType.png] as the default.
   static ImageType convertToImageType(String? value) {
     if (value == null) return ImageType.network;
 
@@ -320,6 +425,11 @@ class ParamsMapper {
     return ImageType.network;
   }
 
+  /// Converts a string value to a [BoxFit] value.
+  ///
+  /// Returns the corresponding [BoxFit] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid box fit value, returns [BoxFit.contain] as the default.
   static BoxFit? convertToBoxFit(String? value) {
     if (value == null) return null;
 
@@ -343,6 +453,11 @@ class ParamsMapper {
     return null;
   }
 
+  /// Converts a string value to a [BlendMode] value.
+  ///
+  /// Returns the corresponding [BlendMode] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid blend mode, returns [BlendMode.srcOver] as the default.
   static BlendMode convertToBlendMode(String? value) {
     if (value == null) return BlendMode.src;
 
@@ -410,6 +525,11 @@ class ParamsMapper {
     return BlendMode.src;
   }
 
+  /// Converts a string value to a [VerticalDirection] value.
+  ///
+  /// Returns the corresponding [VerticalDirection] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid vertical direction, returns [VerticalDirection.down] as the default.
   static VerticalDirection? convertToVerticalDirection(String? value) {
     if (value == null) return null;
 
@@ -426,6 +546,12 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Decoration">
+
+  /// Converts a string value to a [BoxShape] value.
+  ///
+  /// Returns the corresponding [BoxShape] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid box shape, returns [BoxShape.rectangle] as the default.
   static BoxShape convertToBoxShape(String? value) {
     if (value == null) return BoxShape.rectangle;
 
@@ -439,12 +565,21 @@ class ParamsMapper {
     return BoxShape.rectangle;
   }
 
+  /// Converts a list of two double values to an [Offset].
+  ///
+  /// Returns an [Offset] with the given [x] and [y] values.
+  /// If [list] is `null` or does not contain exactly two elements, returns `null`.
   static Offset convertToOffset(JSONObject? json) {
     if (json == null) return Offset.zero;
 
     return Offset(json["dx"] ?? 0.0, json["dy"] ?? 0.0);
   }
 
+  /// Converts a string value to a [BlurStyle] value.
+  ///
+  /// Returns the corresponding [BlurStyle] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  /// If [value] is not a valid blur style, returns [BlurStyle.normal] as the default.
   static BlurStyle convertToBlurStyle(String? value) {
     if (value == null) return BlurStyle.normal;
 
@@ -462,6 +597,11 @@ class ParamsMapper {
     return BlurStyle.normal;
   }
 
+  /// Converts a list of values to a [BoxShadow].
+  ///
+  /// Returns a [BoxShadow] with the given [color], [offset], [blurRadius], and [spreadRadius].
+  /// If any of the values are `null` or if the list does not contain exactly four elements,
+  /// returns `null`.
   static List<BoxShadow>? convertToBoxShadow(JSONObject? json) {
     if (json == null) return null;
 
@@ -482,6 +622,11 @@ class ParamsMapper {
     return arr;
   }
 
+  /// Converts a list of values to a [Gradient].
+  ///
+  /// Returns a [Gradient] with the given [type] and [colors].
+  /// If [type] is `null` or not a valid gradient type, or if [colors] is `null`,
+  /// returns `null`.
   static Gradient? convertToGradient(JSONObject? json) {
     if (json == null) return null;
 
@@ -510,6 +655,11 @@ class ParamsMapper {
     );
   }
 
+  /// Converts a map of values to a [Decoration].
+  ///
+  /// Returns a [Decoration] with the given properties specified in the [map].
+  /// If the [map] is `null` or does not contain valid properties, returns `null`.
+  /// You can provide any combination of these properties in the [map].
   static Decoration? convertToDecoration(JSONObject? json) {
     if (json == null) return null;
 
@@ -523,6 +673,9 @@ class ParamsMapper {
     );
   }
 
+  /// Converts a map of values to a [Border].
+  ///
+  /// Returns a [Border] with the given properties specified in the [map].
   static Border? convertToBorder(JSONObject? json) {
     if (json == null) return null;
 
@@ -531,6 +684,9 @@ class ParamsMapper {
     );
   }
 
+  /// Converts a map of values to an [InputDecoration].
+  ///
+  /// Returns an [InputDecoration] with the given properties specified in the [map].
   static InputDecoration? convertToInputDecoration(JSONObject? json) {
     if (json == null) return null;
 
@@ -569,6 +725,10 @@ class ParamsMapper {
     );
   }
 
+  /// Converts a string value to a [TextInputType].
+  ///
+  /// Returns the corresponding [TextInputType] value for the given string [value].
+  /// If [value] is `null` or not a valid text input type, returns [TextInputType.text] as the default.
   static TextInputType convertToTextInputType(String? value) {
     if (value == null) return TextInputType.text;
     // TextInputType.
@@ -598,7 +758,11 @@ class ParamsMapper {
     return TextInputType.text;
   }
 
-  static convertToBorderStyle(JSONObject? json) {
+  /// Converts a string value to a [BorderStyle].
+  ///
+  /// Returns the corresponding [BorderStyle] value for the given string [value].
+  /// If [value] is `null` or not a valid border style, returns [BorderStyle.solid] as the default.
+  static BorderStyle convertToBorderStyle(JSONObject? json) {
     if (json == null) return BorderStyle.solid;
 
     switch (json["style"]) {
@@ -607,8 +771,14 @@ class ParamsMapper {
       case "none":
         return BorderStyle.none;
     }
+
+    return BorderStyle.solid;
   }
 
+  /// Converts a string value to a [VisualDensity].
+  ///
+  /// Returns the corresponding [VisualDensity] value for the given string [value].
+  /// If [value] is `null` or not a valid visual density, returns [VisualDensity.standard] as the default.
   static VisualDensity convertToVisualDensity(JSONObject? json) {
     if (json == null) return const VisualDensity();
 
@@ -618,6 +788,27 @@ class ParamsMapper {
     );
   }
 
+  /// Converts a JSON string to a [MaterialStateProperty<Color>].
+  ///
+  /// Returns a [MaterialStateProperty<Color>] with colors based on the provided JSON string.
+  /// If the [json] is `null`, returns `null`.
+  /// The JSON object should contain color values for different states, such as "activeColor" and "defaultColor".
+  /// You can customize the implementation to handle different states and map them to the corresponding colors.
+  /// This method uses `MaterialStateProperty.resolveWith` to dynamically resolve colors based on the provided states.
+  ///
+  /// Example JSON string:
+  /// ```
+  /// {
+  ///   "activeColor": 4294901760,
+  ///   "defaultColor": 4278190080
+  /// }
+  /// ```
+  ///
+  /// Example usage:
+  /// ```
+  /// final jsonString = '{"activeColor": 4294901760, "defaultColor": 4278190080}';
+  /// final mspColor = convertToMSPColor(jsonString);
+  /// ```
   static MaterialStateProperty<Color>? convertToMSPColor(JSONObject? json) {
     if (json == null) return null;
 
@@ -693,6 +884,38 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Shape and insets">
+
+  /// Converts a JSON object to an [EdgeInsets].
+  ///
+  /// Returns an [EdgeInsets] with values based on the provided JSON object.
+  /// If the [json] is `null` or does not contain valid properties, returns [EdgeInsets.zero] as the default.
+  /// The supported properties are:
+  /// - "top" (double): The top edge inset.
+  /// - "right" (double): The right edge inset.
+  /// - "bottom" (double): The bottom edge inset.
+  /// - "left" (double): The left edge inset.
+  /// You can provide any combination of these properties in the [json] object.
+  ///
+  /// Example JSON object:
+  /// ```
+  /// {
+  ///   "top": 10.0,
+  ///   "right": 20.0,
+  ///   "bottom": 10.0,
+  ///   "left": 20.0
+  /// }
+  /// ```
+  ///
+  /// Example usage:
+  /// ```
+  /// final json = {
+  ///   "top": 10.0,
+  ///   "right": 20.0,
+  ///   "bottom": 10.0,
+  ///   "left": 20.0
+  /// };
+  /// final edgeInsets = convertToEdgeInsets(json);
+  /// ```
   static EdgeInsets convertToEdgeInsets(dynamic insets) {
     if (insets == null) return EdgeInsets.zero;
 
