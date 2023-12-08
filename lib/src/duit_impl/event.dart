@@ -1,28 +1,22 @@
 import 'package:flutter_duit/src/utils/index.dart';
 
-class WidgetsUpdateSet {
-  Map<String, dynamic> updates;
-
-  WidgetsUpdateSet({
-    required this.updates,
-  });
-
-  static WidgetsUpdateSet? fromJson(JSONObject? json) {
-    if (json == null) return null;
-
-    return WidgetsUpdateSet(updates: json["updates"]);
-  }
-}
-
+/// Represents the type of a server event.
 enum ServerEventType {
   update,
   // navigate,
   // openUrl,
 }
 
+/// Represents a server response event.
 abstract class ServerEvent {
+  /// The type of the server event.
   abstract ServerEventType type;
 
+  /// Creates a [ServerEvent] object from a JSON object.
+  ///
+  /// The [json] parameter is a JSON object representing the server event.
+  /// Returns a [ServerEvent] object if the JSON object is valid and represents
+  /// a recognized server event type, otherwise returns `null`.
   static ServerEvent? fromJson(JSONObject? json) {
     if (json == null) return null;
 
@@ -43,16 +37,25 @@ abstract class ServerEvent {
   }
 }
 
+/// Represents an update event.
 final class UpdateEvent extends ServerEvent {
   @override
   ServerEventType type = ServerEventType.update;
 
+  /// The updates associated with the event.
   Map<String, dynamic> updates;
 
+  /// Constructs an [UpdateEvent] object with the specified updates.
+  ///
+  /// The [updates] parameter is a map of key-value pairs representing the updates.
   UpdateEvent({
     required this.updates,
   });
 
+  /// Creates an [UpdateEvent] object from a JSON object.
+  ///
+  /// The [json] parameter is a JSON object representing the update event.
+  /// Returns an [UpdateEvent] object if the JSON object is valid, otherwise throws an exception.
   factory UpdateEvent.fromJson(JSONObject json) {
     return UpdateEvent(updates: json["updates"]);
   }

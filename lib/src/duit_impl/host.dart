@@ -2,11 +2,37 @@ import 'package:flutter/material.dart';
 
 import 'driver.dart';
 
+/// A widget that hosts a DUIT view.
+///
+/// The `DuitViewHost` widget is responsible for rendering a DUIT view using the provided `UIDriver`.
+/// It receives a `placeholder` widget that is displayed while the DUIT view is loading or if there is no data to render.
+/// The `driver` parameter is required and should be an instance of `UIDriver`.
+/// The `context` parameter is required and should be the build context of the parent widget.
+///
+/// Example usage:
+///
+/// ```dart
+/// DuitViewHost(
+///   driver: myUIDriver,
+///   context: context,
+///   placeholder: CircularProgressIndicator(),
+/// )
+/// ```
 class DuitViewHost extends StatefulWidget {
+  /// A widget to be displayed while the DUIT view is loading or if there is no data to render.
   final Widget? placeholder;
+
+  /// The UIDriver that handles the DUIT view.
   final UIDriver driver;
+
+  /// The build context of the parent widget.
   final BuildContext context;
 
+  /// Creates a new `DuitViewHost` widget.
+  ///
+  /// The [driver] parameter is required and should be an instance of `UIDriver`.
+  /// The [context] parameter is required and should be the build context of the parent widget.
+  /// The [placeholder] parameter is optional and specifies a widget to be displayed while the DUIT view is loading or if there is no data to render.
   const DuitViewHost({
     super.key,
     required this.driver,
@@ -19,7 +45,6 @@ class DuitViewHost extends StatefulWidget {
 }
 
 class _DuitViewHostState extends State<DuitViewHost> {
-
   @override
   void initState() {
     widget.driver.init();

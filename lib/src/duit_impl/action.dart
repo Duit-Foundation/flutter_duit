@@ -1,5 +1,8 @@
 import 'package:flutter_duit/src/utils/index.dart';
 
+/// Represents the metadata for an HTTP action.
+///
+/// The [HttpActionMetainfo] class contains information about the HTTP method to be used for the action.
 final class HttpActionMetainfo {
   String method;
 
@@ -12,6 +15,9 @@ final class HttpActionMetainfo {
   }
 }
 
+/// Represents a dependency for a server action.
+///
+/// The [ActionDependency] class contains information about the dependency target and ID.
 final class ActionDependency {
   String id;
   String target;
@@ -29,9 +35,17 @@ final class ActionDependency {
   }
 }
 
+/// Represents a server action.
+///
+/// The [ServerAction] class encapsulates information about a server action, including its dependencies, event, and metadata.
 final class ServerAction {
+  /// The list of dependencies for the server action.
   List<ActionDependency> dependsOn;
+
+  /// The event associated with the server action.
   String event;
+
+  /// The event associated with the server action.
   HttpActionMetainfo? meta;
 
   ServerAction({
@@ -40,8 +54,8 @@ final class ServerAction {
     this.meta,
   });
 
-   static ServerAction? fromJSON(JSONObject? json) {
-     if (json == null) return null;
+  static ServerAction? fromJSON(JSONObject? json) {
+    if (json == null) return null;
 
     List<ActionDependency> deps = [];
 
