@@ -4,14 +4,17 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 //TODO add transform [Matrix4] prop
 
+/// Represents the attributes for a Container widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 class ContainerAttributes implements DUITAttributes<ContainerAttributes> {
-  double? width, height;
-  Color? color;
-  Clip? clipBehavior;
-  Decoration? decoration, foregroundDecoration;
-  BoxConstraints? constraints;
-  EdgeInsetsGeometry? padding, margin;
-  AlignmentGeometry? alignment, transformAlignment;
+  final double? width, height;
+  final Color? color;
+  final Clip? clipBehavior;
+  final Decoration? decoration, foregroundDecoration;
+  final BoxConstraints? constraints;
+  final EdgeInsetsGeometry? padding, margin;
+  final AlignmentGeometry? alignment, transformAlignment;
 
   ContainerAttributes({
     this.width,

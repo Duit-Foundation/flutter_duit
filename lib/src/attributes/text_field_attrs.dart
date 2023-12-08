@@ -3,16 +3,19 @@ import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/models/attended_model.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
+/// Represents the attributes for a TextField widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 final class TextFieldAttributes extends AttendedModel<String>
     implements DUITAttributes<TextFieldAttributes> {
-  InputDecoration? decoration;
-  TextStyle? style;
-  TextInputType? keyboardType;
-  TextAlign? textAlign;
-  TextAlignVertical? textAlignVertical;
-  TextDirection? textDirection;
-  String? obscuringCharacter;
-  bool? obscureText,
+  final InputDecoration? decoration;
+  final TextStyle? style;
+  final TextInputType? keyboardType;
+  final TextAlign? textAlign;
+  final TextAlignVertical? textAlignVertical;
+  final TextDirection? textDirection;
+  final String? obscuringCharacter;
+  final bool? obscureText,
       autocorrect,
       enableSuggestions,
       expands,
@@ -20,7 +23,7 @@ final class TextFieldAttributes extends AttendedModel<String>
       showCursor,
       enabled,
       autofocus;
-  int? maxLines, minLines, maxLength;
+  final int? maxLines, minLines, maxLength;
 
   TextFieldAttributes({
     this.decoration,

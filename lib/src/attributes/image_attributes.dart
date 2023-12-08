@@ -5,19 +5,25 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 import 'attributes.dart';
 
-class ImageAttributes implements DUITAttributes<ImageAttributes> {
-  ImageType type;
-  String src;
-  Uint8List byteData;
-  double? scale, width, height;
-  int? cacheWidth, cacheHeight;
-  bool? isAntiAlias, matchTextDirection, gaplessPlayback, excludeFromSemantics;
-  FilterQuality? filterQuality;
-  AlignmentGeometry? alignment;
-  ImageRepeat? repeat;
-  Color? color;
-  BlendMode? colorBlendMode;
-  BoxFit? fit;
+/// Represents the attributes for a Image widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
+final class ImageAttributes implements DUITAttributes<ImageAttributes> {
+  final ImageType type;
+  final String src;
+  final Uint8List byteData;
+  final double? scale, width, height;
+  final int? cacheWidth, cacheHeight;
+  final bool? isAntiAlias,
+      matchTextDirection,
+      gaplessPlayback,
+      excludeFromSemantics;
+  final FilterQuality? filterQuality;
+  final AlignmentGeometry? alignment;
+  final ImageRepeat? repeat;
+  final Color? color;
+  final BlendMode? colorBlendMode;
+  final BoxFit? fit;
 
   ImageAttributes({
     required this.type,

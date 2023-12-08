@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
+/// Represents the attributes for a Stack widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 final class StackAttributes implements DUITAttributes<StackAttributes> {
-  AlignmentGeometry? alignment;
-  TextDirection? textDirection;
-  StackFit? fit;
-  Clip? clipBehavior;
+  final AlignmentGeometry? alignment;
+  final TextDirection? textDirection;
+  final StackFit? fit;
+  final Clip? clipBehavior;
 
   StackAttributes({
     required this.alignment,

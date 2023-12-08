@@ -6,16 +6,26 @@ import "index.dart";
 
 //TODO: need add shape [OutlinedBorder]
 
+/// Represents the attributes for a checkbox widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 class CheckboxAttributes extends AttendedModel<bool>
     implements DUITAttributes<CheckboxAttributes> {
   // OutlinedBorder? shape;
-  bool? autofocus, isError, tristate;
-  String? semanticLabel;
-  double? splashRadius;
-  BorderSide? side;
-  MaterialStateProperty<Color>? fillColor, overlayColor;
-  Color? checkColor, splashColor, activeColor, focusColor, hoverColor;
-  VisualDensity visualDensity;
+  final bool? autofocus;
+  final bool? isError;
+  final bool? tristate;
+  final String? semanticLabel;
+  final double? splashRadius;
+  final BorderSide? side;
+  final MaterialStateProperty<Color>? fillColor;
+  final MaterialStateProperty<Color>? overlayColor;
+  final Color? checkColor;
+  final Color? splashColor;
+  final Color? activeColor;
+  final Color? focusColor;
+  final Color? hoverColor;
+  final VisualDensity visualDensity;
 
   CheckboxAttributes({
     required super.value,

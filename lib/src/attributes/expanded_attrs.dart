@@ -1,8 +1,11 @@
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
+/// Represents the attributes for a Expanded widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 class ExpandedAttributes implements DUITAttributes<ExpandedAttributes> {
-  int? flex;
+  final int? flex;
 
   ExpandedAttributes({
     required this.flex,

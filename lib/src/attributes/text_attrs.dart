@@ -3,16 +3,19 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 import 'index.dart';
 
+/// Represents the attributes for a Text widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 final class TextAttributes implements DUITAttributes<TextAttributes> {
-  String? data;
-  TextAlign? textAlign;
-  TextDirection? textDirection;
-  bool? softWrap;
-  TextOverflow? overflow;
-  double? textScaleFactor;
-  int? maxLines;
-  String? semanticsLabel;
-  TextStyle? style;
+  final String? data;
+  final TextAlign? textAlign;
+  final TextDirection? textDirection;
+  final bool? softWrap;
+  final TextOverflow? overflow;
+  final double? textScaleFactor;
+  final int? maxLines;
+  final String? semanticsLabel;
+  final TextStyle? style;
 
   TextAttributes({
     required this.data,

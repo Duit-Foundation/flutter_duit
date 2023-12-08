@@ -2,12 +2,12 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 import 'index.dart';
 
+/// Represents the attributes for a Positioned widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 final class PositionedAttributes
     implements DUITAttributes<PositionedAttributes> {
-  double? left;
-  double? top;
-  double? right;
-  double? bottom;
+  final double? left, top, right, bottom;
 
   PositionedAttributes({
     this.left,

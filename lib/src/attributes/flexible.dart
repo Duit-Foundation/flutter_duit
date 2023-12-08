@@ -3,13 +3,16 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 import 'index.dart';
 
+/// Represents the attributes for a Flexible widgets.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 sealed class FlexAttributes {
-  MainAxisAlignment? mainAxisAlignment;
-  MainAxisSize? mainAxisSize;
-  CrossAxisAlignment? crossAxisAlignment;
-  TextDirection? textDirection;
-  VerticalDirection? verticalDirection;
-  Clip? clipBehavior;
+  final MainAxisAlignment? mainAxisAlignment;
+  final MainAxisSize? mainAxisSize;
+  final CrossAxisAlignment? crossAxisAlignment;
+  final TextDirection? textDirection;
+  final VerticalDirection? verticalDirection;
+  final Clip? clipBehavior;
 
   FlexAttributes({
     this.mainAxisAlignment,

@@ -3,9 +3,12 @@ import 'dart:ui';
 import 'package:flutter_duit/src/attributes/attributes.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
+/// Represents the attributes for a ColoredBox widget.
+///
+/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
 final class ColoredBoxAttributes
     implements DUITAttributes<ColoredBoxAttributes> {
-  Color color;
+  final Color color;
 
   ColoredBoxAttributes({
     required this.color,
