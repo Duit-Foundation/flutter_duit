@@ -8,6 +8,21 @@ import 'package:http/http.dart' as http;
 
 import 'transport.dart';
 
+/// An HTTP transport implementation for making HTTP requests.
+///
+/// This class extends the [Transport] class and provides the functionality to
+/// make HTTP requests to a server. It uses the `http` package for performing
+/// the HTTP operations.
+///
+/// To use this transport, you need to provide a base URL and [HttpTransportOptions].
+///
+/// Example usage:
+/// ```dart
+/// final transport = HttpTransport(
+///   'https://api.example.com',
+///   options: HttpTransportOptions(),
+/// );
+/// ```
 final class HttpTransport extends Transport {
   final client = http.Client();
   final HttpTransportOptions options;

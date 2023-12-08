@@ -1,4 +1,8 @@
+/// Enum representing the type of transport.
 enum TransportType {
-  ws,
+  /// Represents the HTTP transport type.
   http,
+
+  /// Represents the WebSocket transport type.
+  ws,
 }

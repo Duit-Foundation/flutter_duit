@@ -8,6 +8,21 @@ import 'package:flutter_duit/src/transport/options.dart';
 import 'streamer.dart';
 import 'transport.dart';
 
+/// A WebSocket transport implementation for streaming data.
+///
+/// This class extends the [Transport] class and implements the [Streamer] interface.
+/// It provides the functionality to establish a WebSocket connection and stream data
+/// from the server.
+///
+/// To use this transport, you need to provide a WebSocket URL and [WebSocketTransportOptions].
+///
+/// Example usage:
+/// ```dart
+/// final transport = WSTransport(
+///   'wss://example.com/ws',
+///   options: WebSocketTransportOptions(),
+/// );
+/// ```
 final class WSTransport extends Transport implements Streamer {
   StreamController<Map<String, dynamic>> _controller =
       StreamController<Map<String, dynamic>>();
