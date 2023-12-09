@@ -86,7 +86,7 @@ final class ImageAttributes implements DUITAttributes<ImageAttributes> {
       filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
       alignment: ParamsMapper.convertToAlignment(json['alignment']),
       repeat: ParamsMapper.convertToImageRepeat(json['repeat']),
-      color: ColorUtils.tryParseColor(json['color']),
+      color: json['color'] != null ? ColorUtils.tryParseColor(json['color']) : null,
       colorBlendMode: ParamsMapper.convertToBlendMode(json['colorBlendMode']),
       fit: ParamsMapper.convertToBoxFit(json['fit']),
       excludeFromSemantics: json['excludeFromSemantics'],

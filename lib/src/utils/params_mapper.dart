@@ -394,12 +394,10 @@ class ParamsMapper {
   static Uint8List convertToUint8List(dynamic value) {
     if (value == null) return Uint8List(0);
 
-    if (value is Uint8List) {
-      return value;
-    }
-
-    if (value is List<int>) {
-      return Uint8List.fromList(value);
+    final bytes = value["data"];
+    if (bytes != null && bytes is List) {
+      final data = List.castFrom<dynamic, int>(bytes);
+      return Uint8List.fromList(data);
     }
 
     return Uint8List(0);

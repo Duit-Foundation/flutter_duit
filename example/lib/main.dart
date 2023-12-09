@@ -12,6 +12,32 @@ void main() {
   runApp(const MyApp());
 }
 
+final driver1 = DUITDriver(
+  "/decoratedbox",
+  transportOptions: HttpTransportOptions(
+    defaultHeaders: {"Content-Type": "application/json"},
+    baseUrl: "http://localhost:8999",
+  ),
+);
+final driver2 = DUITDriver(
+  "/inputs",
+  transportOptions: HttpTransportOptions(
+    defaultHeaders: {"Content-Type": "application/json"},
+    baseUrl: "http://localhost:8999",
+  ),
+);
+final driver3 = DUITDriver(
+  "ws://localhost:8999",
+  transportOptions: WebSocketTransportOptions(),
+);
+final driver4 = DUITDriver(
+  "/img",
+  transportOptions: HttpTransportOptions(
+    defaultHeaders: {"Content-Type": "application/json"},
+    baseUrl: "http://localhost:8999",
+  ),
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -37,24 +63,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final driver1 = DUITDriver(
-      "/decoratedbox",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    );
-    final driver2 = DUITDriver(
-      "/inputs",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    );
-    final driver3 = DUITDriver(
-      "ws://localhost:8999",
-      transportOptions: WebSocketTransportOptions(),
-    );
     return Scaffold(
       body: ListView(
         children: [
@@ -73,6 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
           DuitViewHost(
             context: context,
             driver: driver3,
+            placeholder: const CircularProgressIndicator(),
+          ),
+          const SizedBox(height: 24,),
+          DuitViewHost(
+            context: context,
+            driver: driver4,
             placeholder: const CircularProgressIndicator(),
           ),
         ],
