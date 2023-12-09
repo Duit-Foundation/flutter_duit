@@ -75,7 +75,7 @@ class CheckboxAttributes extends AttendedModel<bool>
       isError: json['isError'] ?? false,
       tristate: json['tristate'] ?? false,
       semanticLabel: json['semanticLabel'],
-      splashRadius: json['splashRadius'],
+      splashRadius: NumUtils.toDouble(json['splashRadius']),
       // shape: json['shape'] as OutlinedBorder,
       hoverColor: ColorUtils.tryParseColor(json["hoverColor"]),
       side: ParamsMapper.convertToBorderSide(json["side"]),

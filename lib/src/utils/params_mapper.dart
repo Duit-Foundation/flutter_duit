@@ -602,22 +602,21 @@ class ParamsMapper {
   /// Returns a [BoxShadow] with the given [color], [offset], [blurRadius], and [spreadRadius].
   /// If any of the values are `null` or if the list does not contain exactly four elements,
   /// returns `null`.
-  static List<BoxShadow>? convertToBoxShadow(JSONObject? json) {
+  static List<BoxShadow>? convertToBoxShadow(dynamic json) {
     if (json == null) return null;
 
     List<BoxShadow> arr = [];
-
-    json.forEach((key, value) {
-      final shadow = value as Map<String, dynamic>;
+    //
+    for (var value in json) {
       final boxShadow = BoxShadow(
-        color: ColorUtils.tryParseColor(shadow["color"]),
-        blurRadius: shadow["blurRadius"],
-        spreadRadius: shadow["spreadRadius"],
-        offset: convertToOffset(json["offset"]),
-        blurStyle: convertToBlurStyle(shadow["blurStyle"]),
+        color: ColorUtils.tryParseColor(value["color"]),
+        blurRadius: value["blurRadius"],
+        spreadRadius: value["spreadRadius"],
+        offset: convertToOffset(value["offset"]),
+        blurStyle: convertToBlurStyle(value["blurStyle"]),
       );
       arr.add(boxShadow);
-    });
+    }
 
     return arr;
   }
@@ -632,16 +631,16 @@ class ParamsMapper {
 
     final stops = json["stops"];
     final rotationAngle = json["rotationAngle"] as num?;
-    final colors = json["colors"];
-    final begin = json["begin"] ?? Alignment.centerLeft;
-    final end = json["end"] ?? Alignment.centerRight;
+    final colors = json["colors"] as List?;
+    final begin = convertToAlignment(json["begin"]);
+    final end = convertToAlignment(json["end"]);
 
     final List<Color> dColors = [];
 
     if (colors != null) {
-      colors.forEach((_, value) {
-        dColors.add(ColorUtils.tryParseColor(value));
-      });
+      for (var color in colors) {
+        dColors.add(ColorUtils.tryParseColor(color));
+      }
     }
 
     return LinearGradient(
@@ -666,7 +665,8 @@ class ParamsMapper {
     return BoxDecoration(
       color: ColorUtils.tryParseColor(json["color"]),
       border: convertToBorder(json["border"]),
-      borderRadius: BorderRadius.circular(json["borderRadius"] ?? 4),
+      borderRadius: BorderRadius.circular(
+          NumUtils.toDoubleWithNullReplacement(json["borderRadius"], 4.0)),
       shape: convertToBoxShape(json["shape"]),
       boxShadow: convertToBoxShadow(json["boxShadow"]),
       gradient: convertToGradient(json["gradient"]),
@@ -848,11 +848,9 @@ class ParamsMapper {
   static BorderSide convertToBorderSide(JSONObject? json) {
     if (json == null) return BorderSide.none;
 
-    final width = json["width"] as num?;
-
     return BorderSide(
       color: ColorUtils.tryParseColor(json["color"]),
-      width: width?.toDouble() ?? 1.0,
+      width: NumUtils.toDoubleWithNullReplacement(json["width"], 1.0),
       style: convertToBorderStyle(json["style"]),
     );
   }
@@ -923,13 +921,16 @@ class ParamsMapper {
       return EdgeInsets.all(insets.toDouble());
     }
 
-    if (insets is List<num>) {
-      if (insets.length == 2) {
+
+    if (insets is List) {
+      final list = List.castFrom<dynamic, num>(insets);
+
+      if (list.length == 2) {
         return EdgeInsets.symmetric(
             vertical: insets[0].toDouble(), horizontal: insets[1].toDouble());
       }
 
-      if (insets.length == 4) {
+      if (list.length == 4) {
         return EdgeInsets.only(
             left: insets[0].toDouble(),
             top: insets[1].toDouble(),

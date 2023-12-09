@@ -34,27 +34,14 @@ final class ColorUtils {
       }
     }
 
-    ///Parse array by fromARGB method to Color instance
-    if (color is List<int>) {
-      if (color.length == 4) {
-        return Color.fromARGB(color[3], color[0], color[1], color[2]);
-      } else if (color.length == 3) {
-        ///If passed only r g b channels set alpha channel to 1.0 automatically
-        return Color.fromARGB(1, color[0], color[1], color[2]);
-      } else {
-        throw ArgumentError(
-            "Color must be valid list of integers with length 4 or 3");
-      }
-    }
-
     ///Parse array by fromRGBO method to Color instance
-    if (color is List<double>) {
+    if (color is List) {
       if (color.length == 4) {
         return Color.fromRGBO(
           color[0].toInt(),
           color[1].toInt(),
           color[2].toInt(),
-          color[3],
+          color[3].toDouble(),
         );
       } else if (color.length == 3) {
         ///If passed only r g b channels set opacity to 1.0 automatically

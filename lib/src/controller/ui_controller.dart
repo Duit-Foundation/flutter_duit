@@ -62,4 +62,7 @@ abstract interface class UIElementController<T> {
   ///
   /// This method is called to dispose the controller and release any resources associated with it.
   void dispose();
+
+  /// RemoveListener the [ChangeNotifier].
+  void removeListener(VoidCallback listener);
 }

@@ -85,7 +85,7 @@ final class DUITDriver implements UIDriver {
   @override
   TransportOptions transportOptions;
   @override
-  StreamController<DUITAbstractTree?> _streamController = StreamController();
+  StreamController<DUITAbstractTree?> _streamController = StreamController.broadcast();
   @override
   late BuildContext _context;
 
@@ -98,7 +98,7 @@ final class DUITDriver implements UIDriver {
   }
 
   @override
-  Stream<DUITAbstractTree?> get stream => _streamController.stream;
+  Stream<DUITAbstractTree?> get stream => _streamController.stream.asBroadcastStream();
 
   DUITDriver(
     this.source, {
@@ -200,17 +200,23 @@ final class DUITDriver implements UIDriver {
 
   @override
   Future<void> init() async {
-    transport = _getTransport(transportOptions.type);
-    final json = await transport?.connect();
-    assert(json != null);
+    if (_layout != null) {
+      await Future.delayed(Duration.zero);
+      _streamController.sink.add(_layout);
+    } else {
+      transport ??= _getTransport(transportOptions.type);
 
-    if (transport is Streamer) {
-      final streamer = transport as Streamer;
-      streamer.eventStream.listen(_resolveEventFromJson);
+      final json = await transport?.connect();
+      assert(json != null);
+
+      if (transport is Streamer) {
+        final streamer = transport as Streamer;
+        streamer.eventStream.listen(_resolveEventFromJson);
+      }
+
+      _layout = DUITAbstractTree(json: json!, driver: this);
+      _streamController.sink.add(await _layout?.parse());
     }
-
-    _layout = await DUITAbstractTree(json: json!, driver: this).parse();
-    _streamController.sink.add(_layout);
   }
 
   @override

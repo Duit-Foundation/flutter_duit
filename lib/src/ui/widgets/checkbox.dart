@@ -21,6 +21,7 @@ class _DUITCheckboxState extends State<DUITCheckbox>
   @override
   void initState() {
     attachStateToController(widget.controller);
+    _value = attributes?.value;
     super.initState();
   }
 

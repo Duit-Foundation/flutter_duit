@@ -65,16 +65,18 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
     attributes = _controller?.attributes?.payload;
   }
 
-  void _listenControllerUpdateStateEvent() {
-    _controller?.addListener(() {
-      final newState = _controller?.attributes?.payload;
+  void _listener() {
+    final newState = _controller?.attributes?.payload;
 
-      if (newState != null) {
-        setState(() {
-          attributes = attributes?.copyWith(newState);
-        });
-      }
-    });
+    if (newState != null) {
+      setState(() {
+        attributes = attributes?.copyWith(newState);
+      });
+    }
+  }
+
+  void _listenControllerUpdateStateEvent() {
+    _controller?.addListener(_listener);
   }
 
   @override
@@ -85,7 +87,7 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller?.removeListener(_listener);
     super.dispose();
   }
 }
