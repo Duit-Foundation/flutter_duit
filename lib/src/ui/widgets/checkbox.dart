@@ -37,7 +37,7 @@ class _DUITCheckboxState extends State<DUITCheckbox>
   Widget build(BuildContext context) {
     return Checkbox(
       value: _value,
-      tristate: attributes?.tristate ?? false,
+      tristate: attributes?.tristate ?? true,
       autofocus: attributes?.autofocus ?? false,
       checkColor: attributes?.checkColor,
       hoverColor: attributes?.hoverColor,

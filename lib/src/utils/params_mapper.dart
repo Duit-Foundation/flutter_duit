@@ -303,8 +303,8 @@ class ParamsMapper {
   /// Returns the corresponding [Clip] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid clip value, returns [Clip.none] as the default.
-  static Clip convertToClip(String? value) {
-    if (value == null) return Clip.hardEdge;
+  static Clip? convertToClip(String? value) {
+    if (value == null) return null;
 
     switch (value) {
       case "hardEdge":
@@ -317,7 +317,7 @@ class ParamsMapper {
         return Clip.none;
     }
 
-    return Clip.hardEdge;
+    return null;
   }
 
   /// Converts a string value to a [MainAxisSize] value.

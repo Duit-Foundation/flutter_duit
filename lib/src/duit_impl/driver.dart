@@ -85,7 +85,7 @@ final class DUITDriver implements UIDriver {
   @override
   TransportOptions transportOptions;
   @override
-  late StreamController<DUITAbstractTree?> _streamController;
+  StreamController<DUITAbstractTree?> _streamController = StreamController();
   @override
   late BuildContext _context;
 
@@ -200,7 +200,6 @@ final class DUITDriver implements UIDriver {
 
   @override
   Future<void> init() async {
-    _streamController = StreamController();
     transport = _getTransport(transportOptions.type);
     final json = await transport?.connect();
     assert(json != null);

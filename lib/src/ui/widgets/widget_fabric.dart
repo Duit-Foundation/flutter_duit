@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/duit_impl/registry.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
+import 'package:flutter_duit/src/ui/widgets/positioned.dart';
 
 import 'index.dart';
 
@@ -126,7 +127,7 @@ mixin WidgetFabric {
         }
       case DUITElementType.stack:
         {
-          final it = model as RowUIElement;
+          final it = model as StackUIElement;
           List<Widget> arr = [];
 
           for (var element in it.children) {
@@ -155,6 +156,21 @@ mixin WidgetFabric {
                   child: child,
                 )
               : DUITExpanded(
+                  attributes: it.attributes,
+                  child: child,
+                );
+        }
+      case DUITElementType.positioned:
+        {
+          final it = model as PositionedUiElement;
+          final child = getWidgetFromElement(it.child);
+
+          return it.controlled
+              ? DUITControlledPositioned(
+                  controller: it.viewController!,
+                  child: child,
+                )
+              : DUITPositioned(
                   attributes: it.attributes,
                   child: child,
                 );
