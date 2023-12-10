@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -395,9 +396,14 @@ class ParamsMapper {
     if (value == null) return Uint8List(0);
 
     final bytes = value["data"];
+    
     if (bytes != null && bytes is List) {
       final data = List.castFrom<dynamic, int>(bytes);
       return Uint8List.fromList(data);
+    }
+
+    if (bytes is String) {
+      return base64Decode(bytes);
     }
 
     return Uint8List(0);
