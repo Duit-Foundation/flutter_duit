@@ -37,6 +37,13 @@ final driver4 = DUITDriver(
     baseUrl: "http://localhost:8999",
   ),
 );
+final driver5 = DUITDriver(
+  "/stack",
+  transportOptions: HttpTransportOptions(
+    defaultHeaders: {"Content-Type": "application/json"},
+    baseUrl: "http://localhost:8999",
+  ),
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -64,32 +71,55 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          DuitViewHost(
-            context: context,
-            driver: driver1,
-            placeholder: const CircularProgressIndicator(),
-          ),
-          const SizedBox(height: 24,),
-          DuitViewHost(
-            context: context,
-            driver: driver2,
-            placeholder: const CircularProgressIndicator(),
-          ),
-          const SizedBox(height: 24,),
-          DuitViewHost(
-            context: context,
-            driver: driver3,
-            placeholder: const CircularProgressIndicator(),
-          ),
-          const SizedBox(height: 24,),
-          DuitViewHost(
-            context: context,
-            driver: driver4,
-            placeholder: const CircularProgressIndicator(),
-          ),
-        ],
+      body: SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            DuitViewHost(
+              context: context,
+              driver: driver1,
+              placeholder: const CircularProgressIndicator(),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            DuitViewHost(
+              context: context,
+              driver: driver2,
+              placeholder: const CircularProgressIndicator(),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            DuitViewHost(
+              context: context,
+              driver: driver3,
+              placeholder: const CircularProgressIndicator(),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            DuitViewHost(
+              context: context,
+              driver: driver4,
+              placeholder: const CircularProgressIndicator(),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: 150,
+                maxWidth: MediaQuery.of(context).size.width,
+              ),
+              child: DuitViewHost(
+                context: context,
+                driver: driver5,
+                placeholder: const CircularProgressIndicator(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -661,10 +661,12 @@ class ParamsMapper {
     if (json == null) return null;
 
     return BoxDecoration(
-      color: ColorUtils.tryParseColor(json["color"]),
+      color: ColorUtils.tryParseNullableColor(json["color"]),
       border: convertToBorder(json["border"]),
-      borderRadius: BorderRadius.circular(
-          NumUtils.toDoubleWithNullReplacement(json["borderRadius"], 4.0)),
+      borderRadius: json["borderRadius"] != null
+          ? BorderRadius.circular(
+              NumUtils.toDoubleWithNullReplacement(json["borderRadius"], 4.0))
+          : null,
       shape: convertToBoxShape(json["shape"]),
       boxShadow: convertToBoxShadow(json["boxShadow"]),
       gradient: convertToGradient(json["gradient"]),
@@ -918,7 +920,6 @@ class ParamsMapper {
     if (insets is num) {
       return EdgeInsets.all(insets.toDouble());
     }
-
 
     if (insets is List) {
       final list = List.castFrom<dynamic, num>(insets);

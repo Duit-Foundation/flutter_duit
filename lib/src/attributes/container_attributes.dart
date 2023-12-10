@@ -51,7 +51,7 @@ class ContainerAttributes implements DUITAttributes<ContainerAttributes> {
     return ContainerAttributes(
       width: NumUtils.toDouble(json['width']),
       height: NumUtils.toDouble(json['height']),
-      color: ColorUtils.tryParseColor(json['color']),
+      color: ColorUtils.tryParseNullableColor(json['color']),
       clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
       decoration: ParamsMapper.convertToDecoration(json['decoration']),
       foregroundDecoration:
