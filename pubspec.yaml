@@ -3,7 +3,6 @@ description: Server driver UI framework for Flutter.
 version: 1.0.0
 repository: https://github.com/lesleysin/flutter_duit
 issue_tracker: https://github.com/lesleysin/flutter_duit/issues
-publish_to: none
 
 environment:
   sdk: '>=3.1.4 <4.0.0'
