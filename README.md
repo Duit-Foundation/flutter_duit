@@ -13,7 +13,7 @@ The framework ensures that the layout model is received from the server, interac
 ## Core features
 
 - Initial connection to the server and receiving a layout
-- Support for different network protocols (http, websocket)
+- Support for different [network protocols](https://github.com/lesleysin/flutter_duit/wiki/Networking) (http, websocket)
 - Pointed widget state update (updating only those widgets for which the server returned an "update")
 - Actions API. A special protocol that allows the server to specify dependencies for an action associated with a widget.
 - Ability to add your own [custom widgets](https://github.com/lesleysin/flutter_duit/wiki/Adding-custom-widgets) on the Flutter and backend side.
