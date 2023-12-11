@@ -16,7 +16,7 @@ The framework ensures that the layout model is received from the server, interac
 - Support for different network protocols (http, websocket)
 - Pointed widget state update (updating only those widgets for which the server returned an "update")
 - Actions API. A special protocol that allows the server to specify dependencies for an action associated with a widget.
-- Ability to add your own custom widgets on the Flutter and backend side.
+- Ability to add your own [custom widgets](https://github.com/lesleysin/flutter_duit/wiki/Adding-custom-widgets) on the Flutter and backend side.
 
 ## Usage example
 
