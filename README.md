@@ -53,7 +53,9 @@ DuitViewHost(
 - Adding new adapters for the backend (Dart, C#, etc.)
 - Troubleshooting, updating documentation
 
-## [WIKI](https://github.com/lesleysin/flutter_duit/wiki) in progress
+## Package info and documentation
+
+[WIKI](https://github.com/lesleysin/flutter_duit/wiki) (work in progress)
 
 ## License 
 MIT
