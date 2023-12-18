@@ -3,11 +3,11 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DUITCenter extends StatelessWidget {
+class DuitCenter extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
   final Widget child;
 
-  const DUITCenter({
+  const DuitCenter({
     super.key,
     required this.attributes,
     required this.child,
@@ -24,22 +24,22 @@ class DUITCenter extends StatelessWidget {
   }
 }
 
-class DUITControlledCenter extends StatefulWidget {
+class DuitControlledCenter extends StatefulWidget {
   final UIElementController? controller;
   final Widget child;
 
-  const DUITControlledCenter({
+  const DuitControlledCenter({
     super.key,
     required this.controller,
     required this.child,
   });
 
   @override
-  State<DUITControlledCenter> createState() => _DUITControlledCenterState();
+  State<DuitControlledCenter> createState() => _DuitControlledCenterState();
 }
 
-class _DUITControlledCenterState extends State<DUITControlledCenter>
-    with ViewControllerChangeListener<DUITControlledCenter, CenterAttributes> {
+class _DuitControlledCenterState extends State<DuitControlledCenter>
+    with ViewControllerChangeListener<DuitControlledCenter, CenterAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

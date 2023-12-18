@@ -3,8 +3,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for a SizedBox widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
-final class SizedBoxAttributes implements DUITAttributes<SizedBoxAttributes> {
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+final class SizedBoxAttributes implements DuitAttributes<SizedBoxAttributes> {
   num? width, height;
 
   SizedBoxAttributes({

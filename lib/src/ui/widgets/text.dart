@@ -3,10 +3,10 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-final class DUITText extends StatelessWidget {
+final class DuitText extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
 
-  const DUITText({
+  const DuitText({
     super.key,
     required this.attributes,
   });
@@ -21,27 +21,26 @@ final class DUITText extends StatelessWidget {
       style: payload?.style,
       maxLines: payload?.maxLines,
       semanticsLabel: payload?.semanticsLabel,
-      textScaleFactor: payload?.textScaleFactor,
       overflow: payload?.overflow,
       softWrap: payload?.softWrap,
     );
   }
 }
 
-final class DUITControlledText extends StatefulWidget {
+final class DuitControlledText extends StatefulWidget {
   final UIElementController? controller;
 
-  const DUITControlledText({
+  const DuitControlledText({
     super.key,
     required this.controller,
   });
 
   @override
-  State<DUITControlledText> createState() => _DUITControlledTextState();
+  State<DuitControlledText> createState() => _DuitControlledTextState();
 }
 
-class _DUITControlledTextState extends State<DUITControlledText>
-    with ViewControllerChangeListener<DUITControlledText, TextAttributes> {
+class _DuitControlledTextState extends State<DuitControlledText>
+    with ViewControllerChangeListener<DuitControlledText, TextAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -57,7 +56,6 @@ class _DUITControlledTextState extends State<DUITControlledText>
       style: attributes?.style,
       maxLines: attributes?.maxLines,
       semanticsLabel: attributes?.semanticsLabel,
-      textScaleFactor: attributes?.textScaleFactor,
       overflow: attributes?.overflow,
       softWrap: attributes?.softWrap,
     );

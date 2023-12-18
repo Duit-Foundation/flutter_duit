@@ -4,8 +4,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for a Stack widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
-final class StackAttributes implements DUITAttributes<StackAttributes> {
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+final class StackAttributes implements DuitAttributes<StackAttributes> {
   final AlignmentGeometry? alignment;
   final TextDirection? textDirection;
   final StackFit? fit;

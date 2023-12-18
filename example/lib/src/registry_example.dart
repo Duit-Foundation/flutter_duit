@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
-final class ExampleCustomWidget<T> extends DUITElement<T> {
+final class ExampleCustomWidget<T> extends DuitElement<T> {
   @override
   ViewAttributeWrapper<T>? attributes;
 
@@ -20,7 +20,7 @@ final class ExampleCustomWidget<T> extends DUITElement<T> {
 }
 
 class ExampleCustomWidgetAttributes
-    implements DUITAttributes<ExampleCustomWidgetAttributes> {
+    implements DuitAttributes<ExampleCustomWidgetAttributes> {
   String? random;
 
   ExampleCustomWidgetAttributes({required this.random});
@@ -33,16 +33,16 @@ class ExampleCustomWidgetAttributes
   }
 }
 
-DUITAttributes exampleAttributeMapper(String type, Map<String, dynamic>? json) {
+DuitAttributes exampleAttributeMapper(String type, Map<String, dynamic>? json) {
   return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random");
 }
 
-Widget exampleRenderer(DUITElement model) {
+Widget exampleRenderer(DuitElement model) {
   final data = model.attributes?.payload as ExampleCustomWidgetAttributes?;
   return Text(data?.random ?? "no random");
 }
 
-DUITElement modelMapperExample(
+DuitElement modelMapperExample(
   String id,
   bool controlled,
   ViewAttributeWrapper attributes,

@@ -4,8 +4,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for a DecoratedBox widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
-class DecoratedBoxAttributes implements DUITAttributes<DecoratedBoxAttributes> {
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+class DecoratedBoxAttributes implements DuitAttributes<DecoratedBoxAttributes> {
   final Decoration? decoration;
 
   DecoratedBoxAttributes({

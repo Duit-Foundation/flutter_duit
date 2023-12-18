@@ -77,7 +77,7 @@ abstract interface class UIDriver {
   Stream<DUITAbstractTree?> get stream;
 }
 
-final class DUITDriver implements UIDriver {
+final class DuitDriver implements UIDriver {
   @override
   final String source;
   @override
@@ -100,7 +100,7 @@ final class DUITDriver implements UIDriver {
   @override
   Stream<DUITAbstractTree?> get stream => _streamController.stream.asBroadcastStream();
 
-  DUITDriver(
+  DuitDriver(
     this.source, {
     required this.transportOptions,
   });

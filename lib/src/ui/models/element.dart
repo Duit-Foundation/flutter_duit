@@ -11,10 +11,10 @@ import 'el_type.dart';
 
 /// Represents a DUIT element in the DUIT element tree.
 ///
-/// The [DUITElement] class represents an individual DUIT element in the DUIT element tree.
+/// The [DuitElement] class represents an individual DUIT element in the DUIT element tree.
 /// It holds information about the element's type, properties, and child elements.
-/// The [DUITElement] class provides methods for rendering the element to a Flutter widget and handling interactions.
-abstract base class DUITElement<T> with WidgetFabric {
+/// The [DuitElement] class provides methods for rendering the element to a Flutter widget and handling interactions.
+abstract base class DuitElement<T> with WidgetFabric {
   //<editor-fold desc="Properties and ctor">
   final String id;
 
@@ -25,14 +25,14 @@ abstract base class DUITElement<T> with WidgetFabric {
   abstract UIElementController<T>? viewController;
   abstract ViewAttributeWrapper<T>? attributes;
 
-  DUITElement({
+  DuitElement({
     required this.type,
     required this.id,
     this.controlled = false,
     this.tag,
   });
 
-  factory DUITElement.fromJson(JSONObject? json, UIDriver driver) {
+  factory DuitElement.fromJson(JSONObject? json, UIDriver driver) {
     if (json == null) return EmptyUIElement();
 
     final DUITElementType type = inferTypeFromValue(json["type"]);
@@ -47,11 +47,11 @@ abstract base class DUITElement<T> with WidgetFabric {
     switch (type) {
       case DUITElementType.row:
         {
-          List<DUITElement> arr = [];
+          List<DuitElement> arr = [];
 
           if (json["children"] != null) {
             json["children"].forEach((element) {
-              final child = DUITElement.fromJson(element, driver);
+              final child = DuitElement.fromJson(element, driver);
               arr.add(child);
             });
           }
@@ -75,11 +75,11 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.column:
         {
-          List<DUITElement> arr = [];
+          List<DuitElement> arr = [];
 
           if (json["children"] != null) {
             json["children"].forEach((element) {
-              final child = DUITElement.fromJson(element, driver);
+              final child = DuitElement.fromJson(element, driver);
               arr.add(child);
             });
           }
@@ -103,7 +103,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.center:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return CenterUIElement(
             type: type,
@@ -124,7 +124,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.coloredBox:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return ColoredBoxUIElement(
             type: type,
@@ -145,7 +145,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.sizedBox:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return SizedBoxUIElement(
             type: type,
@@ -184,7 +184,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.elevatedButton:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return ElevatedButtonUIElement(
             type: type,
@@ -223,11 +223,11 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.stack:
         {
-          List<DUITElement> arr = [];
+          List<DuitElement> arr = [];
 
           if (json["children"] != null) {
             json["children"].forEach((element) {
-              final child = DUITElement.fromJson(element, driver);
+              final child = DuitElement.fromJson(element, driver);
               arr.add(child);
             });
           }
@@ -251,7 +251,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.expanded:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return ExpandedUiElement(
             type: type,
@@ -272,7 +272,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.padding:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return PaddingUiElement(
             type: type,
@@ -293,7 +293,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.positioned:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return PositionedUiElement(
             type: type,
@@ -314,7 +314,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.decoratedBox:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return DecoratedBoxUiElement(
             type: type,
@@ -373,7 +373,7 @@ abstract base class DUITElement<T> with WidgetFabric {
         }
       case DUITElementType.container:
         {
-          final child = DUITElement.fromJson(json["child"], driver);
+          final child = DuitElement.fromJson(json["child"], driver);
 
           return ContainerUiElement(
             type: type,
@@ -399,7 +399,7 @@ abstract base class DUITElement<T> with WidgetFabric {
       case DUITElementType.custom:
         {
           if (tag != null) {
-            final mapper = DUITRegistry.getModelMapper(tag);
+            final mapper = DuitRegistry.getModelMapper(tag);
             if (mapper != null) {
               final controller = createAndAttachController(
                 id,
@@ -415,7 +415,7 @@ abstract base class DUITElement<T> with WidgetFabric {
                 controlled,
                 attributes,
                 controller,
-              ) as DUITElement<T>;
+              ) as DuitElement<T>;
             } else {
               return EmptyUIElement();
             }
@@ -478,11 +478,11 @@ abstract base class DUITElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
-final class ContainerUiElement<T> extends DUITElement<T>
+final class ContainerUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -502,11 +502,11 @@ final class ContainerUiElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class DecoratedBoxUiElement<T> extends DUITElement<T>
+final class DecoratedBoxUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -526,11 +526,11 @@ final class DecoratedBoxUiElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class PositionedUiElement<T> extends DUITElement<T>
+final class PositionedUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -550,11 +550,11 @@ final class PositionedUiElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class PaddingUiElement<T> extends DUITElement<T>
+final class PaddingUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -574,11 +574,11 @@ final class PaddingUiElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class ExpandedUiElement<T> extends DUITElement<T>
+final class ExpandedUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -598,10 +598,10 @@ final class ExpandedUiElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class StackUIElement<T> extends DUITElement<T>
+final class StackUIElement<T> extends DuitElement<T>
     implements MultiChildLayout {
   @override
-  List<DUITElement> children = const [];
+  List<DuitElement> children = const [];
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -619,7 +619,7 @@ final class StackUIElement<T> extends DUITElement<T>
   });
 }
 
-final class CustomDUITElement<T> extends DUITElement<T> {
+final class CustomDUITElement<T> extends DuitElement<T> {
   @override
   ViewAttributeWrapper<T>? attributes;
 
@@ -631,11 +631,11 @@ final class CustomDUITElement<T> extends DUITElement<T> {
   }) : super(type: DUITElementType.custom);
 }
 
-final class ElevatedButtonUIElement<T> extends DUITElement<T>
+final class ElevatedButtonUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -655,11 +655,11 @@ final class ElevatedButtonUIElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class CenterUIElement<T> extends DUITElement<T>
+final class CenterUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -679,11 +679,11 @@ final class CenterUIElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class ColoredBoxUIElement<T> extends DUITElement<T>
+final class ColoredBoxUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -702,11 +702,11 @@ final class ColoredBoxUIElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class ColumnUIElement<T> extends DUITElement<T>
+final class ColumnUIElement<T> extends DuitElement<T>
     implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  List<DUITElement> children = const [];
+  List<DuitElement> children = const [];
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -725,10 +725,10 @@ final class ColumnUIElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class RowUIElement<T> extends DUITElement<T> implements MultiChildLayout {
+final class RowUIElement<T> extends DuitElement<T> implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  List<DUITElement> children = const [];
+  List<DuitElement> children = const [];
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -747,11 +747,11 @@ final class RowUIElement<T> extends DUITElement<T> implements MultiChildLayout {
 //</editor-fold>
 }
 
-final class SizedBoxUIElement<T> extends DUITElement<T>
+final class SizedBoxUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
-  DUITElement child;
+  DuitElement child;
 
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -770,7 +770,7 @@ final class SizedBoxUIElement<T> extends DUITElement<T>
 //</editor-fold>
 }
 
-final class TextUIElement<T> extends DUITElement<T> {
+final class TextUIElement<T> extends DuitElement<T> {
   //<editor-fold desc="Properties and ctor">
 
   @override
@@ -794,7 +794,7 @@ final class TextUIElement<T> extends DUITElement<T> {
 //</editor-fold>
 }
 
-final class CheckboxUIElement<T> extends DUITElement<T> {
+final class CheckboxUIElement<T> extends DuitElement<T> {
   //<editor-fold desc="Properties and ctor">
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -812,7 +812,7 @@ final class CheckboxUIElement<T> extends DUITElement<T> {
 //</editor-fold>
 }
 
-final class TextFieldUIElement<T> extends DUITElement<T> {
+final class TextFieldUIElement<T> extends DuitElement<T> {
   //<editor-fold desc="Properties and ctor">
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -830,7 +830,7 @@ final class TextFieldUIElement<T> extends DUITElement<T> {
 //</editor-fold>
 }
 
-final class ImageUIElement<T> extends DUITElement<T> {
+final class ImageUIElement<T> extends DuitElement<T> {
   //<editor-fold desc="Properties and ctor">
   @override
   ViewAttributeWrapper<T>? attributes;
@@ -848,7 +848,7 @@ final class ImageUIElement<T> extends DUITElement<T> {
 //</editor-fold>
 }
 
-final class EmptyUIElement<T> extends DUITElement<T> {
+final class EmptyUIElement<T> extends DuitElement<T> {
   @override
   ViewAttributeWrapper<T>? attributes;
 

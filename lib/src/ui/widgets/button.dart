@@ -3,22 +3,22 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-final class DUITControlledButton extends StatefulWidget {
+final class DuitElevatedButton extends StatefulWidget {
   final UIElementController controller;
   final Widget? child;
 
-  const DUITControlledButton({
+  const DuitElevatedButton({
     super.key,
     required this.controller,
     this.child,
   });
 
   @override
-  State<DUITControlledButton> createState() => _DUITControlledButtonState();
+  State<DuitElevatedButton> createState() => _DuitElevatedButtonState();
 }
 
-class _DUITControlledButtonState extends State<DUITControlledButton>
-    with ViewControllerChangeListener<DUITControlledButton, ElevatedButtonAttributes> {
+class _DuitElevatedButtonState extends State<DuitElevatedButton>
+    with ViewControllerChangeListener<DuitElevatedButton, ElevatedButtonAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

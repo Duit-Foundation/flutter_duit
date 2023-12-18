@@ -6,8 +6,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for a Container widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
-class ContainerAttributes implements DUITAttributes<ContainerAttributes> {
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+class ContainerAttributes implements DuitAttributes<ContainerAttributes> {
   final double? width, height;
   final Color? color;
   final Clip? clipBehavior;

@@ -2,11 +2,11 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DUITStack extends StatelessWidget {
+class DuitStack extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
   final List<Widget> children;
 
-  const DUITStack({
+  const DuitStack({
     super.key,
     this.children = const [],
     this.attributes,
@@ -25,22 +25,22 @@ class DUITStack extends StatelessWidget {
   }
 }
 
-class DUITControlledStack extends StatefulWidget {
+class DuitControlledStack extends StatefulWidget {
   final UIElementController? controller;
   final List<Widget> children;
 
-  const DUITControlledStack({
+  const DuitControlledStack({
     super.key,
     required this.children,
     this.controller,
   });
 
   @override
-  State<DUITControlledStack> createState() => _DUITControlledStackState();
+  State<DuitControlledStack> createState() => _DuitControlledStackState();
 }
 
-class _DUITControlledStackState extends State<DUITControlledStack>
-    with ViewControllerChangeListener<DUITControlledStack, StackAttributes> {
+class _DuitControlledStackState extends State<DuitControlledStack>
+    with ViewControllerChangeListener<DuitControlledStack, StackAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

@@ -7,7 +7,7 @@ import 'package:flutter_duit/src/ui/widgets/positioned.dart';
 import 'index.dart';
 
 mixin WidgetFabric {
-  Widget getWidgetFromElement(DUITElement model) {
+  Widget getWidgetFromElement(DuitElement model) {
     switch (model.type) {
       case DUITElementType.column:
         {
@@ -20,11 +20,11 @@ mixin WidgetFabric {
           }
 
           return it.controlled
-              ? DUITControlledColumn(
+              ? DuitControlledColumn(
                   controller: it.viewController,
                   children: arr,
                 )
-              : DUITColumn(
+              : DuitColumn(
                   attributes: it.attributes,
                   children: arr,
                 );
@@ -40,11 +40,11 @@ mixin WidgetFabric {
           }
 
           return it.controlled
-              ? DUITControlledRow(
+              ? DuitControlledRow(
                   controller: it.viewController,
                   children: arr,
                 )
-              : DUITRow(
+              : DuitRow(
                   attributes: it.attributes,
                   children: arr,
                 );
@@ -56,11 +56,11 @@ mixin WidgetFabric {
           final child = getWidgetFromElement(it.child);
 
           return it.controlled
-              ? DUITControlledColoredBox(
+              ? DuitControlledColoredBox(
                   controller: it.viewController,
                   child: child,
                 )
-              : DUITColoredBox(
+              : DuitColoredBox(
                   attributes: it.attributes,
                   child: child,
                 );
@@ -72,11 +72,11 @@ mixin WidgetFabric {
           final child = getWidgetFromElement(it.child);
 
           return it.controlled
-              ? DUITControlledCenter(
+              ? DuitControlledCenter(
                   controller: it.viewController,
                   child: child,
                 )
-              : DUITCenter(
+              : DuitCenter(
                   attributes: it.attributes,
                   child: child,
                 );
@@ -88,11 +88,11 @@ mixin WidgetFabric {
           final child = getWidgetFromElement(it.child);
 
           return it.controlled
-              ? DUITControlledSizedBox(
+              ? DuitControlledSizedBox(
                   controller: it.viewController,
                   child: child,
                 )
-              : DUITSizedBox(
+              : DuitSizedBox(
                   attributes: it.attributes,
                   child: child,
                 );
@@ -102,16 +102,16 @@ mixin WidgetFabric {
           final it = model as TextUIElement;
 
           return it.controlled
-              ? DUITControlledText(
+              ? DuitControlledText(
                   controller: it.viewController,
                 )
-              : DUITText(attributes: it.attributes);
+              : DuitText(attributes: it.attributes);
         }
       case DUITElementType.textField:
         {
           final it = model as TextFieldUIElement;
 
-          return DUITTextField(
+          return DuitTextField(
             controller: it.viewController,
           );
         }
@@ -120,7 +120,7 @@ mixin WidgetFabric {
           final it = model as ElevatedButtonUIElement;
           final child = getWidgetFromElement(it.child);
 
-          return DUITControlledButton(
+          return DuitElevatedButton(
             controller: it.viewController!,
             child: child,
           );
@@ -136,11 +136,11 @@ mixin WidgetFabric {
           }
 
           return it.controlled
-              ? DUITControlledStack(
+              ? DuitControlledStack(
                   controller: it.viewController,
                   children: arr,
                 )
-              : DUITStack(
+              : DuitStack(
                   attributes: it.attributes,
                   children: arr,
                 );
@@ -151,11 +151,11 @@ mixin WidgetFabric {
           final child = getWidgetFromElement(it.child);
 
           return it.controlled
-              ? DUITControlledExpanded(
+              ? DuitControlledExpanded(
                   controller: it.viewController!,
                   child: child,
                 )
-              : DUITExpanded(
+              : DuitExpanded(
                   attributes: it.attributes,
                   child: child,
                 );
@@ -166,11 +166,11 @@ mixin WidgetFabric {
           final child = getWidgetFromElement(it.child);
 
           return it.controlled
-              ? DUITControlledPositioned(
+              ? DuitControlledPositioned(
                   controller: it.viewController!,
                   child: child,
                 )
-              : DUITPositioned(
+              : DuitPositioned(
                   attributes: it.attributes,
                   child: child,
                 );
@@ -181,11 +181,11 @@ mixin WidgetFabric {
           final child = getWidgetFromElement(it.child);
 
           return it.controlled
-              ? DUITControlledPadding(
+              ? DuitControlledPadding(
                   controller: it.viewController!,
                   child: child,
                 )
-              : DUITPadding(
+              : DuitPadding(
                   attributes: it.attributes,
                   child: child,
                 );
@@ -196,18 +196,18 @@ mixin WidgetFabric {
           final child = getWidgetFromElement(it.child);
 
           return it.controlled
-              ? DUITControlledDecoratedBox(
+              ? DuitControlledDecoratedBox(
                   controller: it.viewController!,
                   child: child,
                 )
-              : DUITDecoratedBox(
+              : DuitDecoratedBox(
                   attributes: it.attributes,
                   child: child,
                 );
         }
       case DUITElementType.checkbox:
         {
-          return DUITCheckbox(
+          return DuitCheckbox(
             controller: model.viewController,
           );
         }
@@ -217,11 +217,11 @@ mixin WidgetFabric {
           final child = getWidgetFromElement(it.child);
 
           return it.controlled
-              ? DUITControlledContainer(
+              ? DuitControlledContainer(
                   controller: it.viewController!,
                   child: child,
                 )
-              : DUITContainer(
+              : DuitContainer(
                   attributes: it.attributes,
                   child: child,
                 );
@@ -231,25 +231,25 @@ mixin WidgetFabric {
           final it = model as ImageUIElement;
 
           return it.controlled
-              ? DUITControlledImage(
+              ? DuitControlledImage(
                   controller: it.viewController!,
                 )
-              : DUITImage(
+              : DuitImage(
                   attributes: it.attributes,
                 );
         }
       case DUITElementType.empty:
         {
-          return const DUITEmptyView();
+          return const DuitEmptyView();
         }
       case DUITElementType.custom:
         {
           if (model.tag != null) {
-            final renderer = DUITRegistry.getRenderer(model.tag!);
-            return renderer?.call(model) ?? const DUITEmptyView();
+            final renderer = DuitRegistry.getRenderer(model.tag!);
+            return renderer?.call(model) ?? const DuitEmptyView();
           }
 
-          return const DUITEmptyView();
+          return const DuitEmptyView();
         }
       default:
         {

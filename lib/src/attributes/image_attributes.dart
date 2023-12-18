@@ -7,8 +7,8 @@ import 'attributes.dart';
 
 /// Represents the attributes for a Image widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
-final class ImageAttributes implements DUITAttributes<ImageAttributes> {
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+final class ImageAttributes implements DuitAttributes<ImageAttributes> {
   final ImageType type;
   final String src;
   final Uint8List byteData;

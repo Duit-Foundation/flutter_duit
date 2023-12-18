@@ -3,20 +3,20 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DUITTextField extends StatefulWidget {
+class DuitTextField extends StatefulWidget {
   final UIElementController? controller;
 
-  const DUITTextField({
+  const DuitTextField({
     super.key,
     required this.controller,
   });
 
   @override
-  State<DUITTextField> createState() => _DUITTextFieldState();
+  State<DuitTextField> createState() => _DuitTextFieldState();
 }
 
-class _DUITTextFieldState extends State<DUITTextField>
-    with ViewControllerChangeListener<DUITTextField, TextFieldAttributes> {
+class _DuitTextFieldState extends State<DuitTextField>
+    with ViewControllerChangeListener<DuitTextField, TextFieldAttributes> {
   late final TextEditingController textEditingController;
   late final FocusNode focusNode;
 

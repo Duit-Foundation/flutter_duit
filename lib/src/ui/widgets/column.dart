@@ -3,11 +3,11 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DUITColumn extends StatelessWidget {
+class DuitColumn extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
   final List<Widget> children;
 
-  const DUITColumn({
+  const DuitColumn({
     super.key,
     required this.attributes,
     required this.children,
@@ -28,22 +28,22 @@ class DUITColumn extends StatelessWidget {
   }
 }
 
-class DUITControlledColumn extends StatefulWidget {
+class DuitControlledColumn extends StatefulWidget {
   final UIElementController? controller;
   final List<Widget> children;
 
-  const DUITControlledColumn({
+  const DuitControlledColumn({
     super.key,
     required this.controller,
     required this.children,
   });
 
   @override
-  State<DUITControlledColumn> createState() => _DUITControlledColumnState();
+  State<DuitControlledColumn> createState() => _DuitControlledColumnState();
 }
 
-class _DUITControlledColumnState extends State<DUITControlledColumn>
-    with ViewControllerChangeListener<DUITControlledColumn, ColumnAttributes> {
+class _DuitControlledColumnState extends State<DuitControlledColumn>
+    with ViewControllerChangeListener<DuitControlledColumn, ColumnAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

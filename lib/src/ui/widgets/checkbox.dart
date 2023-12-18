@@ -2,20 +2,20 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DUITCheckbox extends StatefulWidget {
+class DuitCheckbox extends StatefulWidget {
   final UIElementController? controller;
 
-  const DUITCheckbox({
+  const DuitCheckbox({
     super.key,
     this.controller,
   });
 
   @override
-  State<DUITCheckbox> createState() => _DUITCheckboxState();
+  State<DuitCheckbox> createState() => _DuitCheckboxState();
 }
 
-class _DUITCheckboxState extends State<DUITCheckbox>
-    with ViewControllerChangeListener<DUITCheckbox, CheckboxAttributes> {
+class _DuitCheckboxState extends State<DuitCheckbox>
+    with ViewControllerChangeListener<DuitCheckbox, CheckboxAttributes> {
   bool? _value;
 
   @override

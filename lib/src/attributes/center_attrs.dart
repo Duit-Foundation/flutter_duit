@@ -3,8 +3,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for a center widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
-final class CenterAttributes implements DUITAttributes<CenterAttributes> {
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+final class CenterAttributes implements DuitAttributes<CenterAttributes> {
   final double? widthFactor;
   final double? heightFactor;
 

@@ -44,7 +44,7 @@ import 'package:flutter_duit/src/controller/index.dart';
 /// The following properties are available in the `ViewControllerChangeListener` mixin:
 /// - `attributes`: The current attributes of the `UIElementController`. These attributes can be used to build the UI.
 mixin ViewControllerChangeListener<T extends StatefulWidget,
-    AttrType extends DUITAttributes> on State<T> {
+    AttrType extends DuitAttributes> on State<T> {
   AttrType? attributes;
   UIElementController? _controller;
 

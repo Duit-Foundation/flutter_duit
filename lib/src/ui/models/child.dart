@@ -5,7 +5,7 @@ import 'element.dart';
 /// The [MultiChildLayout] interface provides a contract for classes that implement a layout that can contain multiple child elements.
 abstract interface class MultiChildLayout {
   /// The list of child elements in the layout.
-  abstract List<DUITElement> children;
+  abstract List<DuitElement> children;
 }
 
 /// Represents a layout that can contain a single child element.
@@ -13,5 +13,5 @@ abstract interface class MultiChildLayout {
 /// The [SingleChildLayout] interface provides a contract for classes that implement a layout that can contain a single child element.
 abstract interface class SingleChildLayout {
   /// The child element in the layout.
-  abstract DUITElement child;
+  abstract DuitElement child;
 }

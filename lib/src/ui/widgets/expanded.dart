@@ -2,11 +2,11 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DUITExpanded extends StatelessWidget {
+class DuitExpanded extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
   final Widget child;
 
-  const DUITExpanded({
+  const DuitExpanded({
     super.key,
     required this.child,
     required this.attributes,
@@ -22,23 +22,23 @@ class DUITExpanded extends StatelessWidget {
   }
 }
 
-class DUITControlledExpanded extends StatefulWidget {
+class DuitControlledExpanded extends StatefulWidget {
   final Widget child;
   final UIElementController controller;
 
-  const DUITControlledExpanded({
+  const DuitControlledExpanded({
     super.key,
     required this.child,
     required this.controller,
   });
 
   @override
-  State<DUITControlledExpanded> createState() => _DUITControlledExpandedState();
+  State<DuitControlledExpanded> createState() => _DuitControlledExpandedState();
 }
 
-class _DUITControlledExpandedState extends State<DUITControlledExpanded>
+class _DuitControlledExpandedState extends State<DuitControlledExpanded>
     with
-        ViewControllerChangeListener<DUITControlledExpanded,
+        ViewControllerChangeListener<DuitControlledExpanded,
             ExpandedAttributes> {
   @override
   void initState() {

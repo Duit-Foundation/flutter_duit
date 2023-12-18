@@ -5,9 +5,9 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for a TextField widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
 final class TextFieldAttributes extends AttendedModel<String>
-    implements DUITAttributes<TextFieldAttributes> {
+    implements DuitAttributes<TextFieldAttributes> {
   final InputDecoration? decoration;
   final TextStyle? style;
   final TextInputType? keyboardType;

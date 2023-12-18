@@ -5,14 +5,13 @@ import 'index.dart';
 
 /// Represents the attributes for a Text widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
-final class TextAttributes implements DUITAttributes<TextAttributes> {
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+final class TextAttributes implements DuitAttributes<TextAttributes> {
   final String? data;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final bool? softWrap;
   final TextOverflow? overflow;
-  final double? textScaleFactor;
   final int? maxLines;
   final String? semanticsLabel;
   final TextStyle? style;
@@ -21,7 +20,6 @@ final class TextAttributes implements DUITAttributes<TextAttributes> {
     required this.data,
     this.textAlign,
     this.textDirection,
-    this.textScaleFactor,
     this.softWrap,
     this.overflow,
     this.maxLines,
@@ -33,7 +31,6 @@ final class TextAttributes implements DUITAttributes<TextAttributes> {
     return TextAttributes(
       data: json["data"] ?? "",
       textAlign: ParamsMapper.convertToTextAlign(json["textAlign"]),
-      textScaleFactor: json["textScaleFactor"],
       softWrap: json["softWrap"],
       maxLines: json["maxLines"],
       semanticsLabel: json["semanticsLabel"],
@@ -51,7 +48,6 @@ final class TextAttributes implements DUITAttributes<TextAttributes> {
       textDirection: other.textDirection ?? textDirection,
       softWrap: other.softWrap ?? softWrap,
       overflow: other.overflow ?? overflow,
-      textScaleFactor: other.textScaleFactor ?? textScaleFactor,
       maxLines: other.maxLines ?? maxLines,
       semanticsLabel: other.semanticsLabel ?? semanticsLabel,
       style: other.style ?? style,

@@ -29,9 +29,9 @@ abstract interface class UIElementController<T> {
   /// It can be used to perform an action when the UI element is interacted with.
   abstract ServerAction? action;
 
-  /// Reference to the [DUITDriver] instance.
+  /// Reference to the [DuitDriver] instance.
   ///
-  /// The [driver] property represents a reference to the [DUITDriver] instance
+  /// The [driver] property represents a reference to the [DuitDriver] instance
   /// that is responsible for driving the UI elements.
   abstract UIDriver driver;
 

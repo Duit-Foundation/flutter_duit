@@ -5,8 +5,8 @@ import 'index.dart';
 
 /// Represents the attributes for a Padding widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
-final class PaddingAttributes implements DUITAttributes<PaddingAttributes> {
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+final class PaddingAttributes implements DuitAttributes<PaddingAttributes> {
   final EdgeInsetsGeometry? padding;
 
   PaddingAttributes({

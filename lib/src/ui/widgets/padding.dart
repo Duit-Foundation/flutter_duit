@@ -3,11 +3,11 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DUITPadding extends StatelessWidget {
+class DuitPadding extends StatelessWidget {
   final Widget? child;
   final ViewAttributeWrapper? attributes;
 
-  const DUITPadding({
+  const DuitPadding({
     super.key,
     this.child,
     this.attributes,
@@ -23,23 +23,23 @@ class DUITPadding extends StatelessWidget {
   }
 }
 
-class DUITControlledPadding extends StatefulWidget {
+class DuitControlledPadding extends StatefulWidget {
   final UIElementController? controller;
   final Widget? child;
 
-  const DUITControlledPadding({
+  const DuitControlledPadding({
     super.key,
     this.child,
     this.controller,
   });
 
   @override
-  State<DUITControlledPadding> createState() => _DUITControlledPaddingState();
+  State<DuitControlledPadding> createState() => _DuitControlledPaddingState();
 }
 
-class _DUITControlledPaddingState extends State<DUITControlledPadding>
+class _DuitControlledPaddingState extends State<DuitControlledPadding>
     with
-        ViewControllerChangeListener<DUITControlledPadding, PaddingAttributes> {
+        ViewControllerChangeListener<DuitControlledPadding, PaddingAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

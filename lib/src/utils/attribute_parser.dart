@@ -34,7 +34,7 @@ sealed class AttributeParser {
     assert(tag != null, "Custom widget must have specified tag");
 
     if (tag is String) {
-      final attributesMapper = DUITRegistry.getAttributesMapper(tag);
+      final attributesMapper = DuitRegistry.getAttributesMapper(tag);
       if (attributesMapper != null) {
         return attributesMapper(tag, json);
       } else {

@@ -5,7 +5,7 @@ import 'index.dart';
 
 /// Represents the attributes for a Flexible widgets.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
 sealed class FlexAttributes {
   final MainAxisAlignment? mainAxisAlignment;
   final MainAxisSize? mainAxisSize;
@@ -25,7 +25,7 @@ sealed class FlexAttributes {
 }
 
 final class RowAttributes extends FlexAttributes
-    implements DUITAttributes<RowAttributes> {
+    implements DuitAttributes<RowAttributes> {
   RowAttributes({
     super.mainAxisAlignment,
     super.mainAxisSize,
@@ -63,7 +63,7 @@ final class RowAttributes extends FlexAttributes
 }
 
 final class ColumnAttributes extends FlexAttributes
-    implements DUITAttributes<ColumnAttributes> {
+    implements DuitAttributes<ColumnAttributes> {
   ColumnAttributes({
     super.mainAxisAlignment,
     super.mainAxisSize,

@@ -8,9 +8,9 @@ import "index.dart";
 
 /// Represents the attributes for a checkbox widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
 class CheckboxAttributes extends AttendedModel<bool>
-    implements DUITAttributes<CheckboxAttributes> {
+    implements DuitAttributes<CheckboxAttributes> {
   // OutlinedBorder? shape;
   final bool? autofocus;
   final bool? isError;

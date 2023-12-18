@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 
-class DUITEmptyView extends StatelessWidget {
-  const DUITEmptyView({super.key});
+class DuitEmptyView extends StatelessWidget {
+  const DuitEmptyView({super.key});
 
   @override
   Widget build(BuildContext context) {

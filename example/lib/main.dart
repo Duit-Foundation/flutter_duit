@@ -3,7 +3,7 @@ import 'package:flutter_duit/flutter_duit.dart';
 import './src/registry_example.dart';
 
 void main() {
-  DUITRegistry.register(
+  DuitRegistry.register(
     "ExampleCustomWidget",
     modelMapperExample,
     exampleRenderer,
@@ -12,32 +12,32 @@ void main() {
   runApp(const MyApp());
 }
 
-final driver1 = DUITDriver(
+final driver1 = DuitDriver(
   "/decoratedbox",
   transportOptions: HttpTransportOptions(
     defaultHeaders: {"Content-Type": "application/json"},
     baseUrl: "http://localhost:8999",
   ),
 );
-final driver2 = DUITDriver(
+final driver2 = DuitDriver(
   "/inputs",
   transportOptions: HttpTransportOptions(
     defaultHeaders: {"Content-Type": "application/json"},
     baseUrl: "http://localhost:8999",
   ),
 );
-final driver3 = DUITDriver(
+final driver3 = DuitDriver(
   "ws://localhost:8999",
   transportOptions: WebSocketTransportOptions(),
 );
-final driver4 = DUITDriver(
+final driver4 = DuitDriver(
   "/img",
   transportOptions: HttpTransportOptions(
     defaultHeaders: {"Content-Type": "application/json"},
     baseUrl: "http://localhost:8999",
   ),
 );
-final driver5 = DUITDriver(
+final driver5 = DuitDriver(
   "/stack",
   transportOptions: HttpTransportOptions(
     defaultHeaders: {"Content-Type": "application/json"},

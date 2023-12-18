@@ -4,9 +4,9 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for an elevated button widget.
 ///
-/// This class implements the [DUITAttributes] interface, allowing it to be used with DUIT widgets.
+/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
 final class ElevatedButtonAttributes
-    implements DUITAttributes<ElevatedButtonAttributes> {
+    implements DuitAttributes<ElevatedButtonAttributes> {
   final bool? autofocus;
   final Clip? clipBehavior;
 

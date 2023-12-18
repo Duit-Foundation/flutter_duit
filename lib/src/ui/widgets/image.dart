@@ -6,10 +6,75 @@ import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 import "package:flutter_duit/src/utils/image_type.dart";
 
-class DUITImage extends StatelessWidget {
+final class _ImageProducer {
+  static Widget memory(ImageAttributes? attrs) {
+    return Image.memory(
+      attrs?.byteData ?? Uint8List(0),
+      fit: attrs?.fit,
+      gaplessPlayback: attrs?.gaplessPlayback ?? false,
+      excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
+      scale: attrs?.scale ?? 1.0,
+      color: attrs?.color,
+      colorBlendMode: attrs?.colorBlendMode,
+      alignment: attrs?.alignment ?? Alignment.center,
+      repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
+      matchTextDirection: attrs?.matchTextDirection ?? false,
+      isAntiAlias: attrs?.isAntiAlias ?? false,
+      filterQuality: attrs?.filterQuality ?? FilterQuality.low,
+      cacheWidth: attrs?.cacheWidth,
+      cacheHeight: attrs?.cacheHeight,
+      width: attrs?.width,
+      height: attrs?.height,
+    );
+  }
+
+  static Widget asset(ImageAttributes? attrs) {
+    return Image.asset(
+      attrs?.src ?? "",
+      fit: attrs?.fit,
+      gaplessPlayback: attrs?.gaplessPlayback ?? false,
+      excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
+      scale: attrs?.scale ?? 1.0,
+      color: attrs?.color,
+      colorBlendMode: attrs?.colorBlendMode,
+      alignment: attrs?.alignment ?? Alignment.center,
+      repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
+      matchTextDirection: attrs?.matchTextDirection ?? false,
+      isAntiAlias: attrs?.isAntiAlias ?? false,
+      filterQuality: attrs?.filterQuality ?? FilterQuality.low,
+      cacheWidth: attrs?.cacheWidth,
+      cacheHeight: attrs?.cacheHeight,
+      width: attrs?.width,
+      height: attrs?.height,
+    );
+  }
+
+  static Widget network(ImageAttributes? attrs) {
+    return Image.network(
+      attrs?.src ?? "",
+      fit: attrs?.fit,
+      gaplessPlayback: attrs?.gaplessPlayback ?? false,
+      excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
+      scale: attrs?.scale ?? 1.0,
+      color: attrs?.color,
+      colorBlendMode: attrs?.colorBlendMode,
+      alignment: attrs?.alignment ?? Alignment.center,
+      repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
+      matchTextDirection: attrs?.matchTextDirection ?? false,
+      isAntiAlias: attrs?.isAntiAlias ?? false,
+      filterQuality: attrs?.filterQuality ?? FilterQuality.low,
+      cacheWidth: attrs?.cacheWidth,
+      cacheHeight: attrs?.cacheHeight,
+      width: attrs?.width,
+      height: attrs?.height,
+    );
+  }
+}
+
+class DuitImage extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
 
-  const DUITImage({
+  const DuitImage({
     super.key,
     this.attributes,
   });
@@ -18,79 +83,28 @@ class DUITImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final attrs = attributes?.payload as ImageAttributes?;
     return switch (attrs?.type) {
-      ImageType.memory => Image.memory(
-          attrs?.byteData ?? Uint8List(0),
-          fit: attrs?.fit,
-          gaplessPlayback: attrs?.gaplessPlayback ?? false,
-          excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
-          scale: attrs?.scale ?? 1.0,
-          color: attrs?.color,
-          colorBlendMode: attrs?.colorBlendMode,
-          alignment: attrs?.alignment ?? Alignment.center,
-          repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
-          matchTextDirection: attrs?.matchTextDirection ?? false,
-          isAntiAlias: attrs?.isAntiAlias ?? false,
-          filterQuality: attrs?.filterQuality ?? FilterQuality.low,
-          cacheWidth: attrs?.cacheWidth,
-          cacheHeight: attrs?.cacheHeight,
-          width: attrs?.width,
-          height: attrs?.height,
-        ),
-      ImageType.asset => Image.asset(
-          attrs?.src ?? "",
-          fit: attrs?.fit,
-          gaplessPlayback: attrs?.gaplessPlayback ?? false,
-          excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
-          scale: attrs?.scale ?? 1.0,
-          color: attrs?.color,
-          colorBlendMode: attrs?.colorBlendMode,
-          alignment: attrs?.alignment ?? Alignment.center,
-          repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
-          matchTextDirection: attrs?.matchTextDirection ?? false,
-          isAntiAlias: attrs?.isAntiAlias ?? false,
-          filterQuality: attrs?.filterQuality ?? FilterQuality.low,
-          cacheWidth: attrs?.cacheWidth,
-          cacheHeight: attrs?.cacheHeight,
-          width: attrs?.width,
-          height: attrs?.height,
-        ),
-      ImageType.network => Image.network(
-          attrs?.src ?? "",
-          fit: attrs?.fit,
-          gaplessPlayback: attrs?.gaplessPlayback ?? false,
-          excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
-          scale: attrs?.scale ?? 1.0,
-          color: attrs?.color,
-          colorBlendMode: attrs?.colorBlendMode,
-          alignment: attrs?.alignment ?? Alignment.center,
-          repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
-          matchTextDirection: attrs?.matchTextDirection ?? false,
-          isAntiAlias: attrs?.isAntiAlias ?? false,
-          filterQuality: attrs?.filterQuality ?? FilterQuality.low,
-          cacheWidth: attrs?.cacheWidth,
-          cacheHeight: attrs?.cacheHeight,
-          width: attrs?.width,
-          height: attrs?.height,
-        ),
+      ImageType.memory => _ImageProducer.memory(attrs),
+      ImageType.asset => _ImageProducer.asset(attrs),
+      ImageType.network => _ImageProducer.network(attrs),
       null => const SizedBox.shrink(),
     };
   }
 }
 
-class DUITControlledImage extends StatefulWidget {
+class DuitControlledImage extends StatefulWidget {
   final UIElementController? controller;
 
-  const DUITControlledImage({
+  const DuitControlledImage({
     super.key,
     this.controller,
   });
 
   @override
-  State<DUITControlledImage> createState() => _DUITControlledImageState();
+  State<DuitControlledImage> createState() => _DuitControlledImageState();
 }
 
-class _DUITControlledImageState extends State<DUITControlledImage>
-    with ViewControllerChangeListener<DUITControlledImage, ImageAttributes> {
+class _DuitControlledImageState extends State<DuitControlledImage>
+    with ViewControllerChangeListener<DuitControlledImage, ImageAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -100,60 +114,9 @@ class _DUITControlledImageState extends State<DUITControlledImage>
   @override
   Widget build(BuildContext context) {
     return switch (attributes?.type) {
-      ImageType.memory => Image.memory(
-          attributes?.byteData ?? Uint8List(0),
-          fit: attributes?.fit,
-          gaplessPlayback: attributes?.gaplessPlayback ?? false,
-          excludeFromSemantics: attributes?.excludeFromSemantics ?? false,
-          scale: attributes?.scale ?? 1.0,
-          color: attributes?.color,
-          colorBlendMode: attributes?.colorBlendMode,
-          alignment: attributes?.alignment ?? Alignment.center,
-          repeat: attributes?.repeat ?? ImageRepeat.noRepeat,
-          matchTextDirection: attributes?.matchTextDirection ?? false,
-          isAntiAlias: attributes?.isAntiAlias ?? false,
-          filterQuality: attributes?.filterQuality ?? FilterQuality.low,
-          cacheWidth: attributes?.cacheWidth,
-          cacheHeight: attributes?.cacheHeight,
-          width: attributes?.width,
-          height: attributes?.height,
-        ),
-      ImageType.asset => Image.asset(
-          attributes?.src ?? "",
-          fit: attributes?.fit,
-          gaplessPlayback: attributes?.gaplessPlayback ?? false,
-          excludeFromSemantics: attributes?.excludeFromSemantics ?? false,
-          scale: attributes?.scale ?? 1.0,
-          color: attributes?.color,
-          colorBlendMode: attributes?.colorBlendMode,
-          alignment: attributes?.alignment ?? Alignment.center,
-          repeat: attributes?.repeat ?? ImageRepeat.noRepeat,
-          matchTextDirection: attributes?.matchTextDirection ?? false,
-          isAntiAlias: attributes?.isAntiAlias ?? false,
-          filterQuality: attributes?.filterQuality ?? FilterQuality.low,
-          cacheWidth: attributes?.cacheWidth,
-          cacheHeight: attributes?.cacheHeight,
-          width: attributes?.width,
-          height: attributes?.height,
-        ),
-      ImageType.network => Image.network(
-          attributes?.src ?? "",
-          fit: attributes?.fit,
-          gaplessPlayback: attributes?.gaplessPlayback ?? false,
-          excludeFromSemantics: attributes?.excludeFromSemantics ?? false,
-          scale: attributes?.scale ?? 1.0,
-          color: attributes?.color,
-          colorBlendMode: attributes?.colorBlendMode,
-          alignment: attributes?.alignment ?? Alignment.center,
-          repeat: attributes?.repeat ?? ImageRepeat.noRepeat,
-          matchTextDirection: attributes?.matchTextDirection ?? false,
-          isAntiAlias: attributes?.isAntiAlias ?? false,
-          filterQuality: attributes?.filterQuality ?? FilterQuality.low,
-          cacheWidth: attributes?.cacheWidth,
-          cacheHeight: attributes?.cacheHeight,
-          width: attributes?.width,
-          height: attributes?.height,
-        ),
+      ImageType.memory => _ImageProducer.memory(attributes),
+      ImageType.asset => _ImageProducer.asset(attributes),
+      ImageType.network => _ImageProducer.network(attributes),
       null => const SizedBox.shrink(),
     };
   }

@@ -3,11 +3,11 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DUITPositioned extends StatelessWidget {
+class DuitPositioned extends StatelessWidget {
   final Widget child;
   final ViewAttributeWrapper? attributes;
 
-  const DUITPositioned({
+  const DuitPositioned({
     super.key,
     required this.child,
     this.attributes,
@@ -26,24 +26,24 @@ class DUITPositioned extends StatelessWidget {
   }
 }
 
-class DUITControlledPositioned extends StatefulWidget {
+class DuitControlledPositioned extends StatefulWidget {
   final UIElementController? controller;
   final Widget child;
 
-  const DUITControlledPositioned({
+  const DuitControlledPositioned({
     super.key,
     required this.child,
     this.controller,
   });
 
   @override
-  State<DUITControlledPositioned> createState() =>
-      _DUITControlledPositionedState();
+  State<DuitControlledPositioned> createState() =>
+      _DuitControlledPositionedState();
 }
 
-class _DUITControlledPositionedState extends State<DUITControlledPositioned>
+class _DuitControlledPositionedState extends State<DuitControlledPositioned>
     with
-        ViewControllerChangeListener<DUITControlledPositioned,
+        ViewControllerChangeListener<DuitControlledPositioned,
             PositionedAttributes> {
   @override
   void initState() {

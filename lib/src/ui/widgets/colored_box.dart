@@ -3,11 +3,11 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import 'package:flutter_duit/src/duit_impl/index.dart';
 
-class DUITColoredBox extends StatelessWidget {
+class DuitColoredBox extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
   final Widget child;
 
-  const DUITColoredBox({
+  const DuitColoredBox({
     super.key,
     this.attributes,
     required this.child,
@@ -23,23 +23,23 @@ class DUITColoredBox extends StatelessWidget {
   }
 }
 
-class DUITControlledColoredBox extends StatefulWidget {
+class DuitControlledColoredBox extends StatefulWidget {
   final UIElementController? controller;
   final Widget child;
 
-  const DUITControlledColoredBox({
+  const DuitControlledColoredBox({
     super.key,
     required this.child,
     required this.controller,
   });
 
   @override
-  State<DUITControlledColoredBox> createState() =>
-      _DUITControlledColoredBoxState();
+  State<DuitControlledColoredBox> createState() =>
+      _DuitControlledColoredBoxState();
 }
 
-class _DUITControlledColoredBoxState extends State<DUITControlledColoredBox>
-    with ViewControllerChangeListener<DUITControlledColoredBox, ColoredBoxAttributes> {
+class _DuitControlledColoredBoxState extends State<DuitControlledColoredBox>
+    with ViewControllerChangeListener<DuitControlledColoredBox, ColoredBoxAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

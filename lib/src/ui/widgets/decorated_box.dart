@@ -3,11 +3,11 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DUITDecoratedBox extends StatelessWidget {
+class DuitDecoratedBox extends StatelessWidget {
   final ViewAttributeWrapper? attributes;
   final Widget child;
 
-  const DUITDecoratedBox({
+  const DuitDecoratedBox({
     super.key,
     this.attributes,
     required this.child,
@@ -23,24 +23,24 @@ class DUITDecoratedBox extends StatelessWidget {
   }
 }
 
-class DUITControlledDecoratedBox extends StatefulWidget {
+class DuitControlledDecoratedBox extends StatefulWidget {
   final UIElementController? controller;
   final Widget child;
 
-  const DUITControlledDecoratedBox({
+  const DuitControlledDecoratedBox({
     super.key,
     this.controller,
     required this.child,
   });
 
   @override
-  State<DUITControlledDecoratedBox> createState() =>
-      _DUITControlledDecoratedBoxState();
+  State<DuitControlledDecoratedBox> createState() =>
+      _DuitControlledDecoratedBoxState();
 }
 
-class _DUITControlledDecoratedBoxState extends State<DUITControlledDecoratedBox>
+class _DuitControlledDecoratedBoxState extends State<DuitControlledDecoratedBox>
     with
-        ViewControllerChangeListener<DUITControlledDecoratedBox,
+        ViewControllerChangeListener<DuitControlledDecoratedBox,
             DecoratedBoxAttributes> {
   @override
   void initState() {
