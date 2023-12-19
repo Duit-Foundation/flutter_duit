@@ -1,9 +1,6 @@
 name: Publish flutter_duit
 
 on:
-  push:
-    tags:
-    - 'test'
   release:
     types: [created]
 
@@ -11,11 +8,6 @@ jobs:
   publish:
     permissions:
       id-token: write # Required for authentication using OIDC
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
-      - name: Install dependencies
-        run: dart pub get
-      - name: Publish
-        run: dart pub publish --dry-run
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    with:
+      environment: 'pub.dev'
