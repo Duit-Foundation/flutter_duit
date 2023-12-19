@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/duit_impl/event.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 
 /// Base class for transport implementations.
 ///
@@ -28,7 +29,7 @@ abstract class Transport {
   /// The [action] parameter represents the server action to execute.
   /// The [payload] parameter contains any additional data required for the action.
   /// Returns a [ServerEvent] object representing the server's response.
-  FutureOr<ServerEvent?> execute(ServerAction action, Map<String, dynamic> payload);
+  FutureOr<JSONObject?> execute(ServerAction action, Map<String, dynamic> payload);
 
   /// Establishes a connection to the server.
   ///

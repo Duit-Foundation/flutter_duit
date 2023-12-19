@@ -6,10 +6,10 @@ import 'element.dart';
 
 /// Represents an abstract tree structure for rendering DUIT elements.
 ///
-/// The [DUITAbstractTree] class provides a structure for representing and rendering DUIT elements.
+/// The [DuitAbstractTree] class provides a structure for representing and rendering DUIT elements.
 /// It holds a JSON object representing the DUIT element tree, as well as a UIDriver for interacting with the UI.
 /// The tree is parsed and stored as a [DuitElement] object, which can be rendered to a Flutter widget using the [render] method.
-class DUITAbstractTree {
+class DuitAbstractTree {
   /// The JSON object representing the DUIT element tree.
   @protected
   final JSONObject json;
@@ -24,15 +24,15 @@ class DUITAbstractTree {
   /// It is created during the parsing process and is used for rendering the DUIT element tree to a Flutter widget.
   late final DuitElement _uiRoot;
 
-  DUITAbstractTree({
+  DuitAbstractTree({
     required this.json,
     required this.driver,
   });
 
   /// Parses the JSON object to create a [DuitElement] object tree.
   ///
-  /// Returns a future that completes with the parsed [DUITAbstractTree] instance.
-  Future<DUITAbstractTree> parse() async {
+  /// Returns a future that completes with the parsed [DuitAbstractTree] instance.
+  Future<DuitAbstractTree> parse() async {
     _uiRoot = DuitElement.fromJson(json, driver);
     return this;
   }
