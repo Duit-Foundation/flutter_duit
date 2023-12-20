@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter_duit/src/duit_impl/event.dart';
 import 'package:flutter_duit/src/transport/options.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 
 import 'streamer.dart';
 import 'transport.dart';
@@ -72,7 +73,7 @@ final class WSTransport extends Transport implements Streamer {
 
     await for (final event in _controller.stream) {
       _controller.close();
-      _controller = StreamController<Map<String, dynamic>>.broadcast();
+      _controller = StreamController.broadcast();
       return event;
     }
 
@@ -80,7 +81,7 @@ final class WSTransport extends Transport implements Streamer {
   }
 
   @override
-  FutureOr<ServerEvent?> execute(action, payload) {
+  FutureOr<JSONObject?> execute(action, payload) {
     final data = {
       "event": action.event,
       "payload": payload,
