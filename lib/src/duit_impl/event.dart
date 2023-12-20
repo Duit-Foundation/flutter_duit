@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_duit/src/duit_impl/index.dart';
 import 'package:flutter_duit/src/ui/models/ui_tree.dart';
 import 'package:flutter_duit/src/utils/index.dart';
@@ -27,7 +29,7 @@ abstract class ServerEvent {
 
     final event = switch (type) {
       "update" => UpdateEvent.fromJson(json),
-      "layoutUpdate" => LayoutUpdateEvent.fromJson(json, driver),
+      "updateLayout" => LayoutUpdateEvent.fromJson(json, driver),
       // "navigate" => NavigateEvent.fromJson(json),
       // "openUrl" => OpenUrlEvent.fromJson(json),
       String() || Object() || null => null,
@@ -79,7 +81,7 @@ final class LayoutUpdateEvent extends ServerEvent {
   /// Returns an [LayoutUpdateEvent] object if the JSON object is valid, otherwise throws an exception.
   factory LayoutUpdateEvent.fromJson(JSONObject json, UIDriver driver) {
     final layout = DuitAbstractTree(
-      json: json["layout"],
+      json: jsonDecode(json["layout"]),
       driver: driver,
     );
     return LayoutUpdateEvent(layout);
