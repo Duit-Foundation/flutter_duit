@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/duit_impl/event.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 import 'package:http/http.dart' as http;
 

@@ -20,10 +20,10 @@ abstract interface class UIDriver {
   abstract Transport? transport;
 
   /// The build context associated with the UI driver.
-  abstract BuildContext _context;
+  abstract BuildContext context;
 
   /// The stream controller for the UI driver.
-  abstract StreamController<DuitAbstractTree?> _streamController;
+  abstract StreamController<DuitAbstractTree?> streamController;
 
   /// Attaches a controller to the UI driver.
   ///
@@ -69,10 +69,7 @@ abstract interface class UIDriver {
   ///
   /// This method is called when the driver is no longer needed.
   void dispose();
-
-  /// Sets the build context for the UI driver.
-  set context(BuildContext value);
-
+  
   /// Returns the stream of UI abstract trees.
   Stream<DuitAbstractTree?> get stream;
 }
@@ -85,22 +82,17 @@ final class DuitDriver implements UIDriver {
   @override
   TransportOptions transportOptions;
   @override
-  StreamController<DuitAbstractTree?> _streamController =
+  StreamController<DuitAbstractTree?> streamController =
       StreamController.broadcast();
   @override
-  late BuildContext _context;
+  late BuildContext context;
 
   DuitAbstractTree? _layout;
   Map<String, UIElementController> _viewControllers = {};
 
   @override
-  set context(BuildContext value) {
-    _context = value;
-  }
-
-  @override
   Stream<DuitAbstractTree?> get stream =>
-      _streamController.stream.asBroadcastStream();
+      streamController.stream.asBroadcastStream();
 
   DuitDriver(
     this.source, {
@@ -182,7 +174,7 @@ final class DuitDriver implements UIDriver {
 
           if (newLayout != null) {
             _layout = newLayout;
-            _streamController.sink.add(_layout);
+            streamController.sink.add(_layout);
           }
       }
     }
@@ -192,7 +184,7 @@ final class DuitDriver implements UIDriver {
   Future<void> init() async {
     if (_layout != null) {
       await Future.delayed(Duration.zero);
-      _streamController.sink.add(_layout);
+      streamController.sink.add(_layout);
     } else {
       transport ??= _getTransport(transportOptions.type);
 
@@ -205,7 +197,7 @@ final class DuitDriver implements UIDriver {
       }
 
       _layout = DuitAbstractTree(json: json!, driver: this);
-      _streamController.sink.add(await _layout?.parse());
+      streamController.sink.add(await _layout?.parse());
     }
   }
 
@@ -244,7 +236,7 @@ final class DuitDriver implements UIDriver {
     transport?.dispose();
     _viewControllers = {};
     _layout = null;
-    _streamController.close();
+    streamController.close();
   }
 
   /// Updates the attributes of a controller.
