@@ -16,3 +16,4 @@ export 'decorated_box_attributes.dart';
 export 'checkbox_attributes.dart';
 export 'container_attributes.dart';
 export 'image_attributes.dart';
+export 'gesture_detector_attributes.dart';

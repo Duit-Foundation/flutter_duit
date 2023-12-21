@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_duit/src/duit_impl/view_context.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 
 import 'driver.dart';
 
@@ -28,6 +30,8 @@ class DuitViewHost extends StatefulWidget {
   /// The build context of the parent widget.
   final BuildContext context;
 
+  final GestureInterceptor? gestureInterceptor;
+
   /// Creates a new `DuitViewHost` widget.
   ///
   /// The [driver] parameter is required and should be an instance of `UIDriver`.
@@ -38,6 +42,7 @@ class DuitViewHost extends StatefulWidget {
     required this.driver,
     required this.context,
     this.placeholder,
+    this.gestureInterceptor,
   });
 
   @override
@@ -59,7 +64,10 @@ class _DuitViewHostState extends State<DuitViewHost> {
           widget.driver.context = context;
 
           if (snapshot.data != null) {
-            return snapshot.data!.render();
+            return DuitViewContext(
+              gestureInterceptor: widget.gestureInterceptor,
+              child: snapshot.data!.render(),
+            );
           } else {
             return widget.placeholder ?? const SizedBox.shrink();
           }
