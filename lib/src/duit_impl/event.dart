@@ -81,7 +81,7 @@ final class LayoutUpdateEvent extends ServerEvent {
   /// Returns an [LayoutUpdateEvent] object if the JSON object is valid, otherwise throws an exception.
   factory LayoutUpdateEvent.fromJson(JSONObject json, UIDriver driver) {
     final layout = DuitAbstractTree(
-      json: jsonDecode(json["layout"]),
+      json: json is String ? jsonDecode(json["layout"]) : json["layout"],
       driver: driver,
     );
     return LayoutUpdateEvent(layout);
