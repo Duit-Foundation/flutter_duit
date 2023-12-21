@@ -23,7 +23,7 @@ abstract interface class UIDriver {
   abstract BuildContext _context;
 
   /// The stream controller for the UI driver.
-  abstract StreamController<DUITAbstractTree?> _streamController;
+  abstract StreamController<DuitAbstractTree?> _streamController;
 
   /// Attaches a controller to the UI driver.
   ///
@@ -74,7 +74,7 @@ abstract interface class UIDriver {
   set context(BuildContext value);
 
   /// Returns the stream of UI abstract trees.
-  Stream<DUITAbstractTree?> get stream;
+  Stream<DuitAbstractTree?> get stream;
 }
 
 final class DuitDriver implements UIDriver {
@@ -85,11 +85,12 @@ final class DuitDriver implements UIDriver {
   @override
   TransportOptions transportOptions;
   @override
-  StreamController<DUITAbstractTree?> _streamController = StreamController.broadcast();
+  StreamController<DuitAbstractTree?> _streamController =
+      StreamController.broadcast();
   @override
   late BuildContext _context;
 
-  DUITAbstractTree? _layout;
+  DuitAbstractTree? _layout;
   Map<String, UIElementController> _viewControllers = {};
 
   @override
@@ -98,7 +99,8 @@ final class DuitDriver implements UIDriver {
   }
 
   @override
-  Stream<DUITAbstractTree?> get stream => _streamController.stream.asBroadcastStream();
+  Stream<DuitAbstractTree?> get stream =>
+      _streamController.stream.asBroadcastStream();
 
   DuitDriver(
     this.source, {
@@ -163,8 +165,8 @@ final class DuitDriver implements UIDriver {
   /// - [json]: The JSON object representing a server event.
   ///
   /// Returns: A [Future] that completes with [void].
-  FutureOr<void> _resolveEventFromJson(JSONObject? json) async {
-    final event = ServerEvent.fromJson(json);
+  FutureOr<void> _resolveEvent(JSONObject? json) async {
+    final event = ServerEvent.fromJson(json, this);
 
     if (event != null) {
       switch (event.type) {
@@ -174,27 +176,15 @@ final class DuitDriver implements UIDriver {
             _updateAttributes(key, value);
           });
           break;
-      }
-    }
-  }
+        case ServerEventType.layoutUpdate:
+          final layoutUpdateEvent = event as LayoutUpdateEvent;
+          final newLayout = await layoutUpdateEvent.layout?.parse();
 
-  /// Resolves a server event.
-  ///
-  /// This method takes a [ServerEvent] object representing a server event and
-  /// performs the appropriate handling based on the event type. It switches on
-  /// the [type] of the event and executes the corresponding logic for each event
-  /// type.
-  ///
-  /// Parameters:
-  /// - [event]: The server event to be resolved.
-  FutureOr<void> _resolveEvent(ServerEvent event) async {
-    switch (event.type) {
-      case ServerEventType.update:
-        final updEvent = event as UpdateEvent;
-        updEvent.updates.forEach((key, value) {
-          _updateAttributes(key, value);
-        });
-        break;
+          if (newLayout != null) {
+            _layout = newLayout;
+            _streamController.sink.add(_layout);
+          }
+      }
     }
   }
 
@@ -211,10 +201,10 @@ final class DuitDriver implements UIDriver {
 
       if (transport is Streamer) {
         final streamer = transport as Streamer;
-        streamer.eventStream.listen(_resolveEventFromJson);
+        streamer.eventStream.listen(_resolveEvent);
       }
 
-      _layout = DUITAbstractTree(json: json!, driver: this);
+      _layout = DuitAbstractTree(json: json!, driver: this);
       _streamController.sink.add(await _layout?.parse());
     }
   }

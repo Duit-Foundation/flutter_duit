@@ -44,6 +44,13 @@ final driver5 = DuitDriver(
     baseUrl: "http://localhost:8999",
   ),
 );
+final driver6 = DuitDriver(
+  "/updateExample",
+  transportOptions: HttpTransportOptions(
+    defaultHeaders: {"Content-Type": "application/json"},
+    baseUrl: "http://localhost:8999",
+  ),
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -117,6 +124,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 driver: driver5,
                 placeholder: const CircularProgressIndicator(),
               ),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            DuitViewHost(
+              context: context,
+              driver: driver6,
+              placeholder: const CircularProgressIndicator(),
             ),
           ],
         ),
