@@ -81,43 +81,6 @@ class _DuitGestureDetectorState extends State<DuitGestureDetector>
         _performAction(attributes?.onLongPressEnd);
         interceptor?.call(GestureType.onLongPressEnd, gestureInfo: info);
       },
-      onVerticalDragStart: (info) {
-        _performAction(attributes?.onVerticalDragStart);
-        interceptor?.call(GestureType.onVerticalDragStart, gestureInfo: info);
-      },
-      onVerticalDragDown: (info) {
-        _performAction(attributes?.onVerticalDragDown);
-        interceptor?.call(GestureType.onVerticalDragDown, gestureInfo: info);
-      },
-      onVerticalDragUpdate: (info) {
-        _performAction(attributes?.onVerticalDragUpdate);
-        interceptor?.call(GestureType.onVerticalDragUpdate, gestureInfo: info);
-      },
-      onVerticalDragEnd: (info) {
-        _performAction(attributes?.onVerticalDragEnd);
-        interceptor?.call(GestureType.onVerticalDragEnd, gestureInfo: info);
-      },
-      onHorizontalDragStart: (info) {
-        _performAction(attributes?.onHorizontalDragStart);
-        interceptor?.call(GestureType.onHorizontalDragStart, gestureInfo: info);
-      },
-      onHorizontalDragUpdate: (info) {
-        _performAction(attributes?.onHorizontalDragUpdate);
-        interceptor?.call(GestureType.onHorizontalDragUpdate,
-            gestureInfo: info);
-      },
-      onHorizontalDragEnd: (info) {
-        _performAction(attributes?.onHorizontalDragEnd);
-        interceptor?.call(GestureType.onHorizontalDragEnd, gestureInfo: info);
-      },
-      onHorizontalDragCancel: () {
-        _performAction(attributes?.onHorizontalDragCancel);
-        interceptor?.call(GestureType.onHorizontalDragCancel);
-      },
-      onVerticalDragCancel: () {
-        _performAction(attributes?.onVerticalDragCancel);
-        interceptor?.call(GestureType.onVerticalDragCancel);
-      },
       onPanStart: (info) {
         _performAction(attributes?.onPanStart);
         interceptor?.call(GestureType.onPanStart, gestureInfo: info);
@@ -137,18 +100,6 @@ class _DuitGestureDetectorState extends State<DuitGestureDetector>
       onPanCancel: () {
         _performAction(attributes?.onPanCancel);
         interceptor?.call(GestureType.onPanCancel);
-      },
-      onScaleStart: (info) {
-        _performAction(attributes?.onScaleStart);
-        interceptor?.call(GestureType.onScaleStart, gestureInfo: info);
-      },
-      onScaleUpdate: (info) {
-        _performAction(attributes?.onScaleUpdate);
-        interceptor?.call(GestureType.onScaleUpdate, gestureInfo: info);
-      },
-      onScaleEnd: (info) {
-        _performAction(attributes?.onScaleEnd);
-        interceptor?.call(GestureType.onScaleEnd, gestureInfo: info);
       },
       behavior: attributes?.behavior,
       dragStartBehavior:

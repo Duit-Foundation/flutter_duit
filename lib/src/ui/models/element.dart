@@ -392,6 +392,27 @@ abstract base class DuitElement<T> with WidgetFabric {
             controlled: controlled,
           );
         }
+      case DUITElementType.gestureDetector:
+        {
+          final child = DuitElement.fromJson(json["child"], driver);
+
+          return GestureDetectorUiElement(
+            type: type,
+            id: id,
+            attributes: attributes,
+            viewController: createAndAttachController(
+              id,
+              controlled,
+              attributes,
+              serverAction,
+              driver,
+              type,
+              tag,
+            ),
+            child: child,
+            controlled: controlled,
+          );
+        }
       case DUITElementType.empty:
         {
           return EmptyUIElement();
@@ -478,6 +499,30 @@ abstract base class DuitElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class GestureDetectorUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  @override
+  ViewAttributeWrapper<T>? attributes;
+
+  @override
+  UIElementController<T>? viewController;
+
+  GestureDetectorUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required this.viewController,
+    required this.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class ContainerUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
