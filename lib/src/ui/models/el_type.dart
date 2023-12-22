@@ -52,6 +52,9 @@ enum DUITElementType {
 
   ///Keys: Image
   image,
+
+  ///Keys: GestureDetector
+  gestureDetector,
 }
 
 /// Infers the type of a value based on its runtime type.
@@ -65,6 +68,8 @@ DUITElementType inferTypeFromValue(dynamic type) {
 
   if (type is String) {
     switch (type) {
+      case "GestureDetector":
+        return DUITElementType.gestureDetector;
       case "Image":
         return DUITElementType.image;
       case "Column":

@@ -75,6 +75,8 @@ sealed class AttributeParser {
       DUITElementType.checkbox => CheckboxAttributes.fromJson(json ?? {}),
       DUITElementType.container => ContainerAttributes.fromJson(json ?? {}),
       DUITElementType.image => ImageAttributes.fromJson(json ?? {}),
+      DUITElementType.gestureDetector =>
+        GestureDetectorAttributes.fromJson(json ?? {}),
       DUITElementType.empty => EmptyAttributes(),
       DUITElementType.custom => _parseCustomWidgetAttributes(json, tag),
     };

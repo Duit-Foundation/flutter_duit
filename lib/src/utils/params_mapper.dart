@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
@@ -396,7 +397,7 @@ class ParamsMapper {
     if (value == null) return Uint8List(0);
 
     final bytes = value["data"];
-    
+
     if (bytes != null && bytes is List) {
       final data = List.castFrom<dynamic, int>(bytes);
       return Uint8List.fromList(data);
@@ -887,6 +888,37 @@ class ParamsMapper {
 
   //</editor-fold>
 
+  //<editor-fold desc="Gestures">
+  static DragStartBehavior convertToDragStartBehavior(String? behavior) {
+    if (behavior == null) return DragStartBehavior.start;
+
+    switch (behavior) {
+      case "start":
+        return DragStartBehavior.start;
+      case "down":
+        return DragStartBehavior.down;
+    }
+
+    return DragStartBehavior.start;
+  }
+
+  static HitTestBehavior convertToHitTestBehavior(String? behavior) {
+    if (behavior == null) return HitTestBehavior.deferToChild;
+
+    switch (behavior) {
+      case "deferToChild":
+        return HitTestBehavior.deferToChild;
+      case "opaque":
+        return HitTestBehavior.opaque;
+      case "translucent":
+        return HitTestBehavior.translucent;
+    }
+
+    return HitTestBehavior.deferToChild;
+  }
+
+//</editor-fold>
+
   //<editor-fold desc="Shape and insets">
 
   /// Converts a JSON object to an [EdgeInsets].
@@ -946,5 +978,6 @@ class ParamsMapper {
 
     return EdgeInsets.zero;
   }
+
 //</editor-fold>
 }

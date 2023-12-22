@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/duit_impl/registry.dart';
 import 'package:flutter_duit/src/ui/models/el_type.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
+import 'package:flutter_duit/src/ui/widgets/gesture_detector.dart';
 import 'package:flutter_duit/src/ui/widgets/positioned.dart';
 
 import 'index.dart';
@@ -225,6 +226,16 @@ mixin WidgetFabric {
                   attributes: it.attributes,
                   child: child,
                 );
+        }
+      case DUITElementType.gestureDetector:
+        {
+          final it = model as GestureDetectorUiElement;
+          final child = getWidgetFromElement(it.child);
+
+          return DuitGestureDetector(
+            controller: it.viewController!,
+            child: child,
+          );
         }
       case DUITElementType.image:
         {

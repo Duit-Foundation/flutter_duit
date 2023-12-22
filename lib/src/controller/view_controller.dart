@@ -85,4 +85,11 @@ final class ViewController<T> with ChangeNotifier implements UIElementController
     }
   }
 
+  @override
+  void performAction(ServerAction? action) {
+    if (action != null) {
+      driver.execute(action);
+    }
+  }
+
 }
