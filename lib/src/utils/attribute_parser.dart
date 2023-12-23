@@ -1,5 +1,6 @@
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/duit_kernel/index.dart';
+import 'package:flutter_duit/src/ui/models/element_type.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 /// The `AttributeParser` class is responsible for parsing and mapping attributes for different DUIT elements.
@@ -55,31 +56,29 @@ final class AttributeParser implements AttributeParserBase {
   /// Returns:
   /// A `ViewAttributeWrapper` instance with the parsed attributes.
   @override
-  ViewAttributeWrapper<T> parse<T>(
-      DUITElementType type, JSONObject? json, String? tag) {
+  ViewAttributeWrapper<T> parse<T>(String type, JSONObject? json, String? tag) {
     final payload = switch (type) {
-      DUITElementType.text => TextAttributes.fromJson(json ?? {}),
-      DUITElementType.row => RowAttributes.fromJson(json ?? {}),
-      DUITElementType.column => ColumnAttributes.fromJson(json ?? {}),
-      DUITElementType.sizedBox => SizedBoxAttributes.fromJson(json ?? {}),
-      DUITElementType.center => CenterAttributes.fromJson(json ?? {}),
-      DUITElementType.coloredBox => ColoredBoxAttributes.fromJson(json ?? {}),
-      DUITElementType.textField => TextFieldAttributes.fromJson(json ?? {}),
-      DUITElementType.elevatedButton =>
+      ElementType.text => TextAttributes.fromJson(json ?? {}),
+      ElementType.row => RowAttributes.fromJson(json ?? {}),
+      ElementType.column => ColumnAttributes.fromJson(json ?? {}),
+      ElementType.sizedBox => SizedBoxAttributes.fromJson(json ?? {}),
+      ElementType.center => CenterAttributes.fromJson(json ?? {}),
+      ElementType.coloredBox => ColoredBoxAttributes.fromJson(json ?? {}),
+      ElementType.textField => TextFieldAttributes.fromJson(json ?? {}),
+      ElementType.elevatedButton =>
         ElevatedButtonAttributes.fromJson(json ?? {}),
-      DUITElementType.stack => StackAttributes.fromJson(json ?? {}),
-      DUITElementType.expanded => ExpandedAttributes.fromJson(json ?? {}),
-      DUITElementType.padding => PaddingAttributes.fromJson(json ?? {}),
-      DUITElementType.positioned => PositionedAttributes.fromJson(json ?? {}),
-      DUITElementType.decoratedBox =>
-        DecoratedBoxAttributes.fromJson(json ?? {}),
-      DUITElementType.checkbox => CheckboxAttributes.fromJson(json ?? {}),
-      DUITElementType.container => ContainerAttributes.fromJson(json ?? {}),
-      DUITElementType.image => ImageAttributes.fromJson(json ?? {}),
-      DUITElementType.gestureDetector =>
+      ElementType.stack => StackAttributes.fromJson(json ?? {}),
+      ElementType.expanded => ExpandedAttributes.fromJson(json ?? {}),
+      ElementType.padding => PaddingAttributes.fromJson(json ?? {}),
+      ElementType.positioned => PositionedAttributes.fromJson(json ?? {}),
+      ElementType.decoratedBox => DecoratedBoxAttributes.fromJson(json ?? {}),
+      ElementType.checkbox => CheckboxAttributes.fromJson(json ?? {}),
+      ElementType.container => ContainerAttributes.fromJson(json ?? {}),
+      ElementType.image => ImageAttributes.fromJson(json ?? {}),
+      ElementType.gestureDetector =>
         GestureDetectorAttributes.fromJson(json ?? {}),
-      DUITElementType.empty => EmptyAttributes(),
-      DUITElementType.custom => _parseCustomWidgetAttributes(json, tag),
+      ElementType.custom => _parseCustomWidgetAttributes(json, tag),
+      ElementType.empty || String() => EmptyAttributes(),
     };
 
     return ViewAttributeWrapper<T>(payload: payload);

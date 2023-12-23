@@ -1,6 +1,5 @@
 export 'action.dart';
 export 'attributes.dart';
-export 'el_type.dart';
 export 'registry.dart';
 export 'streamer.dart';
 export 'transport.dart';

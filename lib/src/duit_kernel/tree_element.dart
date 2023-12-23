@@ -4,7 +4,7 @@ abstract base class TreeElement<T> {
   final String id;
 
   /// The type of the DUIT element.
-  final DUITElementType type;
+  final String type;
   final bool controlled;
   final String? tag;
   abstract UIElementController<T>? viewController;

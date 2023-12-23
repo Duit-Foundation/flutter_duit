@@ -20,7 +20,7 @@ abstract interface class UIElementController<T> {
   ///
   /// The [type] property represents the type of the UI element associated with the controller.
   /// It can be used to identify the type of the element and perform specific operations based on the type.
-  abstract DUITElementType type;
+  abstract String type;
 
   /// Related action.
   ///
