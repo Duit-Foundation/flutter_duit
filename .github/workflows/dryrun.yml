@@ -1,0 +1,16 @@
+name: Test workflow for publish pipeline
+on:
+  workflow_dispatch:
+
+jobs:
+  dr:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for authentication using OIDC
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter pub publish --force
