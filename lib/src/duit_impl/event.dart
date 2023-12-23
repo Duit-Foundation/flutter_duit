@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_duit/src/duit_kernel/index.dart';
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/ui/models/ui_tree.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 

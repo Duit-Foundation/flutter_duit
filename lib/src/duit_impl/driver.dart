@@ -1,8 +1,8 @@
 import "dart:async";
 
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/duit_kernel/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";

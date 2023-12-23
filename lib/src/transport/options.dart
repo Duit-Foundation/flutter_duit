@@ -1,4 +1,4 @@
-import 'package:flutter_duit/src/duit_kernel/index.dart';
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/transport/index.dart';
 
 final class EmptyTransportOptions extends TransportOptions {

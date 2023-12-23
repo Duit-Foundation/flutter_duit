@@ -1,9 +1,9 @@
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/view_context.dart";
-import "package:flutter_duit/src/duit_kernel/index.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 class DuitGestureDetector extends StatefulWidget {

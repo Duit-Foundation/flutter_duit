@@ -1,5 +1,5 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/duit_kernel/index.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
