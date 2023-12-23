@@ -1,20 +1,15 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
 final class ExampleCustomWidget<T> extends DuitElement<T> {
-  @override
-  ViewAttributeWrapper<T>? attributes;
-
-  @override
-  UIElementController<T>? viewController;
-
   ExampleCustomWidget({
     required super.id,
-    required this.attributes,
-    required this.viewController,
+    required super.attributes,
+    required super.viewController,
     required super.controlled,
   }) : super(
-          type: DUITElementType.custom,
+          type: "Custom",
           tag: "ExampleCustomWidget",
         );
 }
@@ -37,7 +32,7 @@ DuitAttributes exampleAttributeMapper(String type, Map<String, dynamic>? json) {
   return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random");
 }
 
-Widget exampleRenderer(DuitElement model) {
+Widget exampleRenderer(TreeElement model) {
   final data = model.attributes?.payload as ExampleCustomWidgetAttributes?;
   return Text(data?.random ?? "no random");
 }
