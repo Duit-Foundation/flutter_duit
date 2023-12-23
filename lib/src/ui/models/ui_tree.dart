@@ -1,46 +1,23 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_duit/src/duit_impl/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 import 'element.dart';
 
-/// Represents an abstract tree structure for rendering DUIT elements.
-///
-/// The [DuitAbstractTree] class provides a structure for representing and rendering DUIT elements.
-/// It holds a JSON object representing the DUIT element tree, as well as a UIDriver for interacting with the UI.
-/// The tree is parsed and stored as a [DuitElement] object, which can be rendered to a Flutter widget using the [render] method.
-class DuitAbstractTree {
-  /// The JSON object representing the DUIT element tree.
-  @protected
-  final JSONObject json;
+final class DuitTree extends DuitAbstractTree {
+  DuitTree({
+    required JSONObject json,
+    required UIDriver driver,
+  }) : super(json: json, driver: driver);
 
-  /// The UIDriver for interacting with the UI.
-  @protected
-  final UIDriver driver;
-
-  /// The root [DuitElement] of the DUIT element tree.
-  ///
-  /// This property holds the root [DuitElement] object of the parsed DUIT element tree.
-  /// It is created during the parsing process and is used for rendering the DUIT element tree to a Flutter widget.
-  late final DuitElement _uiRoot;
-
-  DuitAbstractTree({
-    required this.json,
-    required this.driver,
-  });
-
-  /// Parses the JSON object to create a [DuitElement] object tree.
-  ///
-  /// Returns a future that completes with the parsed [DuitAbstractTree] instance.
+  @override
   Future<DuitAbstractTree> parse() async {
-    _uiRoot = DuitElement.fromJson(json, driver);
+    uiRoot = DuitElement.fromJson(json, driver);
     return this;
   }
 
-  /// Renders the DUIT element tree to a Flutter widget.
-  ///
-  /// Returns the rendered Flutter widget.
+  @override
   Widget render() {
-    return _uiRoot.renderView();
+    return uiRoot.renderView();
   }
 }

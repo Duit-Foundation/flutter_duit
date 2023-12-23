@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_duit/src/duit_impl/index.dart';
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/ui/models/ui_tree.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
@@ -80,7 +80,7 @@ final class LayoutUpdateEvent extends ServerEvent {
   /// The [json] parameter is a JSON object representing the update event.
   /// Returns an [LayoutUpdateEvent] object if the JSON object is valid, otherwise throws an exception.
   factory LayoutUpdateEvent.fromJson(JSONObject json, UIDriver driver) {
-    final layout = DuitAbstractTree(
+    final layout = DuitTree(
       json: json is String ? jsonDecode(json["layout"]) : json["layout"],
       driver: driver,
     );

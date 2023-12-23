@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 import 'package:http/http.dart' as http;
-
-import 'transport.dart';
 
 /// An HTTP transport implementation for making HTTP requests.
 ///

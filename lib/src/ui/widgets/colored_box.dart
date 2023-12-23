@@ -1,6 +1,6 @@
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
-import "package:flutter_duit/src/controller/index.dart";
 import 'package:flutter_duit/src/duit_impl/index.dart';
 
 class DuitColoredBox extends StatelessWidget {
@@ -39,7 +39,9 @@ class DuitControlledColoredBox extends StatefulWidget {
 }
 
 class _DuitControlledColoredBoxState extends State<DuitControlledColoredBox>
-    with ViewControllerChangeListener<DuitControlledColoredBox, ColoredBoxAttributes> {
+    with
+        ViewControllerChangeListener<DuitControlledColoredBox,
+            ColoredBoxAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

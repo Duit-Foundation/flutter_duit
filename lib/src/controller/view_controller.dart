@@ -1,16 +1,14 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/duit_impl/index.dart';
-import 'package:flutter_duit/src/ui/models/el_type.dart';
-
-import 'ui_controller.dart';
 
 /// The controller for a UI element.
 ///
 /// This class is responsible for managing the state and behavior of a UI element.
 /// It implements the [UIElementController] interface and uses the [ChangeNotifier]
 /// mixin to provide change notification to listeners.
-final class ViewController<T> with ChangeNotifier implements UIElementController<T> {
+final class ViewController<T>
+    with ChangeNotifier
+    implements UIElementController<T> {
   /// The attributes associated with the UI element.
   ///
   /// This property holds the attributes of the UI element that the `ViewController` controls.
@@ -40,7 +38,7 @@ final class ViewController<T> with ChangeNotifier implements UIElementController
   ///
   /// This property holds the type of the UI element that the `ViewController` controls.
   @override
-  DUITElementType type;
+  String type;
 
   /// The tag associated with the UI element.
   ///
@@ -91,5 +89,4 @@ final class ViewController<T> with ChangeNotifier implements UIElementController
       driver.execute(action);
     }
   }
-
 }

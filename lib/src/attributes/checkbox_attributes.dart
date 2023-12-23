@@ -1,8 +1,7 @@
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/utils/index.dart";
-
-import "index.dart";
 
 //TODO: need add shape [OutlinedBorder]
 

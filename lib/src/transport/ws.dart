@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/transport/options.dart';
 import 'package:flutter_duit/src/utils/index.dart';
-
-import 'streamer.dart';
-import 'transport.dart';
 
 /// A WebSocket transport implementation for streaming data.
 ///

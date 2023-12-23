@@ -1,6 +1,6 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 class GestureDetectorAttributes

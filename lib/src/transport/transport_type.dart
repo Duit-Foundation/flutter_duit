@@ -1,8 +1,6 @@
 /// Enum representing the type of transport.
-enum TransportType {
-  /// Represents the HTTP transport type.
-  http,
-
-  /// Represents the WebSocket transport type.
-  ws,
+class TransportType {
+  static const http = "http";
+  static const ws = "ws";
+  static const none = "none";
 }

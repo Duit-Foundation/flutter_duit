@@ -1,12 +1,12 @@
 import "dart:typed_data";
 
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
-import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 import "package:flutter_duit/src/utils/image_type.dart";
 
-final class _ImageProducer {
+sealed class _ImageProducer {
   static Widget memory(ImageAttributes? attrs) {
     return Image.memory(
       attrs?.byteData ?? Uint8List(0),

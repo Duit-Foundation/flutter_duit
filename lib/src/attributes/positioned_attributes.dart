@@ -1,6 +1,5 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/utils/index.dart';
-
-import 'index.dart';
 
 /// Represents the attributes for a Positioned widget.
 ///

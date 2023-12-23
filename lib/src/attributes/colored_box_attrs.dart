@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter_duit/src/attributes/attributes.dart';
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for a ColoredBox widget.

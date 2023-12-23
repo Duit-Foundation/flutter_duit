@@ -1,6 +1,6 @@
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
-import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitSizedBox extends StatelessWidget {
@@ -39,7 +39,9 @@ class DuitControlledSizedBox extends StatefulWidget {
 }
 
 class _DuitControlledSizedBoxState extends State<DuitControlledSizedBox>
-    with ViewControllerChangeListener<DuitControlledSizedBox, SizedBoxAttributes> {
+    with
+        ViewControllerChangeListener<DuitControlledSizedBox,
+            SizedBoxAttributes> {
   @override
   void initState() {
     attachStateToController(widget.controller);

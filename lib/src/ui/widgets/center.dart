@@ -1,6 +1,6 @@
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
-import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitCenter extends StatelessWidget {
