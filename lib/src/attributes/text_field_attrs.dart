@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
+import 'package:flutter_duit/src/duit_kernel/index.dart';
 import 'package:flutter_duit/src/ui/models/attended_model.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 

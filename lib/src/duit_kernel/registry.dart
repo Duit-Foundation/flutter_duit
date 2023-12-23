@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import 'package:flutter/material.dart';
+
+import 'index.dart';
 
 /// The `ModelMapper` is a function type that maps a DUIT element to a `DUITElement`.
 ///
@@ -11,7 +11,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// - [controller]: An optional UI element controller.
 ///
 /// It returns a `DUITElement` that represents the mapped DUIT element.
-typedef ModelMapper = DuitElement Function(
+typedef ModelMapper = TreeElement Function(
   String id,
   bool controlled,
   ViewAttributeWrapper attributes,
@@ -24,7 +24,7 @@ typedef ModelMapper = DuitElement Function(
 /// - [model]: The `DUITElement` to be rendered.
 ///
 /// It returns a `Widget` that represents the rendered `DUITElement`.
-typedef Renderer = Widget Function(DuitElement model);
+typedef Renderer = Widget Function(TreeElement model);
 
 /// The `AttributesMapper` is a function type that maps the attributes of a DUIT element to `DUITAttributes`.
 ///
@@ -34,7 +34,7 @@ typedef Renderer = Widget Function(DuitElement model);
 ///
 /// It returns a `DUITAttributes` object that represents the mapped attributes.
 typedef AttributesMapper = DuitAttributes Function(
-    String type, JSONObject? json);
+    String type, Map<String, dynamic>? json);
 
 /// The `DUITRegistry` class is responsible for registering and retrieving
 /// model mappers, renderers, and attributes mappers for custom DUIT elements.

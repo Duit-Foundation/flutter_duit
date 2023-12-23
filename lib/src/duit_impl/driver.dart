@@ -2,77 +2,13 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/duit_kernel/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 import "event.dart";
-
-abstract interface class UIDriver {
-  /// The source url of the UI driver.
-  abstract final String source;
-
-  /// The options for the transport used by the UI driver.
-  abstract final TransportOptions transportOptions;
-
-  /// The transport used by the UI driver.
-  abstract Transport? transport;
-
-  /// The build context associated with the UI driver.
-  abstract BuildContext context;
-
-  /// The stream controller for the UI driver.
-  abstract StreamController<DuitAbstractTree?> streamController;
-
-  /// Attaches a controller to the UI driver.
-  ///
-  /// Parameters:
-  /// - [id]: The ID of the controller.
-  /// - [controller]: The UI element controller to attach.
-  void attachController(String id, UIElementController controller);
-
-  /// Initializes the UI driver.
-  ///
-  /// This method initializes the UI driver by performing any necessary setup or
-  /// configuration. It can be called before using the UI driver to ensure that
-  /// it is ready to perform its intended tasks.
-  ///
-  /// Returns: A [Future] that completes when the initialization is done. If the
-  /// initialization is successful, the [Future] completes successfully. If there
-  /// is an error during initialization, the [Future] completes with an error.
-  Future<void> init();
-
-  /// Builds the UI.
-  ///
-  /// This method is responsible for building the user interface (UI) based on the
-  /// current state of the UI driver. It creates and returns a widget that represents
-  /// the UI to be rendered on the screen.
-  ///
-  /// Returns: The widget representing the UI.
-  Widget? build();
-
-  /// Executes a server action and handles the response event.
-  ///
-  /// If [dependencies] is not empty, it collects the data from the controllers
-  /// associated with each dependency and adds it to the payload. The payload is
-  /// then passed to the server action.
-  ///
-  /// This method is called when a server action needs to be executed.
-  ///
-  /// Parameters:
-  /// - [action]: The server action to be executed.
-  /// - [dependencies]: A list of dependencies for the server action.
-  Future<void> execute(ServerAction action);
-
-  /// Disposes of the driver and releases any resources.
-  ///
-  /// This method is called when the driver is no longer needed.
-  void dispose();
-  
-  /// Returns the stream of UI abstract trees.
-  Stream<DuitAbstractTree?> get stream;
-}
 
 final class DuitDriver implements UIDriver {
   @override
@@ -85,7 +21,12 @@ final class DuitDriver implements UIDriver {
   StreamController<DuitAbstractTree?> streamController =
       StreamController.broadcast();
   @override
-  late BuildContext context;
+  late BuildContext buildContext;
+
+  @override
+  set context(BuildContext value) {
+    buildContext = value;
+  }
 
   DuitAbstractTree? _layout;
   Map<String, UIElementController> _viewControllers = {};
@@ -120,7 +61,7 @@ final class DuitDriver implements UIDriver {
   /// Returns:
   /// - An instance of the transport class based on the specified [type].
   /// - If the [type] is not recognized, it returns an instance of [HttpTransport].
-  Transport _getTransport(TransportType type) {
+  Transport _getTransport(String type) {
     switch (type) {
       case TransportType.http:
         {
@@ -159,7 +100,6 @@ final class DuitDriver implements UIDriver {
   /// Returns: A [Future] that completes with [void].
   FutureOr<void> _resolveEvent(JSONObject? json) async {
     final event = ServerEvent.fromJson(json, this);
-
     if (event != null) {
       switch (event.type) {
         case ServerEventType.update:
@@ -186,6 +126,7 @@ final class DuitDriver implements UIDriver {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
     } else {
+      ViewAttributeWrapper.attributeParser = AttributeParser();
       transport ??= _getTransport(transportOptions.type);
 
       final json = await transport?.connect();
@@ -196,7 +137,7 @@ final class DuitDriver implements UIDriver {
         streamer.eventStream.listen(_resolveEvent);
       }
 
-      _layout = DuitAbstractTree(json: json!, driver: this);
+      _layout = DuitTree(json: json!, driver: this);
       streamController.sink.add(await _layout?.parse());
     }
   }

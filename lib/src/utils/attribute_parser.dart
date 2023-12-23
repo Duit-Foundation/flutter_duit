@@ -1,6 +1,5 @@
 import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/duit_impl/registry.dart';
-import 'package:flutter_duit/src/ui/models/el_type.dart';
+import 'package:flutter_duit/src/duit_kernel/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 /// The `AttributeParser` class is responsible for parsing and mapping attributes for different DUIT elements.
@@ -17,7 +16,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// ```dart
 /// final customAttributes = AttributeParser._parseCustomWidgetAttributes(json, tag);
 /// ```
-sealed class AttributeParser {
+final class AttributeParser implements AttributeParserBase {
   /// Parses custom widget attributes based on the specified JSON object and tag.
   ///
   /// This method retrieves the attributes mapper for the given tag from the `DUITRegistry`.
@@ -55,7 +54,9 @@ sealed class AttributeParser {
   ///
   /// Returns:
   /// A `ViewAttributeWrapper` instance with the parsed attributes.
-  static parse(DUITElementType type, JSONObject? json, String? tag) {
+  @override
+  ViewAttributeWrapper<T> parse<T>(
+      DUITElementType type, JSONObject? json, String? tag) {
     final payload = switch (type) {
       DUITElementType.text => TextAttributes.fromJson(json ?? {}),
       DUITElementType.row => RowAttributes.fromJson(json ?? {}),
@@ -81,6 +82,6 @@ sealed class AttributeParser {
       DUITElementType.custom => _parseCustomWidgetAttributes(json, tag),
     };
 
-    return ViewAttributeWrapper(payload: payload);
+    return ViewAttributeWrapper<T>(payload: payload);
   }
 }

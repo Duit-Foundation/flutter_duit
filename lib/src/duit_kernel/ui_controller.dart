@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/duit_impl/index.dart';
-import 'package:flutter_duit/src/ui/models/el_type.dart';
+import 'dart:ui';
+
+import 'index.dart';
 
 /// Base class for ViewController objects.
 ///

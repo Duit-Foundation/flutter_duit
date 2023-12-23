@@ -1,9 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/duit_impl/index.dart';
-import 'package:flutter_duit/src/ui/models/el_type.dart';
-
-import 'ui_controller.dart';
+import 'package:flutter_duit/src/duit_kernel/index.dart';
 
 /// The controller for a UI element.
 ///

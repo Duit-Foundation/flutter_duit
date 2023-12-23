@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_duit/src/duit_kernel/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-import 'attributes.dart';
 
 /// Represents the attributes for a Image widget.
 ///

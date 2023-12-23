@@ -1,23 +1,22 @@
-import 'package:flutter_duit/src/duit_impl/index.dart';
+import 'package:flutter_duit/src/duit_kernel/index.dart';
 import 'package:flutter_duit/src/transport/index.dart';
 
-/// The base options for configuring a transport.
-abstract interface class TransportOptions {
-  /// The type of the transport.
-  abstract TransportType type;
+final class EmptyTransportOptions extends TransportOptions {
+  @override
+  String type = TransportType.none;
 
-  /// The base URL for the transport.
-  abstract String? baseUrl;
+  @override
+  String? baseUrl;
 
-  /// The default headers to be included in the transport requests.
-  abstract Map<String, String> defaultHeaders;
+  @override
+  Map<String, String> defaultHeaders = {};
 }
 
 /// The options for configuring the HTTP transport.
 final class HttpTransportOptions extends TransportOptions {
   /// The type of the transport, which is always [TransportType.http].
   @override
-  TransportType type = TransportType.http;
+  String type = TransportType.http;
 
   /// The base URL for the HTTP requests.
   @override
@@ -53,7 +52,7 @@ final class HttpTransportOptions extends TransportOptions {
 final class WebSocketTransportOptions extends TransportOptions {
   /// The type of the transport, which is always [TransportType.ws].
   @override
-  TransportType type = TransportType.ws;
+  String type = TransportType.ws;
 
   /// The base URL for the HTTP requests.
   @override

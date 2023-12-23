@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/duit_impl/registry.dart';
-import 'package:flutter_duit/src/ui/models/el_type.dart';
+import 'package:flutter_duit/src/duit_kernel/el_type.dart';
+import 'package:flutter_duit/src/duit_kernel/index.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/widgets/gesture_detector.dart';
 import 'package:flutter_duit/src/ui/widgets/positioned.dart';

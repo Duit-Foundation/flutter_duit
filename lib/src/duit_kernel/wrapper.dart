@@ -1,5 +1,4 @@
-import 'package:flutter_duit/src/ui/models/el_type.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import 'index.dart';
 
 /// Represents a wrapper for view attributes.
 ///
@@ -10,6 +9,8 @@ final class ViewAttributeWrapper<T> {
   ///
   /// Use the [payload] property to access or modify the value of the view attribute.
   final T payload;
+
+  static late AttributeParserBase attributeParser;
 
   /// Creates a new instance of the [ViewAttributeWrapper] class.
   ///
@@ -24,7 +25,7 @@ final class ViewAttributeWrapper<T> {
   /// based on the specified [type], [json], and [tag]. It returns a new instance
   /// of [ViewAttributeWrapper] with the appropriate payload type.
   static ViewAttributeWrapper<T> createAttributes<T>(
-      DUITElementType type, JSONObject? json, String? tag) {
-    return AttributeParser.parse(type, json, tag);
+      DUITElementType type, Map<String, dynamic>? json, String? tag) {
+    return attributeParser.parse(type, json, tag);
   }
 }
