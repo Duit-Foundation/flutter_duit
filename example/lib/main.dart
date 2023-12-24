@@ -26,7 +26,19 @@ final driver2 = DuitDriver(
     defaultHeaders: {"Content-Type": "application/json"},
     baseUrl: "http://localhost:8999",
   ),
-);
+)
+  ..onInit = () {
+    print("INIT");
+  }
+  ..beforeActionCallback = (action) {
+    print(action.event);
+  }
+  ..afterActionCallback = () {
+    print("Action handled");
+  }
+  ..onEventReceived = (event) {
+    print(event?.type);
+  };
 final driver3 = DuitDriver(
   "ws://localhost:8999",
   transportOptions: WebSocketTransportOptions(),
