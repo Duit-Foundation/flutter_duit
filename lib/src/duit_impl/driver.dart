@@ -3,6 +3,7 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/duit_impl/hooks.dart";
 import "package:flutter_duit/src/transport/index.dart";
 import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
@@ -10,7 +11,7 @@ import "package:flutter_duit/src/utils/index.dart";
 
 import "event.dart";
 
-final class DuitDriver implements UIDriver {
+final class DuitDriver with DriverHooks implements UIDriver {
   @override
   final String source;
   @override
@@ -100,6 +101,7 @@ final class DuitDriver implements UIDriver {
   /// Returns: A [Future] that completes with [void].
   FutureOr<void> _resolveEvent(JSONObject? json) async {
     final event = ServerEvent.fromJson(json, this);
+    onEventReceived?.call(event);
     if (event != null) {
       switch (event.type) {
         case ServerEventType.update:
@@ -118,10 +120,13 @@ final class DuitDriver implements UIDriver {
           }
       }
     }
+
+    onEventHandled?.call();
   }
 
   @override
   Future<void> init() async {
+    onInit?.call();
     if (_layout != null) {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
@@ -149,6 +154,7 @@ final class DuitDriver implements UIDriver {
 
   @override
   Future<void> execute(ServerAction action) async {
+    beforeActionCallback?.call(action);
     final Map<String, dynamic> payload = {};
 
     final dependencies = action.dependsOn;
@@ -170,10 +176,13 @@ final class DuitDriver implements UIDriver {
     if (event != null) {
       _resolveEvent(event);
     }
+
+    afterActionCallback?.call();
   }
 
   @override
   void dispose() {
+    onDispose?.call();
     transport?.dispose();
     _viewControllers = {};
     _layout = null;
