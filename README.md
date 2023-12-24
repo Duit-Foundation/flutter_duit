@@ -19,6 +19,12 @@ The framework ensures that the layout model is received from the server, interac
 - Ability to add your own [custom widgets](https://github.com/lesleysin/flutter_duit/wiki/Adding-custom-widgets) on the Flutter and backend side.
 
 ## Usage example
+0. If you want to use the advanced features of the framework, you should install a dependency on the duit_kernel package, which provides definitions of the basic abstractions on the basis of which custom widgets and third-party extensions are implemented.
+
+```
+flutter pub add duit_kernel
+```
+
 
 1. Create DuitDriver instance. 
 
