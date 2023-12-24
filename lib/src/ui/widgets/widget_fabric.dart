@@ -205,6 +205,19 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.align:
+        final it = model as AlignUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledAlign(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitAlign(
+                attributes: it.attributes,
+                child: child,
+              );
       case ElementType.image:
         final it = model as ImageUIElement;
 

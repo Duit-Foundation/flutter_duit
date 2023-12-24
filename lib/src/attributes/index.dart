@@ -15,3 +15,4 @@ export 'checkbox_attributes.dart';
 export 'container_attributes.dart';
 export 'image_attributes.dart';
 export 'gesture_detector_attributes.dart';
+export 'align_attributes.dart';
