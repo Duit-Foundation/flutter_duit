@@ -377,6 +377,25 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.align:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return AlignUiElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.empty:
         return EmptyUIElement();
       case ElementType.custom:
@@ -448,6 +467,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
   /// Renders the DUIT element to a Flutter widget.
   ///
   /// Returns the rendered Flutter widget.
+  @override
   Widget renderView() {
     return getWidgetFromElement(this);
   }
@@ -456,6 +476,24 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class AlignUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  AlignUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class GestureDetectorUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">

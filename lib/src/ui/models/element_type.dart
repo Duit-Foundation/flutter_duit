@@ -18,4 +18,5 @@ final class ElementType {
   static const center = "Center";
   static const elevatedButton = "ElevatedButton";
   static const positioned = "Positioned";
+  static const align = "Align";
 }

@@ -15,3 +15,4 @@ export 'decorated_box.dart';
 export 'container.dart';
 export 'checkbox.dart';
 export 'image.dart';
+export 'align.dart';
