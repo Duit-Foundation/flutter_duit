@@ -577,7 +577,10 @@ class ParamsMapper {
   static Offset convertToOffset(JSONObject? json) {
     if (json == null) return Offset.zero;
 
-    return Offset(json["dx"] ?? 0.0, json["dy"] ?? 0.0);
+    return Offset(
+      NumUtils.toDoubleWithNullReplacement(json["dx"], 0.0),
+      NumUtils.toDoubleWithNullReplacement(json["dy"], 0.0),
+    );
   }
 
   /// Converts a string value to a [BlurStyle] value.

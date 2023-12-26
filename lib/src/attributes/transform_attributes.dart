@@ -55,7 +55,7 @@ final class ScaleTransform extends TransformAttributes
       scaleY: NumUtils.toDouble(json['scaleY']),
       origin: ParamsMapper.convertToOffset(json['origin']),
       alignment: ParamsMapper.convertToAlignment(json['alignment']),
-      transformHitTests: json['transformHitTests'],
+      transformHitTests: json['transformHitTests'] ?? true,
       filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
     );
   }
@@ -91,7 +91,7 @@ final class TranslateTransform extends TransformAttributes
       offset: ParamsMapper.convertToOffset(map['offset']),
       origin: ParamsMapper.convertToOffset(map['origin']),
       alignment: ParamsMapper.convertToAlignment(map['alignment']),
-      transformHitTests: map['transformHitTests'],
+      transformHitTests: map['transformHitTests'] ?? true,
       filterQuality: ParamsMapper.convertToFilterQuality(map['filterQuality']),
     );
   }
@@ -136,7 +136,7 @@ final class RotateTransform extends TransformAttributes
       angle: NumUtils.toDouble(map['angle']),
       origin: ParamsMapper.convertToOffset(map['origin']),
       alignment: ParamsMapper.convertToAlignment(map['alignment']),
-      transformHitTests: map['transformHitTests'],
+      transformHitTests: map['transformHitTests'] ?? true,
       filterQuality: ParamsMapper.convertToFilterQuality(map['filterQuality']),
     );
   }
@@ -157,11 +157,11 @@ final class FlipTransform extends TransformAttributes
 
   factory FlipTransform.fromJson(Map<String, dynamic> json) {
     return FlipTransform(
-      flipX: json['flipX'],
-      flipY: json['flipY'],
+      flipX: json['flipX'] ?? false,
+      flipY: json['flipY'] ?? false,
       origin: ParamsMapper.convertToOffset(json['origin']),
       alignment: ParamsMapper.convertToAlignment(json['alignment']),
-      transformHitTests: json['transformHitTests'],
+      transformHitTests: json['transformHitTests'] ?? true,
       filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
     );
   }
