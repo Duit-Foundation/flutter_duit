@@ -48,12 +48,6 @@ final class ScaleTransform extends TransformAttributes
     super.filterQuality,
   });
 
-  @override
-  ScaleTransform copyWith(ScaleTransform other) {
-    // TODO: implement copyWith
-    throw UnimplementedError();
-  }
-
   factory ScaleTransform.fromJson(Map<String, dynamic> json) {
     return ScaleTransform(
       scale: NumUtils.toDouble(json['scale']),
@@ -65,10 +59,23 @@ final class ScaleTransform extends TransformAttributes
       filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
     );
   }
+
+  @override
+  ScaleTransform copyWith(other) {
+    return ScaleTransform(
+      scale: other.scale ?? scale,
+      scaleX: other.scaleX ?? scaleX,
+      scaleY: other.scaleY ?? scaleY,
+      origin: other.origin ?? origin,
+      alignment: other.alignment ?? alignment,
+      transformHitTests: other.transformHitTests,
+      filterQuality: other.filterQuality ?? filterQuality,
+    );
+  }
 }
 
 final class TranslateTransform extends TransformAttributes
-    implements DuitAttributes<ScaleTransform> {
+    implements DuitAttributes<TranslateTransform> {
   Offset? offset;
 
   TranslateTransform({
@@ -79,12 +86,6 @@ final class TranslateTransform extends TransformAttributes
     super.filterQuality,
   });
 
-  @override
-  ScaleTransform copyWith(ScaleTransform other) {
-    // TODO: implement copyWith
-    throw UnimplementedError();
-  }
-
   factory TranslateTransform.fromJson(Map<String, dynamic> map) {
     return TranslateTransform(
       offset: ParamsMapper.convertToOffset(map['offset']),
@@ -94,10 +95,21 @@ final class TranslateTransform extends TransformAttributes
       filterQuality: ParamsMapper.convertToFilterQuality(map['filterQuality']),
     );
   }
+
+  @override
+  TranslateTransform copyWith(other) {
+    return TranslateTransform(
+      offset: other.offset ?? offset,
+      origin: other.origin ?? origin,
+      alignment: other.alignment ?? alignment,
+      transformHitTests: other.transformHitTests,
+      filterQuality: other.filterQuality ?? filterQuality,
+    );
+  }
 }
 
 final class RotateTransform extends TransformAttributes
-    implements DuitAttributes<ScaleTransform> {
+    implements DuitAttributes<RotateTransform> {
   double? angle;
 
   RotateTransform({
@@ -109,9 +121,14 @@ final class RotateTransform extends TransformAttributes
   });
 
   @override
-  ScaleTransform copyWith(ScaleTransform other) {
-    // TODO: implement copyWith
-    throw UnimplementedError();
+  RotateTransform copyWith(other) {
+    return RotateTransform(
+      angle: other.angle ?? angle,
+      origin: other.origin ?? origin,
+      alignment: other.alignment ?? alignment,
+      transformHitTests: other.transformHitTests,
+      filterQuality: other.filterQuality ?? filterQuality,
+    );
   }
 
   factory RotateTransform.fromJson(Map<String, dynamic> map) {
@@ -126,7 +143,7 @@ final class RotateTransform extends TransformAttributes
 }
 
 final class FlipTransform extends TransformAttributes
-    implements DuitAttributes<ScaleTransform> {
+    implements DuitAttributes<FlipTransform> {
   bool? flipX, flipY;
 
   FlipTransform({
@@ -138,12 +155,6 @@ final class FlipTransform extends TransformAttributes
     super.filterQuality,
   });
 
-  @override
-  ScaleTransform copyWith(ScaleTransform other) {
-    // TODO: implement copyWith
-    throw UnimplementedError();
-  }
-
   factory FlipTransform.fromJson(Map<String, dynamic> json) {
     return FlipTransform(
       flipX: json['flipX'],
@@ -152,6 +163,18 @@ final class FlipTransform extends TransformAttributes
       alignment: ParamsMapper.convertToAlignment(json['alignment']),
       transformHitTests: json['transformHitTests'],
       filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
+    );
+  }
+
+  @override
+  FlipTransform copyWith(other) {
+    return FlipTransform(
+      flipX: flipX ?? flipX,
+      flipY: flipY ?? flipY,
+      origin: other.origin ?? origin,
+      alignment: other.alignment ?? alignment,
+      transformHitTests: other.transformHitTests,
+      filterQuality: other.filterQuality ?? filterQuality,
     );
   }
 }

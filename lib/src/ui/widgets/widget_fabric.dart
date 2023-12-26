@@ -2,8 +2,6 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
-import 'package:flutter_duit/src/ui/widgets/gesture_detector.dart';
-import 'package:flutter_duit/src/ui/widgets/positioned.dart';
 
 import 'index.dart';
 
@@ -216,6 +214,19 @@ mixin WidgetFabric {
               )
             : DuitAlign(
                 attributes: it.attributes,
+                child: child,
+              );
+      case ElementType.transform:
+        final it = model as TransformUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledTransform(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitTransform(
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.image:

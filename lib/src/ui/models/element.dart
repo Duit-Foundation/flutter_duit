@@ -396,6 +396,25 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.transform:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return TransformUiElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.empty:
         return EmptyUIElement();
       case ElementType.custom:
@@ -476,6 +495,24 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class TransformUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  TransformUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class AlignUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
