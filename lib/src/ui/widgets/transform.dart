@@ -31,7 +31,6 @@ class DuitTransform extends StatelessWidget {
     }
 
     if (attrs is RotateTransform) {
-      print(attrs.angle);
       return Transform.rotate(
         angle: attrs.angle ?? 0,
         origin: attrs.origin,
