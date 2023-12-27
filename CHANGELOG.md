@@ -1,3 +1,6 @@
+## 1.4.0
+- Added Transform and Align widgets
+- Update documentation
 ## 1.3.0
 - Added hooks to listen on driver events
 ## 1.2.1
