@@ -20,7 +20,7 @@ The framework ensures that the layout model is received from the server, interac
 
 ## Matching library and kernel versions
 
-The flutter_duit library depends on the duit_kernel package, which contains basic model definitions for implementing framework entities and developing third-party packages and extensions. Carefully study the version compatibility table if you are going to directly add duit_kernel to your project (needed to implement custom widgets and extensions).
+The flutter_duit library depends on the [duit_kernel](https://github.com/lesleysin/duit_kernel) package, which contains basic model definitions for implementing framework entities and developing third-party packages and extensions. Carefully study the version compatibility table if you are going to directly add duit_kernel to your project (needed to implement custom widgets and extensions).
 
 
 | Lib versions  | Kernel versions |
