@@ -4,7 +4,6 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-
 /// Represents the attributes for a Image widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
@@ -86,7 +85,9 @@ final class ImageAttributes implements DuitAttributes<ImageAttributes> {
       filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
       alignment: ParamsMapper.convertToAlignment(json['alignment']),
       repeat: ParamsMapper.convertToImageRepeat(json['repeat']),
-      color: json['color'] != null ? ColorUtils.tryParseColor(json['color']) : null,
+      color: json['color'] != null
+          ? ColorUtils.tryParseColor(json['color'])
+          : null,
       colorBlendMode: ParamsMapper.convertToBlendMode(json['colorBlendMode']),
       fit: ParamsMapper.convertToBoxFit(json['fit']),
       excludeFromSemantics: json['excludeFromSemantics'],

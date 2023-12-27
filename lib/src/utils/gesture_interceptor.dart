@@ -13,23 +13,11 @@ enum GestureType {
   onLongPressMoveUpdate,
   onLongPressUp,
   onLongPressEnd,
-  onVerticalDragStart,
-  onVerticalDragDown,
-  onVerticalDragUpdate,
-  onVerticalDragEnd,
-  onHorizontalDragStart,
-  onHorizontalDragUpdate,
-  onHorizontalDragEnd,
-  onHorizontalDragCancel,
-  onVerticalDragCancel,
   onPanStart,
   onPanDown,
   onPanUpdate,
   onPanEnd,
   onPanCancel,
-  onScaleStart,
-  onScaleUpdate,
-  onScaleEnd
 }
 
 typedef GestureInterceptor = void Function(

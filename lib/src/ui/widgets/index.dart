@@ -15,4 +15,7 @@ export 'decorated_box.dart';
 export 'container.dart';
 export 'checkbox.dart';
 export 'image.dart';
+export 'gesture_detector.dart';
+export 'positioned.dart';
 export 'align.dart';
+export 'transform.dart';
