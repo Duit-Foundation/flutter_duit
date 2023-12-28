@@ -9,6 +9,34 @@ import 'package:flutter_duit/src/utils/index.dart';
 class ParamsMapper {
   //<editor-fold desc="Text">
 
+  static StrutStyle? convertToStrutStyle(JSONObject? value) {
+    if (value == null) return null;
+
+    return StrutStyle(
+      fontFamily: value['fontFamily'],
+      fontSize: NumUtils.toDouble(value['fontSize']),
+      height: NumUtils.toDouble(value['height']),
+      leading: NumUtils.toDouble(value['leading']),
+      fontWeight: convertToFontWeight(value['fontWeight']),
+      fontStyle: convertToFontStyle(value['fontStyle']),
+      forceStrutHeight: value['forceStrutHeight'],
+      debugLabel: value['debugLabel'],
+    );
+  }
+
+  static FontStyle? convertToFontStyle(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "normal":
+        return FontStyle.normal;
+      case "italic":
+        return FontStyle.italic;
+    }
+
+    return null;
+  }
+
   /// Converts a string value to a [TextAlign] value.
   ///
   /// Returns the corresponding [TextAlign] value for the given string [value].
