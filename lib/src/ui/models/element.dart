@@ -151,6 +151,22 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           controlled: controlled,
         );
+      case ElementType.richText:
+        return RichTextUIElement(
+          type: type,
+          id: id,
+          viewController: createAndAttachController<T>(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          attributes: attributes,
+          controlled: controlled,
+        );
       case ElementType.text:
         return TextUIElement(
           type: type,
@@ -760,6 +776,24 @@ final class SizedBoxUIElement<T> extends DuitElement<T>
     required super.attributes,
     required this.child,
   });
+//</editor-fold>
+}
+
+final class RichTextUIElement<T> extends DuitElement<T> {
+  //<editor-fold desc="Properties and ctor">
+
+  RichTextUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+  });
+
+  @override
+  String toString() {
+    return 'TextUIElement{attributes: $attributes, viewController: $viewController, uncontrolled: $controlled}';
+  }
 //</editor-fold>
 }
 

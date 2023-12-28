@@ -20,4 +20,5 @@ final class ElementType {
   static const positioned = "Positioned";
   static const align = "Align";
   static const transform = "Transform";
+  static const richText = "RichText";
 }

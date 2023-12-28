@@ -7,9 +7,29 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// A utility class for mapping parameter values to their corresponding Flutter widget properties.
 class ParamsMapper {
+  static TextSpan convertToTextSpan(JSONObject? json) {
+    assert(json != null, "TextSpan json cannot be null");
+
+    final children = json!['children'] as List<JSONObject>?;
+
+    List<InlineSpan> spanChildren = [];
+
+    if (children != null) {
+      for (final child in children) {
+        spanChildren.add(ParamsMapper.convertToTextSpan(child));
+      }
+    }
+
+    return TextSpan(
+      text: json['text'],
+      children: spanChildren.isNotEmpty ? spanChildren : null,
+      style: ParamsMapper.convertToTextStyle(json['style']),
+      spellOut: json['spellOut'],
+    );
+  }
+
   //<editor-fold desc="Text">
-  static TextWidthBasis? convertToTextWidthBasis(
-      String? value) {
+  static TextWidthBasis? convertToTextWidthBasis(String? value) {
     if (value == null) return null;
 
     switch (value) {

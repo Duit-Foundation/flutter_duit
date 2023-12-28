@@ -54,7 +54,7 @@ class RichTextAttributes implements DuitAttributes<RichTextAttributes> {
 
   factory RichTextAttributes.fromJson(Map<String, dynamic> json) {
     return RichTextAttributes(
-      textSpan: json['textSpan'] as InlineSpan,
+      textSpan: ParamsMapper.convertToTextSpan(json['textSpan']),
       style: ParamsMapper.convertToTextStyle(json['style']),
       strutStyle: ParamsMapper.convertToStrutStyle(json['strutStyle']),
       textAlign: ParamsMapper.convertToTextAlign(json['textAlign']),

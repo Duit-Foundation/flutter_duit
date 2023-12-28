@@ -94,6 +94,14 @@ mixin WidgetFabric {
                 controller: it.viewController,
               )
             : DuitText(attributes: it.attributes);
+      case ElementType.richText:
+        final it = model as RichTextUIElement;
+
+        return it.controlled
+            ? DuitControlledRichText(
+                controller: it.viewController,
+              )
+            : DuitRichText(attributes: it.attributes);
       case ElementType.textField:
         final it = model as TextFieldUIElement;
 
