@@ -63,10 +63,14 @@ class RichTextAttributes implements DuitAttributes<RichTextAttributes> {
       overflow: ParamsMapper.convertToTextOverflow(json['overflow']),
       maxLines: NumUtils.toInt(json['maxLines']),
       semanticsLabel: json['semanticsLabel'],
-      textWidthBasis: json['textWidthBasis'] as TextWidthBasis,
-      textHeightBehavior: json['textHeightBehavior'] as TextHeightBehavior,
+      textWidthBasis: ParamsMapper.convertToTextWidthBasis(
+        json['textWidthBasis'],
+      ),
+      textHeightBehavior: ParamsMapper.convertToTextHeightBehavior(
+        json['textHeightBehavior'],
+      ),
       selectionColor: ColorUtils.tryParseColor(json['selectionColor']),
-      textScaler: json['textScaler'] as TextScaler,
+      textScaler: ParamsMapper.convertToTextScaler(json['textScaler']),
     );
   }
 }

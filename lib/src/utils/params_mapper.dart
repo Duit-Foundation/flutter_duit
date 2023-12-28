@@ -8,6 +8,53 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// A utility class for mapping parameter values to their corresponding Flutter widget properties.
 class ParamsMapper {
   //<editor-fold desc="Text">
+  static TextWidthBasis? convertToTextWidthBasis(
+      String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "parent":
+        return TextWidthBasis.parent;
+      case "longestLine":
+        return TextWidthBasis.longestLine;
+    }
+
+    return null;
+  }
+
+  static TextLeadingDistribution convertToTextLeadingDistribution(
+      String? value) {
+    if (value == null) return TextLeadingDistribution.proportional;
+
+    switch (value) {
+      case "even":
+        return TextLeadingDistribution.even;
+      case "italic":
+        return TextLeadingDistribution.proportional;
+    }
+
+    return TextLeadingDistribution.proportional;
+  }
+
+  static TextHeightBehavior? convertToTextHeightBehavior(JSONObject? value) {
+    if (value == null) return null;
+
+    return TextHeightBehavior(
+      applyHeightToFirstAscent: value['applyHeightToFirstAscent'] ?? true,
+      applyHeightToLastDescent: value['applyHeightToLastDescent'] ?? true,
+      leadingDistribution:
+          convertToTextLeadingDistribution(value['leadingDistribution']),
+    );
+  }
+
+  static TextScaler convertToTextScaler(JSONObject? value) {
+    if (value == null) return TextScaler.noScaling;
+
+    return TextScaler.linear(NumUtils.toDoubleWithNullReplacement(
+      value['textScaleFactor'],
+      1,
+    ));
+  }
 
   static StrutStyle? convertToStrutStyle(JSONObject? value) {
     if (value == null) return null;
