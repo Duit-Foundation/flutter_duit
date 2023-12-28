@@ -53,10 +53,10 @@ packages:
     dependency: "direct main"
     description:
       name: duit_kernel
-      sha256: d7037895817f2cda1c2410a9f112840093de3828d88ae85f1295751e10c64ce0
+      sha256: d0e3889ba27b39301d0af5fe55d77c9621642df9440ac0afbc9a3352ec95602e
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   fake_async:
     dependency: transitive
     description:
