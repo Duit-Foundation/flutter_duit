@@ -10,7 +10,7 @@ class ParamsMapper {
   static TextSpan convertToTextSpan(JSONObject? json) {
     assert(json != null, "TextSpan json cannot be null");
 
-    final children = json!['children'] as List<JSONObject>?;
+    final children = json!['children'];
 
     List<InlineSpan> spanChildren = [];
 
@@ -209,9 +209,9 @@ class ParamsMapper {
       fontFamily: json["fontFamily"],
       fontWeight: convertToFontWeight(json["fontWeight"]),
       fontSize: size?.toDouble(),
-      letterSpacing: json["letterSpacing"],
-      wordSpacing: json["wordSpacing"],
-      height: json["height"],
+      letterSpacing: NumUtils.toDouble(json["letterSpacing"]),
+      wordSpacing: NumUtils.toDouble(json["wordSpacing"]),
+      height: NumUtils.toDouble(json["height"]),
     );
   }
 
