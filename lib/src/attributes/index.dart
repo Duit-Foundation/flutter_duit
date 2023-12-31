@@ -17,3 +17,4 @@ export 'image_attributes.dart';
 export 'gesture_detector_attributes.dart';
 export 'align_attributes.dart';
 export 'transform_attributes.dart';
+export 'rich_text_attributes.dart';

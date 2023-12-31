@@ -7,7 +7,102 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// A utility class for mapping parameter values to their corresponding Flutter widget properties.
 class ParamsMapper {
+  static TextSpan convertToTextSpan(JSONObject? json) {
+    assert(json != null, "TextSpan json cannot be null");
+
+    final children = json!['children'];
+
+    List<InlineSpan> spanChildren = [];
+
+    if (children != null) {
+      for (final child in children) {
+        spanChildren.add(ParamsMapper.convertToTextSpan(child));
+      }
+    }
+
+    return TextSpan(
+      text: json['text'],
+      children: spanChildren.isNotEmpty ? spanChildren : null,
+      style: ParamsMapper.convertToTextStyle(json['style']),
+      spellOut: json['spellOut'],
+    );
+  }
+
   //<editor-fold desc="Text">
+  static TextWidthBasis? convertToTextWidthBasis(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "parent":
+        return TextWidthBasis.parent;
+      case "longestLine":
+        return TextWidthBasis.longestLine;
+    }
+
+    return null;
+  }
+
+  static TextLeadingDistribution convertToTextLeadingDistribution(
+      String? value) {
+    if (value == null) return TextLeadingDistribution.proportional;
+
+    switch (value) {
+      case "even":
+        return TextLeadingDistribution.even;
+      case "italic":
+        return TextLeadingDistribution.proportional;
+    }
+
+    return TextLeadingDistribution.proportional;
+  }
+
+  static TextHeightBehavior? convertToTextHeightBehavior(JSONObject? value) {
+    if (value == null) return null;
+
+    return TextHeightBehavior(
+      applyHeightToFirstAscent: value['applyHeightToFirstAscent'] ?? true,
+      applyHeightToLastDescent: value['applyHeightToLastDescent'] ?? true,
+      leadingDistribution:
+          convertToTextLeadingDistribution(value['leadingDistribution']),
+    );
+  }
+
+  static TextScaler convertToTextScaler(JSONObject? value) {
+    if (value == null) return TextScaler.noScaling;
+
+    return TextScaler.linear(NumUtils.toDoubleWithNullReplacement(
+      value['textScaleFactor'],
+      1,
+    ));
+  }
+
+  static StrutStyle? convertToStrutStyle(JSONObject? value) {
+    if (value == null) return null;
+
+    return StrutStyle(
+      fontFamily: value['fontFamily'],
+      fontSize: NumUtils.toDouble(value['fontSize']),
+      height: NumUtils.toDouble(value['height']),
+      leading: NumUtils.toDouble(value['leading']),
+      fontWeight: convertToFontWeight(value['fontWeight']),
+      fontStyle: convertToFontStyle(value['fontStyle']),
+      forceStrutHeight: value['forceStrutHeight'],
+      debugLabel: value['debugLabel'],
+    );
+  }
+
+  static FontStyle? convertToFontStyle(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "normal":
+        return FontStyle.normal;
+      case "italic":
+        return FontStyle.italic;
+    }
+
+    return null;
+  }
 
   /// Converts a string value to a [TextAlign] value.
   ///
@@ -114,9 +209,9 @@ class ParamsMapper {
       fontFamily: json["fontFamily"],
       fontWeight: convertToFontWeight(json["fontWeight"]),
       fontSize: size?.toDouble(),
-      letterSpacing: json["letterSpacing"],
-      wordSpacing: json["wordSpacing"],
-      height: json["height"],
+      letterSpacing: NumUtils.toDouble(json["letterSpacing"]),
+      wordSpacing: NumUtils.toDouble(json["wordSpacing"]),
+      height: NumUtils.toDouble(json["height"]),
     );
   }
 

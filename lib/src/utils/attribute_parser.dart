@@ -79,6 +79,7 @@ final class AttributeParser implements AttributeParserBase {
         GestureDetectorAttributes.fromJson(json ?? {}),
       ElementType.align => AlignAttributes.fromJson(json ?? {}),
       ElementType.transform => TransformAttributes.fromJson(json ?? {}),
+      ElementType.richText => RichTextAttributes.fromJson(json ?? {}),
       ElementType.custom => _parseCustomWidgetAttributes(json, tag),
       ElementType.empty || String() => EmptyAttributes(),
     };

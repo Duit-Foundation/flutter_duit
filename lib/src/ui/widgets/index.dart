@@ -19,3 +19,4 @@ export 'gesture_detector.dart';
 export 'positioned.dart';
 export 'align.dart';
 export 'transform.dart';
+export 'rich_text.dart';
