@@ -21,4 +21,5 @@ final class ElementType {
   static const align = "Align";
   static const transform = "Transform";
   static const richText = "RichText";
+  static const wrap = "Wrap";
 }

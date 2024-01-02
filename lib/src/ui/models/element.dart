@@ -244,6 +244,32 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
           children: arr,
         );
+      case ElementType.wrap:
+        List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            final child = DuitElement.fromJson(element, driver);
+            arr.add(child);
+          });
+        }
+
+        return WrapUIElement(
+          type: type,
+          id: id,
+          viewController: createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          attributes: attributes,
+          controlled: controlled,
+          children: arr,
+        );
       case ElementType.expanded:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -752,6 +778,23 @@ final class RowUIElement<T> extends DuitElement<T> implements MultiChildLayout {
   List<DuitElement> children = const [];
 
   RowUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.children,
+  });
+//</editor-fold>
+}
+
+final class WrapUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  List<DuitElement> children = const [];
+
+  WrapUIElement({
     required super.type,
     required super.id,
     required super.controlled,
