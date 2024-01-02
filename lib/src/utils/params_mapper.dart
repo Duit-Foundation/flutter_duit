@@ -29,6 +29,19 @@ class ParamsMapper {
   }
 
   //<editor-fold desc="Text">
+  static TextBaseline? convertToTextBaseline(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "alphabetic":
+        return TextBaseline.alphabetic;
+      case "ideographic":
+        return TextBaseline.ideographic;
+    }
+
+    return null;
+  }
+
   static TextWidthBasis? convertToTextWidthBasis(String? value) {
     if (value == null) return null;
 
@@ -236,6 +249,53 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Flex and container props">
+  static Axis convertToAxis(String? value) {
+    if (value == null) return Axis.vertical;
+
+    switch (value) {
+      case "horizontal":
+        return Axis.horizontal;
+      case "vertical":
+        return Axis.vertical;
+    }
+
+    return Axis.vertical;
+  }
+
+  static WrapCrossAlignment? convertToWrapCrossAlignment(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "start":
+        return WrapCrossAlignment.start;
+      case "end":
+        return WrapCrossAlignment.end;
+      case "center":
+        return WrapCrossAlignment.center;
+    }
+
+    return null;
+  }
+
+  static WrapAlignment? convertToWrapAlignment(String? value) {
+    if (value == null) return null;
+    switch (value) {
+      case "start":
+        return WrapAlignment.start;
+      case "end":
+        return WrapAlignment.end;
+      case "center":
+        return WrapAlignment.center;
+      case "spaceBetween":
+        return WrapAlignment.spaceBetween;
+      case "spaceAround":
+        return WrapAlignment.spaceAround;
+      case "spaceEvenly":
+        return WrapAlignment.spaceEvenly;
+    }
+
+    return null;
+  }
 
   /// Converts a map of constraint values to a [BoxConstraints] object.
   ///

@@ -27,16 +27,17 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
 
   factory WrapAttributes.fromJson(Map<String, dynamic> json) {
     return WrapAttributes(
-      direction: json['direction'] as Axis,
+      direction: ParamsMapper.convertToAxis(json['direction']),
       textDirection: ParamsMapper.convertToTextDirection(json['textDirection']),
       verticalDirection:
           ParamsMapper.convertToVerticalDirection(json['verticalDirection']),
-      alignment: json['alignment'] as WrapAlignment,
-      runAlignment: json['runAlignment'] as WrapAlignment,
+      alignment: ParamsMapper.convertToWrapAlignment(json['alignment']),
+      runAlignment: ParamsMapper.convertToWrapAlignment(json['runAlignment']),
       spacing: NumUtils.toDoubleWithNullReplacement(json['spacing'], 0),
       runSpacing: NumUtils.toDoubleWithNullReplacement(json['runSpacing'], 0),
-      crossAxisAlignment: json['crossAxisAlignment'] as WrapCrossAlignment,
-      textBaseline: json['textBaseline'] as TextBaseline,
+      crossAxisAlignment:
+          ParamsMapper.convertToWrapCrossAlignment(json['crossAxisAlignment']),
+      textBaseline: ParamsMapper.convertToTextBaseline(json['textBaseline']),
       clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
     );
   }

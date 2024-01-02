@@ -25,6 +25,7 @@ class DuitWrap extends StatelessWidget {
       textDirection: attrs.textDirection,
       verticalDirection: attrs.verticalDirection ?? VerticalDirection.down,
       clipBehavior: attrs.clipBehavior ?? Clip.none,
+      crossAxisAlignment: attrs.crossAxisAlignment ?? WrapCrossAlignment.start,
       children: children,
     );
   }
@@ -61,6 +62,8 @@ class _DuitControlledWrapState extends State<DuitControlledWrap>
       runSpacing: attributes?.runSpacing ?? 0.0,
       direction: attributes?.direction ?? Axis.horizontal,
       textDirection: attributes?.textDirection,
+      crossAxisAlignment:
+          attributes?.crossAxisAlignment ?? WrapCrossAlignment.start,
       verticalDirection:
           attributes?.verticalDirection ?? VerticalDirection.down,
       clipBehavior: attributes?.clipBehavior ?? Clip.none,
