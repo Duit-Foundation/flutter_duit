@@ -134,6 +134,24 @@ mixin WidgetFabric {
                 attributes: it.attributes,
                 children: arr,
               );
+      case ElementType.wrap:
+        final it = model as WrapUIElement;
+        List<Widget> arr = [];
+
+        for (var element in it.children) {
+          final children = getWidgetFromElement(element);
+          arr.add(children);
+        }
+
+        return it.controlled
+            ? DuitControlledWrap(
+                controller: it.viewController!,
+                children: arr,
+              )
+            : DuitWrap(
+                attributes: it.attributes!,
+                children: arr,
+              );
       case ElementType.expanded:
         final it = model as ExpandedUiElement;
         final child = getWidgetFromElement(it.child);

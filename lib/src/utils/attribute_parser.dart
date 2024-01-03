@@ -80,6 +80,7 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.align => AlignAttributes.fromJson(json ?? {}),
       ElementType.transform => TransformAttributes.fromJson(json ?? {}),
       ElementType.richText => RichTextAttributes.fromJson(json ?? {}),
+      ElementType.wrap => WrapAttributes.fromJson(json ?? {}),
       ElementType.custom => _parseCustomWidgetAttributes(json, tag),
       ElementType.empty || String() => EmptyAttributes(),
     };
