@@ -9,7 +9,6 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
   final WrapAlignment? alignment, runAlignment;
   final double spacing, runSpacing;
   final WrapCrossAlignment? crossAxisAlignment;
-  final TextBaseline? textBaseline;
   final Clip? clipBehavior;
 
   WrapAttributes({
@@ -21,7 +20,6 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
     this.alignment = WrapAlignment.start,
     this.runAlignment = WrapAlignment.start,
     this.crossAxisAlignment = WrapCrossAlignment.start,
-    this.textBaseline,
     this.clipBehavior,
   });
 
@@ -37,7 +35,6 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
       runSpacing: NumUtils.toDoubleWithNullReplacement(json['runSpacing'], 0),
       crossAxisAlignment:
           ParamsMapper.convertToWrapCrossAlignment(json['crossAxisAlignment']),
-      textBaseline: ParamsMapper.convertToTextBaseline(json['textBaseline']),
       clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
     );
   }
@@ -53,7 +50,6 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
       spacing: other.spacing,
       runSpacing: other.runSpacing,
       crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,
-      textBaseline: other.textBaseline ?? textBaseline,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
