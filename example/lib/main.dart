@@ -120,6 +120,9 @@ class _MyHomePageState extends State<MyHomePage> {
               context: context,
               driver: driver1,
               placeholder: const CircularProgressIndicator(),
+              invertStack: true,
+              showChildInsteadOfPlaceholder: true,
+              child: Container(height: 150, color: Colors.blue,),
             ),
             const SizedBox(
               height: 24,
