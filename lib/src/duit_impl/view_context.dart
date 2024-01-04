@@ -1,12 +1,18 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/utils/gesture_interceptor.dart";
 
-class DuitViewContext extends InheritedWidget {
+class DuitViewContext extends InheritedWidget
+    implements GestureInterceptionLogic {
+  @override
   final GestureInterceptor? gestureInterceptor;
+
+  @override
+  final GestureInterceptorBehavior gestureInterceptorBehavior;
 
   const DuitViewContext({
     super.key,
     required Widget child,
+    required this.gestureInterceptorBehavior,
     this.gestureInterceptor,
   }) : super(child: child);
 

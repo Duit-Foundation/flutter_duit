@@ -4,7 +4,6 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/view_context.dart";
-import "package:flutter_duit/src/utils/index.dart";
 
 class DuitGestureDetector extends StatefulWidget {
   final Widget child;
@@ -26,81 +25,141 @@ class _DuitGestureDetectorState extends State<DuitGestureDetector>
     super.initState();
   }
 
-  void _performAction(ServerAction? action) {
+  void _performAction(
+    ServerAction? action, {
+    required GestureType type,
+    Object? gestureInfo,
+  }) {
+    final viewCtx = DuitViewContext.of(context);
+
+    if (viewCtx.gestureInterceptorBehavior ==
+        GestureInterceptorBehavior.onlyWithAction) {
+      if (action != null) {
+        viewCtx.gestureInterceptor?.call(type, gestureInfo: gestureInfo);
+      }
+
+      widget.controller?.performAction(action);
+      return;
+    }
+
+    viewCtx.gestureInterceptor?.call(type, gestureInfo: gestureInfo);
     widget.controller?.performAction(action);
   }
 
   @override
   Widget build(BuildContext context) {
-    final interceptor = DuitViewContext.of(context).gestureInterceptor;
     return GestureDetector(
       onTap: () {
-        _performAction(attributes?.onTap);
-        interceptor?.call(GestureType.onTap);
+        _performAction(
+          attributes?.onTap,
+          type: GestureType.onTap,
+        );
       },
       onTapUp: (info) {
-        _performAction(attributes?.onTapUp);
-        interceptor?.call(GestureType.onTapUp, gestureInfo: info);
+        _performAction(
+          attributes?.onTapUp,
+          type: GestureType.onTapUp,
+          gestureInfo: info,
+        );
       },
       onTapDown: (info) {
-        _performAction(attributes?.onTapDown);
-        interceptor?.call(GestureType.onTapDown, gestureInfo: info);
+        _performAction(
+          attributes?.onTapDown,
+          type: GestureType.onTapDown,
+          gestureInfo: info,
+        );
       },
       onTapCancel: () {
-        _performAction(attributes?.onTapCancel);
-        interceptor?.call(GestureType.onTapCancel);
+        _performAction(
+          attributes?.onTapCancel,
+          type: GestureType.onTapCancel,
+        );
       },
       onDoubleTap: () {
-        _performAction(attributes?.onDoubleTap);
-        interceptor?.call(GestureType.onDoubleTap);
+        _performAction(
+          attributes?.onDoubleTap,
+          type: GestureType.onDoubleTap,
+        );
       },
       onDoubleTapDown: (info) {
-        _performAction(attributes?.onDoubleTapDown);
-        interceptor?.call(GestureType.onDoubleTapDown, gestureInfo: info);
+        _performAction(
+          attributes?.onDoubleTapDown,
+          type: GestureType.onDoubleTapDown,
+          gestureInfo: info,
+        );
       },
       onDoubleTapCancel: () {
-        _performAction(attributes?.onDoubleTapCancel);
-        interceptor?.call(GestureType.onDoubleTapCancel);
+        _performAction(
+          attributes?.onDoubleTapCancel,
+          type: GestureType.onDoubleTapCancel,
+        );
       },
       onLongPress: () {
-        _performAction(attributes?.onLongPress);
-        interceptor?.call(GestureType.onLongPress);
+        _performAction(
+          attributes?.onLongPress,
+          type: GestureType.onLongPress,
+        );
       },
       onLongPressStart: (info) {
-        _performAction(attributes?.onLongPressStart);
-        interceptor?.call(GestureType.onLongPressStart, gestureInfo: info);
+        _performAction(
+          attributes?.onLongPressStart,
+          type: GestureType.onLongPressStart,
+          gestureInfo: info,
+        );
       },
       onLongPressMoveUpdate: (info) {
-        _performAction(attributes?.onLongPressMoveUpdate);
-        interceptor?.call(GestureType.onLongPressMoveUpdate, gestureInfo: info);
+        _performAction(
+          attributes?.onLongPressMoveUpdate,
+          type: GestureType.onLongPressMoveUpdate,
+          gestureInfo: info,
+        );
       },
       onLongPressUp: () {
-        _performAction(attributes?.onLongPressUp);
-        interceptor?.call(GestureType.onLongPressUp);
+        _performAction(
+          attributes?.onLongPressUp,
+          type: GestureType.onLongPressUp,
+        );
       },
       onLongPressEnd: (info) {
-        _performAction(attributes?.onLongPressEnd);
-        interceptor?.call(GestureType.onLongPressEnd, gestureInfo: info);
+        _performAction(
+          attributes?.onLongPressEnd,
+          type: GestureType.onLongPressEnd,
+          gestureInfo: info,
+        );
       },
       onPanStart: (info) {
-        _performAction(attributes?.onPanStart);
-        interceptor?.call(GestureType.onPanStart, gestureInfo: info);
+        _performAction(
+          attributes?.onPanStart,
+          type: GestureType.onPanStart,
+          gestureInfo: info,
+        );
       },
       onPanDown: (info) {
-        _performAction(attributes?.onPanDown);
-        interceptor?.call(GestureType.onPanDown, gestureInfo: info);
+        _performAction(
+          attributes?.onPanDown,
+          type: GestureType.onPanDown,
+          gestureInfo: info,
+        );
       },
       onPanUpdate: (info) {
-        _performAction(attributes?.onPanUpdate);
-        interceptor?.call(GestureType.onPanUpdate, gestureInfo: info);
+        _performAction(
+          attributes?.onPanUpdate,
+          type: GestureType.onPanUpdate,
+          gestureInfo: info,
+        );
       },
       onPanEnd: (info) {
-        _performAction(attributes?.onPanEnd);
-        interceptor?.call(GestureType.onPanEnd, gestureInfo: info);
+        _performAction(
+          attributes?.onPanEnd,
+          type: GestureType.onPanEnd,
+          gestureInfo: info,
+        );
       },
       onPanCancel: () {
-        _performAction(attributes?.onPanCancel);
-        interceptor?.call(GestureType.onPanCancel);
+        _performAction(
+          attributes?.onPanCancel,
+          type: GestureType.onPanCancel,
+        );
       },
       behavior: attributes?.behavior,
       dragStartBehavior:
