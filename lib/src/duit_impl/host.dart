@@ -34,6 +34,11 @@ class DuitViewHost extends StatefulWidget {
   ///been received from the server.
   final GestureInterceptor? gestureInterceptor;
 
+  ///Determine how the interceptor will be invoked
+  ///
+  ///[GestureInterceptorBehavior.values] by default
+  final GestureInterceptorBehavior gestureInterceptorBehavior;
+
   ///Child of host view
   final Widget? child;
 
@@ -59,6 +64,7 @@ class DuitViewHost extends StatefulWidget {
     this.showChildInsteadOfPlaceholder = false,
     this.placeholder,
     this.gestureInterceptor,
+    this.gestureInterceptorBehavior = GestureInterceptorBehavior.always,
   }) : assert(
           showChildInsteadOfPlaceholder == true ? child != null : true,
           "Child must not be null if showChildInsteadOfPlaceholder property is set to true",
@@ -85,6 +91,8 @@ class _DuitViewHostState extends State<DuitViewHost> {
         return snapshot.data != null
             ? DuitViewContext(
                 gestureInterceptor: widget.gestureInterceptor,
+                gestureInterceptorBehavior:
+                    widget.gestureInterceptorBehavior,
                 child: _StackWrapper(
                   invertStack: widget.invertStack,
                   content: snapshot.data!.render(),

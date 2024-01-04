@@ -122,7 +122,10 @@ class _MyHomePageState extends State<MyHomePage> {
               placeholder: const CircularProgressIndicator(),
               invertStack: true,
               showChildInsteadOfPlaceholder: true,
-              child: Container(height: 150, color: Colors.blue,),
+              child: Container(
+                height: 150,
+                color: Colors.blue,
+              ),
             ),
             const SizedBox(
               height: 24,
@@ -176,6 +179,11 @@ class _MyHomePageState extends State<MyHomePage> {
             DuitViewHost(
               context: context,
               driver: driver7,
+              gestureInterceptor: (type, {gestureInfo}) {
+                debugPrint(type.name);
+              },
+              gestureInterceptorBehavior:
+              GestureInterceptorBehavior.onlyWithAction,
               placeholder: const CircularProgressIndicator(),
             ),
             const SizedBox(
