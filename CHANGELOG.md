@@ -1,3 +1,7 @@
+## 1.5.0
+- Added Text.rich widget
+- Added Wrap widget
+- Added gesture interceptor behaviors
 ## 1.4.0
 - Added Transform and Align widgets
 - Update documentation
