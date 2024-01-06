@@ -34,7 +34,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   Map<String, UIElementController> _viewControllers = {};
 
-  final NavigationResolver? navigationResolver;
+  @protected
+  final ExternalEventHandler? eventHandler;
 
   @override
   Stream<DuitAbstractTree?> get stream =>
@@ -43,7 +44,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   DuitDriver(
     this.source, {
     required this.transportOptions,
-    this.navigationResolver,
+    this.eventHandler,
   });
 
   @override
@@ -126,9 +127,18 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
           break;
         case ServerEventType.navigation:
-          assert(navigationResolver != null, "NavigationResolver is not set");
-          final navigateEvent = event as NavigationEvent;
-          navigationResolver?.resolveNavigationToPath(navigateEvent.url);
+          assert(eventHandler != null, "NavigationResolver is not set");
+          final navEvent = event as NavigationEvent;
+          await eventHandler?.handleNavigation(
+            navEvent.path,
+            navEvent.extra,
+          );
+          break;
+        case ServerEventType.openUrl:
+          assert(eventHandler != null, "NavigationResolver is not set");
+          final urlEvent = event as OpenUrlEvent;
+          await eventHandler?.handleOpenUrl(urlEvent.url);
+          break;
       }
     }
 

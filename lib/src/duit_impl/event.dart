@@ -9,7 +9,7 @@ enum ServerEventType {
   update,
   layoutUpdate,
   navigation,
-  // openUrl,
+  openUrl,
 }
 
 /// Represents a server response event.
@@ -27,19 +27,13 @@ abstract class ServerEvent {
 
     final type = json["type"];
 
-    final event = switch (type) {
+    return switch (type) {
       "update" => UpdateEvent.fromJson(json),
       "updateLayout" => LayoutUpdateEvent.fromJson(json, driver),
       "navigation" => NavigationEvent.fromJson(json),
-      // "openUrl" => OpenUrlEvent.fromJson(json),
+      "openUrl" => OpenUrlEvent.fromJson(json),
       String() || Object() || null => null,
     };
-
-    if (event != null) {
-      return event;
-    }
-
-    return null;
   }
 }
 
@@ -92,38 +86,36 @@ final class NavigationEvent extends ServerEvent {
   @override
   ServerEventType type = ServerEventType.navigation;
 
-  final String url;
+  final String path;
 
   final Map<String, dynamic> extra;
 
   NavigationEvent({
-    required this.url,
+    required this.path,
     required this.extra,
   });
 
   factory NavigationEvent.fromJson(JSONObject json) {
     return NavigationEvent(
-      url: json["url"] ?? "",
+      path: json["path"] ?? "",
       extra: json["extra"] ?? {},
     );
   }
 }
 
-//<editor-fold desc="unimplemented">
-// final class OpenUrlEvent {
-//   @override
-//   ServerEventType type = ServerEventType.openUrl;
-//
-//   String url;
-//
-//   OpenUrlEvent({
-//     required this.url,
-//   });
-//
-//   factory OpenUrlEvent.fromJson(JSONObject json) {
-//     return OpenUrlEvent(
-//       url: json["url"],
-//     );
-//   }
-// }
-//</editor-fold>
+final class OpenUrlEvent extends ServerEvent {
+  @override
+  ServerEventType type = ServerEventType.openUrl;
+
+  final String url;
+
+  OpenUrlEvent({
+    required this.url,
+  });
+
+  factory OpenUrlEvent.fromJson(JSONObject json) {
+    return OpenUrlEvent(
+      url: json["url"] ?? "",
+    );
+  }
+}
