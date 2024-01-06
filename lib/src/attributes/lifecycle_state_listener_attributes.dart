@@ -34,17 +34,22 @@ class LifecycleStateListenerAttributes extends DuitAttributes {
   copyWith(other) {
     return LifecycleStateListenerAttributes(
       onStateChanged: other.onStateChanged ?? onStateChanged,
+      onResumed: other.onResumed ?? onResumed,
+      onInactive: other.onInactive ?? onInactive,
+      onPaused: other.onPaused ?? onPaused,
+      onDetached: other.onDetached ?? onDetached,
+      onHidden: other.onHidden ?? onHidden,
     );
   }
 
-  factory LifecycleStateListenerAttributes.fromMap(Map<String, dynamic> map) {
+  factory LifecycleStateListenerAttributes.fromJson(Map<String, dynamic> json) {
     return LifecycleStateListenerAttributes(
-      onStateChanged: ServerAction.fromJSON(map['onStateChanged']),
-      onResumed: ServerAction.fromJSON(map['onResumed']),
-      onInactive: ServerAction.fromJSON(map['onInactive']),
-      onPaused: ServerAction.fromJSON(map['onPaused']),
-      onDetached: ServerAction.fromJSON(map['onDetached']),
-      onHidden: ServerAction.fromJSON(map['onHidden']),
+      onStateChanged: ServerAction.fromJSON(json['onStateChanged']),
+      onResumed: ServerAction.fromJSON(json['onResumed']),
+      onInactive: ServerAction.fromJSON(json['onInactive']),
+      onPaused: ServerAction.fromJSON(json['onPaused']),
+      onDetached: ServerAction.fromJSON(json['onDetached']),
+      onHidden: ServerAction.fromJSON(json['onHidden']),
     );
   }
 }

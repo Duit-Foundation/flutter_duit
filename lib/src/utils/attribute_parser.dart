@@ -82,6 +82,7 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.richText => RichTextAttributes.fromJson(json ?? {}),
       ElementType.wrap => WrapAttributes.fromJson(json ?? {}),
       ElementType.custom => _parseCustomWidgetAttributes(json, tag),
+      ElementType.lifecycleStateListener => LifecycleStateListenerAttributes.fromJson(json ?? {}),
       ElementType.empty || String() => EmptyAttributes(),
     };
 
