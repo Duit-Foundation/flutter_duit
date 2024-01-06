@@ -8,7 +8,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 enum ServerEventType {
   update,
   layoutUpdate,
-  // navigate,
+  navigation,
   // openUrl,
 }
 
@@ -30,7 +30,7 @@ abstract class ServerEvent {
     final event = switch (type) {
       "update" => UpdateEvent.fromJson(json),
       "updateLayout" => LayoutUpdateEvent.fromJson(json, driver),
-      // "navigate" => NavigateEvent.fromJson(json),
+      "navigation" => NavigationEvent.fromJson(json),
       // "openUrl" => OpenUrlEvent.fromJson(json),
       String() || Object() || null => null,
     };
@@ -88,28 +88,28 @@ final class LayoutUpdateEvent extends ServerEvent {
   }
 }
 
-//<editor-fold desc="unimplemented">
-// final class NavigateEvent extends ServerEvent {
-//   @override
-//   ServerEventType type = ServerEventType.navigate;
-//
-//   String url;
-//
-//   Map<String, dynamic>? params;
-//
-//   NavigateEvent({
-//     required this.url,
-//     this.params,
-//   });
-//
-//   factory NavigateEvent.fromJson(JSONObject json) {
-//     return NavigateEvent(
-//       url: json["url"],
-//       params: json["params"],
-//     );
-//   }
-// }
+final class NavigationEvent extends ServerEvent {
+  @override
+  ServerEventType type = ServerEventType.navigation;
 
+  final String url;
+
+  final Map<String, dynamic> extra;
+
+  NavigationEvent({
+    required this.url,
+    required this.extra,
+  });
+
+  factory NavigationEvent.fromJson(JSONObject json) {
+    return NavigationEvent(
+      url: json["url"] ?? "",
+      extra: json["extra"] ?? {},
+    );
+  }
+}
+
+//<editor-fold desc="unimplemented">
 // final class OpenUrlEvent {
 //   @override
 //   ServerEventType type = ServerEventType.openUrl;
