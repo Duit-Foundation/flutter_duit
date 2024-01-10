@@ -265,6 +265,14 @@ mixin WidgetFabric {
             : DuitImage(
                 attributes: it.attributes,
               );
+      case ElementType.lifecycleStateListener:
+        final it = model as LifecycleStateListenerUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitLifecycleStateListener(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:
