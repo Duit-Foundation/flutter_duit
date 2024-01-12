@@ -23,4 +23,5 @@ final class ElementType {
   static const richText = "RichText";
   static const wrap = "Wrap";
   static const lifecycleStateListener = "LifecycleStateListener";
+  static const component = "Component";
 }

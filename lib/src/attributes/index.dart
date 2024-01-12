@@ -20,3 +20,4 @@ export 'transform_attributes.dart';
 export 'rich_text_attributes.dart';
 export 'wrap_attributes.dart';
 export 'lifecycle_state_listener_attributes.dart';
+export 'component_attributes.dart';

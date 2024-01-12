@@ -36,6 +36,41 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
     final String id = json["id"];
     final bool controlled = json["controlled"] ?? false;
     final String? tag = json["tag"];
+
+    if (type == ElementType.component) {
+      final providedData = json["data"] as Map<String, dynamic>;
+
+      final model = DuitRegistry.getComponentDescription(tag!);
+
+      if (model != null) {
+        JsonUtils.mergeComponentLayoutDescriptionWithExternalData(
+          model.data,
+          providedData,
+        );
+
+        final controller = ViewController<T>(
+          id: id,
+          driver: driver,
+          type: type,
+          tag: tag,
+        );
+        driver.attachController(id, controller);
+
+        final child = DuitElement.fromJson(model.data, driver);
+
+        return ComponentUIElement<T>(
+          child: child,
+          type: type,
+          id: id,
+          controlled: controlled,
+          attributes: null,
+          viewController: controller,
+        );
+      }
+
+      return EmptyUIElement();
+    }
+
     final ViewAttributeWrapper<T> attributes =
         ViewAttributeWrapper.createAttributes<T>(
       type,
@@ -514,7 +549,6 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
   //</editor-fold>
 
   //<editor-fold desc="Methods">
-
   /// Creates and attaches a controller to a specific element in the DUIT element tree.
   ///
   /// The [_createAndAttachController] function is used to create and attach a controller to a specific element in the DUIT element tree.
@@ -921,6 +955,24 @@ final class TextFieldUIElement<T> extends DuitElement<T> {
     required super.attributes,
     required super.viewController,
   });
+//</editor-fold>
+}
+
+final class ComponentUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  ComponentUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+    required this.child,
+  });
+
 //</editor-fold>
 }
 
