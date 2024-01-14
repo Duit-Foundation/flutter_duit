@@ -1,5 +1,6 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_duit/src/duit_impl/component_wrapper.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 
@@ -265,6 +266,22 @@ mixin WidgetFabric {
             : DuitImage(
                 attributes: it.attributes,
               );
+      case ElementType.lifecycleStateListener:
+        final it = model as LifecycleStateListenerUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitLifecycleStateListener(
+          controller: it.viewController!,
+          child: child,
+        );
+      case ElementType.component:
+        final it = model as ComponentUIElement;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitComponentWrapper(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:

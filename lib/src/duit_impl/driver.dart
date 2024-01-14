@@ -6,6 +6,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/duit_impl/hooks.dart";
 import "package:flutter_duit/src/transport/index.dart";
 import "package:flutter_duit/src/ui/models/attended_model.dart";
+import "package:flutter_duit/src/ui/models/element_type.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
@@ -220,6 +221,33 @@ final class DuitDriver with DriverHooks implements UIDriver {
   void _updateAttributes(String id, JSONObject json) {
     final controller = _viewControllers[id];
     if (controller != null) {
+      if (controller.type == ElementType.component) {
+        final tag = controller.tag;
+        final description = DuitRegistry.getComponentDescription(tag!);
+
+        if (description != null) {
+          JsonUtils.mergeComponentLayoutDescriptionWithExternalData(
+            description.data,
+            json,
+          );
+
+          final tree = DuitTree(
+            json: description.data,
+            driver: this,
+          );
+
+          final attributes = ViewAttributeWrapper.createAttributes(
+            controller.type,
+            {
+              "tree": tree,
+            },
+            controller.tag,
+          );
+
+          controller.updateState(attributes);
+        }
+      }
+
       final attributes = ViewAttributeWrapper.createAttributes(
         controller.type,
         json,

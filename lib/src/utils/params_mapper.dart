@@ -773,8 +773,10 @@ class ParamsMapper {
     for (var value in json) {
       final boxShadow = BoxShadow(
         color: ColorUtils.tryParseColor(value["color"]),
-        blurRadius: value["blurRadius"],
-        spreadRadius: value["spreadRadius"],
+        blurRadius:
+            NumUtils.toDoubleWithNullReplacement(value["blurRadius"], 0.0),
+        spreadRadius:
+            NumUtils.toDoubleWithNullReplacement(value["spreadRadius"], 0.0),
         offset: convertToOffset(value["offset"]),
         blurStyle: convertToBlurStyle(value["blurStyle"]),
       );
