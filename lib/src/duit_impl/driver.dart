@@ -10,7 +10,6 @@ import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 import "event.dart";
-import "navigation_resolver.dart";
 
 final class DuitDriver with DriverHooks implements UIDriver {
   @override
