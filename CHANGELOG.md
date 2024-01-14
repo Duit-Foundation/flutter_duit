@@ -1,3 +1,7 @@
+## 1.6.0
+- Added components rendering
+- Added LifecycleEventListener widget
+- Added external event handling
 ## 1.5.0
 - Added Text.rich widget
 - Added Wrap widget
