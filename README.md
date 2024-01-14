@@ -26,7 +26,6 @@ The flutter_duit library depends on the [duit_kernel](https://github.com/lesleys
 | Lib versions | Kernel versions |
 |--------------|-----------------|
 | <= v1.5.0    | v1.0.1          |
-| v1.6.0       | v1.1.0          |
 
 ## Usage example
 0. If you want to use the advanced features of the framework, you should install a dependency on the duit_kernel package, which provides definitions of the basic abstractions on the basis of which custom widgets and third-party extensions are implemented.
