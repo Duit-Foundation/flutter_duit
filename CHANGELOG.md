@@ -1,3 +1,5 @@
+## 1.6.1
+- Added a reference to the BuildContext in the navigation event handler
 ## 1.6.0
 - Added components rendering
 - Added LifecycleEventListener widget
