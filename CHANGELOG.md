@@ -1,3 +1,5 @@
+## 1.7.0
+- Fixed a problem with duplicate ids of controlled widgets within the component
 ## 1.6.1
 - Added a reference to the BuildContext in the navigation event handler
 ## 1.6.0
