@@ -130,6 +130,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
           assert(eventHandler != null, "NavigationResolver is not set");
           final navEvent = event as NavigationEvent;
           await eventHandler?.handleNavigation(
+            buildContext,
             navEvent.path,
             navEvent.extra,
           );
