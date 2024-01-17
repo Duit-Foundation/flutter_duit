@@ -7,6 +7,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 /// A utility class for mapping parameter values to their corresponding Flutter widget properties.
 class ParamsMapper {
+  //<editor-fold desc="Text">
   static TextSpan convertToTextSpan(JSONObject? json) {
     assert(json != null, "TextSpan json cannot be null");
 
@@ -28,7 +29,6 @@ class ParamsMapper {
     );
   }
 
-  //<editor-fold desc="Text">
   static TextBaseline? convertToTextBaseline(String? value) {
     if (value == null) return null;
 
@@ -1049,6 +1049,42 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Gestures">
+  static ScrollViewKeyboardDismissBehavior convertToKeyboardDismissBehavior(
+      String? value) {
+    if (value == null) return ScrollViewKeyboardDismissBehavior.manual;
+
+    switch (value) {
+      case "manual":
+        return ScrollViewKeyboardDismissBehavior.manual;
+      case "onDrag":
+        return ScrollViewKeyboardDismissBehavior.onDrag;
+    }
+
+    return ScrollViewKeyboardDismissBehavior.manual;
+  }
+
+  static ScrollPhysics convertToScrollPhysics(String? value) {
+    if (value == null) return const AlwaysScrollableScrollPhysics();
+
+    switch (value) {
+      case "alwaysScrollableScrollPhysics":
+        return const AlwaysScrollableScrollPhysics();
+      case "bouncingScrollPhysics":
+        return const BouncingScrollPhysics();
+      case "clampingScrollPhysics":
+        return const ClampingScrollPhysics();
+      case "fixedExtentScrollPhysics":
+        return const FixedExtentScrollPhysics();
+      case "neverScrollableScrollPhysics":
+        return const NeverScrollableScrollPhysics();
+      //Not use this physics
+      // case "PageScrollPhysics":
+      //   return const PageScrollPhysics();
+    }
+
+    return const AlwaysScrollableScrollPhysics();
+  }
+
   static DragStartBehavior convertToDragStartBehavior(String? behavior) {
     if (behavior == null) return DragStartBehavior.start;
 

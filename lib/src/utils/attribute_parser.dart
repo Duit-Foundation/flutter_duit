@@ -85,6 +85,8 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.lifecycleStateListener =>
         LifecycleStateListenerAttributes.fromJson(json ?? {}),
       ElementType.component => ComponentAttributes.fromJson(json ?? {}),
+      ElementType.singleChildScrollview =>
+        SingleChildScrollviewAttributes.fromJson(json ?? {}),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

@@ -274,6 +274,19 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.singleChildScrollview:
+        final it = model as LifecycleStateListenerUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSingleChildScrollView(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSingleChildScrollView(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.component:
         final it = model as ComponentUIElement;
         final child = getWidgetFromElement(it.child);
