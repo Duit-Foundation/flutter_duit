@@ -24,5 +24,5 @@ final class ElementType {
   static const wrap = "Wrap";
   static const lifecycleStateListener = "LifecycleStateListener";
   static const component = "Component";
-  static const singleChildScrollview = "SingleChildScrollview";
+  static const singleChildScrollview = "SingleChildScrollView";
 }

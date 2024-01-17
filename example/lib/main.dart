@@ -135,144 +135,6 @@ void main() async {
         }
       }
     },
-    {
-      "tag": "promotion_list_item",
-      "layoutRoot": {
-        "controlled": true,
-        "action": null,
-        "id": "GD",
-        "type": "GestureDetector",
-        "attributes": {
-          "onTap": {
-            "event": "/promotion_item_tap",
-            "dependsOn": [],
-            "meta": {"method": "GET"}
-          }
-        },
-        "child": {
-          "controlled": false,
-          "action": null,
-          "id": "ad234061-61ee-4112-80c5-ad46eec6eeca",
-          "type": "Container",
-          "attributes": {
-            "decoration": {"borderRadius": 8, "color": "#103054FF"},
-            "clipBehavior": "handEnge"
-          },
-          "child": {
-            "controlled": false,
-            "action": null,
-            "id": "9934d032-73b1-4c69-8007-6d406f010faf",
-            "children": [
-              {
-                "controlled": false,
-                "action": null,
-                "id": "4d03180f-8568-40b8-be14-281fb5a330a4",
-                "type": "Padding",
-                "attributes": {
-                  "padding": [32, 16]
-                },
-                "child": {
-                  "controlled": false,
-                  "action": null,
-                  "id": "8ae4a2e7-9268-4e2b-9850-abe2481411aa",
-                  "children": [
-                    {
-                      "controlled": false,
-                      "action": null,
-                      "id": "46795189-18cf-4595-b96e-5c61ef93c151",
-                      "type": "Expanded",
-                      "child": {
-                        "controlled": false,
-                        "action": null,
-                        "id": "49dfb1e4-e0cc-4f86-bfb2-681015699ab8",
-                        "children": [
-                          {
-                            "controlled": false,
-                            "action": null,
-                            "id": "ded8d54e-824c-443d-b802-7fc35d41753e",
-                            "type": "Text",
-                            "attributes": {
-                              "refs": [
-                                {"attributeKey": "data", "objectKey": "title"}
-                              ],
-                              "overflow": "ellipsis",
-                              "maxLines": 1,
-                              "style": {
-                                "fontSize": 20,
-                                "fontWeight": 700,
-                                "fontFamily": "SFProRounded",
-                                "color": "#FFFFFFFF"
-                              }
-                            }
-                          },
-                          {
-                            "controlled": false,
-                            "action": null,
-                            "id": "6371f956-05a0-4e1e-a0f4-25eef8b4c608",
-                            "type": "SizedBox",
-                            "attributes": {"height": 4}
-                          },
-                          {
-                            "controlled": false,
-                            "action": null,
-                            "id": "ec5eb47c-4533-4f7e-a057-e49f9eed4479",
-                            "type": "Text",
-                            "attributes": {
-                              "refs": [
-                                {
-                                  "attributeKey": "data",
-                                  "objectKey": "description"
-                                }
-                              ],
-                              "overflow": "ellipsis",
-                              "maxLines": 2,
-                              "style": {
-                                "fontSize": 12,
-                                "fontWeight": 400,
-                                "fontFamily": "Lato",
-                                "color": "#868FAEFF"
-                              }
-                            }
-                          }
-                        ],
-                        "type": "Column",
-                        "attributes": {"crossAxisAlignment": "start"}
-                      }
-                    },
-                    {
-                      "controlled": false,
-                      "action": null,
-                      "id": "7daee84f-e18d-4863-8142-9a81cec0858e",
-                      "type": "SizedBox",
-                      "attributes": {"width": 24}
-                    },
-                    {
-                      "controlled": false,
-                      "action": null,
-                      "id": "a389cd40-ee9a-4eb8-b44b-e9f62c64f4b7",
-                      "type": "Image",
-                      "attributes": {
-                        "type": "network",
-                        "width": 120,
-                        "height": 90,
-                        "fit": "contain",
-                        "src": "",
-                        "refs": [
-                          {"attributeKey": "src", "objectKey": "imageUrl"}
-                        ]
-                      }
-                    }
-                  ],
-                  "type": "Row",
-                  "attributes": {"crossAxisAlignment": "center"}
-                }
-              }
-            ],
-            "type": "Column"
-          }
-        }
-      }
-    }
   ]);
   runApp(const MyApp());
 }
@@ -359,7 +221,7 @@ final driver10 = DuitDriver(
 );
 
 final driver11 = DuitDriver(
-  "/promotion",
+  "/scrollview",
   transportOptions: HttpTransportOptions(
     defaultHeaders: {"Content-Type": "application/json"},
     baseUrl: "http://localhost:8999",
@@ -490,16 +352,10 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 24,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DuitViewHost(
-                context: context,
-                driver: driver11,
-                placeholder: const CircularProgressIndicator(),
-              ),
-            ),
-            const SizedBox(
-              height: 24,
+            DuitViewHost(
+              context: context,
+              driver: driver11,
+              placeholder: const CircularProgressIndicator(),
             ),
           ],
         ),

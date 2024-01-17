@@ -275,7 +275,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.singleChildScrollview:
-        final it = model as LifecycleStateListenerUiElement;
+        final it = model as SingleChildScrollviewUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
