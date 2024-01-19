@@ -5,6 +5,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 import 'element.dart';
 
 final class DuitTree extends DuitAbstractTree {
+  Widget? _root;
+
   DuitTree({
     required JSONObject json,
     required UIDriver driver,
@@ -18,6 +20,6 @@ final class DuitTree extends DuitAbstractTree {
 
   @override
   Widget render() {
-    return uiRoot.renderView();
+    return _root ??= uiRoot.renderView();
   }
 }
