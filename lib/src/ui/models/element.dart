@@ -495,6 +495,25 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.singleChildScrollview:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return SingleChildScrollviewUiElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.lifecycleStateListener:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -594,6 +613,24 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 }
 
 //<editor-fold desc="Inherited models">
+final class SingleChildScrollviewUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  SingleChildScrollviewUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class LifecycleStateListenerUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
