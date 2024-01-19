@@ -139,95 +139,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-final driver1 = DuitDriver(
-  "/decoratedbox",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-final driver2 = DuitDriver(
-  "/inputs",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-)
-  ..onInit = () {
-    print("INIT");
-  }
-  ..beforeActionCallback = (action) {
-    print(action.event);
-  }
-  ..afterActionCallback = () {
-    print("Action handled");
-  }
-  ..onEventReceived = (event) {
-    print(event?.type);
-  };
-final driver3 = DuitDriver(
-  "ws://localhost:8999",
-  transportOptions: WebSocketTransportOptions(),
-);
-final driver4 = DuitDriver(
-  "/img",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-final driver5 = DuitDriver(
-  "/stack",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-final driver6 = DuitDriver(
-  "/updateExample",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-final driver7 = DuitDriver(
-  "/gesture",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-final driver8 = DuitDriver(
-  "/transform",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-final driver9 = DuitDriver(
-  "/rich",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-
-final driver10 = DuitDriver(
-  "/shoes",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-
-final driver11 = DuitDriver(
-  "/scrollview",
-  transportOptions: HttpTransportOptions(
-    defaultHeaders: {"Content-Type": "application/json"},
-    baseUrl: "http://localhost:8999",
-  ),
-);
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -251,6 +162,147 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late final DuitDriver driver1;
+  late final DuitDriver driver2;
+  late final DuitDriver driver3;
+  late final DuitDriver driver4;
+  late final DuitDriver driver5;
+  late final DuitDriver driver6;
+  late final DuitDriver driver7;
+  late final DuitDriver driver8;
+  late final DuitDriver driver9;
+  late final DuitDriver driver10;
+  late final DuitDriver driver11;
+
+  @override
+  void initState() {
+    driver1 = DuitDriver(
+      "/decoratedbox",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver1 INIT");
+      };
+    driver2 = DuitDriver(
+      "/inputs",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )
+      ..onInit = () {
+        print("driver2 INIT");
+      }
+      ..beforeActionCallback = (action) {
+        print(action.event);
+      }
+      ..afterActionCallback = () {
+        print("Action handled");
+      }
+      ..onEventReceived = (event) {
+        print(event?.type);
+      };
+    driver3 = DuitDriver(
+      "ws://localhost:8999",
+      transportOptions: WebSocketTransportOptions(),
+    )..onInit = () {
+        print("driver3 INIT");
+      };
+    driver4 = DuitDriver(
+      "/img",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver4 INIT");
+      };
+    driver5 = DuitDriver(
+      "/stack",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver5 INIT");
+      };
+    driver6 = DuitDriver(
+      "/updateExample",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver6 INIT");
+      };
+    driver7 = DuitDriver(
+      "/gesture",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver7 INIT");
+      };
+    driver8 = DuitDriver(
+      "/transform",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver8 INIT");
+      };
+    driver9 = DuitDriver(
+      "/rich",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver9 INIT");
+      };
+
+    driver10 = DuitDriver(
+      "/shoes",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver10 INIT");
+      };
+
+    driver11 = DuitDriver(
+      "/scrollview",
+      transportOptions: HttpTransportOptions(
+        defaultHeaders: {"Content-Type": "application/json"},
+        baseUrl: "http://localhost:8999",
+      ),
+    )..onInit = () {
+        print("driver11 INIT");
+      };
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    driver1.dispose();
+    driver2.dispose();
+    driver3.dispose();
+    driver4.dispose();
+    driver5.dispose();
+    driver6.dispose();
+    driver7.dispose();
+    driver8.dispose();
+    driver9.dispose();
+    driver10.dispose();
+    driver11.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
