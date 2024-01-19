@@ -5,9 +5,9 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 class SingleChildScrollviewAttributes
     implements DuitAttributes<SingleChildScrollviewAttributes> {
-  final Axis scrollDirection;
+  final Axis? scrollDirection;
   final bool? reverse, primary;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
   final String? restorationId;
   final Clip? clipBehavior;
@@ -42,6 +42,7 @@ class SingleChildScrollviewAttributes
     );
   }
 
+  @override
   SingleChildScrollviewAttributes copyWith(other) {
     return SingleChildScrollviewAttributes(
       scrollDirection: other.scrollDirection ?? scrollDirection,
