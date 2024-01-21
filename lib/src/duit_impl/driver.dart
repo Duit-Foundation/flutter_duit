@@ -177,26 +177,31 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @override
   Future<void> execute(ServerAction action) async {
     beforeActionCallback?.call(action);
-    final Map<String, dynamic> payload = {};
 
-    final dependencies = action.dependsOn;
+    if (action.executionType == 1) {
+      _resolveEvent(action.payload);
+    } else {
+      final Map<String, dynamic> payload = {};
 
-    if (dependencies.isNotEmpty) {
-      for (final dependency in dependencies) {
-        final controller = _viewControllers[dependency.id];
-        if (controller != null) {
-          if (controller.attributes?.payload is AttendedModel) {
-            final model = controller.attributes?.payload as AttendedModel;
-            payload[dependency.target] = model.collect();
+      final dependencies = action.dependsOn;
+
+      if (dependencies.isNotEmpty) {
+        for (final dependency in dependencies) {
+          final controller = _viewControllers[dependency.id];
+          if (controller != null) {
+            if (controller.attributes?.payload is AttendedModel) {
+              final model = controller.attributes?.payload as AttendedModel;
+              payload[dependency.target] = model.collect();
+            }
           }
         }
       }
-    }
 
-    final event = await transport?.execute(action, payload);
-    //case with http request
-    if (event != null) {
-      _resolveEvent(event);
+      final event = await transport?.execute(action, payload);
+      //case with http request
+      if (event != null) {
+        _resolveEvent(event);
+      }
     }
 
     afterActionCallback?.call();
