@@ -23,6 +23,7 @@ final class RadioGroupContextAttributes extends AttendedModel<dynamic>
   @override
   RadioGroupContextAttributes copyWith(other) {
     return RadioGroupContextAttributes(
+      value: other.value,
       groupValue: other.groupValue,
     );
   }

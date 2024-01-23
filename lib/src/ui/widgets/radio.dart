@@ -71,8 +71,8 @@ final class RadioGroupContext extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(covariant RadioGroupContext old) {
-    return this != old;
+  bool updateShouldNotify(covariant RadioGroupContext oldWidget) {
+    return groupValue != oldWidget.groupValue;
   }
 }
 
@@ -103,14 +103,10 @@ class _DuitRadioGroupContextProviderState
   }
 
   void _onChangeHandler(dynamic value) {
-    attributes?.update(value);
-    setState(() {
-      attributes = attributes?.copyWith(
-        RadioGroupContextAttributes(
-          groupValue: value,
-        ),
-      );
-    });
+    updateStateManually(RadioGroupContextAttributes(
+      value: value,
+      groupValue: value,
+    ));
     widget.controller.performRelatedAction();
   }
 

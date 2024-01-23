@@ -74,6 +74,11 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
     }
   }
 
+  /// Updates the state of the `UIElementController` manually.
+  void updateStateManually(AttrType newState) {
+    _controller?.updateState(ViewAttributeWrapper(payload: newState));
+  }
+
   void _listenControllerUpdateStateEvent() {
     _controller?.addListener(_listener);
   }
