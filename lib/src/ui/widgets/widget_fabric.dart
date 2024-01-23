@@ -266,6 +266,20 @@ mixin WidgetFabric {
             : DuitImage(
                 attributes: it.attributes,
               );
+      case ElementType.radio:
+        final it = model as RadioUIElement;
+
+        return DuitControlledRadio(
+          controller: it.viewController!,
+        );
+      case ElementType.radioGroupContext:
+        final it = model as RadioGroupContextUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitRadioGroupContextProvider(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.lifecycleStateListener:
         final it = model as LifecycleStateListenerUiElement;
         final child = getWidgetFromElement(it.child);
