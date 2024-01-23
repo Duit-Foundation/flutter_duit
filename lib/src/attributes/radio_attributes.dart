@@ -37,7 +37,6 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
   final double? splashRadius;
   final MaterialTapTargetSize? materialTapTargetSize;
   final VisualDensity? visualDensity;
-  final ServerAction? onChanged;
 
   RadioAttributes({
     required this.value,
@@ -51,12 +50,13 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
     required this.splashRadius,
     required this.materialTapTargetSize,
     required this.visualDensity,
-    required this.onChanged,
   });
 
   factory RadioAttributes.fromJson(Map<String, dynamic> json) {
     final value = json['value'];
     assert(value != null, "value must not be null");
+    assert(value is String || value is bool || value is double || value is int,
+        "Value must be string, bool, double or int type");
     return RadioAttributes(
       value: value,
       toggleable: json['toggleable'],
@@ -70,7 +70,6 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
       materialTapTargetSize: ParamsMapper.convertToMaterialTapTargetSize(
           json['materialTapTargetSize']),
       visualDensity: ParamsMapper.convertToVisualDensity(json['visualDensity']),
-      onChanged: ServerAction.fromJSON(json['onChanged']),
     );
   }
 
@@ -88,7 +87,6 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
       materialTapTargetSize:
           other.materialTapTargetSize ?? materialTapTargetSize,
       visualDensity: other.visualDensity ?? visualDensity,
-      onChanged: other.onChanged ?? onChanged,
       value: other.value ?? value,
     );
   }
