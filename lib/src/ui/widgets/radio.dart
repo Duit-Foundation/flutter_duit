@@ -3,6 +3,41 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
+class DuitRadio extends StatelessWidget {
+  final ViewAttributeWrapper attributes;
+
+  const DuitRadio({
+    super.key,
+    required this.attributes,
+  });
+
+  void _onChangeHandler(BuildContext context, dynamic value) {
+    RadioGroupContext.maybeOf(context)?.updateGroupValue(value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final groupContext = RadioGroupContext.maybeOf(context);
+    assert(groupContext != null, 'RadioGroupContext not found in context');
+    final attrs = attributes.payload as RadioAttributes?;
+    return Radio(
+      value: attrs?.value,
+      groupValue: groupContext?.groupValue,
+      onChanged: (value) => _onChangeHandler(context, value),
+      toggleable: attrs?.toggleable ?? false,
+      autofocus: attrs?.autofocus ?? false,
+      activeColor: attrs?.activeColor,
+      focusColor: attrs?.focusColor,
+      hoverColor: attrs?.hoverColor,
+      fillColor: attrs?.fillColor,
+      overlayColor: attrs?.overlayColor,
+      splashRadius: attrs?.splashRadius,
+      materialTapTargetSize: attrs?.materialTapTargetSize,
+      visualDensity: attrs?.visualDensity,
+    );
+  }
+}
+
 final class DuitControlledRadio extends StatefulWidget {
   final UIElementController? controller;
 
@@ -30,7 +65,7 @@ class _DuitControlledRadioState extends State<DuitControlledRadio>
   @override
   Widget build(BuildContext context) {
     final groupContext = RadioGroupContext.maybeOf(context);
-    assert(groupContext != null, '_RadioGroupContext not found in context');
+    assert(groupContext != null, 'RadioGroupContext not found in context');
     return Radio(
       value: attributes?.value,
       groupValue: groupContext?.groupValue,
