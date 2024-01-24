@@ -87,6 +87,9 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.component => ComponentAttributes.fromJson(json ?? {}),
       ElementType.singleChildScrollview =>
         SingleChildScrollviewAttributes.fromJson(json ?? {}),
+      ElementType.radio => RadioAttributes.fromJson(json ?? {}),
+      ElementType.radioGroupContext =>
+        RadioGroupContextAttributes.fromJson(json ?? {}),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

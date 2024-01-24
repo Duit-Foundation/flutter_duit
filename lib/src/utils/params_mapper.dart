@@ -498,6 +498,18 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Basic">
+  static MaterialTapTargetSize? convertToMaterialTapTargetSize(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "shrinkWrap":
+        return MaterialTapTargetSize.shrinkWrap;
+      case "padded":
+        return MaterialTapTargetSize.padded;
+    }
+
+    return null;
+  }
 
   /// Converts a string value to a [FilterQuality] value.
   ///

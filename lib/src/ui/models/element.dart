@@ -419,6 +419,22 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           controlled: controlled,
         );
+      case ElementType.radio:
+        return RadioUIElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlled,
+        );
       case ElementType.container:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -480,6 +496,25 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final child = DuitElement.fromJson(json["child"], driver);
 
         return TransformUiElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.radioGroupContext:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return RadioGroupContextUiElement(
           type: type,
           id: id,
           attributes: attributes,
@@ -638,6 +673,24 @@ final class LifecycleStateListenerUiElement<T> extends DuitElement<T>
   DuitElement child;
 
   LifecycleStateListenerUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
+final class RadioGroupContextUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  RadioGroupContextUiElement({
     required super.type,
     required super.id,
     required super.controlled,
@@ -974,6 +1027,19 @@ final class CheckboxUIElement<T> extends DuitElement<T> {
   //<editor-fold desc="Properties and ctor">
 
   CheckboxUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+  });
+//</editor-fold>
+}
+
+final class RadioUIElement<T> extends DuitElement<T> {
+  //<editor-fold desc="Properties and ctor">
+
+  RadioUIElement({
     required super.type,
     required super.id,
     required super.controlled,
