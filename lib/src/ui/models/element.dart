@@ -549,6 +549,25 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.ignorePointer:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return IgnorePointerUiElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.lifecycleStateListener:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -655,6 +674,24 @@ final class SingleChildScrollviewUiElement<T> extends DuitElement<T>
   DuitElement child;
 
   SingleChildScrollviewUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
+final class IgnorePointerUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  IgnorePointerUiElement({
     required super.type,
     required super.id,
     required super.controlled,
