@@ -29,4 +29,5 @@ final class ElementType {
   static const radioGroupContext = "RadioGroupContext";
   static const ignorePointer = "IgnorePointer";
   static const opacity = "Opacity";
+  static const slider = "Slider";
 }

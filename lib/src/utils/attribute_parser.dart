@@ -92,6 +92,7 @@ final class AttributeParser implements AttributeParserBase {
         RadioGroupContextAttributes.fromJson(json ?? {}),
       ElementType.ignorePointer => IgnorePointerAttributes.fromJson(json ?? {}),
       ElementType.opacity => OpacityAttributes.fromJson(json ?? {}),
+      ElementType.slider => SliderAttributes.fromJson(json ?? {}),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

@@ -498,6 +498,23 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Basic">
+  static SliderInteraction? convertToSliderInteraction(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "tapOnly":
+        return SliderInteraction.tapOnly;
+      case "tapAndSlide":
+        return SliderInteraction.tapAndSlide;
+      case "slideOnly":
+        return SliderInteraction.slideOnly;
+      case "slideThumb":
+        return SliderInteraction.slideThumb;
+    }
+
+    return null;
+  }
+
   static MaterialTapTargetSize? convertToMaterialTapTargetSize(String? value) {
     if (value == null) return null;
 

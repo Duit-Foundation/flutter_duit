@@ -25,3 +25,4 @@ export 'single_child_scrollview_attributes.dart';
 export 'radio_attributes.dart';
 export 'ignore_pointer_attributes.dart';
 export 'opacity_attributes.dart';
+export 'slider_attributes.dart';
