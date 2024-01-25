@@ -549,6 +549,25 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.opacity:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return OpacityUiElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.ignorePointer:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -692,6 +711,24 @@ final class IgnorePointerUiElement<T> extends DuitElement<T>
   DuitElement child;
 
   IgnorePointerUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
+final class OpacityUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  OpacityUiElement({
     required super.type,
     required super.id,
     required super.controlled,

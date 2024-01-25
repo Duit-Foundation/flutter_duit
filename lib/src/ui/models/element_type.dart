@@ -28,4 +28,5 @@ final class ElementType {
   static const radio = "Radio";
   static const radioGroupContext = "RadioGroupContext";
   static const ignorePointer = "IgnorePointer";
+  static const opacity = "Opacity";
 }

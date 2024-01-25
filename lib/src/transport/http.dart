@@ -47,7 +47,7 @@ final class HttpTransport extends Transport {
 
     final res =
         await client.get(Uri.parse(urlString), headers: options.defaultHeaders);
-    return jsonDecode(res.body) as Map<String, dynamic>;
+    return jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
   }
 
   @override
@@ -77,7 +77,8 @@ final class HttpTransport extends Transport {
             final res = await client.get(uri, headers: {
               ...options.defaultHeaders,
             });
-            return jsonDecode(res.body) as Map<String, dynamic>;
+            return jsonDecode(utf8.decode(res.bodyBytes))
+                as Map<String, dynamic>;
           } catch (e) {
             rethrow;
           }
@@ -93,7 +94,8 @@ final class HttpTransport extends Transport {
                 ...options.defaultHeaders,
               },
             );
-            return jsonDecode(res.body) as Map<String, dynamic>;
+            return jsonDecode(utf8.decode(res.bodyBytes))
+                as Map<String, dynamic>;
           } catch (e) {
             rethrow;
           }
@@ -109,7 +111,8 @@ final class HttpTransport extends Transport {
                 ...options.defaultHeaders,
               },
             );
-            return jsonDecode(res.body) as Map<String, dynamic>;
+            return jsonDecode(utf8.decode(res.bodyBytes))
+                as Map<String, dynamic>;
           } catch (e) {
             rethrow;
           }
@@ -118,14 +121,15 @@ final class HttpTransport extends Transport {
         {
           final urlString = _prepareUrl(action.event);
           try {
-            final json = await client.patch(
+            final res = await client.patch(
               Uri.parse(urlString),
               body: jsonEncode(payload),
               headers: {
                 ...options.defaultHeaders,
               },
             );
-            return jsonDecode(json.body) as JSONObject;
+            return jsonDecode(utf8.decode(res.bodyBytes))
+                as Map<String, dynamic>;
           } catch (e) {
             rethrow;
           }

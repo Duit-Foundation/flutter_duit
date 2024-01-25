@@ -318,6 +318,19 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.opacity:
+        final it = model as OpacityUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledOpacity(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitOpacity(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.component:
         final it = model as ComponentUIElement;
         final child = getWidgetFromElement(it.child);
