@@ -284,6 +284,12 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.slider:
+        final it = model as SliderUIElement;
+
+        return DuitSlider(
+          controller: it.viewController!,
+        );
       case ElementType.lifecycleStateListener:
         final it = model as LifecycleStateListenerUiElement;
         final child = getWidgetFromElement(it.child);

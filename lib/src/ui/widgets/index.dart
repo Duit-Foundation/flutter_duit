@@ -26,3 +26,4 @@ export 'single_child_scrollview.dart';
 export 'radio.dart';
 export 'ignore_pointer.dart';
 export 'opacity.dart';
+export 'slider.dart';
