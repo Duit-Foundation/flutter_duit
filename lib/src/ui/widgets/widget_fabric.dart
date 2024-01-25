@@ -305,6 +305,19 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.ignorePointer:
+        final it = model as IgnorePointerUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledIgnorePointer(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitIgnorePointer(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.opacity:
         final it = model as OpacityUiElement;
         final child = getWidgetFromElement(it.child);
