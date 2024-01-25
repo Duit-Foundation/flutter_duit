@@ -23,3 +23,4 @@ export 'lifecycle_state_listener_attributes.dart';
 export 'component_attributes.dart';
 export 'single_child_scrollview_attributes.dart';
 export 'radio_attributes.dart';
+export 'opacity_attributes.dart';

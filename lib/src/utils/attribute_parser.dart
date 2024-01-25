@@ -90,6 +90,7 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.radio => RadioAttributes.fromJson(json ?? {}),
       ElementType.radioGroupContext =>
         RadioGroupContextAttributes.fromJson(json ?? {}),
+      ElementType.opacity => OpacityAttributes.fromJson(json ?? {}),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

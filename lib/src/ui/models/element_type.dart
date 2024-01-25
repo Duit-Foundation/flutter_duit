@@ -27,4 +27,5 @@ final class ElementType {
   static const singleChildScrollview = "SingleChildScrollView";
   static const radio = "Radio";
   static const radioGroupContext = "RadioGroupContext";
+  static const opacity = "Opacity";
 }
