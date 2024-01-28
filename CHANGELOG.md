@@ -1,5 +1,12 @@
 ## 1.7.0
 - Fixed a problem with duplicate ids of controlled widgets within the component
+- Widget tree caching
+- Added local executed actions
+- Added SingleChildScrollView widget
+- Added Radio and RadioGroupContext widgets
+- Added Opacity widget
+- Added IgnorePointer widget
+- Added Slider widget
 ## 1.6.1
 - Added a reference to the BuildContext in the navigation event handler
 ## 1.6.0
