@@ -17,14 +17,19 @@ class DuitSlider extends StatefulWidget {
 
 class _DuitSliderState extends State<DuitSlider>
     with ViewControllerChangeListener<DuitSlider, SliderAttributes> {
+  double _value = 0;
+
   @override
   void initState() {
     attachStateToController(widget.controller);
+    _value = attributes?.value ?? 0;
     super.initState();
   }
 
   void _onChangeHandler(double value) {
-    attributes?.update(value);
+    setState(() {
+      _value = value;
+    });
     widget.controller.performAction(attributes?.onChanged);
   }
 
@@ -32,14 +37,15 @@ class _DuitSliderState extends State<DuitSlider>
     widget.controller.performAction(attributes?.onChangeStart);
   }
 
-  void _onChangeEndHandler(double _) {
+  void _onChangeEndHandler(double value) {
+    attributes?.update(value);
     widget.controller.performAction(attributes?.onChangeEnd);
   }
 
   @override
   Widget build(BuildContext context) {
     return Slider(
-      value: attributes?.value ?? 0.0,
+      value: _value,
       onChanged: _onChangeHandler,
       onChangeStart: _onChangeStartHandler,
       onChangeEnd: _onChangeEndHandler,
