@@ -435,6 +435,22 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           controlled: controlled,
         );
+      case ElementType.slider:
+        return SliderUIElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlled,
+        );
       case ElementType.container:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -1114,6 +1130,19 @@ final class RadioUIElement<T> extends DuitElement<T> {
   //<editor-fold desc="Properties and ctor">
 
   RadioUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+  });
+//</editor-fold>
+}
+
+final class SliderUIElement<T> extends DuitElement<T> {
+  //<editor-fold desc="Properties and ctor">
+
+  SliderUIElement({
     required super.type,
     required super.id,
     required super.controlled,
