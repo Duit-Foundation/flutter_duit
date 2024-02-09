@@ -10,6 +10,10 @@ sealed class NumUtils {
   ///
   /// Returns the converted integer value, or null if the conversion is not possible.
   static int? toInt(dynamic value) {
+    if (value is int) {
+      return value;
+    }
+
     if (value is num) {
       return value.toInt();
     }
@@ -25,6 +29,10 @@ sealed class NumUtils {
   ///
   /// Returns the converted double value, or null if the conversion is not possible.
   static double? toDouble(dynamic value) {
+    if (value is double) {
+      return value;
+    }
+
     if (value is num) {
       return value.toDouble();
     }
@@ -40,6 +48,10 @@ sealed class NumUtils {
   ///
   /// Returns the converted double value.
   static double toDoubleWithNullReplacement(dynamic value, double replacement) {
+    if (value is double) {
+      return value;
+    }
+
     if (value is num) {
       return value.toDouble();
     }
