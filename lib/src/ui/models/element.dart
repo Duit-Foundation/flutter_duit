@@ -530,7 +530,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.transform:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return TransformUiElement(
           type: type,
