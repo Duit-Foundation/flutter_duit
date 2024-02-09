@@ -290,6 +290,19 @@ mixin WidgetFabric {
         return DuitSlider(
           controller: it.viewController!,
         );
+      case ElementType.fittedBox:
+        final it = model as FittedBoxUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledFittedBox(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitFittedBox(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.lifecycleStateListener:
         final it = model as LifecycleStateListenerUiElement;
         final child = getWidgetFromElement(it.child);
