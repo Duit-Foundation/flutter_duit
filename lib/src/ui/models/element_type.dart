@@ -30,4 +30,5 @@ final class ElementType {
   static const ignorePointer = "IgnorePointer";
   static const opacity = "Opacity";
   static const slider = "Slider";
+  static const fittedBox = "FittedBox";
 }

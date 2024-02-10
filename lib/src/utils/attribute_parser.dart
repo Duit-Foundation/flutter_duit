@@ -93,6 +93,7 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.ignorePointer => IgnorePointerAttributes.fromJson(json ?? {}),
       ElementType.opacity => OpacityAttributes.fromJson(json ?? {}),
       ElementType.slider => SliderAttributes.fromJson(json ?? {}),
+      ElementType.fittedBox => FittedBoxAttributes.fromJson(json ?? {}),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

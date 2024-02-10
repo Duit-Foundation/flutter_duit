@@ -29,7 +29,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
     this.attributes,
   });
 
-  factory DuitElement.fromJson(JSONObject? json, UIDriver driver) {
+  static Future<DuitElement> fromJson(JSONObject? json, UIDriver driver) async {
     if (json == null) return EmptyUIElement();
 
     final String type = json["type"];
@@ -48,7 +48,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           providedData,
         );
 
-        final controller = ViewController<T>(
+        final controller = ViewController(
           id: id,
           driver: driver,
           type: type,
@@ -56,9 +56,9 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         );
         driver.attachController(id, controller);
 
-        final child = DuitElement.fromJson(model.data, driver);
+        final child = await DuitElement.fromJson(model.data, driver);
 
-        return ComponentUIElement<T>(
+        return ComponentUIElement(
           child: child,
           type: type,
           id: id,
@@ -71,8 +71,8 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       return EmptyUIElement();
     }
 
-    final ViewAttributeWrapper<T> attributes =
-        ViewAttributeWrapper.createAttributes<T>(
+    final ViewAttributeWrapper attributes =
+        ViewAttributeWrapper.createAttributes(
       type,
       json["attributes"],
       tag,
@@ -85,12 +85,12 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         if (json["children"] != null) {
           json["children"].forEach((element) {
-            final child = DuitElement.fromJson(element, driver);
-            arr.add(child);
+            DuitElement.fromJson(element, driver)
+                .then((value) => arr.add(value));
           });
         }
 
-        return RowUIElement(
+        final el = RowUIElement(
           type: type,
           id: id,
           children: arr,
@@ -106,13 +106,15 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           controlled: controlled,
         );
+
+        return el;
       case ElementType.column:
         List<DuitElement> arr = [];
 
         if (json["children"] != null) {
           json["children"].forEach((element) {
-            final child = DuitElement.fromJson(element, driver);
-            arr.add(child);
+            DuitElement.fromJson(element, driver)
+                .then((value) => arr.add(value));
           });
         }
 
@@ -133,7 +135,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
         );
       case ElementType.center:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return CenterUIElement(
           type: type,
@@ -151,8 +153,27 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           controlled: controlled,
         );
+      case ElementType.fittedBox:
+        final child = await DuitElement.fromJson(json["child"], driver);
+
+        return FittedBoxUiElement(
+          type: type,
+          id: id,
+          child: child,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlled,
+        );
       case ElementType.coloredBox:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return ColoredBoxUIElement(
           type: type,
@@ -171,7 +192,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.sizedBox:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return SizedBoxUIElement(
           type: type,
@@ -193,7 +214,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         return RichTextUIElement(
           type: type,
           id: id,
-          viewController: _createAndAttachController<T>(
+          viewController: _createAndAttachController(
             id,
             controlled,
             attributes,
@@ -209,7 +230,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         return TextUIElement(
           type: type,
           id: id,
-          viewController: _createAndAttachController<T>(
+          viewController: _createAndAttachController(
             id,
             controlled,
             attributes,
@@ -222,7 +243,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.elevatedButton:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return ElevatedButtonUIElement(
           type: type,
@@ -261,8 +282,8 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         if (json["children"] != null) {
           json["children"].forEach((element) {
-            final child = DuitElement.fromJson(element, driver);
-            arr.add(child);
+            DuitElement.fromJson(element, driver)
+                .then((value) => arr.add(value));
           });
         }
 
@@ -287,8 +308,8 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         if (json["children"] != null) {
           json["children"].forEach((element) {
-            final child = DuitElement.fromJson(element, driver);
-            arr.add(child);
+            DuitElement.fromJson(element, driver)
+                .then((value) => arr.add(value));
           });
         }
 
@@ -309,7 +330,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           children: arr,
         );
       case ElementType.expanded:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return ExpandedUiElement(
           type: type,
@@ -328,7 +349,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.padding:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return PaddingUiElement(
           type: type,
@@ -347,7 +368,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.positioned:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return PositionedUiElement(
           type: type,
@@ -366,7 +387,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.decoratedBox:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return DecoratedBoxUiElement(
           type: type,
@@ -452,7 +473,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.container:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return ContainerUiElement(
           type: type,
@@ -471,7 +492,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.gestureDetector:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return GestureDetectorUiElement(
           type: type,
@@ -490,7 +511,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.align:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return AlignUiElement(
           type: type,
@@ -509,7 +530,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.transform:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return TransformUiElement(
           type: type,
@@ -528,7 +549,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.radioGroupContext:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return RadioGroupContextUiElement(
           type: type,
@@ -547,7 +568,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.singleChildScrollview:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return SingleChildScrollviewUiElement(
           type: type,
@@ -566,7 +587,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.opacity:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return OpacityUiElement(
           type: type,
@@ -585,7 +606,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.ignorePointer:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         return IgnorePointerUiElement(
           type: type,
@@ -604,7 +625,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.lifecycleStateListener:
-        final child = DuitElement.fromJson(json["child"], driver);
+        final child = await DuitElement.fromJson(json["child"], driver);
 
         //controlled - always false
         //ViewController necessary and created directly
@@ -612,7 +633,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type: type,
           id: id,
           attributes: null,
-          viewController: ViewController<T>(
+          viewController: ViewController(
             id: id,
             driver: driver,
             action: serverAction,
@@ -643,7 +664,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
               controlled,
               attributes,
               controller,
-            ) as DuitElement<T>;
+            ) as DuitElement;
           }
         }
         return EmptyUIElement();
@@ -907,6 +928,24 @@ final class PaddingUiElement<T> extends DuitElement<T>
   DuitElement child;
 
   PaddingUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
+final class FittedBoxUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  FittedBoxUiElement({
     required super.type,
     required super.id,
     required super.controlled,
