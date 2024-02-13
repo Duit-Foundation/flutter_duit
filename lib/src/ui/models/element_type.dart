@@ -31,4 +31,5 @@ final class ElementType {
   static const opacity = "Opacity";
   static const slider = "Slider";
   static const fittedBox = "FittedBox";
+  static const switchW = "Switch";
 }

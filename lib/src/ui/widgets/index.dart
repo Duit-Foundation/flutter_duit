@@ -28,3 +28,4 @@ export 'ignore_pointer.dart';
 export 'opacity.dart';
 export 'slider.dart';
 export 'fitted_box.dart';
+export 'switch.dart';

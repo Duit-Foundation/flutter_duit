@@ -276,6 +276,12 @@ mixin WidgetFabric {
             : DuitRadio(
                 attributes: it.attributes!,
               );
+      case ElementType.switchW:
+        final it = model as SwitchUiElement;
+
+        return DuitSwitch(
+          controller: it.viewController!,
+        );
       case ElementType.radioGroupContext:
         final it = model as RadioGroupContextUiElement;
         final child = getWidgetFromElement(it.child);

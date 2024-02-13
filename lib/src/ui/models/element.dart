@@ -440,6 +440,22 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           controlled: controlled,
         );
+      case ElementType.switchW:
+        return SwitchUiElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlled,
+        );
       case ElementType.radio:
         return RadioUIElement(
           type: type,
@@ -1231,6 +1247,24 @@ final class ImageUIElement<T> extends DuitElement<T> {
     required super.attributes,
     required super.viewController,
   });
+//</editor-fold>
+}
+
+final class SwitchUiElement<T> extends DuitElement<T> {
+  //<editor-fold desc="Properties and ctor">
+
+  SwitchUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+  });
+
+  @override
+  String toString() {
+    return 'TextUIElement{attributes: $attributes, viewController: $viewController, uncontrolled: $controlled}';
+  }
 //</editor-fold>
 }
 

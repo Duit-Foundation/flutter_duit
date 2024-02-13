@@ -1041,6 +1041,63 @@ class ParamsMapper {
     });
   }
 
+  static MaterialStateProperty<double>? convertToMSPDouble(JSONObject? json) {
+    if (json == null) return null;
+
+    return MaterialStateProperty.resolveWith((states) {
+      if (states.contains(MaterialState.disabled)) {
+        return NumUtils.toDoubleWithNullReplacement(
+          json[MaterialState.disabled.name],
+          0,
+        );
+      }
+
+      if (states.contains(MaterialState.selected)) {
+        return NumUtils.toDoubleWithNullReplacement(
+          json[MaterialState.selected.name],
+          0,
+        );
+      }
+
+      if (states.contains(MaterialState.error)) {
+        return NumUtils.toDoubleWithNullReplacement(
+          json[MaterialState.error.name],
+          0,
+        );
+      }
+
+      if (states.contains(MaterialState.pressed)) {
+        return NumUtils.toDoubleWithNullReplacement(
+          json[MaterialState.pressed.name],
+          0,
+        );
+      }
+
+      if (states.contains(MaterialState.hovered)) {
+        return NumUtils.toDoubleWithNullReplacement(
+          json[MaterialState.hovered.name],
+          0,
+        );
+      }
+
+      if (states.contains(MaterialState.focused)) {
+        return NumUtils.toDoubleWithNullReplacement(
+          json[MaterialState.focused.name],
+          0,
+        );
+      }
+
+      if (states.contains(MaterialState.dragged)) {
+        return NumUtils.toDoubleWithNullReplacement(
+          json[MaterialState.dragged.name],
+          0,
+        );
+      }
+
+      return 0;
+    });
+  }
+
   static BorderSide convertToBorderSide(JSONObject? json) {
     if (json == null) return BorderSide.none;
 

@@ -27,3 +27,4 @@ export 'ignore_pointer_attributes.dart';
 export 'opacity_attributes.dart';
 export 'slider_attributes.dart';
 export 'fitted_box_attributes.dart';
+export 'switch_attributes.dart';
