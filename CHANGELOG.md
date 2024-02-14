@@ -1,3 +1,8 @@
+## 1.8.0
+- Fixed unnecessary convert function call on num type
+- FittedBox widget
+- Switch widget
+- Custom events
 ## 1.7.0
 - Fixed a problem with duplicate ids of controlled widgets within the component
 - Widget tree caching
