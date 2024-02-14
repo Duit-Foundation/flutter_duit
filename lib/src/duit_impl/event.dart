@@ -10,6 +10,7 @@ enum ServerEventType {
   layoutUpdate,
   navigation,
   openUrl,
+  custom,
 }
 
 /// Represents a server response event.
@@ -32,6 +33,7 @@ abstract class ServerEvent {
       "updateLayout" => LayoutUpdateEvent.fromJson(json, driver),
       "navigation" => NavigationEvent.fromJson(json),
       "openUrl" => OpenUrlEvent.fromJson(json),
+      "custom" => CustomEvent.fromJson(json),
       String() || Object() || null => null,
     };
   }
@@ -116,6 +118,27 @@ final class OpenUrlEvent extends ServerEvent {
   factory OpenUrlEvent.fromJson(JSONObject json) {
     return OpenUrlEvent(
       url: json["url"] ?? "",
+    );
+  }
+}
+
+final class CustomEvent extends ServerEvent {
+  @override
+  ServerEventType type = ServerEventType.custom;
+
+  final String key;
+
+  final Map<String, dynamic> extra;
+
+  CustomEvent({
+    required this.key,
+    required this.extra,
+  });
+
+  factory CustomEvent.fromJson(JSONObject json) {
+    return CustomEvent(
+      key: json["key"] ?? "",
+      extra: json["extra"] ?? {},
     );
   }
 }

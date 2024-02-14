@@ -1,7 +1,41 @@
+import 'dart:async';
+
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:example/src/registry_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
+
+final class _Handler implements ExternalEventHandler {
+  @override
+  FutureOr<void> handleCustomEvent(
+      BuildContext context, String key, Object? extra) {
+    switch (key) {
+      case "event1":
+        {
+          debugPrint("Event 1");
+          break;
+        }
+      case "event2":
+        {
+          debugPrint("Event 2");
+          break;
+        }
+    }
+  }
+
+  @override
+  FutureOr<void> handleNavigation(
+      BuildContext context, String path, Object? extra) {
+    // TODO: implement handleNavigation
+    throw UnimplementedError();
+  }
+
+  @override
+  FutureOr<void> handleOpenUrl(String url) {
+    // TODO: implement handleOpenUrl
+    throw UnimplementedError();
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -191,6 +225,7 @@ class _MyHomePageState extends State<MyHomePage> {
         defaultHeaders: {"Content-Type": "application/json"},
         baseUrl: "http://localhost:8999",
       ),
+      eventHandler: _Handler(),
     )
       ..onInit = () {
         print("driver2 INIT");

@@ -140,6 +140,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
           final urlEvent = event as OpenUrlEvent;
           await eventHandler?.handleOpenUrl(urlEvent.url);
           break;
+        case ServerEventType.custom:
+          final customEvent = event as CustomEvent;
+          await eventHandler?.handleCustomEvent(
+            buildContext,
+            customEvent.key,
+            customEvent.extra,
+          );
+          break;
       }
     }
 
