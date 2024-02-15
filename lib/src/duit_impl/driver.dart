@@ -113,6 +113,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         case ServerEventType.update:
           final updEvent = event as UpdateEvent;
           updEvent.updates.forEach((key, value) {
+            print(value);
             _updateAttributes(key, value);
           });
           break;
@@ -147,6 +148,19 @@ final class DuitDriver with DriverHooks implements UIDriver {
             customEvent.key,
             customEvent.extra,
           );
+          break;
+        case ServerEventType.sequenced:
+          final sequence = event as SequencedEventGroup;
+          for (final entry in sequence.events) {
+            await _resolveEvent(entry.event);
+            await Future.delayed(entry.delay);
+          }
+          break;
+        case ServerEventType.grouped:
+          final group = event as CommonEventGroup;
+          for (final entry in group.events) {
+            _resolveEvent(entry.event);
+          }
           break;
       }
     }

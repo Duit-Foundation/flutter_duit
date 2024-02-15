@@ -11,6 +11,8 @@ enum ServerEventType {
   navigation,
   openUrl,
   custom,
+  sequenced,
+  grouped,
 }
 
 /// Represents a server response event.
@@ -34,6 +36,8 @@ abstract class ServerEvent {
       "navigation" => NavigationEvent.fromJson(json),
       "openUrl" => OpenUrlEvent.fromJson(json),
       "custom" => CustomEvent.fromJson(json),
+      "sequenced" => SequencedEventGroup.fromJson(json),
+      "grouped" => CommonEventGroup.fromJson(json),
       String() || Object() || null => null,
     };
   }
@@ -140,5 +144,62 @@ final class CustomEvent extends ServerEvent {
       key: json["key"] ?? "",
       extra: json["extra"] ?? {},
     );
+  }
+}
+
+final class GroupMember {
+  final JSONObject event;
+
+  GroupMember({
+    required this.event,
+  });
+}
+
+final class SequencedGroupMember extends GroupMember {
+  final Duration delay;
+
+  SequencedGroupMember({
+    required super.event,
+    required this.delay,
+  });
+}
+
+final class CommonEventGroup extends ServerEvent {
+  final List<GroupMember> events;
+
+  @override
+  ServerEventType type = ServerEventType.grouped;
+
+  CommonEventGroup({
+    required this.events,
+  });
+
+  factory CommonEventGroup.fromJson(JSONObject json) {
+    final list = List.from(json["events"] ?? []);
+
+    final events = list.map((model) => GroupMember(event: model));
+    return CommonEventGroup(events: events.toList());
+  }
+}
+
+final class SequencedEventGroup extends ServerEvent {
+  final List<SequencedGroupMember> events;
+
+  @override
+  ServerEventType type = ServerEventType.sequenced;
+
+  SequencedEventGroup({
+    required this.events,
+  });
+
+  factory SequencedEventGroup.fromJson(JSONObject json) {
+    final list = List.from(json["events"] ?? []);
+
+    final events = list.map((model) {
+      final delay = Duration(milliseconds: model["delay"] ?? 0);
+
+      return SequencedGroupMember(event: model["event"], delay: delay);
+    });
+    return SequencedEventGroup(events: events.toList());
   }
 }
