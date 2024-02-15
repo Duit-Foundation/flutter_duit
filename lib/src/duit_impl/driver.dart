@@ -113,7 +113,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         case ServerEventType.update:
           final updEvent = event as UpdateEvent;
           updEvent.updates.forEach((key, value) {
-            print(value);
             _updateAttributes(key, value);
           });
           break;
