@@ -140,6 +140,40 @@ final class HttpTransport extends Transport {
   }
 
   @override
+  FutureOr<Map<String, dynamic>?> request(
+    String url,
+    Map<String, dynamic> meta,
+    Map<String, dynamic> body,
+  ) async {
+    final method = meta["method"] as String?;
+
+    final httpMethod = switch (method) {
+      "POST" => "POST",
+      "GET" || null || String() => "GET",
+    };
+
+    if (httpMethod == "GET") {
+      final res = await client.get(
+        Uri.parse(_prepareUrl(url)),
+        headers: {
+          ...options.defaultHeaders,
+        },
+      );
+
+      return jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
+    } else {
+      final res = await client.post(
+        Uri.parse(_prepareUrl(url)),
+        body: jsonEncode(body),
+        headers: {
+          ...options.defaultHeaders,
+        },
+      );
+      return jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
+    }
+  }
+
+  @override
   void dispose() {
     client.close();
   }

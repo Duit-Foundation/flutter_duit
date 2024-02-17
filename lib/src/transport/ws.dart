@@ -91,6 +91,20 @@ final class WSTransport extends Transport implements Streamer {
   }
 
   @override
+  FutureOr<Map<String, dynamic>?> request(
+    String url,
+    Map<String, dynamic> meta,
+    Map<String, dynamic> body,
+  ) {
+    final data = {
+      "event": url,
+      "payload": body,
+    };
+    ws.add(jsonEncode(data));
+    return null;
+  }
+
+  @override
   void dispose() {
     ws.close(1000, "disposed");
     _controller.close();
