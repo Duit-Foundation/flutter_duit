@@ -199,6 +199,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
       ViewAttributeWrapper.attributeParser = AttributeParser();
       transport ??= _getTransport(transportOptions.type);
 
+      await scriptRunner?.initWithTransport(transport!);
+
       final json = await transport?.connect();
       assert(json != null);
 
