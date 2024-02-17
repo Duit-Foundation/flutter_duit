@@ -253,8 +253,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         {
           try {
             final body = _preparePayload(action.dependsOn);
-            assert(action.script != null,
-                "Script can't be null when executionType == 2");
             final script = action.script as DuitScript;
 
             final scriptInvocationResult = await scriptRunner?.runScript(
