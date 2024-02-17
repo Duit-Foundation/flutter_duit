@@ -37,6 +37,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   final ExternalEventHandler? eventHandler;
 
+  @protected
+  @override
+  DuitScriptRunner? scriptRunner;
+
   @override
   Stream<DuitAbstractTree?> get stream =>
       streamController.stream.asBroadcastStream();
@@ -167,6 +171,24 @@ final class DuitDriver with DriverHooks implements UIDriver {
     onEventHandled?.call();
   }
 
+  Map<String, dynamic> _preparePayload(List<ActionDependency> deps) {
+    final Map<String, dynamic> payload = {};
+
+    if (deps.isNotEmpty) {
+      for (final dependency in deps) {
+        final controller = _viewControllers[dependency.id];
+        if (controller != null) {
+          if (controller.attributes?.payload is AttendedModel) {
+            final model = controller.attributes?.payload as AttendedModel;
+            payload[dependency.target] = model.collect();
+          }
+        }
+      }
+    }
+
+    return payload;
+  }
+
   @override
   Future<void> init() async {
     onInit?.call();
@@ -199,33 +221,55 @@ final class DuitDriver with DriverHooks implements UIDriver {
   Future<void> execute(ServerAction action) async {
     beforeActionCallback?.call(action);
 
-    if (action.executionType == 1) {
-      _resolveEvent(action.payload);
-    } else {
-      final Map<String, dynamic> payload = {};
+    switch (action.executionType) {
+      //transport
+      case 0:
+        {
+          try {
+            final payload = _preparePayload(action.dependsOn);
 
-      final dependencies = action.dependsOn;
-
-      if (dependencies.isNotEmpty) {
-        for (final dependency in dependencies) {
-          final controller = _viewControllers[dependency.id];
-          if (controller != null) {
-            if (controller.attributes?.payload is AttendedModel) {
-              final model = controller.attributes?.payload as AttendedModel;
-              payload[dependency.target] = model.collect();
+            final event = await transport?.execute(action, payload);
+            //case with http request
+            if (event != null) {
+              await _resolveEvent(event);
             }
+          } catch (e) {
+            debugPrint(e.toString());
           }
+
+          break;
         }
-      }
+      //local execution
+      case 1:
+        {
+          try {
+            await _resolveEvent(action.payload);
+          } catch (e) {
+            debugPrint(e.toString());
+          }
+          break;
+        }
+      //script
+      case 2:
+        {
+          try {
+            final body = _preparePayload(action.dependsOn);
+            final script = action.script as DuitScript;
 
-      final event = await transport?.execute(action, payload);
-      //case with http request
-      if (event != null) {
-        _resolveEvent(event);
-      }
+            final scriptInvocationResult = await scriptRunner?.runScript(
+              script.functionName,
+              url: action.event,
+              meta: action.payload,
+              body: body,
+            );
+            _resolveEvent(scriptInvocationResult);
+          } catch (e) {
+            debugPrint(e.toString());
+          }
+
+          break;
+        }
     }
-
-    afterActionCallback?.call();
   }
 
   @override
@@ -282,5 +326,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
       );
       controller.updateState(attributes);
     }
+  }
+
+  @override
+  Future<void> evalScript(String source) async {
+    await scriptRunner?.eval(source);
   }
 }

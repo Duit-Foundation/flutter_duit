@@ -79,6 +79,13 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
     );
     final ServerAction? serverAction = ServerAction.fromJSON(json["action"]);
 
+    if (serverAction?.executionType == 2) {
+      assert(serverAction?.script != null,
+          "Script can't be null when executionType == 2");
+      final script = serverAction?.script as DuitScript;
+      driver.evalScript(script.sourceCode);
+    }
+
     switch (type) {
       case ElementType.row:
         List<DuitElement> arr = [];
