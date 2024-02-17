@@ -37,6 +37,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   final ExternalEventHandler? eventHandler;
 
+  @protected
   @override
   DuitScriptRunner? scriptRunner;
 
