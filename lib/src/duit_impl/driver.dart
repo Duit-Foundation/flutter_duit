@@ -226,52 +226,49 @@ final class DuitDriver with DriverHooks implements UIDriver {
     switch (action.executionType) {
       //transport
       case 0:
-        {
-          try {
-            final payload = _preparePayload(action.dependsOn);
+        try {
+          final payload = _preparePayload(action.dependsOn);
 
-            final event = await transport?.execute(action, payload);
-            //case with http request
-            if (event != null) {
-              await _resolveEvent(event);
-            }
-          } catch (e) {
-            debugPrint(e.toString());
+          final event = await transport?.execute(action, payload);
+          //case with http request
+          if (event != null) {
+            await _resolveEvent(event);
           }
-
-          break;
+        } catch (e) {
+          debugPrint(e.toString());
         }
+
+        break;
       //local execution
       case 1:
-        {
-          try {
-            await _resolveEvent(action.payload);
-          } catch (e) {
-            debugPrint(e.toString());
-          }
-          break;
+        try {
+          await _resolveEvent(action.payload);
+        } catch (e) {
+          debugPrint(e.toString());
         }
+        break;
+
       //script
       case 2:
-        {
-          try {
-            final body = _preparePayload(action.dependsOn);
-            final script = action.script as DuitScript;
+        try {
+          final body = _preparePayload(action.dependsOn);
+          final script = action.script as DuitScript;
 
-            final scriptInvocationResult = await scriptRunner?.runScript(
-              script.functionName,
-              url: action.event,
-              meta: action.payload,
-              body: body,
-            );
-            _resolveEvent(scriptInvocationResult);
-          } catch (e) {
-            debugPrint(e.toString());
-          }
-
-          break;
+          final scriptInvocationResult = await scriptRunner?.runScript(
+            script.functionName,
+            url: action.event,
+            meta: action.script?.meta,
+            body: body,
+          );
+          _resolveEvent(scriptInvocationResult);
+        } catch (e) {
+          debugPrint(e.toString());
         }
+
+        break;
     }
+
+    afterActionCallback?.call();
   }
 
   @override
