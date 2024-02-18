@@ -49,15 +49,19 @@ class _DuitControlledTextState extends State<DuitControlledText>
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      attributes?.data ?? "",
-      textAlign: attributes?.textAlign,
-      textDirection: attributes?.textDirection,
-      style: attributes?.style,
-      maxLines: attributes?.maxLines,
-      semanticsLabel: attributes?.semanticsLabel,
-      overflow: attributes?.overflow,
-      softWrap: attributes?.softWrap,
-    );
+    if (attributes?.data == null || attributes!.data!.isEmpty) {
+      return const SizedBox.shrink();
+    } else {
+      return Text(
+        attributes?.data ?? "",
+        textAlign: attributes?.textAlign,
+        textDirection: attributes?.textDirection,
+        style: attributes?.style,
+        maxLines: attributes?.maxLines,
+        semanticsLabel: attributes?.semanticsLabel,
+        overflow: attributes?.overflow,
+        softWrap: attributes?.softWrap,
+      );
+    }
   }
 }
