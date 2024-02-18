@@ -91,8 +91,7 @@ class _DuitViewHostState extends State<DuitViewHost> {
         return snapshot.data != null
             ? DuitViewContext(
                 gestureInterceptor: widget.gestureInterceptor,
-                gestureInterceptorBehavior:
-                    widget.gestureInterceptorBehavior,
+                gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
                 child: _StackWrapper(
                   invertStack: widget.invertStack,
                   content: snapshot.data!.render(),
