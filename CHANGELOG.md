@@ -1,3 +1,5 @@
+## 1.9.1
+- Fixed incorrect transmission of script metadata
 ## 1.9.0
 - Added ScriptRunner API
 - Added sequenced and common event groups

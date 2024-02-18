@@ -53,10 +53,10 @@ packages:
     dependency: "direct main"
     description:
       name: duit_kernel
-      sha256: "9fa065649b9d24a5ad8b68362d40848c20085aa02ba792645aba56ed974333aa"
+      sha256: "1d1d9d493f8497e7fc16771108683f73f57e482a3dae124a5c83986bd675b19f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   fake_async:
     dependency: transitive
     description:
@@ -76,7 +76,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.8.0"
+    version: "1.9.0"
   flutter_lints:
     dependency: "direct dev"
     description:
