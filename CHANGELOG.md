@@ -1,3 +1,7 @@
+## 1.9.0
+- Added ScriptRunner API
+- Added sequenced and common event groups
+- Replaced text with empty data property using SizedBox.shrink
 ## 1.8.0
 - Fixed unnecessary convert function call on num type
 - FittedBox widget
