@@ -32,4 +32,5 @@ final class ElementType {
   static const slider = "Slider";
   static const fittedBox = "FittedBox";
   static const switchW = "Switch";
+  static const subtree = "Subtree";
 }
