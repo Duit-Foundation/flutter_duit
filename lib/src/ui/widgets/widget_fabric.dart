@@ -1,8 +1,8 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/duit_impl/component_wrapper.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
+import 'package:flutter_duit/src/ui/widgets/subtree.dart';
 
 import 'index.dart';
 
@@ -359,8 +359,15 @@ mixin WidgetFabric {
       case ElementType.component:
         final it = model as ComponentUIElement;
         final child = getWidgetFromElement(it.child);
+        return DuitComponent(
+          controller: it.viewController!,
+          child: child,
+        );
+      case ElementType.subtree:
+        final it = model as SubtreeUIElement;
+        final child = getWidgetFromElement(it.child);
 
-        return DuitComponentWrapper(
+        return DuitSubtree(
           controller: it.viewController!,
           child: child,
         );

@@ -84,7 +84,6 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.custom => _parseCustomWidgetAttributes(json, tag),
       ElementType.lifecycleStateListener =>
         LifecycleStateListenerAttributes.fromJson(json ?? {}),
-      ElementType.component => ComponentAttributes.fromJson(json ?? {}),
       ElementType.singleChildScrollview =>
         SingleChildScrollviewAttributes.fromJson(json ?? {}),
       ElementType.radio => RadioAttributes.fromJson(json ?? {}),
@@ -95,6 +94,7 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.slider => SliderAttributes.fromJson(json ?? {}),
       ElementType.fittedBox => FittedBoxAttributes.fromJson(json ?? {}),
       ElementType.switchW => SwitchAttributes.fromJson(json ?? {}),
+      ElementType.subtree || ElementType.component => SubtreeAttributes.fromJson(json ?? {}),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

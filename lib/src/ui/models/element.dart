@@ -37,40 +37,6 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
     final bool controlled = json["controlled"] ?? false;
     final String? tag = json["tag"];
 
-    if (type == ElementType.component) {
-      final providedData = json["data"] as Map<String, dynamic>;
-
-      final model = DuitRegistry.getComponentDescription(tag!);
-
-      if (model != null) {
-        JsonUtils.mergeComponentLayoutDescriptionWithExternalData(
-          model.data,
-          providedData,
-        );
-
-        final controller = ViewController(
-          id: id,
-          driver: driver,
-          type: type,
-          tag: tag,
-        );
-        driver.attachController(id, controller);
-
-        final child = await DuitElement.fromJson(model.data, driver);
-
-        return ComponentUIElement(
-          child: child,
-          type: type,
-          id: id,
-          controlled: controlled,
-          attributes: null,
-          viewController: controller,
-        );
-      }
-
-      return EmptyUIElement();
-    }
-
     final ViewAttributeWrapper attributes =
         ViewAttributeWrapper.createAttributes(
       type,
@@ -514,6 +480,25 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.subtree:
+        final child = await DuitElement.fromJson(json["child"], driver);
+
+        return SubtreeUIElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.gestureDetector:
         final child = await DuitElement.fromJson(json["child"], driver);
 
@@ -668,6 +653,38 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           controlled: false,
         );
       case ElementType.empty:
+        return EmptyUIElement();
+      case ElementType.component:
+        final providedData = json["data"] as Map<String, dynamic>;
+
+        final model = DuitRegistry.getComponentDescription(tag!);
+
+        if (model != null) {
+          JsonUtils.mergeComponentLayoutDescriptionWithExternalData(
+            model.data,
+            providedData,
+          );
+
+          final child = await DuitElement.fromJson(model.data, driver);
+
+          return ComponentUIElement(
+            child: child,
+            type: type,
+            id: id,
+            controlled: controlled,
+            attributes: attributes,
+            viewController: _createAndAttachController(
+              id,
+              controlled,
+              attributes,
+              null,
+              driver,
+              type,
+              tag,
+            ),
+          );
+        }
+
         return EmptyUIElement();
       case ElementType.custom:
         if (tag != null) {
@@ -1233,6 +1250,24 @@ final class ComponentUIElement<T> extends DuitElement<T>
   DuitElement child;
 
   ComponentUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
+final class SubtreeUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  SubtreeUIElement({
     required super.type,
     required super.id,
     required super.controlled,

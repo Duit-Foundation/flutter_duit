@@ -301,20 +301,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
             json,
           );
 
-          final tree = DuitTree(
-            json: description.data,
-            driver: this,
-          );
-
           final attributes = ViewAttributeWrapper.createAttributes(
-            controller.type,
-            {
-              "tree": tree,
-            },
+            ElementType.subtree,
+            description.data,
             controller.tag,
           );
 
           controller.updateState(attributes);
+          return;
         }
       }
 
