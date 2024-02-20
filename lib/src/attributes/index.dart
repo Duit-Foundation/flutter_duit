@@ -28,3 +28,4 @@ export 'slider_attributes.dart';
 export 'fitted_box_attributes.dart';
 export 'switch_attributes.dart';
 export 'subtree_attributes.dart';
+export 'meta_attributes.dart';

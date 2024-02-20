@@ -94,7 +94,10 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.slider => SliderAttributes.fromJson(json ?? {}),
       ElementType.fittedBox => FittedBoxAttributes.fromJson(json ?? {}),
       ElementType.switchW => SwitchAttributes.fromJson(json ?? {}),
-      ElementType.subtree || ElementType.component => SubtreeAttributes.fromJson(json ?? {}),
+      ElementType.subtree ||
+      ElementType.component =>
+        SubtreeAttributes.fromJson(json ?? {}),
+      ElementType.meta => MetaAttributes.fromJson(json ?? {}),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

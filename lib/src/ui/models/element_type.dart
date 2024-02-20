@@ -33,4 +33,5 @@ final class ElementType {
   static const fittedBox = "FittedBox";
   static const switchW = "Switch";
   static const subtree = "Subtree";
+  static const meta = "Meta";
 }
