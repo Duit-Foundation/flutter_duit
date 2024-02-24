@@ -30,3 +30,4 @@ export 'slider.dart';
 export 'fitted_box.dart';
 export 'switch.dart';
 export 'component.dart';
+export 'meta.dart';

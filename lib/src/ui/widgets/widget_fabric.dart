@@ -371,6 +371,14 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.meta:
+        final it = model as MetaUiElement;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitMetaWidget(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:
