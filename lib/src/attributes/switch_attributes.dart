@@ -36,6 +36,7 @@ final class SwitchAttributes extends AttendedModel<bool>
     this.autofocus,
   });
 
+  @override
   SwitchAttributes copyWith(SwitchAttributes other) {
     return SwitchAttributes(
       value: other.value,
