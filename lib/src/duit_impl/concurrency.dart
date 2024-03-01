@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 FutureOr<Object?> _handler(Object? message) {
-  if (message is Job) {
+  if (message is Task) {
     switch (message.key) {
       case "parseJson":
         jsonDecode(utf8.decode(message.payload)) as Map<String, dynamic>;
@@ -24,11 +24,11 @@ FutureOr<Object?> _handler(Object? message) {
   return null;
 }
 
-base class Job {
+base class Task {
   final String key;
   final dynamic payload;
 
-  Job({
+  Task({
     required this.key,
     required this.payload,
   });
@@ -69,7 +69,7 @@ final class WorkerPool {
     }
   }
 
-  Future<Object?> run(Job job) async {
+  Future<Object?> run(Task job) async {
     return await _workers.first.sendJob(job);
   }
 
