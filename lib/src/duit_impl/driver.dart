@@ -10,6 +10,7 @@ import "package:flutter_duit/src/ui/models/element_type.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
+import "concurrency.dart";
 import "event.dart";
 
 final class DuitDriver with DriverHooks implements UIDriver {
@@ -32,6 +33,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   DuitAbstractTree? _layout;
 
+  bool concurrentModeEnabled;
+
   Map<String, UIElementController> _viewControllers = {};
 
   @protected
@@ -49,6 +52,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.source, {
     required this.transportOptions,
     this.eventHandler,
+    this.concurrentModeEnabled = false,
   });
 
   @override
@@ -116,8 +120,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
       switch (event.type) {
         case ServerEventType.update:
           final updEvent = event as UpdateEvent;
-          updEvent.updates.forEach((key, value) {
-            _updateAttributes(key, value);
+          updEvent.updates.forEach((key, value) async {
+            await _updateAttributes(key, value);
           });
           break;
         case ServerEventType.layoutUpdate:
@@ -288,7 +292,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// Parameters:
   /// - [id]: The id of the controller.
   /// - [json]: The json object containing the updated attributes.
-  void _updateAttributes(String id, JSONObject json) {
+  Future<void> _updateAttributes(String id, JSONObject json) async {
     final controller = _viewControllers[id];
     if (controller != null) {
       if (controller.type == ElementType.component) {
@@ -296,14 +300,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
         final description = DuitRegistry.getComponentDescription(tag!);
 
         if (description != null) {
-          JsonUtils.mergeComponentLayoutDescriptionWithExternalData(
+          final component = JsonUtils.fillComponentProperties(
             description.data,
             json,
           );
 
           final attributes = ViewAttributeWrapper.createAttributes(
             ElementType.subtree,
-            description.data,
+            component,
             controller.tag,
           );
 
