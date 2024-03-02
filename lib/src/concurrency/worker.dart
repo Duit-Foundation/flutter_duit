@@ -1,102 +1,53 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
+import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-FutureOr<Object?> _handler(Object? message) {
-  if (message is Task) {
-    switch (message.key) {
-      case "parseJson":
-        jsonDecode(utf8.decode(message.payload)) as Map<String, dynamic>;
-      case "fillProps":
-        return JsonUtils.fillComponentProperties(
-          message.payload["layout"],
-          message.payload["data"],
-        );
-      case "test":
-        print("test");
-        return 0;
-    }
+import 'index.dart';
+
+typedef IsolateCallback = void Function(Task? message);
+
+FutureOr<Object?> _handler(Task? message) {
+  if (message == null) return null;
+
+  switch (message.key) {
+    case "parseJson":
+      return switch (message.payload) {
+        String() => jsonDecode(message.payload) as Map<String, dynamic>,
+        Uint8List() =>
+          jsonDecode(utf8.decode(message.payload)) as Map<String, dynamic>,
+        Map() => message.payload,
+        Object() || null => null,
+      };
+    case "fillComponentProperties":
+      return JsonUtils.fillComponentProperties(
+        message.payload["layout"],
+        message.payload["data"],
+      );
   }
 
   return null;
 }
 
-base class Task {
-  final String key;
-  final dynamic payload;
-
-  Task({
-    required this.key,
-    required this.payload,
-  });
-}
-
-enum TaskDistributionPolicy {
-  sequential,
-  roundRobin,
-}
-
-typedef Handler = void Function(Object? message);
-
-final class WorkerPool {
-  static final WorkerPool _singleton = WorkerPool._internal();
-
-  factory WorkerPool() {
-    return _singleton;
-  }
-
-  WorkerPool._internal();
-
-  bool initialized = false;
-  final _workers = <_Worker>[];
-
-  Future<void> init() async {
-    if (!initialized) {
-      for (var i = 0; i < 4; i++) {
-        try {
-          _workers.add(await _Worker.spawn());
-        } catch (e) {
-          debugPrint(e.toString());
-        }
-      }
-
-      initialized = true;
-    } else {
-      debugPrint("WorkerPool already initialized");
-    }
-  }
-
-  Future<Object?> run(Task job) async {
-    return await _workers.first.sendJob(job);
-  }
-
-  void close() {
-    for (var worker in _workers) {
-      worker.close();
-    }
-  }
-}
-
-class _Worker {
+class DuitWorker {
   final SendPort _sp;
   final ReceivePort _rp;
   final Map<int, Completer<Object?>> _activeRequests = {};
   bool _closed = false;
   int _idCounter = 0;
 
-  Future<Object?> sendJob(Object? message) async {
+  Future<Object?> executeTask(Task? task) async {
     if (_closed) throw StateError('Worker closed');
     final completer = Completer<Object?>.sync();
     final id = _idCounter++;
     _activeRequests[id] = completer;
-    _sp.send(message);
+    _sp.send(task);
     return await completer.future;
   }
 
-  static Future<_Worker> spawn() async {
+  static Future<DuitWorker> spawn() async {
     final initPort = RawReceivePort();
     final connection = Completer<(ReceivePort, SendPort)>.sync();
     initPort.handler = (initialMessage) {
@@ -117,10 +68,10 @@ class _Worker {
     final (ReceivePort receivePort, SendPort sendPort) =
         await connection.future;
 
-    return _Worker._(receivePort, sendPort);
+    return DuitWorker._(receivePort, sendPort);
   }
 
-  _Worker._(this._rp, this._sp) {
+  DuitWorker._(this._rp, this._sp) {
     _rp.listen(_handleResponsesFromIsolate);
   }
 
@@ -140,9 +91,18 @@ class _Worker {
   static void _handleCommandsToIsolate(
     ReceivePort receivePort,
     SendPort sendPort,
-    Handler cb,
+    IsolateCallback cb,
   ) {
-    receivePort.listen(cb);
+    receivePort.listen((event) {
+      if (event is Task) {
+        if (event.key == 'shutdown') {
+          receivePort.close();
+          return;
+        } else {
+          cb(event);
+        }
+      }
+    });
   }
 
   static void _runIsolate(SendPort sendPort) {
@@ -154,9 +114,8 @@ class _Worker {
   void close() {
     if (!_closed) {
       _closed = true;
-      _sp.send('shutdown');
+      _sp.send(ShutdownTask());
       if (_activeRequests.isEmpty) _rp.close();
-      print('--- port closed --- ');
     }
   }
 }
