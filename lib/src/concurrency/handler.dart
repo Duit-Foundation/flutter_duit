@@ -26,11 +26,7 @@ class TaskHandler {
         );
 
         return (message.taskId, res);
-      case "test":
-        print("test1");
-        return (message.taskId, 100);
     }
-
     return (0, null);
   }
 }

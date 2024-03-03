@@ -14,7 +14,12 @@ final class DuitTree extends DuitAbstractTree {
 
   @override
   Future<DuitAbstractTree> parse() async {
-    uiRoot = await DuitElement.fromJson(json, driver);
+    uiRoot = await DuitElement.fromJson(
+      json,
+      driver,
+      workerPool: driver.workerPool,
+      concurrencyEnabled: driver.concurrentModeEnabled,
+    );
     return this;
   }
 

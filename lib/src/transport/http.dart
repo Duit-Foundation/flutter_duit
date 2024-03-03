@@ -24,11 +24,13 @@ import 'package:http/http.dart' as http;
 final class HttpTransport extends Transport {
   final client = http.Client();
   final HttpTransportOptions options;
+  final bool concurrencyEnabled;
 
   HttpTransport(
     super.url, {
     super.workerPool,
     required this.options,
+    required this.concurrencyEnabled,
   });
 
   String _prepareUrl(String url) {
@@ -53,7 +55,7 @@ final class HttpTransport extends Transport {
   }
 
   Future<Map<String, dynamic>> _parseJson(dynamic data) async {
-    if (workerPool != null) {
+    if (concurrencyEnabled && workerPool != null) {
       return await workerPool!.perform(ParseJsonTask(data))
           as Map<String, dynamic>;
     }

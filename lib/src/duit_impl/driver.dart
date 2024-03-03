@@ -90,6 +90,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         {
           return HttpTransport(
             source,
+            concurrencyEnabled: concurrentModeEnabled,
             workerPool: workerPool,
             options: transportOptions as HttpTransportOptions,
           );
@@ -99,6 +100,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
           return WSTransport(
             source,
             workerPool: workerPool,
+            concurrencyEnabled: concurrentModeEnabled,
             options: transportOptions as WebSocketTransportOptions,
           );
         }
@@ -106,6 +108,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         {
           return HttpTransport(
             source,
+            concurrencyEnabled: concurrentModeEnabled,
             workerPool: workerPool,
             options: transportOptions as HttpTransportOptions,
           );

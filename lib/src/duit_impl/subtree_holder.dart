@@ -16,9 +16,10 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
     final layout = _controller?.attributes?.payload as SubtreeAttributes?;
 
     if (layout?.data != null) {
+      final driver = _controller!.driver;
       final layoutTree = await DuitTree(
         json: layout!.data!,
-        driver: _controller!.driver,
+        driver: driver,
       ).parse();
 
       final newChild = layoutTree.render();
