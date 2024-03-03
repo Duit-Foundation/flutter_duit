@@ -50,8 +50,13 @@ final class WSTransport extends Transport implements Streamer {
 
   Future<Map<String, dynamic>> _parseJson(String data) async {
     if (concurrencyEnabled && workerPool != null) {
-      return await workerPool!.perform(ParseJsonTask(data))
-          as Map<String, dynamic>;
+      final tres = await workerPool!.perform(
+        (params) {
+          return jsonDecode(params);
+        },
+        data,
+      );
+      return tres.result as Map<String, dynamic>;
     }
     return jsonDecode(data) as Map<String, dynamic>;
   }

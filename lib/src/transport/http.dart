@@ -56,8 +56,13 @@ final class HttpTransport extends Transport {
 
   Future<Map<String, dynamic>> _parseJson(dynamic data) async {
     if (concurrencyEnabled && workerPool != null) {
-      return await workerPool!.perform(ParseJsonTask(data))
-          as Map<String, dynamic>;
+      final tres = await workerPool!.perform(
+        (params) {
+          return jsonDecode(params);
+        },
+        utf8.decode(data),
+      );
+      return tres.result as Map<String, dynamic>;
     }
     return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
   }

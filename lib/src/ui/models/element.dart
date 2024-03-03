@@ -31,10 +31,8 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
   static Future<DuitElement> fromJson(
     JSONObject? json,
-    UIDriver driver, {
-    WorkerPool? workerPool,
-    bool concurrencyEnabled = false,
-  }) async {
+    UIDriver driver,
+  ) async {
     if (json == null) return EmptyUIElement();
 
     final String type = json["type"];
@@ -688,20 +686,6 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
             model.data,
             providedData,
           );
-
-          // if (driver.concurrentModeEnabled && driver.workerPool != null) {
-          //   childModel = await driver.workerPool!.perform(
-          //     FillComponentPropertiesTask(
-          //       model.data,
-          //       providedData,
-          //     ),
-          //   ) as Map<String, dynamic>;
-          // } else {
-          //   childModel = JsonUtils.fillComponentProperties(
-          //     model.data,
-          //     providedData,
-          //   );
-          // }
 
           final child = await DuitElement.fromJson(childModel, driver);
 

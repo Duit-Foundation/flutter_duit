@@ -17,8 +17,6 @@ final class DuitTree extends DuitAbstractTree {
     uiRoot = await DuitElement.fromJson(
       json,
       driver,
-      workerPool: driver.workerPool,
-      concurrencyEnabled: driver.concurrentModeEnabled,
     );
     return this;
   }

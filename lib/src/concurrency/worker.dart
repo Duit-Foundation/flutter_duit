@@ -3,24 +3,30 @@ import 'dart:isolate';
 
 import 'package:duit_kernel/duit_kernel.dart';
 
-import 'handler.dart';
-import 'index.dart';
-
-typedef IsolateCallback = void Function(Task? message);
-
-class DuitWorker {
+final class DuitWorker {
   final SendPort _sp;
   final ReceivePort _rp;
-  final Map<int, Completer<Object?>> _activeRequests = {};
+  final Isolate _isolate;
+  final Map<Capability, Completer<Object?>> _activeRequests = {};
   bool _closed = false;
-  int _idCounter = 0;
 
-  Future<Object?> sendTaskToIsolate(Task task) async {
+  Future<TaskResult> sendTaskToIsolate(
+    TaskOperation fn,
+    dynamic payload,
+  ) async {
     if (_closed) throw StateError('Worker closed');
-    final completer = Completer<Object?>.sync();
-    final id = _idCounter++;
-    _activeRequests[id] = completer;
-    task.setTaskId(id);
+
+    final completer = Completer<TaskResult>.sync();
+    final cap = Capability();
+
+    final task = Task(
+      func: fn,
+      cap: cap,
+      payload: payload,
+    );
+
+    _activeRequests[cap] = completer;
+
     _sp.send(task);
     return await completer.future;
   }
@@ -36,8 +42,10 @@ class DuitWorker {
       ));
     };
 
+    Isolate isolate;
+
     try {
-      await Isolate.spawn(_runIsolate, (initPort.sendPort));
+      isolate = await Isolate.spawn(_runIsolate, (initPort.sendPort));
     } on Object {
       initPort.close();
       rethrow;
@@ -46,16 +54,20 @@ class DuitWorker {
     final (ReceivePort receivePort, SendPort sendPort) =
         await connection.future;
 
-    return DuitWorker._(receivePort, sendPort);
+    return DuitWorker._(receivePort, sendPort, isolate);
   }
 
-  DuitWorker._(this._rp, this._sp) {
+  DuitWorker._(
+    this._rp,
+    this._sp,
+    this._isolate,
+  ) {
     _rp.listen(_handleResponsesFromIsolate);
   }
 
   void _handleResponsesFromIsolate(dynamic message) {
-    final (int id, Object? response) = message as (int, Object?);
-    final completer = _activeRequests.remove(id)!;
+    final response = message as TaskResult;
+    final completer = _activeRequests.remove(response.cap)!;
 
     if (response is RemoteError) {
       completer.completeError(response);
@@ -70,17 +82,14 @@ class DuitWorker {
     ReceivePort receivePort,
     SendPort sendPort,
   ) {
-    receivePort.listen((event) {
+    receivePort.listen((event) async {
       if (event is Task) {
-        if (event.key == 'shutdown') {
-          receivePort.close();
-          return;
-        } else {
-          final res = TaskHandler.perform(event);
-          sendPort.send(res);
-          return;
-        }
+        final fnRes = event.func(event.payload);
+        final taskRes = TaskResult(fnRes, event.cap);
+        sendPort.send(taskRes);
+        return;
       }
+      return;
     });
   }
 
@@ -93,11 +102,11 @@ class DuitWorker {
     );
   }
 
-  void close() {
+  void dispose() {
     if (!_closed) {
       _closed = true;
-      _sp.send(ShutdownTask());
       if (_activeRequests.isEmpty) _rp.close();
+      _isolate.kill();
     }
   }
 }

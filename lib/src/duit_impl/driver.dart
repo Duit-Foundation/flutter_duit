@@ -215,7 +215,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
       final sharedPool = DuitRegistry.workerPool();
       if (sharedPool != null) {
-        return sharedPool;
+        return workerPool = sharedPool;
       }
 
       return null;
@@ -336,12 +336,16 @@ final class DuitDriver with DriverHooks implements UIDriver {
       Map<String, dynamic> component;
 
       if (concurrentModeEnabled) {
-        component = await workerPool?.perform(
-          FillComponentPropertiesTask(
-            description.data,
-            json,
-          ),
-        ) as Map<String, dynamic>;
+        final response = await workerPool!.perform((params) {
+          return JsonUtils.fillComponentProperties(
+            params["layout"],
+            params["data"],
+          );
+        }, {
+          "layout": description.data,
+          "data": json,
+        });
+        component = response.result as Map<String, dynamic>;
       } else {
         component = JsonUtils.fillComponentProperties(
           description.data,

@@ -15,30 +15,38 @@ final class DuitWorkerPoolConfiguration extends WorkerPoolConfiguration {
   });
 }
 
-final class DuitWorkerPool implements WorkerPool {
+final class _WorkerPoolFinalizationController {
+  final WorkerPool p;
+
+  _WorkerPoolFinalizationController(this.p);
+
+  void dispose() {
+    p.dispose();
+  }
+}
+
+final class DuitWorkerPool extends WorkerPool {
   late final Distributor _distributor;
-  @override
-  bool initialized = false;
   final _workers = <DuitWorker>[];
 
-  // final Finalizer<DuitWorkerPool> _workerPoolFinalizer =
-  //     Finalizer((wp) => wp.close());
-
-  @override
-  Future<Object?> perform(Task task) async {
-    return await _distributor.distributeTask(_workers, task);
-  }
-
-  void close() {
-    for (var worker in _workers) {
-      worker.close();
-    }
-    // _workerPoolFinalizer.detach(this);
-  }
+  final Finalizer<_WorkerPoolFinalizationController> _workerPoolFinalizer =
+      Finalizer((wp) => wp.dispose());
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    for (var worker in _workers) {
+      worker.dispose();
+    }
+    _workerPoolFinalizer.detach(this);
+  }
+
+  @override
+  Future<TaskResult> perform(TaskOperation func, dynamic payload) async {
+    return await _distributor.distributeTask(
+      _workers,
+      fn: func,
+      payload: payload,
+    );
   }
 
   @override
@@ -56,15 +64,16 @@ final class DuitWorkerPool implements WorkerPool {
       }
 
       _distributor = switch (config.policy) {
-        TaskDistributionPolicy.sequential => SequentialDistributor(),
-        //TODO: implement rr and lc distributors
-        TaskDistributionPolicy.roundRobin ||
-        TaskDistributionPolicy.leastConnection =>
-          throw UnimplementedError(),
+        TaskDistributionPolicy.roundRobin => RoundRobinDistributor(),
+        TaskDistributionPolicy.leastConnection => throw UnimplementedError(),
       };
 
+      _workerPoolFinalizer.attach(
+        this,
+        _WorkerPoolFinalizationController(this),
+        detach: this,
+      );
       initialized = true;
-      // _workerPoolFinalizer.attach(this, this, detach: this);
     } else {
       debugPrint("WorkerPool already initialized");
     }
