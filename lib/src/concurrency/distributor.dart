@@ -1,3 +1,5 @@
+import 'package:duit_kernel/duit_kernel.dart';
+
 import 'index.dart';
 
 abstract class Distributor {
@@ -14,10 +16,10 @@ final class SequentialDistributor extends Distributor {
 
     if (_ln! - 1 == currentIndex) {
       currentIndex = 0;
-      return await workers[currentIndex].executeTask(task);
+      return await workers[currentIndex].sendTaskToIsolate(task);
     }
     final worker = workers[currentIndex];
     currentIndex++;
-    return await worker.executeTask(task);
+    return await worker.sendTaskToIsolate(task);
   }
 }

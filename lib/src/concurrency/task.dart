@@ -1,12 +1,4 @@
-sealed class Task {
-  final String key;
-  final dynamic payload;
-
-  Task({
-    required this.key,
-    required this.payload,
-  });
-}
+import 'package:duit_kernel/duit_kernel.dart';
 
 final class ShutdownTask extends Task {
   ShutdownTask() : super(key: "shutdown", payload: null);

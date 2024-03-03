@@ -1,28 +1,53 @@
 import 'dart:async';
 
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/foundation.dart';
 
 import 'distributor.dart';
 import 'index.dart';
 
-final class WorkerPool {
-  static final WorkerPool _instance = WorkerPool._internal();
+final class DuitWorkerPoolConfiguration extends WorkerPoolConfiguration {
+  final TaskDistributionPolicy policy;
+
+  DuitWorkerPoolConfiguration({
+    required super.workerCount,
+    required this.policy,
+  });
+}
+
+final class DuitWorkerPool implements WorkerPool {
   late final Distributor _distributor;
-  final Finalizer<WorkerPool> _workerPoolFinalizer =
-      Finalizer((wp) => wp.close());
-
-  factory WorkerPool() {
-    return _instance;
-  }
-
-  WorkerPool._internal();
-
+  @override
   bool initialized = false;
   final _workers = <DuitWorker>[];
 
-  Future<void> init(TaskDistributionPolicy policy) async {
+  // final Finalizer<DuitWorkerPool> _workerPoolFinalizer =
+  //     Finalizer((wp) => wp.close());
+
+  @override
+  Future<Object?> perform(Task task) async {
+    return await _distributor.distributeTask(_workers, task);
+  }
+
+  void close() {
+    for (var worker in _workers) {
+      worker.close();
+    }
+    // _workerPoolFinalizer.detach(this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+  }
+
+  @override
+  Future<void> initWithConfiguration(
+    WorkerPoolConfiguration configuration,
+  ) async {
+    final config = configuration as DuitWorkerPoolConfiguration;
     if (!initialized) {
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < config.workerCount; i++) {
         try {
           _workers.add(await DuitWorker.spawn());
         } catch (e) {
@@ -30,9 +55,7 @@ final class WorkerPool {
         }
       }
 
-      initialized = true;
-
-      _distributor = switch (policy) {
+      _distributor = switch (config.policy) {
         TaskDistributionPolicy.sequential => SequentialDistributor(),
         //TODO: implement rr and lc distributors
         TaskDistributionPolicy.roundRobin ||
@@ -40,19 +63,10 @@ final class WorkerPool {
           throw UnimplementedError(),
       };
 
-      _workerPoolFinalizer.attach(this, this);
+      initialized = true;
+      // _workerPoolFinalizer.attach(this, this, detach: this);
     } else {
       debugPrint("WorkerPool already initialized");
-    }
-  }
-
-  Future<Object?> run(Task task) async {
-    return await _distributor.distributeTask(_workers, task);
-  }
-
-  void close() {
-    for (var worker in _workers) {
-      worker.close();
     }
   }
 }

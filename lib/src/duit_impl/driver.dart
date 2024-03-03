@@ -32,7 +32,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   DuitAbstractTree? _layout;
 
+  @override
   bool concurrentModeEnabled;
+
+  @override
+  WorkerPool? workerPool;
+
+  @override
+  WorkerPoolConfiguration? workerPoolConfiguration;
 
   Map<String, UIElementController> _viewControllers = {};
 
@@ -52,6 +59,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
     required this.transportOptions,
     this.eventHandler,
     this.concurrentModeEnabled = false,
+    this.workerPool,
+    this.workerPoolConfiguration,
   });
 
   @override
@@ -75,12 +84,13 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// Returns:
   /// - An instance of the transport class based on the specified [type].
   /// - If the [type] is not recognized, it returns an instance of [HttpTransport].
-  Transport _getTransport(String type) {
+  Transport _getTransport(String type, {WorkerPool? workerPool}) {
     switch (type) {
       case TransportType.http:
         {
           return HttpTransport(
             source,
+            workerPool: workerPool,
             options: transportOptions as HttpTransportOptions,
           );
         }
@@ -88,6 +98,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         {
           return WSTransport(
             source,
+            workerPool: workerPool,
             options: transportOptions as WebSocketTransportOptions,
           );
         }
@@ -95,6 +106,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         {
           return HttpTransport(
             source,
+            workerPool: workerPool,
             options: transportOptions as HttpTransportOptions,
           );
         }
@@ -192,6 +204,22 @@ final class DuitDriver with DriverHooks implements UIDriver {
     return payload;
   }
 
+  Future<WorkerPool?> _getWorkerPool() async {
+    if (concurrentModeEnabled) {
+      if (workerPool != null) {
+        return workerPool!;
+      }
+
+      final sharedPool = DuitRegistry.workerPool();
+      if (sharedPool != null) {
+        return sharedPool;
+      }
+
+      return null;
+    }
+    return null;
+  }
+
   @override
   Future<void> init() async {
     onInit?.call();
@@ -200,7 +228,18 @@ final class DuitDriver with DriverHooks implements UIDriver {
       streamController.sink.add(_layout);
     } else {
       ViewAttributeWrapper.attributeParser = AttributeParser();
-      transport ??= _getTransport(transportOptions.type);
+      final wp = await _getWorkerPool();
+
+      if (wp != null && wp.initialized == false) {
+        assert(
+            workerPoolConfiguration != null, "Worker pool is not configured");
+        await wp.initWithConfiguration(workerPoolConfiguration!);
+      }
+
+      transport ??= _getTransport(
+        transportOptions.type,
+        workerPool: wp,
+      );
 
       await scriptRunner?.initWithTransport(transport!);
 
@@ -283,6 +322,40 @@ final class DuitDriver with DriverHooks implements UIDriver {
     streamController.close();
   }
 
+  Future<void> _resolveComponentUpdate(
+    UIElementController controller,
+    JSONObject json,
+  ) async {
+    final tag = controller.tag;
+    final description = DuitRegistry.getComponentDescription(tag!);
+
+    if (description != null) {
+      Map<String, dynamic> component;
+
+      if (concurrentModeEnabled) {
+        component = await workerPool?.perform(
+          FillComponentPropertiesTask(
+            description.data,
+            json,
+          ),
+        ) as Map<String, dynamic>;
+      } else {
+        component = JsonUtils.fillComponentProperties(
+          description.data,
+          json,
+        );
+      }
+
+      final attributes = ViewAttributeWrapper.createAttributes(
+        ElementType.subtree,
+        component,
+        controller.tag,
+      );
+
+      controller.updateState(attributes);
+    }
+  }
+
   /// Updates the attributes of a controller.
   ///
   /// This method is called to update the attributes of a controller based on the
@@ -295,24 +368,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
     final controller = _viewControllers[id];
     if (controller != null) {
       if (controller.type == ElementType.component) {
-        final tag = controller.tag;
-        final description = DuitRegistry.getComponentDescription(tag!);
-
-        if (description != null) {
-          final component = JsonUtils.fillComponentProperties(
-            description.data,
-            json,
-          );
-
-          final attributes = ViewAttributeWrapper.createAttributes(
-            ElementType.subtree,
-            component,
-            controller.tag,
-          );
-
-          controller.updateState(attributes);
-          return;
-        }
+        await _resolveComponentUpdate(controller, json);
+        return;
       }
 
       final attributes = ViewAttributeWrapper.createAttributes(

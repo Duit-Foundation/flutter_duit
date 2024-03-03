@@ -1,35 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:isolate';
-import 'dart:typed_data';
 
-import 'package:flutter_duit/src/utils/index.dart';
+import 'package:duit_kernel/duit_kernel.dart';
 
+import 'handler.dart';
 import 'index.dart';
 
 typedef IsolateCallback = void Function(Task? message);
-
-FutureOr<Object?> _handler(Task? message) {
-  if (message == null) return null;
-
-  switch (message.key) {
-    case "parseJson":
-      return switch (message.payload) {
-        String() => jsonDecode(message.payload) as Map<String, dynamic>,
-        Uint8List() =>
-          jsonDecode(utf8.decode(message.payload)) as Map<String, dynamic>,
-        Map() => message.payload,
-        Object() || null => null,
-      };
-    case "fillComponentProperties":
-      return JsonUtils.fillComponentProperties(
-        message.payload["layout"],
-        message.payload["data"],
-      );
-  }
-
-  return null;
-}
 
 class DuitWorker {
   final SendPort _sp;
@@ -38,11 +15,12 @@ class DuitWorker {
   bool _closed = false;
   int _idCounter = 0;
 
-  Future<Object?> executeTask(Task? task) async {
+  Future<Object?> sendTaskToIsolate(Task task) async {
     if (_closed) throw StateError('Worker closed');
     final completer = Completer<Object?>.sync();
     final id = _idCounter++;
     _activeRequests[id] = completer;
+    task.setTaskId(id);
     _sp.send(task);
     return await completer.future;
   }
@@ -91,7 +69,6 @@ class DuitWorker {
   static void _handleCommandsToIsolate(
     ReceivePort receivePort,
     SendPort sendPort,
-    IsolateCallback cb,
   ) {
     receivePort.listen((event) {
       if (event is Task) {
@@ -99,7 +76,9 @@ class DuitWorker {
           receivePort.close();
           return;
         } else {
-          cb(event);
+          final res = TaskHandler.perform(event);
+          sendPort.send(res);
+          return;
         }
       }
     });
@@ -108,7 +87,10 @@ class DuitWorker {
   static void _runIsolate(SendPort sendPort) {
     final receivePort = ReceivePort();
     sendPort.send(receivePort.sendPort);
-    _handleCommandsToIsolate(receivePort, sendPort, _handler);
+    _handleCommandsToIsolate(
+      receivePort,
+      sendPort,
+    );
   }
 
   void close() {

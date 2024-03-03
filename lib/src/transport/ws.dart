@@ -33,6 +33,7 @@ final class WSTransport extends Transport implements Streamer {
 
   WSTransport(
     super.url, {
+    super.workerPool,
     required this.options,
   });
 

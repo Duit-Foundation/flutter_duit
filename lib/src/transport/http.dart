@@ -27,6 +27,7 @@ final class HttpTransport extends Transport {
 
   HttpTransport(
     super.url, {
+    super.workerPool,
     required this.options,
   });
 
@@ -47,7 +48,16 @@ final class HttpTransport extends Transport {
 
     final res =
         await client.get(Uri.parse(urlString), headers: options.defaultHeaders);
-    return jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
+
+    return await _parseJson(res.bodyBytes);
+  }
+
+  Future<Map<String, dynamic>> _parseJson(dynamic data) async {
+    if (workerPool != null) {
+      return await workerPool!.perform(ParseJsonTask(data))
+          as Map<String, dynamic>;
+    }
+    return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
   }
 
   @override
@@ -77,8 +87,7 @@ final class HttpTransport extends Transport {
             final res = await client.get(uri, headers: {
               ...options.defaultHeaders,
             });
-            return jsonDecode(utf8.decode(res.bodyBytes))
-                as Map<String, dynamic>;
+            return await _parseJson(res.bodyBytes);
           } catch (e) {
             rethrow;
           }
@@ -94,8 +103,7 @@ final class HttpTransport extends Transport {
                 ...options.defaultHeaders,
               },
             );
-            return jsonDecode(utf8.decode(res.bodyBytes))
-                as Map<String, dynamic>;
+            return await _parseJson(res.bodyBytes);
           } catch (e) {
             rethrow;
           }
@@ -111,8 +119,7 @@ final class HttpTransport extends Transport {
                 ...options.defaultHeaders,
               },
             );
-            return jsonDecode(utf8.decode(res.bodyBytes))
-                as Map<String, dynamic>;
+            return await _parseJson(res.bodyBytes);
           } catch (e) {
             rethrow;
           }
@@ -128,8 +135,7 @@ final class HttpTransport extends Transport {
                 ...options.defaultHeaders,
               },
             );
-            return jsonDecode(utf8.decode(res.bodyBytes))
-                as Map<String, dynamic>;
+            return await _parseJson(res.bodyBytes);
           } catch (e) {
             rethrow;
           }
@@ -160,7 +166,7 @@ final class HttpTransport extends Transport {
         },
       );
 
-      return jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
+      return await _parseJson(res.bodyBytes);
     } else {
       final res = await client.post(
         Uri.parse(_prepareUrl(url)),
@@ -169,7 +175,7 @@ final class HttpTransport extends Transport {
           ...options.defaultHeaders,
         },
       );
-      return jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
+      return await _parseJson(res.bodyBytes);
     }
   }
 
