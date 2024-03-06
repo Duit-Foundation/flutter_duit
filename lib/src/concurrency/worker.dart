@@ -3,7 +3,7 @@ import 'dart:isolate';
 
 import 'package:duit_kernel/duit_kernel.dart';
 
-final class DuitWorker {
+final class Worker {
   final SendPort _sp;
   final ReceivePort _rp;
   final Isolate _isolate;
@@ -31,7 +31,7 @@ final class DuitWorker {
     return await completer.future;
   }
 
-  static Future<DuitWorker> spawn() async {
+  static Future<Worker> spawn() async {
     final initPort = RawReceivePort();
     final connection = Completer<(ReceivePort, SendPort)>.sync();
     initPort.handler = (initialMessage) {
@@ -54,10 +54,10 @@ final class DuitWorker {
     final (ReceivePort receivePort, SendPort sendPort) =
         await connection.future;
 
-    return DuitWorker._(receivePort, sendPort, isolate);
+    return Worker._(receivePort, sendPort, isolate);
   }
 
-  DuitWorker._(
+  Worker._(
     this._rp,
     this._sp,
     this._isolate,

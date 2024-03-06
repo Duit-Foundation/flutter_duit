@@ -46,6 +46,16 @@ void main() async {
     exampleAttributeMapper,
   );
 
+  final worker = DuitWorkerPool();
+  await worker.initWithConfiguration(
+    DuitWorkerPoolConfiguration(
+      workerCount: 6,
+      policy: TaskDistributionPolicy.roundRobin,
+    ),
+  );
+
+  DuitRegistry.registerWorkerPool(worker);
+
   DuitRegistry.registerComponents([
     {
       "tag": "shoes_card",
@@ -219,6 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
     )..onInit = () {
         print("driver1 INIT");
       };
+
     driver2 = DuitDriver(
       "/inputs",
       transportOptions: HttpTransportOptions(
@@ -239,8 +250,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ..onEventReceived = (event) {
         print(event?.type);
       };
+
     driver3 = DuitDriver(
       "ws://localhost:8999",
+      concurrentModeEnabled: true,
+      // workerPool: DuitWorkerPool(),
+      // workerPoolConfiguration: DuitWorkerPoolConfiguration(
+      //   workerCount: 6,
+      //   policy: TaskDistributionPolicy.sequential,
+      // ),
       transportOptions: WebSocketTransportOptions(),
     )..onInit = () {
         print("driver3 INIT");
@@ -302,6 +320,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     driver10 = DuitDriver(
       "/shoes",
+      concurrentModeEnabled: true,
       transportOptions: HttpTransportOptions(
         defaultHeaders: {"Content-Type": "application/json"},
         baseUrl: "http://localhost:8999",

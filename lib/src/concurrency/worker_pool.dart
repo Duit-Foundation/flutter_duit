@@ -27,7 +27,7 @@ final class _WorkerPoolFinalizationController {
 
 final class DuitWorkerPool extends WorkerPool {
   late final Distributor _distributor;
-  final _workers = <DuitWorker>[];
+  final _workers = <Worker>[];
 
   final Finalizer<_WorkerPoolFinalizationController> _workerPoolFinalizer =
       Finalizer((wp) => wp.dispose());
@@ -57,7 +57,7 @@ final class DuitWorkerPool extends WorkerPool {
     if (!initialized) {
       for (var i = 0; i < config.workerCount; i++) {
         try {
-          _workers.add(await DuitWorker.spawn());
+          _workers.add(await Worker.spawn());
         } catch (e) {
           debugPrint(e.toString());
         }

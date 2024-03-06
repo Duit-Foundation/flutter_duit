@@ -12,6 +12,16 @@ import "package:flutter_duit/src/utils/index.dart";
 
 import "event.dart";
 
+final class _DriverFinalizationController {
+  final DuitDriver d;
+
+  _DriverFinalizationController(this.d);
+
+  void dispose() {
+    d.dispose();
+  }
+}
+
 final class DuitDriver with DriverHooks implements UIDriver {
   @override
   final String source;
@@ -40,6 +50,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   @override
   WorkerPoolConfiguration? workerPoolConfiguration;
+
+  final Finalizer<_DriverFinalizationController> _driverFinalizer =
+      Finalizer((d) => d.dispose());
 
   Map<String, UIElementController> _viewControllers = {};
 
@@ -256,6 +269,12 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
       _layout = DuitTree(json: json!, driver: this);
       streamController.sink.add(await _layout?.parse());
+
+      _driverFinalizer.attach(
+        this,
+        _DriverFinalizationController(this),
+        detach: this,
+      );
     }
   }
 
@@ -323,6 +342,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     _viewControllers = {};
     _layout = null;
     streamController.close();
+    _driverFinalizer.detach(this);
   }
 
   Future<void> _resolveComponentUpdate(

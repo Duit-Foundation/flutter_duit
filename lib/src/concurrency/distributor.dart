@@ -4,7 +4,7 @@ import 'index.dart';
 
 abstract class Distributor {
   Future<TaskResult> distributeTask(
-    List<DuitWorker> workers, {
+    List<Worker> workers, {
     required TaskOperation fn,
     dynamic payload,
   });
@@ -16,7 +16,7 @@ final class RoundRobinDistributor extends Distributor {
 
   @override
   Future<TaskResult> distributeTask(
-    List<DuitWorker> workers, {
+    List<Worker> workers, {
     required TaskOperation fn,
     dynamic payload,
   }) async {
