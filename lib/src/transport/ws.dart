@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/src/transport/options.dart';
+import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 /// A WebSocket transport implementation for streaming data.
@@ -26,6 +26,7 @@ final class WSTransport extends Transport implements Streamer {
       StreamController<Map<String, dynamic>>();
   late final WebSocket ws;
   final WebSocketTransportOptions options;
+  final bool concurrencyEnabled;
 
   @override
   Stream<Map<String, dynamic>> get eventStream =>
@@ -33,7 +34,9 @@ final class WSTransport extends Transport implements Streamer {
 
   WSTransport(
     super.url, {
+    super.workerPool,
     required this.options,
+    required this.concurrencyEnabled,
   });
 
   String _prepareUrl(String url) {
@@ -43,6 +46,19 @@ final class WSTransport extends Transport implements Streamer {
     }
 
     return urlString += url;
+  }
+
+  Future<Map<String, dynamic>> _parseJson(String data) async {
+    if (concurrencyEnabled && workerPool != null) {
+      final tres = await workerPool!.perform(
+        (params) {
+          return jsonDecode(params);
+        },
+        data,
+      );
+      return tres.result as Map<String, dynamic>;
+    }
+    return jsonDecode(data) as Map<String, dynamic>;
   }
 
   @override
@@ -58,12 +74,12 @@ final class WSTransport extends Transport implements Streamer {
     );
 
     ws.listen(
-      (event) {
-        final data = jsonDecode(event) as Map<String, dynamic>;
+      (event) async {
+        final data = await _parseJson(event);
         _controller.sink.add(data);
       },
-      onError: (e) {
-        final error = jsonDecode(e) as Map;
+      onError: (e) async {
+        final error = await _parseJson(e);
         _controller.addError(error);
       },
     );

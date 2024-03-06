@@ -1,6 +1,7 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
+import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 import 'package:flutter_duit/src/ui/widgets/subtree.dart';
 

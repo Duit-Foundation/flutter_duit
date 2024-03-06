@@ -1,0 +1,4 @@
+enum TaskDistributionPolicy {
+  roundRobin,
+  leastConnection,
+}
