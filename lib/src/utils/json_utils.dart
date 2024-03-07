@@ -9,6 +9,8 @@ class JsonUtils {
     JSONObject layout,
     JSONObject dataSource,
   ) {
+    if (dataSource.values.isEmpty) return layout;
+
     void replaceId(JSONObject map) {
       if (map["controlled"] == true) {
         final type = map["type"];
