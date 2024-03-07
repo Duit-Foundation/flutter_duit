@@ -657,8 +657,8 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.lifecycleStateListener:
         final child = await DuitElement.fromJson(json["child"], driver);
 
-        //controlled - always false
-        //ViewController necessary and created directly
+        //[controlled] - always false
+        //[ViewController] necessary and created directly
         return LifecycleStateListenerUiElement(
           type: type,
           id: id,
@@ -673,6 +673,29 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           child: child,
           controlled: false,
+        );
+      case ElementType.listView:
+        List<DuitElement> arr = [];
+
+        json["children"].forEach((element) {
+          DuitElement.fromJson(element, driver).then((value) => arr.add(value));
+        });
+
+        return ListViewUIElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: controlled,
         );
       case ElementType.empty:
         return EmptyUIElement();

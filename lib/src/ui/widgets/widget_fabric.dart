@@ -1,5 +1,6 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
@@ -372,6 +373,41 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.listView:
+        final it = model as ListViewUIElement;
+        List<Widget> arr = [];
+
+        for (var element in it.children) {
+          final children = getWidgetFromElement(element);
+          arr.add(children);
+        }
+
+        final attrs = it.attributes!.payload as ListViewAttributes;
+
+        switch (attrs.type) {
+          case 0:
+            return it.controlled
+                ? DuitControlledListView(
+                    controller: it.viewController!,
+                    children: arr,
+                  )
+                : DuitListView(
+                    attributes: it.attributes!,
+                    children: arr,
+                  );
+          default:
+            //TODO rem
+            return it.controlled
+                ? DuitControlledListView(
+                    controller: it.viewController!,
+                    children: arr,
+                  )
+                : DuitListView(
+                    attributes: it.attributes!,
+                    children: arr,
+                  );
+        }
+
       case ElementType.meta:
         final it = model as MetaUiElement;
         final child = getWidgetFromElement(it.child);

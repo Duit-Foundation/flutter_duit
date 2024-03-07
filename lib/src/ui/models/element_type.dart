@@ -34,4 +34,5 @@ final class ElementType {
   static const switchW = "Switch";
   static const subtree = "Subtree";
   static const meta = "Meta";
+  static const listView = "ListView";
 }

@@ -13,10 +13,10 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
       addAutomaticKeepAlives,
       primary;
   final ScrollPhysics? physics;
+  final EdgeInsets? padding;
 
   // final ScrollBehavior? scrollBehavior;
-  final double? anchor;
-  final double? cacheExtent;
+  final double? anchor, cacheExtent, itemExtent;
   final int? semanticChildCount;
   final DragStartBehavior? dragStartBehavior;
   final ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior;
@@ -33,6 +33,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
   /// 2 - ListView.separated
   final int type;
   final String? componentTag, separatorComponentTag;
+  final List<JSONObject>? initialData;
 
   //</editor-fold>
 
@@ -54,8 +55,11 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.keyboardDismissBehavior,
     required this.restorationId,
     required this.clipBehavior,
+    required this.padding,
+    required this.itemExtent,
   })  : componentTag = null,
         separatorComponentTag = null,
+        initialData = null,
         type = 0;
 
   ListViewAttributes.builder({
@@ -75,7 +79,10 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.keyboardDismissBehavior,
     required this.restorationId,
     required this.clipBehavior,
+    required this.padding,
+    required this.itemExtent,
     required this.componentTag,
+    required this.initialData,
   })  : separatorComponentTag = null,
         type = 1;
 
@@ -96,8 +103,11 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.keyboardDismissBehavior,
     required this.restorationId,
     required this.clipBehavior,
+    required this.padding,
+    required this.itemExtent,
     required this.componentTag,
     required this.separatorComponentTag,
+    required this.initialData,
   }) : type = 2;
 
   factory ListViewAttributes.fromJson(Map<String, dynamic> json) {
@@ -124,6 +134,8 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
+          padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+          itemExtent: NumUtils.toDouble(json["itemExtent"]),
         );
       case 1:
         final tag = json["componentTag"];
@@ -148,7 +160,10 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
+          padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+          itemExtent: NumUtils.toDouble(json["itemExtent"]),
           componentTag: tag,
+          initialData: json["initialData"],
         );
       case 2:
         final tag = json["componentTag"];
@@ -176,8 +191,11 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
+          padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+          itemExtent: NumUtils.toDouble(json["itemExtent"]),
           separatorComponentTag: separator,
           componentTag: tag,
+          initialData: json["initialData"],
         );
       default:
         return ListViewAttributes(
@@ -199,6 +217,8 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
+          padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+          itemExtent: NumUtils.toDouble(json["itemExtent"]),
         );
     }
   }
@@ -227,6 +247,8 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
                 other.keyboardDismissBehavior ?? keyboardDismissBehavior,
             restorationId: other.restorationId ?? restorationId,
             clipBehavior: other.clipBehavior ?? clipBehavior,
+            padding: other.padding ?? padding,
+            itemExtent: other.itemExtent ?? itemExtent,
           );
         }
       case 1:
@@ -250,6 +272,9 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           restorationId: other.restorationId ?? restorationId,
           clipBehavior: other.clipBehavior ?? clipBehavior,
           componentTag: other.componentTag ?? componentTag,
+          padding: other.padding ?? padding,
+          itemExtent: other.itemExtent ?? itemExtent,
+          initialData: other.initialData ?? initialData,
         );
       case 2:
         return ListViewAttributes.separated(
@@ -274,6 +299,9 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           componentTag: other.componentTag ?? componentTag,
           separatorComponentTag:
               other.separatorComponentTag ?? separatorComponentTag,
+          padding: other.padding ?? padding,
+          itemExtent: other.itemExtent ?? itemExtent,
+          initialData: other.initialData ?? initialData,
         );
       default:
         return ListViewAttributes(
@@ -295,6 +323,8 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
               other.keyboardDismissBehavior ?? keyboardDismissBehavior,
           restorationId: other.restorationId ?? restorationId,
           clipBehavior: other.clipBehavior ?? clipBehavior,
+          padding: other.padding ?? padding,
+          itemExtent: other.itemExtent ?? itemExtent,
         );
     }
   }
