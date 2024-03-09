@@ -1261,5 +1261,32 @@ class ParamsMapper {
     return EdgeInsets.zero;
   }
 
+  static EdgeInsets? convertToNullableEdgeInsets(dynamic insets) {
+    if (insets == null) return null;
+
+    if (insets is num) {
+      return EdgeInsets.all(insets.toDouble());
+    }
+
+    if (insets is List) {
+      final list = List.castFrom<dynamic, num>(insets);
+
+      if (list.length == 2) {
+        return EdgeInsets.symmetric(
+            vertical: insets[0].toDouble(), horizontal: insets[1].toDouble());
+      }
+
+      if (list.length == 4) {
+        return EdgeInsets.only(
+            left: insets[0].toDouble(),
+            top: insets[1].toDouble(),
+            right: insets[2].toDouble(),
+            bottom: insets[3].toDouble());
+      }
+    }
+
+    return null;
+  }
+
 //</editor-fold>
 }

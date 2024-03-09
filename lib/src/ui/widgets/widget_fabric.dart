@@ -375,17 +375,18 @@ mixin WidgetFabric {
         );
       case ElementType.listView:
         final it = model as ListViewUIElement;
-        List<Widget> arr = [];
-
-        for (var element in it.children) {
-          final children = getWidgetFromElement(element);
-          arr.add(children);
-        }
 
         final attrs = it.attributes!.payload as ListViewAttributes;
 
         switch (attrs.type) {
           case 0:
+            List<Widget> arr = [];
+
+            for (var element in it.children) {
+              final children = getWidgetFromElement(element);
+              arr.add(children);
+            }
+
             return it.controlled
                 ? DuitControlledListView(
                     controller: it.viewController!,
@@ -395,17 +396,18 @@ mixin WidgetFabric {
                     attributes: it.attributes!,
                     children: arr,
                   );
+          case 1:
+            return DuitListViewContextProvider(
+              controller: it.viewController!,
+              child: const DuitListViewBuilder(),
+            );
+          case 2:
+            return DuitListViewContextProvider(
+              controller: it.viewController!,
+              child: const DuitListViewSeparated(),
+            );
           default:
-            //TODO rem
-            return it.controlled
-                ? DuitControlledListView(
-                    controller: it.viewController!,
-                    children: arr,
-                  )
-                : DuitListView(
-                    attributes: it.attributes!,
-                    children: arr,
-                  );
+            return const SizedBox.shrink();
         }
 
       case ElementType.meta:

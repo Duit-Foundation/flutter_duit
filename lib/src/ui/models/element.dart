@@ -677,9 +677,12 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.listView:
         List<DuitElement> arr = [];
 
-        json["children"].forEach((element) {
-          DuitElement.fromJson(element, driver).then((value) => arr.add(value));
-        });
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            DuitElement.fromJson(element, driver)
+                .then((value) => arr.add(value));
+          });
+        }
 
         return ListViewUIElement(
           type: type,
@@ -716,11 +719,11 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
             child: child,
             type: type,
             id: id,
-            controlled: controlled,
+            controlled: true,
             attributes: attributes,
             viewController: _createAndAttachController(
               id,
-              controlled,
+              true,
               attributes,
               null,
               driver,

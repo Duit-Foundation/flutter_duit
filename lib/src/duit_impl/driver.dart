@@ -54,7 +54,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   final Finalizer<_DriverFinalizationController> _driverFinalizer =
       Finalizer((d) => d.dispose());
 
-  Map<String, UIElementController> _viewControllers = {};
+  final Map<String, UIElementController> _viewControllers = {};
 
   @protected
   final ExternalEventHandler? eventHandler;
@@ -339,7 +339,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   void dispose() {
     onDispose?.call();
     transport?.dispose();
-    _viewControllers = {};
+    _viewControllers.clear();
     _layout = null;
     streamController.close();
     _driverFinalizer.detach(this);
@@ -411,5 +411,15 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @override
   Future<void> evalScript(String source) async {
     await scriptRunner?.eval(source);
+  }
+
+  @override
+  void detachController(String id) {
+    _viewControllers.remove(id);
+  }
+
+  @override
+  UIElementController? getController(String id) {
+    return _viewControllers[id];
   }
 }

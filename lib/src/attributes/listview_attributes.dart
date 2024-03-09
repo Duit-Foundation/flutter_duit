@@ -3,6 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
+enum ArrayMergeStrategy {
+  addToEnd,
+  addToStart,
+  replace,
+}
+
 final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
   //<editor-fold desc="Flutter widget props">
   final Axis? scrollDirection;
@@ -15,7 +21,6 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
   final ScrollPhysics? physics;
   final EdgeInsets? padding;
 
-  // final ScrollBehavior? scrollBehavior;
   final double? anchor, cacheExtent, itemExtent;
   final int? semanticChildCount;
   final DragStartBehavior? dragStartBehavior;
@@ -32,8 +37,10 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
   ///
   /// 2 - ListView.separated
   final int type;
-  final String? componentTag, separatorComponentTag;
-  final List<JSONObject>? initialData;
+  final String? separatorComponentTag;
+  final List<JSONObject>? childObjects;
+  final ArrayMergeStrategy? mergeStrategy;
+  final double? scrollEndReachedThreshold;
 
   //</editor-fold>
 
@@ -47,7 +54,6 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.addAutomaticKeepAlives,
     required this.primary,
     required this.physics,
-    // required this.scrollBehavior,
     required this.anchor,
     required this.cacheExtent,
     required this.semanticChildCount,
@@ -57,9 +63,10 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.clipBehavior,
     required this.padding,
     required this.itemExtent,
-  })  : componentTag = null,
-        separatorComponentTag = null,
-        initialData = null,
+  })  : separatorComponentTag = null,
+        childObjects = null,
+        mergeStrategy = ArrayMergeStrategy.addToEnd,
+        scrollEndReachedThreshold = null,
         type = 0;
 
   ListViewAttributes.builder({
@@ -71,7 +78,6 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.addAutomaticKeepAlives,
     required this.primary,
     required this.physics,
-    // required this.scrollBehavior,
     required this.anchor,
     required this.cacheExtent,
     required this.semanticChildCount,
@@ -81,8 +87,9 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.clipBehavior,
     required this.padding,
     required this.itemExtent,
-    required this.componentTag,
-    required this.initialData,
+    required this.childObjects,
+    this.mergeStrategy = ArrayMergeStrategy.addToEnd,
+    this.scrollEndReachedThreshold = 150,
   })  : separatorComponentTag = null,
         type = 1;
 
@@ -95,7 +102,6 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.addAutomaticKeepAlives,
     required this.primary,
     required this.physics,
-    // required this.scrollBehavior,
     required this.anchor,
     required this.cacheExtent,
     required this.semanticChildCount,
@@ -105,42 +111,19 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.clipBehavior,
     required this.padding,
     required this.itemExtent,
-    required this.componentTag,
     required this.separatorComponentTag,
-    required this.initialData,
+    required this.childObjects,
+    this.mergeStrategy = ArrayMergeStrategy.addToEnd,
+    this.scrollEndReachedThreshold = 150,
   }) : type = 2;
 
   factory ListViewAttributes.fromJson(Map<String, dynamic> json) {
     final type = json["type"] as int;
 
     switch (type) {
-      case 0:
-        return ListViewAttributes(
-          scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
-          reverse: json["reverse"],
-          shrinkWrap: json["shrinkWrap"],
-          addSemanticIndexes: json["addSemanticIndexes"],
-          addRepaintBoundaries: json["addRepaintBoundaries"],
-          addAutomaticKeepAlives: json["addAutomaticKeepAlives"],
-          primary: json["primary"],
-          physics: ParamsMapper.convertToScrollPhysics(json['physics']),
-          anchor: NumUtils.toDouble(json["anchor"]),
-          cacheExtent: NumUtils.toDouble(json["cacheExtent"]),
-          semanticChildCount: NumUtils.toInt(json["semanticChildCount"]),
-          dragStartBehavior: ParamsMapper.convertToDragStartBehavior(
-              json["dragStartBehavior"]),
-          keyboardDismissBehavior:
-              ParamsMapper.convertToKeyboardDismissBehavior(
-                  json["keyboardDismissBehavior"]),
-          restorationId: json["restorationId"],
-          clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-          padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
-          itemExtent: NumUtils.toDouble(json["itemExtent"]),
-        );
       case 1:
-        final tag = json["componentTag"];
-        assert(tag != null && tag is String,
-            "componentTag must be a String and non-null value");
+        final initialData = List<JSONObject>.from(json["initialData"] ?? []);
+        final children = List<JSONObject>.from(json["childObjects"] ?? []);
         return ListViewAttributes.builder(
           scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
           reverse: json["reverse"],
@@ -160,18 +143,20 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-          padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+          padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
-          componentTag: tag,
-          initialData: json["initialData"],
+          childObjects: children.isEmpty ? initialData : children,
+          mergeStrategy: ArrayMergeStrategy.values[json["mergeStrategy"] ?? 0],
+          scrollEndReachedThreshold: NumUtils.toDouble(
+            json["scrollEndReachedThreshold"],
+          ),
         );
       case 2:
-        final tag = json["componentTag"];
         final separator = json["separatorComponentTag"];
-        assert(tag != null && tag is String,
-            "componentTag must be a String and non-null value");
         assert(separator != null && separator is String,
             "separatorComponentTag must be a String and non-null value");
+        final initialData = List<JSONObject>.from(json["initialData"] ?? []);
+        final children = List<JSONObject>.from(json["childObjects"] ?? []);
         return ListViewAttributes.separated(
           scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
           reverse: json["reverse"],
@@ -191,11 +176,14 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-          padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+          padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
           separatorComponentTag: separator,
-          componentTag: tag,
-          initialData: json["initialData"],
+          childObjects: children.isEmpty ? initialData : children,
+          mergeStrategy: ArrayMergeStrategy.values[json["mergeStrategy"] ?? 0],
+          scrollEndReachedThreshold: NumUtils.toDouble(
+            json["scrollEndReachedThreshold"],
+          ),
         );
       default:
         return ListViewAttributes(
@@ -217,7 +205,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-          padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+          padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
         );
     }
@@ -226,32 +214,21 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
   @override
   ListViewAttributes copyWith(ListViewAttributes other) {
     switch (other.type) {
-      case 0:
-        {
-          return ListViewAttributes(
-            scrollDirection: other.scrollDirection ?? scrollDirection,
-            reverse: other.reverse ?? reverse,
-            shrinkWrap: other.shrinkWrap ?? shrinkWrap,
-            addSemanticIndexes: other.addSemanticIndexes ?? addSemanticIndexes,
-            addRepaintBoundaries:
-                other.addRepaintBoundaries ?? addRepaintBoundaries,
-            addAutomaticKeepAlives:
-                other.addAutomaticKeepAlives ?? addAutomaticKeepAlives,
-            primary: other.primary ?? primary,
-            physics: other.physics ?? physics,
-            anchor: other.anchor ?? anchor,
-            cacheExtent: other.cacheExtent ?? cacheExtent,
-            semanticChildCount: other.semanticChildCount ?? semanticChildCount,
-            dragStartBehavior: other.dragStartBehavior ?? dragStartBehavior,
-            keyboardDismissBehavior:
-                other.keyboardDismissBehavior ?? keyboardDismissBehavior,
-            restorationId: other.restorationId ?? restorationId,
-            clipBehavior: other.clipBehavior ?? clipBehavior,
-            padding: other.padding ?? padding,
-            itemExtent: other.itemExtent ?? itemExtent,
-          );
-        }
       case 1:
+        var children = childObjects ?? [];
+
+        switch (mergeStrategy!) {
+          case ArrayMergeStrategy.addToEnd:
+            children.addAll(other.childObjects!);
+            break;
+          case ArrayMergeStrategy.addToStart:
+            children.insertAll(0, other.childObjects!);
+            break;
+          case ArrayMergeStrategy.replace:
+            children = other.childObjects!;
+            break;
+        }
+
         return ListViewAttributes.builder(
           scrollDirection: other.scrollDirection ?? scrollDirection,
           reverse: other.reverse ?? reverse,
@@ -271,12 +248,26 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
               other.keyboardDismissBehavior ?? keyboardDismissBehavior,
           restorationId: other.restorationId ?? restorationId,
           clipBehavior: other.clipBehavior ?? clipBehavior,
-          componentTag: other.componentTag ?? componentTag,
           padding: other.padding ?? padding,
           itemExtent: other.itemExtent ?? itemExtent,
-          initialData: other.initialData ?? initialData,
+          childObjects: children,
+          mergeStrategy: other.mergeStrategy ?? mergeStrategy,
         );
       case 2:
+        var children = childObjects ?? [];
+
+        switch (mergeStrategy!) {
+          case ArrayMergeStrategy.addToEnd:
+            children.addAll(other.childObjects!);
+            break;
+          case ArrayMergeStrategy.addToStart:
+            children.insertAll(0, other.childObjects!);
+            break;
+          case ArrayMergeStrategy.replace:
+            children = other.childObjects!;
+            break;
+        }
+
         return ListViewAttributes.separated(
           scrollDirection: other.scrollDirection ?? scrollDirection,
           reverse: other.reverse ?? reverse,
@@ -296,12 +287,11 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
               other.keyboardDismissBehavior ?? keyboardDismissBehavior,
           restorationId: other.restorationId ?? restorationId,
           clipBehavior: other.clipBehavior ?? clipBehavior,
-          componentTag: other.componentTag ?? componentTag,
-          separatorComponentTag:
-              other.separatorComponentTag ?? separatorComponentTag,
+          separatorComponentTag: other.separatorComponentTag ?? separatorComponentTag,
           padding: other.padding ?? padding,
           itemExtent: other.itemExtent ?? itemExtent,
-          initialData: other.initialData ?? initialData,
+          childObjects: childObjects,
+          mergeStrategy: other.mergeStrategy ?? mergeStrategy,
         );
       default:
         return ListViewAttributes(
