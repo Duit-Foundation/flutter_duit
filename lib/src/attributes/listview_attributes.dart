@@ -37,7 +37,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
   ///
   /// 2 - ListView.separated
   final int type;
-  final String? separatorComponentTag;
+  final JSONObject? separator;
   final List<JSONObject>? childObjects;
   final ArrayMergeStrategy? mergeStrategy;
   final double? scrollEndReachedThreshold;
@@ -63,7 +63,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.clipBehavior,
     required this.padding,
     required this.itemExtent,
-  })  : separatorComponentTag = null,
+  })  : separator = null,
         childObjects = null,
         mergeStrategy = ArrayMergeStrategy.addToEnd,
         scrollEndReachedThreshold = null,
@@ -90,7 +90,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.childObjects,
     this.mergeStrategy = ArrayMergeStrategy.addToEnd,
     this.scrollEndReachedThreshold = 150,
-  })  : separatorComponentTag = null,
+  })  : separator = null,
         type = 1;
 
   ListViewAttributes.separated({
@@ -111,7 +111,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
     required this.clipBehavior,
     required this.padding,
     required this.itemExtent,
-    required this.separatorComponentTag,
+    required this.separator,
     required this.childObjects,
     this.mergeStrategy = ArrayMergeStrategy.addToEnd,
     this.scrollEndReachedThreshold = 150,
@@ -152,9 +152,9 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           ),
         );
       case 2:
-        final separator = json["separatorComponentTag"];
-        assert(separator != null && separator is String,
-            "separatorComponentTag must be a String and non-null value");
+        final separator = json["separator"];
+        assert(separator != null,
+            "separatorComponentTag must be a Map and non-null value");
         final initialData = List<JSONObject>.from(json["initialData"] ?? []);
         final children = List<JSONObject>.from(json["childObjects"] ?? []);
         return ListViewAttributes.separated(
@@ -178,7 +178,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
           padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
-          separatorComponentTag: separator,
+          separator: separator,
           childObjects: children.isEmpty ? initialData : children,
           mergeStrategy: ArrayMergeStrategy.values[json["mergeStrategy"] ?? 0],
           scrollEndReachedThreshold: NumUtils.toDouble(
@@ -287,7 +287,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
               other.keyboardDismissBehavior ?? keyboardDismissBehavior,
           restorationId: other.restorationId ?? restorationId,
           clipBehavior: other.clipBehavior ?? clipBehavior,
-          separatorComponentTag: other.separatorComponentTag ?? separatorComponentTag,
+          separator: other.separator ?? separator,
           padding: other.padding ?? padding,
           itemExtent: other.itemExtent ?? itemExtent,
           childObjects: childObjects,

@@ -1,4 +1,3 @@
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
@@ -9,6 +8,7 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
   //<editor-fold desc="Properties and getters">
   late final ScrollController _scrollController;
   bool _isExecuting = false, _isEOL = false;
+  Widget? _separatorView;
 
   ScrollController get scrollController => _scrollController;
 
@@ -35,10 +35,11 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
   void attachOnScrollCallback(BuildContext context) {
     final viewCtx = DuitListViewContext.of(context);
     final attrs = viewCtx.controller.attributes!.payload as ListViewAttributes;
+    //TODO
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent -
               _scrollController.offset <=
-          attrs.scrollEndReachedThreshold!) {
+          150) {
         if (!_isExecuting && !_isEOL) {
           _isExecuting = true;
           _isEOL = true;
@@ -84,16 +85,16 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
   }
 
   Widget buildSeparator(BuildContext context, int index) {
+    if (_separatorView != null) {
+      return _separatorView!;
+    }
+
     final viewCtx = DuitListViewContext.of(context);
     final attrs = viewCtx.controller.attributes!.payload as ListViewAttributes;
     final driver = viewCtx.controller.driver;
 
-    final separator = attrs.separatorComponentTag;
-
-    final component = DuitRegistry.getComponentDescription(separator!);
-
     final layout = parseLayout(
-      component!.data,
+      attrs.separator!,
       driver,
     );
 
@@ -101,7 +102,7 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
       future: layout,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return snapshot.data!.render();
+          return _separatorView = snapshot.data!.render();
         } else if (snapshot.hasError) {
           return kDebugMode
               ? Text(snapshot.error.toString())
