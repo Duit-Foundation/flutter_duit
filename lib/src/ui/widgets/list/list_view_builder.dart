@@ -1,13 +1,19 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
+import 'package:flutter_duit/src/ui/widgets/list/list_utils.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 
-import 'list_view_context.dart';
-import 'list_utils.dart';
+import 'list_tile.dart';
 
 final class DuitListViewBuilder extends StatefulWidget {
+  final UIElementController controller;
+
   const DuitListViewBuilder({
     super.key,
+    required this.controller,
   });
 
   @override
@@ -15,38 +21,64 @@ final class DuitListViewBuilder extends StatefulWidget {
 }
 
 class _DuitListViewBuilderState extends State<DuitListViewBuilder>
-    with ListUtils {
+    with
+        ViewControllerChangeListener<DuitListViewBuilder, ListViewAttributes>,
+        ListUtils {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    attachOnScrollCallback(context);
+  void initState() {
+    attachStateToController(widget.controller);
+    attachOnScrollCallback(widget.controller);
+    super.initState();
+  }
+
+  Widget? buildItem(BuildContext context, int index) {
+    final item = attributes!.childObjects![index];
+
+    final alreadyParsed = item["alreadyParsed"] == true;
+    final driver = widget.controller.driver;
+
+    if (alreadyParsed) {
+      driver.detachController(item["id"]);
+    }
+
+    final layout = parseLayoutSync(
+      item,
+      driver,
+    );
+
+    item["alreadyParsed"] = true;
+
+    return DisposableListTile(
+      id: item["id"],
+      driver: driver,
+      child: layout.render(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewCtx = DuitListViewContext.of(context);
-    final attrs = viewCtx.controller.attributes!.payload as ListViewAttributes;
     isEOL = false;
     return ListView.builder(
-      scrollDirection: attrs.scrollDirection ?? Axis.vertical,
-      reverse: attrs.reverse ?? false,
-      primary: attrs.primary,
-      physics: attrs.physics,
-      shrinkWrap: attrs.shrinkWrap ?? false,
-      padding: attrs.padding,
-      itemExtent: attrs.itemExtent,
-      cacheExtent: attrs.cacheExtent,
-      semanticChildCount: attrs.semanticChildCount,
-      dragStartBehavior: attrs.dragStartBehavior ?? DragStartBehavior.start,
-      keyboardDismissBehavior: attrs.keyboardDismissBehavior ??
+      scrollDirection: attributes?.scrollDirection ?? Axis.vertical,
+      reverse: attributes?.reverse ?? false,
+      primary: attributes?.primary,
+      physics: attributes?.physics,
+      shrinkWrap: attributes?.shrinkWrap ?? false,
+      padding: attributes?.padding,
+      itemExtent: attributes?.itemExtent,
+      cacheExtent: attributes?.cacheExtent,
+      semanticChildCount: attributes?.semanticChildCount,
+      dragStartBehavior:
+          attributes?.dragStartBehavior ?? DragStartBehavior.start,
+      keyboardDismissBehavior: attributes?.keyboardDismissBehavior ??
           ScrollViewKeyboardDismissBehavior.manual,
-      clipBehavior: attrs.clipBehavior ?? Clip.hardEdge,
-      restorationId: attrs.restorationId,
-      addAutomaticKeepAlives: attrs.addAutomaticKeepAlives ?? true,
-      addRepaintBoundaries: attrs.addRepaintBoundaries ?? true,
-      addSemanticIndexes: attrs.addSemanticIndexes ?? true,
+      clipBehavior: attributes?.clipBehavior ?? Clip.hardEdge,
+      restorationId: attributes?.restorationId,
+      addAutomaticKeepAlives: attributes?.addAutomaticKeepAlives ?? true,
+      addRepaintBoundaries: attributes?.addRepaintBoundaries ?? true,
+      addSemanticIndexes: attributes?.addSemanticIndexes ?? true,
       itemBuilder: buildItem,
-      itemCount: viewCtx.childrenArray.length,
+      itemCount: attributes?.childObjects?.length ?? 0,
       controller: scrollController,
     );
   }

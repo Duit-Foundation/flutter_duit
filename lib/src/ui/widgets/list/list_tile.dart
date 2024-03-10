@@ -1,81 +1,52 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 
-class DuitDisposableListTile extends StatefulWidget {
-  final Future<DuitAbstractTree> layout;
+class DisposableListTile extends StatefulWidget {
   final UIDriver driver;
+  final Widget child;
   final String id;
 
-  const DuitDisposableListTile({
+  const DisposableListTile({
     super.key,
-    required this.layout,
     required this.id,
+    required this.child,
     required this.driver,
   });
 
   @override
-  State<DuitDisposableListTile> createState() => _DuitDisposableListTileState();
+  State<DisposableListTile> createState() => _DisposableListTileState();
 }
 
-class _DuitDisposableListTileState extends State<DuitDisposableListTile> {
+class _DisposableListTileState extends State<DisposableListTile> {
   @override
   void dispose() async {
-    print(
-        "Element out of view: controller assotiated with id - ${widget.id} was been disposed");
     widget.driver.detachController(widget.id);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: widget.layout,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return snapshot.data!.render();
-        } else if (snapshot.hasError) {
-          return kDebugMode
-              ? Text(snapshot.error.toString())
-              : const SizedBox.shrink();
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-    );
+    return widget.child;
   }
 }
 
-class DuitListTile extends StatefulWidget {
-  final Future<DuitAbstractTree> layout;
+class CommonListTile extends StatefulWidget {
+  final Widget child;
   final UIDriver driver;
 
-  const DuitListTile({
+  const CommonListTile({
     super.key,
-    required this.layout,
+    required this.child,
     required this.driver,
   });
 
   @override
-  State<DuitListTile> createState() => _DuitListTileState();
+  State<CommonListTile> createState() => _CommonListTileState();
 }
 
-class _DuitListTileState extends State<DuitListTile> {
+class _CommonListTileState extends State<CommonListTile> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: widget.layout,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return snapshot.data!.render();
-        } else if (snapshot.hasError) {
-          return kDebugMode
-              ? Text(snapshot.error.toString())
-              : const SizedBox.shrink();
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
-    );
+    return widget.child;
   }
 }

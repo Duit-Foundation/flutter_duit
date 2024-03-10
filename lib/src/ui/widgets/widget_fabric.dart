@@ -4,7 +4,7 @@ import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
-import 'package:flutter_duit/src/ui/widgets/subtree.dart';
+
 
 import 'index.dart';
 
@@ -397,14 +397,12 @@ mixin WidgetFabric {
                     children: arr,
                   );
           case 1:
-            return DuitListViewContextProvider(
+            return DuitListViewBuilder(
               controller: it.viewController!,
-              child: const DuitListViewBuilder(),
             );
           case 2:
-            return DuitListViewContextProvider(
+            return DuitListViewSeparated(
               controller: it.viewController!,
-              child: const DuitListViewSeparated(),
             );
           default:
             return const SizedBox.shrink();

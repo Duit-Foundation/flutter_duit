@@ -12,3 +12,13 @@ Future<DuitAbstractTree> parseLayout(
     driver: driver,
   ).parse();
 }
+
+DuitAbstractTree parseLayoutSync(
+  JSONObject data,
+  UIDriver driver,
+) {
+  return DuitTree(
+    json: data,
+    driver: driver,
+  ).parseSync();
+}

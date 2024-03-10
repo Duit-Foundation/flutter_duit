@@ -84,9 +84,33 @@ final class ViewController<T>
   }
 
   @override
+  Future<void> performRelatedActionAsync() async {
+    try {
+      if (action != null) {
+        await driver.execute(action!);
+      }
+    } catch (e) {
+      //TODO: logging
+      rethrow;
+    }
+  }
+
+  @override
   void performAction(ServerAction? action) {
     if (action != null) {
       driver.execute(action);
+    }
+  }
+
+  @override
+  Future<void> performActionAsync(ServerAction? action) async {
+    try {
+      if (action != null) {
+        await driver.execute(action);
+      }
+    } catch (e) {
+      //TODO: logging
+      rethrow;
     }
   }
 }

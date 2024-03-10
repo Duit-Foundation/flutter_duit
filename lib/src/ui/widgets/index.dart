@@ -32,3 +32,4 @@ export 'switch.dart';
 export 'component.dart';
 export 'meta.dart';
 export 'list/index.dart';
+export 'subtree.dart';
