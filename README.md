@@ -30,6 +30,7 @@ The flutter_duit library depends on the [duit_kernel](https://github.com/lesleys
 | >= v1.7.0    | v1.1.1          |
 | >= v1.9.0    | v1.2.0          |
 | >= v1.11.0   | v1.3.0          |
+| >= v1.12.0   | v1.4.0          |
 
 
 ## Usage example
