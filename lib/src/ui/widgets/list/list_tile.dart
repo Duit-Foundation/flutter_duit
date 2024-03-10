@@ -1,7 +1,7 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/cupertino.dart';
 
-class DisposableListTile extends StatefulWidget {
+final class DisposableListTile extends StatefulWidget {
   final UIDriver driver;
   final Widget child;
   final String id;
@@ -30,23 +30,16 @@ class _DisposableListTileState extends State<DisposableListTile> {
   }
 }
 
-class CommonListTile extends StatefulWidget {
+final class CommonListTile extends StatelessWidget {
   final Widget child;
-  final UIDriver driver;
 
   const CommonListTile({
     super.key,
     required this.child,
-    required this.driver,
   });
 
   @override
-  State<CommonListTile> createState() => _CommonListTileState();
-}
-
-class _CommonListTileState extends State<CommonListTile> {
-  @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return child;
   }
 }

@@ -67,7 +67,6 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
     );
 
     return _separatorView = CommonListTile(
-      driver: driver,
       child: layout.render(),
     );
   }
