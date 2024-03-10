@@ -9,7 +9,7 @@ class JsonUtils {
     JSONObject layout,
     JSONObject dataSource,
   ) {
-    if (dataSource.values.isEmpty) return layout;
+    final src = Map<String, dynamic>.from(layout);
 
     void replaceId(JSONObject map) {
       if (map["controlled"] == true) {
@@ -20,11 +20,14 @@ class JsonUtils {
       }
     }
 
-    final src = Map<String, dynamic>.from(layout);
+    if (dataSource.values.isEmpty) {
+      replaceId(src);
+      return src;
+    }
+
     final attributes = src["attributes"] as JSONObject?;
     final refs = List.from(attributes?["refs"] ?? []);
 
-    //generate unique id for controlled widgets to prevent duplicates of ids in controllers registry
     replaceId(src);
 
     for (var ref in refs) {

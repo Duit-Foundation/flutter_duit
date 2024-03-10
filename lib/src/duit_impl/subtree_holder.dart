@@ -1,7 +1,7 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/ui/models/ui_tree.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 
 mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
   Widget? subtreeChild;
@@ -17,10 +17,10 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
 
     if (layout?.data != null) {
       final driver = _controller!.driver;
-      final layoutTree = await DuitTree(
-        json: layout!.data!,
-        driver: driver,
-      ).parse();
+      final layoutTree = await parseLayout(
+        layout!.data!,
+        driver,
+      );
 
       final newChild = layoutTree.render();
       setState(() {
