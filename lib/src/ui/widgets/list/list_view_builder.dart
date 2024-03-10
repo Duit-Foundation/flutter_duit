@@ -18,8 +18,8 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
     with ListUtils {
   @override
   void didChangeDependencies() {
-    attachOnScrollCallback(context);
     super.didChangeDependencies();
+    attachOnScrollCallback(context);
   }
 
   @override
@@ -46,7 +46,7 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
       addRepaintBoundaries: attrs.addRepaintBoundaries ?? true,
       addSemanticIndexes: attrs.addSemanticIndexes ?? true,
       itemBuilder: buildItem,
-      itemCount: viewCtx.len,
+      itemCount: viewCtx.childrenArray.length,
       controller: scrollController,
     );
   }

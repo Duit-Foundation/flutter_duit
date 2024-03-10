@@ -18,8 +18,8 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
     with ListUtils {
   @override
   void didChangeDependencies() {
-    attachOnScrollCallback(context);
     super.didChangeDependencies();
+    attachOnScrollCallback(context);
   }
 
   @override
@@ -44,7 +44,7 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
       addRepaintBoundaries: attrs.addRepaintBoundaries ?? true,
       addSemanticIndexes: attrs.addSemanticIndexes ?? true,
       itemBuilder: buildItem,
-      itemCount: viewCtx.len,
+      itemCount: viewCtx.childrenArray.length,
       controller: scrollController,
       separatorBuilder: buildSeparator,
     );

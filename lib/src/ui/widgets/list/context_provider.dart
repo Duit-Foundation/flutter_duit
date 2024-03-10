@@ -34,9 +34,9 @@ class _DuitListViewContextProviderState
   @override
   Widget build(BuildContext context) {
     return DuitListViewContext(
-      childrenArray: attributes?.childObjects ?? [],
+      childrenArray: attributes!.childObjects!,
       controller: widget.controller,
-      len: attributes?.childObjects?.length ?? 0,
+      len: attributes!.childObjects!.length,
       child: widget.child,
     );
   }

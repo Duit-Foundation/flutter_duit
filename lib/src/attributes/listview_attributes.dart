@@ -122,8 +122,8 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
 
     switch (type) {
       case 1:
-        final initialData = List<JSONObject>.from(json["initialData"] ?? []);
         final children = List<JSONObject>.from(json["childObjects"] ?? []);
+
         return ListViewAttributes.builder(
           scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
           reverse: json["reverse"],
@@ -145,7 +145,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
           padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
-          childObjects: children.isEmpty ? initialData : children,
+          childObjects: children,
           mergeStrategy: ArrayMergeStrategy.values[json["mergeStrategy"] ?? 0],
           scrollEndReachedThreshold: NumUtils.toDouble(
             json["scrollEndReachedThreshold"],
@@ -155,8 +155,8 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
         final separator = json["separator"];
         assert(separator != null,
             "separatorComponentTag must be a Map and non-null value");
-        final initialData = List<JSONObject>.from(json["initialData"] ?? []);
         final children = List<JSONObject>.from(json["childObjects"] ?? []);
+
         return ListViewAttributes.separated(
           scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
           reverse: json["reverse"],
@@ -179,7 +179,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
           separator: separator,
-          childObjects: children.isEmpty ? initialData : children,
+          childObjects: children,
           mergeStrategy: ArrayMergeStrategy.values[json["mergeStrategy"] ?? 0],
           scrollEndReachedThreshold: NumUtils.toDouble(
             json["scrollEndReachedThreshold"],
@@ -213,7 +213,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
 
   @override
   ListViewAttributes copyWith(ListViewAttributes other) {
-    switch (other.type) {
+    switch (type) {
       case 1:
         var children = childObjects ?? [];
 
@@ -290,7 +290,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           separator: other.separator ?? separator,
           padding: other.padding ?? padding,
           itemExtent: other.itemExtent ?? itemExtent,
-          childObjects: childObjects,
+          childObjects: children,
           mergeStrategy: other.mergeStrategy ?? mergeStrategy,
         );
       default:

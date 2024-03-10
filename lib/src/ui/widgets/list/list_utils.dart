@@ -1,8 +1,10 @@
-import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
+import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/ui/widgets/index.dart";
 import "package:flutter_duit/src/utils/index.dart";
+
+import "list_tile.dart";
 
 mixin ListUtils<T extends StatefulWidget> on State<T> {
   //<editor-fold desc="Properties and getters">
@@ -35,15 +37,16 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
   void attachOnScrollCallback(BuildContext context) {
     final viewCtx = DuitListViewContext.of(context);
     final attrs = viewCtx.controller.attributes!.payload as ListViewAttributes;
-    //TODO
-    _scrollController.addListener(() {
+    final extent = attrs.scrollEndReachedThreshold ?? 150;
+    _scrollController.addListener(() async {
       if (_scrollController.position.maxScrollExtent -
               _scrollController.offset <=
-          150) {
+          extent) {
         if (!_isExecuting && !_isEOL) {
           _isExecuting = true;
+          final controller = viewCtx.controller as ViewController;
+          await controller.performRelatedActionAsync();
           _isEOL = true;
-          viewCtx.controller.performRelatedAction();
           _isExecuting = false;
         }
       }
@@ -68,19 +71,10 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
 
     item["alreadyParsed"] = true;
 
-    return FutureBuilder(
-      future: layout,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return snapshot.data!.render();
-        } else if (snapshot.hasError) {
-          return kDebugMode
-              ? Text(snapshot.error.toString())
-              : const SizedBox.shrink();
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
+    return DuitDisposableListTile(
+      driver: driver,
+      id: item["id"],
+      layout: layout,
     );
   }
 
@@ -98,19 +92,9 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
       driver,
     );
 
-    return FutureBuilder(
-      future: layout,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return _separatorView = snapshot.data!.render();
-        } else if (snapshot.hasError) {
-          return kDebugMode
-              ? Text(snapshot.error.toString())
-              : const SizedBox.shrink();
-        } else {
-          return const SizedBox.shrink();
-        }
-      },
+    return _separatorView = DuitListTile(
+      driver: driver,
+      layout: layout,
     );
   }
 //</editor-fold>
