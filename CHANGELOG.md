@@ -1,3 +1,7 @@
+## 1.12.0
+
+- Added ListView widget
+
 ## 1.11.0
 
 - Added concurrent mode experimental feature
