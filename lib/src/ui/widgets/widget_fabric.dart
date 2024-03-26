@@ -5,7 +5,6 @@ import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 
-
 import 'index.dart';
 
 mixin WidgetFabric {
@@ -365,6 +364,19 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.repaintBoundary:
+        final it = model as RepaintBoundaryUIElement;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledRepaintBoundary(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitRepaintBoundary(
+                attributes: it.attributes,
+                child: child,
+              );
       case ElementType.subtree:
         final it = model as SubtreeUIElement;
         final child = getWidgetFromElement(it.child);

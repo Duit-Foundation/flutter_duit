@@ -96,6 +96,8 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.switchW => SwitchAttributes.fromJson(json ?? {}),
       ElementType.meta => MetaAttributes.fromJson(json ?? {}),
       ElementType.listView => ListViewAttributes.fromJson(json ?? {}),
+      ElementType.repaintBoundary =>
+        RepaintBoundaryAttributes.fromJson(json ?? {}),
       ElementType.subtree ||
       ElementType.component =>
         SubtreeAttributes.fromJson(json ?? {}),

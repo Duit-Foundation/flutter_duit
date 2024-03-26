@@ -413,6 +413,23 @@ final class SizedBoxUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
+final class RepaintBoundaryUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  RepaintBoundaryUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+//</editor-fold>
+}
+
 final class RichTextUIElement<T> extends DuitElement<T> {
   //<editor-fold desc="Properties and ctor">
 

@@ -35,4 +35,5 @@ final class ElementType {
   static const subtree = "Subtree";
   static const meta = "Meta";
   static const listView = "ListView";
+  static const repaintBoundary = "RepaintBoundary";
 }
