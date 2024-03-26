@@ -30,3 +30,4 @@ export 'switch_attributes.dart';
 export 'subtree_attributes.dart';
 export 'meta_attributes.dart';
 export 'listview_attributes.dart';
+export 'repaint_boundary_attributes.dart';
