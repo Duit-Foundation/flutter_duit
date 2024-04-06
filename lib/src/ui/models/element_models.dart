@@ -535,6 +535,24 @@ final class ComponentUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
+final class OverflowBoxUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  OverflowBoxUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class SubtreeUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">

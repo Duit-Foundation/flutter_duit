@@ -36,4 +36,5 @@ final class ElementType {
   static const meta = "Meta";
   static const listView = "ListView";
   static const repaintBoundary = "RepaintBoundary";
+  static const overflowBox = "OverflowBox";
 }
