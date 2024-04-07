@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 /// A utility class for mapping parameter values to their corresponding Flutter widget properties.
@@ -339,6 +340,19 @@ class ParamsMapper {
     }
 
     return StackFit.loose;
+  }
+
+  static OverflowBoxFit convertToOverflowBoxFit(String? value) {
+    if (value == null) return OverflowBoxFit.max;
+
+    switch (value) {
+      case "max":
+        return OverflowBoxFit.max;
+      case "deferToChild":
+        return OverflowBoxFit.deferToChild;
+    }
+
+    return OverflowBoxFit.max;
   }
 
   /// Converts a string value to an [Alignment] value.
