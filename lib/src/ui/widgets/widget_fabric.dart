@@ -377,6 +377,19 @@ mixin WidgetFabric {
                 attributes: it.attributes,
                 child: child,
               );
+      case ElementType.overflowBox:
+        final it = model as OverflowBoxUIElement;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledOverflowBox(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitOverflowBox(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.subtree:
         final it = model as SubtreeUIElement;
         final child = getWidgetFromElement(it.child);

@@ -650,6 +650,25 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.overflowBox:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return OverflowBoxUIElement(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.meta:
         final child = DuitElement.fromJson(json["child"], driver);
 
