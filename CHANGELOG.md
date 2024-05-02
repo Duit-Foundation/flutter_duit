@@ -1,3 +1,9 @@
+## 1.13.0
+
+- Added RepaintBoundary widget
+- Added OverflowBox widget
+- Added DuitMetaData inherited widget
+
 ## 1.12.0
 
 - Added ListView widget
