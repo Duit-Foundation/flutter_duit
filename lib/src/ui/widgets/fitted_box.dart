@@ -17,6 +17,7 @@ final class DuitFittedBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final attrs = attributes.payload as FittedBoxAttributes;
     return FittedBox(
+      key: Key(attributes.id),
       fit: attrs.fit ?? BoxFit.contain,
       clipBehavior: attrs.clipBehavior ?? Clip.none,
       alignment: attrs.alignment ?? Alignment.center,
@@ -26,7 +27,7 @@ final class DuitFittedBox extends StatelessWidget {
 }
 
 class DuitControlledFittedBox extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledFittedBox({
@@ -53,9 +54,10 @@ class _DuitControlledFittedBoxState extends State<DuitControlledFittedBox>
   @override
   Widget build(BuildContext context) {
     return FittedBox(
-      fit: attributes?.fit ?? BoxFit.contain,
-      clipBehavior: attributes?.clipBehavior ?? Clip.none,
-      alignment: attributes?.alignment ?? Alignment.center,
+      key: Key(widget.controller.id),
+      fit: attributes.fit ?? BoxFit.contain,
+      clipBehavior: attributes.clipBehavior ?? Clip.none,
+      alignment: attributes.alignment ?? Alignment.center,
       child: widget.child,
     );
   }

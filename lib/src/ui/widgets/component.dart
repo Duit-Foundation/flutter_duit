@@ -33,17 +33,3 @@ class _DuitComponentState extends State<DuitComponent>
     return subtreeChild ?? const SizedBox.shrink();
   }
 }
-
-class DuitSComponent extends StatelessWidget {
-  final Widget child;
-
-  const DuitSComponent({
-    super.key,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return child;
-  }
-}

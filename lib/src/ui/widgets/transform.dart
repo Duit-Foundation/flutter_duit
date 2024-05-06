@@ -19,6 +19,7 @@ class DuitTransform extends StatelessWidget {
 
     if (attrs is ScaleTransform) {
       return Transform.scale(
+        key: Key(attributes.id),
         scale: attrs.scale,
         scaleX: attrs.scaleX,
         scaleY: attrs.scaleY,
@@ -32,6 +33,7 @@ class DuitTransform extends StatelessWidget {
 
     if (attrs is RotateTransform) {
       return Transform.rotate(
+        key: Key(attributes.id),
         angle: attrs.angle ?? 0,
         origin: attrs.origin,
         alignment: attrs.alignment,
@@ -43,6 +45,7 @@ class DuitTransform extends StatelessWidget {
 
     if (attrs is TranslateTransform) {
       return Transform.translate(
+        key: Key(attributes.id),
         offset: attrs.offset ?? Offset.zero,
         transformHitTests: attrs.transformHitTests,
         filterQuality: attrs.filterQuality,
@@ -52,6 +55,7 @@ class DuitTransform extends StatelessWidget {
 
     if (attrs is FlipTransform) {
       return Transform.flip(
+        key: Key(attributes.id),
         flipX: attrs.flipX ?? false,
         flipY: attrs.flipY ?? false,
         transformHitTests: attrs.transformHitTests,
@@ -67,7 +71,7 @@ class DuitTransform extends StatelessWidget {
 
 class DuitControlledTransform extends StatefulWidget {
   final Widget child;
-  final UIElementController? controller;
+  final UIElementController controller;
 
   const DuitControlledTransform({
     super.key,
@@ -93,6 +97,7 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
     if (attributes is ScaleTransform) {
       final attrs = attributes as ScaleTransform;
       return Transform.scale(
+        key: Key(widget.controller.id),
         scale: attrs.scale,
         scaleX: attrs.scaleX,
         scaleY: attrs.scaleY,
@@ -107,6 +112,7 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
     if (attributes is RotateTransform) {
       final attrs = attributes as RotateTransform;
       return Transform.rotate(
+        key: Key(widget.controller.id),
         angle: attrs.angle ?? 0,
         origin: attrs.origin,
         alignment: attrs.alignment,
@@ -119,6 +125,7 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
     if (attributes is TranslateTransform) {
       final attrs = attributes as TranslateTransform;
       return Transform.translate(
+        key: Key(widget.controller.id),
         offset: attrs.offset ?? Offset.zero,
         transformHitTests: attrs.transformHitTests,
         filterQuality: attrs.filterQuality,
@@ -129,6 +136,7 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
     if (attributes is FlipTransform) {
       final attrs = attributes as FlipTransform;
       return Transform.flip(
+        key: Key(widget.controller.id),
         flipX: attrs.flipX ?? false,
         flipY: attrs.flipY ?? false,
         transformHitTests: attrs.transformHitTests,

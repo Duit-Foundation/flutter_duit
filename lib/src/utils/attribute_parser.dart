@@ -56,7 +56,12 @@ final class AttributeParser implements AttributeParserBase {
   /// Returns:
   /// A `ViewAttributeWrapper` instance with the parsed attributes.
   @override
-  ViewAttributeWrapper<T> parse<T>(String type, JSONObject? json, String? tag) {
+  ViewAttributeWrapper<T> parse<T>(
+    String type,
+    JSONObject? json,
+    String? tag, {
+    String? id,
+  }) {
     final data = json ?? {};
     final payload = switch (type) {
       ElementType.text => TextAttributes.fromJson(data),
@@ -103,6 +108,6 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.empty || String() => EmptyAttributes(),
     };
 
-    return ViewAttributeWrapper<T>(payload: payload);
+    return ViewAttributeWrapper<T>(payload: payload, id: id ?? "none");
   }
 }

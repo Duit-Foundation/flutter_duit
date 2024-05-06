@@ -32,9 +32,38 @@ DuitAttributes exampleAttributeMapper(String type, Map<String, dynamic>? json) {
   return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random");
 }
 
+class ExampleWidget extends StatefulWidget {
+  final UIElementController controller;
+
+  const ExampleWidget({
+    super.key,
+    required this.controller,
+  });
+
+  @override
+  State<ExampleWidget> createState() => _ExampleWidgetState();
+}
+
+class _ExampleWidgetState extends State<ExampleWidget>
+    with
+        ViewControllerChangeListener<ExampleWidget,
+            ExampleCustomWidgetAttributes> {
+  @override
+  void initState() {
+    attachStateToController(widget.controller);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(attributes.random ?? "");
+  }
+}
+
 Widget exampleRenderer(TreeElement model) {
-  final data = model.attributes?.payload as ExampleCustomWidgetAttributes?;
-  return Text(data?.random ?? "no random");
+  return ExampleWidget(
+    controller: model.viewController!,
+  );
 }
 
 DuitElement modelMapperExample(

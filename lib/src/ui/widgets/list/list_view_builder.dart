@@ -32,7 +32,7 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
   }
 
   Widget? buildItem(BuildContext context, int index) {
-    final item = attributes!.childObjects![index];
+    final item = attributes.childObjects![index];
 
     final alreadyParsed = item["alreadyParsed"] == true;
     final driver = widget.controller.driver;
@@ -59,26 +59,27 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
   Widget build(BuildContext context) {
     isEOL = false;
     return ListView.builder(
-      scrollDirection: attributes?.scrollDirection ?? Axis.vertical,
-      reverse: attributes?.reverse ?? false,
-      primary: attributes?.primary,
-      physics: attributes?.physics,
-      shrinkWrap: attributes?.shrinkWrap ?? false,
-      padding: attributes?.padding,
-      itemExtent: attributes?.itemExtent,
-      cacheExtent: attributes?.cacheExtent,
-      semanticChildCount: attributes?.semanticChildCount,
+      key: Key(widget.controller.id),
+      scrollDirection: attributes.scrollDirection ?? Axis.vertical,
+      reverse: attributes.reverse ?? false,
+      primary: attributes.primary,
+      physics: attributes.physics,
+      shrinkWrap: attributes.shrinkWrap ?? false,
+      padding: attributes.padding,
+      itemExtent: attributes.itemExtent,
+      cacheExtent: attributes.cacheExtent,
+      semanticChildCount: attributes.semanticChildCount,
       dragStartBehavior:
-          attributes?.dragStartBehavior ?? DragStartBehavior.start,
-      keyboardDismissBehavior: attributes?.keyboardDismissBehavior ??
+          attributes.dragStartBehavior ?? DragStartBehavior.start,
+      keyboardDismissBehavior: attributes.keyboardDismissBehavior ??
           ScrollViewKeyboardDismissBehavior.manual,
-      clipBehavior: attributes?.clipBehavior ?? Clip.hardEdge,
-      restorationId: attributes?.restorationId,
-      addAutomaticKeepAlives: attributes?.addAutomaticKeepAlives ?? true,
-      addRepaintBoundaries: attributes?.addRepaintBoundaries ?? true,
-      addSemanticIndexes: attributes?.addSemanticIndexes ?? true,
+      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
+      restorationId: attributes.restorationId,
+      addAutomaticKeepAlives: attributes.addAutomaticKeepAlives ?? true,
+      addRepaintBoundaries: attributes.addRepaintBoundaries ?? true,
+      addSemanticIndexes: attributes.addSemanticIndexes ?? true,
       itemBuilder: buildItem,
-      itemCount: attributes?.childObjects?.length ?? 0,
+      itemCount: attributes.childObjects?.length ?? 0,
       controller: scrollController,
     );
   }

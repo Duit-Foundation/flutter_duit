@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitExpanded extends StatelessWidget {
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
   final Widget child;
 
   const DuitExpanded({
@@ -15,9 +15,10 @@ class DuitExpanded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes?.payload as ExpandedAttributes?;
+    final attrs = attributes.payload as ExpandedAttributes;
     return Expanded(
-      flex: attrs?.flex ?? 1,
+      key: Key(attributes.id),
+      flex: attrs.flex ?? 1,
       child: child,
     );
   }
@@ -50,7 +51,8 @@ class _DuitControlledExpandedState extends State<DuitControlledExpanded>
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: attributes?.flex ?? 1,
+      key: Key(widget.controller.id),
+      flex: attributes.flex ?? 1,
       child: widget.child,
     );
   }

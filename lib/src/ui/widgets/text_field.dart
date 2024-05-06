@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitTextField extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
 
   const DuitTextField({
     super.key,
@@ -27,10 +27,9 @@ class _DuitTextFieldState extends State<DuitTextField>
     focusNode = FocusNode();
     textEditingController.addListener(() {
       final text = textEditingController.text;
-      final data =
-          widget.controller?.attributes?.payload as TextFieldAttributes?;
-      data?.update(text);
-      widget.controller?.performRelatedAction();
+      final data = widget.controller.attributes?.payload as TextFieldAttributes;
+      data.update(text);
+      widget.controller.performRelatedAction();
     });
     super.initState();
   }
@@ -49,23 +48,24 @@ class _DuitTextFieldState extends State<DuitTextField>
       onTapOutside: (_) {
         focusNode.unfocus();
       },
+      key: Key(widget.controller.id),
       controller: textEditingController,
-      decoration: attributes?.decoration,
-      style: attributes?.style,
-      textDirection: attributes?.textDirection,
-      textAlign: attributes?.textAlign ?? TextAlign.start,
-      obscuringCharacter: attributes?.obscuringCharacter ?? "*",
-      obscureText: attributes?.obscureText ?? false,
-      autofocus: attributes?.autofocus ?? false,
-      enabled: attributes?.enabled,
-      enableSuggestions: attributes?.enableSuggestions ?? true,
-      readOnly: attributes?.readOnly ?? false,
-      expands: attributes?.expands ?? false,
-      maxLines: attributes?.maxLines,
-      maxLength: attributes?.maxLength,
-      minLines: attributes?.minLines,
-      showCursor: attributes?.showCursor,
-      keyboardType: attributes?.keyboardType,
+      decoration: attributes.decoration,
+      style: attributes.style,
+      textDirection: attributes.textDirection,
+      textAlign: attributes.textAlign ?? TextAlign.start,
+      obscuringCharacter: attributes.obscuringCharacter ?? "*",
+      obscureText: attributes.obscureText ?? false,
+      autofocus: attributes.autofocus ?? false,
+      enabled: attributes.enabled,
+      enableSuggestions: attributes.enableSuggestions ?? true,
+      readOnly: attributes.readOnly ?? false,
+      expands: attributes.expands ?? false,
+      maxLines: attributes.maxLines,
+      maxLength: attributes.maxLength,
+      minLines: attributes.minLines,
+      showCursor: attributes.showCursor,
+      keyboardType: attributes.keyboardType,
     );
   }
 }

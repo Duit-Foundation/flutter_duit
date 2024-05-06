@@ -5,12 +5,12 @@ import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitElevatedButton extends StatefulWidget {
   final UIElementController controller;
-  final Widget? child;
+  final Widget child;
 
   const DuitElevatedButton({
     super.key,
     required this.controller,
-    this.child,
+    required this.child,
   });
 
   @override
@@ -30,8 +30,9 @@ class _DuitElevatedButtonState extends State<DuitElevatedButton>
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      autofocus: attributes?.autofocus ?? false,
-      clipBehavior: attributes?.clipBehavior ?? Clip.none,
+      key: Key(widget.controller.id),
+      autofocus: attributes.autofocus ?? false,
+      clipBehavior: attributes.clipBehavior ?? Clip.none,
       onPressed: widget.controller.performRelatedAction,
       child: widget.child,
     );

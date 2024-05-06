@@ -17,6 +17,7 @@ class DuitWrap extends StatelessWidget {
   Widget build(BuildContext context) {
     final attrs = attributes.payload as WrapAttributes;
     return Wrap(
+      key: Key(attributes.id),
       alignment: attrs.alignment ?? WrapAlignment.start,
       runAlignment: attrs.runAlignment ?? WrapAlignment.start,
       spacing: attrs.spacing,
@@ -56,17 +57,18 @@ class _DuitControlledWrapState extends State<DuitControlledWrap>
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      alignment: attributes?.alignment ?? WrapAlignment.start,
-      runAlignment: attributes?.runAlignment ?? WrapAlignment.start,
-      spacing: attributes?.spacing ?? 0.0,
-      runSpacing: attributes?.runSpacing ?? 0.0,
-      direction: attributes?.direction ?? Axis.horizontal,
-      textDirection: attributes?.textDirection,
+      key: Key(widget.controller.id),
+      alignment: attributes.alignment ?? WrapAlignment.start,
+      runAlignment: attributes.runAlignment ?? WrapAlignment.start,
+      spacing: attributes.spacing,
+      runSpacing: attributes.runSpacing,
+      direction: attributes.direction ?? Axis.horizontal,
+      textDirection: attributes.textDirection,
       crossAxisAlignment:
-          attributes?.crossAxisAlignment ?? WrapCrossAlignment.start,
+          attributes.crossAxisAlignment ?? WrapCrossAlignment.start,
       verticalDirection:
-          attributes?.verticalDirection ?? VerticalDirection.down,
-      clipBehavior: attributes?.clipBehavior ?? Clip.none,
+          attributes.verticalDirection ?? VerticalDirection.down,
+      clipBehavior: attributes.clipBehavior ?? Clip.none,
       children: widget.children,
     );
   }

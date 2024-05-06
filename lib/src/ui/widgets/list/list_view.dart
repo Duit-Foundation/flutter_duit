@@ -18,6 +18,7 @@ final class DuitListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final attrs = attributes.payload as ListViewAttributes;
     return ListView(
+      key: Key(attributes.id),
       scrollDirection: attrs.scrollDirection ?? Axis.vertical,
       reverse: attrs.reverse ?? false,
       primary: attrs.primary,
@@ -67,24 +68,25 @@ class _DuitControlledListViewState extends State<DuitControlledListView>
   @override
   Widget build(BuildContext context) {
     return ListView(
-      scrollDirection: attributes?.scrollDirection ?? Axis.vertical,
-      reverse: attributes?.reverse ?? false,
-      primary: attributes?.primary,
-      physics: attributes?.physics,
-      shrinkWrap: attributes?.shrinkWrap ?? false,
-      padding: attributes?.padding,
-      itemExtent: attributes?.itemExtent,
-      cacheExtent: attributes?.cacheExtent,
-      semanticChildCount: attributes?.semanticChildCount,
+      key: Key(widget.controller.id),
+      scrollDirection: attributes.scrollDirection ?? Axis.vertical,
+      reverse: attributes.reverse ?? false,
+      primary: attributes.primary,
+      physics: attributes.physics,
+      shrinkWrap: attributes.shrinkWrap ?? false,
+      padding: attributes.padding,
+      itemExtent: attributes.itemExtent,
+      cacheExtent: attributes.cacheExtent,
+      semanticChildCount: attributes.semanticChildCount,
       dragStartBehavior:
-          attributes?.dragStartBehavior ?? DragStartBehavior.start,
-      keyboardDismissBehavior: attributes?.keyboardDismissBehavior ??
+          attributes.dragStartBehavior ?? DragStartBehavior.start,
+      keyboardDismissBehavior: attributes.keyboardDismissBehavior ??
           ScrollViewKeyboardDismissBehavior.manual,
-      clipBehavior: attributes?.clipBehavior ?? Clip.hardEdge,
-      restorationId: attributes?.restorationId,
-      addAutomaticKeepAlives: attributes?.addAutomaticKeepAlives ?? true,
-      addRepaintBoundaries: attributes?.addRepaintBoundaries ?? true,
-      addSemanticIndexes: attributes?.addSemanticIndexes ?? true,
+      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
+      restorationId: attributes.restorationId,
+      addAutomaticKeepAlives: attributes.addAutomaticKeepAlives ?? true,
+      addRepaintBoundaries: attributes.addRepaintBoundaries ?? true,
+      addSemanticIndexes: attributes.addSemanticIndexes ?? true,
       children: widget.children,
     );
   }

@@ -18,6 +18,7 @@ final class DuitOverflowBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final attrs = attributes.payload as OverflowBoxAttributes;
     return OverflowBox(
+      key: Key(attributes.id),
       alignment: attrs.alignment ?? Alignment.center,
       minWidth: attrs.minWidth,
       maxWidth: attrs.maxWidth,
@@ -57,12 +58,13 @@ class _DuitControlledOverflowBoxState extends State<DuitControlledOverflowBox>
   @override
   Widget build(BuildContext context) {
     return OverflowBox(
-      alignment: attributes?.alignment ?? Alignment.center,
-      minWidth: attributes?.minWidth,
-      maxWidth: attributes?.maxWidth,
-      minHeight: attributes?.minHeight,
-      maxHeight: attributes?.maxHeight,
-      fit: attributes?.fit ?? OverflowBoxFit.max,
+      key: Key(widget.controller.id),
+      alignment: attributes.alignment ?? Alignment.center,
+      minWidth: attributes.minWidth,
+      maxWidth: attributes.maxWidth,
+      minHeight: attributes.minHeight,
+      maxHeight: attributes.maxHeight,
+      fit: attributes.fit ?? OverflowBoxFit.max,
       child: widget.child,
     );
   }

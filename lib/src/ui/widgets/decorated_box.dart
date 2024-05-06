@@ -4,32 +4,33 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitDecoratedBox extends StatelessWidget {
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
   final Widget child;
 
   const DuitDecoratedBox({
     super.key,
-    this.attributes,
+    required this.attributes,
     required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes?.payload as DecoratedBoxAttributes?;
+    final attrs = attributes.payload as DecoratedBoxAttributes;
     return DecoratedBox(
-      decoration: attrs?.decoration ?? const BoxDecoration(),
+      key: Key(attributes.id),
+      decoration: attrs.decoration ?? const BoxDecoration(),
       child: child,
     );
   }
 }
 
 class DuitControlledDecoratedBox extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledDecoratedBox({
     super.key,
-    this.controller,
+    required this.controller,
     required this.child,
   });
 
@@ -51,7 +52,8 @@ class _DuitControlledDecoratedBoxState extends State<DuitControlledDecoratedBox>
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: attributes?.decoration ?? const BoxDecoration(),
+      key: Key(widget.controller.id),
+      decoration: attributes.decoration ?? const BoxDecoration(),
       child: widget.child,
     );
   }

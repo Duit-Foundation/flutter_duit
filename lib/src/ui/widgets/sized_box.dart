@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitSizedBox extends StatelessWidget {
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
   final Widget? child;
 
   const DuitSizedBox({
@@ -15,18 +15,19 @@ class DuitSizedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes?.payload as SizedBoxAttributes?;
+    final state = attributes.payload as SizedBoxAttributes;
     return SizedBox(
-      width: state?.width?.toDouble(),
-      height: state?.height?.toDouble(),
+      key: Key(attributes.id),
+      width: state.width?.toDouble(),
+      height: state.height?.toDouble(),
       child: child,
     );
   }
 }
 
 class DuitControlledSizedBox extends StatefulWidget {
-  final UIElementController? controller;
-  final Widget? child;
+  final UIElementController controller;
+  final Widget child;
 
   const DuitControlledSizedBox({
     super.key,
@@ -51,8 +52,9 @@ class _DuitControlledSizedBoxState extends State<DuitControlledSizedBox>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: attributes?.width?.toDouble(),
-      height: attributes?.height?.toDouble(),
+      key: Key(widget.controller.id),
+      width: attributes.width?.toDouble(),
+      height: attributes.height?.toDouble(),
       child: widget.child,
     );
   }

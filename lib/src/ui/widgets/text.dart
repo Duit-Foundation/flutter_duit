@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitText extends StatelessWidget {
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
 
   const DuitText({
     super.key,
@@ -13,22 +13,23 @@ final class DuitText extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final payload = attributes?.payload as TextAttributes?;
+    final payload = attributes.payload as TextAttributes;
     return Text(
-      payload?.data ?? "",
-      textAlign: payload?.textAlign,
-      textDirection: payload?.textDirection,
-      style: payload?.style,
-      maxLines: payload?.maxLines,
-      semanticsLabel: payload?.semanticsLabel,
-      overflow: payload?.overflow,
-      softWrap: payload?.softWrap,
+      key: Key(attributes.id),
+      payload.data ?? "",
+      textAlign: payload.textAlign,
+      textDirection: payload.textDirection,
+      style: payload.style,
+      maxLines: payload.maxLines,
+      semanticsLabel: payload.semanticsLabel,
+      overflow: payload.overflow,
+      softWrap: payload.softWrap,
     );
   }
 }
 
 final class DuitControlledText extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
 
   const DuitControlledText({
     super.key,
@@ -49,18 +50,18 @@ class _DuitControlledTextState extends State<DuitControlledText>
 
   @override
   Widget build(BuildContext context) {
-    if (attributes?.data == null || attributes!.data!.isEmpty) {
+    if (attributes.data == null || attributes.data!.isEmpty) {
       return const SizedBox.shrink();
     } else {
       return Text(
-        attributes?.data ?? "",
-        textAlign: attributes?.textAlign,
-        textDirection: attributes?.textDirection,
-        style: attributes?.style,
-        maxLines: attributes?.maxLines,
-        semanticsLabel: attributes?.semanticsLabel,
-        overflow: attributes?.overflow,
-        softWrap: attributes?.softWrap,
+        attributes.data ?? "",
+        textAlign: attributes.textAlign,
+        textDirection: attributes.textDirection,
+        style: attributes.style,
+        maxLines: attributes.maxLines,
+        semanticsLabel: attributes.semanticsLabel,
+        overflow: attributes.overflow,
+        softWrap: attributes.softWrap,
       );
     }
   }

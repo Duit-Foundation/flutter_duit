@@ -5,35 +5,36 @@ import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitPositioned extends StatelessWidget {
   final Widget child;
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
 
   const DuitPositioned({
     super.key,
     required this.child,
-    this.attributes,
+    required this.attributes,
   });
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes?.payload as PositionedAttributes?;
+    final attrs = attributes.payload as PositionedAttributes;
     return Positioned(
-      top: attrs?.top,
-      left: attrs?.left,
-      right: attrs?.right,
-      bottom: attrs?.bottom,
+      key: Key(attributes.id),
+      top: attrs.top,
+      left: attrs.left,
+      right: attrs.right,
+      bottom: attrs.bottom,
       child: child,
     );
   }
 }
 
 class DuitControlledPositioned extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledPositioned({
     super.key,
     required this.child,
-    this.controller,
+    required this.controller,
   });
 
   @override
@@ -54,10 +55,11 @@ class _DuitControlledPositionedState extends State<DuitControlledPositioned>
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: attributes?.top,
-      left: attributes?.left,
-      right: attributes?.right,
-      bottom: attributes?.bottom,
+      key: Key(widget.controller.id),
+      top: attributes.top,
+      left: attributes.left,
+      right: attributes.right,
+      bottom: attributes.bottom,
       child: widget.child,
     );
   }
