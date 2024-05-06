@@ -6,11 +6,10 @@ class DuitLifecycleStateListener extends InheritedWidget
     with WidgetsBindingObserver {
   final UIElementController controller;
 
-  const DuitLifecycleStateListener({
-    super.key,
+  DuitLifecycleStateListener({
     required Widget child,
     required this.controller,
-  }) : super(child: child);
+  }) : super(child: child, key: Key(controller.id));
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {

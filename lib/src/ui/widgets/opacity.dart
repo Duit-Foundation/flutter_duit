@@ -17,6 +17,7 @@ class DuitOpacity extends StatelessWidget {
   Widget build(BuildContext context) {
     final attrs = attributes.payload as OpacityAttributes;
     return Opacity(
+      key: Key(attributes.id),
       opacity: attrs.opacity,
       child: child,
     );
@@ -49,7 +50,8 @@ class _DuitControlledOpacityState extends State<DuitControlledOpacity>
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: attributes!.opacity,
+      key: Key(widget.controller.id),
+      opacity: attributes.opacity,
       child: widget.child,
     );
   }

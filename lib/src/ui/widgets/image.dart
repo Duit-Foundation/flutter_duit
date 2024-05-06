@@ -7,8 +7,9 @@ import "package:flutter_duit/src/duit_impl/index.dart";
 import "package:flutter_duit/src/utils/image_type.dart";
 
 sealed class _ImageProducer {
-  static Widget memory(ImageAttributes? attrs) {
+  static Widget memory(ImageAttributes? attrs, String id) {
     return Image.memory(
+      key: Key(id),
       attrs?.byteData ?? Uint8List(0),
       fit: attrs?.fit,
       gaplessPlayback: attrs?.gaplessPlayback ?? false,
@@ -28,8 +29,9 @@ sealed class _ImageProducer {
     );
   }
 
-  static Widget asset(ImageAttributes? attrs) {
+  static Widget asset(ImageAttributes? attrs, String id) {
     return Image.asset(
+      key: Key(id),
       attrs?.src ?? "",
       fit: attrs?.fit,
       gaplessPlayback: attrs?.gaplessPlayback ?? false,
@@ -49,8 +51,9 @@ sealed class _ImageProducer {
     );
   }
 
-  static Widget network(ImageAttributes? attrs) {
+  static Widget network(ImageAttributes? attrs, String id) {
     return Image.network(
+      key: Key(id),
       attrs?.src ?? "",
       fit: attrs?.fit,
       gaplessPlayback: attrs?.gaplessPlayback ?? false,
@@ -72,31 +75,30 @@ sealed class _ImageProducer {
 }
 
 class DuitImage extends StatelessWidget {
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
 
   const DuitImage({
     super.key,
-    this.attributes,
+    required this.attributes,
   });
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes?.payload as ImageAttributes?;
-    return switch (attrs?.type) {
-      ImageType.memory => _ImageProducer.memory(attrs),
-      ImageType.asset => _ImageProducer.asset(attrs),
-      ImageType.network => _ImageProducer.network(attrs),
-      null => const SizedBox.shrink(),
+    final attrs = attributes.payload as ImageAttributes;
+    return switch (attrs.type) {
+      ImageType.memory => _ImageProducer.memory(attrs, attributes.id),
+      ImageType.asset => _ImageProducer.asset(attrs, attributes.id),
+      ImageType.network => _ImageProducer.network(attrs, attributes.id),
     };
   }
 }
 
 class DuitControlledImage extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
 
   const DuitControlledImage({
     super.key,
-    this.controller,
+    required this.controller,
   });
 
   @override
@@ -113,11 +115,12 @@ class _DuitControlledImageState extends State<DuitControlledImage>
 
   @override
   Widget build(BuildContext context) {
-    return switch (attributes?.type) {
-      ImageType.memory => _ImageProducer.memory(attributes),
-      ImageType.asset => _ImageProducer.asset(attributes),
-      ImageType.network => _ImageProducer.network(attributes),
-      null => const SizedBox.shrink(),
+    return switch (attributes.type) {
+      ImageType.memory =>
+        _ImageProducer.memory(attributes, widget.controller.id),
+      ImageType.asset => _ImageProducer.asset(attributes, widget.controller.id),
+      ImageType.network =>
+        _ImageProducer.network(attributes, widget.controller.id),
     };
   }
 }

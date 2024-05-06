@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitRichText extends StatelessWidget {
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
 
   const DuitRichText({
     super.key,
@@ -13,10 +13,11 @@ class DuitRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes?.payload as RichTextAttributes?;
-    assert(attrs?.textSpan != null, "TextSpan cannot be null");
+    final attrs = attributes.payload as RichTextAttributes;
+    assert(attrs.textSpan != null, "TextSpan cannot be null");
     return Text.rich(
-      attrs!.textSpan!,
+      key: Key(attributes.id),
+      attrs.textSpan!,
       textAlign: attrs.textAlign,
       textDirection: attrs.textDirection,
       softWrap: attrs.softWrap,
@@ -34,7 +35,7 @@ class DuitRichText extends StatelessWidget {
 }
 
 class DuitControlledRichText extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
 
   const DuitControlledRichText({
     super.key,
@@ -57,21 +58,22 @@ class _DuitControlledRichTextState extends State<DuitControlledRichText>
 
   @override
   Widget build(BuildContext context) {
-    assert(attributes?.textSpan != null, "TextSpan cannot be null");
+    assert(attributes.textSpan != null, "TextSpan cannot be null");
     return Text.rich(
-      attributes!.textSpan!,
-      textAlign: attributes?.textAlign,
-      textDirection: attributes?.textDirection,
-      softWrap: attributes?.softWrap,
-      overflow: attributes?.overflow,
-      maxLines: attributes?.maxLines,
-      semanticsLabel: attributes?.semanticsLabel,
-      textWidthBasis: attributes?.textWidthBasis,
-      textHeightBehavior: attributes?.textHeightBehavior,
-      selectionColor: attributes?.selectionColor,
-      strutStyle: attributes?.strutStyle,
-      style: attributes?.style,
-      textScaler: attributes?.textScaler,
+      key: Key(widget.controller.id),
+      attributes.textSpan!,
+      textAlign: attributes.textAlign,
+      textDirection: attributes.textDirection,
+      softWrap: attributes.softWrap,
+      overflow: attributes.overflow,
+      maxLines: attributes.maxLines,
+      semanticsLabel: attributes.semanticsLabel,
+      textWidthBasis: attributes.textWidthBasis,
+      textHeightBehavior: attributes.textHeightBehavior,
+      selectionColor: attributes.selectionColor,
+      strutStyle: attributes.strutStyle,
+      style: attributes.style,
+      textScaler: attributes.textScaler,
     );
   }
 }

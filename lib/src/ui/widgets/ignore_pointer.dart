@@ -15,9 +15,10 @@ class DuitIgnorePointer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as IgnorePointerAttributes?;
+    final attrs = attributes.payload as IgnorePointerAttributes;
     return IgnorePointer(
-      ignoring: attrs?.ignoring ?? true,
+      key: Key(attributes.id),
+      ignoring: attrs.ignoring ?? true,
       child: child,
     );
   }
@@ -52,7 +53,8 @@ class _DuitControlledIgnorePointerState
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      ignoring: attributes?.ignoring ?? true,
+      key: Key(widget.controller.id),
+      ignoring: attributes.ignoring ?? true,
       child: widget.child,
     );
   }

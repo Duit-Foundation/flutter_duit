@@ -21,11 +21,11 @@ mixin WidgetFabric {
 
         return it.controlled
             ? DuitControlledColumn(
-                controller: it.viewController,
+                controller: it.viewController!,
                 children: arr,
               )
             : DuitColumn(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 children: arr,
               );
       case ElementType.row:
@@ -39,11 +39,11 @@ mixin WidgetFabric {
 
         return it.controlled
             ? DuitControlledRow(
-                controller: it.viewController,
+                controller: it.viewController!,
                 children: arr,
               )
             : DuitRow(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 children: arr,
               );
       case ElementType.coloredBox:
@@ -53,11 +53,11 @@ mixin WidgetFabric {
 
         return it.controlled
             ? DuitControlledColoredBox(
-                controller: it.viewController,
+                controller: it.viewController!,
                 child: child,
               )
             : DuitColoredBox(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.center:
@@ -67,11 +67,11 @@ mixin WidgetFabric {
 
         return it.controlled
             ? DuitControlledCenter(
-                controller: it.viewController,
+                controller: it.viewController!,
                 child: child,
               )
             : DuitCenter(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.sizedBox:
@@ -81,11 +81,11 @@ mixin WidgetFabric {
 
         return it.controlled
             ? DuitControlledSizedBox(
-                controller: it.viewController,
+                controller: it.viewController!,
                 child: child,
               )
             : DuitSizedBox(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.text:
@@ -93,22 +93,26 @@ mixin WidgetFabric {
 
         return it.controlled
             ? DuitControlledText(
-                controller: it.viewController,
+                controller: it.viewController!,
               )
-            : DuitText(attributes: it.attributes);
+            : DuitText(
+                attributes: it.attributes!,
+              );
       case ElementType.richText:
         final it = model as RichTextUIElement;
 
         return it.controlled
             ? DuitControlledRichText(
-                controller: it.viewController,
+                controller: it.viewController!,
               )
-            : DuitRichText(attributes: it.attributes);
+            : DuitRichText(
+                attributes: it.attributes!,
+              );
       case ElementType.textField:
         final it = model as TextFieldUIElement;
 
         return DuitTextField(
-          controller: it.viewController,
+          controller: it.viewController!,
         );
       case ElementType.elevatedButton:
         final it = model as ElevatedButtonUIElement;
@@ -129,11 +133,11 @@ mixin WidgetFabric {
 
         return it.controlled
             ? DuitControlledStack(
-                controller: it.viewController,
+                controller: it.viewController!,
                 children: arr,
               )
             : DuitStack(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 children: arr,
               );
       case ElementType.wrap:
@@ -164,7 +168,7 @@ mixin WidgetFabric {
                 child: child,
               )
             : DuitExpanded(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.positioned:
@@ -177,7 +181,7 @@ mixin WidgetFabric {
                 child: child,
               )
             : DuitPositioned(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.padding:
@@ -190,7 +194,7 @@ mixin WidgetFabric {
                 child: child,
               )
             : DuitPadding(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.decoratedBox:
@@ -203,12 +207,12 @@ mixin WidgetFabric {
                 child: child,
               )
             : DuitDecoratedBox(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.checkbox:
         return DuitCheckbox(
-          controller: model.viewController,
+          controller: model.viewController!,
         );
       case ElementType.container:
         final it = model as ContainerUiElement;
@@ -220,7 +224,7 @@ mixin WidgetFabric {
                 child: child,
               )
             : DuitContainer(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.gestureDetector:
@@ -241,7 +245,7 @@ mixin WidgetFabric {
                 child: child,
               )
             : DuitAlign(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.transform:
@@ -265,7 +269,7 @@ mixin WidgetFabric {
                 controller: it.viewController!,
               )
             : DuitImage(
-                attributes: it.attributes,
+                attributes: it.attributes!,
               );
       case ElementType.radio:
         final it = model as RadioUIElement;
@@ -374,7 +378,7 @@ mixin WidgetFabric {
                 child: child,
               )
             : DuitRepaintBoundary(
-                attributes: it.attributes,
+                attributes: it.attributes!,
                 child: child,
               );
       case ElementType.overflowBox:

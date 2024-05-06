@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitCenter extends StatelessWidget {
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
   final Widget child;
 
   const DuitCenter({
@@ -15,17 +15,18 @@ class DuitCenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes?.payload as CenterAttributes?;
+    final state = attributes.payload as CenterAttributes;
     return Center(
-      widthFactor: state?.widthFactor,
-      heightFactor: state?.heightFactor,
+      key: Key(attributes.id),
+      widthFactor: state.widthFactor,
+      heightFactor: state.heightFactor,
       child: child,
     );
   }
 }
 
 class DuitControlledCenter extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledCenter({
@@ -49,8 +50,9 @@ class _DuitControlledCenterState extends State<DuitControlledCenter>
   @override
   Widget build(BuildContext context) {
     return Center(
-      widthFactor: attributes?.widthFactor,
-      heightFactor: attributes?.heightFactor,
+      key: Key(widget.controller.id),
+      widthFactor: attributes.widthFactor,
+      heightFactor: attributes.heightFactor,
       child: widget.child,
     );
   }

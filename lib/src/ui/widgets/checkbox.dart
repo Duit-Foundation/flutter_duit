@@ -4,11 +4,11 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitCheckbox extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
 
   const DuitCheckbox({
     super.key,
-    this.controller,
+    required this.controller,
   });
 
   @override
@@ -22,14 +22,14 @@ class _DuitCheckboxState extends State<DuitCheckbox>
   @override
   void initState() {
     attachStateToController(widget.controller);
-    _value = attributes?.value;
+    _value = attributes.value;
     super.initState();
   }
 
   void _onChange(bool? value) {
-    final data = widget.controller?.attributes?.payload as CheckboxAttributes?;
-    data?.update(value ?? false);
-    widget.controller?.performRelatedAction();
+    final data = widget.controller.attributes?.payload as CheckboxAttributes;
+    data.update(value ?? false);
+    widget.controller.performRelatedAction();
     setState(() {
       _value = value;
     });
@@ -38,20 +38,21 @@ class _DuitCheckboxState extends State<DuitCheckbox>
   @override
   Widget build(BuildContext context) {
     return Checkbox(
+      key: Key(widget.controller.id),
       value: _value,
-      tristate: attributes?.tristate ?? true,
-      autofocus: attributes?.autofocus ?? false,
-      checkColor: attributes?.checkColor,
-      hoverColor: attributes?.hoverColor,
-      fillColor: attributes?.fillColor,
-      focusColor: attributes?.focusColor,
-      overlayColor: attributes?.overlayColor,
-      splashRadius: attributes?.splashRadius,
-      semanticLabel: attributes?.semanticLabel,
-      side: attributes?.side,
-      activeColor: attributes?.activeColor,
-      isError: attributes?.isError ?? false,
-      visualDensity: attributes?.visualDensity,
+      tristate: attributes.tristate ?? true,
+      autofocus: attributes.autofocus ?? false,
+      checkColor: attributes.checkColor,
+      hoverColor: attributes.hoverColor,
+      fillColor: attributes.fillColor,
+      focusColor: attributes.focusColor,
+      overlayColor: attributes.overlayColor,
+      splashRadius: attributes.splashRadius,
+      semanticLabel: attributes.semanticLabel,
+      side: attributes.side,
+      activeColor: attributes.activeColor,
+      isError: attributes.isError ?? false,
+      visualDensity: attributes.visualDensity,
       onChanged: _onChange,
     );
   }

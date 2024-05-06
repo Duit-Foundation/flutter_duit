@@ -29,7 +29,8 @@ class _DuitMetaWidgetState extends State<DuitMetaWidget>
   @override
   Widget build(BuildContext context) {
     return DuitMetaData(
-      value: attributes?.value ?? {},
+      key: Key(widget.controller.id),
+      value: attributes.value,
       child: widget.child,
     );
   }

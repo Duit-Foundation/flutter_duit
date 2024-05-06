@@ -4,33 +4,34 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitPadding extends StatelessWidget {
-  final Widget? child;
-  final ViewAttributeWrapper? attributes;
+  final Widget child;
+  final ViewAttributeWrapper attributes;
 
   const DuitPadding({
     super.key,
-    this.child,
-    this.attributes,
+    required this.child,
+    required this.attributes,
   });
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes?.payload as PaddingAttributes?;
+    final attrs = attributes.payload as PaddingAttributes;
     return Padding(
-      padding: attrs?.padding ?? EdgeInsets.zero,
+      key: Key(attributes.id),
+      padding: attrs.padding ?? EdgeInsets.zero,
       child: child,
     );
   }
 }
 
 class DuitControlledPadding extends StatefulWidget {
-  final UIElementController? controller;
-  final Widget? child;
+  final UIElementController controller;
+  final Widget child;
 
   const DuitControlledPadding({
     super.key,
-    this.child,
-    this.controller,
+    required this.child,
+    required this.controller,
   });
 
   @override
@@ -49,7 +50,8 @@ class _DuitControlledPaddingState extends State<DuitControlledPadding>
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: attributes?.padding ?? EdgeInsets.zero,
+      key: Key(widget.controller.id),
+      padding: attributes.padding ?? EdgeInsets.zero,
       child: widget.child,
     );
   }

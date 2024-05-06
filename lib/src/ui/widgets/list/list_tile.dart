@@ -6,12 +6,11 @@ final class DisposableListTile extends StatefulWidget {
   final Widget child;
   final String id;
 
-  const DisposableListTile({
-    super.key,
+  DisposableListTile({
     required this.id,
     required this.child,
     required this.driver,
-  });
+  }) : super(key: Key(id));
 
   @override
   State<DisposableListTile> createState() => _DisposableListTileState();

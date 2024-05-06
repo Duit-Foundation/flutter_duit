@@ -19,27 +19,28 @@ class DuitRadio extends StatelessWidget {
   Widget build(BuildContext context) {
     final groupContext = RadioGroupContext.maybeOf(context);
     assert(groupContext != null, 'RadioGroupContext not found in context');
-    final attrs = attributes.payload as RadioAttributes?;
+    final attrs = attributes.payload as RadioAttributes;
     return Radio(
-      value: attrs?.value,
+      key: Key(attributes.id),
+      value: attrs.value,
       groupValue: groupContext?.groupValue,
       onChanged: (value) => _onChangeHandler(context, value),
-      toggleable: attrs?.toggleable ?? false,
-      autofocus: attrs?.autofocus ?? false,
-      activeColor: attrs?.activeColor,
-      focusColor: attrs?.focusColor,
-      hoverColor: attrs?.hoverColor,
-      fillColor: attrs?.fillColor,
-      overlayColor: attrs?.overlayColor,
-      splashRadius: attrs?.splashRadius,
-      materialTapTargetSize: attrs?.materialTapTargetSize,
-      visualDensity: attrs?.visualDensity,
+      toggleable: attrs.toggleable ?? false,
+      autofocus: attrs.autofocus ?? false,
+      activeColor: attrs.activeColor,
+      focusColor: attrs.focusColor,
+      hoverColor: attrs.hoverColor,
+      fillColor: attrs.fillColor,
+      overlayColor: attrs.overlayColor,
+      splashRadius: attrs.splashRadius,
+      materialTapTargetSize: attrs.materialTapTargetSize,
+      visualDensity: attrs.visualDensity,
     );
   }
 }
 
 final class DuitControlledRadio extends StatefulWidget {
-  final UIElementController? controller;
+  final UIElementController controller;
 
   const DuitControlledRadio({
     super.key,
@@ -67,19 +68,20 @@ class _DuitControlledRadioState extends State<DuitControlledRadio>
     final groupContext = RadioGroupContext.maybeOf(context);
     assert(groupContext != null, 'RadioGroupContext not found in context');
     return Radio(
-      value: attributes?.value,
+      key: Key(widget.controller.id),
+      value: attributes.value,
       groupValue: groupContext?.groupValue,
       onChanged: _onChangeHandler,
-      toggleable: attributes?.toggleable ?? false,
-      autofocus: attributes?.autofocus ?? false,
-      activeColor: attributes?.activeColor,
-      focusColor: attributes?.focusColor,
-      hoverColor: attributes?.hoverColor,
-      fillColor: attributes?.fillColor,
-      overlayColor: attributes?.overlayColor,
-      splashRadius: attributes?.splashRadius,
-      materialTapTargetSize: attributes?.materialTapTargetSize,
-      visualDensity: attributes?.visualDensity,
+      toggleable: attributes.toggleable ?? false,
+      autofocus: attributes.autofocus ?? false,
+      activeColor: attributes.activeColor,
+      focusColor: attributes.focusColor,
+      hoverColor: attributes.hoverColor,
+      fillColor: attributes.fillColor,
+      overlayColor: attributes.overlayColor,
+      splashRadius: attributes.splashRadius,
+      materialTapTargetSize: attributes.materialTapTargetSize,
+      visualDensity: attributes.visualDensity,
     );
   }
 }
@@ -138,17 +140,21 @@ class _DuitRadioGroupContextProviderState
   }
 
   void _onChangeHandler(dynamic value) {
-    updateStateManually(RadioGroupContextAttributes(
-      value: value,
-      groupValue: value,
-    ));
+    updateStateManually(
+      RadioGroupContextAttributes(
+        value: value,
+        groupValue: value,
+      ),
+      widgetId: widget.controller.id,
+    );
     widget.controller.performRelatedAction();
   }
 
   @override
   Widget build(BuildContext context) {
     return RadioGroupContext(
-      groupValue: attributes?.groupValue,
+      key: Key(widget.controller.id),
+      groupValue: attributes.groupValue,
       updater: _onChangeHandler,
       child: widget.child,
     );

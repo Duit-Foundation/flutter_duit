@@ -5,17 +5,17 @@ import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitRepaintBoundary extends StatelessWidget {
   final Widget child;
-  final ViewAttributeWrapper? attributes;
+  final ViewAttributeWrapper attributes;
 
   const DuitRepaintBoundary({
     super.key,
     required this.child,
-    this.attributes,
+    required this.attributes,
   });
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes?.payload as RepaintBoundaryAttributes;
+    final attrs = attributes.payload as RepaintBoundaryAttributes;
 
     if (attrs.childIndex == null) {
       return RepaintBoundary(
@@ -32,12 +32,12 @@ class DuitRepaintBoundary extends StatelessWidget {
 
 class DuitControlledRepaintBoundary extends StatefulWidget {
   final Widget child;
-  final UIElementController? controller;
+  final UIElementController controller;
 
   const DuitControlledRepaintBoundary({
     super.key,
     required this.child,
-    this.controller,
+    required this.controller,
   });
 
   @override
@@ -58,14 +58,15 @@ class _DuitControlledRepaintBoundaryState
 
   @override
   Widget build(BuildContext context) {
-    if (attributes?.childIndex == null) {
+    if (attributes.childIndex == null) {
       return RepaintBoundary(
+        key: Key(widget.controller.id),
         child: widget.child,
       );
     } else {
       return RepaintBoundary.wrap(
         widget.child,
-        attributes!.childIndex!,
+        attributes.childIndex!,
       );
     }
   }

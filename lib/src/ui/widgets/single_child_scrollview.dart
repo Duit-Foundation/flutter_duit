@@ -16,18 +16,18 @@ class DuitSingleChildScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as SingleChildScrollviewAttributes?;
+    final attrs = attributes.payload as SingleChildScrollviewAttributes;
     return SingleChildScrollView(
-      scrollDirection: attrs?.scrollDirection ?? Axis.vertical,
-      reverse: attrs?.reverse ?? false,
-      primary: attrs?.primary,
-      padding: attrs?.padding,
-      physics: attrs?.physics,
-      restorationId: attrs?.restorationId,
-      clipBehavior: attrs?.clipBehavior ?? Clip.hardEdge,
-      keyboardDismissBehavior: attrs?.keyboardDismissBehavior ??
+      scrollDirection: attrs.scrollDirection ?? Axis.vertical,
+      reverse: attrs.reverse ?? false,
+      primary: attrs.primary,
+      padding: attrs.padding,
+      physics: attrs.physics,
+      restorationId: attrs.restorationId,
+      clipBehavior: attrs.clipBehavior ?? Clip.hardEdge,
+      keyboardDismissBehavior: attrs.keyboardDismissBehavior ??
           ScrollViewKeyboardDismissBehavior.manual,
-      dragStartBehavior: attrs?.dragStartBehavior ?? DragStartBehavior.start,
+      dragStartBehavior: attrs.dragStartBehavior ?? DragStartBehavior.start,
       child: child,
     );
   }
@@ -62,17 +62,18 @@ class _DuitControlledSingleChildScrollViewState
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: attributes?.scrollDirection ?? Axis.vertical,
-      reverse: attributes?.reverse ?? false,
-      primary: attributes?.primary,
-      padding: attributes?.padding,
-      physics: attributes?.physics,
-      restorationId: attributes?.restorationId,
-      clipBehavior: attributes?.clipBehavior ?? Clip.hardEdge,
-      keyboardDismissBehavior: attributes?.keyboardDismissBehavior ??
+      key: Key(widget.controller.id),
+      scrollDirection: attributes.scrollDirection ?? Axis.vertical,
+      reverse: attributes.reverse ?? false,
+      primary: attributes.primary,
+      padding: attributes.padding,
+      physics: attributes.physics,
+      restorationId: attributes.restorationId,
+      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
+      keyboardDismissBehavior: attributes.keyboardDismissBehavior ??
           ScrollViewKeyboardDismissBehavior.manual,
       dragStartBehavior:
-          attributes?.dragStartBehavior ?? DragStartBehavior.start,
+          attributes.dragStartBehavior ?? DragStartBehavior.start,
       child: widget.child,
     );
   }
