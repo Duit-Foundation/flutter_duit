@@ -1,5 +1,10 @@
 ## 1.13.0
 
+- Added ID property to attribute objects
+- Added Keys for duit views based on ID
+
+## 1.13.0
+
 - Added RepaintBoundary widget
 - Added OverflowBox widget
 - Added DuitMetaData inherited widget
