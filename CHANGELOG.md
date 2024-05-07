@@ -1,4 +1,4 @@
-## 1.13.0
+## 1.13.1
 
 - Added ID property to attribute objects
 - Added Keys for duit views based on ID
