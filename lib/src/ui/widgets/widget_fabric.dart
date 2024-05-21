@@ -60,6 +60,15 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.animatedSize:
+        final it = model as AnimatedSizeUIElement;
+
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedSize(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.center:
         final it = model as CenterUIElement;
 
