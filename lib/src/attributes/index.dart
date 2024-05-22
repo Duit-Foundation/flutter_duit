@@ -33,3 +33,4 @@ export 'listview_attributes.dart';
 export 'repaint_boundary_attributes.dart';
 export 'overflow_box_attributes.dart';
 export 'animation_attributes/animated_size_attributes.dart';
+export 'animation_attributes/animated_builder_attiributes.dart';

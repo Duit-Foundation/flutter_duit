@@ -5,6 +5,124 @@ import 'package:example/src/registry_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
+class TestWidget extends StatelessWidget {
+  const TestWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final DuitAnimationContext ctx = DuitAnimationContext.of(context);
+    print(ctx.data.toString());
+    return const Placeholder();
+  }
+}
+
+class DuitAnimationContext extends InheritedWidget {
+  final dynamic data;
+
+  const DuitAnimationContext({
+    super.key,
+    required Widget child,
+    required this.data,
+  }) : super(child: child);
+
+  static DuitAnimationContext of(BuildContext context) {
+    final DuitAnimationContext? result =
+        context.dependOnInheritedWidgetOfExactType<DuitAnimationContext>();
+    assert(result != null, 'No DuitAnimationContext found in context');
+    return result!;
+  }
+
+  @override
+  bool updateShouldNotify(DuitAnimationContext oldWidget) {
+    return this != oldWidget;
+  }
+}
+
+class Descr {
+  final String animatedPropKey;
+  final num duration, from, to;
+
+  const Descr({
+    required this.animatedPropKey,
+    required this.duration,
+    required this.from,
+    required this.to,
+  });
+}
+
+class Anim extends StatefulWidget {
+  final List<Descr> descrs;
+  final Widget child;
+
+  const Anim({
+    super.key,
+    required this.descrs,
+    required this.child,
+  });
+
+  @override
+  State<Anim> createState() => _AnimState();
+}
+
+class _AnimState extends State<Anim> with TickerProviderStateMixin {
+  final Map<String, AnimationController> _controllers = {};
+  final Map<String, Animation> _animations = {};
+
+  @override
+  void initState() {
+    for (var element in widget.descrs) {
+      final controller = AnimationController(
+        vsync: this,
+        duration: Duration(
+          milliseconds: element.duration.toInt(),
+        ),
+      );
+
+      final anim =
+          Tween(begin: element.from, end: element.to).animate(controller);
+
+      _animations[element.animatedPropKey] = anim;
+      _controllers[element.animatedPropKey] = controller;
+    }
+    _controllers.forEach((_, value) {
+      value.forward();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((_, value) {
+      value.dispose();
+    });
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: Listenable.merge(
+        _animations.values.toList(),
+      ),
+      builder: (context, widget) {
+        final dataObj = {};
+
+        _animations.forEach((key, animation) {
+          if (animation.status != AnimationStatus.completed) {
+            dataObj[key] = animation.value;
+          }
+        });
+
+        return DuitAnimationContext(
+          data: dataObj,
+          child: widget ?? const SizedBox.shrink(),
+        );
+      },
+      child: widget.child,
+    );
+  }
+}
+
 final class _Handler implements ExternalEventHandler {
   @override
   FutureOr<void> handleCustomEvent(
@@ -361,110 +479,124 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            DuitViewHost(
-              context: context,
-              driver: driver1,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver2,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver3,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver4,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: 150,
-                maxWidth: MediaQuery.of(context).size.width,
-              ),
-              child: DuitViewHost(
-                context: context,
-                driver: driver5,
-                placeholder: const CircularProgressIndicator(),
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver6,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver7,
-              gestureInterceptor: (type, {gestureInfo}) {
-                debugPrint(type.name);
-              },
-              gestureInterceptorBehavior:
-                  GestureInterceptorBehavior.onlyWithAction,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver8,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 48,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver9,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DuitViewHost(
-                context: context,
-                driver: driver10,
-                placeholder: const CircularProgressIndicator(),
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver11,
-              placeholder: const CircularProgressIndicator(),
-            ),
-          ],
+        // child: Anim(
+        //   descrs: [
+        //     Descr(
+        //         animatedPropKey: "width", duration: 1000, from: 0.0, to: 200.0),
+        //     Descr(
+        //         animatedPropKey: "height", duration: 2000, from: 1.0, to: 3.0),
+        //   ],
+        //   child: TestWidget(),
+        // ),
+        child: DuitViewHost(
+          context: context,
+          driver: driver1,
+          placeholder: const CircularProgressIndicator(),
         ),
+        // child: ListView(
+        //   shrinkWrap: true,
+        //   children: [
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver1,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // DuitViewHost(
+        //     //   context: context,
+        //     //   driver: driver2,
+        //     //   placeholder: const CircularProgressIndicator(),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // DuitViewHost(
+        //     //   context: context,
+        //     //   driver: driver3,
+        //     //   placeholder: const CircularProgressIndicator(),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // DuitViewHost(
+        //     //   context: context,
+        //     //   driver: driver4,
+        //     //   placeholder: const CircularProgressIndicator(),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // ConstrainedBox(
+        //     //   constraints: BoxConstraints(
+        //     //     maxHeight: 150,
+        //     //     maxWidth: MediaQuery.of(context).size.width,
+        //     //   ),
+        //     //   child: DuitViewHost(
+        //     //     context: context,
+        //     //     driver: driver5,
+        //     //     placeholder: const CircularProgressIndicator(),
+        //     //   ),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // DuitViewHost(
+        //     //   context: context,
+        //     //   driver: driver6,
+        //     //   placeholder: const CircularProgressIndicator(),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // DuitViewHost(
+        //     //   context: context,
+        //     //   driver: driver7,
+        //     //   gestureInterceptor: (type, {gestureInfo}) {
+        //     //     debugPrint(type.name);
+        //     //   },
+        //     //   gestureInterceptorBehavior:
+        //     //       GestureInterceptorBehavior.onlyWithAction,
+        //     //   placeholder: const CircularProgressIndicator(),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // DuitViewHost(
+        //     //   context: context,
+        //     //   driver: driver8,
+        //     //   placeholder: const CircularProgressIndicator(),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 48,
+        //     // ),
+        //     // DuitViewHost(
+        //     //   context: context,
+        //     //   driver: driver9,
+        //     //   placeholder: const CircularProgressIndicator(),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // Padding(
+        //     //   padding: const EdgeInsets.symmetric(horizontal: 16),
+        //     //   child: DuitViewHost(
+        //     //     context: context,
+        //     //     driver: driver10,
+        //     //     placeholder: const CircularProgressIndicator(),
+        //     //   ),
+        //     // ),
+        //     // const SizedBox(
+        //     //   height: 24,
+        //     // ),
+        //     // DuitViewHost(
+        //     //   context: context,
+        //     //   driver: driver11,
+        //     //   placeholder: const CircularProgressIndicator(),
+        //     // ),
+        //   ],
+        // ),
       ),
     );
   }

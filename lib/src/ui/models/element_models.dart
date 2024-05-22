@@ -346,6 +346,23 @@ final class ColoredBoxUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
+final class AnimatedBuilderUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  AnimatedBuilderUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+    required this.child,
+  });
+//</editor-fold>
+}
+
 final class ColumnUIElement<T> extends DuitElement<T>
     implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">

@@ -2,8 +2,9 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
+import "package:flutter_duit/src/utils/animated.dart";
 
-class DuitContainer extends StatelessWidget {
+class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
   final Widget child;
   final ViewAttributeWrapper attributes;
 
@@ -15,7 +16,8 @@ class DuitContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as ContainerAttributes;
+    final attrs = wrapAttributes(context, attributes.payload as ContainerAttributes);
+
     return Container(
       key: Key(attributes.id),
       alignment: attrs.alignment,

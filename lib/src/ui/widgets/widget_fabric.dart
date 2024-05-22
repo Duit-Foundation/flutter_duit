@@ -4,7 +4,9 @@ import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
+import 'package:flutter_duit/src/ui/widgets/explicit/animation_builder.dart';
 
+import 'explicit/animation_description.dart';
 import 'index.dart';
 
 mixin WidgetFabric {
@@ -60,6 +62,23 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.animatedBuilder:
+        final it = model as AnimatedBuilderUIElement;
+
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimationBuilder(
+          descriptions: [
+            AnimationDescription<double>(
+              animatedPropKey: 'width',
+              begin: 0.0,
+              end: 100.0,
+              duration: const Duration(milliseconds: 5000),
+            ),
+          ],
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.animatedSize:
         final it = model as AnimatedSizeUIElement;
 

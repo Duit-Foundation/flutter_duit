@@ -102,6 +102,7 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.listView => ListViewAttributes.fromJson(data),
       ElementType.repaintBoundary => RepaintBoundaryAttributes.fromJson(data),
       ElementType.overflowBox => OverflowBoxAttributes.fromJson(data),
+      ElementType.animatedBuilder => AnimatedBuilderAttributes.fromJson(data),
       ElementType.animatedSize => AnimatedSizeAttributes.fromJson(data),
       ElementType.subtree ||
       ElementType.component =>
