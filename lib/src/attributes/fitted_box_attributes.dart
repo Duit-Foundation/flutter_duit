@@ -29,4 +29,10 @@ class FittedBoxAttributes implements DuitAttributes<FittedBoxAttributes> {
       alignment: other.alignment ?? alignment,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

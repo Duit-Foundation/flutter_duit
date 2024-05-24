@@ -318,5 +318,11 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
         );
     }
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 //</editor-fold>
 }

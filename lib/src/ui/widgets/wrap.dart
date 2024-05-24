@@ -5,7 +5,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitWrap extends StatelessWidget {
   final List<Widget> children;
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
 
   const DuitWrap({
     super.key,

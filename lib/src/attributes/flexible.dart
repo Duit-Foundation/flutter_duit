@@ -59,6 +59,12 @@ final class RowAttributes extends FlexAttributes
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }
 
 final class ColumnAttributes extends FlexAttributes
@@ -96,5 +102,11 @@ final class ColumnAttributes extends FlexAttributes
       verticalDirection: other.verticalDirection ?? verticalDirection,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
   }
 }

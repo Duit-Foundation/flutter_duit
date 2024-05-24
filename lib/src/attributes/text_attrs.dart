@@ -52,4 +52,10 @@ final class TextAttributes implements DuitAttributes<TextAttributes> {
       style: other.style ?? style,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

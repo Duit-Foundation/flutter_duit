@@ -80,4 +80,10 @@ final class SwitchAttributes extends AttendedModel<bool>
       autofocus: json['autofocus'],
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

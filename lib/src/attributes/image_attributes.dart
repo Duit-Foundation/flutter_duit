@@ -93,4 +93,10 @@ final class ImageAttributes implements DuitAttributes<ImageAttributes> {
       excludeFromSemantics: json['excludeFromSemantics'],
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

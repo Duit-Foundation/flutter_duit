@@ -33,4 +33,10 @@ final class PositionedAttributes
       bottom: NumUtils.toDouble(json['bottom']),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

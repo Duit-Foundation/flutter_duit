@@ -20,4 +20,10 @@ class OpacityAttributes implements DuitAttributes<OpacityAttributes> {
       opacity: NumUtils.toDoubleWithNullReplacement(json['opacity'], 1),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

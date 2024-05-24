@@ -7,8 +7,10 @@ base class TransformAttributes {
   AlignmentGeometry? alignment;
   bool transformHitTests;
   FilterQuality? filterQuality;
+  String type;
 
   TransformAttributes({
+    required this.type,
     this.origin,
     this.alignment,
     this.transformHitTests = true,
@@ -29,7 +31,7 @@ base class TransformAttributes {
       case 'flip':
         return FlipTransform.fromJson(data);
       default:
-        return TransformAttributes();
+        return TransformAttributes(type: 'none');
     }
   }
 }
@@ -46,6 +48,7 @@ final class ScaleTransform extends TransformAttributes
     super.alignment,
     super.transformHitTests,
     super.filterQuality,
+    super.type = 'scale',
   });
 
   factory ScaleTransform.fromJson(Map<String, dynamic> json) {
@@ -72,6 +75,13 @@ final class ScaleTransform extends TransformAttributes
       filterQuality: other.filterQuality ?? filterQuality,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }
 
 final class TranslateTransform extends TransformAttributes
@@ -84,6 +94,7 @@ final class TranslateTransform extends TransformAttributes
     super.alignment,
     super.transformHitTests,
     super.filterQuality,
+    super.type = 'translate',
   });
 
   factory TranslateTransform.fromJson(Map<String, dynamic> map) {
@@ -106,6 +117,13 @@ final class TranslateTransform extends TransformAttributes
       filterQuality: other.filterQuality ?? filterQuality,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }
 
 final class RotateTransform extends TransformAttributes
@@ -118,6 +136,7 @@ final class RotateTransform extends TransformAttributes
     super.alignment,
     super.transformHitTests,
     super.filterQuality,
+    super.type = 'rotate',
   });
 
   @override
@@ -140,6 +159,13 @@ final class RotateTransform extends TransformAttributes
       filterQuality: ParamsMapper.convertToFilterQuality(map['filterQuality']),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }
 
 final class FlipTransform extends TransformAttributes
@@ -153,6 +179,7 @@ final class FlipTransform extends TransformAttributes
     super.alignment,
     super.transformHitTests,
     super.filterQuality,
+    super.type = 'flip',
   });
 
   factory FlipTransform.fromJson(Map<String, dynamic> json) {
@@ -176,5 +203,12 @@ final class FlipTransform extends TransformAttributes
       transformHitTests: other.transformHitTests,
       filterQuality: other.filterQuality ?? filterQuality,
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
   }
 }

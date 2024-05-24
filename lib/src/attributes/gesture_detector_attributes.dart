@@ -84,30 +84,73 @@ class GestureDetectorAttributes
 
   factory GestureDetectorAttributes.fromJson(JSONObject json) {
     return GestureDetectorAttributes(
-      onTap: ServerAction.fromJSON(json["onTap"]),
-      onTapDown: ServerAction.fromJSON(json["onTapDown"]),
-      onTapUp: ServerAction.fromJSON(json["onTapUp"]),
-      onTapCancel: ServerAction.fromJSON(json["onTapCancel"]),
-      onDoubleTap: ServerAction.fromJSON(json["onDoubleTap"]),
-      onDoubleTapDown: ServerAction.fromJSON(json["onDoubleTapDown"]),
-      onDoubleTapCancel: ServerAction.fromJSON(json["onDoubleTapCancel"]),
-      onLongPressDown: ServerAction.fromJSON(json["onLongPressDown"]),
-      onLongPressCancel: ServerAction.fromJSON(json["onLongPressCancel"]),
-      onLongPress: ServerAction.fromJSON(json["onLongPress"]),
-      onLongPressStart: ServerAction.fromJSON(json["onLongPressStart"]),
-      onLongPressMoveUpdate:
-          ServerAction.fromJSON(json["onLongPressMoveUpdate"]),
-      onLongPressUp: ServerAction.fromJSON(json["onLongPressUp"]),
-      onLongPressEnd: ServerAction.fromJSON(json["onLongPressEnd"]),
-      onPanStart: ServerAction.fromJSON(json["onPanStart"]),
-      onPanDown: ServerAction.fromJSON(json["onPanDown"]),
-      onPanUpdate: ServerAction.fromJSON(json["onPanUpdate"]),
-      onPanEnd: ServerAction.fromJSON(json["onPanEnd"]),
-      onPanCancel: ServerAction.fromJSON(json["onPanCancel"]),
+      onTap:
+          json["onTap"] != null ? ServerAction.fromJson(json["onTap"]) : null,
+      onTapDown: json["onTapDown"] != null
+          ? ServerAction.fromJson(json["onTapDown"])
+          : null,
+      onTapUp: json["onTapUp"] != null
+          ? ServerAction.fromJson(json["onTapUp"])
+          : null,
+      onTapCancel: json["onTapCancel"] != null
+          ? ServerAction.fromJson(json["onTapCancel"])
+          : null,
+      onDoubleTap: json["onDoubleTap"] != null
+          ? ServerAction.fromJson(json["onDoubleTap"])
+          : null,
+      onDoubleTapDown: json["onDoubleTapDown"] != null
+          ? ServerAction.fromJson(json["onDoubleTapDown"])
+          : null,
+      onDoubleTapCancel: json["onDoubleTapCancel"] != null
+          ? ServerAction.fromJson(json["onDoubleTapCancel"])
+          : null,
+      onLongPressDown: json["onLongPressDown"] != null
+          ? ServerAction.fromJson(json["onLongPressDown"])
+          : null,
+      onLongPressCancel: json["onLongPressCancel"] != null
+          ? ServerAction.fromJson(json["onLongPressCancel"])
+          : null,
+      onLongPress: json["onLongPress"] != null
+          ? ServerAction.fromJson(json["onLongPress"])
+          : null,
+      onLongPressStart: json["onLongPressStart"] != null
+          ? ServerAction.fromJson(json["onLongPressStart"])
+          : null,
+      onLongPressMoveUpdate: json["onLongPressMoveUpdate"] != null
+          ? ServerAction.fromJson(json["onLongPressMoveUpdate"])
+          : null,
+      onLongPressUp: json["onLongPressUp"] != null
+          ? ServerAction.fromJson(json["onLongPressUp"])
+          : null,
+      onLongPressEnd: json["onLongPressEnd"] != null
+          ? ServerAction.fromJson(json["onLongPressEnd"])
+          : null,
+      onPanStart: json["onPanStart"] != null
+          ? ServerAction.fromJson(json["onPanStart"])
+          : null,
+      onPanDown: json["onPanDown"] != null
+          ? ServerAction.fromJson(json["onPanDown"])
+          : null,
+      onPanUpdate: json["onPanUpdate"] != null
+          ? ServerAction.fromJson(json["onPanUpdate"])
+          : null,
+      onPanEnd: json["onPanEnd"] != null
+          ? ServerAction.fromJson(json["onPanEnd"])
+          : null,
+      onPanCancel: json["onPanCancel"] != null
+          ? ServerAction.fromJson(json["onPanCancel"])
+          : null,
       excludeFromSemantics: json['excludeFromSemantics'] ?? false,
       dragStartBehavior:
           ParamsMapper.convertToDragStartBehavior(json['dragStartBehavior']),
       behavior: ParamsMapper.convertToHitTestBehavior(json['behavior']),
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
   }
 }

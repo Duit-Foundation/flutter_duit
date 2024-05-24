@@ -1,4 +1,4 @@
-import 'package:duit_kernel/duit_kernel.dart';
+ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 import 'package:flutter_duit/src/utils/index.dart';
@@ -34,7 +34,7 @@ final class AttributeParser implements AttributeParserBase {
     assert(tag != null, "Custom widget must have specified tag");
 
     if (tag is String) {
-      final attributesMapper = DuitRegistry.getAttributesMapper(tag);
+      final attributesMapper = DuitRegistry.getAttributesFactory(tag);
       if (attributesMapper != null) {
         return attributesMapper(tag, json);
       } else {
@@ -56,7 +56,7 @@ final class AttributeParser implements AttributeParserBase {
   /// Returns:
   /// A `ViewAttributeWrapper` instance with the parsed attributes.
   @override
-  ViewAttributeWrapper<T> parse<T>(
+  ViewAttribute<T> parse<T>(
     String type,
     JSONObject? json,
     String? tag, {
@@ -108,6 +108,6 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.empty || String() => EmptyAttributes(),
     };
 
-    return ViewAttributeWrapper<T>(payload: payload, id: id ?? "none");
+    return ViewAttribute(payload: payload, id: id ?? "none");
   }
 }

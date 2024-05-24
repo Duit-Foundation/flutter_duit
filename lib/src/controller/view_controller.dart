@@ -14,7 +14,7 @@ final class ViewController<T>
   /// This property holds the attributes of the UI element that the `ViewController` controls.
   /// It can be used to access and modify the attributes of the UI element.
   @override
-  ViewAttributeWrapper<T>? attributes;
+  ViewAttribute<T>? attributes;
 
   /// The server action associated with the UI element.
   ///
@@ -67,8 +67,8 @@ final class ViewController<T>
   ///
   /// The [newAttrs] parameter specifies the new attributes to be applied to the UI element.
   @override
-  void updateState(ViewAttributeWrapper<T> newAttrs) {
-    attributes = newAttrs;
+  void updateState(ViewAttribute newState) {
+    attributes = newState.cast<T>();
     notifyListeners();
   }
 

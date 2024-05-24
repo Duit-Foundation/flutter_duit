@@ -20,4 +20,10 @@ final class SubtreeAttributes implements DuitAttributes<SubtreeAttributes> {
       data: other.data ?? data,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

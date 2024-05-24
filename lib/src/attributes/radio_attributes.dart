@@ -27,6 +27,12 @@ final class RadioGroupContextAttributes extends AttendedModel<dynamic>
       groupValue: other.groupValue,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }
 
 final class RadioAttributes implements DuitAttributes<RadioAttributes> {
@@ -90,5 +96,11 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
       visualDensity: other.visualDensity ?? visualDensity,
       value: other.value ?? value,
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
   }
 }

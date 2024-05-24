@@ -258,7 +258,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
     } else {
-      ViewAttributeWrapper.attributeParser = AttributeParser();
+      ViewAttribute.attributeParser = AttributeParser();
       final wp = await _getWorkerPool();
 
       if (wp != null && wp.initialized == false) {
@@ -274,7 +274,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
       await scriptRunner?.initWithTransport(transport!);
 
-      final json = await transport?.connect();
+      final json = await transport?.connect(
+        initialData: initialRequestPayload,
+      );
       assert(json != null);
 
       if (transport is Streamer) {
@@ -387,7 +389,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         );
       }
 
-      final attributes = ViewAttributeWrapper.createAttributes(
+      final attributes = ViewAttribute.createAttributes(
         ElementType.subtree,
         component,
         tag,
@@ -413,11 +415,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
         return;
       }
 
-      final attributes = ViewAttributeWrapper.createAttributes(
+      final attributes = ViewAttribute.createAttributes(
         controller.type,
         json,
         controller.tag,
       );
+
+      print("ok");
+
       controller.updateState(attributes);
     }
   }
@@ -439,6 +444,4 @@ final class DuitDriver with DriverHooks implements UIDriver {
   UIElementController? getController(String id) {
     return _viewControllers[id];
   }
-
-
 }

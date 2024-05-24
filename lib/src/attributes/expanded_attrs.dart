@@ -25,4 +25,10 @@ class ExpandedAttributes implements DuitAttributes<ExpandedAttributes> {
       flex: flx.toInt(),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

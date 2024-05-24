@@ -45,9 +45,8 @@ final class HttpTransport extends Transport {
   }
 
   @override
-  Future<Map<String, dynamic>?> connect({
-    Map<String, String>? initialData,
-  }) async {
+  Future<Map<String, dynamic>?> connect(
+      {Map<String, dynamic>? initialData}) async {
     assert(url.isNotEmpty, "Invalid url: $url}");
 
     final urlString = _prepareUrl(url);
@@ -70,16 +69,18 @@ final class HttpTransport extends Transport {
       final request = http.Request(method, uri)
         ..headers.addAll(options.defaultHeaders);
       if (method == "POST") {
-        request.bodyFields = initialData ?? {};
+        request.bodyFields = {
+          ...?initialData,
+        };
       }
 
       ///Call request interceptor
       reqInter?.call(request);
 
       ///Send request and await for response
-      final str = await request.send();
-      await for (final x in str.stream) {
-        return await _parseJson(x);
+      final response = await request.send();
+      await for (final byteData in response.stream) {
+        return await _parseJson(byteData);
       }
     } catch (e) {
       ///Call error interceptor
@@ -101,6 +102,7 @@ final class HttpTransport extends Transport {
       );
       return taskResult.result as Map<String, dynamic>;
     }
+
     ///If concurrency is not enabled, run the task in main isolate
     return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
   }
@@ -113,7 +115,7 @@ final class HttpTransport extends Transport {
       HttpActionMetainfo() => action.meta!.method,
     };
 
-    final urlString = _prepareUrl(url);
+    final urlString = _prepareUrl(action.event);
     Uri uri;
     final reqInter = options.requestInterceptor;
     final errInter = options.errorInterceptor;
@@ -136,9 +138,9 @@ final class HttpTransport extends Transport {
       reqInter?.call(request);
 
       ///Send request and await for response
-      final str = await request.send();
-      await for (final x in str.stream) {
-        return await _parseJson(x);
+      final response = await request.send();
+      await for (final byteData in response.stream) {
+        return await _parseJson(byteData);
       }
     } catch (e) {
       ///Call error interceptor
@@ -180,9 +182,9 @@ final class HttpTransport extends Transport {
       reqInter?.call(request);
 
       ///Send request and await for response
-      final str = await request.send();
-      await for (final x in str.stream) {
-        return await _parseJson(x);
+      final response = await request.send();
+      await for (final byteData in response.stream) {
+        return await _parseJson(byteData);
       }
     } catch (e) {
       errInter?.call(e);

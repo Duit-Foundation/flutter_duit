@@ -24,4 +24,10 @@ class DecoratedBoxAttributes implements DuitAttributes<DecoratedBoxAttributes> {
       decoration: other.decoration ?? decoration,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

@@ -91,4 +91,10 @@ final class TextFieldAttributes extends AttendedModel<String>
       maxLength: other.maxLength ?? maxLength,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

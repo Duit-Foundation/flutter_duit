@@ -87,4 +87,10 @@ class CheckboxAttributes extends AttendedModel<bool>
       visualDensity: ParamsMapper.convertToVisualDensity(json["visualDensity"]),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

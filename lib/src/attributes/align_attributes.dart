@@ -28,4 +28,10 @@ final class AlignAttributes implements DuitAttributes<AlignAttributes> {
       heightFactor: other.heightFactor ?? heightFactor,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

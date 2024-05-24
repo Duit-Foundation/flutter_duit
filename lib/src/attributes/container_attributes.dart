@@ -64,4 +64,10 @@ class ContainerAttributes implements DuitAttributes<ContainerAttributes> {
           json['transformAlignment']),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

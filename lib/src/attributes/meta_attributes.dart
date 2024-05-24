@@ -19,4 +19,10 @@ final class MetaAttributes extends AttendedModel<Map<String, dynamic>>
       value: other.value,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }

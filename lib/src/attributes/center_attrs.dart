@@ -27,4 +27,10 @@ final class CenterAttributes implements DuitAttributes<CenterAttributes> {
       heightFactor: other.heightFactor ?? heightFactor,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }
