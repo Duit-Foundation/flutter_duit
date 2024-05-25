@@ -11,7 +11,7 @@ mixin WidgetFabric {
   Widget getWidgetFromElement(DuitElement model) {
     switch (model.type) {
       case ElementType.column:
-        final it = model as ColumnUIElement;
+        final it = model as ColumnUIElement<ColumnAttributes>;
         List<Widget> arr = [];
 
         for (var element in it.children) {
@@ -458,7 +458,7 @@ mixin WidgetFabric {
         return const DuitEmptyView();
       case ElementType.custom:
         if (model.tag != null) {
-          final renderer = DuitRegistry.getRenderer(model.tag!);
+          final renderer = DuitRegistry.getBuildFactory(model.tag!);
           return renderer?.call(model) ?? const DuitEmptyView();
         }
 

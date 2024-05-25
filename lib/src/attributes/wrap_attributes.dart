@@ -53,4 +53,16 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" => WrapAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }

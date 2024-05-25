@@ -5,7 +5,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitRepaintBoundary extends StatelessWidget {
   final Widget child;
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
 
   const DuitRepaintBoundary({
     super.key,

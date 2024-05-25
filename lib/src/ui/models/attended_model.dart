@@ -5,7 +5,9 @@
 abstract class AttendedModel<T> {
   T value;
 
-  AttendedModel({required this.value});
+  AttendedModel({
+    required this.value,
+  });
 
   /// Updates the value of the model with the specified [value].
   ///

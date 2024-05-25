@@ -59,6 +59,18 @@ final class RowAttributes extends FlexAttributes
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" => RowAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }
 
 final class ColumnAttributes extends FlexAttributes
@@ -96,5 +108,18 @@ final class ColumnAttributes extends FlexAttributes
       verticalDirection: other.verticalDirection ?? verticalDirection,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        ColumnAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

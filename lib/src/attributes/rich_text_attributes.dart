@@ -73,4 +73,14 @@ class RichTextAttributes implements DuitAttributes<RichTextAttributes> {
       textScaler: ParamsMapper.convertToTextScaler(json['textScaler']),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    return switch (methodName) {
+      "fromJson" =>
+        RichTextAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }
