@@ -13,8 +13,7 @@ import 'element_type.dart';
 /// The [DuitElement] class represents an individual DUIT element in the DUIT element tree.
 /// It holds information about the element's type, properties, and child elements.
 /// The [DuitElement] class provides methods for rendering the element to a Flutter widget and handling interactions.
-base class DuitElement<T> extends TreeElement<T>
-    with WidgetFabric {
+base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
   //<editor-fold desc="Properties and ctor">
   @override
   ViewAttribute<T>? attributes;

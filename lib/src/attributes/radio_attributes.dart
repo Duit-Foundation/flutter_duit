@@ -29,9 +29,14 @@ final class RadioGroupContextAttributes extends AttendedModel<dynamic>
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    return switch (methodName) {
+      "fromJson" =>
+        RadioGroupContextAttributes.fromJson(positionalParams!.first)
+            as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }
 
@@ -99,8 +104,15 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        RadioAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

@@ -66,8 +66,7 @@ class _DuitControlledWrapState extends State<DuitControlledWrap>
       textDirection: attributes.textDirection,
       crossAxisAlignment:
           attributes.crossAxisAlignment ?? WrapCrossAlignment.start,
-      verticalDirection:
-          attributes.verticalDirection ?? VerticalDirection.down,
+      verticalDirection: attributes.verticalDirection ?? VerticalDirection.down,
       clipBehavior: attributes.clipBehavior ?? Clip.none,
       children: widget.children,
     );

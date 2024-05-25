@@ -60,8 +60,7 @@ class _DuitControlledRowState extends State<DuitControlledRow>
       crossAxisAlignment:
           attributes.crossAxisAlignment ?? CrossAxisAlignment.center,
       textDirection: attributes.textDirection,
-      verticalDirection:
-          attributes.verticalDirection ?? VerticalDirection.down,
+      verticalDirection: attributes.verticalDirection ?? VerticalDirection.down,
       children: widget.children,
     );
   }

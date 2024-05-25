@@ -85,9 +85,15 @@ final class SliderAttributes extends AttendedModel<double>
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName,
-      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        SliderAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

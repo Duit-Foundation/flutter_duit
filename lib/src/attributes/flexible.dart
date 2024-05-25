@@ -61,9 +61,15 @@ final class RowAttributes extends FlexAttributes
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" => RowAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }
 
@@ -105,8 +111,15 @@ final class ColumnAttributes extends FlexAttributes
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        ColumnAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

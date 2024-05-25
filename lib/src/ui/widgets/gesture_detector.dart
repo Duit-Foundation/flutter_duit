@@ -166,8 +166,7 @@ class _DuitGestureDetectorState extends State<DuitGestureDetector>
         );
       },
       behavior: attributes.behavior,
-      dragStartBehavior:
-          attributes.dragStartBehavior,
+      dragStartBehavior: attributes.dragStartBehavior,
       excludeFromSemantics: attributes.excludeFromSemantics ?? false,
       child: widget.child,
     );

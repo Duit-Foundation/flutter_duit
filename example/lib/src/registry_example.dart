@@ -35,7 +35,8 @@ class ExampleCustomWidgetAttributes
   }
 }
 
-ExampleCustomWidgetAttributes exampleAttributeMapper(String type, Map<String, dynamic>? json) {
+ExampleCustomWidgetAttributes exampleAttributeMapper(
+    String type, Map<String, dynamic>? json) {
   return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random");
 }
 

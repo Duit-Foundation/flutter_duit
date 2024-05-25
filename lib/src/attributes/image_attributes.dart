@@ -95,8 +95,15 @@ final class ImageAttributes implements DuitAttributes<ImageAttributes> {
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        ImageAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

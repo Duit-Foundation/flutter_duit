@@ -1,6 +1,7 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 class GestureDetectorAttributes
@@ -148,9 +149,15 @@ class GestureDetectorAttributes
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName,
-      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        GestureDetectorAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

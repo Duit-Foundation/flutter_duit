@@ -6,13 +6,18 @@ import 'package:duit_kernel/duit_kernel.dart';
 final class EmptyAttributes implements DuitAttributes<EmptyAttributes> {
   @override
   EmptyAttributes copyWith(EmptyAttributes other) {
-    // TODO: implement copyWith
-    throw UnimplementedError();
+    return EmptyAttributes();
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName, {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      String() => throw UnimplementedError(
+          "$methodName is not implemented on EmptyAttributes"),
+    };
   }
 }
