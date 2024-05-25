@@ -75,8 +75,11 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
   }
 
   /// Updates the state of the `UIElementController` manually.
-  void updateStateManually(AttrType newState, {String? widgetId}) {
-    _controller.updateState(ViewAttributeWrapper(
+  void updateStateManually(
+    AttrType newState, {
+    String? widgetId,
+  }) {
+    _controller.updateState(ViewAttribute<AttrType>(
       payload: newState,
       id: widgetId ?? "none",
     ));

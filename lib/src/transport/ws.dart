@@ -6,6 +6,8 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
+import 'transport_utils.dart';
+
 /// A WebSocket transport implementation for streaming data.
 ///
 /// This class extends the [Transport] class and implements the [Streamer] interface.
@@ -62,8 +64,14 @@ final class WSTransport extends Transport implements Streamer {
   }
 
   @override
-  Future<Map<String, dynamic>?> connect() async {
-    final urlString = _prepareUrl(url);
+  Future<Map<String, dynamic>?> connect({
+    JSONObject? initialData,
+  }) async {
+    var urlString = _prepareUrl(url);
+
+    if (initialData != null) {
+      urlString = objectToURLWithQueryParams(urlString, initialData).toString();
+    }
 
     assert(urlString.isNotEmpty && urlString.startsWith("ws"),
         "Invalid url: $url}");

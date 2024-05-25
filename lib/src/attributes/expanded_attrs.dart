@@ -25,4 +25,17 @@ class ExpandedAttributes implements DuitAttributes<ExpandedAttributes> {
       flex: flx.toInt(),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        ExpandedAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }

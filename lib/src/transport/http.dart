@@ -6,6 +6,8 @@ import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 import 'package:http/http.dart' as http;
 
+import 'transport_utils.dart';
+
 /// An HTTP transport implementation for making HTTP requests.
 ///
 /// This class extends the [Transport] class and provides the functionality to
@@ -43,110 +45,107 @@ final class HttpTransport extends Transport {
   }
 
   @override
-  Future<Map<String, dynamic>?> connect() async {
+  Future<Map<String, dynamic>?> connect(
+      {Map<String, dynamic>? initialData}) async {
     assert(url.isNotEmpty, "Invalid url: $url}");
 
     final urlString = _prepareUrl(url);
+    Uri uri;
 
-    final res =
-        await client.get(Uri.parse(urlString), headers: options.defaultHeaders);
+    final reqInter = options.requestInterceptor;
+    final errInter = options.errorInterceptor;
 
-    return await _parseJson(res.bodyBytes);
+    try {
+      ///Try read initial request method from metainfo
+      final method = options.initialRequestMetainfo?.method ?? "GET";
+
+      if (method == "POST") {
+        uri = Uri.parse(urlString);
+      } else {
+        uri = objectToURLWithQueryParams(urlString, initialData);
+      }
+
+      ///Create new request, add headers and body if needed
+      final request = http.Request(method, uri)
+        ..headers.addAll(options.defaultHeaders);
+      if (method == "POST") {
+        request.bodyFields = {
+          ...?initialData,
+        };
+      }
+
+      ///Call request interceptor
+      reqInter?.call(request);
+
+      ///Send request and await for response
+      final response = await request.send();
+      await for (final byteData in response.stream) {
+        return await _parseJson(byteData);
+      }
+    } catch (e) {
+      ///Call error interceptor
+      errInter?.call(e);
+      return null;
+    }
+
+    return null;
   }
 
   Future<Map<String, dynamic>> _parseJson(dynamic data) async {
+    ///Check if concurrency is enabled and run the task in isolate
     if (concurrencyEnabled && workerPool != null) {
-      final tres = await workerPool!.perform(
+      final taskResult = await workerPool!.perform(
         (params) {
           return jsonDecode(params);
         },
         utf8.decode(data),
       );
-      return tres.result as Map<String, dynamic>;
+      return taskResult.result as Map<String, dynamic>;
     }
+
+    ///If concurrency is not enabled, run the task in main isolate
     return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
   }
 
   @override
   FutureOr<JSONObject?> execute(action, payload) async {
+    ///Prepare url and method
     String method = switch (action.meta) {
       null => "GET",
       HttpActionMetainfo() => action.meta!.method,
     };
 
-    switch (method) {
-      case "GET":
-        {
-          Uri uri;
-          var urlString = _prepareUrl(action.event);
+    final urlString = _prepareUrl(action.event);
+    Uri uri;
+    final reqInter = options.requestInterceptor;
+    final errInter = options.errorInterceptor;
 
-          if (payload.isNotEmpty) {
-            urlString += "?";
-            payload.forEach((key, value) {
-              urlString += "$key=$value";
-            });
-            uri = Uri.parse(urlString);
-          } else {
-            uri = Uri.parse(urlString);
-          }
+    try {
+      if (method == "POST") {
+        uri = Uri.parse(urlString);
+      } else {
+        uri = objectToURLWithQueryParams(urlString, payload);
+      }
 
-          try {
-            final res = await client.get(uri, headers: {
-              ...options.defaultHeaders,
-            });
-            return await _parseJson(res.bodyBytes);
-          } catch (e) {
-            rethrow;
-          }
-        }
-      case "POST":
-        {
-          final urlString = _prepareUrl(action.event);
-          try {
-            final res = await client.post(
-              Uri.parse(urlString),
-              body: jsonEncode(payload),
-              headers: {
-                ...options.defaultHeaders,
-              },
-            );
-            return await _parseJson(res.bodyBytes);
-          } catch (e) {
-            rethrow;
-          }
-        }
-      case "DELETE":
-        {
-          final urlString = _prepareUrl(action.event);
-          try {
-            final res = await client.delete(
-              Uri.parse(urlString),
-              body: jsonEncode(payload),
-              headers: {
-                ...options.defaultHeaders,
-              },
-            );
-            return await _parseJson(res.bodyBytes);
-          } catch (e) {
-            rethrow;
-          }
-        }
-      case "PATCH":
-        {
-          final urlString = _prepareUrl(action.event);
-          try {
-            final res = await client.patch(
-              Uri.parse(urlString),
-              body: jsonEncode(payload),
-              headers: {
-                ...options.defaultHeaders,
-              },
-            );
-            return await _parseJson(res.bodyBytes);
-          } catch (e) {
-            rethrow;
-          }
-        }
+      ///Create new request, add headers and body if needed
+      final request = http.Request(method, uri)
+        ..headers.addAll(options.defaultHeaders);
+      if (method == "POST") {
+        request.body = jsonEncode(payload);
+      }
+
+      ///Call request interceptor
+      reqInter?.call(request);
+
+      ///Send request and await for response
+      final response = await request.send();
+      await for (final byteData in response.stream) {
+        return await _parseJson(byteData);
+      }
+    } catch (e) {
+      ///Call error interceptor
+      errInter?.call(e);
+      return null;
     }
 
     return null;
@@ -158,32 +157,41 @@ final class HttpTransport extends Transport {
     Map<String, dynamic> meta,
     Map<String, dynamic> body,
   ) async {
-    final method = meta["method"] as String?;
+    final method = meta["method"] ?? "GET";
 
-    final httpMethod = switch (method) {
-      "POST" => "POST",
-      "GET" || null || String() => "GET",
-    };
+    final urlString = _prepareUrl(url);
+    Uri uri;
+    final reqInter = options.requestInterceptor;
+    final errInter = options.errorInterceptor;
 
-    if (httpMethod == "GET") {
-      final res = await client.get(
-        Uri.parse(_prepareUrl(url)),
-        headers: {
-          ...options.defaultHeaders,
-        },
-      );
+    try {
+      if (method == "POST") {
+        uri = Uri.parse(urlString);
+      } else {
+        uri = objectToURLWithQueryParams(urlString, body);
+      }
 
-      return await _parseJson(res.bodyBytes);
-    } else {
-      final res = await client.post(
-        Uri.parse(_prepareUrl(url)),
-        body: jsonEncode(body),
-        headers: {
-          ...options.defaultHeaders,
-        },
-      );
-      return await _parseJson(res.bodyBytes);
+      ///Create new request, add headers and body if needed
+      final request = http.Request(method, uri)
+        ..headers.addAll(options.defaultHeaders);
+      if (method == "POST") {
+        request.body = jsonEncode(body);
+      }
+
+      ///Call request interceptor
+      reqInter?.call(request);
+
+      ///Send request and await for response
+      final response = await request.send();
+      await for (final byteData in response.stream) {
+        return await _parseJson(byteData);
+      }
+    } catch (e) {
+      errInter?.call(e);
+      return null;
     }
+
+    return null;
   }
 
   @override

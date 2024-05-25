@@ -2,15 +2,12 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-import 'animation_attributes/animated_attributes_holder.dart';
-
 //TODO add transform [Matrix4] prop
 
 /// Represents the attributes for a Container widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
-final class ContainerAttributes extends AnimatedPropertyOwner
-    implements DuitAttributes<ContainerAttributes> {
+final class ContainerAttributes implements DuitAttributes<ContainerAttributes> {
   final double? width, height;
   final Color? color;
   final Clip? clipBehavior;
@@ -31,8 +28,8 @@ final class ContainerAttributes extends AnimatedPropertyOwner
     this.alignment,
     this.transformAlignment,
     this.foregroundDecoration,
-    required super.affectedProperties,
-    required super.parentBuilderId,
+    // required super.affectedProperties,
+    // required super.parentBuilderId,
   });
 
   @override
@@ -49,8 +46,8 @@ final class ContainerAttributes extends AnimatedPropertyOwner
       alignment: other.alignment ?? alignment,
       transformAlignment: other.transformAlignment ?? transformAlignment,
       foregroundDecoration: other.foregroundDecoration ?? foregroundDecoration,
-      affectedProperties: other.affectedProperties,
-      parentBuilderId: other.parentBuilderId,
+      // affectedProperties: other.affectedProperties,
+      // parentBuilderId: other.parentBuilderId,
     );
   }
 
@@ -69,8 +66,21 @@ final class ContainerAttributes extends AnimatedPropertyOwner
       alignment: ParamsMapper.convertToAlignmentDirectional(json['alignment']),
       transformAlignment: ParamsMapper.convertToAlignmentDirectional(
           json['transformAlignment']),
-      affectedProperties: Set.from(json['affectedProperties'] ?? {}),
-      parentBuilderId: json['parentBuilderId'],
+      // affectedProperties: Set.from(json['affectedProperties'] ?? {}),
+      // parentBuilderId: json['parentBuilderId'],
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        ContainerAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

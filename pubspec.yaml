@@ -9,7 +9,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  duit_kernel: ^1.4.1
+  duit_kernel: ^2.0.1
   flutter:
     sdk: flutter
   http: ^1.1.0

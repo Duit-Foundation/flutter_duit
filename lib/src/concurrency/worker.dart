@@ -11,7 +11,7 @@ final class Worker {
   bool _closed = false;
 
   Future<TaskResult> sendTaskToIsolate(
-    TaskOperation fn,
+    TaskHandler fn,
     dynamic payload,
   ) async {
     if (_closed) throw StateError('Worker closed');

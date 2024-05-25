@@ -6,7 +6,7 @@ import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitSingleChildScrollView extends StatelessWidget {
   final Widget child;
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
 
   const DuitSingleChildScrollView({
     super.key,

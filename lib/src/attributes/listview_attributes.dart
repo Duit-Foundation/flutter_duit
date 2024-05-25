@@ -1,4 +1,5 @@
 import 'package:duit_kernel/duit_kernel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
@@ -317,6 +318,16 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           itemExtent: other.itemExtent ?? itemExtent,
         );
     }
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    return switch (methodName) {
+      "fromJson" =>
+        ListViewAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 //</editor-fold>
 }

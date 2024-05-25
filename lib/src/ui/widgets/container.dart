@@ -6,7 +6,7 @@ import "package:flutter_duit/src/utils/animated.dart";
 
 class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
   final Widget child;
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
 
   const DuitContainer({
     super.key,
@@ -16,7 +16,7 @@ class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = wrapAttributes(context, attributes.payload as ContainerAttributes);
+    final attrs = attributes.payload as ContainerAttributes;
 
     return Container(
       key: Key(attributes.id),

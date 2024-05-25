@@ -57,4 +57,18 @@ class SingleChildScrollviewAttributes
       dragStartBehavior: other.dragStartBehavior ?? dragStartBehavior,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        SingleChildScrollviewAttributes.fromJson(positionalParams!.first)
+            as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }

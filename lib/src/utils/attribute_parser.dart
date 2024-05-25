@@ -34,7 +34,7 @@ final class AttributeParser implements AttributeParserBase {
     assert(tag != null, "Custom widget must have specified tag");
 
     if (tag is String) {
-      final attributesMapper = DuitRegistry.getAttributesMapper(tag);
+      final attributesMapper = DuitRegistry.getAttributesFactory(tag);
       if (attributesMapper != null) {
         return attributesMapper(tag, json);
       } else {
@@ -56,7 +56,7 @@ final class AttributeParser implements AttributeParserBase {
   /// Returns:
   /// A `ViewAttributeWrapper` instance with the parsed attributes.
   @override
-  ViewAttributeWrapper<T> parse<T>(
+  ViewAttribute<T> parse<T>(
     String type,
     JSONObject? json,
     String? tag, {
@@ -102,7 +102,6 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.listView => ListViewAttributes.fromJson(data),
       ElementType.repaintBoundary => RepaintBoundaryAttributes.fromJson(data),
       ElementType.overflowBox => OverflowBoxAttributes.fromJson(data),
-      ElementType.animatedBuilder => AnimatedBuilderAttributes.fromJson(data),
       ElementType.animatedSize => AnimatedSizeAttributes.fromJson(data),
       ElementType.subtree ||
       ElementType.component =>
@@ -110,6 +109,6 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.empty || String() => EmptyAttributes(),
     };
 
-    return ViewAttributeWrapper<T>(payload: payload, id: id ?? "none");
+    return ViewAttribute(payload: payload, id: id ?? "none");
   }
 }

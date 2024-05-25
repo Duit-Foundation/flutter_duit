@@ -29,4 +29,17 @@ class FittedBoxAttributes implements DuitAttributes<FittedBoxAttributes> {
       alignment: other.alignment ?? alignment,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        FittedBoxAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }

@@ -48,9 +48,15 @@ final class SliderAttributes extends AttendedModel<double>
       thumbColor: ColorUtils.tryParseNullableColor(json['thumbColor']),
       overlayColor: ParamsMapper.convertToMSPColor(json['overlayColor']),
       autofocus: json['autofocus'] ?? false,
-      onChanged: ServerAction.fromJSON(json['onChanged']),
-      onChangeStart: ServerAction.fromJSON(json['onChangeStart']),
-      onChangeEnd: ServerAction.fromJSON(json['onChangeEnd']),
+      onChanged: json['onChanged'] != null
+          ? ServerAction.fromJson(json['onChanged'])
+          : null,
+      onChangeStart: json['onChangeStart'] != null
+          ? ServerAction.fromJson(json['onChangeStart'])
+          : null,
+      onChangeEnd: json['onChangeEnd'] != null
+          ? ServerAction.fromJson(json['onChangeEnd'])
+          : null,
       allowedInteraction:
           ParamsMapper.convertToSliderInteraction(json["allowedInteraction"]),
     );
@@ -76,5 +82,18 @@ final class SliderAttributes extends AttendedModel<double>
       allowedInteraction: other.allowedInteraction ?? allowedInteraction,
       secondaryTrackValue: other.secondaryTrackValue ?? secondaryTrackValue,
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        SliderAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

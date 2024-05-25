@@ -93,4 +93,17 @@ final class ImageAttributes implements DuitAttributes<ImageAttributes> {
       excludeFromSemantics: json['excludeFromSemantics'],
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        ImageAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }

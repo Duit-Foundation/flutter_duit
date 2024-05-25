@@ -1,6 +1,7 @@
 import 'package:duit_kernel/duit_kernel.dart';
 
-class LifecycleStateListenerAttributes extends DuitAttributes {
+class LifecycleStateListenerAttributes
+    implements DuitAttributes<LifecycleStateListenerAttributes> {
   final ServerAction? onStateChanged,
       onResumed,
       onInactive,
@@ -44,12 +45,38 @@ class LifecycleStateListenerAttributes extends DuitAttributes {
 
   factory LifecycleStateListenerAttributes.fromJson(Map<String, dynamic> json) {
     return LifecycleStateListenerAttributes(
-      onStateChanged: ServerAction.fromJSON(json['onStateChanged']),
-      onResumed: ServerAction.fromJSON(json['onResumed']),
-      onInactive: ServerAction.fromJSON(json['onInactive']),
-      onPaused: ServerAction.fromJSON(json['onPaused']),
-      onDetached: ServerAction.fromJSON(json['onDetached']),
-      onHidden: ServerAction.fromJSON(json['onHidden']),
+      onStateChanged: json['onStateChanged'] != null
+          ? ServerAction.fromJson(json['onStateChanged'])
+          : null,
+      onResumed: json['onResumed'] != null
+          ? ServerAction.fromJson(json['onResumed'])
+          : null,
+      onInactive: json['onInactive'] != null
+          ? ServerAction.fromJson(json['onInactive'])
+          : null,
+      onPaused: json['onPaused'] != null
+          ? ServerAction.fromJson(json['onPaused'])
+          : null,
+      onDetached: json['onDetached'] != null
+          ? ServerAction.fromJson(json['onDetached'])
+          : null,
+      onHidden: json['onHidden'] != null
+          ? ServerAction.fromJson(json['onHidden'])
+          : null,
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        LifecycleStateListenerAttributes.fromJson(positionalParams!.first)
+            as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

@@ -24,4 +24,17 @@ class DecoratedBoxAttributes implements DuitAttributes<DecoratedBoxAttributes> {
       decoration: other.decoration ?? decoration,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        DecoratedBoxAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }
