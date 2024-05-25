@@ -5,7 +5,7 @@ import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitPositioned extends StatelessWidget {
   final Widget child;
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
 
   const DuitPositioned({
     super.key,

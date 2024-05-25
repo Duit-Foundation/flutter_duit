@@ -5,7 +5,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitOverflowBox extends StatelessWidget {
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitOverflowBox({

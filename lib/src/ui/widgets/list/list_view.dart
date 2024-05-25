@@ -5,7 +5,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 final class DuitListView extends StatelessWidget {
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitListView({

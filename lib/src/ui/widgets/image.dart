@@ -75,7 +75,7 @@ sealed class _ImageProducer {
 }
 
 class DuitImage extends StatelessWidget {
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
 
   const DuitImage({
     super.key,

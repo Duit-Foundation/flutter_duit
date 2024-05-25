@@ -41,9 +41,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DuitRegistry.register(
     "ExampleCustomWidget",
-    modelMapperExample,
-    exampleRenderer,
-    exampleAttributeMapper,
+    modelFactory: modelMapperExample,
+    buildFactory: exampleRenderer,
+    attributesFactory: exampleAttributeMapper,
   );
 
   final worker = DuitWorkerPool();

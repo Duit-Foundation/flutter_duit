@@ -24,4 +24,17 @@ final class PaddingAttributes implements DuitAttributes<PaddingAttributes> {
       padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        PaddingAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }

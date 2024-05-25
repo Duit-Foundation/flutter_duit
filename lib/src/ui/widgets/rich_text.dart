@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitRichText extends StatelessWidget {
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
 
   const DuitRichText({
     super.key,

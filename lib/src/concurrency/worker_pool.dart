@@ -41,7 +41,7 @@ final class DuitWorkerPool extends WorkerPool {
   }
 
   @override
-  Future<TaskResult> perform(TaskOperation func, dynamic payload) async {
+  Future<TaskResult> perform(TaskHandler func, dynamic payload) async {
     return await _distributor.distributeTask(
       _workers,
       fn: func,

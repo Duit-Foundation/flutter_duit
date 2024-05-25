@@ -23,15 +23,23 @@ final class _DriverFinalizationController {
 }
 
 final class DuitDriver with DriverHooks implements UIDriver {
+  @protected
   @override
   final String source;
+
   @override
   Transport? transport;
+
+  @protected
   @override
   TransportOptions transportOptions;
+
+  @protected
   @override
   StreamController<DuitAbstractTree?> streamController =
       StreamController.broadcast();
+
+  @protected
   @override
   late BuildContext buildContext;
 
@@ -45,9 +53,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @override
   bool concurrentModeEnabled;
 
+  @protected
   @override
   WorkerPool? workerPool;
 
+  @protected
   @override
   WorkerPoolConfiguration? workerPoolConfiguration;
 
@@ -67,6 +77,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
   Stream<DuitAbstractTree?> get stream =>
       streamController.stream.asBroadcastStream();
 
+  @protected
+  final Map<String, dynamic>? initialRequestPayload;
+
   DuitDriver(
     this.source, {
     required this.transportOptions,
@@ -74,8 +87,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.concurrentModeEnabled = false,
     this.workerPool,
     this.workerPoolConfiguration,
+    this.initialRequestPayload,
   });
 
+  @protected
   @override
   void attachController(String id, UIElementController controller) {
     final hasController = _viewControllers.containsKey(id);
@@ -243,7 +258,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
     } else {
-      ViewAttributeWrapper.attributeParser = AttributeParser();
+      ViewAttribute.attributeParser = AttributeParser();
       final wp = await _getWorkerPool();
 
       if (wp != null && wp.initialized == false) {
@@ -259,7 +274,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
       await scriptRunner?.initWithTransport(transport!);
 
-      final json = await transport?.connect();
+      final json = await transport?.connect(
+        initialData: initialRequestPayload,
+      );
       assert(json != null);
 
       if (transport is Streamer) {
@@ -311,7 +328,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
           debugPrint(e.toString());
         }
         break;
-
       //script
       case 2:
         try {
@@ -373,10 +389,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
         );
       }
 
-      final attributes = ViewAttributeWrapper.createAttributes(
+      final attributes = ViewAttribute.createAttributes(
         ElementType.subtree,
         component,
-        controller.tag,
+        tag,
       );
 
       controller.updateState(attributes);
@@ -399,25 +415,31 @@ final class DuitDriver with DriverHooks implements UIDriver {
         return;
       }
 
-      final attributes = ViewAttributeWrapper.createAttributes(
+      final attributes = ViewAttribute.createAttributes(
         controller.type,
         json,
         controller.tag,
       );
+
+      print("ok");
+
       controller.updateState(attributes);
     }
   }
 
+  @protected
   @override
   Future<void> evalScript(String source) async {
     await scriptRunner?.eval(source);
   }
 
+  @protected
   @override
   void detachController(String id) {
     _viewControllers.remove(id);
   }
 
+  @protected
   @override
   UIElementController? getController(String id) {
     return _viewControllers[id];

@@ -6,6 +6,7 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
   //<editor-fold desc="Properties and getters">
   late final ScrollController _scrollController;
   bool _isExecuting = false;
+
   /// Indicates if the list is at the end of list
   bool _isEOL = false;
   UIElementController? _controller;

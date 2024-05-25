@@ -2,7 +2,7 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
-final class ExampleCustomWidget<T> extends DuitElement<T> {
+final class ExampleCustomWidget extends DuitElement<dynamic> {
   ExampleCustomWidget({
     required super.id,
     required super.attributes,
@@ -26,9 +26,17 @@ class ExampleCustomWidgetAttributes
       random: other.random ?? random,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    // TODO: implement dispatchInternalCall
+    throw UnimplementedError();
+  }
 }
 
-DuitAttributes exampleAttributeMapper(String type, Map<String, dynamic>? json) {
+ExampleCustomWidgetAttributes exampleAttributeMapper(
+    String type, Map<String, dynamic>? json) {
   return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random");
 }
 
@@ -66,10 +74,10 @@ Widget exampleRenderer(TreeElement model) {
   );
 }
 
-DuitElement modelMapperExample(
+TreeElement modelMapperExample(
   String id,
   bool controlled,
-  ViewAttributeWrapper attributes,
+  ViewAttribute attributes,
   UIElementController? controller,
 ) {
   return ExampleCustomWidget(

@@ -5,7 +5,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitWrap extends StatelessWidget {
   final List<Widget> children;
-  final ViewAttributeWrapper attributes;
+  final ViewAttribute attributes;
 
   const DuitWrap({
     super.key,
@@ -66,8 +66,7 @@ class _DuitControlledWrapState extends State<DuitControlledWrap>
       textDirection: attributes.textDirection,
       crossAxisAlignment:
           attributes.crossAxisAlignment ?? WrapCrossAlignment.start,
-      verticalDirection:
-          attributes.verticalDirection ?? VerticalDirection.down,
+      verticalDirection: attributes.verticalDirection ?? VerticalDirection.down,
       clipBehavior: attributes.clipBehavior ?? Clip.none,
       children: widget.children,
     );

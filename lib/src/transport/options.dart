@@ -1,5 +1,6 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/transport/index.dart';
+import 'package:http/http.dart';
 
 final class EmptyTransportOptions extends TransportOptions {
   @override
@@ -41,10 +42,18 @@ final class HttpTransportOptions extends TransportOptions {
   /// ```
   HttpActionMetainfo? initialRequestMetainfo;
 
+  /// The interceptor for the HTTP requests.
+  void Function(Request request)? requestInterceptor;
+
+  /// The interceptor for the HTTP errors.
+  void Function(Object? error)? errorInterceptor;
+
   HttpTransportOptions({
     this.initialRequestMetainfo,
     this.defaultHeaders = const {},
     this.baseUrl,
+    this.requestInterceptor,
+    this.errorInterceptor,
   });
 }
 

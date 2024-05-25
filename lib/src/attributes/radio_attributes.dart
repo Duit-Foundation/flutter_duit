@@ -27,6 +27,17 @@ final class RadioGroupContextAttributes extends AttendedModel<dynamic>
       groupValue: other.groupValue,
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(String methodName,
+      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+    return switch (methodName) {
+      "fromJson" =>
+        RadioGroupContextAttributes.fromJson(positionalParams!.first)
+            as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }
 
 final class RadioAttributes implements DuitAttributes<RadioAttributes> {
@@ -90,5 +101,18 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
       visualDensity: other.visualDensity ?? visualDensity,
       value: other.value ?? value,
     );
+  }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        RadioAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }

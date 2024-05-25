@@ -20,4 +20,17 @@ class OpacityAttributes implements DuitAttributes<OpacityAttributes> {
       opacity: NumUtils.toDoubleWithNullReplacement(json['opacity'], 1),
     );
   }
+
+  @override
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
+    return switch (methodName) {
+      "fromJson" =>
+        OpacityAttributes.fromJson(positionalParams!.first) as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
+  }
 }
