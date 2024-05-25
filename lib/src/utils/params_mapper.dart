@@ -1303,4 +1303,56 @@ class ParamsMapper {
   }
 
 //</editor-fold>
+
+  //<editor-fold desc="Animations">
+  static Curve convertToCurve(String? value) {
+    if (value == null) return Curves.linear;
+
+    return switch (value) {
+      "linear" => Curves.linear,
+      "fastEaseInToSlowEaseOut" => Curves.fastEaseInToSlowEaseOut,
+      "bounceIn" => Curves.bounceIn,
+      "bounceInOut" => Curves.bounceInOut,
+      "bounceOut" => Curves.bounceOut,
+      "decelerate" => Curves.decelerate,
+      "ease" => Curves.ease,
+      "easeIn" => Curves.easeIn,
+      "easeInBack" => Curves.easeInBack,
+      "easeInCirc" => Curves.easeInCirc,
+      "easeInSine" => Curves.easeInSine,
+      "easeInCubic" => Curves.easeInCubic,
+      "easeInExpo" => Curves.easeInExpo,
+      "easeInOutCubicEmphasized" => Curves.easeInOutCubicEmphasized,
+      "easeInOutBack" => Curves.easeInOutBack,
+      "easeInOutCirc" => Curves.easeInOutCirc,
+      "easeInOutExpo" => Curves.easeInOutExpo,
+      "easeInOutQuad" => Curves.easeInOutQuad,
+      "easeInOutQuart" => Curves.easeInOutQuart,
+      "easeInOutQuint" => Curves.easeInOutQuint,
+      "easeInOutSine" => Curves.easeInOutSine,
+      "easeInToLinear" => Curves.easeInToLinear,
+      "easeOutSine" => Curves.easeOutSine,
+      "easeOutBack" => Curves.easeOutBack,
+      "easeOutCirc" => Curves.easeOutCirc,
+      "easeOutCubic" => Curves.easeOutCubic,
+      "easeOutExpo" => Curves.easeOutExpo,
+      "easeOutQuad" => Curves.easeOutQuad,
+      "easeOutQuart" => Curves.easeOutQuart,
+      "easeOutQuint" => Curves.easeOutQuint,
+      "linearToEaseOut" => Curves.linearToEaseOut,
+      "slowMiddle" => Curves.slowMiddle,
+      "fastOutSlowIn" => Curves.fastOutSlowIn,
+      "elasticIn" => Curves.elasticIn,
+      "elasticInOut" => Curves.elasticInOut,
+      "elasticOut" => Curves.elasticOut,
+      String() => Curves.linear,
+    };
+  }
+
+  static Duration convertToDuration(num? value) {
+    if (value == null) return Duration.zero;
+
+    return Duration(milliseconds: value.toInt());
+  }
+//</editor-fold>
 }

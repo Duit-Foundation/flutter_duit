@@ -194,6 +194,32 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           controlled: controlled,
         );
+      case ElementType.animatedSize:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedSizeAttributes>(
+          type,
+          json["attributes"],
+          tag,
+        );
+
+        return AnimatedSizeUIElement(
+          type: type,
+          id: id,
+          child: child,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlled,
+        );
       case ElementType.sizedBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
