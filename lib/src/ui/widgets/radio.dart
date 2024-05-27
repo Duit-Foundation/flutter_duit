@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitRadio extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<RadioAttributes> attributes;
 
   const DuitRadio({
     super.key,
@@ -19,7 +19,7 @@ class DuitRadio extends StatelessWidget {
   Widget build(BuildContext context) {
     final groupContext = RadioGroupContext.maybeOf(context);
     assert(groupContext != null, 'RadioGroupContext not found in context');
-    final attrs = attributes.payload as RadioAttributes;
+    final attrs = attributes.payload;
     return Radio(
       key: Key(attributes.id),
       value: attrs.value,
@@ -40,7 +40,7 @@ class DuitRadio extends StatelessWidget {
 }
 
 final class DuitControlledRadio extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<RadioAttributes> controller;
 
   const DuitControlledRadio({
     super.key,
@@ -114,7 +114,7 @@ final class RadioGroupContext extends InheritedWidget {
 }
 
 class DuitRadioGroupContextProvider extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<RadioGroupContextAttributes> controller;
   final Widget child;
 
   const DuitRadioGroupContextProvider({

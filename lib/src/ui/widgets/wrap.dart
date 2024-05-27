@@ -4,8 +4,8 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitWrap extends StatelessWidget {
+  final ViewAttribute<WrapAttributes> attributes;
   final List<Widget> children;
-  final ViewAttribute attributes;
 
   const DuitWrap({
     super.key,
@@ -15,7 +15,7 @@ class DuitWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as WrapAttributes;
+    final attrs = attributes.payload;
     return Wrap(
       key: Key(attributes.id),
       alignment: attrs.alignment ?? WrapAlignment.start,
@@ -33,7 +33,7 @@ class DuitWrap extends StatelessWidget {
 }
 
 class DuitControlledWrap extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<WrapAttributes> controller;
   final List<Widget> children;
 
   const DuitControlledWrap({

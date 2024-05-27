@@ -2,11 +2,11 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
-import "package:flutter_duit/src/utils/animated.dart";
+import "package:flutter_duit/src/animations/animated_props.dart";
 
 class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
   final Widget child;
-  final ViewAttribute attributes;
+  final ViewAttribute<ContainerAttributes> attributes;
 
   const DuitContainer({
     super.key,
@@ -16,7 +16,7 @@ class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as ContainerAttributes;
+    final attrs = wrapAttributes(context, attributes.payload);
 
     return Container(
       key: Key(attributes.id),
@@ -35,9 +35,10 @@ class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
   }
 }
 
-class DuitControlledContainer extends StatefulWidget {
+class DuitControlledContainer extends StatefulWidget
+    with AnimatedPropertiesMixin {
   final Widget child;
-  final UIElementController controller;
+  final UIElementController<ContainerAttributes> controller;
 
   const DuitControlledContainer({
     super.key,
@@ -56,24 +57,30 @@ class _DuitControlledContainerState extends State<DuitControlledContainer>
             ContainerAttributes> {
   @override
   void initState() {
-    attachStateToController(widget.controller);
+    attachStateToController(
+      widget.controller,
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.wrapAttributes(
+      context,
+      widget.controller.attributes!.payload,
+    );
     return Container(
       key: Key(widget.controller.id),
-      alignment: attributes.alignment,
-      constraints: attributes.constraints,
-      padding: attributes.padding,
-      margin: attributes.margin,
-      width: attributes.width,
-      height: attributes.height,
-      color: attributes.color,
-      clipBehavior: attributes.clipBehavior ?? Clip.none,
-      decoration: attributes.decoration,
-      transformAlignment: attributes.transformAlignment,
+      alignment: attrs.alignment,
+      constraints: attrs.constraints,
+      padding: attrs.padding,
+      margin: attrs.margin,
+      width: attrs.width,
+      height: attrs.height,
+      color: attrs.color,
+      clipBehavior: attrs.clipBehavior ?? Clip.none,
+      decoration: attrs.decoration,
+      transformAlignment: attrs.transformAlignment,
       child: widget.child,
     );
   }

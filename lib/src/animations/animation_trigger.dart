@@ -1,0 +1,4 @@
+enum AnimationTrigger {
+  onEnter,
+  onAction,
+}

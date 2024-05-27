@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:duit_kernel/duit_kernel.dart';
+import 'package:flutter_duit/src/animations/animation_command.dart';
+import 'package:flutter_duit/src/animations/animation_method.dart';
 import 'package:flutter_duit/src/ui/models/ui_tree.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
@@ -13,6 +15,7 @@ enum ServerEventType {
   custom,
   sequenced,
   grouped,
+  animationTrigger,
 }
 
 /// Represents a server response event.
@@ -38,6 +41,7 @@ abstract class ServerEvent {
       "custom" => CustomEvent.fromJson(json),
       "sequenced" => SequencedEventGroup.fromJson(json),
       "grouped" => CommonEventGroup.fromJson(json),
+      "animationTrigger" => AnimationTriggerEvent.fromJson(json),
       String() || Object() || null => null,
     };
   }
@@ -201,5 +205,32 @@ final class SequencedEventGroup extends ServerEvent {
       return SequencedGroupMember(event: model["event"], delay: delay);
     });
     return SequencedEventGroup(events: events.toList());
+  }
+}
+
+final class AnimationTriggerEvent extends ServerEvent {
+  @override
+  ServerEventType type = ServerEventType.animationTrigger;
+
+  final AnimationCommand command;
+
+  AnimationTriggerEvent({
+    required this.command,
+  });
+
+  factory AnimationTriggerEvent.fromJson(JSONObject json) {
+    return AnimationTriggerEvent(
+      command: AnimationCommand(
+        method: switch (json["method"]) {
+          0 => AnimationMethod.forward,
+          1 => AnimationMethod.repeat,
+          2 => AnimationMethod.reverse,
+          3 => AnimationMethod.toggle,
+          Object() || null => AnimationMethod.forward,
+        },
+        controllerId: json["controllerId"],
+        animatedPropKey: json["animatedPropKey"],
+      ),
+    );
   }
 }

@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitAlign extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<AlignAttributes> attributes;
   final Widget child;
 
   const DuitAlign({
@@ -15,7 +15,7 @@ class DuitAlign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as AlignAttributes;
+    final attrs = attributes.payload;
     return Align(
       key: Key(attributes.id),
       alignment: attrs.alignment ?? Alignment.center,
@@ -27,7 +27,7 @@ class DuitAlign extends StatelessWidget {
 }
 
 class DuitControlledAlign extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<AlignAttributes> controller;
   final Widget child;
 
   const DuitControlledAlign({

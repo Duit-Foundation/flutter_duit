@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitLifecycleStateListener extends InheritedWidget
     with WidgetsBindingObserver {
-  final UIElementController controller;
+  final UIElementController<LifecycleStateListenerAttributes> controller;
 
   DuitLifecycleStateListener({
     required Widget child,
@@ -13,26 +13,26 @@ class DuitLifecycleStateListener extends InheritedWidget
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    final attrs = controller.attributes as LifecycleStateListenerAttributes?;
+    final attrs = controller.attributes!.payload;
     switch (state) {
       case AppLifecycleState.resumed:
-        controller.performAction(attrs?.onResumed);
+        controller.performAction(attrs.onResumed);
         break;
       case AppLifecycleState.inactive:
-        controller.performAction(attrs?.onInactive);
+        controller.performAction(attrs.onInactive);
         break;
       case AppLifecycleState.paused:
-        controller.performAction(attrs?.onPaused);
+        controller.performAction(attrs.onPaused);
         break;
       case AppLifecycleState.detached:
-        controller.performAction(attrs?.onDetached);
+        controller.performAction(attrs.onDetached);
         break;
       case AppLifecycleState.hidden:
-        controller.performAction(attrs?.onHidden);
+        controller.performAction(attrs.onHidden);
         break;
     }
 
-    controller.performAction(attrs?.onStateChanged);
+    controller.performAction(attrs.onStateChanged);
     super.didChangeAppLifecycleState(state);
   }
 

@@ -1,10 +1,17 @@
-import 'package:flutter/material.dart' show BuildContext;
-import 'package:flutter_duit/src/attributes/animation_attributes/animated_attributes_holder.dart';
-import 'package:flutter_duit/src/ui/widgets/explicit/animation_context.dart';
+import 'package:duit_kernel/duit_kernel.dart';
+import 'package:flutter/material.dart';
 
-mixin AnimatedPropertiesMixin {
-  T wrapAttributes<T extends AnimatedPropertyOwner>(
-      BuildContext context, T attributes) {
+import 'animation_context.dart';
+
+mixin AnimatedPropertiesMixin on Widget {
+  T wrapAttributes<T>(
+    BuildContext context,
+    T attributes,
+  ) {
+    if (attributes is! AnimatedPropertyOwner) {
+      return attributes;
+    }
+
     if (attributes.parentBuilderId == null) {
       return attributes;
     }
@@ -29,6 +36,15 @@ mixin AnimatedPropertiesMixin {
       animatedProperties[prop] = animationContext.data[prop];
     }
 
-    return attributes;
+    final dA = attributes as DuitAttributes;
+
+    final newAttr = dA.dispatchInternalCall<DuitAttributes>(
+      "fromJson",
+      positionalParams: [
+        animatedProperties,
+      ],
+    );
+
+    return dA.copyWith(newAttr);
   }
 }

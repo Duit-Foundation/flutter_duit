@@ -501,102 +501,154 @@ class _MyHomePageState extends State<MyHomePage> {
         //       driver: driver1,
         //       placeholder: const CircularProgressIndicator(),
         //     ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // DuitViewHost(
-        //     //   context: context,
-        //     //   driver: driver2,
-        //     //   placeholder: const CircularProgressIndicator(),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // DuitViewHost(
-        //     //   context: context,
-        //     //   driver: driver3,
-        //     //   placeholder: const CircularProgressIndicator(),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // DuitViewHost(
-        //     //   context: context,
-        //     //   driver: driver4,
-        //     //   placeholder: const CircularProgressIndicator(),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // ConstrainedBox(
-        //     //   constraints: BoxConstraints(
-        //     //     maxHeight: 150,
-        //     //     maxWidth: MediaQuery.of(context).size.width,
-        //     //   ),
-        //     //   child: DuitViewHost(
-        //     //     context: context,
-        //     //     driver: driver5,
-        //     //     placeholder: const CircularProgressIndicator(),
-        //     //   ),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // DuitViewHost(
-        //     //   context: context,
-        //     //   driver: driver6,
-        //     //   placeholder: const CircularProgressIndicator(),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // DuitViewHost(
-        //     //   context: context,
-        //     //   driver: driver7,
-        //     //   gestureInterceptor: (type, {gestureInfo}) {
-        //     //     debugPrint(type.name);
-        //     //   },
-        //     //   gestureInterceptorBehavior:
-        //     //       GestureInterceptorBehavior.onlyWithAction,
-        //     //   placeholder: const CircularProgressIndicator(),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // DuitViewHost(
-        //     //   context: context,
-        //     //   driver: driver8,
-        //     //   placeholder: const CircularProgressIndicator(),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 48,
-        //     // ),
-        //     // DuitViewHost(
-        //     //   context: context,
-        //     //   driver: driver9,
-        //     //   placeholder: const CircularProgressIndicator(),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // Padding(
-        //     //   padding: const EdgeInsets.symmetric(horizontal: 16),
-        //     //   child: DuitViewHost(
-        //     //     context: context,
-        //     //     driver: driver10,
-        //     //     placeholder: const CircularProgressIndicator(),
-        //     //   ),
-        //     // ),
-        //     // const SizedBox(
-        //     //   height: 24,
-        //     // ),
-        //     // DuitViewHost(
-        //     //   context: context,
-        //     //   driver: driver11,
-        //     //   placeholder: const CircularProgressIndicator(),
-        //     // ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver2,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver3,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver4,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     ConstrainedBox(
+        //       constraints: BoxConstraints(
+        //         maxHeight: 150,
+        //         maxWidth: MediaQuery.of(context).size.width,
+        //       ),
+        //       child: DuitViewHost(
+        //         context: context,
+        //         driver: driver5,
+        //         placeholder: const CircularProgressIndicator(),
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver6,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver7,
+        //       gestureInterceptor: (type, {gestureInfo}) {
+        //         debugPrint(type.name);
+        //       },
+        //       gestureInterceptorBehavior:
+        //           GestureInterceptorBehavior.onlyWithAction,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver8,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
+        //     const SizedBox(
+        //       height: 48,
+        //     ),
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver9,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     Padding(
+        //       padding: const EdgeInsets.symmetric(horizontal: 16),
+        //       child: DuitViewHost(
+        //         context: context,
+        //         driver: driver10,
+        //         placeholder: const CircularProgressIndicator(),
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       height: 24,
+        //     ),
+        //     DuitViewHost(
+        //       context: context,
+        //       driver: driver11,
+        //       placeholder: const CircularProgressIndicator(),
+        //     ),
         //   ],
         // ),
+      ),
+    );
+  }
+}
+
+class TestDisAnim extends StatefulWidget {
+  const TestDisAnim({super.key});
+
+  @override
+  State<TestDisAnim> createState() => _TestDisAnimState();
+}
+
+class _TestDisAnimState extends State<TestDisAnim>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ct;
+  late final Animation _anim;
+
+  @override
+  void initState() {
+    _ct = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        seconds: 1,
+      ),
+    );
+    _anim = Tween(begin: 0.0, end: 1.0).animate(_ct);
+    _ct.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _ct.reverse().whenComplete(() {
+      _ct.dispose();
+      super.dispose();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _anim,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _anim.value,
+          child: child,
+        );
+      },
+      child: Container(
+        width: 100,
+        height: 100,
+        color: Colors.red,
       ),
     );
   }

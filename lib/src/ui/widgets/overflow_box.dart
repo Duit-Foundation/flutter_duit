@@ -5,7 +5,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitOverflowBox extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<OverflowBoxAttributes> attributes;
   final Widget child;
 
   const DuitOverflowBox({
@@ -16,7 +16,7 @@ final class DuitOverflowBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as OverflowBoxAttributes;
+    final attrs = attributes.payload;
     return OverflowBox(
       key: Key(attributes.id),
       alignment: attrs.alignment ?? Alignment.center,
@@ -31,7 +31,7 @@ final class DuitOverflowBox extends StatelessWidget {
 }
 
 final class DuitControlledOverflowBox extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<OverflowBoxAttributes> controller;
   final Widget child;
 
   const DuitControlledOverflowBox({

@@ -6,7 +6,7 @@ import "package:flutter_duit/src/utils/index.dart";
 
 class DuitMetaWidget extends StatefulWidget {
   final Widget child;
-  final UIElementController controller;
+  final UIElementController<MetaAttributes> controller;
 
   const DuitMetaWidget({
     super.key,

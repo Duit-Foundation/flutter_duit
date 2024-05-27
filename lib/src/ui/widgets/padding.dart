@@ -5,7 +5,7 @@ import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitPadding extends StatelessWidget {
   final Widget child;
-  final ViewAttribute attributes;
+  final ViewAttribute<PaddingAttributes> attributes;
 
   const DuitPadding({
     super.key,
@@ -15,7 +15,7 @@ class DuitPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as PaddingAttributes;
+    final attrs = attributes.payload;
     return Padding(
       key: Key(attributes.id),
       padding: attrs.padding ?? EdgeInsets.zero,
@@ -25,7 +25,7 @@ class DuitPadding extends StatelessWidget {
 }
 
 class DuitControlledPadding extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<PaddingAttributes> controller;
   final Widget child;
 
   const DuitControlledPadding({

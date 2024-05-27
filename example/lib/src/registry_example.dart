@@ -28,16 +28,22 @@ class ExampleCustomWidgetAttributes
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName,
-      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
     // TODO: implement dispatchInternalCall
     throw UnimplementedError();
   }
 }
 
-ExampleCustomWidgetAttributes exampleAttributeMapper(
-    String type, Map<String, dynamic>? json) {
-  return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random");
+DuitAttributes exampleAttributeMapper(
+  String type,
+  Map<String, dynamic>? json,
+) {
+  return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random")
+      as DuitAttributes;
 }
 
 class ExampleWidget extends StatefulWidget {
@@ -53,9 +59,7 @@ class ExampleWidget extends StatefulWidget {
 }
 
 class _ExampleWidgetState extends State<ExampleWidget>
-    with
-        ViewControllerChangeListener<ExampleWidget,
-            ExampleCustomWidgetAttributes> {
+    with ViewControllerChangeListener<ExampleWidget, dynamic> {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -69,12 +73,13 @@ class _ExampleWidgetState extends State<ExampleWidget>
 }
 
 Widget exampleRenderer(TreeElement model) {
+  final m = model as ExampleCustomWidget;
   return ExampleWidget(
-    controller: model.viewController!,
+    controller: m.viewController!,
   );
 }
 
-TreeElement modelMapperExample(
+TreeElement<dynamic> modelMapperExample(
   String id,
   bool controlled,
   ViewAttribute attributes,

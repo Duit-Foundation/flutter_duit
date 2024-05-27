@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitOpacity extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<OpacityAttributes> attributes;
   final Widget child;
 
   const DuitOpacity({
@@ -15,7 +15,7 @@ class DuitOpacity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as OpacityAttributes;
+    final attrs = attributes.payload;
     return Opacity(
       key: Key(attributes.id),
       opacity: attrs.opacity,
@@ -25,7 +25,7 @@ class DuitOpacity extends StatelessWidget {
 }
 
 class DuitControlledOpacity extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<OpacityAttributes> controller;
   final Widget child;
 
   const DuitControlledOpacity({

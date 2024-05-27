@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitSizedBox extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<SizedBoxAttributes> attributes;
   final Widget? child;
 
   const DuitSizedBox({
@@ -15,7 +15,7 @@ class DuitSizedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes.payload as SizedBoxAttributes;
+    final state = attributes.payload;
     return SizedBox(
       key: Key(attributes.id),
       width: state.width?.toDouble(),
@@ -26,7 +26,7 @@ class DuitSizedBox extends StatelessWidget {
 }
 
 class DuitControlledSizedBox extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<SizedBoxAttributes> controller;
   final Widget child;
 
   const DuitControlledSizedBox({

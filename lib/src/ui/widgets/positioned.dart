@@ -4,8 +4,8 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitPositioned extends StatelessWidget {
+  final ViewAttribute<PositionedAttributes> attributes;
   final Widget child;
-  final ViewAttribute attributes;
 
   const DuitPositioned({
     super.key,
@@ -15,7 +15,7 @@ class DuitPositioned extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as PositionedAttributes;
+    final attrs = attributes.payload;
     return Positioned(
       key: Key(attributes.id),
       top: attrs.top,
@@ -28,7 +28,7 @@ class DuitPositioned extends StatelessWidget {
 }
 
 class DuitControlledPositioned extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<PositionedAttributes> controller;
   final Widget child;
 
   const DuitControlledPositioned({

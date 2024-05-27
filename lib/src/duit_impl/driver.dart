@@ -9,6 +9,7 @@ import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/element_type.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
+import "package:flutter_duit/src/animations/index.dart";
 
 import "event.dart";
 
@@ -278,6 +279,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
             _resolveEvent(entry.event);
           }
           break;
+        case ServerEventType.animationTrigger:
+          final trigger = event as AnimationTriggerEvent;
+          await _resolveAnimationTrigger(trigger);
+          break;
       }
     }
 
@@ -426,6 +431,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
     _layout = null;
     streamController.close();
     _driverFinalizer.detach(this);
+  }
+
+  Future<void> _resolveAnimationTrigger(AnimationTriggerEvent event) async {
+    final controller = _viewControllers[event.command.controllerId];
+
+    if (controller != null) {
+      controller.emitCommand(event.command);
+    }
   }
 
   Future<void> _resolveComponentUpdate(

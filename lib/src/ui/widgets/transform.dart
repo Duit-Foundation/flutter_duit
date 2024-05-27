@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitTransform extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<DuitAttributes> attributes;
   final Widget child;
 
   const DuitTransform({
@@ -71,7 +71,7 @@ class DuitTransform extends StatelessWidget {
 
 class DuitControlledTransform extends StatefulWidget {
   final Widget child;
-  final UIElementController controller;
+  final UIElementController<DuitAttributes> controller;
 
   const DuitControlledTransform({
     super.key,

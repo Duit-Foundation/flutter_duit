@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitSwitch extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<SwitchAttributes> controller;
 
   const DuitSwitch({
     super.key,

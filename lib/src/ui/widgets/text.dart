@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitText extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<TextAttributes> attributes;
 
   const DuitText({
     super.key,
@@ -13,7 +13,7 @@ final class DuitText extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final payload = attributes.payload as TextAttributes;
+    final payload = attributes.payload;
     return Text(
       key: Key(attributes.id),
       payload.data ?? "",
@@ -29,7 +29,7 @@ final class DuitText extends StatelessWidget {
 }
 
 final class DuitControlledText extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<TextAttributes> controller;
 
   const DuitControlledText({
     super.key,

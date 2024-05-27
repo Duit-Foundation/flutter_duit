@@ -7,7 +7,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// Represents the attributes for a Container widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
-final class ContainerAttributes implements DuitAttributes<ContainerAttributes> {
+final class ContainerAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<ContainerAttributes> {
   final double? width, height;
   final Color? color;
   final Clip? clipBehavior;
@@ -28,8 +29,8 @@ final class ContainerAttributes implements DuitAttributes<ContainerAttributes> {
     this.alignment,
     this.transformAlignment,
     this.foregroundDecoration,
-    // required super.affectedProperties,
-    // required super.parentBuilderId,
+    required super.affectedProperties,
+    required super.parentBuilderId,
   });
 
   @override
@@ -46,8 +47,8 @@ final class ContainerAttributes implements DuitAttributes<ContainerAttributes> {
       alignment: other.alignment ?? alignment,
       transformAlignment: other.transformAlignment ?? transformAlignment,
       foregroundDecoration: other.foregroundDecoration ?? foregroundDecoration,
-      // affectedProperties: other.affectedProperties,
-      // parentBuilderId: other.parentBuilderId,
+      affectedProperties: other.affectedProperties,
+      parentBuilderId: other.parentBuilderId,
     );
   }
 
@@ -66,8 +67,8 @@ final class ContainerAttributes implements DuitAttributes<ContainerAttributes> {
       alignment: ParamsMapper.convertToAlignmentDirectional(json['alignment']),
       transformAlignment: ParamsMapper.convertToAlignmentDirectional(
           json['transformAlignment']),
-      // affectedProperties: Set.from(json['affectedProperties'] ?? {}),
-      // parentBuilderId: json['parentBuilderId'],
+      affectedProperties: Set.from(json['affectedProperties'] ?? {}),
+      parentBuilderId: json['parentBuilderId'],
     );
   }
 

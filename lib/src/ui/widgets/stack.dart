@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitStack extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<StackAttributes> attributes;
   final List<Widget> children;
 
   const DuitStack({
@@ -28,7 +28,7 @@ class DuitStack extends StatelessWidget {
 }
 
 class DuitControlledStack extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<StackAttributes> controller;
   final List<Widget> children;
 
   const DuitControlledStack({

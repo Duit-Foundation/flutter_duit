@@ -5,8 +5,8 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitSingleChildScrollView extends StatelessWidget {
+  final ViewAttribute<SingleChildScrollviewAttributes> attributes;
   final Widget child;
-  final ViewAttribute attributes;
 
   const DuitSingleChildScrollView({
     super.key,
@@ -16,7 +16,7 @@ class DuitSingleChildScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as SingleChildScrollviewAttributes;
+    final attrs = attributes.payload;
     return SingleChildScrollView(
       scrollDirection: attrs.scrollDirection ?? Axis.vertical,
       reverse: attrs.reverse ?? false,
@@ -34,8 +34,8 @@ class DuitSingleChildScrollView extends StatelessWidget {
 }
 
 class DuitControlledSingleChildScrollView extends StatefulWidget {
+  final UIElementController<SingleChildScrollviewAttributes> controller;
   final Widget child;
-  final UIElementController controller;
 
   const DuitControlledSingleChildScrollView({
     super.key,

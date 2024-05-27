@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import 'package:flutter_duit/src/duit_impl/index.dart';
 
 class DuitColoredBox extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<ColoredBoxAttributes> attributes;
   final Widget child;
 
   const DuitColoredBox({
@@ -15,7 +15,7 @@ class DuitColoredBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes.payload as ColoredBoxAttributes;
+    final state = attributes.payload;
     return ColoredBox(
       key: Key(attributes.id),
       color: state.color,
@@ -25,7 +25,7 @@ class DuitColoredBox extends StatelessWidget {
 }
 
 class DuitControlledColoredBox extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<ColoredBoxAttributes> controller;
   final Widget child;
 
   const DuitControlledColoredBox({

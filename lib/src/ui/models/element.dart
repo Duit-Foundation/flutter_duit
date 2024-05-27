@@ -173,13 +173,13 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final child = DuitElement.fromJson(json["child"], driver);
 
         final attributes =
-            ViewAttribute.createAttributes<AnimatedBuilderUIElement>(
+            ViewAttribute.createAttributes<AnimatedBuilderAttributes>(
           type,
           json["attributes"],
           tag,
         );
 
-        return AnimatedBuilderUIElement(
+        return AnimatedBuilderUIElement<AnimatedBuilderAttributes>(
           type: type,
           id: id,
           child: child,

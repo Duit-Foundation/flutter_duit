@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 final class DuitFittedBox extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<FittedBoxAttributes> attributes;
   final Widget child;
 
   const DuitFittedBox({
@@ -15,7 +15,7 @@ final class DuitFittedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as FittedBoxAttributes;
+    final attrs = attributes.payload;
     return FittedBox(
       key: Key(attributes.id),
       fit: attrs.fit ?? BoxFit.contain,
@@ -27,7 +27,7 @@ final class DuitFittedBox extends StatelessWidget {
 }
 
 class DuitControlledFittedBox extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<FittedBoxAttributes> controller;
   final Widget child;
 
   const DuitControlledFittedBox({

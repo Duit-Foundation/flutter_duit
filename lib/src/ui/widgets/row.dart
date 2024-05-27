@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import 'package:flutter_duit/src/duit_impl/index.dart';
 
 class DuitRow extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<RowAttributes> attributes;
   final List<Widget> children;
 
   const DuitRow({
@@ -29,7 +29,7 @@ class DuitRow extends StatelessWidget {
 }
 
 class DuitControlledRow extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<RowAttributes> controller;
   final List<Widget> children;
 
   const DuitControlledRow({

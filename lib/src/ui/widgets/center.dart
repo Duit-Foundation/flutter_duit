@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitCenter extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<CenterAttributes> attributes;
   final Widget child;
 
   const DuitCenter({
@@ -26,7 +26,7 @@ class DuitCenter extends StatelessWidget {
 }
 
 class DuitControlledCenter extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<CenterAttributes> controller;
   final Widget child;
 
   const DuitControlledCenter({

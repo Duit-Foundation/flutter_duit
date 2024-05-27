@@ -75,7 +75,7 @@ sealed class _ImageProducer {
 }
 
 class DuitImage extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<ImageAttributes> attributes;
 
   const DuitImage({
     super.key,
@@ -84,7 +84,7 @@ class DuitImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as ImageAttributes;
+    final attrs = attributes.payload;
     return switch (attrs.type) {
       ImageType.memory => _ImageProducer.memory(attrs, attributes.id),
       ImageType.asset => _ImageProducer.asset(attrs, attributes.id),
@@ -94,7 +94,7 @@ class DuitImage extends StatelessWidget {
 }
 
 class DuitControlledImage extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<ImageAttributes> controller;
 
   const DuitControlledImage({
     super.key,
