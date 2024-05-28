@@ -1,9 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DuitTransform extends StatelessWidget {
+class DuitTransform extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute<DuitAttributes> attributes;
   final Widget child;
 
@@ -15,7 +16,10 @@ class DuitTransform extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
 
     if (attrs is ScaleTransform) {
       return Transform.scale(
@@ -69,7 +73,7 @@ class DuitTransform extends StatelessWidget {
   }
 }
 
-class DuitControlledTransform extends StatefulWidget {
+class DuitControlledTransform extends StatefulWidget with AnimatedAttributes {
   final Widget child;
   final UIElementController<DuitAttributes> controller;
 
@@ -94,8 +98,12 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
 
   @override
   Widget build(BuildContext context) {
-    if (attributes is ScaleTransform) {
-      final attrs = attributes as ScaleTransform;
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
+    if (attrs is ScaleTransform) {
       return Transform.scale(
         key: Key(widget.controller.id),
         scale: attrs.scale,
@@ -109,8 +117,7 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
       );
     }
 
-    if (attributes is RotateTransform) {
-      final attrs = attributes as RotateTransform;
+    if (attrs is RotateTransform) {
       return Transform.rotate(
         key: Key(widget.controller.id),
         angle: attrs.angle ?? 0,
@@ -122,8 +129,7 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
       );
     }
 
-    if (attributes is TranslateTransform) {
-      final attrs = attributes as TranslateTransform;
+    if (attrs is TranslateTransform) {
       return Transform.translate(
         key: Key(widget.controller.id),
         offset: attrs.offset ?? Offset.zero,
@@ -133,8 +139,7 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
       );
     }
 
-    if (attributes is FlipTransform) {
-      final attrs = attributes as FlipTransform;
+    if (attrs is FlipTransform) {
       return Transform.flip(
         key: Key(widget.controller.id),
         flipX: attrs.flipX ?? false,

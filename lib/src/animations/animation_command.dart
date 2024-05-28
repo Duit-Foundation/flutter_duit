@@ -1,5 +1,6 @@
 import 'index.dart';
 
+
 final class AnimationCommand {
   final String controllerId;
   final AnimationMethod method;

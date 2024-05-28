@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/animations/animated_props.dart";
 
-class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
+class DuitContainer extends StatelessWidget with AnimatedAttributes {
   final Widget child;
   final ViewAttribute<ContainerAttributes> attributes;
 
@@ -16,7 +16,7 @@ class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = wrapAttributes(context, attributes.payload);
+    final attrs = mergeWithAttributes(context, attributes.payload);
 
     return Container(
       key: Key(attributes.id),
@@ -35,8 +35,7 @@ class DuitContainer extends StatelessWidget with AnimatedPropertiesMixin {
   }
 }
 
-class DuitControlledContainer extends StatefulWidget
-    with AnimatedPropertiesMixin {
+class DuitControlledContainer extends StatefulWidget with AnimatedAttributes {
   final Widget child;
   final UIElementController<ContainerAttributes> controller;
 
@@ -65,9 +64,9 @@ class _DuitControlledContainerState extends State<DuitControlledContainer>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.wrapAttributes(
+    final attrs = widget.mergeWithController(
       context,
-      widget.controller.attributes!.payload,
+      widget.controller,
     );
     return Container(
       key: Key(widget.controller.id),

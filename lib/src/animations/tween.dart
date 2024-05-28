@@ -1,7 +1,7 @@
-import 'package:flutter/painting.dart';
-
+import 'package:flutter/material.dart';
 import 'index.dart';
 
+/// [Tween] description
 final class TweenDescription extends DuitTweenDescription<double> {
   TweenDescription({
     required super.animatedPropKey,
@@ -15,6 +15,7 @@ final class TweenDescription extends DuitTweenDescription<double> {
   });
 }
 
+/// [ColorTween] description
 final class ColorTweenDescription extends DuitTweenDescription<Color> {
   ColorTweenDescription({
     required super.animatedPropKey,
@@ -28,6 +29,7 @@ final class ColorTweenDescription extends DuitTweenDescription<Color> {
   });
 }
 
+/// [TextStyleTween] description
 final class TextStyleTweenDescription extends DuitTweenDescription<TextStyle> {
   TextStyleTweenDescription({
     required super.animatedPropKey,
@@ -41,6 +43,7 @@ final class TextStyleTweenDescription extends DuitTweenDescription<TextStyle> {
   });
 }
 
+/// [DecorationTween] description
 final class DecorationTweenDescription
     extends DuitTweenDescription<Decoration> {
   DecorationTweenDescription({

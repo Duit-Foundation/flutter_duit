@@ -2,6 +2,7 @@ import "dart:typed_data";
 
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 import "package:flutter_duit/src/utils/image_type.dart";
@@ -74,7 +75,7 @@ sealed class _ImageProducer {
   }
 }
 
-class DuitImage extends StatelessWidget {
+class DuitImage extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute<ImageAttributes> attributes;
 
   const DuitImage({
@@ -84,7 +85,11 @@ class DuitImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
+
     return switch (attrs.type) {
       ImageType.memory => _ImageProducer.memory(attrs, attributes.id),
       ImageType.asset => _ImageProducer.asset(attrs, attributes.id),
@@ -93,7 +98,7 @@ class DuitImage extends StatelessWidget {
   }
 }
 
-class DuitControlledImage extends StatefulWidget {
+class DuitControlledImage extends StatefulWidget with AnimatedAttributes {
   final UIElementController<ImageAttributes> controller;
 
   const DuitControlledImage({
@@ -115,12 +120,15 @@ class _DuitControlledImageState extends State<DuitControlledImage>
 
   @override
   Widget build(BuildContext context) {
-    return switch (attributes.type) {
-      ImageType.memory =>
-        _ImageProducer.memory(attributes, widget.controller.id),
-      ImageType.asset => _ImageProducer.asset(attributes, widget.controller.id),
-      ImageType.network =>
-        _ImageProducer.network(attributes, widget.controller.id),
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
+    return switch (attrs.type) {
+      ImageType.memory => _ImageProducer.memory(attrs, widget.controller.id),
+      ImageType.asset => _ImageProducer.asset(attrs, widget.controller.id),
+      ImageType.network => _ImageProducer.network(attrs, widget.controller.id),
     };
   }
 }

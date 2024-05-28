@@ -1,9 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DuitDecoratedBox extends StatelessWidget {
+class DuitDecoratedBox extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute<DecoratedBoxAttributes> attributes;
   final Widget child;
 
@@ -15,7 +16,11 @@ class DuitDecoratedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
+
     return DecoratedBox(
       key: Key(attributes.id),
       decoration: attrs.decoration ?? const BoxDecoration(),
@@ -24,7 +29,8 @@ class DuitDecoratedBox extends StatelessWidget {
   }
 }
 
-class DuitControlledDecoratedBox extends StatefulWidget {
+class DuitControlledDecoratedBox extends StatefulWidget
+    with AnimatedAttributes {
   final UIElementController<DecoratedBoxAttributes> controller;
   final Widget child;
 
@@ -51,9 +57,14 @@ class _DuitControlledDecoratedBoxState extends State<DuitControlledDecoratedBox>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
     return DecoratedBox(
       key: Key(widget.controller.id),
-      decoration: attributes.decoration ?? const BoxDecoration(),
+      decoration: attrs.decoration ?? const BoxDecoration(),
       child: widget.child,
     );
   }

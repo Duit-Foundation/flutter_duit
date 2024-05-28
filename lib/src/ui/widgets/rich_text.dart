@@ -1,9 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DuitRichText extends StatelessWidget {
+class DuitRichText extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute<RichTextAttributes> attributes;
 
   const DuitRichText({
@@ -13,7 +14,11 @@ class DuitRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as RichTextAttributes;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
+
     assert(attrs.textSpan != null, "TextSpan cannot be null");
     return Text.rich(
       key: Key(attributes.id),
@@ -34,7 +39,7 @@ class DuitRichText extends StatelessWidget {
   }
 }
 
-class DuitControlledRichText extends StatefulWidget {
+class DuitControlledRichText extends StatefulWidget with AnimatedAttributes {
   final UIElementController<RichTextAttributes> controller;
 
   const DuitControlledRichText({
@@ -58,22 +63,27 @@ class _DuitControlledRichTextState extends State<DuitControlledRichText>
 
   @override
   Widget build(BuildContext context) {
-    assert(attributes.textSpan != null, "TextSpan cannot be null");
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
+    assert(attrs.textSpan != null, "TextSpan cannot be null");
     return Text.rich(
       key: Key(widget.controller.id),
-      attributes.textSpan!,
-      textAlign: attributes.textAlign,
-      textDirection: attributes.textDirection,
-      softWrap: attributes.softWrap,
-      overflow: attributes.overflow,
-      maxLines: attributes.maxLines,
-      semanticsLabel: attributes.semanticsLabel,
-      textWidthBasis: attributes.textWidthBasis,
-      textHeightBehavior: attributes.textHeightBehavior,
-      selectionColor: attributes.selectionColor,
-      strutStyle: attributes.strutStyle,
-      style: attributes.style,
-      textScaler: attributes.textScaler,
+      attrs.textSpan!,
+      textAlign: attrs.textAlign,
+      textDirection: attrs.textDirection,
+      softWrap: attrs.softWrap,
+      overflow: attrs.overflow,
+      maxLines: attrs.maxLines,
+      semanticsLabel: attrs.semanticsLabel,
+      textWidthBasis: attrs.textWidthBasis,
+      textHeightBehavior: attrs.textHeightBehavior,
+      selectionColor: attrs.selectionColor,
+      strutStyle: attrs.strutStyle,
+      style: attrs.style,
+      textScaler: attrs.textScaler,
     );
   }
 }

@@ -15,7 +15,7 @@ class DuitRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes.payload as RowAttributes;
+    final state = attributes.payload;
     return Row(
       key: Key(attributes.id),
       mainAxisAlignment: state.mainAxisAlignment ?? MainAxisAlignment.start,

@@ -349,14 +349,13 @@ final class DuitDriver with DriverHooks implements UIDriver {
       final json = await transport?.connect(
         initialData: initialRequestPayload,
       );
-      assert(json != null);
 
       if (transport is Streamer) {
         final streamer = transport as Streamer;
         streamer.eventStream.listen(_resolveEvent);
       }
 
-      _layout = DuitTree(json: builder, driver: this);
+      _layout = DuitTree(json: json!, driver: this);
       streamController.sink.add(await _layout?.parse());
 
       _driverFinalizer.attach(

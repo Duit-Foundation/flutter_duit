@@ -5,6 +5,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 import 'index.dart';
 import 'tween.dart';
 
+/// Base class for describing a Tween object, parsing json into concrete Tween types
 base class DuitTweenDescription<T> {
   final String animatedPropKey;
   final Duration duration;
@@ -45,6 +46,7 @@ base class DuitTweenDescription<T> {
     };
   }
 
+  /// Deserializes a [json] object into a [DuitTweenDescription]
   static DuitTweenDescription fromJson<T>(JSONObject json) {
     final type = json["type"] as String;
     return switch (type) {

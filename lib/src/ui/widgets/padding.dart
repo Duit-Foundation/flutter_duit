@@ -1,9 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DuitPadding extends StatelessWidget {
+class DuitPadding extends StatelessWidget with AnimatedAttributes {
   final Widget child;
   final ViewAttribute<PaddingAttributes> attributes;
 
@@ -15,7 +16,10 @@ class DuitPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
     return Padding(
       key: Key(attributes.id),
       padding: attrs.padding ?? EdgeInsets.zero,
@@ -24,7 +28,7 @@ class DuitPadding extends StatelessWidget {
   }
 }
 
-class DuitControlledPadding extends StatefulWidget {
+class DuitControlledPadding extends StatefulWidget with AnimatedAttributes {
   final UIElementController<PaddingAttributes> controller;
   final Widget child;
 
@@ -49,9 +53,14 @@ class _DuitControlledPaddingState extends State<DuitControlledPadding>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
     return Padding(
       key: Key(widget.controller.id),
-      padding: attributes.padding ?? EdgeInsets.zero,
+      padding: attrs.padding ?? EdgeInsets.zero,
       child: widget.child,
     );
   }

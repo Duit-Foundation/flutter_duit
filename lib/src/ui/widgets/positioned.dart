@@ -1,9 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DuitPositioned extends StatelessWidget {
+class DuitPositioned extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute<PositionedAttributes> attributes;
   final Widget child;
 
@@ -15,7 +16,10 @@ class DuitPositioned extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
     return Positioned(
       key: Key(attributes.id),
       top: attrs.top,
@@ -27,7 +31,7 @@ class DuitPositioned extends StatelessWidget {
   }
 }
 
-class DuitControlledPositioned extends StatefulWidget {
+class DuitControlledPositioned extends StatefulWidget with AnimatedAttributes {
   final UIElementController<PositionedAttributes> controller;
   final Widget child;
 
@@ -54,12 +58,17 @@ class _DuitControlledPositionedState extends State<DuitControlledPositioned>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
     return Positioned(
       key: Key(widget.controller.id),
-      top: attributes.top,
-      left: attributes.left,
-      right: attributes.right,
-      bottom: attributes.bottom,
+      top: attrs.top,
+      left: attrs.left,
+      right: attrs.right,
+      bottom: attrs.bottom,
       child: widget.child,
     );
   }

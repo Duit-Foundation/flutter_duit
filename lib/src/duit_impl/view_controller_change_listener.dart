@@ -66,11 +66,11 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
 
   void _listener() {
     final newState = _controller.attributes?.cast<AttrType>();
-    final attrs = attributes as DuitAttributes;
+    final attrs = attributes as DuitAttributes<AttrType>;
 
     if (newState != null) {
       setState(() {
-        attributes = attrs.copyWith(newState);
+        attributes = attrs.copyWith(newState.payload);
       });
     }
   }

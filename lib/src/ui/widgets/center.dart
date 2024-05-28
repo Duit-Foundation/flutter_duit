@@ -15,7 +15,7 @@ class DuitCenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes.payload as CenterAttributes;
+    final state = attributes.payload;
     return Center(
       key: Key(attributes.id),
       widthFactor: state.widthFactor,
