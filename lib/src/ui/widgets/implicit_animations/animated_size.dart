@@ -5,7 +5,7 @@ import "package:flutter_duit/src/attributes/animation_attributes/animated_size_a
 
 class DuitAnimatedSize extends StatefulWidget {
   final Widget child;
-  final UIElementController controller;
+  final UIElementController<AnimatedSizeAttributes> controller;
 
   const DuitAnimatedSize({
     super.key,

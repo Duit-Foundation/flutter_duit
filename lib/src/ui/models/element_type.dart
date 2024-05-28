@@ -38,4 +38,5 @@ final class ElementType {
   static const repaintBoundary = "RepaintBoundary";
   static const overflowBox = "OverflowBox";
   static const animatedSize = "AnimatedSize";
+  static const animatedBuilder = "AnimatedBuilder";
 }

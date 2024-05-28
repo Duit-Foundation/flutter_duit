@@ -1,10 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import 'package:flutter_duit/src/duit_impl/index.dart';
 
-class DuitColoredBox extends StatelessWidget {
-  final ViewAttribute attributes;
+class DuitColoredBox extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute<ColoredBoxAttributes> attributes;
   final Widget child;
 
   const DuitColoredBox({
@@ -15,17 +16,17 @@ class DuitColoredBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes.payload as ColoredBoxAttributes;
+    final attrs = mergeWithAttributes(context, attributes.payload);
     return ColoredBox(
       key: Key(attributes.id),
-      color: state.color,
+      color: attrs.color,
       child: child,
     );
   }
 }
 
-class DuitControlledColoredBox extends StatefulWidget {
-  final UIElementController controller;
+class DuitControlledColoredBox extends StatefulWidget with AnimatedAttributes {
+  final UIElementController<ColoredBoxAttributes> controller;
   final Widget child;
 
   const DuitControlledColoredBox({
@@ -51,9 +52,13 @@ class _DuitControlledColoredBoxState extends State<DuitControlledColoredBox>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
     return ColoredBox(
       key: Key(widget.controller.id),
-      color: attributes.color,
+      color: attrs.color,
       child: widget.child,
     );
   }

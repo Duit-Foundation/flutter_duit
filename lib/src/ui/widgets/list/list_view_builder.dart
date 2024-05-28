@@ -9,7 +9,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 import 'list_tile.dart';
 
 final class DuitListViewBuilder extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<ListViewAttributes> controller;
 
   const DuitListViewBuilder({
     super.key,

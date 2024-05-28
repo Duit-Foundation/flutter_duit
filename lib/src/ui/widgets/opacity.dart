@@ -1,10 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DuitOpacity extends StatelessWidget {
-  final ViewAttribute attributes;
+class DuitOpacity extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute<OpacityAttributes> attributes;
   final Widget child;
 
   const DuitOpacity({
@@ -15,7 +16,11 @@ class DuitOpacity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as OpacityAttributes;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
+
     return Opacity(
       key: Key(attributes.id),
       opacity: attrs.opacity,
@@ -24,8 +29,8 @@ class DuitOpacity extends StatelessWidget {
   }
 }
 
-class DuitControlledOpacity extends StatefulWidget {
-  final UIElementController controller;
+class DuitControlledOpacity extends StatefulWidget with AnimatedAttributes {
+  final UIElementController<OpacityAttributes> controller;
   final Widget child;
 
   const DuitControlledOpacity({
@@ -49,9 +54,14 @@ class _DuitControlledOpacityState extends State<DuitControlledOpacity>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
     return Opacity(
       key: Key(widget.controller.id),
-      opacity: attributes.opacity,
+      opacity: attrs.opacity,
       child: widget.child,
     );
   }

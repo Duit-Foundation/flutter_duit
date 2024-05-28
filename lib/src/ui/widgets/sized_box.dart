@@ -1,10 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-class DuitSizedBox extends StatelessWidget {
-  final ViewAttribute attributes;
+class DuitSizedBox extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute<SizedBoxAttributes> attributes;
   final Widget? child;
 
   const DuitSizedBox({
@@ -15,18 +16,21 @@ class DuitSizedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes.payload as SizedBoxAttributes;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
     return SizedBox(
       key: Key(attributes.id),
-      width: state.width?.toDouble(),
-      height: state.height?.toDouble(),
+      width: attrs.width?.toDouble(),
+      height: attrs.height?.toDouble(),
       child: child,
     );
   }
 }
 
-class DuitControlledSizedBox extends StatefulWidget {
-  final UIElementController controller;
+class DuitControlledSizedBox extends StatefulWidget with AnimatedAttributes {
+  final UIElementController<SizedBoxAttributes> controller;
   final Widget child;
 
   const DuitControlledSizedBox({
@@ -51,10 +55,15 @@ class _DuitControlledSizedBoxState extends State<DuitControlledSizedBox>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
     return SizedBox(
       key: Key(widget.controller.id),
-      width: attributes.width?.toDouble(),
-      height: attributes.height?.toDouble(),
+      width: attrs.width?.toDouble(),
+      height: attrs.height?.toDouble(),
       child: widget.child,
     );
   }

@@ -1,10 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DuitStack extends StatelessWidget {
-  final ViewAttribute attributes;
+class DuitStack extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute<StackAttributes> attributes;
   final List<Widget> children;
 
   const DuitStack({
@@ -15,7 +16,11 @@ class DuitStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as StackAttributes;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
+
     return Stack(
       key: Key(attributes.id),
       alignment: attrs.alignment ?? AlignmentDirectional.topStart,
@@ -27,8 +32,8 @@ class DuitStack extends StatelessWidget {
   }
 }
 
-class DuitControlledStack extends StatefulWidget {
-  final UIElementController controller;
+class DuitControlledStack extends StatefulWidget with AnimatedAttributes {
+  final UIElementController<StackAttributes> controller;
   final List<Widget> children;
 
   const DuitControlledStack({
@@ -51,11 +56,15 @@ class _DuitControlledStackState extends State<DuitControlledStack>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
     return Stack(
-      alignment: attributes.alignment ?? AlignmentDirectional.topStart,
-      textDirection: attributes.textDirection,
-      fit: attributes.fit ?? StackFit.loose,
-      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
+      alignment: attrs.alignment ?? AlignmentDirectional.topStart,
+      textDirection: attrs.textDirection,
+      fit: attrs.fit ?? StackFit.loose,
+      clipBehavior: attrs.clipBehavior ?? Clip.hardEdge,
       children: widget.children,
     );
   }

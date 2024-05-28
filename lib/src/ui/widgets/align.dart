@@ -1,10 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DuitAlign extends StatelessWidget {
-  final ViewAttribute attributes;
+class DuitAlign extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute<AlignAttributes> attributes;
   final Widget child;
 
   const DuitAlign({
@@ -15,7 +16,11 @@ class DuitAlign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as AlignAttributes;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
+
     return Align(
       key: Key(attributes.id),
       alignment: attrs.alignment ?? Alignment.center,
@@ -26,8 +31,8 @@ class DuitAlign extends StatelessWidget {
   }
 }
 
-class DuitControlledAlign extends StatefulWidget {
-  final UIElementController controller;
+class DuitControlledAlign extends StatefulWidget with AnimatedAttributes {
+  final UIElementController<AlignAttributes> controller;
   final Widget child;
 
   const DuitControlledAlign({
@@ -50,11 +55,16 @@ class _DuitControlledAlignState extends State<DuitControlledAlign>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
     return Align(
       key: Key(widget.controller.id),
-      alignment: attributes.alignment ?? Alignment.center,
-      widthFactor: attributes.widthFactor,
-      heightFactor: attributes.heightFactor,
+      alignment: attrs.alignment ?? Alignment.center,
+      widthFactor: attrs.widthFactor,
+      heightFactor: attrs.heightFactor,
       child: widget.child,
     );
   }

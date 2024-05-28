@@ -31,7 +31,7 @@ class DuitColumn extends StatelessWidget {
 }
 
 class DuitControlledColumn extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<ColumnAttributes> controller;
   final List<Widget> children;
 
   const DuitControlledColumn({

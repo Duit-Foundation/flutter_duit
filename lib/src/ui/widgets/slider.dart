@@ -4,7 +4,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitSlider extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<SliderAttributes> controller;
 
   const DuitSlider({
     super.key,

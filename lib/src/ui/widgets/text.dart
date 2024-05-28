@@ -1,10 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-final class DuitText extends StatelessWidget {
-  final ViewAttribute attributes;
+final class DuitText extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute<TextAttributes> attributes;
 
   const DuitText({
     super.key,
@@ -13,23 +14,30 @@ final class DuitText extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final payload = attributes.payload as TextAttributes;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
+
+    if (attributes.payload.data == null || attributes.payload.data!.isEmpty) {
+      return const SizedBox.shrink();
+    }
     return Text(
       key: Key(attributes.id),
-      payload.data ?? "",
-      textAlign: payload.textAlign,
-      textDirection: payload.textDirection,
-      style: payload.style,
-      maxLines: payload.maxLines,
-      semanticsLabel: payload.semanticsLabel,
-      overflow: payload.overflow,
-      softWrap: payload.softWrap,
+      attrs.data ?? "",
+      textAlign: attrs.textAlign,
+      textDirection: attrs.textDirection,
+      style: attrs.style,
+      maxLines: attrs.maxLines,
+      semanticsLabel: attrs.semanticsLabel,
+      overflow: attrs.overflow,
+      softWrap: attrs.softWrap,
     );
   }
 }
 
-final class DuitControlledText extends StatefulWidget {
-  final UIElementController controller;
+final class DuitControlledText extends StatefulWidget with AnimatedAttributes {
+  final UIElementController<TextAttributes> controller;
 
   const DuitControlledText({
     super.key,
@@ -50,18 +58,23 @@ class _DuitControlledTextState extends State<DuitControlledText>
 
   @override
   Widget build(BuildContext context) {
-    if (attributes.data == null || attributes.data!.isEmpty) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
+    if (attrs.data == null || attrs.data!.isEmpty) {
       return const SizedBox.shrink();
     } else {
       return Text(
-        attributes.data ?? "",
-        textAlign: attributes.textAlign,
-        textDirection: attributes.textDirection,
-        style: attributes.style,
-        maxLines: attributes.maxLines,
-        semanticsLabel: attributes.semanticsLabel,
-        overflow: attributes.overflow,
-        softWrap: attributes.softWrap,
+        attrs.data ?? "",
+        textAlign: attrs.textAlign,
+        textDirection: attrs.textDirection,
+        style: attrs.style,
+        maxLines: attrs.maxLines,
+        semanticsLabel: attrs.semanticsLabel,
+        overflow: attrs.overflow,
+        softWrap: attrs.softWrap,
       );
     }
   }

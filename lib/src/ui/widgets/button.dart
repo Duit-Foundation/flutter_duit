@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitElevatedButton extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<ElevatedButtonAttributes> controller;
   final Widget child;
 
   const DuitElevatedButton({

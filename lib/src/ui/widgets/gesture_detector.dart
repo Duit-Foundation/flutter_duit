@@ -6,7 +6,7 @@ import "package:flutter_duit/src/duit_impl/view_context.dart";
 
 class DuitGestureDetector extends StatefulWidget {
   final Widget child;
-  final UIElementController controller;
+  final UIElementController<GestureDetectorAttributes> controller;
 
   const DuitGestureDetector({
     super.key,

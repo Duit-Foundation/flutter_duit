@@ -43,9 +43,9 @@ import 'package:flutter/material.dart';
 /// The following properties are available in the `ViewControllerChangeListener` mixin:
 /// - `attributes`: The current attributes of the `UIElementController`. These attributes can be used to build the UI.
 mixin ViewControllerChangeListener<T extends StatefulWidget,
-    AttrType extends DuitAttributes> on State<T> {
+    AttrType> on State<T> {
   late AttrType attributes;
-  late UIElementController _controller;
+  late UIElementController<AttrType> _controller;
 
   /// Attaches the state to a [UIElementController].
   ///
@@ -59,17 +59,18 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
   ///   super.initState();
   /// }
   /// ```
-  void attachStateToController(UIElementController controller) {
+  void attachStateToController(UIElementController<AttrType> controller) {
     _controller = controller;
-    attributes = _controller.attributes?.payload;
+    attributes = _controller.attributes!.payload;
   }
 
   void _listener() {
-    final newState = _controller.attributes?.payload;
+    final newState = _controller.attributes?.cast<AttrType>();
+    final attrs = attributes as DuitAttributes<AttrType>;
 
     if (newState != null) {
       setState(() {
-        attributes = attributes.copyWith(newState);
+        attributes = attrs.copyWith(newState.payload);
       });
     }
   }

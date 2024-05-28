@@ -169,6 +169,32 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           controlled: controlled,
         );
+      case ElementType.animatedBuilder:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedBuilderAttributes>(
+          type,
+          json["attributes"],
+          tag,
+        );
+
+        return AnimatedBuilderUIElement<AnimatedBuilderAttributes>(
+          type: type,
+          id: id,
+          child: child,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlled,
+        );
       case ElementType.coloredBox:
         final child = DuitElement.fromJson(json["child"], driver);
 

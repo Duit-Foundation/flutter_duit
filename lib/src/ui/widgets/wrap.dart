@@ -1,11 +1,12 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DuitWrap extends StatelessWidget {
+class DuitWrap extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute<WrapAttributes> attributes;
   final List<Widget> children;
-  final ViewAttribute attributes;
 
   const DuitWrap({
     super.key,
@@ -15,7 +16,7 @@ class DuitWrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as WrapAttributes;
+    final attrs = mergeWithAttributes(context, attributes.payload);
     return Wrap(
       key: Key(attributes.id),
       alignment: attrs.alignment ?? WrapAlignment.start,
@@ -32,8 +33,8 @@ class DuitWrap extends StatelessWidget {
   }
 }
 
-class DuitControlledWrap extends StatefulWidget {
-  final UIElementController controller;
+class DuitControlledWrap extends StatefulWidget with AnimatedAttributes {
+  final UIElementController<WrapAttributes> controller;
   final List<Widget> children;
 
   const DuitControlledWrap({
@@ -56,18 +57,21 @@ class _DuitControlledWrapState extends State<DuitControlledWrap>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
     return Wrap(
       key: Key(widget.controller.id),
-      alignment: attributes.alignment ?? WrapAlignment.start,
-      runAlignment: attributes.runAlignment ?? WrapAlignment.start,
-      spacing: attributes.spacing,
-      runSpacing: attributes.runSpacing,
-      direction: attributes.direction ?? Axis.horizontal,
-      textDirection: attributes.textDirection,
-      crossAxisAlignment:
-          attributes.crossAxisAlignment ?? WrapCrossAlignment.start,
-      verticalDirection: attributes.verticalDirection ?? VerticalDirection.down,
-      clipBehavior: attributes.clipBehavior ?? Clip.none,
+      alignment: attrs.alignment ?? WrapAlignment.start,
+      runAlignment: attrs.runAlignment ?? WrapAlignment.start,
+      spacing: attrs.spacing,
+      runSpacing: attrs.runSpacing,
+      direction: attrs.direction ?? Axis.horizontal,
+      textDirection: attrs.textDirection,
+      crossAxisAlignment: attrs.crossAxisAlignment ?? WrapCrossAlignment.start,
+      verticalDirection: attrs.verticalDirection ?? VerticalDirection.down,
+      clipBehavior: attrs.clipBehavior ?? Clip.none,
       children: widget.children,
     );
   }

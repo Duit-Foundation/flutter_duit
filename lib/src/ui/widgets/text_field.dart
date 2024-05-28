@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitTextField extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<TextFieldAttributes> controller;
 
   const DuitTextField({
     super.key,

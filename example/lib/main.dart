@@ -469,3 +469,55 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class TestDisAnim extends StatefulWidget {
+  const TestDisAnim({super.key});
+
+  @override
+  State<TestDisAnim> createState() => _TestDisAnimState();
+}
+
+class _TestDisAnimState extends State<TestDisAnim>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ct;
+  late final Animation _anim;
+
+  @override
+  void initState() {
+    _ct = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        seconds: 1,
+      ),
+    );
+    _anim = Tween(begin: 0.0, end: 1.0).animate(_ct);
+    _ct.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _ct.reverse().whenComplete(() {
+      _ct.dispose();
+      super.dispose();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _anim,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _anim.value,
+          child: child,
+        );
+      },
+      child: Container(
+        width: 100,
+        height: 100,
+        color: Colors.red,
+      ),
+    );
+  }
+}

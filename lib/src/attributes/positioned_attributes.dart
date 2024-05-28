@@ -4,7 +4,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// Represents the attributes for a Positioned widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
-final class PositionedAttributes
+final class PositionedAttributes extends AnimatedPropertyOwner
     implements DuitAttributes<PositionedAttributes> {
   final double? left, top, right, bottom;
 
@@ -13,6 +13,8 @@ final class PositionedAttributes
     this.top,
     this.right,
     this.bottom,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   @override
@@ -22,6 +24,8 @@ final class PositionedAttributes
       top: other.top ?? top,
       right: other.right ?? right,
       bottom: other.bottom ?? bottom,
+      parentBuilderId: other.parentBuilderId,
+      affectedProperties: other.affectedProperties,
     );
   }
 
@@ -31,6 +35,10 @@ final class PositionedAttributes
       top: NumUtils.toDouble(json['top']),
       right: NumUtils.toDouble(json['right']),
       bottom: NumUtils.toDouble(json['bottom']),
+      parentBuilderId: json['parentBuilderId'],
+      affectedProperties: Set.from(
+        json['affectedProperties'] ?? {},
+      ),
     );
   }
 

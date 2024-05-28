@@ -9,6 +9,7 @@ import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/element_type.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
+import "package:flutter_duit/src/animations/index.dart";
 
 import "event.dart";
 
@@ -21,6 +22,73 @@ final class _DriverFinalizationController {
     d.dispose();
   }
 }
+
+final builder = {
+  "controlled": true,
+  "id": "57c52093-d7cb-4d6b-a26b-c9527fb83435",
+  "type": "AnimatedBuilder",
+  "child": {
+    "type": "Container",
+    "id": "cont",
+    "controlled": false,
+    "attributes": {
+      "parentBuilderId": "57c52093-d7cb-4d6b-a26b-c9527fb83435",
+      "affectedProperties": ["width"],
+      "width": 10,
+      "height": 100,
+      "color": "#FDDDDD",
+    },
+  },
+};
+
+final data = {
+  "controlled": true,
+  "action": null,
+  "id": "57c52093-d7cb-4d6b-a26b-c9527fb83435",
+  "type": "AnimatedSize",
+  "attributes": {
+    "duration": 3000,
+    "reverseDuration": 1500,
+    "curve": "easeInOutCubicEmphasized",
+  },
+  "child": {
+    "type": "Container",
+    "id": "cont",
+    "controlled": true,
+    "attributes": {
+      "width": 100,
+      "height": 100,
+      "color": "#FDDDDD",
+    },
+    "child": {
+      "type": "Center",
+      "id": "cntr",
+      "child": {
+        "type": "ElevatedButton",
+        "id": "button",
+        "action": {
+          "executionType": 1,
+          "payload": {
+            "type": "update",
+            "updates": {
+              "cont": {
+                "height": 300,
+                "width": 300,
+              },
+            },
+          },
+        },
+        "child": {
+          "type": "Text",
+          "id": "txt",
+          "attributes": {
+            "text": "Hello",
+          },
+        },
+      }
+    }
+  }
+};
 
 final class DuitDriver with DriverHooks implements UIDriver {
   @protected
@@ -211,6 +279,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
             _resolveEvent(entry.event);
           }
           break;
+        case ServerEventType.animationTrigger:
+          final trigger = event as AnimationTriggerEvent;
+          await _resolveAnimationTrigger(trigger);
+          break;
       }
     }
 
@@ -277,7 +349,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
       final json = await transport?.connect(
         initialData: initialRequestPayload,
       );
-      assert(json != null);
 
       if (transport is Streamer) {
         final streamer = transport as Streamer;
@@ -359,6 +430,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
     _layout = null;
     streamController.close();
     _driverFinalizer.detach(this);
+  }
+
+  Future<void> _resolveAnimationTrigger(AnimationTriggerEvent event) async {
+    final controller = _viewControllers[event.command.controllerId];
+
+    if (controller != null) {
+      controller.emitCommand(event.command);
+    }
   }
 
   Future<void> _resolveComponentUpdate(

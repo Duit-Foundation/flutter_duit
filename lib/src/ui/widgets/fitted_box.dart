@@ -1,10 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-final class DuitFittedBox extends StatelessWidget {
-  final ViewAttribute attributes;
+final class DuitFittedBox extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute<FittedBoxAttributes> attributes;
   final Widget child;
 
   const DuitFittedBox({
@@ -15,7 +16,11 @@ final class DuitFittedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as FittedBoxAttributes;
+    final attrs = mergeWithAttributes(
+      context,
+      attributes.payload,
+    );
+
     return FittedBox(
       key: Key(attributes.id),
       fit: attrs.fit ?? BoxFit.contain,
@@ -26,8 +31,8 @@ final class DuitFittedBox extends StatelessWidget {
   }
 }
 
-class DuitControlledFittedBox extends StatefulWidget {
-  final UIElementController controller;
+class DuitControlledFittedBox extends StatefulWidget with AnimatedAttributes {
+  final UIElementController<FittedBoxAttributes> controller;
   final Widget child;
 
   const DuitControlledFittedBox({
@@ -53,11 +58,16 @@ class _DuitControlledFittedBoxState extends State<DuitControlledFittedBox>
 
   @override
   Widget build(BuildContext context) {
+    final attrs = widget.mergeWithController(
+      context,
+      widget.controller,
+    );
+
     return FittedBox(
       key: Key(widget.controller.id),
-      fit: attributes.fit ?? BoxFit.contain,
-      clipBehavior: attributes.clipBehavior ?? Clip.none,
-      alignment: attributes.alignment ?? Alignment.center,
+      fit: attrs.fit ?? BoxFit.contain,
+      clipBehavior: attrs.clipBehavior ?? Clip.none,
+      alignment: attrs.alignment ?? Alignment.center,
       child: widget.child,
     );
   }

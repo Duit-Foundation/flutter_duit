@@ -5,7 +5,7 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 final class DuitListView extends StatelessWidget {
-  final ViewAttribute attributes;
+  final ViewAttribute<ListViewAttributes> attributes;
   final List<Widget> children;
 
   const DuitListView({
@@ -16,7 +16,7 @@ final class DuitListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload as ListViewAttributes;
+    final attrs = attributes.payload;
     return ListView(
       key: Key(attributes.id),
       scrollDirection: attrs.scrollDirection ?? Axis.vertical,
@@ -42,7 +42,7 @@ final class DuitListView extends StatelessWidget {
 }
 
 final class DuitControlledListView extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<ListViewAttributes> controller;
   final List<Widget> children;
 
   const DuitControlledListView({

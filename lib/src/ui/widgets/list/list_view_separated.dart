@@ -9,7 +9,7 @@ import 'list_tile.dart';
 import 'list_utils.dart';
 
 final class DuitListViewSeparated extends StatefulWidget {
-  final UIElementController controller;
+  final UIElementController<ListViewAttributes> controller;
 
   const DuitListViewSeparated({super.key, required this.controller});
 
