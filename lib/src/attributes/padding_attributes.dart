@@ -5,23 +5,32 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// Represents the attributes for a Padding widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
-final class PaddingAttributes implements DuitAttributes<PaddingAttributes> {
+final class PaddingAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<PaddingAttributes> {
   final EdgeInsetsGeometry? padding;
 
   PaddingAttributes({
     this.padding,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   @override
   PaddingAttributes copyWith(other) {
     return PaddingAttributes(
       padding: other.padding ?? padding,
+      parentBuilderId: other.parentBuilderId,
+      affectedProperties: other.affectedProperties,
     );
   }
 
   factory PaddingAttributes.fromJson(JSONObject json) {
     return PaddingAttributes(
       padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+      parentBuilderId: json["parentBuilderId"],
+      affectedProperties: Set.from(
+        json["affectedProperties"] ?? {},
+      ),
     );
   }
 

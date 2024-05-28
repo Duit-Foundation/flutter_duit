@@ -2,7 +2,7 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-base class TransformAttributes {
+base class TransformAttributes extends AnimatedPropertyOwner {
   Offset? origin;
   AlignmentGeometry? alignment;
   bool transformHitTests;
@@ -15,6 +15,8 @@ base class TransformAttributes {
     this.alignment,
     this.transformHitTests = true,
     this.filterQuality,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory TransformAttributes.fromJson(Map<String, dynamic> json) {
@@ -31,7 +33,8 @@ base class TransformAttributes {
       case 'flip':
         return FlipTransform.fromJson(data);
       default:
-        return TransformAttributes(type: 'none');
+        return TransformAttributes(
+            type: 'none', parentBuilderId: '', affectedProperties: null);
     }
   }
 }
@@ -49,18 +52,24 @@ final class ScaleTransform extends TransformAttributes
     super.transformHitTests,
     super.filterQuality,
     super.type = 'scale',
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory ScaleTransform.fromJson(Map<String, dynamic> json) {
     return ScaleTransform(
-      scale: NumUtils.toDouble(json['scale']),
-      scaleX: NumUtils.toDouble(json['scaleX']),
-      scaleY: NumUtils.toDouble(json['scaleY']),
-      origin: ParamsMapper.convertToOffset(json['origin']),
-      alignment: ParamsMapper.convertToAlignment(json['alignment']),
-      transformHitTests: json['transformHitTests'] ?? true,
-      filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
-    );
+        scale: NumUtils.toDouble(json['scale']),
+        scaleX: NumUtils.toDouble(json['scaleX']),
+        scaleY: NumUtils.toDouble(json['scaleY']),
+        origin: ParamsMapper.convertToOffset(json['origin']),
+        alignment: ParamsMapper.convertToAlignment(json['alignment']),
+        transformHitTests: json['transformHitTests'] ?? true,
+        filterQuality:
+            ParamsMapper.convertToFilterQuality(json['filterQuality']),
+        parentBuilderId: json['parentBuilderId'],
+        affectedProperties: Set.from(
+          json['affectedProperties'] ?? {},
+        ));
   }
 
   @override
@@ -73,6 +82,8 @@ final class ScaleTransform extends TransformAttributes
       alignment: other.alignment ?? alignment,
       transformHitTests: other.transformHitTests,
       filterQuality: other.filterQuality ?? filterQuality,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 
@@ -101,6 +112,8 @@ final class TranslateTransform extends TransformAttributes
     super.transformHitTests,
     super.filterQuality,
     super.type = 'translate',
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory TranslateTransform.fromJson(Map<String, dynamic> map) {
@@ -110,6 +123,10 @@ final class TranslateTransform extends TransformAttributes
       alignment: ParamsMapper.convertToAlignment(map['alignment']),
       transformHitTests: map['transformHitTests'] ?? true,
       filterQuality: ParamsMapper.convertToFilterQuality(map['filterQuality']),
+      parentBuilderId: map['parentBuilderId'],
+      affectedProperties: Set.from(
+        map['affectedProperties'] ?? {},
+      ),
     );
   }
 
@@ -121,6 +138,8 @@ final class TranslateTransform extends TransformAttributes
       alignment: other.alignment ?? alignment,
       transformHitTests: other.transformHitTests,
       filterQuality: other.filterQuality ?? filterQuality,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 
@@ -149,6 +168,8 @@ final class RotateTransform extends TransformAttributes
     super.transformHitTests,
     super.filterQuality,
     super.type = 'rotate',
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   @override
@@ -159,6 +180,8 @@ final class RotateTransform extends TransformAttributes
       alignment: other.alignment ?? alignment,
       transformHitTests: other.transformHitTests,
       filterQuality: other.filterQuality ?? filterQuality,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 
@@ -169,6 +192,10 @@ final class RotateTransform extends TransformAttributes
       alignment: ParamsMapper.convertToAlignment(map['alignment']),
       transformHitTests: map['transformHitTests'] ?? true,
       filterQuality: ParamsMapper.convertToFilterQuality(map['filterQuality']),
+      parentBuilderId: map['parentBuilderId'],
+      affectedProperties: Set.from(
+        map['affectedProperties'] ?? {},
+      ),
     );
   }
 
@@ -198,6 +225,8 @@ final class FlipTransform extends TransformAttributes
     super.transformHitTests,
     super.filterQuality,
     super.type = 'flip',
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory FlipTransform.fromJson(Map<String, dynamic> json) {
@@ -208,6 +237,10 @@ final class FlipTransform extends TransformAttributes
       alignment: ParamsMapper.convertToAlignment(json['alignment']),
       transformHitTests: json['transformHitTests'] ?? true,
       filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
+      parentBuilderId: json['parentBuilderId'],
+      affectedProperties: Set.from(
+        json['affectedProperties'] ?? {},
+      ),
     );
   }
 
@@ -220,6 +253,8 @@ final class FlipTransform extends TransformAttributes
       alignment: other.alignment ?? alignment,
       transformHitTests: other.transformHitTests,
       filterQuality: other.filterQuality ?? filterQuality,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 

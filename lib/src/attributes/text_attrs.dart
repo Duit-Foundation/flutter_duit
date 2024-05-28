@@ -5,7 +5,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// Represents the attributes for a Text widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
-final class TextAttributes implements DuitAttributes<TextAttributes> {
+final class TextAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<TextAttributes> {
   final String? data;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
@@ -24,6 +25,8 @@ final class TextAttributes implements DuitAttributes<TextAttributes> {
     this.maxLines,
     this.semanticsLabel,
     this.style,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   static TextAttributes? fromJson(JSONObject json) {
@@ -36,6 +39,10 @@ final class TextAttributes implements DuitAttributes<TextAttributes> {
       style: ParamsMapper.convertToTextStyle(json["style"]),
       overflow: ParamsMapper.convertToTextOverflow(json["overflow"]),
       textDirection: ParamsMapper.convertToTextDirection(json["textDirection"]),
+      parentBuilderId: json["parentBuilderId"],
+      affectedProperties: Set.from(
+        json["affectedProperties"] ?? {},
+      ),
     );
   }
 
@@ -50,6 +57,8 @@ final class TextAttributes implements DuitAttributes<TextAttributes> {
       maxLines: other.maxLines ?? maxLines,
       semanticsLabel: other.semanticsLabel ?? semanticsLabel,
       style: other.style ?? style,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 

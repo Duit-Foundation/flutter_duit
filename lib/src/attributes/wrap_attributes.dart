@@ -2,7 +2,8 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-final class WrapAttributes implements DuitAttributes<WrapAttributes> {
+final class WrapAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<WrapAttributes> {
   final Axis? direction;
   final TextDirection? textDirection;
   final VerticalDirection? verticalDirection;
@@ -21,6 +22,8 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
     this.runAlignment = WrapAlignment.start,
     this.crossAxisAlignment = WrapCrossAlignment.start,
     this.clipBehavior,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory WrapAttributes.fromJson(Map<String, dynamic> json) {
@@ -36,6 +39,10 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
       crossAxisAlignment:
           ParamsMapper.convertToWrapCrossAlignment(json['crossAxisAlignment']),
       clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
+      parentBuilderId: json['parentBuilderId'],
+      affectedProperties: Set.from(
+        json['affectedProperties'] ?? {},
+      ),
     );
   }
 
@@ -51,6 +58,8 @@ final class WrapAttributes implements DuitAttributes<WrapAttributes> {
       runSpacing: other.runSpacing,
       crossAxisAlignment: other.crossAxisAlignment ?? crossAxisAlignment,
       clipBehavior: other.clipBehavior ?? clipBehavior,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 

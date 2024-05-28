@@ -2,7 +2,8 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-class RichTextAttributes implements DuitAttributes<RichTextAttributes> {
+final class RichTextAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<RichTextAttributes> {
   final InlineSpan? textSpan;
   final TextStyle? style;
   final StrutStyle? strutStyle;
@@ -31,6 +32,8 @@ class RichTextAttributes implements DuitAttributes<RichTextAttributes> {
     this.textHeightBehavior,
     this.selectionColor,
     this.textScaler,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   @override
@@ -49,6 +52,8 @@ class RichTextAttributes implements DuitAttributes<RichTextAttributes> {
       textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
       selectionColor: other.selectionColor ?? selectionColor,
       textScaler: other.textScaler ?? textScaler,
+      parentBuilderId: other.parentBuilderId,
+      affectedProperties: other.affectedProperties,
     );
   }
 
@@ -71,12 +76,19 @@ class RichTextAttributes implements DuitAttributes<RichTextAttributes> {
       ),
       selectionColor: ColorUtils.tryParseColor(json['selectionColor']),
       textScaler: ParamsMapper.convertToTextScaler(json['textScaler']),
+      parentBuilderId: json['parentBuilderId'],
+      affectedProperties: Set.from(
+        json['affectedProperties'] ?? {},
+      ),
     );
   }
 
   @override
-  ReturnT dispatchInternalCall<ReturnT>(String methodName,
-      {Iterable? positionalParams, Map<String, dynamic>? namedParams}) {
+  ReturnT dispatchInternalCall<ReturnT>(
+    String methodName, {
+    Iterable? positionalParams,
+    Map<String, dynamic>? namedParams,
+  }) {
     return switch (methodName) {
       "fromJson" =>
         RichTextAttributes.fromJson(positionalParams!.first) as ReturnT,

@@ -7,7 +7,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// Represents the attributes for a Image widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
-final class ImageAttributes implements DuitAttributes<ImageAttributes> {
+final class ImageAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<ImageAttributes> {
   final ImageType type;
   final String src;
   final Uint8List byteData;
@@ -43,6 +44,8 @@ final class ImageAttributes implements DuitAttributes<ImageAttributes> {
     this.colorBlendMode,
     this.fit,
     this.excludeFromSemantics,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   @override
@@ -66,6 +69,8 @@ final class ImageAttributes implements DuitAttributes<ImageAttributes> {
       colorBlendMode: other.colorBlendMode ?? colorBlendMode,
       fit: other.fit ?? fit,
       excludeFromSemantics: other.excludeFromSemantics ?? excludeFromSemantics,
+      parentBuilderId: other.parentBuilderId,
+      affectedProperties: other.affectedProperties,
     );
   }
 
@@ -91,6 +96,10 @@ final class ImageAttributes implements DuitAttributes<ImageAttributes> {
       colorBlendMode: ParamsMapper.convertToBlendMode(json['colorBlendMode']),
       fit: ParamsMapper.convertToBoxFit(json['fit']),
       excludeFromSemantics: json['excludeFromSemantics'],
+      parentBuilderId: json['parentBuilderId'],
+      affectedProperties: Set.from(
+        json['affectedProperties'] ?? {},
+      ),
     );
   }
 

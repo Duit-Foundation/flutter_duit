@@ -5,16 +5,21 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// Represents the attributes for a DecoratedBox widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
-class DecoratedBoxAttributes implements DuitAttributes<DecoratedBoxAttributes> {
+final class DecoratedBoxAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<DecoratedBoxAttributes> {
   final Decoration? decoration;
 
   DecoratedBoxAttributes({
     required this.decoration,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory DecoratedBoxAttributes.fromJson(JSONObject json) {
     return DecoratedBoxAttributes(
       decoration: ParamsMapper.convertToDecoration(json["decoration"]),
+      parentBuilderId: json["parentBuilderId"],
+      affectedProperties: Set.from(json["affectedProperties"] ?? {}),
     );
   }
 
@@ -22,6 +27,8 @@ class DecoratedBoxAttributes implements DuitAttributes<DecoratedBoxAttributes> {
   DecoratedBoxAttributes copyWith(other) {
     return DecoratedBoxAttributes(
       decoration: other.decoration ?? decoration,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 

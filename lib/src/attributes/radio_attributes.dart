@@ -40,7 +40,8 @@ final class RadioGroupContextAttributes extends AttendedModel<dynamic>
   }
 }
 
-final class RadioAttributes implements DuitAttributes<RadioAttributes> {
+final class RadioAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<RadioAttributes> {
   final dynamic value;
   final bool? toggleable, autofocus;
   final Color? activeColor, focusColor, hoverColor;
@@ -62,6 +63,8 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
     required this.splashRadius,
     required this.materialTapTargetSize,
     required this.visualDensity,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory RadioAttributes.fromJson(Map<String, dynamic> json) {
@@ -82,6 +85,10 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
       materialTapTargetSize: ParamsMapper.convertToMaterialTapTargetSize(
           json['materialTapTargetSize']),
       visualDensity: ParamsMapper.convertToVisualDensity(json['visualDensity']),
+      parentBuilderId: json['parentBuilderId'],
+      affectedProperties: Set.from(
+        json['affectedProperties'] ?? {},
+      ),
     );
   }
 
@@ -100,6 +107,8 @@ final class RadioAttributes implements DuitAttributes<RadioAttributes> {
           other.materialTapTargetSize ?? materialTapTargetSize,
       visualDensity: other.visualDensity ?? visualDensity,
       value: other.value ?? value,
+      parentBuilderId: other.parentBuilderId,
+      affectedProperties: other.affectedProperties,
     );
   }
 

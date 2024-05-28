@@ -5,7 +5,8 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// Represents the attributes for a Stack widget.
 ///
 /// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
-final class StackAttributes implements DuitAttributes<StackAttributes> {
+final class StackAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<StackAttributes> {
   final AlignmentGeometry? alignment;
   final TextDirection? textDirection;
   final StackFit? fit;
@@ -16,6 +17,8 @@ final class StackAttributes implements DuitAttributes<StackAttributes> {
     this.textDirection,
     required this.fit,
     required this.clipBehavior,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory StackAttributes.fromJson(JSONObject json) {
@@ -24,6 +27,10 @@ final class StackAttributes implements DuitAttributes<StackAttributes> {
       textDirection: ParamsMapper.convertToTextDirection(json["textDirection"]),
       fit: ParamsMapper.convertToStackFit(json["fit"]),
       clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
+      parentBuilderId: json["parentBuilderId"],
+      affectedProperties: Set.from(
+        json["affectedProperties"] ?? {},
+      ),
     );
   }
 
@@ -34,6 +41,8 @@ final class StackAttributes implements DuitAttributes<StackAttributes> {
       textDirection: other.textDirection ?? textDirection,
       fit: other.fit ?? fit,
       clipBehavior: other.clipBehavior ?? clipBehavior,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 

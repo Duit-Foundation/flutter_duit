@@ -2,7 +2,8 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-final class AlignAttributes implements DuitAttributes<AlignAttributes> {
+final class AlignAttributes extends AnimatedPropertyOwner
+    implements DuitAttributes<AlignAttributes> {
   final AlignmentGeometry? alignment;
   final double? widthFactor, heightFactor;
 
@@ -10,6 +11,8 @@ final class AlignAttributes implements DuitAttributes<AlignAttributes> {
     this.alignment,
     this.widthFactor,
     this.heightFactor,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
 
   factory AlignAttributes.fromJson(JSONObject json) {
@@ -17,6 +20,8 @@ final class AlignAttributes implements DuitAttributes<AlignAttributes> {
       alignment: ParamsMapper.convertToAlignment(json["alignment"]),
       widthFactor: NumUtils.toDouble(json["widthFactor"]),
       heightFactor: NumUtils.toDouble(json["heightFactor"]),
+      parentBuilderId: json["parentBuilderId"],
+      affectedProperties: Set.from(json["affectedProperties"] ?? {}),
     );
   }
 
@@ -26,6 +31,8 @@ final class AlignAttributes implements DuitAttributes<AlignAttributes> {
       alignment: other.alignment ?? alignment,
       widthFactor: other.widthFactor ?? widthFactor,
       heightFactor: other.heightFactor ?? heightFactor,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 

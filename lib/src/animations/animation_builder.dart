@@ -3,6 +3,7 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
+import "package:flutter_duit/src/animations/tween.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitAnimationBuilder extends StatefulWidget {
@@ -28,33 +29,63 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
   void initState() {
     widget.controller.listenCommand(_handleCommand);
     final attrs = widget.controller.attributes!.payload;
-    for (var description in attrs.tweenDescriptions) {
+    for (var animation in attrs.tweenDescriptions) {
       final controller = AnimationController(
         vsync: this,
-        duration: description.duration,
+        duration: animation.duration,
       );
 
-      final animation = Tween(
-        begin: description.begin,
-        end: description.end,
-      ).animate(
-        CurvedAnimation(
-          parent: controller,
-          curve: description.curve,
-        ),
-      );
+      final tween = switch (animation.runtimeType) {
+        ColorTweenDescription => ColorTween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
+        TweenDescription => Tween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
+        TextStyleTweenDescription => TextStyleTween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
+        DecorationTweenDescription => DecorationTween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
+        Type() => throw UnimplementedError(),
+      };
 
-      _animations[description.animatedPropKey] = animation;
-      _controllers[description.animatedPropKey] = controller;
+      _animations[animation.animatedPropKey] = tween;
+      _controllers[animation.animatedPropKey] = controller;
 
-      if (description.trigger == AnimationTrigger.onEnter) {
-        switch (description.method) {
+      if (animation.trigger == AnimationTrigger.onEnter) {
+        switch (animation.method) {
           case AnimationMethod.forward:
             controller.forward();
             break;
           case AnimationMethod.repeat:
             controller.repeat(
-              reverse: description.reverseOnRepeat,
+              reverse: animation.reverseOnRepeat,
             );
             break;
           case AnimationMethod.reverse:
