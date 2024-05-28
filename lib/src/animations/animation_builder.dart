@@ -72,6 +72,51 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
               curve: animation.curve,
             ),
           ),
+        AlignmentTweenDescription => AlignmentTween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
+        EdgeInsetsTweenDescription => EdgeInsetsTween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
+        BoxConstraintsTweenDescription => BoxConstraintsTween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
+        SizeTweenDescription => SizeTween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
+        BorderTweenDescription => BorderTween(
+            begin: animation.begin,
+            end: animation.end,
+          ).animate(
+            CurvedAnimation(
+              parent: controller,
+              curve: animation.curve,
+            ),
+          ),
         Type() => throw UnimplementedError(),
       };
 

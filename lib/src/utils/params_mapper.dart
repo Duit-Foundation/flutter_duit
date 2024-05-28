@@ -250,6 +250,21 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Flex and container props">
+  static Size convertToSize(JSONObject? json) {
+    if (json == null) return Size.zero;
+
+    return Size(
+      NumUtils.toDoubleWithNullReplacement(
+        json["width"],
+        double.infinity,
+      ),
+      NumUtils.toDoubleWithNullReplacement(
+        json["height"],
+        double.infinity,
+      ),
+    );
+  }
+
   static Axis convertToAxis(String? value) {
     if (value == null) return Axis.vertical;
 
@@ -315,10 +330,14 @@ class ParamsMapper {
     return BoxConstraints(
       minWidth: NumUtils.toDoubleWithNullReplacement(json["minWidth"], 0.0),
       maxWidth: NumUtils.toDoubleWithNullReplacement(
-          json["maxWidth"], double.infinity),
+        json["maxWidth"],
+        double.infinity,
+      ),
       minHeight: NumUtils.toDoubleWithNullReplacement(json["minHeight"], 0.0),
       maxHeight: NumUtils.toDoubleWithNullReplacement(
-          json["maxHeight"], double.infinity),
+        json["maxHeight"],
+        double.infinity,
+      ),
     );
   }
 
