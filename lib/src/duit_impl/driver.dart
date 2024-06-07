@@ -500,8 +500,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         controller.tag,
       );
 
-      print("ok");
-
       controller.updateState(attributes);
     }
   }
