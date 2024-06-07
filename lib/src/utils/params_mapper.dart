@@ -213,8 +213,10 @@ class ParamsMapper {
   ///
   /// If any of the properties are missing or invalid, they will be ignored.
   /// If [styleMap] is `null` or empty, returns `null`.
-  static TextStyle? convertToTextStyle(JSONObject? json) {
+  static TextStyle? convertToTextStyle(dynamic json) {
     if (json == null) return null;
+
+    if (json is TextStyle) return json;
 
     final size = json["fontSize"] as num?;
 
@@ -250,8 +252,10 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Flex and container props">
-  static Size convertToSize(JSONObject? json) {
+  static Size convertToSize(dynamic json) {
     if (json == null) return Size.zero;
+
+    if (json is Size) return json;
 
     return Size(
       NumUtils.toDoubleWithNullReplacement(
@@ -324,8 +328,10 @@ class ParamsMapper {
   ///
   /// If any of the properties are missing or invalid, they will be ignored.
   /// If [constraintsMap] is `null` or empty, returns `null`.
-  static BoxConstraints? convertToBoxConstraints(JSONObject? json) {
+  static BoxConstraints? convertToBoxConstraints(dynamic json) {
     if (json == null) return null;
+
+    if (json is BoxConstraints) return json;
 
     return BoxConstraints(
       minWidth: NumUtils.toDoubleWithNullReplacement(json["minWidth"], 0.0),
@@ -379,8 +385,10 @@ class ParamsMapper {
   /// Returns the corresponding [Alignment] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid alignment, returns [Alignment.center] as the default.
-  static AlignmentGeometry convertToAlignment(String? value) {
+  static AlignmentGeometry convertToAlignment(dynamic value) {
     if (value == null) return Alignment.topLeft;
+
+    if (value is Alignment) return value;
 
     switch (value) {
       case "topCenter":
@@ -886,8 +894,10 @@ class ParamsMapper {
   /// Returns a [Decoration] with the given properties specified in the [map].
   /// If the [map] is `null` or does not contain valid properties, returns `null`.
   /// You can provide any combination of these properties in the [map].
-  static Decoration? convertToDecoration(JSONObject? json) {
+  static Decoration? convertToDecoration(dynamic json) {
     if (json == null) return null;
+
+    if (json is Decoration) return json;
 
     return BoxDecoration(
       color: ColorUtils.tryParseNullableColor(json["color"]),
@@ -905,8 +915,10 @@ class ParamsMapper {
   /// Converts a map of values to a [Border].
   ///
   /// Returns a [Border] with the given properties specified in the [map].
-  static Border? convertToBorder(JSONObject? json) {
+  static Border? convertToBorder(dynamic json) {
     if (json == null) return null;
+
+    if (json is Border) return json;
 
     return Border.fromBorderSide(
       convertToBorderSide(json),
@@ -1269,6 +1281,8 @@ class ParamsMapper {
   /// ```
   static EdgeInsets convertToEdgeInsets(dynamic insets) {
     if (insets == null) return EdgeInsets.zero;
+
+    if (insets is EdgeInsets) return insets;
 
     if (insets is num) {
       return EdgeInsets.all(insets.toDouble());

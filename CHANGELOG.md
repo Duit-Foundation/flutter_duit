@@ -1,3 +1,9 @@
+## 2.0.0
+
+- Migration to duit_kernel v2
+- Added experimental implicit animation widget - AnimatedSize
+- Added experimental support of animations via AnimatedBuilder
+
 ## 1.13.1
 
 - Added ID property to attribute objects

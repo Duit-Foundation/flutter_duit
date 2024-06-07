@@ -207,153 +207,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late final DuitDriver driver1;
-  late final DuitDriver driver2;
-  late final DuitDriver driver3;
-  late final DuitDriver driver4;
-  late final DuitDriver driver5;
-  late final DuitDriver driver6;
-  late final DuitDriver driver7;
-  late final DuitDriver driver8;
-  late final DuitDriver driver9;
-  late final DuitDriver driver10;
-  late final DuitDriver driver11;
 
   @override
   void initState() {
     driver1 = DuitDriver(
-      "/decoratedbox",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver1 INIT");
-      };
-
-    driver2 = DuitDriver(
-      "/inputs",
+      "/example_screen",
       transportOptions: HttpTransportOptions(
         defaultHeaders: {"Content-Type": "application/json"},
         baseUrl: "http://localhost:8999",
       ),
       eventHandler: _Handler(),
-    )
-      ..onInit = () {
-        print("driver2 INIT");
-      }
-      ..beforeActionCallback = (action) {
-        print(action.event);
-      }
-      ..afterActionCallback = () {
-        print("Action handled");
-      }
-      ..onEventReceived = (event) {
-        print(event?.type);
-      };
-
-    driver3 = DuitDriver(
-      "ws://localhost:8999",
-      concurrentModeEnabled: true,
-      // workerPool: DuitWorkerPool(),
-      // workerPoolConfiguration: DuitWorkerPoolConfiguration(
-      //   workerCount: 6,
-      //   policy: TaskDistributionPolicy.sequential,
-      // ),
-      transportOptions: WebSocketTransportOptions(),
-    )..onInit = () {
-        print("driver3 INIT");
-      };
-    driver4 = DuitDriver(
-      "/img",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver4 INIT");
-      };
-    driver5 = DuitDriver(
-      "/stack",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver5 INIT");
-      };
-    driver6 = DuitDriver(
-      "/updateExample",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver6 INIT");
-      };
-    driver7 = DuitDriver(
-      "/gesture",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver7 INIT");
-      };
-    driver8 = DuitDriver(
-      "/transform",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver8 INIT");
-      };
-    driver9 = DuitDriver(
-      "/rich",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver9 INIT");
-      };
-
-    driver10 = DuitDriver(
-      "/shoes",
-      concurrentModeEnabled: true,
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver10 INIT");
-      };
-
-    driver11 = DuitDriver(
-      "/scrollview",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
-        baseUrl: "http://localhost:8999",
-      ),
-    )..onInit = () {
-        print("driver11 INIT");
-      };
+    );
     super.initState();
   }
 
   @override
   void dispose() {
     driver1.dispose();
-    driver2.dispose();
-    driver3.dispose();
-    driver4.dispose();
-    driver5.dispose();
-    driver6.dispose();
-    driver7.dispose();
-    driver8.dispose();
-    driver9.dispose();
-    driver10.dispose();
-    driver11.dispose();
     super.dispose();
   }
 
@@ -361,109 +231,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            DuitViewHost(
-              context: context,
-              driver: driver1,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver2,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver3,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver4,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: 150,
-                maxWidth: MediaQuery.of(context).size.width,
-              ),
-              child: DuitViewHost(
-                context: context,
-                driver: driver5,
-                placeholder: const CircularProgressIndicator(),
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver6,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver7,
-              gestureInterceptor: (type, {gestureInfo}) {
-                debugPrint(type.name);
-              },
-              gestureInterceptorBehavior:
-                  GestureInterceptorBehavior.onlyWithAction,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver8,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 48,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver9,
-              placeholder: const CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: DuitViewHost(
-                context: context,
-                driver: driver10,
-                placeholder: const CircularProgressIndicator(),
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            DuitViewHost(
-              context: context,
-              driver: driver11,
-              placeholder: const CircularProgressIndicator(),
-            ),
-          ],
+        child: Center(
+          child: DuitViewHost(
+            context: context,
+            driver: driver1,
+            placeholder: const CircularProgressIndicator(),
+          ),
         ),
       ),
     );
