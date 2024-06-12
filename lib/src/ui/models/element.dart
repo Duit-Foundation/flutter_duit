@@ -31,7 +31,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
   });
 
   static DuitElement fromJson(
-    JSONObject? json,
+    Map<String, dynamic>? json,
     UIDriver driver,
   ) {
     if (json == null) return EmptyUIElement<EmptyAttributes>();
@@ -40,6 +40,12 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
     final String id = json["id"];
     final bool controlled = json["controlled"] ?? false;
     final String? tag = json["tag"];
+
+    //Safe cast attributes to Map<String, dynamic>
+    final attributesObject = () {
+      final attrs = json["attributes"] ?? {};
+      return attrs.cast<String, dynamic>();
+    }();
 
     ServerAction? serverAction;
 
@@ -63,10 +69,10 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
             arr.add(DuitElement.fromJson(element, driver));
           });
         }
-
+        
         final attributes = ViewAttribute.createAttributes<RowAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -99,7 +105,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<ColumnAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -124,7 +130,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<CenterAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -149,7 +155,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<FittedBoxAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -175,17 +181,18 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<AnimatedBuilderAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
+        //Priority use of  persistentId property for animatedBuilder
         return AnimatedBuilderUIElement<AnimatedBuilderAttributes>(
           type: type,
-          id: id,
+          id: attributes.payload.persistentId ?? id,
           child: child,
           attributes: attributes,
           viewController: _createAndAttachController(
-            id,
+            attributes.payload.persistentId ?? id,
             controlled,
             attributes,
             serverAction,
@@ -200,7 +207,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<ColoredBoxAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -226,7 +233,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<AnimatedSizeAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -251,7 +258,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<SizedBoxAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -274,7 +281,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.richText:
         final attributes = ViewAttribute.createAttributes<RichTextAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -296,7 +303,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.text:
         final attributes = ViewAttribute.createAttributes<TextAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -321,7 +328,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<ElevatedButtonAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -344,7 +351,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.textField:
         final attributes = ViewAttribute.createAttributes<TextFieldAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -374,7 +381,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<StackAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -405,7 +412,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<WrapAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -430,7 +437,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<ExpandedAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -455,7 +462,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<PaddingAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -480,7 +487,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<PositionedAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -506,7 +513,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<DecoratedBoxAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -530,7 +537,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.checkbox:
         final attributes = ViewAttribute.createAttributes<CheckboxAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
         //controlled by default
@@ -553,7 +560,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.image:
         final attributes = ViewAttribute.createAttributes<ImageAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
         return ImageUIElement<ImageAttributes>(
@@ -574,7 +581,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.switchW:
         final attributes = ViewAttribute.createAttributes<SwitchAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
         return SwitchUiElement<SwitchAttributes>(
@@ -595,7 +602,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.radio:
         final attributes = ViewAttribute.createAttributes<RadioAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
         return RadioUIElement<RadioAttributes>(
@@ -616,7 +623,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       case ElementType.slider:
         final attributes = ViewAttribute.createAttributes<SliderAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
         return SliderUIElement<SliderAttributes>(
@@ -639,7 +646,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<ContainerAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -664,7 +671,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<SubtreeAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
         return SubtreeUIElement<SubtreeAttributes>(
@@ -689,7 +696,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<GestureDetectorAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -714,7 +721,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<AlignAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -739,7 +746,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<TransformAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -807,7 +814,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<RadioGroupContextAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -833,7 +840,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<SingleChildScrollviewAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -858,7 +865,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<OpacityAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -884,7 +891,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<IgnorePointerAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -910,7 +917,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<RepaintBoundaryAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -936,7 +943,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<OverflowBoxAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -961,7 +968,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<MetaAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -987,7 +994,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final attributes =
             ViewAttribute.createAttributes<LifecycleStateListenerAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -1020,7 +1027,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         final attributes = ViewAttribute.createAttributes<ListViewAttributes>(
           type,
-          json["attributes"],
+          attributesObject,
           tag,
         );
 
@@ -1057,7 +1064,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
           final attributes = ViewAttribute.createAttributes<SubtreeAttributes>(
             type,
-            json["attributes"],
+            attributesObject,
             tag,
           );
 
@@ -1086,7 +1093,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           if (fabric != null) {
             final attributes = ViewAttribute.createAttributes(
               type,
-              json["attributes"],
+              attributesObject,
               tag,
             );
 

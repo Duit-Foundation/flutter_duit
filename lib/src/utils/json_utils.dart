@@ -25,7 +25,7 @@ class JsonUtils {
       return src;
     }
 
-    final attributes = src["attributes"] as JSONObject?;
+    final attributes = src["attributes"];
     final refs = List.from(attributes?["refs"] ?? []);
 
     replaceId(src);

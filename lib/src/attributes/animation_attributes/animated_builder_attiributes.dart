@@ -4,9 +4,11 @@ import 'package:flutter_duit/src/animations/index.dart';
 final class AnimatedBuilderAttributes
     implements DuitAttributes<AnimatedBuilderAttributes> {
   final List<DuitTweenDescription> tweenDescriptions;
+  final String? persistentId;
 
   AnimatedBuilderAttributes({
     this.tweenDescriptions = const [],
+    this.persistentId,
   });
 
   @override
@@ -19,6 +21,7 @@ final class AnimatedBuilderAttributes
       tweenDescriptions: (json["tweenDescriptions"] as List)
           .map((e) => DuitTweenDescription.fromJson(e))
           .toList(),
+      persistentId: json["persistentId"],
     );
   }
 

@@ -386,7 +386,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.component:
-        final it = model as ComponentUIElement<DuitAttributes>;
+        final it = model as ComponentUIElement<SubtreeAttributes>;
         final child = getWidgetFromElement(it.child);
         return DuitComponent(
           controller: it.viewController!,

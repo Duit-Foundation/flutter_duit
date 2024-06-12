@@ -196,9 +196,11 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
           dataObj[key] = animation.value;
         });
 
+        final wC = widget.controller;
+
         return DuitAnimationContext(
           data: dataObj,
-          parentId: widget.controller.id,
+          parentId: wC.attributes?.payload.persistentId ?? wC.id, //Priority use of persistentId
           child: child ?? const SizedBox.shrink(),
         );
       },
