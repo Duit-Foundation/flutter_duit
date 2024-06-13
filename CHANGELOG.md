@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Fixed an issue with animations not working when using AnimatedBuilder inside components
+
 ## 2.0.0
 
 - Migration to duit_kernel v2
