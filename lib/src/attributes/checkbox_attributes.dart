@@ -77,14 +77,14 @@ class CheckboxAttributes extends AttendedModel<bool>
       splashRadius: NumUtils.toDouble(json['splashRadius']),
       // shape: json['shape'] as OutlinedBorder,
       hoverColor: ColorUtils.tryParseColor(json["hoverColor"]),
-      side: ParamsMapper.convertToBorderSide(json["side"]),
+      side: AttributeValueMapper.toBorderSide(json["side"]),
       checkColor: ColorUtils.tryParseColor(json["checkColor"]),
-      fillColor: ParamsMapper.convertToMSPColor(json["fillColor"]),
+      fillColor: AttributeValueMapper.toMSPColor(json["fillColor"]),
       splashColor: ColorUtils.tryParseColor(json["splashColor"]),
-      overlayColor: ParamsMapper.convertToMSPColor(json["overlayColor"]),
+      overlayColor: AttributeValueMapper.toMSPColor(json["overlayColor"]),
       activeColor: ColorUtils.tryParseColor(json["activeColor"]),
       focusColor: ColorUtils.tryParseColor(json["focusColor"]),
-      visualDensity: ParamsMapper.convertToVisualDensity(json["visualDensity"]),
+      visualDensity: AttributeValueMapper.toVisualDensity(json["visualDensity"]),
     );
   }
 

@@ -17,7 +17,7 @@ final class AlignAttributes extends AnimatedPropertyOwner
 
   factory AlignAttributes.fromJson(JSONObject json) {
     return AlignAttributes(
-      alignment: ParamsMapper.convertToAlignment(json["alignment"]),
+      alignment: AttributeValueMapper.toAlignment(json["alignment"]),
       widthFactor: NumUtils.toDouble(json["widthFactor"]),
       heightFactor: NumUtils.toDouble(json["heightFactor"]),
       parentBuilderId: json["parentBuilderId"],

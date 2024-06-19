@@ -67,15 +67,15 @@ final class SwitchAttributes extends AttendedModel<bool>
           ColorUtils.tryParseNullableColor(json['activeTrackColor']),
       inactiveTrackColor:
           ColorUtils.tryParseNullableColor(json['inactiveTrackColor']),
-      thumbColor: ParamsMapper.convertToMSPColor(json['thumbColor']),
-      overlayColor: ParamsMapper.convertToMSPColor(json['overlayColor']),
-      trackColor: ParamsMapper.convertToMSPColor(json['trackColor']),
+      thumbColor: AttributeValueMapper.toMSPColor(json['thumbColor']),
+      overlayColor: AttributeValueMapper.toMSPColor(json['overlayColor']),
+      trackColor: AttributeValueMapper.toMSPColor(json['trackColor']),
       trackOutlineColor:
-          ParamsMapper.convertToMSPColor(json['trackOutlineColor']),
+          AttributeValueMapper.toMSPColor(json['trackOutlineColor']),
       trackOutlineWidth:
-          ParamsMapper.convertToMSPDouble(json['trackOutlineWidth']),
+          AttributeValueMapper.toMSPDouble(json['trackOutlineWidth']),
       splashRadius: NumUtils.toDouble(json['splashRadius']),
-      materialTapTargetSize: ParamsMapper.convertToMaterialTapTargetSize(
+      materialTapTargetSize: AttributeValueMapper.toMaterialTapTargetSize(
           json['materialTapTargetSize']),
       autofocus: json['autofocus'],
     );

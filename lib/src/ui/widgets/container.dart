@@ -17,7 +17,6 @@ class DuitContainer extends StatelessWidget with AnimatedAttributes {
   @override
   Widget build(BuildContext context) {
     final attrs = mergeWithAttributes(context, attributes.payload);
-
     return Container(
       key: Key(attributes.id),
       alignment: attrs.alignment,

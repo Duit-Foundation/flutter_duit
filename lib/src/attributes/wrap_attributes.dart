@@ -28,17 +28,17 @@ final class WrapAttributes extends AnimatedPropertyOwner
 
   factory WrapAttributes.fromJson(Map<String, dynamic> json) {
     return WrapAttributes(
-      direction: ParamsMapper.convertToAxis(json['direction']),
-      textDirection: ParamsMapper.convertToTextDirection(json['textDirection']),
+      direction: AttributeValueMapper.toAxis(json['direction']),
+      textDirection: AttributeValueMapper.toTextDirection(json['textDirection']),
       verticalDirection:
-          ParamsMapper.convertToVerticalDirection(json['verticalDirection']),
-      alignment: ParamsMapper.convertToWrapAlignment(json['alignment']),
-      runAlignment: ParamsMapper.convertToWrapAlignment(json['runAlignment']),
+          AttributeValueMapper.toVerticalDirection(json['verticalDirection']),
+      alignment: AttributeValueMapper.toWrapAlignment(json['alignment']),
+      runAlignment: AttributeValueMapper.toWrapAlignment(json['runAlignment']),
       spacing: NumUtils.toDoubleWithNullReplacement(json['spacing'], 0),
       runSpacing: NumUtils.toDoubleWithNullReplacement(json['runSpacing'], 0),
       crossAxisAlignment:
-          ParamsMapper.convertToWrapCrossAlignment(json['crossAxisAlignment']),
-      clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
+          AttributeValueMapper.toWrapCrossAlignment(json['crossAxisAlignment']),
+      clipBehavior: AttributeValueMapper.toClip(json['clipBehavior']),
       parentBuilderId: json['parentBuilderId'],
       affectedProperties: Set.from(
         json['affectedProperties'] ?? {},

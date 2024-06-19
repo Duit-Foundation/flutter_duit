@@ -18,9 +18,9 @@ final class FittedBoxAttributes extends AnimatedPropertyOwner
 
   factory FittedBoxAttributes.fromJson(Map<String, dynamic> json) {
     return FittedBoxAttributes(
-      fit: ParamsMapper.convertToBoxFit(json['fit']),
-      clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
-      alignment: ParamsMapper.convertToAlignment(json['alignment']),
+      fit: AttributeValueMapper.toBoxFit(json['fit']),
+      clipBehavior: AttributeValueMapper.toClip(json['clipBehavior']),
+      alignment: AttributeValueMapper.toAlignment(json['alignment']),
       parentBuilderId: json['parentBuilderId'],
       affectedProperties: Set.from(
         json['affectedProperties'] ?? {},

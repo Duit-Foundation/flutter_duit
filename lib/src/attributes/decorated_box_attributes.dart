@@ -17,7 +17,7 @@ final class DecoratedBoxAttributes extends AnimatedPropertyOwner
 
   factory DecoratedBoxAttributes.fromJson(JSONObject json) {
     return DecoratedBoxAttributes(
-      decoration: ParamsMapper.convertToDecoration(json["decoration"]),
+      decoration: AttributeValueMapper.toDecoration(json["decoration"]),
       parentBuilderId: json["parentBuilderId"],
       affectedProperties: Set.from(json["affectedProperties"] ?? {}),
     );

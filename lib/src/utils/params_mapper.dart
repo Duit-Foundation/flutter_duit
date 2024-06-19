@@ -7,9 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 /// A utility class for mapping parameter values to their corresponding Flutter widget properties.
-class ParamsMapper {
+final class AttributeValueMapper {
   //<editor-fold desc="Text">
-  static TextSpan convertToTextSpan(JSONObject? json) {
+  static TextSpan toTextSpan(JSONObject? json) {
     assert(json != null, "TextSpan json cannot be null");
 
     final children = json!['children'];
@@ -18,19 +18,19 @@ class ParamsMapper {
 
     if (children != null) {
       for (final child in children) {
-        spanChildren.add(ParamsMapper.convertToTextSpan(child));
+        spanChildren.add(AttributeValueMapper.toTextSpan(child));
       }
     }
 
     return TextSpan(
       text: json['text'],
       children: spanChildren.isNotEmpty ? spanChildren : null,
-      style: ParamsMapper.convertToTextStyle(json['style']),
+      style: AttributeValueMapper.toTextStyle(json['style']),
       spellOut: json['spellOut'],
     );
   }
 
-  static TextBaseline? convertToTextBaseline(String? value) {
+  static TextBaseline? toTextBaseline(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -43,7 +43,7 @@ class ParamsMapper {
     return null;
   }
 
-  static TextWidthBasis? convertToTextWidthBasis(String? value) {
+  static TextWidthBasis? toTextWidthBasis(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -56,8 +56,9 @@ class ParamsMapper {
     return null;
   }
 
-  static TextLeadingDistribution convertToTextLeadingDistribution(
-      String? value) {
+  static TextLeadingDistribution toTextLeadingDistribution(
+    String? value,
+  ) {
     if (value == null) return TextLeadingDistribution.proportional;
 
     switch (value) {
@@ -70,18 +71,18 @@ class ParamsMapper {
     return TextLeadingDistribution.proportional;
   }
 
-  static TextHeightBehavior? convertToTextHeightBehavior(JSONObject? value) {
+  static TextHeightBehavior? toTextHeightBehavior(JSONObject? value) {
     if (value == null) return null;
 
     return TextHeightBehavior(
       applyHeightToFirstAscent: value['applyHeightToFirstAscent'] ?? true,
       applyHeightToLastDescent: value['applyHeightToLastDescent'] ?? true,
       leadingDistribution:
-          convertToTextLeadingDistribution(value['leadingDistribution']),
+          toTextLeadingDistribution(value['leadingDistribution']),
     );
   }
 
-  static TextScaler convertToTextScaler(JSONObject? value) {
+  static TextScaler toTextScaler(JSONObject? value) {
     if (value == null) return TextScaler.noScaling;
 
     return TextScaler.linear(NumUtils.toDoubleWithNullReplacement(
@@ -90,7 +91,7 @@ class ParamsMapper {
     ));
   }
 
-  static StrutStyle? convertToStrutStyle(JSONObject? value) {
+  static StrutStyle? toStrutStyle(JSONObject? value) {
     if (value == null) return null;
 
     return StrutStyle(
@@ -98,14 +99,14 @@ class ParamsMapper {
       fontSize: NumUtils.toDouble(value['fontSize']),
       height: NumUtils.toDouble(value['height']),
       leading: NumUtils.toDouble(value['leading']),
-      fontWeight: convertToFontWeight(value['fontWeight']),
-      fontStyle: convertToFontStyle(value['fontStyle']),
+      fontWeight: toFontWeight(value['fontWeight']),
+      fontStyle: toFontStyle(value['fontStyle']),
       forceStrutHeight: value['forceStrutHeight'],
       debugLabel: value['debugLabel'],
     );
   }
 
-  static FontStyle? convertToFontStyle(String? value) {
+  static FontStyle? toFontStyle(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -122,7 +123,7 @@ class ParamsMapper {
   ///
   /// Returns the corresponding [TextAlign] value for the given string [value].
   /// If [value] is `null`, returns `null`.
-  static TextAlign? convertToTextAlign(String? value) {
+  static TextAlign? toTextAlign(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -147,7 +148,7 @@ class ParamsMapper {
   ///
   /// Returns the corresponding [FontWeight] value for the given integer [value].
   /// If [value] is `null`, returns `null`.
-  static FontWeight? convertToFontWeight(int? value) {
+  static FontWeight? toFontWeight(int? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -178,7 +179,7 @@ class ParamsMapper {
   ///
   /// Returns the corresponding [TextOverflow] value for the given string [value].
   /// If [value] is `null`, returns `null`.
-  static TextOverflow? convertToTextOverflow(String? value) {
+  static TextOverflow? toTextOverflow(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -213,7 +214,7 @@ class ParamsMapper {
   ///
   /// If any of the properties are missing or invalid, they will be ignored.
   /// If [styleMap] is `null` or empty, returns `null`.
-  static TextStyle? convertToTextStyle(dynamic json) {
+  static TextStyle? toTextStyle(dynamic json) {
     if (json == null) return null;
 
     if (json is TextStyle) return json;
@@ -223,7 +224,7 @@ class ParamsMapper {
     return TextStyle(
       color: ColorUtils.tryParseColor(json["color"]),
       fontFamily: json["fontFamily"],
-      fontWeight: convertToFontWeight(json["fontWeight"]),
+      fontWeight: toFontWeight(json["fontWeight"]),
       fontSize: size?.toDouble(),
       letterSpacing: NumUtils.toDouble(json["letterSpacing"]),
       wordSpacing: NumUtils.toDouble(json["wordSpacing"]),
@@ -236,7 +237,7 @@ class ParamsMapper {
   /// Returns the corresponding [TextDirection] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid text direction, returns [TextDirection.ltr] as the default.
-  static TextDirection? convertToTextDirection(String? value) {
+  static TextDirection? toTextDirection(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -252,7 +253,7 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Flex and container props">
-  static Size convertToSize(dynamic json) {
+  static Size toSize(dynamic json) {
     if (json == null) return Size.zero;
 
     if (json is Size) return json;
@@ -269,7 +270,7 @@ class ParamsMapper {
     );
   }
 
-  static Axis convertToAxis(String? value) {
+  static Axis toAxis(String? value) {
     if (value == null) return Axis.vertical;
 
     switch (value) {
@@ -282,7 +283,7 @@ class ParamsMapper {
     return Axis.vertical;
   }
 
-  static WrapCrossAlignment? convertToWrapCrossAlignment(String? value) {
+  static WrapCrossAlignment? toWrapCrossAlignment(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -297,7 +298,7 @@ class ParamsMapper {
     return null;
   }
 
-  static WrapAlignment? convertToWrapAlignment(String? value) {
+  static WrapAlignment? toWrapAlignment(String? value) {
     if (value == null) return null;
     switch (value) {
       case "start":
@@ -328,7 +329,7 @@ class ParamsMapper {
   ///
   /// If any of the properties are missing or invalid, they will be ignored.
   /// If [constraintsMap] is `null` or empty, returns `null`.
-  static BoxConstraints? convertToBoxConstraints(dynamic json) {
+  static BoxConstraints? toBoxConstraints(dynamic json) {
     if (json == null) return null;
 
     if (json is BoxConstraints) return json;
@@ -352,7 +353,7 @@ class ParamsMapper {
   /// Returns the corresponding [StackFit] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid stack fit, returns [StackFit.loose] as the default.
-  static StackFit convertToStackFit(String? value) {
+  static StackFit toStackFit(String? value) {
     if (value == null) return StackFit.loose;
 
     switch (value) {
@@ -367,7 +368,7 @@ class ParamsMapper {
     return StackFit.loose;
   }
 
-  static OverflowBoxFit convertToOverflowBoxFit(String? value) {
+  static OverflowBoxFit toOverflowBoxFit(String? value) {
     if (value == null) return OverflowBoxFit.max;
 
     switch (value) {
@@ -385,7 +386,7 @@ class ParamsMapper {
   /// Returns the corresponding [Alignment] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid alignment, returns [Alignment.center] as the default.
-  static AlignmentGeometry convertToAlignment(dynamic value) {
+  static AlignmentGeometry toAlignment(dynamic value) {
     if (value == null) return Alignment.topLeft;
 
     if (value is Alignment) return value;
@@ -419,7 +420,7 @@ class ParamsMapper {
   /// Returns the corresponding [AlignmentDirectional] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid alignment, returns [AlignmentDirectional.centerStart] as the default.
-  static AlignmentGeometry convertToAlignmentDirectional(String? value) {
+  static AlignmentGeometry toAlignmentDirectional(String? value) {
     if (value == null) return AlignmentDirectional.topStart;
 
     switch (value) {
@@ -451,7 +452,7 @@ class ParamsMapper {
   /// Returns the corresponding [MainAxisAlignment] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid main axis alignment, returns [MainAxisAlignment.start] as the default.
-  static MainAxisAlignment? convertToMainAxisAlignment(String? value) {
+  static MainAxisAlignment? toMainAxisAlignment(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -477,7 +478,7 @@ class ParamsMapper {
   /// Returns the corresponding [CrossAxisAlignment] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid cross axis alignment, returns [CrossAxisAlignment.start] as the default.
-  static CrossAxisAlignment? convertToCrossAxisAlignment(String? value) {
+  static CrossAxisAlignment? toCrossAxisAlignment(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -501,7 +502,7 @@ class ParamsMapper {
   /// Returns the corresponding [Clip] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid clip value, returns [Clip.none] as the default.
-  static Clip? convertToClip(String? value) {
+  static Clip? toClip(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -523,7 +524,7 @@ class ParamsMapper {
   /// Returns the corresponding [MainAxisSize] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid main axis size, returns [MainAxisSize.max] as the default.
-  static MainAxisSize? convertToMainAxisSize(String? value) {
+  static MainAxisSize? toMainAxisSize(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -539,7 +540,7 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Basic">
-  static SliderInteraction? convertToSliderInteraction(String? value) {
+  static SliderInteraction? toSliderInteraction(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -556,7 +557,7 @@ class ParamsMapper {
     return null;
   }
 
-  static MaterialTapTargetSize? convertToMaterialTapTargetSize(String? value) {
+  static MaterialTapTargetSize? toMaterialTapTargetSize(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -574,7 +575,7 @@ class ParamsMapper {
   /// Returns the corresponding [FilterQuality] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid filter quality, returns [FilterQuality.low] as the default.
-  static FilterQuality convertToFilterQuality(String? value) {
+  static FilterQuality toFilterQuality(String? value) {
     if (value == null) return FilterQuality.low;
 
     switch (value) {
@@ -591,12 +592,12 @@ class ParamsMapper {
     return FilterQuality.low;
   }
 
-// Converts a string value to an [ImageRepeat] value.
+  /// Converts a string value to an [ImageRepeat] value.
   ///
   /// Returns the corresponding [ImageRepeat] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid image repeat value, returns [ImageRepeat.noRepeat] as the default.
-  static ImageRepeat convertToImageRepeat(String? value) {
+  static ImageRepeat toImageRepeat(String? value) {
     if (value == null) return ImageRepeat.noRepeat;
 
     switch (value) {
@@ -618,7 +619,7 @@ class ParamsMapper {
   /// Returns a [Uint8List] containing the values from the given [list].
   /// If [list] is `null`, returns `null`.
   /// If any value in the [list] is not a valid unsigned 8-bit integer (0-255), it will be clamped to that range.
-  static Uint8List convertToUint8List(dynamic value) {
+  static Uint8List toUint8List(dynamic value) {
     if (value == null) return Uint8List(0);
 
     final bytes = value["data"];
@@ -640,7 +641,7 @@ class ParamsMapper {
   /// Returns the corresponding [ImageType] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid image type, returns [ImageType.png] as the default.
-  static ImageType convertToImageType(String? value) {
+  static ImageType toImageType(String? value) {
     if (value == null) return ImageType.network;
 
     switch (value) {
@@ -660,7 +661,7 @@ class ParamsMapper {
   /// Returns the corresponding [BoxFit] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid box fit value, returns [BoxFit.contain] as the default.
-  static BoxFit? convertToBoxFit(String? value) {
+  static BoxFit? toBoxFit(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -688,7 +689,7 @@ class ParamsMapper {
   /// Returns the corresponding [BlendMode] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid blend mode, returns [BlendMode.srcOver] as the default.
-  static BlendMode convertToBlendMode(String? value) {
+  static BlendMode toBlendMode(String? value) {
     if (value == null) return BlendMode.src;
 
     switch (value) {
@@ -760,7 +761,7 @@ class ParamsMapper {
   /// Returns the corresponding [VerticalDirection] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid vertical direction, returns [VerticalDirection.down] as the default.
-  static VerticalDirection? convertToVerticalDirection(String? value) {
+  static VerticalDirection? toVerticalDirection(String? value) {
     if (value == null) return null;
 
     switch (value) {
@@ -782,7 +783,7 @@ class ParamsMapper {
   /// Returns the corresponding [BoxShape] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid box shape, returns [BoxShape.rectangle] as the default.
-  static BoxShape convertToBoxShape(String? value) {
+  static BoxShape toBoxShape(String? value) {
     if (value == null) return BoxShape.rectangle;
 
     switch (value) {
@@ -799,7 +800,7 @@ class ParamsMapper {
   ///
   /// Returns an [Offset] with the given [x] and [y] values.
   /// If [list] is `null` or does not contain exactly two elements, returns `null`.
-  static Offset convertToOffset(JSONObject? json) {
+  static Offset toOffset(JSONObject? json) {
     if (json == null) return Offset.zero;
 
     return Offset(
@@ -813,7 +814,7 @@ class ParamsMapper {
   /// Returns the corresponding [BlurStyle] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid blur style, returns [BlurStyle.normal] as the default.
-  static BlurStyle convertToBlurStyle(String? value) {
+  static BlurStyle toBlurStyle(String? value) {
     if (value == null) return BlurStyle.normal;
 
     switch (value) {
@@ -835,7 +836,7 @@ class ParamsMapper {
   /// Returns a [BoxShadow] with the given [color], [offset], [blurRadius], and [spreadRadius].
   /// If any of the values are `null` or if the list does not contain exactly four elements,
   /// returns `null`.
-  static List<BoxShadow>? convertToBoxShadow(dynamic json) {
+  static List<BoxShadow>? toBoxShadow(dynamic json) {
     if (json == null) return null;
 
     List<BoxShadow> arr = [];
@@ -847,8 +848,8 @@ class ParamsMapper {
             NumUtils.toDoubleWithNullReplacement(value["blurRadius"], 0.0),
         spreadRadius:
             NumUtils.toDoubleWithNullReplacement(value["spreadRadius"], 0.0),
-        offset: convertToOffset(value["offset"]),
-        blurStyle: convertToBlurStyle(value["blurStyle"]),
+        offset: toOffset(value["offset"]),
+        blurStyle: toBlurStyle(value["blurStyle"]),
       );
       arr.add(boxShadow);
     }
@@ -861,14 +862,14 @@ class ParamsMapper {
   /// Returns a [Gradient] with the given [type] and [colors].
   /// If [type] is `null` or not a valid gradient type, or if [colors] is `null`,
   /// returns `null`.
-  static Gradient? convertToGradient(JSONObject? json) {
+  static Gradient? toGradient(JSONObject? json) {
     if (json == null) return null;
 
     final stops = json["stops"];
     final rotationAngle = json["rotationAngle"] as num?;
     final colors = json["colors"] as List?;
-    final begin = convertToAlignment(json["begin"]);
-    final end = convertToAlignment(json["end"]);
+    final begin = toAlignment(json["begin"]);
+    final end = toAlignment(json["end"]);
 
     final List<Color> dColors = [];
 
@@ -894,75 +895,75 @@ class ParamsMapper {
   /// Returns a [Decoration] with the given properties specified in the [map].
   /// If the [map] is `null` or does not contain valid properties, returns `null`.
   /// You can provide any combination of these properties in the [map].
-  static Decoration? convertToDecoration(dynamic json) {
+  static Decoration? toDecoration(dynamic json) {
     if (json == null) return null;
 
     if (json is Decoration) return json;
 
     return BoxDecoration(
       color: ColorUtils.tryParseNullableColor(json["color"]),
-      border: convertToBorder(json["border"]),
+      border: toBorder(json["border"]),
       borderRadius: json["borderRadius"] != null
           ? BorderRadius.circular(
               NumUtils.toDoubleWithNullReplacement(json["borderRadius"], 4.0))
           : null,
-      shape: convertToBoxShape(json["shape"]),
-      boxShadow: convertToBoxShadow(json["boxShadow"]),
-      gradient: convertToGradient(json["gradient"]),
+      shape: toBoxShape(json["shape"]),
+      boxShadow: toBoxShadow(json["boxShadow"]),
+      gradient: toGradient(json["gradient"]),
     );
   }
 
   /// Converts a map of values to a [Border].
   ///
   /// Returns a [Border] with the given properties specified in the [map].
-  static Border? convertToBorder(dynamic json) {
+  static Border? toBorder(dynamic json) {
     if (json == null) return null;
 
     if (json is Border) return json;
 
     return Border.fromBorderSide(
-      convertToBorderSide(json),
+      toBorderSide(json),
     );
   }
 
   /// Converts a map of values to an [InputDecoration].
   ///
   /// Returns an [InputDecoration] with the given properties specified in the [map].
-  static InputDecoration? convertToInputDecoration(JSONObject? json) {
+  static InputDecoration? toInputDecoration(JSONObject? json) {
     if (json == null) return null;
 
     return InputDecoration(
       labelText: json["labelText"],
-      labelStyle: ParamsMapper.convertToTextStyle(json["labelStyle"]),
-      floatingLabelStyle: ParamsMapper.convertToTextStyle(json["labelStyle"]),
+      labelStyle: AttributeValueMapper.toTextStyle(json["labelStyle"]),
+      floatingLabelStyle: AttributeValueMapper.toTextStyle(json["labelStyle"]),
       helperText: json["helperText"],
       helperMaxLines: json["helperMaxLines"],
-      helperStyle: ParamsMapper.convertToTextStyle(json["helperStyle"]),
+      helperStyle: AttributeValueMapper.toTextStyle(json["helperStyle"]),
       hintText: json["hintText"],
-      hintStyle: ParamsMapper.convertToTextStyle(json["hintStyle"]),
+      hintStyle: AttributeValueMapper.toTextStyle(json["hintStyle"]),
       hintMaxLines: json["hintMaxLines"],
       errorText: json["errorText"],
       errorMaxLines: json["errorMaxLines"],
-      errorStyle: ParamsMapper.convertToTextStyle(json["errorStyle"]),
-      enabledBorder: ParamsMapper.convertToInputBorder(json["enabledBorder"]),
-      border: ParamsMapper.convertToInputBorder(json["border"]),
-      errorBorder: ParamsMapper.convertToInputBorder(json["errorBorder"]),
-      focusedBorder: ParamsMapper.convertToInputBorder(json["focusedBorder"]),
+      errorStyle: AttributeValueMapper.toTextStyle(json["errorStyle"]),
+      enabledBorder: AttributeValueMapper.toInputBorder(json["enabledBorder"]),
+      border: AttributeValueMapper.toInputBorder(json["border"]),
+      errorBorder: AttributeValueMapper.toInputBorder(json["errorBorder"]),
+      focusedBorder: AttributeValueMapper.toInputBorder(json["focusedBorder"]),
       focusedErrorBorder:
-          ParamsMapper.convertToInputBorder(json["focusedErrorBorder"]),
+          AttributeValueMapper.toInputBorder(json["focusedErrorBorder"]),
       enabled: json["enabled"] ?? true,
       isCollapsed: json["isCollapsed"] ?? false,
       isDense: json["isDense"],
       suffixText: json["suffixText"],
-      suffixStyle: ParamsMapper.convertToTextStyle(json["suffixStyle"]),
+      suffixStyle: AttributeValueMapper.toTextStyle(json["suffixStyle"]),
       prefixText: json["prefixText"],
-      prefixStyle: ParamsMapper.convertToTextStyle(json["prefixStyle"]),
+      prefixStyle: AttributeValueMapper.toTextStyle(json["prefixStyle"]),
       counterText: json["counterText"],
-      counterStyle: ParamsMapper.convertToTextStyle(json["prefixStyle"]),
+      counterStyle: AttributeValueMapper.toTextStyle(json["prefixStyle"]),
       alignLabelWithHint: json["alignLabelWithHint"],
       filled: json["filled"],
       fillColor: ColorUtils.tryParseColor(json["fillColor"]),
-      contentPadding: convertToEdgeInsets(json["contentPadding"]),
+      contentPadding: toEdgeInsets(json["contentPadding"]),
     );
   }
 
@@ -970,7 +971,7 @@ class ParamsMapper {
   ///
   /// Returns the corresponding [TextInputType] value for the given string [value].
   /// If [value] is `null` or not a valid text input type, returns [TextInputType.text] as the default.
-  static TextInputType convertToTextInputType(String? value) {
+  static TextInputType toTextInputType(String? value) {
     if (value == null) return TextInputType.text;
     // TextInputType.
     switch (value) {
@@ -1003,7 +1004,7 @@ class ParamsMapper {
   ///
   /// Returns the corresponding [BorderStyle] value for the given string [value].
   /// If [value] is `null` or not a valid border style, returns [BorderStyle.solid] as the default.
-  static BorderStyle convertToBorderStyle(JSONObject? json) {
+  static BorderStyle toBorderStyle(JSONObject? json) {
     if (json == null) return BorderStyle.solid;
 
     switch (json["style"]) {
@@ -1020,7 +1021,7 @@ class ParamsMapper {
   ///
   /// Returns the corresponding [VisualDensity] value for the given string [value].
   /// If [value] is `null` or not a valid visual density, returns [VisualDensity.standard] as the default.
-  static VisualDensity convertToVisualDensity(JSONObject? json) {
+  static VisualDensity toVisualDensity(JSONObject? json) {
     if (json == null) return const VisualDensity();
 
     return VisualDensity(
@@ -1050,7 +1051,7 @@ class ParamsMapper {
   /// final jsonString = '{"activeColor": 4294901760, "defaultColor": 4278190080}';
   /// final mspColor = convertToMSPColor(jsonString);
   /// ```
-  static MaterialStateProperty<Color>? convertToMSPColor(JSONObject? json) {
+  static MaterialStateProperty<Color>? toMSPColor(JSONObject? json) {
     if (json == null) return null;
 
     return MaterialStateProperty.resolveWith((states) {
@@ -1086,7 +1087,7 @@ class ParamsMapper {
     });
   }
 
-  static MaterialStateProperty<double>? convertToMSPDouble(JSONObject? json) {
+  static MaterialStateProperty<double>? toMSPDouble(JSONObject? json) {
     if (json == null) return null;
 
     return MaterialStateProperty.resolveWith((states) {
@@ -1143,22 +1144,22 @@ class ParamsMapper {
     });
   }
 
-  static BorderSide convertToBorderSide(JSONObject? json) {
+  static BorderSide toBorderSide(JSONObject? json) {
     if (json == null) return BorderSide.none;
 
     return BorderSide(
       color: ColorUtils.tryParseColor(json["color"]),
       width: NumUtils.toDoubleWithNullReplacement(json["width"], 1.0),
-      style: convertToBorderStyle(json["style"]),
+      style: toBorderStyle(json["style"]),
     );
   }
 
-  static InputBorder? convertToInputBorder(JSONObject? json) {
+  static InputBorder? toInputBorder(JSONObject? json) {
     if (json == null) return null;
 
     final type = json["type"] as String;
     final borderOptions = json["options"];
-    final borderSide = convertToBorderSide(borderOptions["borderSide"]);
+    final borderSide = toBorderSide(borderOptions["borderSide"]);
 
     switch (type) {
       case "outline":
@@ -1180,7 +1181,7 @@ class ParamsMapper {
   //</editor-fold>
 
   //<editor-fold desc="Gestures">
-  static ScrollViewKeyboardDismissBehavior convertToKeyboardDismissBehavior(
+  static ScrollViewKeyboardDismissBehavior toKeyboardDismissBehavior(
       String? value) {
     if (value == null) return ScrollViewKeyboardDismissBehavior.manual;
 
@@ -1194,7 +1195,7 @@ class ParamsMapper {
     return ScrollViewKeyboardDismissBehavior.manual;
   }
 
-  static ScrollPhysics convertToScrollPhysics(String? value) {
+  static ScrollPhysics toScrollPhysics(String? value) {
     if (value == null) return const AlwaysScrollableScrollPhysics();
 
     switch (value) {
@@ -1216,7 +1217,7 @@ class ParamsMapper {
     return const AlwaysScrollableScrollPhysics();
   }
 
-  static DragStartBehavior convertToDragStartBehavior(String? behavior) {
+  static DragStartBehavior toDragStartBehavior(String? behavior) {
     if (behavior == null) return DragStartBehavior.start;
 
     switch (behavior) {
@@ -1229,7 +1230,7 @@ class ParamsMapper {
     return DragStartBehavior.start;
   }
 
-  static HitTestBehavior convertToHitTestBehavior(String? behavior) {
+  static HitTestBehavior toHitTestBehavior(String? behavior) {
     if (behavior == null) return HitTestBehavior.deferToChild;
 
     switch (behavior) {
@@ -1279,7 +1280,7 @@ class ParamsMapper {
   /// };
   /// final edgeInsets = convertToEdgeInsets(json);
   /// ```
-  static EdgeInsets convertToEdgeInsets(dynamic insets) {
+  static EdgeInsets toEdgeInsets(dynamic insets) {
     if (insets == null) return EdgeInsets.zero;
 
     if (insets is EdgeInsets) return insets;
@@ -1308,7 +1309,7 @@ class ParamsMapper {
     return EdgeInsets.zero;
   }
 
-  static EdgeInsets? convertToNullableEdgeInsets(dynamic insets) {
+  static EdgeInsets? toNullableEdgeInsets(dynamic insets) {
     if (insets == null) return null;
 
     if (insets is num) {
@@ -1338,7 +1339,7 @@ class ParamsMapper {
 //</editor-fold>
 
   //<editor-fold desc="Animations">
-  static Curve convertToCurve(String? value) {
+  static Curve toCurve(String? value) {
     if (value == null) return Curves.linear;
 
     return switch (value) {
@@ -1382,7 +1383,7 @@ class ParamsMapper {
     };
   }
 
-  static Duration convertToDuration(num? value) {
+  static Duration toDuration(num? value) {
     if (value == null) return Duration.zero;
 
     return Duration(milliseconds: value.toInt());

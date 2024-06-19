@@ -26,7 +26,7 @@ final class PaddingAttributes extends AnimatedPropertyOwner
 
   factory PaddingAttributes.fromJson(JSONObject json) {
     return PaddingAttributes(
-      padding: ParamsMapper.convertToEdgeInsets(json["padding"]),
+      padding: AttributeValueMapper.toEdgeInsets(json["padding"]),
       parentBuilderId: json["parentBuilderId"],
       affectedProperties: Set.from(
         json["affectedProperties"] ?? {},

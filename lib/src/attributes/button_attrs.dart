@@ -18,7 +18,7 @@ final class ElevatedButtonAttributes
   factory ElevatedButtonAttributes.fromJson(JSONObject json) {
     return ElevatedButtonAttributes(
       autofocus: json["autofocus"],
-      clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
+      clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),
     );
   }
 

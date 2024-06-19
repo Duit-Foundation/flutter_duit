@@ -28,17 +28,17 @@ class SingleChildScrollviewAttributes
 
   factory SingleChildScrollviewAttributes.fromJson(Map<String, dynamic> json) {
     return SingleChildScrollviewAttributes(
-      scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
+      scrollDirection: AttributeValueMapper.toAxis(json['scrollDirection']),
       reverse: json['reverse'],
       primary: json['primary'],
-      padding: ParamsMapper.convertToEdgeInsets(json['padding']),
-      physics: ParamsMapper.convertToScrollPhysics(json['physics']),
+      padding: AttributeValueMapper.toEdgeInsets(json['padding']),
+      physics: AttributeValueMapper.toScrollPhysics(json['physics']),
       restorationId: json['restorationId'],
-      clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
-      keyboardDismissBehavior: ParamsMapper.convertToKeyboardDismissBehavior(
+      clipBehavior: AttributeValueMapper.toClip(json['clipBehavior']),
+      keyboardDismissBehavior: AttributeValueMapper.toKeyboardDismissBehavior(
           json['keyboardDismissBehavior']),
       dragStartBehavior:
-          ParamsMapper.convertToDragStartBehavior(json['dragStartBehavior']),
+          AttributeValueMapper.toDragStartBehavior(json['dragStartBehavior']),
     );
   }
 

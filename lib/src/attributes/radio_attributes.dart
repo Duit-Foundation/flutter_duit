@@ -79,12 +79,12 @@ final class RadioAttributes extends AnimatedPropertyOwner
       activeColor: ColorUtils.tryParseNullableColor(json['activeColor']),
       focusColor: ColorUtils.tryParseNullableColor(json['focusColor']),
       hoverColor: ColorUtils.tryParseNullableColor(json['hoverColor']),
-      fillColor: ParamsMapper.convertToMSPColor(json['fillColor']),
-      overlayColor: ParamsMapper.convertToMSPColor(json['overlayColor']),
+      fillColor: AttributeValueMapper.toMSPColor(json['fillColor']),
+      overlayColor: AttributeValueMapper.toMSPColor(json['overlayColor']),
       splashRadius: NumUtils.toDouble(json['splashRadius']),
-      materialTapTargetSize: ParamsMapper.convertToMaterialTapTargetSize(
+      materialTapTargetSize: AttributeValueMapper.toMaterialTapTargetSize(
           json['materialTapTargetSize']),
-      visualDensity: ParamsMapper.convertToVisualDensity(json['visualDensity']),
+      visualDensity: AttributeValueMapper.toVisualDensity(json['visualDensity']),
       parentBuilderId: json['parentBuilderId'],
       affectedProperties: Set.from(
         json['affectedProperties'] ?? {},

@@ -20,11 +20,11 @@ final class AnimatedSizeAttributes
   factory AnimatedSizeAttributes.fromJson(Map<String, dynamic> json) {
     assert(json['duration'] != null, "Duration cannot be null");
     return AnimatedSizeAttributes(
-      duration: ParamsMapper.convertToDuration(json['duration']),
-      reverseDuration: ParamsMapper.convertToDuration(json['reverseDuration']),
-      clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
-      curve: ParamsMapper.convertToCurve(json['curve']),
-      alignment: ParamsMapper.convertToAlignment(json['alignment']),
+      duration: AttributeValueMapper.toDuration(json['duration']),
+      reverseDuration: AttributeValueMapper.toDuration(json['reverseDuration']),
+      clipBehavior: AttributeValueMapper.toClip(json['clipBehavior']),
+      curve: AttributeValueMapper.toCurve(json['curve']),
+      alignment: AttributeValueMapper.toAlignment(json['alignment']),
     );
   }
 

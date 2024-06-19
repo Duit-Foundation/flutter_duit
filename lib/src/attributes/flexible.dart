@@ -37,14 +37,14 @@ final class RowAttributes extends FlexAttributes
   factory RowAttributes.fromJson(JSONObject json) {
     return RowAttributes(
       mainAxisAlignment:
-          ParamsMapper.convertToMainAxisAlignment(json["mainAxisAlignment"]),
-      textDirection: ParamsMapper.convertToTextDirection(json["textDirection"]),
+          AttributeValueMapper.toMainAxisAlignment(json["mainAxisAlignment"]),
+      textDirection: AttributeValueMapper.toTextDirection(json["textDirection"]),
       crossAxisAlignment:
-          ParamsMapper.convertToCrossAxisAlignment(json["crossAxisAlignment"]),
-      clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-      mainAxisSize: ParamsMapper.convertToMainAxisSize(json["mainAxisSize"]),
+          AttributeValueMapper.toCrossAxisAlignment(json["crossAxisAlignment"]),
+      clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),
+      mainAxisSize: AttributeValueMapper.toMainAxisSize(json["mainAxisSize"]),
       verticalDirection:
-          ParamsMapper.convertToVerticalDirection(json["verticalDirection"]),
+          AttributeValueMapper.toVerticalDirection(json["verticalDirection"]),
     );
   }
 
@@ -87,14 +87,14 @@ final class ColumnAttributes extends FlexAttributes
   factory ColumnAttributes.fromJson(JSONObject json) {
     return ColumnAttributes(
       mainAxisAlignment:
-          ParamsMapper.convertToMainAxisAlignment(json["mainAxisAlignment"]),
-      textDirection: ParamsMapper.convertToTextDirection(json["textDirection"]),
+          AttributeValueMapper.toMainAxisAlignment(json["mainAxisAlignment"]),
+      textDirection: AttributeValueMapper.toTextDirection(json["textDirection"]),
       crossAxisAlignment:
-          ParamsMapper.convertToCrossAxisAlignment(json["crossAxisAlignment"]),
-      clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-      mainAxisSize: ParamsMapper.convertToMainAxisSize(json["mainAxisSize"]),
+          AttributeValueMapper.toCrossAxisAlignment(json["crossAxisAlignment"]),
+      clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),
+      mainAxisSize: AttributeValueMapper.toMainAxisSize(json["mainAxisSize"]),
       verticalDirection:
-          ParamsMapper.convertToVerticalDirection(json["verticalDirection"]),
+          AttributeValueMapper.toVerticalDirection(json["verticalDirection"]),
     );
   }
 

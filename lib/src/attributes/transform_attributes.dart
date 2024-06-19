@@ -61,11 +61,11 @@ final class ScaleTransform extends TransformAttributes
         scale: NumUtils.toDouble(json['scale']),
         scaleX: NumUtils.toDouble(json['scaleX']),
         scaleY: NumUtils.toDouble(json['scaleY']),
-        origin: ParamsMapper.convertToOffset(json['origin']),
-        alignment: ParamsMapper.convertToAlignment(json['alignment']),
+        origin: AttributeValueMapper.toOffset(json['origin']),
+        alignment: AttributeValueMapper.toAlignment(json['alignment']),
         transformHitTests: json['transformHitTests'] ?? true,
         filterQuality:
-            ParamsMapper.convertToFilterQuality(json['filterQuality']),
+            AttributeValueMapper.toFilterQuality(json['filterQuality']),
         parentBuilderId: json['parentBuilderId'],
         affectedProperties: Set.from(
           json['affectedProperties'] ?? {},
@@ -118,11 +118,11 @@ final class TranslateTransform extends TransformAttributes
 
   factory TranslateTransform.fromJson(Map<String, dynamic> map) {
     return TranslateTransform(
-      offset: ParamsMapper.convertToOffset(map['offset']),
-      origin: ParamsMapper.convertToOffset(map['origin']),
-      alignment: ParamsMapper.convertToAlignment(map['alignment']),
+      offset: AttributeValueMapper.toOffset(map['offset']),
+      origin: AttributeValueMapper.toOffset(map['origin']),
+      alignment: AttributeValueMapper.toAlignment(map['alignment']),
       transformHitTests: map['transformHitTests'] ?? true,
-      filterQuality: ParamsMapper.convertToFilterQuality(map['filterQuality']),
+      filterQuality: AttributeValueMapper.toFilterQuality(map['filterQuality']),
       parentBuilderId: map['parentBuilderId'],
       affectedProperties: Set.from(
         map['affectedProperties'] ?? {},
@@ -188,10 +188,10 @@ final class RotateTransform extends TransformAttributes
   factory RotateTransform.fromJson(Map<String, dynamic> map) {
     return RotateTransform(
       angle: NumUtils.toDouble(map['angle']),
-      origin: ParamsMapper.convertToOffset(map['origin']),
-      alignment: ParamsMapper.convertToAlignment(map['alignment']),
+      origin: AttributeValueMapper.toOffset(map['origin']),
+      alignment: AttributeValueMapper.toAlignment(map['alignment']),
       transformHitTests: map['transformHitTests'] ?? true,
-      filterQuality: ParamsMapper.convertToFilterQuality(map['filterQuality']),
+      filterQuality: AttributeValueMapper.toFilterQuality(map['filterQuality']),
       parentBuilderId: map['parentBuilderId'],
       affectedProperties: Set.from(
         map['affectedProperties'] ?? {},
@@ -233,10 +233,10 @@ final class FlipTransform extends TransformAttributes
     return FlipTransform(
       flipX: json['flipX'] ?? false,
       flipY: json['flipY'] ?? false,
-      origin: ParamsMapper.convertToOffset(json['origin']),
-      alignment: ParamsMapper.convertToAlignment(json['alignment']),
+      origin: AttributeValueMapper.toOffset(json['origin']),
+      alignment: AttributeValueMapper.toAlignment(json['alignment']),
       transformHitTests: json['transformHitTests'] ?? true,
-      filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
+      filterQuality: AttributeValueMapper.toFilterQuality(json['filterQuality']),
       parentBuilderId: json['parentBuilderId'],
       affectedProperties: Set.from(
         json['affectedProperties'] ?? {},
