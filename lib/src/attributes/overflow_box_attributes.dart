@@ -25,8 +25,8 @@ final class OverflowBoxAttributes extends AnimatedPropertyOwner
       maxWidth: NumUtils.toDouble(json['maxWidth']),
       minHeight: NumUtils.toDouble(json['minHeight']),
       maxHeight: NumUtils.toDouble(json['maxHeight']),
-      fit: ParamsMapper.convertToOverflowBoxFit(json['fit']),
-      alignment: ParamsMapper.convertToAlignment(
+      fit: AttributeValueMapper.toOverflowBoxFit(json['fit']),
+      alignment: AttributeValueMapper.toAlignment(
         json['alignment'],
       ),
       parentBuilderId: json['parentBuilderId'],

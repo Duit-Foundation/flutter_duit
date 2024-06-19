@@ -59,23 +59,23 @@ final class RichTextAttributes extends AnimatedPropertyOwner
 
   factory RichTextAttributes.fromJson(Map<String, dynamic> json) {
     return RichTextAttributes(
-      textSpan: ParamsMapper.convertToTextSpan(json['textSpan']),
-      style: ParamsMapper.convertToTextStyle(json['style']),
-      strutStyle: ParamsMapper.convertToStrutStyle(json['strutStyle']),
-      textAlign: ParamsMapper.convertToTextAlign(json['textAlign']),
-      textDirection: ParamsMapper.convertToTextDirection(json['textDirection']),
+      textSpan: AttributeValueMapper.toTextSpan(json['textSpan']),
+      style: AttributeValueMapper.toTextStyle(json['style']),
+      strutStyle: AttributeValueMapper.toStrutStyle(json['strutStyle']),
+      textAlign: AttributeValueMapper.toTextAlign(json['textAlign']),
+      textDirection: AttributeValueMapper.toTextDirection(json['textDirection']),
       softWrap: json['softWrap'],
-      overflow: ParamsMapper.convertToTextOverflow(json['overflow']),
+      overflow: AttributeValueMapper.toTextOverflow(json['overflow']),
       maxLines: NumUtils.toInt(json['maxLines']),
       semanticsLabel: json['semanticsLabel'],
-      textWidthBasis: ParamsMapper.convertToTextWidthBasis(
+      textWidthBasis: AttributeValueMapper.toTextWidthBasis(
         json['textWidthBasis'],
       ),
-      textHeightBehavior: ParamsMapper.convertToTextHeightBehavior(
+      textHeightBehavior: AttributeValueMapper.toTextHeightBehavior(
         json['textHeightBehavior'],
       ),
       selectionColor: ColorUtils.tryParseColor(json['selectionColor']),
-      textScaler: ParamsMapper.convertToTextScaler(json['textScaler']),
+      textScaler: AttributeValueMapper.toTextScaler(json['textScaler']),
       parentBuilderId: json['parentBuilderId'],
       affectedProperties: Set.from(
         json['affectedProperties'] ?? {},

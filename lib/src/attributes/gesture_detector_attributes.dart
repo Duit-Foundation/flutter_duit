@@ -143,8 +143,8 @@ class GestureDetectorAttributes
           : null,
       excludeFromSemantics: json['excludeFromSemantics'] ?? false,
       dragStartBehavior:
-          ParamsMapper.convertToDragStartBehavior(json['dragStartBehavior']),
-      behavior: ParamsMapper.convertToHitTestBehavior(json['behavior']),
+          AttributeValueMapper.toDragStartBehavior(json['dragStartBehavior']),
+      behavior: AttributeValueMapper.toHitTestBehavior(json['behavior']),
     );
   }
 

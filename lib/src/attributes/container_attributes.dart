@@ -57,15 +57,15 @@ final class ContainerAttributes extends AnimatedPropertyOwner
       width: NumUtils.toDouble(json['width']),
       height: NumUtils.toDouble(json['height']),
       color: ColorUtils.tryParseNullableColor(json['color']),
-      clipBehavior: ParamsMapper.convertToClip(json['clipBehavior']),
-      decoration: ParamsMapper.convertToDecoration(json['decoration']),
+      clipBehavior: AttributeValueMapper.toClip(json['clipBehavior']),
+      decoration: AttributeValueMapper.toDecoration(json['decoration']),
       foregroundDecoration:
-          ParamsMapper.convertToDecoration(json['foregroundDecoration']),
-      constraints: ParamsMapper.convertToBoxConstraints(json['constraints']),
-      padding: ParamsMapper.convertToEdgeInsets(json['padding']),
-      margin: ParamsMapper.convertToEdgeInsets(json['margin']),
-      alignment: ParamsMapper.convertToAlignmentDirectional(json['alignment']),
-      transformAlignment: ParamsMapper.convertToAlignmentDirectional(
+          AttributeValueMapper.toDecoration(json['foregroundDecoration']),
+      constraints: AttributeValueMapper.toBoxConstraints(json['constraints']),
+      padding: AttributeValueMapper.toEdgeInsets(json['padding']),
+      margin: AttributeValueMapper.toEdgeInsets(json['margin']),
+      alignment: AttributeValueMapper.toAlignmentDirectional(json['alignment']),
+      transformAlignment: AttributeValueMapper.toAlignmentDirectional(
           json['transformAlignment']),
       affectedProperties: Set.from(json['affectedProperties'] ?? {}),
       parentBuilderId: json['parentBuilderId'],

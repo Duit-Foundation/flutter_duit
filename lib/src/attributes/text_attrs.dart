@@ -32,13 +32,13 @@ final class TextAttributes extends AnimatedPropertyOwner
   static TextAttributes? fromJson(JSONObject json) {
     return TextAttributes(
       data: json["data"],
-      textAlign: ParamsMapper.convertToTextAlign(json["textAlign"]),
+      textAlign: AttributeValueMapper.toTextAlign(json["textAlign"]),
       softWrap: json["softWrap"],
       maxLines: json["maxLines"],
       semanticsLabel: json["semanticsLabel"],
-      style: ParamsMapper.convertToTextStyle(json["style"]),
-      overflow: ParamsMapper.convertToTextOverflow(json["overflow"]),
-      textDirection: ParamsMapper.convertToTextDirection(json["textDirection"]),
+      style: AttributeValueMapper.toTextStyle(json["style"]),
+      overflow: AttributeValueMapper.toTextOverflow(json["overflow"]),
+      textDirection: AttributeValueMapper.toTextDirection(json["textDirection"]),
       parentBuilderId: json["parentBuilderId"],
       affectedProperties: Set.from(
         json["affectedProperties"] ?? {},

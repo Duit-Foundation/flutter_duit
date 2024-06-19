@@ -48,11 +48,11 @@ final class TextFieldAttributes extends AttendedModel<String>
 
   factory TextFieldAttributes.fromJson(JSONObject json) {
     return TextFieldAttributes(
-      decoration: ParamsMapper.convertToInputDecoration(json['decoration']),
-      style: ParamsMapper.convertToTextStyle(json['style']),
-      keyboardType: ParamsMapper.convertToTextInputType(json["keyboardType"]),
-      textAlign: ParamsMapper.convertToTextAlign(json['textAlign']),
-      textDirection: ParamsMapper.convertToTextDirection(json['textDirection']),
+      decoration: AttributeValueMapper.toInputDecoration(json['decoration']),
+      style: AttributeValueMapper.toTextStyle(json['style']),
+      keyboardType: AttributeValueMapper.toTextInputType(json["keyboardType"]),
+      textAlign: AttributeValueMapper.toTextAlign(json['textAlign']),
+      textDirection: AttributeValueMapper.toTextDirection(json['textDirection']),
       obscuringCharacter: json['obscuringCharacter'],
       obscureText: json['obscureText'],
       autocorrect: json['autocorrect'],

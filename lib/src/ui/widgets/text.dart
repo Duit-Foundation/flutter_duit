@@ -22,6 +22,9 @@ final class DuitText extends StatelessWidget with AnimatedAttributes {
     if (attributes.payload.data == null || attributes.payload.data!.isEmpty) {
       return const SizedBox.shrink();
     }
+
+    print("Build stateless text widget");
+
     return Text(
       key: Key(attributes.id),
       attrs.data ?? "",
@@ -66,6 +69,7 @@ class _DuitControlledTextState extends State<DuitControlledText>
     if (attrs.data == null || attrs.data!.isEmpty) {
       return const SizedBox.shrink();
     } else {
+      print("Build text widget with id: ${widget.controller.id}");
       return Text(
         attrs.data ?? "",
         textAlign: attrs.textAlign,

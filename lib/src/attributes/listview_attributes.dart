@@ -126,25 +126,25 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
         final children = List<JSONObject>.from(json["childObjects"] ?? []);
 
         return ListViewAttributes.builder(
-          scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
+          scrollDirection: AttributeValueMapper.toAxis(json['scrollDirection']),
           reverse: json["reverse"],
           shrinkWrap: json["shrinkWrap"],
           addSemanticIndexes: json["addSemanticIndexes"],
           addRepaintBoundaries: json["addRepaintBoundaries"],
           addAutomaticKeepAlives: json["addAutomaticKeepAlives"],
           primary: json["primary"],
-          physics: ParamsMapper.convertToScrollPhysics(json['physics']),
+          physics: AttributeValueMapper.toScrollPhysics(json['physics']),
           anchor: NumUtils.toDouble(json["anchor"]),
           cacheExtent: NumUtils.toDouble(json["cacheExtent"]),
           semanticChildCount: NumUtils.toInt(json["semanticChildCount"]),
-          dragStartBehavior: ParamsMapper.convertToDragStartBehavior(
+          dragStartBehavior: AttributeValueMapper.toDragStartBehavior(
               json["dragStartBehavior"]),
           keyboardDismissBehavior:
-              ParamsMapper.convertToKeyboardDismissBehavior(
+              AttributeValueMapper.toKeyboardDismissBehavior(
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
-          clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-          padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
+          clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),
+          padding: AttributeValueMapper.toNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
           childObjects: children,
           mergeStrategy: ArrayMergeStrategy.values[json["mergeStrategy"] ?? 0],
@@ -159,25 +159,25 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
         final children = List<JSONObject>.from(json["childObjects"] ?? []);
 
         return ListViewAttributes.separated(
-          scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
+          scrollDirection: AttributeValueMapper.toAxis(json['scrollDirection']),
           reverse: json["reverse"],
           shrinkWrap: json["shrinkWrap"],
           addSemanticIndexes: json["addSemanticIndexes"],
           addRepaintBoundaries: json["addRepaintBoundaries"],
           addAutomaticKeepAlives: json["addAutomaticKeepAlives"],
           primary: json["primary"],
-          physics: ParamsMapper.convertToScrollPhysics(json['physics']),
+          physics: AttributeValueMapper.toScrollPhysics(json['physics']),
           anchor: NumUtils.toDouble(json["anchor"]),
           cacheExtent: NumUtils.toDouble(json["cacheExtent"]),
           semanticChildCount: NumUtils.toInt(json["semanticChildCount"]),
-          dragStartBehavior: ParamsMapper.convertToDragStartBehavior(
+          dragStartBehavior: AttributeValueMapper.toDragStartBehavior(
               json["dragStartBehavior"]),
           keyboardDismissBehavior:
-              ParamsMapper.convertToKeyboardDismissBehavior(
+              AttributeValueMapper.toKeyboardDismissBehavior(
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
-          clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-          padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
+          clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),
+          padding: AttributeValueMapper.toNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
           separator: separator,
           childObjects: children,
@@ -188,25 +188,25 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
         );
       default:
         return ListViewAttributes(
-          scrollDirection: ParamsMapper.convertToAxis(json['scrollDirection']),
+          scrollDirection: AttributeValueMapper.toAxis(json['scrollDirection']),
           reverse: json["reverse"],
           shrinkWrap: json["shrinkWrap"],
           addSemanticIndexes: json["addSemanticIndexes"],
           addRepaintBoundaries: json["addRepaintBoundaries"],
           addAutomaticKeepAlives: json["addAutomaticKeepAlives"],
           primary: json["primary"],
-          physics: ParamsMapper.convertToScrollPhysics(json['physics']),
+          physics: AttributeValueMapper.toScrollPhysics(json['physics']),
           anchor: NumUtils.toDouble(json["anchor"]),
           cacheExtent: NumUtils.toDouble(json["cacheExtent"]),
           semanticChildCount: NumUtils.toInt(json["semanticChildCount"]),
-          dragStartBehavior: ParamsMapper.convertToDragStartBehavior(
+          dragStartBehavior: AttributeValueMapper.toDragStartBehavior(
               json["dragStartBehavior"]),
           keyboardDismissBehavior:
-              ParamsMapper.convertToKeyboardDismissBehavior(
+              AttributeValueMapper.toKeyboardDismissBehavior(
                   json["keyboardDismissBehavior"]),
           restorationId: json["restorationId"],
-          clipBehavior: ParamsMapper.convertToClip(json["clipBehavior"]),
-          padding: ParamsMapper.convertToNullableEdgeInsets(json["padding"]),
+          clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),
+          padding: AttributeValueMapper.toNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
         );
     }

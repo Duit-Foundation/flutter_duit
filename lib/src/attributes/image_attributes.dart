@@ -76,9 +76,9 @@ final class ImageAttributes extends AnimatedPropertyOwner
 
   factory ImageAttributes.fromJson(JSONObject json) {
     return ImageAttributes(
-      type: ParamsMapper.convertToImageType(json['type']),
+      type: AttributeValueMapper.toImageType(json['type']),
       src: json['src'],
-      byteData: ParamsMapper.convertToUint8List(json['byteData']),
+      byteData: AttributeValueMapper.toUint8List(json['byteData']),
       scale: NumUtils.toDouble(json['scale']),
       width: NumUtils.toDouble(json['width']),
       height: NumUtils.toDouble(json['height']),
@@ -87,14 +87,14 @@ final class ImageAttributes extends AnimatedPropertyOwner
       isAntiAlias: json['isAntiAlias'],
       matchTextDirection: json['matchTextDirection'],
       gaplessPlayback: json['gaplessPlayback'],
-      filterQuality: ParamsMapper.convertToFilterQuality(json['filterQuality']),
-      alignment: ParamsMapper.convertToAlignment(json['alignment']),
-      repeat: ParamsMapper.convertToImageRepeat(json['repeat']),
+      filterQuality: AttributeValueMapper.toFilterQuality(json['filterQuality']),
+      alignment: AttributeValueMapper.toAlignment(json['alignment']),
+      repeat: AttributeValueMapper.toImageRepeat(json['repeat']),
       color: json['color'] != null
           ? ColorUtils.tryParseColor(json['color'])
           : null,
-      colorBlendMode: ParamsMapper.convertToBlendMode(json['colorBlendMode']),
-      fit: ParamsMapper.convertToBoxFit(json['fit']),
+      colorBlendMode: AttributeValueMapper.toBlendMode(json['colorBlendMode']),
+      fit: AttributeValueMapper.toBoxFit(json['fit']),
       excludeFromSemantics: json['excludeFromSemantics'],
       parentBuilderId: json['parentBuilderId'],
       affectedProperties: Set.from(

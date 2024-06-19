@@ -17,7 +17,6 @@ class DuitContainer extends StatelessWidget with AnimatedAttributes {
   @override
   Widget build(BuildContext context) {
     final attrs = mergeWithAttributes(context, attributes.payload);
-
     return Container(
       key: Key(attributes.id),
       alignment: attrs.alignment,
@@ -68,6 +67,7 @@ class _DuitControlledContainerState extends State<DuitControlledContainer>
       context,
       widget.controller,
     );
+    print("BUild cont!");
     return Container(
       key: Key(widget.controller.id),
       alignment: attrs.alignment,
