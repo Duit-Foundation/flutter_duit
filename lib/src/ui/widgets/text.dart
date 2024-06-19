@@ -23,8 +23,6 @@ final class DuitText extends StatelessWidget with AnimatedAttributes {
       return const SizedBox.shrink();
     }
 
-    print("Build stateless text widget");
-
     return Text(
       key: Key(attributes.id),
       attrs.data ?? "",
@@ -68,18 +66,17 @@ class _DuitControlledTextState extends State<DuitControlledText>
 
     if (attrs.data == null || attrs.data!.isEmpty) {
       return const SizedBox.shrink();
-    } else {
-      print("Build text widget with id: ${widget.controller.id}");
-      return Text(
-        attrs.data ?? "",
-        textAlign: attrs.textAlign,
-        textDirection: attrs.textDirection,
-        style: attrs.style,
-        maxLines: attrs.maxLines,
-        semanticsLabel: attrs.semanticsLabel,
-        overflow: attrs.overflow,
-        softWrap: attrs.softWrap,
-      );
     }
+
+    return Text(
+      attrs.data ?? "",
+      textAlign: attrs.textAlign,
+      textDirection: attrs.textDirection,
+      style: attrs.style,
+      maxLines: attrs.maxLines,
+      semanticsLabel: attrs.semanticsLabel,
+      overflow: attrs.overflow,
+      softWrap: attrs.softWrap,
+    );
   }
 }

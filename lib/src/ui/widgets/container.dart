@@ -67,7 +67,6 @@ class _DuitControlledContainerState extends State<DuitControlledContainer>
       context,
       widget.controller,
     );
-    print("BUild cont!");
     return Container(
       key: Key(widget.controller.id),
       alignment: attrs.alignment,
