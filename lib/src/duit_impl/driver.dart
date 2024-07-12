@@ -81,6 +81,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   final Map<String, dynamic>? initialRequestPayload;
 
+  final bool _useStaticContent;
+
+  @protected
+  Map<String, dynamic>? content;
+
   DuitDriver(
     this.source, {
     required this.transportOptions,
@@ -89,7 +94,19 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.workerPool,
     this.workerPoolConfiguration,
     this.initialRequestPayload,
-  });
+  }) : _useStaticContent = false;
+
+  ///Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
+  DuitDriver.static(
+    this.content, {
+    required this.transportOptions,
+    this.eventHandler,
+    this.concurrentModeEnabled = false,
+    this.workerPool,
+    this.workerPoolConfiguration,
+  })  : _useStaticContent = true,
+        source = "",
+        initialRequestPayload = null;
 
   @protected
   @override
@@ -279,9 +296,15 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
       await scriptRunner?.initWithTransport(transport!);
 
-      final json = await transport?.connect(
-        initialData: initialRequestPayload,
-      );
+      Map<String, dynamic>? json;
+
+      if (_useStaticContent) {
+        json = content;
+      } else {
+        json = await transport?.connect(
+          initialData: initialRequestPayload,
+        );
+      }
 
       if (transport is Streamer) {
         final streamer = transport as Streamer;
