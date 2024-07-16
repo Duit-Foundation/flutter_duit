@@ -185,21 +185,27 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           tag,
         );
 
+        final modelId = attributes.payload.persistentId ?? id;
+
+        final controller = driver.getController(id)
+            as UIElementController<AnimatedBuilderAttributes>?;
+
         //Priority use of  persistentId property for animatedBuilder
         return AnimatedBuilderUIElement<AnimatedBuilderAttributes>(
           type: type,
           id: attributes.payload.persistentId ?? id,
           child: child,
           attributes: attributes,
-          viewController: _createAndAttachController(
-            attributes.payload.persistentId ?? id,
-            controlled,
-            attributes,
-            serverAction,
-            driver,
-            type,
-            tag,
-          ),
+          viewController: controller ??
+              _createAndAttachController(
+                modelId,
+                controlled,
+                attributes,
+                serverAction,
+                driver,
+                type,
+                tag,
+              ),
           controlled: controlled,
         );
       case ElementType.coloredBox:
