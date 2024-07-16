@@ -96,7 +96,8 @@ class _DuitViewHostState extends State<DuitViewHost> {
                   invertStack: widget.invertStack,
                   content: snapshot.data!.render(),
                   child: widget.child,
-                ))
+                ),
+              )
             : widget.showChildInsteadOfPlaceholder
                 ? widget.child!
                 : widget.placeholder ?? const SizedBox.shrink();

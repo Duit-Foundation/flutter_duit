@@ -82,8 +82,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   final Map<String, dynamic>? initialRequestPayload;
 
-  final bool _useStaticContent;
-  final bool _isModule;
+  final bool _useStaticContent, _isModule;
+  bool _isChannelInitialized = false;
 
   late final MethodChannel _driverChannel;
 
@@ -148,6 +148,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// - An instance of the transport class based on the specified [type].
   /// - If the [type] is not recognized, it returns an instance of [HttpTransport].
   Transport _getTransport(String type, {WorkerPool? workerPool}) {
+    if (_isModule) {
+      return NativeTransport(this);
+    }
+
     switch (type) {
       case TransportType.http:
         {
@@ -227,11 +231,15 @@ final class DuitDriver with DriverHooks implements UIDriver {
           break;
         case ServerEventType.custom:
           final customEvent = event as CustomEvent;
-          await eventHandler?.handleCustomEvent(
-            buildContext,
-            customEvent.key,
-            customEvent.extra,
-          );
+          if (_isModule) {
+            await emitNativeEvent(customEvent.key, customEvent.extra);
+          } else {
+            await eventHandler?.handleCustomEvent(
+              buildContext,
+              customEvent.key,
+              customEvent.extra,
+            );
+          }
           break;
         case ServerEventType.sequenced:
           final sequence = event as SequencedEventGroup;
@@ -291,7 +299,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   }
 
   /// Initializes the driver as a module.
-  Future<void> _initAsModule() async {
+  Future<void> _initMethodChannel() async {
     _driverChannel.setMethodCallHandler((call) async {
       switch (call.method) {
         case "duit_event":
@@ -309,29 +317,29 @@ final class DuitDriver with DriverHooks implements UIDriver {
           break;
       }
     });
+    _isChannelInitialized = true;
   }
 
   @override
   Future<void> init() async {
     onInit?.call();
 
-    ViewAttribute.attributeParser = AttributeParser();
-
-    if (_isModule) {
-      await _initAsModule();
-      return;
-    }
-
     if (_layout != null) {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
     } else {
+      ViewAttribute.attributeParser = AttributeParser();
+
       final wp = await _getWorkerPool();
 
       if (wp != null && wp.initialized == false) {
         assert(
             workerPoolConfiguration != null, "Worker pool is not configured");
         await wp.initWithConfiguration(workerPoolConfiguration!);
+      }
+
+      if (_isModule && !_isChannelInitialized) {
+        await _initMethodChannel();
       }
 
       transport ??= _getTransport(
@@ -372,17 +380,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     return _layout?.render();
   }
 
-  ///Execute action request on native side
-  FutureOr<Map<String, dynamic>?> _nativeExecute(
-      Map<String, dynamic> payload) async {
-    try {
-      return await _driverChannel.invokeMapMethod("execute", payload);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    return null;
-  }
-
   @override
   Future<void> execute(ServerAction action) async {
     beforeActionCallback?.call(action);
@@ -393,9 +390,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         try {
           final payload = _preparePayload(action.dependsOn);
 
-          final event = _isModule
-              ? await _nativeExecute(payload)
-              : await transport?.execute(action, payload);
+          final event = await transport?.execute(action, payload);
           //case with http request
           if (event != null) {
             await _resolveEvent(event);
@@ -415,10 +410,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         break;
       //script
       case 2:
-
-        ///Scripts disabled in module
-        if (_isModule) return;
-
         try {
           final body = _preparePayload(action.dependsOn);
           final script = action.script as DuitScript;
@@ -538,5 +529,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @override
   UIElementController? getController(String id) {
     return _viewControllers[id];
+  }
+
+  Future<T?> emitNativeEvent<T>(String event, [Object? data]) async {
+    return await _driverChannel.invokeMethod<T>(event, data);
   }
 }
