@@ -55,7 +55,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
       if (serverAction.executionType == 2) {
         assert(serverAction.script != null,
             "Script can't be null when executionType == 2");
-        final script = serverAction.script as DuitScript;
+        final script = serverAction.script!;
         driver.evalScript(script.sourceCode);
       }
     }
