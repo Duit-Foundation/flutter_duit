@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/duit_impl/hooks.dart";
 import "package:flutter_duit/src/transport/index.dart";
@@ -81,7 +82,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   final Map<String, dynamic>? initialRequestPayload;
 
-  final bool _useStaticContent;
+  final bool _useStaticContent, _isModule;
+  bool _isChannelInitialized = false;
+
+  late final MethodChannel _driverChannel;
 
   @protected
   Map<String, dynamic>? content;
@@ -94,9 +98,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.workerPool,
     this.workerPoolConfiguration,
     this.initialRequestPayload,
-  }) : _useStaticContent = false;
+  })  : _useStaticContent = false,
+        _isModule = false;
 
-  ///Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
+  /// Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
   DuitDriver.static(
     this.content, {
     required this.transportOptions,
@@ -106,7 +111,19 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.workerPoolConfiguration,
   })  : _useStaticContent = true,
         source = "",
-        initialRequestPayload = null;
+        initialRequestPayload = null,
+        _isModule = false;
+
+  /// Creates a new [DuitDriver] instance that is controlled from native code
+  DuitDriver.module()
+      : _useStaticContent = false,
+        source = "",
+        initialRequestPayload = null,
+        _isModule = true,
+        eventHandler = null,
+        concurrentModeEnabled = false,
+        transportOptions = EmptyTransportOptions(),
+        _driverChannel = const MethodChannel("duit:driver");
 
   @protected
   @override
@@ -131,6 +148,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// - An instance of the transport class based on the specified [type].
   /// - If the [type] is not recognized, it returns an instance of [HttpTransport].
   Transport _getTransport(String type, {WorkerPool? workerPool}) {
+    if (_isModule) {
+      return NativeTransport(this);
+    }
+
     switch (type) {
       case TransportType.http:
         {
@@ -210,11 +231,15 @@ final class DuitDriver with DriverHooks implements UIDriver {
           break;
         case ServerEventType.custom:
           final customEvent = event as CustomEvent;
-          await eventHandler?.handleCustomEvent(
-            buildContext,
-            customEvent.key,
-            customEvent.extra,
-          );
+          if (_isModule) {
+            await emitNativeEvent(customEvent.key, customEvent.extra);
+          } else {
+            await eventHandler?.handleCustomEvent(
+              buildContext,
+              customEvent.key,
+              customEvent.extra,
+            );
+          }
           break;
         case ServerEventType.sequenced:
           final sequence = event as SequencedEventGroup;
@@ -273,20 +298,48 @@ final class DuitDriver with DriverHooks implements UIDriver {
     return null;
   }
 
+  /// Initializes the driver as a module.
+  Future<void> _initMethodChannel() async {
+    _driverChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case "duit_event":
+          await _resolveEvent(call.arguments as Map<String, dynamic>);
+          break;
+        case "duit_layout":
+          final json = call.arguments as Map<String, dynamic>;
+          _layout = await DuitTree(
+            json: json,
+            driver: this,
+          ).parse();
+          streamController.sink.add(_layout);
+          break;
+        default:
+          break;
+      }
+    });
+    _isChannelInitialized = true;
+  }
+
   @override
   Future<void> init() async {
     onInit?.call();
+
     if (_layout != null) {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
     } else {
       ViewAttribute.attributeParser = AttributeParser();
+
       final wp = await _getWorkerPool();
 
       if (wp != null && wp.initialized == false) {
         assert(
             workerPoolConfiguration != null, "Worker pool is not configured");
         await wp.initWithConfiguration(workerPoolConfiguration!);
+      }
+
+      if (_isModule && !_isChannelInitialized) {
+        await _initMethodChannel();
       }
 
       transport ??= _getTransport(
@@ -476,5 +529,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @override
   UIElementController? getController(String id) {
     return _viewControllers[id];
+  }
+
+  Future<T?> emitNativeEvent<T>(String event, [Object? data]) async {
+    return await _driverChannel.invokeMethod<T>(event, data);
   }
 }
