@@ -16,6 +16,7 @@ enum ServerEventType {
   sequenced,
   grouped,
   animationTrigger,
+  timer,
 }
 
 /// Represents a server response event.
@@ -42,6 +43,7 @@ abstract class ServerEvent {
       "sequenced" => SequencedEventGroup.fromJson(json),
       "grouped" => CommonEventGroup.fromJson(json),
       "animationTrigger" => AnimationTriggerEvent.fromJson(json),
+      "timer" => TimerEvent.fromJson(json),
       String() || Object() || null => null,
     };
   }
@@ -231,6 +233,26 @@ final class AnimationTriggerEvent extends ServerEvent {
         controllerId: json["controllerId"],
         animatedPropKey: json["animatedPropKey"],
       ),
+    );
+  }
+}
+
+final class TimerEvent extends ServerEvent {
+  @override
+  ServerEventType type = ServerEventType.timer;
+
+  final Duration timerDelay;
+  final JSONObject event;
+
+  TimerEvent({
+    required this.timerDelay,
+    required this.event,
+  });
+
+  factory TimerEvent.fromJson(JSONObject json) {
+    return TimerEvent(
+      timerDelay: Duration(milliseconds: json["timerDelay"] ?? 0),
+      event: json["event"] ?? {},
     );
   }
 }
