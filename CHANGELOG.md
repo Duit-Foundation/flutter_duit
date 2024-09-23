@@ -1,3 +1,12 @@
+## 2.1.0
+
+- AttributeValueMapper import
+- DuitDriver constructor with static content (json)
+- AnimatedBuilder controller reuse
+- Duit native module constructor (use duit as BDUI engine at native apps)
+- Startup metrics
+- New event type: Timer
+
 ## 2.0.1
 
 - Fixed an issue with animations not working when using AnimatedBuilder inside components
