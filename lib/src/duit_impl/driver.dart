@@ -263,6 +263,15 @@ final class DuitDriver with DriverHooks implements UIDriver {
           final trigger = event as AnimationTriggerEvent;
           await _resolveAnimationTrigger(trigger);
           break;
+        case ServerEventType.timer:
+          final timerEvent = event as TimerEvent;
+          Timer(
+            timerEvent.timerDelay,
+            () async {
+              await _resolveEvent(timerEvent.event);
+            },
+          );
+          break;
       }
     }
 
