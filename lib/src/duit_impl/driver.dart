@@ -82,7 +82,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   final Map<String, dynamic>? initialRequestPayload;
 
-  final bool _useStaticContent, _isModule;
+  final bool _useStaticContent, _isModule, _devMetricsEnabled;
   bool _isChannelInitialized = false;
 
   late final MethodChannel _driverChannel;
@@ -98,8 +98,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.workerPool,
     this.workerPoolConfiguration,
     this.initialRequestPayload,
+    bool enableDevMetrics = true,
   })  : _useStaticContent = false,
-        _isModule = false;
+        _isModule = false,
+        _devMetricsEnabled = enableDevMetrics;
 
   /// Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
   DuitDriver.static(
@@ -109,10 +111,12 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.concurrentModeEnabled = false,
     this.workerPool,
     this.workerPoolConfiguration,
+    bool enableDevMetrics = true,
   })  : _useStaticContent = true,
         source = "",
         initialRequestPayload = null,
-        _isModule = false;
+        _isModule = false,
+        _devMetricsEnabled = enableDevMetrics;
 
   /// Creates a new [DuitDriver] instance that is controlled from native code
   DuitDriver.module()
@@ -123,7 +127,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
         eventHandler = null,
         concurrentModeEnabled = false,
         transportOptions = EmptyTransportOptions(),
-        _driverChannel = const MethodChannel("duit:driver");
+        _driverChannel = const MethodChannel("duit:driver"),
+        _devMetricsEnabled = false;
 
   @protected
   @override
@@ -324,6 +329,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
   Future<void> init() async {
     onInit?.call();
 
+    if (_devMetricsEnabled) {
+      DevMetrics().init(source);
+    }
+
     if (_layout != null) {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
@@ -354,6 +363,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
       if (_useStaticContent) {
         json = content;
       } else {
+        DevMetrics().add(ConnectionStartMessage());
         json = await transport?.connect(
           initialData: initialRequestPayload,
         );

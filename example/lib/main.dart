@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     driver1 = DuitDriver(
-      "/example_screen",
+      "/inputs",
       transportOptions: HttpTransportOptions(
         defaultHeaders: {"Content-Type": "application/json"},
         baseUrl: "http://localhost:8999",

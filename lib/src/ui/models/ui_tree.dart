@@ -6,6 +6,7 @@ import 'element.dart';
 
 final class DuitTree extends DuitAbstractTree {
   Widget? _root;
+  final _dm = DevMetrics();
 
   DuitTree({
     required JSONObject json,
@@ -14,19 +15,23 @@ final class DuitTree extends DuitAbstractTree {
 
   @override
   Future<DuitAbstractTree> parse() async {
+    _dm.add(ParseModelStartMessage());
     uiRoot = DuitElement.fromJson(
       json,
       driver,
     );
+    _dm.add(ParseModelEndMessage());
     return this;
   }
 
   @override
   DuitAbstractTree parseSync() {
+    _dm.add(ParseModelStartMessage());
     uiRoot = DuitElement.fromJson(
       json,
       driver,
     );
+    _dm.add(ParseModelEndMessage());
     return this;
   }
 
