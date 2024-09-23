@@ -14,5 +14,16 @@ export "./src/utils/index.dart"
         DuitMetaData,
         NumUtils,
         parseLayoutSync,
-        parseLayout;
+        parseLayout,
+        DevMetrics,
+        DevStartUpMessage,
+        ConnectionStartMessage,
+        ReqStartMessage,
+        ReqEndMessage,
+        DecodeStartMessage,
+        DecodeEndMessage,
+        ParseModelStartMessage,
+        ParseModelEndMessage,
+        RenderStartMessage,
+        RenderEndMessage;
 export './src/concurrency/index.dart' hide Worker;

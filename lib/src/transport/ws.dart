@@ -29,6 +29,7 @@ final class WSTransport extends Transport implements Streamer {
   late final WebSocket ws;
   final WebSocketTransportOptions options;
   final bool concurrencyEnabled;
+  final _dm = DevMetrics();
 
   @override
   Stream<Map<String, dynamic>> get eventStream =>
@@ -51,6 +52,8 @@ final class WSTransport extends Transport implements Streamer {
   }
 
   Future<Map<String, dynamic>> _parseJson(String data) async {
+    _dm.add(DecodeStartMessage());
+
     if (concurrencyEnabled && workerPool != null) {
       final tres = await workerPool!.perform(
         (params) {
@@ -58,8 +61,11 @@ final class WSTransport extends Transport implements Streamer {
         },
         data,
       );
+      _dm.add(DecodeEndMessage());
       return tres.result as Map<String, dynamic>;
     }
+
+    _dm.add(DecodeEndMessage());
     return jsonDecode(data) as Map<String, dynamic>;
   }
 
@@ -76,6 +82,8 @@ final class WSTransport extends Transport implements Streamer {
     assert(urlString.isNotEmpty && urlString.startsWith("ws"),
         "Invalid url: $url}");
 
+    _dm.add(ReqStartMessage());
+
     ws = await WebSocket.connect(
       urlString,
       headers: options.defaultHeaders,
@@ -83,6 +91,7 @@ final class WSTransport extends Transport implements Streamer {
 
     ws.listen(
       (event) async {
+        _dm.add(ReqEndMessage());
         final data = await _parseJson(event);
         _controller.sink.add(data);
       },

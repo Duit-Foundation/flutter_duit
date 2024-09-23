@@ -94,7 +94,13 @@ class _DuitViewHostState extends State<DuitViewHost> {
                 gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
                 child: _StackWrapper(
                   invertStack: widget.invertStack,
-                  content: snapshot.data!.render(),
+                  content: () {
+                    final devM = DevMetrics();
+                    devM.add(RenderStartMessage());
+                    final content = snapshot.data!.render();
+                    devM.add(RenderEndMessage());
+                    return content;
+                  }(),
                   child: widget.child,
                 ),
               )

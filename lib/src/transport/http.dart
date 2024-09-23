@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/flutter_duit.dart';
+import 'package:flutter_duit/src/utils/dev/dev_metrics.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,6 +28,7 @@ final class HttpTransport extends Transport {
   final client = http.Client();
   final HttpTransportOptions options;
   final bool concurrencyEnabled;
+  final _dm = DevMetrics();
 
   HttpTransport(
     super.url, {
@@ -45,8 +47,9 @@ final class HttpTransport extends Transport {
   }
 
   @override
-  Future<Map<String, dynamic>?> connect(
-      {Map<String, dynamic>? initialData}) async {
+  Future<Map<String, dynamic>?> connect({
+    Map<String, dynamic>? initialData,
+  }) async {
     assert(url.isNotEmpty, "Invalid url: $url}");
 
     final urlString = _prepareUrl(url);
@@ -79,7 +82,9 @@ final class HttpTransport extends Transport {
 
       ///Send request and await for response
       final response = await request.send();
+      _dm.add(ReqStartMessage());
       await for (final byteData in response.stream) {
+        _dm.add(ReqEndMessage());
         return await _parseJson(byteData);
       }
     } catch (e) {
@@ -92,6 +97,7 @@ final class HttpTransport extends Transport {
   }
 
   Future<Map<String, dynamic>> _parseJson(dynamic data) async {
+    _dm.add(DecodeStartMessage());
     ///Check if concurrency is enabled and run the task in isolate
     if (concurrencyEnabled && workerPool != null) {
       final taskResult = await workerPool!.perform(
@@ -100,9 +106,11 @@ final class HttpTransport extends Transport {
         },
         utf8.decode(data),
       );
+      _dm.add(DecodeEndMessage());
       return taskResult.result as Map<String, dynamic>;
     }
 
+    _dm.add(DecodeEndMessage());
     ///If concurrency is not enabled, run the task in main isolate
     return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
   }
