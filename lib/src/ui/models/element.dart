@@ -69,7 +69,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
             arr.add(DuitElement.fromJson(element, driver));
           });
         }
-        
+
         final attributes = ViewAttribute.createAttributes<RowAttributes>(
           type,
           attributesObject,
@@ -1052,6 +1052,32 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           children: arr,
           controlled: controlled,
+        );
+      case ElementType.intrinsicHeight:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<IntrinsicHeightAttributes>(
+          type,
+          attributesObject,
+          tag,
+        );
+
+        return IntrinsicHeightUIElement(
+          type: type,
+          id: id,
+          controlled: controlled,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
         );
       case ElementType.empty:
         return EmptyUIElement<EmptyAttributes>();

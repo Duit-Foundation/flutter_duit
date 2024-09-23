@@ -469,6 +469,20 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.intrinsicHeight:
+        final it = model as IntrinsicHeightUIElement<IntrinsicHeightAttributes>;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledIntrinsicHeight(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitIntrinsicHeight(
+                attributes: it.attributes!,
+                child: child,
+              );
+
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:

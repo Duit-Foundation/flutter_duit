@@ -655,6 +655,24 @@ final class SwitchUiElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
+final class IntrinsicHeightUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  IntrinsicHeightUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class EmptyUIElement<T> extends DuitElement<T> {
   EmptyUIElement({
     super.type = ElementType.empty,
