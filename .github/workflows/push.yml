@@ -3,7 +3,7 @@ name: Pre-Publish
 on:
   workflow_dispatch:
   pull_request:
-    types: [opened, edited, reopened, synchronize]
+    types: [closed]
 
 jobs:
   pre-publish:
@@ -17,4 +17,4 @@ jobs:
       - run: dart fix --dry-run
       - run: flutter pub publish --dry-run
     permissions:
-      id-token: write # Required for authentication using OIDC
+      id-token: write
