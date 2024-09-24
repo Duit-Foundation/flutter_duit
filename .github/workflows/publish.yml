@@ -1,4 +1,4 @@
-name: Publish plugin
+name: Publish package
 
 on:
   workflow_dispatch:
@@ -7,16 +7,20 @@ on:
 
 jobs:
   publish:
-
+    permissions:
+      id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Publish
-        uses: sakebook/actions-flutter-pub-publisher@v1.4.1
+      - uses: actions/checkout@v4
+      - uses: flutter-actions/setup-pubdev-credentials@v1
+      # Setup Flutter SDK
+      - name: Setup Flutter SDK
+        uses: flutter-actions/setup-flutter@v3
         with:
-          credential: ${{ secrets.PUB_CRED }}
-          flutter_package: true
-          skip_test: false
-          dry_run: true
+          channel: stable
+          version: latest
+      - name: Install dependencies
+        run: flutter pub get
+      # Here you can insert custom steps you need
+      - name: Publish
+        run: flutter pub publish --force
