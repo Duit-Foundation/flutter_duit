@@ -39,4 +39,5 @@ final class ElementType {
   static const overflowBox = "OverflowBox";
   static const animatedSize = "AnimatedSize";
   static const animatedBuilder = "AnimatedBuilder";
+  static const intrinsicHeight = "IntrinsicHeight";
 }
