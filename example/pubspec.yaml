@@ -40,7 +40,7 @@ dependencies:
   duit_kernel:
     git:
       url: https://github.com/Duit-Foundation/duit_kernel.git
-      ref: d3a7bc1d
+      ref: 5e125cfb
 
 dev_dependencies:
   flutter_test:

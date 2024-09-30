@@ -1085,29 +1085,21 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final providedData = json["data"] as Map<String, dynamic>;
 
         final model = DuitRegistry.getComponentDescription(tag!);
-        // final dm = DevMetrics();
+        final dm = DevMetrics();
 
         if (model != null) {
+          dm.add(StartMergeMessage());
           for (var rwT in model.refs) {
             final vRef = rwT.ref;
             final value = providedData[vRef.objectKey];
-            final target = rwT.target as Map<String, dynamic>;
 
             if (value != null) {
-              target[vRef.attributeKey] = value;
+              rwT.target[vRef.attributeKey] = value;
             }
           }
-        // }
-        //
-        // if (model != null) {
-        //   dm.add(StartMergeMessage());
-        //   Map<String, dynamic> childModel = JsonUtils.fillComponentProperties(
-        //     model.data,
-        //     providedData,
-        //   );
-        //   dm
-        //     ..add(EndMergeMessage())
-        //     ..add(LogMergeInfo());
+          dm
+            ..add(EndMergeMessage())
+            ..add(LogMergeInfo());
 
           final child = DuitElement.fromJson(model.data, driver);
 
