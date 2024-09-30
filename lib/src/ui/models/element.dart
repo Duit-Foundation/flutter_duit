@@ -185,20 +185,20 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           tag,
         );
 
-        final modelId = attributes.payload.persistentId ?? id;
+        final wId = attributes.payload.persistentId ?? id;
 
-        final controller = driver.getController(id)
+        final controller = driver.getController(wId)
             as UIElementController<AnimatedBuilderAttributes>?;
 
         //Priority use of  persistentId property for animatedBuilder
         return AnimatedBuilderUIElement<AnimatedBuilderAttributes>(
           type: type,
-          id: attributes.payload.persistentId ?? id,
+          id: wId,
           child: child,
           attributes: attributes,
           viewController: controller ??
               _createAndAttachController(
-                modelId,
+                wId,
                 controlled,
                 attributes,
                 serverAction,
@@ -1085,14 +1085,23 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         final providedData = json["data"] as Map<String, dynamic>;
 
         final model = DuitRegistry.getComponentDescription(tag!);
+        final dm = DevMetrics();
 
         if (model != null) {
-          Map<String, dynamic> childModel = JsonUtils.fillComponentProperties(
-            model.data,
-            providedData,
-          );
+          dm.add(StartMergeMessage());
+          for (var rwT in model.refs) {
+            final vRef = rwT.ref;
+            final value = providedData[vRef.objectKey];
 
-          final child = DuitElement.fromJson(childModel, driver);
+            if (value != null) {
+              rwT.target[vRef.attributeKey] = value;
+            }
+          }
+          dm
+            ..add(EndMergeMessage())
+            ..add(LogMergeInfo());
+
+          final child = DuitElement.fromJson(model.data, driver);
 
           final attributes = ViewAttribute.createAttributes<SubtreeAttributes>(
             type,
