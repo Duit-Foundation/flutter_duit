@@ -16,9 +16,11 @@ final class DevMetrics {
   bool _isInitialized = false;
 
   void init(String label) {
-    _isInitialized = true;
-    _sController = _StartupController(label);
-    _cController = _ComponentMetricsController();
+    if (!_isInitialized) {
+      _isInitialized = true;
+      _sController = _StartupController(label);
+      _cController = _ComponentMetricsController();
+    }
   }
 
   void add(dynamic message) {
