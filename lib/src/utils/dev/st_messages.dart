@@ -1,7 +1,7 @@
-sealed class DevStartUpMessage {
-  final DateTime timestamp;
+import 'message.dart';
 
-  DevStartUpMessage(this.timestamp);
+base class DevStartUpMessage extends DevMessage {
+  DevStartUpMessage(super.timestamp);
 }
 
 final class ConnectionStartMessage extends DevStartUpMessage {

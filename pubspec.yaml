@@ -3,13 +3,17 @@ description: Server driver UI framework for Flutter. Allows you to update your c
 version: 2.1.0
 repository: https://github.com/Duit-Foundation/flutter_duit
 issue_tracker: https://github.com/Duit-Foundation/flutter_duit/issues
+publish_to: none
 
 environment:
   sdk: '>=3.1.4 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
-  duit_kernel: ^2.0.1
+  duit_kernel:
+    git:
+      url: https://github.com/Duit-Foundation/duit_kernel.git
+      ref: d3a7bc1d
   flutter:
     sdk: flutter
   http: ^1.1.0
@@ -18,5 +22,3 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
-flutter:
