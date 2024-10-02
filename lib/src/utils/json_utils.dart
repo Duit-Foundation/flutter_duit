@@ -3,8 +3,35 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'jsono.dart';
 
 class JsonUtils {
+  ///Modifies the original [model] object by adding values from the [dataSource]
+  ///object to it if there are [ValueReference] objects in the attributes
+  static Map<String, dynamic> mergeWithDataSource(
+    DuitComponentDescription model,
+    Map<String, dynamic> dataSource,
+  ) {
+    for (var rwT in model.refs) {
+      final vRef = rwT.ref;
+      dynamic value;
+
+      if (dataSource[vRef.objectKey] != null) {
+        value = dataSource[vRef.objectKey];
+      } else if (vRef.defaultValue != null) {
+        value = vRef.defaultValue;
+      } else {
+        value = null;
+      }
+
+      if (value != null) {
+        rwT.target[vRef.attributeKey] = value;
+      }
+    }
+
+    return model.data;
+  }
+
   ///Modifies the original [layout] object by adding values from the [data]
   ///object to it if there are [ValueReference] objects in the attributes
+  @Deprecated("Use mergeWithDataSource instead")
   static Map<String, dynamic> fillComponentProperties(
     JSONObject layout,
     JSONObject dataSource,
