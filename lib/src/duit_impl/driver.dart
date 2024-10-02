@@ -25,6 +25,7 @@ final class _DriverFinalizationController {
 }
 
 final class DuitDriver with DriverHooks implements UIDriver {
+  //<editor-fold desc="Properties and Ctor">
   @protected
   @override
   final String source;
@@ -130,6 +131,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
         _driverChannel = const MethodChannel("duit:driver"),
         _devMetricsEnabled = false;
 
+  //</editor-fold">
+
+  //<editor-fold desc="Controller related methods">
   @protected
   @override
   void attachController(String id, UIElementController controller) {
@@ -140,54 +144,99 @@ final class DuitDriver with DriverHooks implements UIDriver {
     _viewControllers[id] = controller;
   }
 
-  /// Returns a transport based on the specified transport type.
-  ///
-  /// This method is used internally to create and return a transport object based
-  /// on the specified [type]. It switches on the [type] parameter and returns an
-  /// instance of the corresponding transport class.
-  ///
-  /// Parameters:
-  /// - [type]: The transport type.
-  ///
-  /// Returns:
-  /// - An instance of the transport class based on the specified [type].
-  /// - If the [type] is not recognized, it returns an instance of [HttpTransport].
-  Transport _getTransport(String type, {WorkerPool? workerPool}) {
-    if (_isModule) {
-      return NativeTransport(this);
+  @protected
+  @override
+  void detachController(String id) {
+    _viewControllers.remove(id);
+  }
+
+  @protected
+  @override
+  UIElementController? getController(String id) {
+    return _viewControllers[id];
+  }
+
+  //</editor-fold>
+
+  //<editor-fold desc="Lifecycle methods">
+  @override
+  Future<void> init() async {
+    onInit?.call();
+
+    if (_devMetricsEnabled) {
+      DevMetrics().init(source);
     }
 
-    switch (type) {
-      case TransportType.http:
-        {
-          return HttpTransport(
-            source,
-            concurrencyEnabled: concurrentModeEnabled,
-            workerPool: workerPool,
-            options: transportOptions as HttpTransportOptions,
-          );
-        }
-      case TransportType.ws:
-        {
-          return WSTransport(
-            source,
-            workerPool: workerPool,
-            concurrencyEnabled: concurrentModeEnabled,
-            options: transportOptions as WebSocketTransportOptions,
-          );
-        }
-      default:
-        {
-          return HttpTransport(
-            source,
-            concurrencyEnabled: concurrentModeEnabled,
-            workerPool: workerPool,
-            options: transportOptions as HttpTransportOptions,
-          );
-        }
+    if (_layout != null) {
+      await Future.delayed(Duration.zero);
+      streamController.sink.add(_layout);
+    } else {
+      ViewAttribute.attributeParser = AttributeParser();
+
+      final wp = await _getWorkerPool();
+
+      if (wp != null && wp.initialized == false) {
+        assert(
+            workerPoolConfiguration != null, "Worker pool is not configured");
+        await wp.initWithConfiguration(workerPoolConfiguration!);
+      }
+
+      if (_isModule && !_isChannelInitialized) {
+        await _initMethodChannel();
+      }
+
+      transport ??= _getTransport(
+        transportOptions.type,
+        workerPool: wp,
+      );
+
+      await scriptRunner?.initWithTransport(transport!);
+
+      Map<String, dynamic>? json;
+
+      if (_useStaticContent) {
+        json = content;
+      } else {
+        DevMetrics().add(ConnectionStartMessage());
+        json = await transport?.connect(
+          initialData: initialRequestPayload,
+        );
+      }
+
+      if (transport is Streamer) {
+        final streamer = transport as Streamer;
+        streamer.eventStream.listen(_resolveEvent);
+      }
+
+      _layout = DuitTree(json: json!, driver: this);
+      streamController.sink.add(await _layout?.parse());
+
+      _driverFinalizer.attach(
+        this,
+        _DriverFinalizationController(this),
+        detach: this,
+      );
     }
   }
 
+  @override
+  void dispose() {
+    onDispose?.call();
+    transport?.dispose();
+    _viewControllers.clear();
+    _layout = null;
+    streamController.close();
+    _driverFinalizer.detach(this);
+  }
+
+  @override
+  Widget? build() {
+    return _layout?.render();
+  }
+
+  //</editor-fold>
+
+  //<editor-fold desc="Actions & Events">
   /// Resolves a server event from a JSON object.
   ///
   /// This method takes a [json] object representing a server event and converts
@@ -296,109 +345,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     return payload;
   }
 
-  Future<WorkerPool?> _getWorkerPool() async {
-    if (concurrentModeEnabled) {
-      if (workerPool != null) {
-        return workerPool!;
-      }
-
-      final sharedPool = DuitRegistry.workerPool();
-      if (sharedPool != null) {
-        return workerPool = sharedPool;
-      }
-
-      return null;
-    }
-    return null;
-  }
-
-  /// Initializes the driver as a module.
-  Future<void> _initMethodChannel() async {
-    _driverChannel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case "duit_event":
-          await _resolveEvent(call.arguments as Map<String, dynamic>);
-          break;
-        case "duit_layout":
-          final json = call.arguments as Map<String, dynamic>;
-          _layout = await DuitTree(
-            json: json,
-            driver: this,
-          ).parse();
-          streamController.sink.add(_layout);
-          break;
-        default:
-          break;
-      }
-    });
-    _isChannelInitialized = true;
-  }
-
-  @override
-  Future<void> init() async {
-    onInit?.call();
-
-    if (_devMetricsEnabled) {
-      DevMetrics().init(source);
-    }
-
-    if (_layout != null) {
-      await Future.delayed(Duration.zero);
-      streamController.sink.add(_layout);
-    } else {
-      ViewAttribute.attributeParser = AttributeParser();
-
-      final wp = await _getWorkerPool();
-
-      if (wp != null && wp.initialized == false) {
-        assert(
-            workerPoolConfiguration != null, "Worker pool is not configured");
-        await wp.initWithConfiguration(workerPoolConfiguration!);
-      }
-
-      if (_isModule && !_isChannelInitialized) {
-        await _initMethodChannel();
-      }
-
-      transport ??= _getTransport(
-        transportOptions.type,
-        workerPool: wp,
-      );
-
-      await scriptRunner?.initWithTransport(transport!);
-
-      Map<String, dynamic>? json;
-
-      if (_useStaticContent) {
-        json = content;
-      } else {
-        DevMetrics().add(ConnectionStartMessage());
-        json = await transport?.connect(
-          initialData: initialRequestPayload,
-        );
-      }
-
-      if (transport is Streamer) {
-        final streamer = transport as Streamer;
-        streamer.eventStream.listen(_resolveEvent);
-      }
-
-      _layout = DuitTree(json: json!, driver: this);
-      streamController.sink.add(await _layout?.parse());
-
-      _driverFinalizer.attach(
-        this,
-        _DriverFinalizationController(this),
-        detach: this,
-      );
-    }
-  }
-
-  @override
-  Widget? build() {
-    return _layout?.render();
-  }
-
   @override
   Future<void> execute(ServerAction action) async {
     beforeActionCallback?.call(action);
@@ -448,16 +394,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     }
 
     afterActionCallback?.call();
-  }
-
-  @override
-  void dispose() {
-    onDispose?.call();
-    transport?.dispose();
-    _viewControllers.clear();
-    _layout = null;
-    streamController.close();
-    _driverFinalizer.detach(this);
   }
 
   Future<void> _resolveAnimationTrigger(AnimationTriggerEvent event) async {
@@ -538,19 +474,121 @@ final class DuitDriver with DriverHooks implements UIDriver {
     await scriptRunner?.eval(source);
   }
 
-  @protected
-  @override
-  void detachController(String id) {
-    _viewControllers.remove(id);
-  }
-
-  @protected
-  @override
-  UIElementController? getController(String id) {
-    return _viewControllers[id];
-  }
-
   Future<T?> emitNativeEvent<T>(String event, [Object? data]) async {
     return await _driverChannel.invokeMethod<T>(event, data);
   }
+
+  // </editor-fold>
+
+  //<editor-fold desc="Transport methods">
+  /// Returns a transport based on the specified transport type.
+  ///
+  /// This method is used internally to create and return a transport object based
+  /// on the specified [type]. It switches on the [type] parameter and returns an
+  /// instance of the corresponding transport class.
+  ///
+  /// Parameters:
+  /// - [type]: The transport type.
+  ///
+  /// Returns:
+  /// - An instance of the transport class based on the specified [type].
+  /// - If the [type] is not recognized, it returns an instance of [HttpTransport].
+  Transport _getTransport(String type, {WorkerPool? workerPool}) {
+    if (_isModule) {
+      return NativeTransport(this);
+    }
+
+    switch (type) {
+      case TransportType.http:
+        {
+          return HttpTransport(
+            source,
+            concurrencyEnabled: concurrentModeEnabled,
+            workerPool: workerPool,
+            options: transportOptions as HttpTransportOptions,
+          );
+        }
+      case TransportType.ws:
+        {
+          return WSTransport(
+            source,
+            workerPool: workerPool,
+            concurrencyEnabled: concurrentModeEnabled,
+            options: transportOptions as WebSocketTransportOptions,
+          );
+        }
+      default:
+        {
+          return HttpTransport(
+            source,
+            concurrencyEnabled: concurrentModeEnabled,
+            workerPool: workerPool,
+            options: transportOptions as HttpTransportOptions,
+          );
+        }
+    }
+  }
+
+  Future<WorkerPool?> _getWorkerPool() async {
+    if (concurrentModeEnabled) {
+      if (workerPool != null) {
+        return workerPool!;
+      }
+
+      final sharedPool = DuitRegistry.workerPool();
+      if (sharedPool != null) {
+        return workerPool = sharedPool;
+      }
+
+      return null;
+    }
+    return null;
+  }
+
+  /// Initializes the driver as a module.
+  Future<void> _initMethodChannel() async {
+    _driverChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case "duit_event":
+          await _resolveEvent(call.arguments as Map<String, dynamic>);
+          break;
+        case "duit_layout":
+          final json = call.arguments as Map<String, dynamic>;
+          _layout = await DuitTree(
+            json: json,
+            driver: this,
+          ).parse();
+          streamController.sink.add(_layout);
+          break;
+        default:
+          break;
+      }
+    });
+    _isChannelInitialized = true;
+  }
+
+  // </editor-fold">
+
+  //<editor-fold desc="Testing">
+  @visibleForTesting
+  Future<void> updateTestAttributes(
+    String id,
+    Map<String, dynamic> json,
+  ) =>
+      _updateAttributes(
+        id,
+        json,
+      );
+
+  @visibleForTesting
+  Future<void> executeTestAction(ServerAction action) async {
+    await execute(action);
+  }
+
+  @visibleForTesting
+  Future<void> resolveTestEvent(Map<String, dynamic>? json) async {
+    await _resolveEvent(json);
+  }
+
+//</editor-fold>
 }

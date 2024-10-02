@@ -27,7 +27,8 @@ class DuitViewHost extends StatefulWidget {
   final UIDriver driver;
 
   /// The build context of the parent widget.
-  final BuildContext context;
+  @Deprecated("Will be removed in the next major release")
+  final BuildContext? context;
 
   ///An interceptor function for processing gesture events received using the [GestureDetector] widget.
   ///The handler is triggered for any callback, even if a description of the user action has not
@@ -58,7 +59,7 @@ class DuitViewHost extends StatefulWidget {
   const DuitViewHost({
     super.key,
     required this.driver,
-    required this.context,
+    this.context,
     this.child,
     this.invertStack = false,
     this.showChildInsteadOfPlaceholder = false,
