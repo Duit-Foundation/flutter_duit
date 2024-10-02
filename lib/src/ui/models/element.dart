@@ -1089,19 +1089,15 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
 
         if (model != null) {
           dm.add(StartMergeMessage());
-          for (var rwT in model.refs) {
-            final vRef = rwT.ref;
-            final value = providedData[vRef.objectKey];
-
-            if (value != null) {
-              rwT.target[vRef.attributeKey] = value;
-            }
-          }
+          final data = JsonUtils.mergeWithDataSource(
+            model,
+            providedData,
+          );
           dm
             ..add(EndMergeMessage())
             ..add(LogMergeInfo());
 
-          final child = DuitElement.fromJson(model.data, driver);
+          final child = DuitElement.fromJson(data, driver);
 
           final attributes = ViewAttribute.createAttributes<SubtreeAttributes>(
             type,
