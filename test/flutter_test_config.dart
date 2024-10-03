@@ -15,9 +15,11 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
       platformGoldensConfig: PlatformGoldensConfig(
         enabled: !isGithubActionsEnv,
       ),
-      ciGoldensConfig: CiGoldensConfig(
-        enabled: isGithubActionsEnv,
-      ),
+      ciGoldensConfig: isGithubActionsEnv
+          ? const CiGoldensConfig(
+              enabled: true,
+            )
+          : null,
     ),
     run: testMain,
   );
