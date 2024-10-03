@@ -79,30 +79,43 @@ void main() {
     goldenTest(
       "Uncontrolled DuitText",
       fileName: "d_text",
-      builder: () => GoldenTestGroup(
-        children: [
-          GoldenTestScenario(
-            name: "Simple text",
-            child: DuitViewHost(
-              driver: DuitDriver.static(
-                _uncText,
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
-              ),
-            ),
+      builder: () => GoldenTestScenario(
+        name: "Simple text",
+        child: DuitViewHost(
+          driver: DuitDriver.static(
+            _uncText,
+            transportOptions: HttpTransportOptions(),
+            enableDevMetrics: false,
           ),
-          GoldenTestScenario(
-            name: "Text without data",
-            child: DuitViewHost(
-              driver: DuitDriver.static(
-                _uncTextWithoutData,
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
-              ),
-            ),
-          )
-        ],
+        ),
       ),
+    );
+
+    goldenTest(
+      "DuitText with empty data prop",
+      fileName: "d_text_without_data",
+      builder: () {
+        return GoldenTestScenario(
+          name: "Without data",
+          child: Row(
+            children: [
+              DuitViewHost(
+                driver: DuitDriver.static(
+                  _uncTextWithoutData,
+                  transportOptions: HttpTransportOptions(),
+                  enableDevMetrics: false,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Container(
+                width: 50,
+                height: 50,
+                color: const Color(0xFFE53935),
+              ),
+            ],
+          ),
+        );
+      },
     );
 
     goldenTest(
