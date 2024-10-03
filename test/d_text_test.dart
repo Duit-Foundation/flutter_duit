@@ -11,8 +11,8 @@ const _uncText = {
   "attributes": {
     "data": "Hello, World!",
     "style": {
-      "color": "#075eeb",
-      "fontSize": 24.0,
+      "color": "#DCDCDC",
+      "fontSize": 14.0,
       "fontWeight": 700,
     }
   },
