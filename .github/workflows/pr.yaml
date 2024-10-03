@@ -2,7 +2,7 @@ name: PR auto-review
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    types: [closed]
 
 jobs:
   review-checklist:
