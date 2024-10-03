@@ -74,6 +74,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         final el = RowUIElement<RowAttributes>(
@@ -132,6 +133,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return CenterUIElement<CenterAttributes>(
@@ -157,6 +159,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return FittedBoxUiElement<FittedBoxAttributes>(
@@ -183,6 +186,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         final wId = attributes.payload.persistentId ?? id;
@@ -215,6 +219,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return ColoredBoxUIElement<ColoredBoxAttributes>(
@@ -241,6 +246,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return AnimatedSizeUIElement(
@@ -266,6 +272,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return SizedBoxUIElement<SizedBoxAttributes>(
@@ -289,6 +296,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return RichTextUIElement<RichTextAttributes>(
@@ -311,6 +319,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return TextUIElement<TextAttributes>(
@@ -336,6 +345,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return ElevatedButtonUIElement<ElevatedButtonAttributes>(
@@ -359,6 +369,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return TextFieldUIElement<TextFieldAttributes>(
@@ -389,6 +400,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return StackUIElement<StackAttributes>(
@@ -420,6 +432,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return WrapUIElement<WrapAttributes>(
@@ -445,6 +458,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return ExpandedUiElement<ExpandedAttributes>(
@@ -470,6 +484,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return PaddingUiElement<PaddingAttributes>(
@@ -495,6 +510,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return PositionedUiElement<PositionedAttributes>(
@@ -521,6 +537,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return DecoratedBoxUiElement<DecoratedBoxAttributes>(
@@ -545,6 +562,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
         //controlled by default
         //extends AttendedModel
@@ -568,6 +586,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
         return ImageUIElement<ImageAttributes>(
           type: type,
@@ -589,6 +608,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
         return SwitchUiElement<SwitchAttributes>(
           type: type,
@@ -610,6 +630,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
         return RadioUIElement<RadioAttributes>(
           type: type,
@@ -631,6 +652,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
         return SliderUIElement<SliderAttributes>(
           type: type,
@@ -654,6 +676,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return ContainerUiElement<ContainerAttributes>(
@@ -679,7 +702,9 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
+
         return SubtreeUIElement<SubtreeAttributes>(
           type: type,
           id: id,
@@ -704,6 +729,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return GestureDetectorUiElement<GestureDetectorAttributes>(
@@ -729,6 +755,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return AlignUiElement<AlignAttributes>(
@@ -754,6 +781,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         switch (attributes.payload.type) {
@@ -822,6 +850,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return RadioGroupContextUiElement<RadioGroupContextAttributes>(
@@ -848,6 +877,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return SingleChildScrollviewUiElement<SingleChildScrollviewAttributes>(
@@ -873,6 +903,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return OpacityUiElement<OpacityAttributes>(
@@ -899,6 +930,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return IgnorePointerUiElement<IgnorePointerAttributes>(
@@ -925,6 +957,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return RepaintBoundaryUIElement<RepaintBoundaryAttributes>(
@@ -951,6 +984,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return OverflowBoxUIElement<OverflowBoxAttributes>(
@@ -976,6 +1010,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return MetaUiElement<MetaAttributes>(
@@ -1002,6 +1037,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         //[controlled] - always false
@@ -1035,6 +1071,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return ListViewUIElement<ListViewAttributes>(
@@ -1061,6 +1098,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           type,
           attributesObject,
           tag,
+          id: id,
         );
 
         return IntrinsicHeightUIElement(
@@ -1103,6 +1141,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
             type,
             attributesObject,
             tag,
+            id: id,
           );
 
           return ComponentUIElement<SubtreeAttributes>(
@@ -1132,6 +1171,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
               type,
               attributesObject,
               tag,
+              id: id,
             );
 
             final controller = _createAndAttachController(
