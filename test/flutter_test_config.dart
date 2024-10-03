@@ -6,10 +6,10 @@ import "package:alchemist/alchemist.dart";
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   HttpOverrides.global = null;
 
-  final isGithubActionsEnv = Platform.isLinux;
+  const isGithubActionsEnv = bool.fromEnvironment("IS_CI");
 
   return AlchemistConfig.runWithConfig(
-    config: AlchemistConfig(
+    config: const AlchemistConfig(
       platformGoldensConfig: PlatformGoldensConfig(
         enabled: !isGithubActionsEnv,
       ),
