@@ -126,7 +126,7 @@ void main() {
       ),
       GoldenTestScenario(
         name: "Component with non existent tag",
-        child: Row(
+        child: Column(
           children: [
             DuitViewHost(
               driver: DuitDriver.static(
