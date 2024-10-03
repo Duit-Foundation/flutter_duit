@@ -102,6 +102,9 @@ void main() {
     goldenTest(
       "Component base scenario",
       fileName: "d_component_base",
+      pumpBeforeTest: (t) async {
+        await t.pumpAndSettle(const Duration(milliseconds: 500));
+      },
       builder: () => GoldenTestScenario(
         name: "Component base scenario",
         child: DuitViewHost(
@@ -122,6 +125,9 @@ void main() {
     goldenTest(
       "Component with default value",
       fileName: "d_component_def_val",
+      pumpBeforeTest: (t) async {
+        await t.pumpAndSettle(const Duration(milliseconds: 500));
+      },
       builder: () => GoldenTestScenario(
         name: "Component with default value",
         child: DuitViewHost(
@@ -142,6 +148,9 @@ void main() {
     goldenTest(
       "Component with non existent tag",
       fileName: "d_component_invalid",
+      pumpBeforeTest: (t) async {
+        await t.pumpAndSettle(const Duration(milliseconds: 500));
+      },
       builder: () => GoldenTestScenario(
         name: "Component with non existent tag",
         child: Row(
