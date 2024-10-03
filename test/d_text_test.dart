@@ -1,7 +1,7 @@
+import "package:alchemist/alchemist.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
-import "package:golden_toolkit/golden_toolkit.dart";
 
 ///Create widget templates for testing
 const _uncText = {
@@ -11,6 +11,7 @@ const _uncText = {
   "attributes": {
     "data": "Hello, World!",
     "style": {
+      "color": "#075eeb",
       "fontSize": 24.0,
       "fontWeight": 700,
     }
@@ -52,13 +53,12 @@ const _textWithPropAnimation = {
       {
         "type": "textStyleTween",
         "animatedPropKey": "style",
-        "duration": 1000,
+        "duration": 100,
         "begin": {"fontSize": 8.0, "fontWeight": 200, "color": "#075eeb"},
         "end": {"fontSize": 24.0, "fontWeight": 700, "color": "#03fcc2"},
         "curve": "linear",
         "trigger": 0,
-        "method": 1,
-        "reverseOnRepeat": true,
+        "method": 0,
       }
     ],
   },
@@ -75,126 +75,110 @@ const _textWithPropAnimation = {
 };
 
 void main() {
-  group("DuitText widget tests", () {
-    testGoldens("Uncontrolled DuitText", (tester) async {
-      final builder = GoldenBuilder.column();
-      builder
-        ..addScenarioBuilder(
-          "Simple text",
-          (context) {
-            final driver = DuitDriver.static(
-              _uncText,
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
-            );
+  group("DuitText widget", () {
+    goldenTest(
+      "Uncontrolled DuitText",
+      fileName: "d_text",
+      builder: () => GoldenTestGroup(
+        children: [
+          GoldenTestScenario(
+            name: "Simple text",
+            child: DuitViewHost(
+              driver: DuitDriver.static(
+                _uncText,
+                transportOptions: HttpTransportOptions(),
+                enableDevMetrics: false,
+              ),
+            ),
+          ),
+          GoldenTestScenario(
+            name: "Text without data",
+            child: DuitViewHost(
+              driver: DuitDriver.static(
+                _uncTextWithoutData,
+                transportOptions: HttpTransportOptions(),
+                enableDevMetrics: false,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
 
-            return DuitViewHost(
-              driver: driver,
-              // context: context,
-            );
-          },
-        )
-        ..addScenarioBuilder(
-          "Text without data",
-          (context) {
-            final driver = DuitDriver.static(
-              _uncTextWithoutData,
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
-            );
-
-            return DuitViewHost(
-              driver: driver,
-              context: context,
-            );
-          },
+    goldenTest(
+      "Controlled DuitText before update",
+      fileName: "d_c_text_before",
+      builder: () {
+        final driver = DuitDriver.static(
+          _cTextWithoutData,
+          transportOptions: HttpTransportOptions(),
+          enableDevMetrics: false,
         );
 
-      await tester.pumpWidgetBuilder(
-        builder.build(),
-      );
-
-      await screenMatchesGolden(
-        tester,
-        "d_text",
-        autoHeight: true,
-      );
-    });
-
-    testGoldens("Controlled DuitText", (tester) async {
-      final driver = DuitDriver.static(
-        _cTextWithoutData,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
-      );
-
-      final builder = GoldenBuilder.column();
-
-      builder.addScenarioBuilder("Update process", (context) {
-        return DuitViewHost(
-          driver: driver,
-          context: context,
+        return GoldenTestScenario(
+          name: "Before update",
+          child: DuitViewHost(
+            driver: driver,
+          ),
         );
-      });
+      },
+    );
 
-      await tester.pumpWidgetBuilder(
-        builder.build(),
-      );
+    final uDriver = DuitDriver.static(
+      _cTextWithoutData,
+      transportOptions: HttpTransportOptions(),
+      enableDevMetrics: false,
+    );
 
-      await screenMatchesGolden(
-        tester,
-        "d_c_text_before",
-        autoHeight: true,
-      );
+    goldenTest(
+      "Controlled DuitText after update",
+      fileName: "d_c_text_after",
+      pumpBeforeTest: (t) async {
+        await uDriver.updateTestAttributes("1", {
+          "data": "Hello, World!",
+          "style": {
+            "fontSize": 24.0,
+            "fontWeight": 700,
+            "color": "#03fcc2",
+          }
+        });
 
-      await driver.updateTestAttributes("1", {
-        "data": "Hello, World!",
-        "style": {
-          "fontSize": 24.0,
-          "fontWeight": 700,
-          "color": "#03fcc2",
-        }
-      });
+        await t.pumpAndSettle(const Duration(seconds: 3));
+      },
+      builder: () {
+        return GoldenTestScenario(
+          name: "After update",
+          child: DuitViewHost(
+            driver: uDriver,
+          ),
+        );
+      },
+    );
 
-      await tester.pumpAndSettle();
+    final aDriver = DuitDriver.static(
+      _textWithPropAnimation,
+      transportOptions: HttpTransportOptions(),
+      enableDevMetrics: false,
+    );
 
-      await screenMatchesGolden(
-        tester,
-        "d_c_text_after",
-        autoHeight: true,
-      );
-    });
-
-    testWidgets("DuitText props animations", (tester) async {
-      final AnimationSheetBuilder animationSheet = AnimationSheetBuilder(
-        frameSize: const Size(100, 100),
-      );
-      addTearDown(animationSheet.dispose);
-
-      final driver = DuitDriver.static(
-        _textWithPropAnimation,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
-      );
-
-      final widget = Material(
-        child: Directionality(
-          textDirection: TextDirection.ltr,
-          child: DuitViewHost(driver: driver),
-        ),
-      );
-
-      await tester.pumpFrames(
-        animationSheet.record(widget),
-        const Duration(milliseconds: 1000),
-      );
-
-      await expectLater(
-        animationSheet.collate(10),
-        matchesGoldenFile("goldens/d_text_animation.png"),
-      );
-    });
-
+    goldenTest(
+      "DuitText props animation",
+      fileName: "d_text_animation",
+      pumpBeforeTest: (t) async {
+        await t.pumpAndSettle(
+          const Duration(milliseconds: 500),
+        );
+      },
+      builder: () {
+        return GoldenTestScenario(
+          name: "Animation end",
+          child: DuitViewHost(
+            driver: aDriver,
+          ),
+        );
+      },
+    );
+    
     testWidgets("Widget key assignment", (tester) async {
       final driver = DuitDriver.static(
         _uncText,
