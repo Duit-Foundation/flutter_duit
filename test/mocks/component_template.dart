@@ -51,3 +51,8 @@ const componentTemplateData = {
 const componentTemplateData2 = {
   "mainColor": "#075eeb",
 };
+
+const componentUpdateTemplateData = {
+  "secColor": "#DCDCDC",
+  "mainColor": "#DCDCDC",
+};

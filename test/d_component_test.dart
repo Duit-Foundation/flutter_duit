@@ -99,29 +99,6 @@ void main() {
   });
 
   group("Component goldens", () {
-    // goldenTest(
-    //   "Component base scenario",
-    //   fileName: "d_component_base",
-    //   pumpBeforeTest: (t) async {
-    //     await t.pumpAndSettle(const Duration(milliseconds: 500));
-    //   },
-    //   builder: () => GoldenTestScenario(
-    //     name: "Component base scenario",
-    //     child: DuitViewHost(
-    //       driver: DuitDriver.static(
-    //         {
-    //           "type": "Component",
-    //           "id": "comp1",
-    //           "tag": "x",
-    //           "data": componentTemplateData,
-    //         },
-    //         transportOptions: HttpTransportOptions(),
-    //         enableDevMetrics: false,
-    //       ),
-    //     ),
-    //   ),
-    // );
-
     goldenTest(
       "Component with default value",
       fileName: "d_component_def_val",
@@ -145,36 +122,37 @@ void main() {
       ),
     );
 
-    // goldenTest(
-    //   "Component with non existent tag",
-    //   fileName: "d_component_invalid",
-    //   pumpBeforeTest: (t) async {
-    //     await t.pumpAndSettle(const Duration(milliseconds: 500));
-    //   },
-    //   builder: () => GoldenTestScenario(
-    //     name: "Component with non existent tag",
-    //     child: Row(
-    //       children: [
-    //         DuitViewHost(
-    //           driver: DuitDriver.static(
-    //             {
-    //               "type": "Component",
-    //               "id": "comp1",
-    //               "tag": "invalid_tag",
-    //               "data": componentTemplateData2,
-    //             },
-    //             transportOptions: HttpTransportOptions(),
-    //             enableDevMetrics: false,
-    //           ),
-    //         ),
-    //         Container(
-    //           width: 50,
-    //           height: 50,
-    //           color: Colors.red,
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
+    final uDriver = DuitDriver.static(
+      {
+        "type": "Component",
+        "id": "testId",
+        "controlled": true,
+        "tag": "x",
+        "data": componentTemplateData,
+      },
+      transportOptions: HttpTransportOptions(),
+      enableDevMetrics: false,
+    );
+
+    goldenTest(
+      "Component update",
+      fileName: "d_component_upd",
+      pumpBeforeTest: (t) async {
+        await t.pumpAndSettle();
+
+        await uDriver.updateTestAttributes(
+          "testId",
+          componentUpdateTemplateData,
+        );
+
+        await t.pumpAndSettle(const Duration(milliseconds: 500));
+      },
+      builder: () => GoldenTestScenario(
+        name: "Component update",
+        child: DuitViewHost(
+          driver: uDriver,
+        ),
+      ),
+    );
   });
 }
