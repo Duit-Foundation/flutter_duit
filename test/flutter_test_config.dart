@@ -10,9 +10,12 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
 
   return AlchemistConfig.runWithConfig(
     config: AlchemistConfig(
-      platformGoldensConfig:
-          PlatformGoldensConfig(enabled: isGithubActionsEnv == false),
-      ciGoldensConfig: CiGoldensConfig(enabled: isGithubActionsEnv == true),
+      platformGoldensConfig: PlatformGoldensConfig(
+        enabled: !isGithubActionsEnv,
+      ),
+      ciGoldensConfig: CiGoldensConfig(
+        enabled: isGithubActionsEnv,
+      ),
     ),
     run: testMain,
   );
