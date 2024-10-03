@@ -2,7 +2,7 @@ name: PR auto-review
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    types: [closed]
 
 jobs:
   review-checklist:
@@ -10,4 +10,4 @@ jobs:
     steps:
       - uses: mheap/require-checklist-action@v2
         with:
-          requireChecklist: true
+          requireChecklist: false

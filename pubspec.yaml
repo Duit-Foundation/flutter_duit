@@ -10,7 +10,7 @@ environment:
 
 dependencies:
   alchemist: ^0.10.0
-  duit_kernel: ^2.1.0
+  duit_kernel: ^2.1.1
   flutter:
     sdk: flutter
   http: ^1.1.0

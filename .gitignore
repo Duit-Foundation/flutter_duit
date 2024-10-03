@@ -30,4 +30,7 @@ migrate_working_dir/
 .packages
 build/
 **/failures/*.png
+**/goldens/macos
+**/goldens/linux
+**/goldens/windows
 coverage
