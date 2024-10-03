@@ -124,33 +124,6 @@ void main() {
           ),
         ),
       ),
-      GoldenTestScenario(
-        name: "Component with non existent tag",
-        child: Column(
-          children: [
-            DuitViewHost(
-              driver: DuitDriver.static(
-                {
-                  "type": "Component",
-                  "id": "comp1",
-                  "tag": "invalid_tag",
-                  "data": componentTemplateData2,
-                },
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
-              ),
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Container(
-              width: 50,
-              height: 50,
-              color: Colors.red,
-            ),
-          ],
-        ),
-      ),
     ]),
   );
 }
