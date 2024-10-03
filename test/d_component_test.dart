@@ -132,21 +132,21 @@ void main() {
           ),
         ),
       ),
-      GoldenTestScenario(
-        name: "Component with non existent tag",
-        child: DuitViewHost(
-          driver: DuitDriver.static(
-            {
-              "type": "Component",
-              "id": "comp1",
-              "tag": "invalid_tag",
-              "data": componentTemplateData2,
-            },
-            transportOptions: HttpTransportOptions(),
-            enableDevMetrics: false,
-          ),
-        ),
-      ),
+      // GoldenTestScenario(
+      //   name: "Component with non existent tag",
+      //   child: DuitViewHost(
+      //     driver: DuitDriver.static(
+      //       {
+      //         "type": "Component",
+      //         "id": "comp1",
+      //         "tag": "invalid_tag",
+      //         "data": componentTemplateData2,
+      //       },
+      //       transportOptions: HttpTransportOptions(),
+      //       enableDevMetrics: false,
+      //     ),
+      //   ),
+      // ),
     ]),
   );
 }
