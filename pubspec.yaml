@@ -9,6 +9,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  alchemist: ^0.10.0
   duit_kernel: ^2.1.0
   flutter:
     sdk: flutter
