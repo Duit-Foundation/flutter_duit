@@ -101,52 +101,54 @@ void main() {
   goldenTest(
     "Component goldens",
     fileName: "d_component",
-    builder: () => GoldenTestGroup(children: [
-      GoldenTestScenario(
-        name: "Component base scenario",
-        child: DuitViewHost(
-          driver: DuitDriver.static(
-            {
-              "type": "Component",
-              "id": "comp1",
-              "tag": "x",
-              "data": componentTemplateData,
-            },
-            transportOptions: HttpTransportOptions(),
-            enableDevMetrics: false,
+    builder: () => GoldenTestGroup(
+      columns: 1,
+        children: [
+          GoldenTestScenario(
+            name: "Component base scenario",
+            child: DuitViewHost(
+              driver: DuitDriver.static(
+                {
+                  "type": "Component",
+                  "id": "comp1",
+                  "tag": "x",
+                  "data": componentTemplateData,
+                },
+                transportOptions: HttpTransportOptions(),
+                enableDevMetrics: false,
+              ),
+            ),
           ),
-        ),
-      ),
-      GoldenTestScenario(
-        name: "Component with default value",
-        child: DuitViewHost(
-          driver: DuitDriver.static(
-            {
-              "type": "Component",
-              "id": "comp1",
-              "tag": "x",
-              "data": componentTemplateData2,
-            },
-            transportOptions: HttpTransportOptions(),
-            enableDevMetrics: false,
+          GoldenTestScenario(
+            name: "Component with default value",
+            child: DuitViewHost(
+              driver: DuitDriver.static(
+                {
+                  "type": "Component",
+                  "id": "comp1",
+                  "tag": "x",
+                  "data": componentTemplateData2,
+                },
+                transportOptions: HttpTransportOptions(),
+                enableDevMetrics: false,
+              ),
+            ),
           ),
-        ),
-      ),
-      // GoldenTestScenario(
-      //   name: "Component with non existent tag",
-      //   child: DuitViewHost(
-      //     driver: DuitDriver.static(
-      //       {
-      //         "type": "Component",
-      //         "id": "comp1",
-      //         "tag": "invalid_tag",
-      //         "data": componentTemplateData2,
-      //       },
-      //       transportOptions: HttpTransportOptions(),
-      //       enableDevMetrics: false,
-      //     ),
-      //   ),
-      // ),
-    ]),
+          GoldenTestScenario(
+            name: "Component with non existent tag",
+            child: DuitViewHost(
+              driver: DuitDriver.static(
+                {
+                  "type": "Component",
+                  "id": "comp1",
+                  "tag": "invalid_tag",
+                  "data": componentTemplateData2,
+                },
+                transportOptions: HttpTransportOptions(),
+                enableDevMetrics: false,
+              ),
+            ),
+          ),
+        ]),
   );
 }
