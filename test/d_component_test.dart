@@ -34,8 +34,8 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final title = find.text("TEXT1");
-      expect(title, findsOneWidget);
+      final cont1 = find.byKey(const Key("container1"));
+      expect(cont1, findsOneWidget);
     });
 
     testWidgets("Component use default value", (tester) async {
@@ -61,8 +61,13 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final defValue = find.text("DEFAULT");
-      expect(defValue, findsOneWidget);
+      final containerWithDefaultColorValue =
+          find.byKey(const Key("container2"));
+      expect(containerWithDefaultColorValue, findsOneWidget);
+      expect(
+          (tester.firstWidget(containerWithDefaultColorValue) as Container)
+              .color,
+          ColorUtils.tryParseColor("#DCDCDC"));
     });
 
     testWidgets("Component have no description", (tester) async {
@@ -78,8 +83,11 @@ void main() {
       );
 
       await tester.pumpWidget(
-        DuitViewHost(
-          driver: driver,
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: DuitViewHost(
+            driver: driver,
+          ),
         ),
       );
 
@@ -96,83 +104,47 @@ void main() {
     builder: () => GoldenTestGroup(children: [
       GoldenTestScenario(
         name: "Component base scenario",
-        child: Column(
-          children: [
-            DuitViewHost(
-              driver: DuitDriver.static(
-                {
-                  "type": "Component",
-                  "id": "comp1",
-                  "tag": "x",
-                  "data": componentTemplateData,
-                },
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Container(
-              width: 50,
-              height: 50,
-              color: Colors.red,
-            ),
-          ],
+        child: DuitViewHost(
+          driver: DuitDriver.static(
+            {
+              "type": "Component",
+              "id": "comp1",
+              "tag": "x",
+              "data": componentTemplateData,
+            },
+            transportOptions: HttpTransportOptions(),
+            enableDevMetrics: false,
+          ),
         ),
       ),
       GoldenTestScenario(
         name: "Component with default value",
-        child: Column(
-          children: [
-            DuitViewHost(
-              driver: DuitDriver.static(
-                {
-                  "type": "Component",
-                  "id": "comp1",
-                  "tag": "x",
-                  "data": componentTemplateData2,
-                },
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Container(
-              width: 50,
-              height: 50,
-              color: Colors.red,
-            ),
-          ],
+        child: DuitViewHost(
+          driver: DuitDriver.static(
+            {
+              "type": "Component",
+              "id": "comp1",
+              "tag": "x",
+              "data": componentTemplateData2,
+            },
+            transportOptions: HttpTransportOptions(),
+            enableDevMetrics: false,
+          ),
         ),
       ),
       GoldenTestScenario(
         name: "Component with non existent tag",
-        child: Column(
-          children: [
-            DuitViewHost(
-              driver: DuitDriver.static(
-                {
-                  "type": "Component",
-                  "id": "comp1",
-                  "tag": "invalid_tag",
-                  "data": componentTemplateData2,
-                },
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
-              ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            Container(
-              width: 50,
-              height: 50,
-              color: Colors.red,
-            ),
-          ],
+        child: DuitViewHost(
+          driver: DuitDriver.static(
+            {
+              "type": "Component",
+              "id": "comp1",
+              "tag": "invalid_tag",
+              "data": componentTemplateData2,
+            },
+            transportOptions: HttpTransportOptions(),
+            enableDevMetrics: false,
+          ),
         ),
       ),
     ]),

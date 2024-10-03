@@ -9,30 +9,32 @@ final componentTemplate = {
     },
     "children": [
       {
-        "type": "Text",
-        "id": "text1",
+        "type": "Container",
+        "id": "container1",
         "controlled": false,
         "attributes": {
-          "data": "1",
+          "width": 50,
+          "height": 50,
           "refs": [
             {
-              "objectKey": "title",
-              "attributeKey": "data",
+              "objectKey": "mainColor",
+              "attributeKey": "color",
             },
           ],
         },
       },
       {
-        "type": "Text",
-        "id": "text2",
+        "type": "Container",
+        "id": "container2",
         "controlled": false,
         "attributes": {
-          "data": "2",
+          "width": 50,
+          "height": 50,
           "refs": [
             {
-              "objectKey": "description",
-              "attributeKey": "data",
-              "defaultValue": "DEFAULT",
+              "objectKey": "secColor",
+              "attributeKey": "color",
+              "defaultValue": "#DCDCDC",
             },
           ],
         },
@@ -42,10 +44,10 @@ final componentTemplate = {
 };
 
 const componentTemplateData = {
-  "description": "TEXT2",
-  "title": "TEXT1",
+  "secColor": "#03fcc2",
+  "mainColor": "#075eeb",
 };
 
 const componentTemplateData2 = {
-  "title": "TEXT1",
+  "mainColor": "#075eeb",
 };
