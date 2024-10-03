@@ -6,12 +6,12 @@ import "package:alchemist/alchemist.dart";
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   HttpOverrides.global = null;
 
-  const isRunningInCi = bool.fromEnvironment('CI', defaultValue: false);
+  const isRunningInCi = bool.fromEnvironment('CI');
 
   return AlchemistConfig.runWithConfig(
     config: const AlchemistConfig(
       ciGoldensConfig: CiGoldensConfig(
-        enabled: !isRunningInCi
+        enabled: isRunningInCi
       ),
     ),
     run: testMain,
