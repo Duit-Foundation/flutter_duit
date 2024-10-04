@@ -7,6 +7,10 @@ final class IntrinsicHeightAttributes
     implements DuitAttributes<IntrinsicHeightAttributes> {
   IntrinsicHeightAttributes();
 
+  factory IntrinsicHeightAttributes.fromJson(arg) {
+    return IntrinsicHeightAttributes();
+  }
+
   @override
   IntrinsicHeightAttributes copyWith(IntrinsicHeightAttributes other) {
     return this;
