@@ -176,7 +176,7 @@ void main() {
             child: Container(
               width: dim,
               height: dim,
-              color: Colors.amber,
+              color: Colors.black,
               child: DuitViewHost(
                 driver: driver,
               ),
