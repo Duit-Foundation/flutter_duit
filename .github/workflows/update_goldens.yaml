@@ -5,6 +5,10 @@ on:
       branch:
         description: 'Branch to generate goldens from'
         required: true
+      flutter_version:
+        description: 'Flutter version to use'
+        required: true
+        default: '3.22.3'
 permissions:
   contents: write
 
@@ -44,6 +48,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: ${{ github.event.inputs.flutter_version }}
           channel: 'stable'
           cache: true
 

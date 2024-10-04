@@ -6,19 +6,22 @@ on:
       - 'main'
 
 env:
-  FLUTTER_VERSION: "3.22.3"
   IS_CI: true
 
 jobs:
-  upload_coverage:
+  post-merge-test:
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        flutter-version: [ '3.16.9', '3.19.6', '3.22.3', '3.24.3' ]
     steps:
       - uses: actions/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: ${{ matrix.flutter-version }}
+          channel: 'stable'
           cache: true
 
       - name: Install Dependencies
@@ -30,7 +33,3 @@ jobs:
       - name: Run tests
         run: |
           flutter test --no-pub --coverage --test-randomize-ordering-seed=random
-
-      - uses: codecov/codecov-action@v2
-        with:
-          files: coverage/lcov.info
