@@ -1,6 +1,6 @@
 # Duit - drived UI tooklit.
 
-***Duit*** is a server side UI framework for Flutter. It is used for creating widgets and server-side state management.
+***Duit*** is a backend side UI framework for Flutter. It is used for creating widgets and server-side state management.
 
 The framework consists of several parts:
 
