@@ -1,0 +1,36 @@
+name: post-merge
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  FLUTTER_VERSION: "3.22.3"
+  IS_CI: true
+
+jobs:
+  upload_coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter packages get
+
+      - name: Disable animations
+        run: flutter config --no-cli-animations
+
+      - name: Run tests
+        run: |
+          flutter test --no-pub --coverage --test-randomize-ordering-seed=random
+
+      - uses: codecov/codecov-action@v2
+        with:
+          files: coverage/lcov.info
