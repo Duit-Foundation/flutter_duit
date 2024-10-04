@@ -33,24 +33,6 @@ jobs:
               exit 1
           fi
 
-      - name: Validate Flutter version input
-        run: |
-          VERSION_PATTERN="^[0-9]+\.[0-9]+\.[0-9]+$"
-
-          # Input string (branch name) to be validated
-          VERSION_INPUT=${{ inputs.flutter_version}}
-
-          echo "Checking version input: $VERSION_INPUT"
-
-          # Validate branch name against the regex pattern
-          if [[ $VERSION_INPUT =~ $VERSION_PATTERN ]]; then
-              echo "Version input is valid."
-              exit 0
-          else
-              echo "Version input is invalid."
-              exit 1
-          fi
-
       - name: Ensure branch is not main
         if: ${{ github.event.inputs.branch == 'main' || github.event.inputs.branch == 'origin/main'}}
         run: exit 1
