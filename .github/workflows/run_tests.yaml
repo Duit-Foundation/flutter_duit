@@ -3,20 +3,26 @@ name: Run tests
 on:
   workflow_dispatch:
   pull_request:
-    types: [opened, edited, synchronize, closed]
+    types: [opened, edited, synchronize]
 
 env:
   IS_CI: true
+  FLUTTER_VERSION: "3.22.3"
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
+          flutter-version: ${{ github.event.inputs.flutter_version || env.FLUTTER_VERSION }}
           channel: 'stable'
+          cache: true
       - run: flutter pub get
-      - run: flutter test
+      - run: flutter test -x golden --no-pub --coverage --test-randomize-ordering-seed=random
     permissions:
       id-token: write
