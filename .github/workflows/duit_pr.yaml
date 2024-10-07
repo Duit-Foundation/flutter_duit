@@ -1,9 +1,6 @@
-name: Run tests
+name: Duit PR CI
 
-on:
-  workflow_dispatch:
-  pull_request:
-    types: [opened, edited, synchronize]
+on: [pull_request]
 
 env:
   IS_CI: true
@@ -19,10 +16,10 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ github.event.inputs.flutter_version || env.FLUTTER_VERSION }}
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: 'stable'
           cache: true
       - run: flutter pub get
-      - run: flutter test -x golden --no-pub --coverage --test-randomize-ordering-seed=random
+      - run: flutter test --no-pub --coverage --test-randomize-ordering-seed=random
     permissions:
       id-token: write
