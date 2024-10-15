@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:typed_data';
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/utils/dev/dev_metrics.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 import 'package:http/http.dart' as http;
 
@@ -82,22 +82,29 @@ final class HttpTransport extends Transport {
 
       ///Send request and await for response
       final response = await request.send();
+
       _dm.add(ReqStartMessage());
-      await for (final byteData in response.stream) {
-        _dm.add(ReqEndMessage());
-        return await _parseJson(byteData);
-      }
+      final res = await response.stream.toBytes();
+      _dm.add(ReqEndMessage());
+
+      return await _parseResponse(res);
     } catch (e) {
       ///Call error interceptor
       errInter?.call(e);
       return null;
     }
-
-    return null;
   }
 
-  Future<Map<String, dynamic>> _parseJson(dynamic data) async {
+  Future<Map<String, dynamic>?> _parseResponse(Uint8List data) async {
     _dm.add(DecodeStartMessage());
+
+    if (options.decoder != null) {
+      final decodingResult =
+          options.decoder!.convert(data) as Map<String, dynamic>;
+      _dm.add(DecodeEndMessage());
+      return decodingResult;
+    }
+
     ///Check if concurrency is enabled and run the task in isolate
     if (concurrencyEnabled && workerPool != null) {
       final taskResult = await workerPool!.perform(
@@ -111,6 +118,7 @@ final class HttpTransport extends Transport {
     }
 
     _dm.add(DecodeEndMessage());
+
     ///If concurrency is not enabled, run the task in main isolate
     return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
   }
@@ -139,7 +147,9 @@ final class HttpTransport extends Transport {
       final request = http.Request(method, uri)
         ..headers.addAll(options.defaultHeaders);
       if (method == "POST") {
-        request.body = jsonEncode(payload);
+        request.body = options.encoder != null
+            ? options.encoder!.convert(payload)
+            : jsonEncode(payload);
       }
 
       ///Call request interceptor
@@ -147,16 +157,14 @@ final class HttpTransport extends Transport {
 
       ///Send request and await for response
       final response = await request.send();
-      await for (final byteData in response.stream) {
-        return await _parseJson(byteData);
-      }
+
+      final byteData = await response.stream.toBytes();
+      return await _parseResponse(byteData);
     } catch (e) {
       ///Call error interceptor
       errInter?.call(e);
       return null;
     }
-
-    return null;
   }
 
   @override
@@ -183,7 +191,9 @@ final class HttpTransport extends Transport {
       final request = http.Request(method, uri)
         ..headers.addAll(options.defaultHeaders);
       if (method == "POST") {
-        request.body = jsonEncode(body);
+        request.body = options.encoder != null
+            ? options.encoder!.convert(body)
+            : jsonEncode(body);
       }
 
       ///Call request interceptor
@@ -191,15 +201,13 @@ final class HttpTransport extends Transport {
 
       ///Send request and await for response
       final response = await request.send();
-      await for (final byteData in response.stream) {
-        return await _parseJson(byteData);
-      }
+
+      final byteData = await response.stream.toBytes();
+      return await _parseResponse(byteData);
     } catch (e) {
       errInter?.call(e);
       return null;
     }
-
-    return null;
   }
 
   @override

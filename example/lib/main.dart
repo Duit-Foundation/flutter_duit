@@ -1,9 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:example/src/registry_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
+
+class CustomDecoder extends Converter<Uint8List, Map<String, dynamic>> {
+  @override
+  Map<String, dynamic> convert(Uint8List input) {
+    return jsonDecode(utf8.decode(input));
+  }
+}
 
 final class _Handler implements ExternalEventHandler {
   @override
@@ -90,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
       transportOptions: HttpTransportOptions(
         defaultHeaders: {"Content-Type": "application/json"},
         baseUrl: "http://localhost:8999",
+        decoder: CustomDecoder(),
       ),
       eventHandler: _Handler(),
     );

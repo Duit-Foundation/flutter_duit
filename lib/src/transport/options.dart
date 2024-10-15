@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/transport/index.dart';
+import 'package:flutter_duit/src/transport/parsable.dart';
 import 'package:http/http.dart';
 
 final class EmptyTransportOptions extends TransportOptions {
@@ -14,7 +18,7 @@ final class EmptyTransportOptions extends TransportOptions {
 }
 
 /// The options for configuring the HTTP transport.
-final class HttpTransportOptions extends TransportOptions {
+final class HttpTransportOptions extends TransportOptions implements Parsable {
   /// The type of the transport, which is always [TransportType.http].
   @override
   String type = TransportType.http;
@@ -48,12 +52,19 @@ final class HttpTransportOptions extends TransportOptions {
   /// The interceptor for the HTTP errors.
   void Function(Object? error)? errorInterceptor;
 
+  @override
+  Converter<Object?, String>? encoder;
+  @override
+  Converter<Uint8List, Object?>? decoder;
+
   HttpTransportOptions({
     this.initialRequestMetainfo,
     this.defaultHeaders = const {},
     this.baseUrl,
     this.requestInterceptor,
     this.errorInterceptor,
+    this.encoder,
+    this.decoder,
   });
 }
 
