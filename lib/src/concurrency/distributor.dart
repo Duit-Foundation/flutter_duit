@@ -2,6 +2,7 @@ import 'package:duit_kernel/duit_kernel.dart';
 
 import 'index.dart';
 
+@Deprecated("Will be removed in next major version")
 abstract class Distributor {
   Future<TaskResult> distributeTask(
     List<Worker> workers, {
@@ -10,6 +11,7 @@ abstract class Distributor {
   });
 }
 
+@Deprecated("Will be removed in next major version")
 final class RoundRobinDistributor extends Distributor {
   int currentIndex = 0;
   int? _ln;

@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'distributor.dart';
 import 'index.dart';
 
+@Deprecated("Will be removed in next major version")
 final class DuitWorkerPoolConfiguration extends WorkerPoolConfiguration {
   final TaskDistributionPolicy policy;
 
@@ -25,6 +26,7 @@ final class _WorkerPoolFinalizationController {
   }
 }
 
+@Deprecated("Will be removed in next major version")
 final class DuitWorkerPool extends WorkerPool {
   late final Distributor _distributor;
   final _workers = <Worker>[];

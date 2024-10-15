@@ -54,6 +54,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   DuitAbstractTree? _layout;
 
   @override
+  @Deprecated("Will be removed in next major version")
   bool concurrentModeEnabled;
 
   @protected
@@ -62,6 +63,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   @protected
   @override
+  @Deprecated("Will be removed in next major version")
   WorkerPoolConfiguration? workerPoolConfiguration;
 
   final Finalizer<_DriverFinalizationController> _driverFinalizer =
