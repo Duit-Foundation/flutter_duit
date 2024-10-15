@@ -32,6 +32,7 @@ The flutter_duit library depends on the [duit_kernel](https://github.com/lesleys
 | >= v1.11.0   | v1.3.0          |
 | >= v1.12.0   | v1.4.0          |
 | >= v2.0.0    | v2.0.1          |
+| >= v2.2.0    | v2.1.1          |
 
 
 ## Usage example
@@ -49,7 +50,7 @@ It is responsible for displaying the UI, updating the state of widgets, and call
 
 
 ```dart
-final driver = DUITDriver(
+final driver = DuitDriver(
   "/layout1",
   transportOptions: HttpTransportOptions(
     defaultHeaders: {"Content-Type": "application/json"},
@@ -62,7 +63,6 @@ final driver = DUITDriver(
 
 ```dart
 DuitViewHost(
-  context: context,
   driver: driver,
   placeholder: const CircularProgressIndicator(),
 ),
@@ -74,10 +74,6 @@ DuitViewHost(
 - Implementation of new network protocols (gRPC, socket.io)
 - Adding new adapters for the backend (Dart, C#, etc.)
 - Troubleshooting, updating documentation
-
-## Package info and documentation
-
-[WIKI](https://github.com/lesleysin/flutter_duit/wiki) (work in progress)
 
 ## License 
 MIT

@@ -1,3 +1,12 @@
+## 2.2.0
+
+- IntrinsicHeight widget
+- Improved data merging with component template
+- ValueReference default value prop
+- Custom decoders & encoders
+- Fixes: Key creation
+- Testing: setup test environment, added test for component, button, align and center widgets
+
 ## 2.1.0
 
 - AttributeValueMapper import
