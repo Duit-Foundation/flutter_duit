@@ -241,8 +241,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
   //<editor-fold desc="Actions & Events">
   /// Resolves a server event from a JSON object.
   ///
-  /// This method takes a [json] object representing a server event and converts
-  /// it into a [ServerEvent] object. If the [json] object is valid and represents
+  /// This method takes a [eventData] object representing a server event and converts
+  /// it into a [ServerEvent] object. If the [eventData] object is valid and represents
   /// a recognized server event type, it creates an instance of the corresponding
   /// event class and assigns it to the [event] variable.
   ///
@@ -250,8 +250,15 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// - [json]: The JSON object representing a server event.
   ///
   /// Returns: A [Future] that completes with [void].
-  FutureOr<void> _resolveEvent(JSONObject? json) async {
-    final event = ServerEvent.fromJson(json, this);
+  FutureOr<void> _resolveEvent(dynamic eventData) async {
+    ServerEvent? event;
+
+    if (eventData is ServerEvent) {
+      event = eventData;
+    } else {
+      event = ServerEvent.fromJson(eventData, this);
+    }
+
     onEventReceived?.call(event);
     if (event != null) {
       switch (event.type) {
@@ -588,9 +595,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
   }
 
   @visibleForTesting
-  Future<void> resolveTestEvent(Map<String, dynamic>? json) async {
-    await _resolveEvent(json);
+  Future<void> resolveTestEvent(dynamic eventData) async {
+    await _resolveEvent(eventData);
   }
 
+  @visibleForTesting
+  int get controllersCount => _viewControllers.length;
 //</editor-fold>
 }

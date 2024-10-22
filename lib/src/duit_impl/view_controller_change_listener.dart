@@ -99,6 +99,7 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
   @override
   void dispose() {
     _controller.removeListener(_listener);
+    _controller.dispose();
     super.dispose();
   }
 }
