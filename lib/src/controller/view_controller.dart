@@ -113,4 +113,10 @@ final class ViewController<T>
       rethrow;
     }
   }
+
+  @override
+  void dispose() {
+    driver.detachController(this.id);
+    super.dispose();
+  }
 }
