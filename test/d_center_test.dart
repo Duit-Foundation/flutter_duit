@@ -1,4 +1,3 @@
-import "package:alchemist/alchemist.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -27,59 +26,54 @@ Map<String, dynamic> _createWidget([bool? controlled = false]) {
 
 void main() {
   group("DuitCenter widget tests", () {
-    const dim = 100.0;
 
-    goldenTest("DuitCenter base variants", fileName: "d_center_base",
-        builder: () {
-      return GoldenTestScenario(
-        name: "Center",
-        child: SizedBox.square(
-          dimension: dim,
-          child: DuitViewHost(
-            driver: DuitDriver.static(
-              _createWidget(),
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
-            ),
-          ),
-        ),
+    testWidgets("check center", (tester) async {
+      final driver = DuitDriver.static(
+        _createWidget(true),
+        transportOptions: HttpTransportOptions(),
+        enableDevMetrics: false,
       );
-    });
 
-    final driver = DuitDriver.static(
-      _createWidget(true),
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
-    );
-
-    goldenTest(
-      "DuitCenter update",
-      fileName: "d_center_upd",
-      pumpBeforeTest: (t) async {
-        await t.pumpAndSettle();
-        await driver.updateTestAttributes(
-          "centerId",
-          {
-            "widthFactor": 0.5,
-            "heightFactor": 1.5,
-          },
-        );
-        await t.pumpAndSettle();
-      },
-      builder: () {
-        return GoldenTestScenario(
-          name: "Center",
-          child: SizedBox.square(
-            dimension: dim,
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: SizedBox(
+            key: const ValueKey("box"),
+            width: 1000,
+            height: 1000,
             child: DuitViewHost(
               driver: driver,
             ),
           ),
-        );
-      },
-    );
+        ),
+      );
 
-    testWidgets("DuitAlign key assignment", (tester) async {
+      await tester.pumpAndSettle();
+
+      await driver.updateTestAttributes("centerId", {
+        "widthFactor": 0.5,
+        "heightFactor": 1.5,
+      });
+
+      await tester.pumpAndSettle();
+
+      final box = find.byKey(const ValueKey("box"));
+
+      expect(box, findsOneWidget);
+
+      final center = tester.getCenter(box);
+
+      final cont = tester.getCenter(find.byKey(const ValueKey("con")));
+
+      expect(center, equals(cont));
+
+      final cWidget = tester.widget(find.byKey(const ValueKey("centerId"))) as Center;
+
+      expect(cWidget.widthFactor, 0.5);
+      expect(cWidget.heightFactor, 1.5);
+    });
+
+    testWidgets("check widget key assignment", (tester) async {
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,

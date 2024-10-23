@@ -1,6 +1,6 @@
-import "package:alchemist/alchemist.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_test/flutter_test.dart";
 
 ///Create widget templates for testing
@@ -76,123 +76,106 @@ const _textWithPropAnimation = {
 
 void main() {
   group("DuitText widget", () {
-    goldenTest(
-      "Uncontrolled DuitText",
-      fileName: "d_text",
-      builder: () => GoldenTestScenario(
-        name: "Simple text",
-        child: DuitViewHost(
-          driver: DuitDriver.static(
-            _uncText,
-            transportOptions: HttpTransportOptions(),
-            enableDevMetrics: false,
+    testWidgets("check simple render scenario", (tester) async {
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: DuitViewHost(
+            driver: DuitDriver.static(
+              _uncText,
+              transportOptions: HttpTransportOptions(),
+              enableDevMetrics: false,
+            ),
           ),
         ),
-      ),
-    );
+      );
 
-    goldenTest(
-      "DuitText with empty data prop",
-      fileName: "d_text_without_data",
-      builder: () {
-        return GoldenTestScenario(
-          name: "Without data",
-          child: Row(
-            children: [
-              DuitViewHost(
-                driver: DuitDriver.static(
-                  _uncTextWithoutData,
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Container(
-                width: 50,
-                height: 50,
-                color: const Color(0xFFE53935),
-              ),
-            ],
+      await tester.pumpAndSettle();
+
+      expect(find.text("Hello, World!"), findsOneWidget);
+    });
+
+    testWidgets("check text layout without data prop", (tester) async {
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: DuitViewHost(
+            driver: DuitDriver.static(
+              _uncTextWithoutData,
+              transportOptions: HttpTransportOptions(),
+              enableDevMetrics: false,
+            ),
           ),
-        );
-      },
-    );
+        ),
+      );
 
-    goldenTest(
-      "Controlled DuitText before update",
-      fileName: "d_c_text_before",
-      builder: () {
-        final driver = DuitDriver.static(
-          _cTextWithoutData,
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
-        );
+      await tester.pumpAndSettle();
 
-        return GoldenTestScenario(
-          name: "Before update",
+      expect(find.byType(SizedBox), findsOneWidget);
+    });
+
+    testWidgets("check text update process", (tester) async {
+      final driver = DuitDriver.static(
+        _cTextWithoutData,
+        transportOptions: HttpTransportOptions(),
+        enableDevMetrics: false,
+      );
+
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
           child: DuitViewHost(
             driver: driver,
           ),
-        );
-      },
-    );
+        ),
+      );
 
-    final uDriver = DuitDriver.static(
-      _cTextWithoutData,
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
-    );
+      await tester.pumpAndSettle();
 
-    goldenTest(
-      "Controlled DuitText after update",
-      fileName: "d_c_text_after",
-      pumpBeforeTest: (t) async {
-        await uDriver.updateTestAttributes("1", {
-          "data": "Hello, World!",
-          "style": {
-            "fontSize": 24.0,
-            "fontWeight": 700,
-            "color": "#03fcc2",
-          }
-        });
+      expect(find.text("Good bye, World!"), findsOneWidget);
 
-        await t.pumpAndSettle(const Duration(seconds: 3));
-      },
-      builder: () {
-        return GoldenTestScenario(
-          name: "After update",
+      await driver.updateTestAttributes("1", {
+        "data": "Hello, World!",
+        "style": {
+          "color": "#DCDCDC",
+          "fontSize": 14.0,
+          "fontWeight": 700,
+        }
+      });
+
+      await tester.pumpAndSettle();
+
+      expect(find.text("Hello, World!"), findsOneWidget);
+    });
+
+    testWidgets("check animation", (tester) async {
+      final driver = DuitDriver.static(
+        _textWithPropAnimation,
+        transportOptions: HttpTransportOptions(),
+        enableDevMetrics: false,
+      );
+
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
           child: DuitViewHost(
-            driver: uDriver,
+            driver: driver,
           ),
-        );
-      },
-    );
+        ),
+      );
 
-    final aDriver = DuitDriver.static(
-      _textWithPropAnimation,
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
-    );
+      await tester.pumpAndSettle();
 
-    goldenTest(
-      "DuitText props animation",
-      fileName: "d_text_animation",
-      pumpBeforeTest: (t) async {
-        await t.pumpAndSettle(
-          const Duration(milliseconds: 500),
-        );
-      },
-      builder: () {
-        return GoldenTestScenario(
-          name: "Animation end",
-          child: DuitViewHost(
-            driver: aDriver,
-          ),
-        );
-      },
-    );
+      final text = find.byKey(const Key("1")).evaluate().single.widget as Text?;
 
-    testWidgets("Widget key assignment", (tester) async {
+      final fSize = text?.style?.fontSize;
+      final fWeight = text?.style?.fontWeight;
+
+      expect(fSize, 24.0);
+      expect(fWeight, FontWeight.w700);
+    });
+
+    testWidgets("check widget key assignment", (tester) async {
       final driver = DuitDriver.static(
         _uncText,
         transportOptions: HttpTransportOptions(),
@@ -212,6 +195,44 @@ void main() {
 
       final text = find.byKey(const Key("text"));
       expect(text, findsOneWidget);
+    });
+
+    testWidgets("check update when data prop is empty or null", (tester) async {
+      final driver = DuitDriver.static(
+        _cTextWithoutData,
+        transportOptions: HttpTransportOptions(),
+        enableDevMetrics: false,
+      );
+
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: DuitViewHost(
+            driver: driver,
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      final text = find.text("Good bye, World!");
+      expect(text, findsOneWidget);
+
+      await driver.updateTestAttributes("1", {});
+
+      await tester.pumpAndSettle();
+
+      expect(text, findsOneWidget);
+    });
+
+    test("check attributes", () async {
+      final attrs = TextAttributes(
+        data: "",
+        parentBuilderId: null,
+        affectedProperties: null,
+      );
+
+      expect(() => attrs.dispatchInternalCall("invalid"), throwsUnimplementedError);
     });
   });
 }
