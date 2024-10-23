@@ -59,9 +59,9 @@ class _DuitControlledTextState extends State<DuitControlledText>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithController(
+    final attrs = widget.mergeWithAttributes(
       context,
-      widget.controller,
+      attributes,
     );
 
     if (attrs.data == null || attrs.data!.isEmpty) {
@@ -69,7 +69,7 @@ class _DuitControlledTextState extends State<DuitControlledText>
     }
 
     return Text(
-      attrs.data ?? "",
+      attrs.data!,
       textAlign: attrs.textAlign,
       textDirection: attrs.textDirection,
       style: attrs.style,

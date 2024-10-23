@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'animation_context.dart';
 
 mixin AnimatedAttributes on Widget {
+  @Deprecated("Will be removed in next major version")
   T mergeWithController<T>(
     BuildContext context,
     UIElementController<T> controller,

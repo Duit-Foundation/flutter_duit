@@ -58,9 +58,9 @@ class _DuitControlledPositionedState extends State<DuitControlledPositioned>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithController(
+    final attrs = widget.mergeWithAttributes(
       context,
-      widget.controller,
+      attributes,
     );
 
     return Positioned(

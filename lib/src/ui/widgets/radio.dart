@@ -71,9 +71,9 @@ class _DuitControlledRadioState extends State<DuitControlledRadio>
   Widget build(BuildContext context) {
     final groupContext = RadioGroupContext.maybeOf(context);
     assert(groupContext != null, 'RadioGroupContext not found in context');
-    final attrs = widget.mergeWithController(
+    final attrs = widget.mergeWithAttributes(
       context,
-      widget.controller,
+      attributes,
     );
 
     return Radio(

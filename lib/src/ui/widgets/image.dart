@@ -120,9 +120,9 @@ class _DuitControlledImageState extends State<DuitControlledImage>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithController(
+    final attrs = widget.mergeWithAttributes(
       context,
-      widget.controller,
+      attributes,
     );
 
     return switch (attrs.type) {
