@@ -1,4 +1,3 @@
-import "package:alchemist/alchemist.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -46,7 +45,7 @@ void main() {
   group(
     "DuitButton widget tests",
     () {
-      testWidgets("DuitButton pressed and key assignment", (t) async {
+      testWidgets("check pressed and key assignment", (t) async {
         await t.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
@@ -73,43 +72,38 @@ void main() {
         expect(find.text("Pressed!"), findsOneWidget);
       });
 
-      goldenTest("DuitButton base variant", fileName: "d_button", builder: () {
-        return GoldenTestScenario(
-          name: "Base variant",
-          child: DuitViewHost(
-            driver: DuitDriver.static(
-              _createWidget(),
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
-            ),
-          ),
+      testWidgets("check action execution", (tester) async {
+        final driver = DuitDriver.static(
+          _createWidget(),
+          transportOptions: HttpTransportOptions(),
+          enableDevMetrics: false,
         );
-      });
 
-      final driver = DuitDriver.static(
-        _createWidget(),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
-      );
-
-      goldenTest(
-        "DuitButton update",
-        fileName: "d_button_upd",
-        pumpBeforeTest: (t) async {
-          await t.pumpAndSettle();
-          final button = find.byKey(const Key("bId"));
-          await t.tap(button);
-          await t.pumpAndSettle();
-        },
-        builder: () {
-          return GoldenTestScenario(
-            name: "After update",
+        await tester.pumpWidget(
+          Directionality(
+            textDirection: TextDirection.ltr,
             child: DuitViewHost(
               driver: driver,
             ),
-          );
-        },
-      );
+          ),
+        );
+
+        await tester.pumpAndSettle();
+
+        final button = find.byKey(const Key("bId"));
+
+        await tester.tap(button);
+
+        await tester.pumpAndSettle();
+
+        final text = find.text("Pressed!");
+        expect(text, findsOneWidget);
+
+        final widget = tester.widget(find.text("Pressed!")) as Text;
+
+        expect(widget.style?.fontWeight, equals(FontWeight.w800));
+        expect(widget.style?.fontSize, equals(24.0));
+      });
     },
   );
 }
