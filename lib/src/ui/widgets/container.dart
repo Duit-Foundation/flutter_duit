@@ -63,9 +63,9 @@ class _DuitControlledContainerState extends State<DuitControlledContainer>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithController(
+    final attrs = widget.mergeWithAttributes(
       context,
-      widget.controller,
+      attributes,
     );
     return Container(
       key: Key(widget.controller.id),

@@ -57,10 +57,11 @@ class _DuitControlledWrapState extends State<DuitControlledWrap>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithController(
+    final attrs = widget.mergeWithAttributes(
       context,
-      widget.controller,
+      attributes,
     );
+
     return Wrap(
       key: Key(widget.controller.id),
       alignment: attrs.alignment ?? WrapAlignment.start,

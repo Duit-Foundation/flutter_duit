@@ -38,7 +38,8 @@ final class TextAttributes extends AnimatedPropertyOwner
       semanticsLabel: json["semanticsLabel"],
       style: AttributeValueMapper.toTextStyle(json["style"]),
       overflow: AttributeValueMapper.toTextOverflow(json["overflow"]),
-      textDirection: AttributeValueMapper.toTextDirection(json["textDirection"]),
+      textDirection:
+          AttributeValueMapper.toTextDirection(json["textDirection"]),
       parentBuilderId: json["parentBuilderId"],
       affectedProperties: Set.from(
         json["affectedProperties"] ?? {},
@@ -49,7 +50,7 @@ final class TextAttributes extends AnimatedPropertyOwner
   @override
   TextAttributes copyWith(TextAttributes other) {
     return TextAttributes(
-      data: other.data ?? data,
+      data: other.data != null && other.data!.isNotEmpty ? other.data : data,
       textAlign: other.textAlign ?? textAlign,
       textDirection: other.textDirection ?? textDirection,
       softWrap: other.softWrap ?? softWrap,

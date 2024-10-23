@@ -98,9 +98,9 @@ class _DuitControlledTransformState extends State<DuitControlledTransform>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithController(
+    final attrs = widget.mergeWithAttributes(
       context,
-      widget.controller,
+      attributes,
     );
 
     if (attrs is ScaleTransform) {
