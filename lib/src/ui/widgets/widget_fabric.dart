@@ -483,6 +483,19 @@ mixin WidgetFabric {
                 child: child,
               );
 
+      case ElementType.rotatedBox:
+        final it = model as RotatedBoxUIElement<RotatedBoxAttributes>;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledRotatedBox(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitRotatedBox(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:
