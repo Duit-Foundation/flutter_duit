@@ -105,6 +105,7 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.animatedSize => AnimatedSizeAttributes.fromJson(data),
       ElementType.animatedBuilder => AnimatedBuilderAttributes.fromJson(data),
       ElementType.intrinsicHeight => IntrinsicHeightAttributes.fromJson(data),
+      ElementType.rotatedBox => RotatedBoxAttributes.fromJson(data),
       ElementType.subtree ||
       ElementType.component =>
         SubtreeAttributes.fromJson(data),

@@ -1117,6 +1117,33 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           child: child,
         );
+
+      case ElementType.rotatedBox:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes = ViewAttribute.createAttributes<RotatedBoxAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return RotatedBoxUIElement<RotatedBoxAttributes>(
+          type: type,
+          id: id,
+          controlled: controlled,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+        );
       case ElementType.empty:
         return EmptyUIElement<EmptyAttributes>();
       case ElementType.component:

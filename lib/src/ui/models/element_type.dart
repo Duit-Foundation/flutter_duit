@@ -40,4 +40,5 @@ final class ElementType {
   static const animatedSize = "AnimatedSize";
   static const animatedBuilder = "AnimatedBuilder";
   static const intrinsicHeight = "IntrinsicHeight";
+  static const rotatedBox = "RotatedBox";
 }
