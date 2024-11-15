@@ -53,118 +53,152 @@ class _DuitGestureDetectorState extends State<DuitGestureDetector>
   Widget build(BuildContext context) {
     return GestureDetector(
       key: Key(widget.controller.id),
-      onTap: () {
-        _performAction(
-          attributes.onTap,
-          type: GestureType.onTap,
-        );
-      },
-      onTapUp: (info) {
-        _performAction(
-          attributes.onTapUp,
-          type: GestureType.onTapUp,
-          gestureInfo: info,
-        );
-      },
-      onTapDown: (info) {
-        _performAction(
-          attributes.onTapDown,
-          type: GestureType.onTapDown,
-          gestureInfo: info,
-        );
-      },
-      onTapCancel: () {
-        _performAction(
-          attributes.onTapCancel,
-          type: GestureType.onTapCancel,
-        );
-      },
-      onDoubleTap: () {
-        _performAction(
-          attributes.onDoubleTap,
-          type: GestureType.onDoubleTap,
-        );
-      },
-      onDoubleTapDown: (info) {
-        _performAction(
-          attributes.onDoubleTapDown,
-          type: GestureType.onDoubleTapDown,
-          gestureInfo: info,
-        );
-      },
-      onDoubleTapCancel: () {
-        _performAction(
-          attributes.onDoubleTapCancel,
-          type: GestureType.onDoubleTapCancel,
-        );
-      },
-      onLongPress: () {
-        _performAction(
-          attributes.onLongPress,
-          type: GestureType.onLongPress,
-        );
-      },
-      onLongPressStart: (info) {
-        _performAction(
-          attributes.onLongPressStart,
-          type: GestureType.onLongPressStart,
-          gestureInfo: info,
-        );
-      },
-      onLongPressMoveUpdate: (info) {
-        _performAction(
-          attributes.onLongPressMoveUpdate,
-          type: GestureType.onLongPressMoveUpdate,
-          gestureInfo: info,
-        );
-      },
-      onLongPressUp: () {
-        _performAction(
-          attributes.onLongPressUp,
-          type: GestureType.onLongPressUp,
-        );
-      },
-      onLongPressEnd: (info) {
-        _performAction(
-          attributes.onLongPressEnd,
-          type: GestureType.onLongPressEnd,
-          gestureInfo: info,
-        );
-      },
-      onPanStart: (info) {
-        _performAction(
-          attributes.onPanStart,
-          type: GestureType.onPanStart,
-          gestureInfo: info,
-        );
-      },
-      onPanDown: (info) {
-        _performAction(
-          attributes.onPanDown,
-          type: GestureType.onPanDown,
-          gestureInfo: info,
-        );
-      },
-      onPanUpdate: (info) {
-        _performAction(
-          attributes.onPanUpdate,
-          type: GestureType.onPanUpdate,
-          gestureInfo: info,
-        );
-      },
-      onPanEnd: (info) {
-        _performAction(
-          attributes.onPanEnd,
-          type: GestureType.onPanEnd,
-          gestureInfo: info,
-        );
-      },
-      onPanCancel: () {
-        _performAction(
-          attributes.onPanCancel,
-          type: GestureType.onPanCancel,
-        );
-      },
+      onTap: attributes.onTap != null
+          ? () {
+              _performAction(
+                attributes.onTap,
+                type: GestureType.onTap,
+              );
+            }
+          : null,
+      onTapUp: attributes.onTapUp != null
+          ? (info) {
+              _performAction(
+                attributes.onTapUp,
+                type: GestureType.onTapUp,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onTapDown: attributes.onTapDown != null
+          ? (info) {
+              _performAction(
+                attributes.onTapDown,
+                type: GestureType.onTapDown,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onTapCancel: attributes.onTapCancel != null
+          ? () {
+              _performAction(
+                attributes.onTapCancel,
+                type: GestureType.onTapCancel,
+              );
+            }
+          : null,
+      onDoubleTap: attributes.onDoubleTap != null
+          ? () {
+              _performAction(
+                attributes.onDoubleTap,
+                type: GestureType.onDoubleTap,
+              );
+            }
+          : null,
+      onDoubleTapDown: attributes.onDoubleTapDown != null
+          ? (info) {
+              _performAction(
+                attributes.onDoubleTapDown,
+                type: GestureType.onDoubleTapDown,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onDoubleTapCancel: attributes.onDoubleTapCancel != null
+          ? () {
+              _performAction(
+                attributes.onDoubleTapCancel,
+                type: GestureType.onDoubleTapCancel,
+              );
+            }
+          : null,
+      onLongPress: attributes.onLongPress != null
+          ? () {
+              _performAction(
+                attributes.onLongPress,
+                type: GestureType.onLongPress,
+              );
+            }
+          : null,
+      onLongPressStart: attributes.onLongPressStart != null
+          ? (info) {
+              _performAction(
+                attributes.onLongPressStart,
+                type: GestureType.onLongPressStart,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onLongPressMoveUpdate: attributes.onLongPressMoveUpdate != null
+          ? (info) {
+              _performAction(
+                attributes.onLongPressMoveUpdate,
+                type: GestureType.onLongPressMoveUpdate,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onLongPressUp: attributes.onLongPressUp != null
+          ? () {
+              _performAction(
+                attributes.onLongPressUp,
+                type: GestureType.onLongPressUp,
+              );
+            }
+          : null,
+      onLongPressEnd: attributes.onLongPressEnd != null
+          ? (info) {
+              _performAction(
+                attributes.onLongPressEnd,
+                type: GestureType.onLongPressEnd,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onPanStart: attributes.onPanStart != null
+          ? (info) {
+              _performAction(
+                attributes.onPanStart,
+                type: GestureType.onPanStart,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onPanDown: attributes.onPanDown != null
+          ? (info) {
+              _performAction(
+                attributes.onPanDown,
+                type: GestureType.onPanDown,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onPanUpdate: attributes.onPanUpdate != null
+          ? (info) {
+              _performAction(
+                attributes.onPanUpdate,
+                type: GestureType.onPanUpdate,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onPanEnd: attributes.onPanEnd != null
+          ? (info) {
+              _performAction(
+                attributes.onPanEnd,
+                type: GestureType.onPanEnd,
+                gestureInfo: info,
+              );
+            }
+          : null,
+      onPanCancel: attributes.onPanCancel != null
+          ? () {
+              _performAction(
+                attributes.onPanCancel,
+                type: GestureType.onPanCancel,
+              );
+            }
+          : null,
       behavior: attributes.behavior,
       dragStartBehavior: attributes.dragStartBehavior,
       excludeFromSemantics: attributes.excludeFromSemantics ?? false,
