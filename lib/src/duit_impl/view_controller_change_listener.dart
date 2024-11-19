@@ -99,7 +99,8 @@ mixin ViewControllerChangeListener<T extends StatefulWidget, AttrType>
 
   @override
   void dispose() {
-    _controller
+    final controller = DetachableController(_controller);
+    controller
       ..removeListener(_listener)
       ..detach();
     super.dispose();

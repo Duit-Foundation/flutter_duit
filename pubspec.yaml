@@ -5,7 +5,7 @@ repository: https://github.com/Duit-Foundation/flutter_duit
 issue_tracker: https://github.com/Duit-Foundation/flutter_duit/issues
 
 environment:
-  sdk: '>=3.1.4 <4.0.0'
+  sdk: '>=3.4.4 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
