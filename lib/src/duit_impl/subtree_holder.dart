@@ -42,7 +42,7 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
   @override
   void dispose() {
     _controller?.removeListener(_listener);
-    _controller?.dispose();
+    _controller?.detach();
     super.dispose();
   }
 }
