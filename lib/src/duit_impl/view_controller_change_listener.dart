@@ -1,5 +1,6 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_duit/src/utils/detach_extension.dart';
 
 /// A mixin that listens for changes in a UI element controller and updates the state accordingly.
 ///
@@ -42,8 +43,8 @@ import 'package:flutter/material.dart';
 ///
 /// The following properties are available in the `ViewControllerChangeListener` mixin:
 /// - `attributes`: The current attributes of the `UIElementController`. These attributes can be used to build the UI.
-mixin ViewControllerChangeListener<T extends StatefulWidget,
-    AttrType> on State<T> {
+mixin ViewControllerChangeListener<T extends StatefulWidget, AttrType>
+    on State<T> {
   late AttrType attributes;
   late UIElementController<AttrType> _controller;
 
@@ -98,8 +99,10 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
 
   @override
   void dispose() {
-    _controller.removeListener(_listener);
-    _controller.dispose();
+    final controller = DetachableController(_controller);
+    controller
+      ..removeListener(_listener)
+      ..detach();
     super.dispose();
   }
 }
