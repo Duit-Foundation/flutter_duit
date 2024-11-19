@@ -149,7 +149,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   @override
   void detachController(String id) {
-    _viewControllers.remove(id);
+    _viewControllers.remove(id)?.dispose();
   }
 
   @protected
