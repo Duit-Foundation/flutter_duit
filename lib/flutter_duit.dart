@@ -25,5 +25,6 @@ export "./src/utils/index.dart"
         ParseModelStartMessage,
         ParseModelEndMessage,
         RenderStartMessage,
-        RenderEndMessage;
+        RenderEndMessage,
+        DetachableController;
 export './src/concurrency/index.dart' hide Worker;
