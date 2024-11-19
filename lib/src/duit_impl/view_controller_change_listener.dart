@@ -43,8 +43,8 @@ import 'package:flutter_duit/src/utils/detach_extension.dart';
 ///
 /// The following properties are available in the `ViewControllerChangeListener` mixin:
 /// - `attributes`: The current attributes of the `UIElementController`. These attributes can be used to build the UI.
-mixin ViewControllerChangeListener<T extends StatefulWidget,
-    AttrType> on State<T> {
+mixin ViewControllerChangeListener<T extends StatefulWidget, AttrType>
+    on State<T> {
   late AttrType attributes;
   late UIElementController<AttrType> _controller;
 
@@ -62,11 +62,11 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
   /// ```
   void attachStateToController(UIElementController<AttrType> controller) {
     _controller = controller;
-    attributes = _controller.attributes.payload;
+    attributes = _controller.attributes!.payload;
   }
 
   void _listener() {
-    final newState = _controller.attributes.cast<AttrType>();
+    final newState = _controller.attributes?.cast<AttrType>();
     final attrs = attributes as DuitAttributes<AttrType>;
 
     if (newState != null) {
@@ -99,8 +99,9 @@ mixin ViewControllerChangeListener<T extends StatefulWidget,
 
   @override
   void dispose() {
-    _controller.removeListener(_listener);
-    _controller.detach();
+    _controller
+      ..removeListener(_listener)
+      ..detach();
     super.dispose();
   }
 }
