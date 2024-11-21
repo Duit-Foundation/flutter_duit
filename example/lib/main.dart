@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:duit_kernel/duit_kernel.dart';
-import 'package:example/src/registry_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
+
+import 'src/custom/index.dart';
 
 class CustomDecoder extends Converter<Uint8List, Map<String, dynamic>> {
   @override
@@ -34,7 +35,10 @@ final class _Handler implements ExternalEventHandler {
 
   @override
   FutureOr<void> handleNavigation(
-      BuildContext context, String path, Object? extra) {
+    BuildContext context,
+    String path,
+    Object? extra,
+  ) {
     // TODO: implement handleNavigation
     throw UnimplementedError();
   }
@@ -49,21 +53,12 @@ final class _Handler implements ExternalEventHandler {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DuitRegistry.register(
-    "ExampleCustomWidget",
-    modelFactory: modelMapperExample,
-    buildFactory: exampleRenderer,
-    attributesFactory: exampleAttributeMapper,
+    exampleCustomWidget,
+    modelFactory: exModelFactory,
+    buildFactory: exBuildFactory,
+    attributesFactory: exAttributeFactory,
   );
 
-  final worker = DuitWorkerPool();
-  await worker.initWithConfiguration(
-    DuitWorkerPoolConfiguration(
-      workerCount: 6,
-      policy: TaskDistributionPolicy.roundRobin,
-    ),
-  );
-
-  DuitRegistry.registerWorkerPool(worker);
   runApp(const MyApp());
 }
 
@@ -73,7 +68,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Duit Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
@@ -95,9 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     driver1 = DuitDriver(
-      "/example_screen",
+      "/some_endpoint",
       transportOptions: HttpTransportOptions(
-        defaultHeaders: {"Content-Type": "application/json"},
+        defaultHeaders: {
+          "Content-Type": "application/json",
+        },
         baseUrl: "http://localhost:8999",
         decoder: CustomDecoder(),
       ),

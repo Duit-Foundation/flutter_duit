@@ -1,3 +1,5 @@
+import 'package:duit_kernel/duit_kernel.dart';
+
 import 'child.dart';
 import 'element.dart';
 import 'element_type.dart';
@@ -287,10 +289,19 @@ final class StackUIElement<T> extends DuitElement<T>
   });
 }
 
-final class CustomDUITElement<T> extends DuitElement<T> {
-  CustomDUITElement({
+base class CustomUiElement extends DuitElement<dynamic> {
+  final Iterable<TreeElement> subviews;
+
+  CustomUiElement({
     required super.id,
-  }) : super(type: ElementType.custom);
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required super.tag,
+    this.subviews = const {},
+  }) : super(
+          type: ElementType.custom,
+        );
 }
 
 final class ElevatedButtonUIElement<T> extends DuitElement<T>

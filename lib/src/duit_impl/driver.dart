@@ -101,7 +101,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.workerPool,
     this.workerPoolConfiguration,
     this.initialRequestPayload,
-    bool enableDevMetrics = true,
+    bool enableDevMetrics = false,
   })  : _useStaticContent = false,
         _isModule = false,
         _devMetricsEnabled = enableDevMetrics;
@@ -114,7 +114,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.concurrentModeEnabled = false,
     this.workerPool,
     this.workerPoolConfiguration,
-    bool enableDevMetrics = true,
+    bool enableDevMetrics = false,
   })  : _useStaticContent = true,
         source = "",
         initialRequestPayload = null,

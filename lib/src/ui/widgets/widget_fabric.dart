@@ -499,9 +499,18 @@ mixin WidgetFabric {
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:
-        if (model.tag != null) {
-          final renderer = DuitRegistry.getBuildFactory(model.tag!);
-          return renderer?.call(model) ?? const DuitEmptyView();
+        final customWidgetModel = model as CustomUiElement;
+        if (customWidgetModel.tag != null) {
+
+          final children = <Widget>{};
+
+          for (var subview in customWidgetModel.subviews) {
+            final child = getWidgetFromElement(subview as DuitElement);
+            children.add(child);
+          }
+
+          final renderer = DuitRegistry.getBuildFactory(customWidgetModel.tag!);
+          return renderer?.call(customWidgetModel, children) ?? const DuitEmptyView();
         }
 
         return const DuitEmptyView();

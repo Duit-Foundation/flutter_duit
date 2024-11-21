@@ -1192,8 +1192,8 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
         return EmptyUIElement<EmptyAttributes>();
       case ElementType.custom:
         if (tag != null) {
-          final fabric = DuitRegistry.getModelFactory(tag);
-          if (fabric != null) {
+          final customModelFactory = DuitRegistry.getModelFactory(tag);
+          if (customModelFactory != null) {
             final attributes = ViewAttribute.createAttributes(
               type,
               attributesObject,
@@ -1211,12 +1211,37 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
               tag,
             );
 
-            return fabric(
+            final children = <DuitElement>{};
+
+            if (json["children"] != null) {
+              json["children"].forEach(
+                (element) {
+                  children.add(
+                    DuitElement.fromJson(
+                      element,
+                      driver,
+                    ),
+                  );
+                },
+              );
+            }
+
+            if (json["child"] != null) {
+              children.add(
+                DuitElement.fromJson(
+                  json["child"],
+                  driver,
+                ),
+              );
+            }
+
+            return customModelFactory(
               id,
               controlled,
               attributes,
               controller,
-            ) as DuitElement;
+              children,
+            ) as CustomUiElement;
           }
         }
         return EmptyUIElement<EmptyAttributes>();
