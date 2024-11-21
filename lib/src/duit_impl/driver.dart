@@ -211,7 +211,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
       }
 
       _layout = DuitTree(json: json!, driver: this);
-      streamController.sink.add(await _layout?.parse());
+
+      try {
+        streamController.sink.add(
+          await _layout!.parse(),
+        );
+      } catch (e) {
+        streamController.sink.addError(e);
+      }
 
       _driverFinalizer.attach(
         this,
@@ -225,7 +232,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
   void dispose() {
     onDispose?.call();
     transport?.dispose();
-    _viewControllers.clear();
+    _viewControllers
+      ..forEach((_, c) => c.dispose())
+      ..clear();
     _layout = null;
     streamController.close();
     _driverFinalizer.detach(this);

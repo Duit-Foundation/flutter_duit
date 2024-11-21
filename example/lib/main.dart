@@ -115,8 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Center(
           child: DuitViewHost(
-            context: context,
             driver: driver1,
+            errorWidgetBuilder: (context, error) => Text(error.toString()),
             placeholder: const CircularProgressIndicator(),
           ),
         ),

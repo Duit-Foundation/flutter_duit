@@ -51,6 +51,8 @@ class DuitViewHost extends StatefulWidget {
   ///Determines whether the passed [child] widget should be shown instead of the [placeholder]
   final bool showChildInsteadOfPlaceholder;
 
+  final Widget Function(BuildContext context, Object? err)? errorWidgetBuilder;
+
   /// Creates a new `DuitViewHost` widget.
   ///
   /// The [driver] parameter is required and should be an instance of `UIDriver`.
@@ -66,6 +68,7 @@ class DuitViewHost extends StatefulWidget {
     this.placeholder,
     this.gestureInterceptor,
     this.gestureInterceptorBehavior = GestureInterceptorBehavior.always,
+    this.errorWidgetBuilder,
   }) : assert(
           showChildInsteadOfPlaceholder == true ? child != null : true,
           "Child must not be null if showChildInsteadOfPlaceholder property is set to true",
@@ -88,6 +91,12 @@ class _DuitViewHostState extends State<DuitViewHost> {
       stream: widget.driver.stream,
       builder: (context, snapshot) {
         widget.driver.context = context;
+
+        if (snapshot.hasError && widget.errorWidgetBuilder != null) {
+          return widget.errorWidgetBuilder!.call(context, snapshot.error);
+        } else if (snapshot.hasError && widget.errorWidgetBuilder == null) {
+          throw snapshot.error!;
+        }
 
         return snapshot.data != null
             ? DuitViewContext(
