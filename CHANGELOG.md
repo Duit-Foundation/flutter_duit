@@ -1,3 +1,12 @@
+## 2.3.0
+
+- Added RotatedBox widget
+- Added error widget builder for DuitViewHost
+- Fixed GestureDetector multiple events call when its not passed as attribute parameters
+- Fixed Text widget unexpected behavior
+- Fixed incorrect controllers creation/destruction, detach and disposing
+- Fixed custom widgets subviews display
+
 ## 2.2.0
 
 - IntrinsicHeight widget

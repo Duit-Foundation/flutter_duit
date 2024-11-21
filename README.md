@@ -33,6 +33,7 @@ The flutter_duit library depends on the [duit_kernel](https://github.com/lesleys
 | >= v1.12.0   | v1.4.0          |
 | >= v2.0.0    | v2.0.1          |
 | >= v2.2.0    | v2.1.1          |
+| >= v2.3.0    | v2.1.3          |
 
 
 ## Usage example
@@ -50,8 +51,9 @@ It is responsible for displaying the UI, updating the state of widgets, and call
 
 
 ```dart
+
 final driver = DuitDriver(
-  "/layout1",
+  "/layout",
   transportOptions: HttpTransportOptions(
     defaultHeaders: {"Content-Type": "application/json"},
     baseUrl: "http://localhost:8999",
