@@ -113,8 +113,8 @@ base class DuitTweenDescription<T> {
       "boxConstraintsTween" => BoxConstraintsTweenDescription(
           animatedPropKey: json["animatedPropKey"],
           duration: AttributeValueMapper.toDuration(json["duration"]),
-          begin: AttributeValueMapper.toBoxConstraints(json["begin"])!,
-          end: AttributeValueMapper.toBoxConstraints(json["end"])!,
+          begin: AttributeValueMapper.toBoxConstraints(json["begin"]),
+          end: AttributeValueMapper.toBoxConstraints(json["end"]),
           curve: AttributeValueMapper.toCurve(json["curve"]),
           trigger: _triggerFromValue(json["trigger"]),
           method: _methodFromValue(json["method"]),

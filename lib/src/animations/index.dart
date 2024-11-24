@@ -6,3 +6,4 @@ export 'animation_method.dart';
 export 'animation_trigger.dart';
 export 'controller_subscription.dart';
 export 'animation_command.dart';
+export 'animated_prop_helper.dart';

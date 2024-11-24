@@ -5,6 +5,7 @@ import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 import 'package:flutter_duit/src/animations/animation_builder.dart';
+import 'package:flutter_duit/src/ui/models/type_def.dart';
 
 import 'index.dart';
 
@@ -496,12 +497,24 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.constrainedBox:
+        final it = model as ConstrainedBoxModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledConstrainedBox(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitConstrainedBox(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:
         final customWidgetModel = model as CustomUiElement;
         if (customWidgetModel.tag != null) {
-
           final children = <Widget>{};
 
           for (var subview in customWidgetModel.subviews) {
@@ -510,7 +523,8 @@ mixin WidgetFabric {
           }
 
           final renderer = DuitRegistry.getBuildFactory(customWidgetModel.tag!);
-          return renderer?.call(customWidgetModel, children) ?? const DuitEmptyView();
+          return renderer?.call(customWidgetModel, children) ??
+              const DuitEmptyView();
         }
 
         return const DuitEmptyView();

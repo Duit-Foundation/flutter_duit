@@ -1144,6 +1144,33 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
           ),
           child: child,
         );
+      case ElementType.constrainedBox:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<ConstrainedBoxAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return ConstrainedBoxUIElement<ConstrainedBoxAttributes>(
+          type: type,
+          id: id,
+          controlled: controlled,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+        );
       case ElementType.empty:
         return EmptyUIElement<EmptyAttributes>();
       case ElementType.component:

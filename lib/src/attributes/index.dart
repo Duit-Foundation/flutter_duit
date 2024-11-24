@@ -36,3 +36,4 @@ export 'animation_attributes/animated_size_attributes.dart';
 export 'animation_attributes/animated_builder_attiributes.dart';
 export 'intrinsic_height_attributes.dart';
 export 'rotated_box_attributes.dart';
+export 'constrained_box_attributes.dart';

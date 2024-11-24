@@ -329,9 +329,7 @@ final class AttributeValueMapper {
   ///
   /// If any of the properties are missing or invalid, they will be ignored.
   /// If [constraintsMap] is `null` or empty, returns `null`.
-  static BoxConstraints? toBoxConstraints(dynamic json) {
-    if (json == null) return null;
-
+  static BoxConstraints toBoxConstraints(dynamic json) {
     if (json is BoxConstraints) return json;
 
     return BoxConstraints(
