@@ -57,5 +57,77 @@ void main() {
         expect(tester.takeException(), isInstanceOf<ArgumentError>());
       });
     });
+
+    testWidgets("check show child instead of placeholder",
+        (WidgetTester tester) async {
+      final driver = DuitDriver.static(
+        {
+          "type": "Container",
+          "id": "1",
+          "controlled": false,
+          "attributes": {
+            "width": 250,
+            "height": 250,
+          },
+        },
+        transportOptions: HttpTransportOptions(),
+      );
+
+      const childKey = ValueKey("child");
+
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: DuitViewHost(
+            driver: driver,
+            showChildInsteadOfPlaceholder: true,
+            placeholder: const CircularProgressIndicator(),
+            child: Container(
+              key: childKey,
+            ),
+          ),
+        ),
+      );
+
+      final child = find.byKey(childKey);
+
+      expect(child, findsOneWidget);
+    });
+
+    testWidgets("check show placeholder correctly",
+        (WidgetTester tester) async {
+      final driver = DuitDriver.static(
+        {
+          "type": "Container",
+          "id": "1",
+          "controlled": false,
+          "attributes": {
+            "width": 250,
+            "height": 250,
+          },
+        },
+        transportOptions: HttpTransportOptions(),
+      );
+
+      const childKey = ValueKey("child");
+
+      await tester.pumpWidget(
+        Directionality(
+          textDirection: TextDirection.ltr,
+          child: DuitViewHost(
+            driver: driver,
+            showChildInsteadOfPlaceholder: false,
+            placeholder: const CircularProgressIndicator(),
+            child: Container(
+              key: childKey,
+            ),
+          ),
+        ),
+      );
+
+      final child = find.byType(CircularProgressIndicator);
+
+      expect(child, findsOneWidget);
+    });
   });
 }
