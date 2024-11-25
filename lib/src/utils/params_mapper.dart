@@ -329,18 +329,24 @@ final class AttributeValueMapper {
   ///
   /// If any of the properties are missing or invalid, they will be ignored.
   /// If [constraintsMap] is `null` or empty, returns `null`.
-  static BoxConstraints? toBoxConstraints(dynamic json) {
-    if (json == null) return null;
+  static BoxConstraints toBoxConstraints(dynamic json) {
+    if (json == null) return const BoxConstraints();
 
     if (json is BoxConstraints) return json;
 
     return BoxConstraints(
-      minWidth: NumUtils.toDoubleWithNullReplacement(json["minWidth"], 0.0),
+      minWidth: NumUtils.toDoubleWithNullReplacement(
+        json["minWidth"],
+        0.0,
+      ),
       maxWidth: NumUtils.toDoubleWithNullReplacement(
         json["maxWidth"],
         double.infinity,
       ),
-      minHeight: NumUtils.toDoubleWithNullReplacement(json["minHeight"], 0.0),
+      minHeight: NumUtils.toDoubleWithNullReplacement(
+        json["minHeight"],
+        0.0,
+      ),
       maxHeight: NumUtils.toDoubleWithNullReplacement(
         json["maxHeight"],
         double.infinity,
