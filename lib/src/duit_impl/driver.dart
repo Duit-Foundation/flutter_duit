@@ -146,8 +146,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
     } else {
-      ViewAttribute.attributeParser = AttributeParser();
-      ServerEvent.eventParser = EventParser();
+      _addParsers();
 
       if (_isModule && !_isChannelInitialized) {
         await _initMethodChannel();
@@ -207,6 +206,16 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @override
   Widget? build() {
     return _layout?.render();
+  }
+
+  void _addParsers() {
+    try {
+      ViewAttribute.attributeParser = AttributeParser();
+      ServerEvent.eventParser = EventParser();
+    } catch (_) {
+      //Safely handle the case of assigning parsers during
+      //multiple driver initializations as part of running tests
+    }
   }
 
   //</editor-fold>

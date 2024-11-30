@@ -1,15 +1,14 @@
-import 'package:duit_kernel/duit_kernel.dart';
 import 'package:example/src/custom/example/attributes.dart';
 import 'package:example/src/custom/example/model.dart';
 import 'package:example/src/custom/example/widget.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_duit/flutter_duit.dart';
 
 DuitAttributes exAttributeFactory(
   String type,
   Map<String, dynamic>? json,
 ) {
-  return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random")
-      as DuitAttributes;
+  return ExampleCustomWidgetAttributes.fromJson(json ?? {});
 }
 
 Widget exBuildFactory(

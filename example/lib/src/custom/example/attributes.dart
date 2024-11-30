@@ -1,18 +1,31 @@
-import 'package:duit_kernel/duit_kernel.dart';
+import 'package:flutter_duit/flutter_duit.dart';
 
-class ExampleCustomWidgetAttributes
+final class ExampleCustomWidgetAttributes extends AnimatedPropertyOwner
     implements DuitAttributes<ExampleCustomWidgetAttributes> {
-  String? random;
+  final String? random;
 
   ExampleCustomWidgetAttributes({
     required this.random,
+    required super.parentBuilderId,
+    required super.affectedProperties,
   });
+
+  factory ExampleCustomWidgetAttributes.fromJson(Map<String, dynamic> json) {
+    final view = AnimatedPropHelper(json);
+
+    return ExampleCustomWidgetAttributes(
+      random: view["random"],
+      parentBuilderId: view.parentBuilderId,
+      affectedProperties: view.affectedProperties,
+    );
+  }
 
   @override
   ExampleCustomWidgetAttributes copyWith(other) {
     return ExampleCustomWidgetAttributes(
-      random: other.random ?? random,
-    );
+        random: other.random ?? random,
+        parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+        affectedProperties: other.affectedProperties ?? affectedProperties);
   }
 
   @override
@@ -21,7 +34,11 @@ class ExampleCustomWidgetAttributes
     Iterable? positionalParams,
     Map<String, dynamic>? namedParams,
   }) {
-    // TODO: implement dispatchInternalCall
-    throw UnimplementedError();
+    return switch (methodName) {
+      "fromJson" =>
+        ExampleCustomWidgetAttributes.fromJson(positionalParams!.first)
+            as ReturnT,
+      String() => throw UnimplementedError("$methodName is not implemented"),
+    };
   }
 }
