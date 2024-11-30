@@ -13,7 +13,7 @@ import 'element_type.dart';
 /// The [DuitElement] class represents an individual DUIT element in the DUIT element tree.
 /// It holds information about the element's type, properties, and child elements.
 /// The [DuitElement] class provides methods for rendering the element to a Flutter widget and handling interactions.
-base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
+base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
   //<editor-fold desc="Properties and ctor">
   @override
   ViewAttribute<T>? attributes;
@@ -50,12 +50,10 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
     ServerAction? serverAction;
 
     if (json["action"] != null) {
-      serverAction = ServerAction.fromJson(json["action"]);
+      serverAction = ServerAction.parse(json["action"]);
 
-      if (serverAction.executionType == 2) {
-        assert(serverAction.script != null,
-            "Script can't be null when executionType == 2");
-        final script = serverAction.script!;
+      if (serverAction is ScriptAction) {
+        final script = serverAction.script;
         driver.evalScript(script.sourceCode);
       }
     }
@@ -1290,7 +1288,7 @@ base class DuitElement<T> extends TreeElement<T> with WidgetFabric {
   static UIElementController<T>? _createAndAttachController<T>(
     String id,
     bool controlled,
-    ViewAttribute<T>? attributes,
+    ViewAttribute<T> attributes,
     ServerAction? action,
     UIDriver driver,
     String type,

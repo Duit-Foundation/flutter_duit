@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 
-
 class DuitAnimationContext extends InheritedWidget {
   final Map<String, dynamic> data;
   final String parentId;

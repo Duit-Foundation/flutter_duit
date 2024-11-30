@@ -271,7 +271,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.transform:
-        final it = model as TransformUiElement<DuitAttributes>;
+        final it = model as TransformUiElement<TransformAttributes>;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled

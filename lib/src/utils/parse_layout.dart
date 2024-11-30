@@ -3,7 +3,7 @@ import 'package:flutter_duit/src/ui/models/ui_tree.dart';
 
 import 'index.dart';
 
-Future<DuitAbstractTree> parseLayout(
+Future<ElementTree> parseLayout(
   JSONObject data,
   UIDriver driver,
 ) async {
@@ -13,7 +13,7 @@ Future<DuitAbstractTree> parseLayout(
   ).parse();
 }
 
-DuitAbstractTree parseLayoutSync(
+ElementTree parseLayoutSync(
   JSONObject data,
   UIDriver driver,
 ) {

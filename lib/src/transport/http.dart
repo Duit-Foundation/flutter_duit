@@ -27,14 +27,10 @@ import 'transport_utils.dart';
 final class HttpTransport extends Transport {
   final client = http.Client();
   final HttpTransportOptions options;
-  final bool concurrencyEnabled;
-  final _dm = DevMetrics();
 
   HttpTransport(
     super.url, {
-    super.workerPool,
     required this.options,
-    required this.concurrencyEnabled,
   });
 
   String _prepareUrl(String url) {
@@ -83,9 +79,7 @@ final class HttpTransport extends Transport {
       ///Send request and await for response
       final response = await request.send();
 
-      _dm.add(ReqStartMessage());
       final res = await response.stream.toBytes();
-      _dm.add(ReqEndMessage());
 
       return await _parseResponse(res);
     } catch (e) {
@@ -96,28 +90,11 @@ final class HttpTransport extends Transport {
   }
 
   Future<Map<String, dynamic>?> _parseResponse(Uint8List data) async {
-    _dm.add(DecodeStartMessage());
-
     if (options.decoder != null) {
       final decodingResult =
           options.decoder!.convert(data) as Map<String, dynamic>;
-      _dm.add(DecodeEndMessage());
       return decodingResult;
     }
-
-    ///Check if concurrency is enabled and run the task in isolate
-    if (concurrencyEnabled && workerPool != null) {
-      final taskResult = await workerPool!.perform(
-        (params) {
-          return jsonDecode(params);
-        },
-        utf8.decode(data),
-      );
-      _dm.add(DecodeEndMessage());
-      return taskResult.result as Map<String, dynamic>;
-    }
-
-    _dm.add(DecodeEndMessage());
 
     ///If concurrency is not enabled, run the task in main isolate
     return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
@@ -125,13 +102,15 @@ final class HttpTransport extends Transport {
 
   @override
   FutureOr<JSONObject?> execute(action, payload) async {
+    if (action is! TransportAction) return null;
+
     ///Prepare url and method
     String method = switch (action.meta) {
       null => "GET",
       HttpActionMetainfo() => action.meta!.method,
     };
 
-    final urlString = _prepareUrl(action.event);
+    final urlString = _prepareUrl(action.eventName);
     Uri uri;
     final reqInter = options.requestInterceptor;
     final errInter = options.errorInterceptor;

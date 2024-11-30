@@ -1,4 +1,3 @@
-import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
@@ -14,7 +13,6 @@ base class DuitTweenDescription<T> {
   final AnimationTrigger trigger;
   final AnimationMethod method;
   final bool reverseOnRepeat;
-  final ServerAction? onAnimationEnd;
 
   DuitTweenDescription({
     required this.animatedPropKey,
@@ -25,7 +23,6 @@ base class DuitTweenDescription<T> {
     this.curve = Curves.linear,
     this.method = AnimationMethod.forward,
     this.reverseOnRepeat = false,
-    this.onAnimationEnd,
   });
 
   static AnimationMethod _methodFromValue(dynamic value) {

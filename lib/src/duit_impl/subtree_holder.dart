@@ -13,7 +13,7 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
   }
 
   Future<void> _listener() async {
-    final layout = _controller?.attributes?.payload as SubtreeAttributes?;
+    final layout = _controller?.attributes.payload as SubtreeAttributes?;
 
     if (layout?.data != null) {
       final driver = _controller!.driver;
@@ -41,12 +41,10 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
 
   @override
   void dispose() {
-    if (_controller != null) {
-      final controller = DetachableController(_controller!);
-      controller
-        ..removeListener(_listener)
-        ..detach();
-    }
+    _controller
+      ?..removeListener(_listener)
+      ..detach();
+
     super.dispose();
   }
 }

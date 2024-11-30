@@ -46,22 +46,22 @@ class LifecycleStateListenerAttributes
   factory LifecycleStateListenerAttributes.fromJson(Map<String, dynamic> json) {
     return LifecycleStateListenerAttributes(
       onStateChanged: json['onStateChanged'] != null
-          ? ServerAction.fromJson(json['onStateChanged'])
+          ? ServerAction.parse(json['onStateChanged'])
           : null,
       onResumed: json['onResumed'] != null
-          ? ServerAction.fromJson(json['onResumed'])
+          ? ServerAction.parse(json['onResumed'])
           : null,
       onInactive: json['onInactive'] != null
-          ? ServerAction.fromJson(json['onInactive'])
+          ? ServerAction.parse(json['onInactive'])
           : null,
       onPaused: json['onPaused'] != null
-          ? ServerAction.fromJson(json['onPaused'])
+          ? ServerAction.parse(json['onPaused'])
           : null,
       onDetached: json['onDetached'] != null
-          ? ServerAction.fromJson(json['onDetached'])
+          ? ServerAction.parse(json['onDetached'])
           : null,
       onHidden: json['onHidden'] != null
-          ? ServerAction.fromJson(json['onHidden'])
+          ? ServerAction.parse(json['onHidden'])
           : null,
     );
   }

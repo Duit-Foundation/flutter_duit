@@ -52,10 +52,11 @@ packages:
   duit_kernel:
     dependency: "direct main"
     description:
-      name: duit_kernel
-      sha256: "80c2affe5fa0271c2fe17addbf5cd2f8d54f08596a370f6520bdf011744314af"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: "v3.0.0-a3"
+      resolved-ref: "77eef06bec57c15321f62e0dacc5235ac6bc9e74"
+      url: "https://github.com/Duit-Foundation/duit_kernel.git"
+    source: git
     version: "2.1.3"
   fake_async:
     dependency: transitive

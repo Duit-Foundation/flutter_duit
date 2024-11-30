@@ -85,61 +85,59 @@ class GestureDetectorAttributes
 
   factory GestureDetectorAttributes.fromJson(JSONObject json) {
     return GestureDetectorAttributes(
-      onTap:
-          json["onTap"] != null ? ServerAction.fromJson(json["onTap"]) : null,
+      onTap: json["onTap"] != null ? ServerAction.parse(json["onTap"]) : null,
       onTapDown: json["onTapDown"] != null
-          ? ServerAction.fromJson(json["onTapDown"])
+          ? ServerAction.parse(json["onTapDown"])
           : null,
-      onTapUp: json["onTapUp"] != null
-          ? ServerAction.fromJson(json["onTapUp"])
-          : null,
+      onTapUp:
+          json["onTapUp"] != null ? ServerAction.parse(json["onTapUp"]) : null,
       onTapCancel: json["onTapCancel"] != null
-          ? ServerAction.fromJson(json["onTapCancel"])
+          ? ServerAction.parse(json["onTapCancel"])
           : null,
       onDoubleTap: json["onDoubleTap"] != null
-          ? ServerAction.fromJson(json["onDoubleTap"])
+          ? ServerAction.parse(json["onDoubleTap"])
           : null,
       onDoubleTapDown: json["onDoubleTapDown"] != null
-          ? ServerAction.fromJson(json["onDoubleTapDown"])
+          ? ServerAction.parse(json["onDoubleTapDown"])
           : null,
       onDoubleTapCancel: json["onDoubleTapCancel"] != null
-          ? ServerAction.fromJson(json["onDoubleTapCancel"])
+          ? ServerAction.parse(json["onDoubleTapCancel"])
           : null,
       onLongPressDown: json["onLongPressDown"] != null
-          ? ServerAction.fromJson(json["onLongPressDown"])
+          ? ServerAction.parse(json["onLongPressDown"])
           : null,
       onLongPressCancel: json["onLongPressCancel"] != null
-          ? ServerAction.fromJson(json["onLongPressCancel"])
+          ? ServerAction.parse(json["onLongPressCancel"])
           : null,
       onLongPress: json["onLongPress"] != null
-          ? ServerAction.fromJson(json["onLongPress"])
+          ? ServerAction.parse(json["onLongPress"])
           : null,
       onLongPressStart: json["onLongPressStart"] != null
-          ? ServerAction.fromJson(json["onLongPressStart"])
+          ? ServerAction.parse(json["onLongPressStart"])
           : null,
       onLongPressMoveUpdate: json["onLongPressMoveUpdate"] != null
-          ? ServerAction.fromJson(json["onLongPressMoveUpdate"])
+          ? ServerAction.parse(json["onLongPressMoveUpdate"])
           : null,
       onLongPressUp: json["onLongPressUp"] != null
-          ? ServerAction.fromJson(json["onLongPressUp"])
+          ? ServerAction.parse(json["onLongPressUp"])
           : null,
       onLongPressEnd: json["onLongPressEnd"] != null
-          ? ServerAction.fromJson(json["onLongPressEnd"])
+          ? ServerAction.parse(json["onLongPressEnd"])
           : null,
       onPanStart: json["onPanStart"] != null
-          ? ServerAction.fromJson(json["onPanStart"])
+          ? ServerAction.parse(json["onPanStart"])
           : null,
       onPanDown: json["onPanDown"] != null
-          ? ServerAction.fromJson(json["onPanDown"])
+          ? ServerAction.parse(json["onPanDown"])
           : null,
       onPanUpdate: json["onPanUpdate"] != null
-          ? ServerAction.fromJson(json["onPanUpdate"])
+          ? ServerAction.parse(json["onPanUpdate"])
           : null,
       onPanEnd: json["onPanEnd"] != null
-          ? ServerAction.fromJson(json["onPanEnd"])
+          ? ServerAction.parse(json["onPanEnd"])
           : null,
       onPanCancel: json["onPanCancel"] != null
-          ? ServerAction.fromJson(json["onPanCancel"])
+          ? ServerAction.parse(json["onPanCancel"])
           : null,
       excludeFromSemantics: json['excludeFromSemantics'] ?? false,
       dragStartBehavior:

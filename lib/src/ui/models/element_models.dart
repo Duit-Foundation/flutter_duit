@@ -290,7 +290,7 @@ final class StackUIElement<T> extends DuitElement<T>
 }
 
 base class CustomUiElement extends DuitElement<dynamic> {
-  final Iterable<TreeElement> subviews;
+  final Iterable<ElementTreeEntry> subviews;
 
   CustomUiElement({
     required super.id,

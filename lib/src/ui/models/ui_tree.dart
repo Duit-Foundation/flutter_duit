@@ -4,7 +4,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 import 'element.dart';
 
-final class DuitTree extends DuitAbstractTree {
+final class DuitTree extends ElementTree {
   Widget? _root;
   final _dm = DevMetrics();
 
@@ -14,7 +14,7 @@ final class DuitTree extends DuitAbstractTree {
   }) : super(json: json, driver: driver);
 
   @override
-  Future<DuitAbstractTree> parse() async {
+  Future<ElementTree> parse() async {
     _dm.add(ParseModelStartMessage());
     uiRoot = DuitElement.fromJson(
       json,
@@ -25,7 +25,7 @@ final class DuitTree extends DuitAbstractTree {
   }
 
   @override
-  DuitAbstractTree parseSync() {
+  ElementTree parseSync() {
     _dm.add(ParseModelStartMessage());
     uiRoot = DuitElement.fromJson(
       json,

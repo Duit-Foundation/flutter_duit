@@ -28,7 +28,7 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
   @override
   void initState() {
     widget.controller.listenCommand(_handleCommand);
-    final attrs = widget.controller.attributes!.payload;
+    final attrs = widget.controller.attributes.payload;
     for (var animation in attrs.tweenDescriptions) {
       final controller = AnimationController(
         vsync: this,
@@ -200,7 +200,8 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
 
         return DuitAnimationContext(
           data: dataObj,
-          parentId: wC.attributes?.payload.persistentId ?? wC.id, //Priority use of persistentId
+          parentId: wC.attributes.payload.persistentId ?? wC.id,
+          //Priority use of persistentId
           child: child ?? const SizedBox.shrink(),
         );
       },

@@ -11,7 +11,7 @@ mixin AnimatedAttributes on Widget {
   ) {
     return mergeWithAttributes<T>(
       context,
-      controller.attributes!.payload,
+      controller.attributes.payload,
     );
   }
 

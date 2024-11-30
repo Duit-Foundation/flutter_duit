@@ -49,13 +49,13 @@ final class SliderAttributes extends AttendedModel<double>
       overlayColor: AttributeValueMapper.toMSPColor(json['overlayColor']),
       autofocus: json['autofocus'] ?? false,
       onChanged: json['onChanged'] != null
-          ? ServerAction.fromJson(json['onChanged'])
+          ? ServerAction.parse(json['onChanged'])
           : null,
       onChangeStart: json['onChangeStart'] != null
-          ? ServerAction.fromJson(json['onChangeStart'])
+          ? ServerAction.parse(json['onChangeStart'])
           : null,
       onChangeEnd: json['onChangeEnd'] != null
-          ? ServerAction.fromJson(json['onChangeEnd'])
+          ? ServerAction.parse(json['onChangeEnd'])
           : null,
       allowedInteraction:
           AttributeValueMapper.toSliderInteraction(json["allowedInteraction"]),
