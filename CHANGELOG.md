@@ -1,3 +1,16 @@
+## 3.0.0
+
+- Migration to duit_kernel v3
+- Removed deprecated features
+- Removed DevMetrics feature (rework needed)
+- Removed deprecated LayoutUpdate event handling
+- Removed isolates support
+- Improve library exports
+- Update example app
+- Action and events handling refactoring
+- Re-exporting duit_kernel API as part of flutter_duit public API
+- The Transform widget attribute type has been clarified
+
 ## 2.3.0
 
 - Added RotatedBox widget

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/src/duit_impl/event.dart';
 
 ///A mixin that adds driver definitions for hook
 ///functions that will be called during certain events
