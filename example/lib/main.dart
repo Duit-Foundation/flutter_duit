@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     driver1 = DuitDriver(
-      "/test_loyalty",
+      "/example_screen",
       transportOptions: HttpTransportOptions(
         defaultHeaders: {
           "Content-Type": "application/json",
