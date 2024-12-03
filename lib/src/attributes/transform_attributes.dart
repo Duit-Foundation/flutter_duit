@@ -34,7 +34,7 @@ base class TransformAttributes extends AnimatedPropertyOwner {
         return FlipTransform.fromJson(data);
       default:
         return TransformAttributes(
-            type: 'none', parentBuilderId: '', affectedProperties: null);
+            type: 'none', parentBuilderId: '', affectedProperties: null,);
     }
   }
 }

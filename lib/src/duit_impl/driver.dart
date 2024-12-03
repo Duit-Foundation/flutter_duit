@@ -39,7 +39,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   @protected
   @override
-  StreamController<DuitAbstractTree?> streamController =
+  StreamController<ElementTree?> streamController =
       StreamController.broadcast();
 
   @protected
@@ -51,20 +51,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     buildContext = value;
   }
 
-  DuitAbstractTree? _layout;
-
-  @override
-  @Deprecated("Will be removed in next major version")
-  bool concurrentModeEnabled;
-
-  @protected
-  @override
-  WorkerPool? workerPool;
-
-  @protected
-  @override
-  @Deprecated("Will be removed in next major version")
-  WorkerPoolConfiguration? workerPoolConfiguration;
+  ElementTree? _layout;
 
   final Finalizer<_DriverFinalizationController> _driverFinalizer =
       Finalizer((d) => d.dispose());
@@ -76,16 +63,16 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   @protected
   @override
-  DuitScriptRunner? scriptRunner;
+  ScriptRunner? scriptRunner;
 
   @override
-  Stream<DuitAbstractTree?> get stream =>
+  Stream<ElementTree?> get stream =>
       streamController.stream.asBroadcastStream();
 
   @protected
   final Map<String, dynamic>? initialRequestPayload;
 
-  final bool _useStaticContent, _isModule, _devMetricsEnabled;
+  final bool _useStaticContent, _isModule;
   bool _isChannelInitialized = false;
 
   late final MethodChannel _driverChannel;
@@ -97,29 +84,21 @@ final class DuitDriver with DriverHooks implements UIDriver {
     this.source, {
     required this.transportOptions,
     this.eventHandler,
-    this.concurrentModeEnabled = false,
-    this.workerPool,
-    this.workerPoolConfiguration,
     this.initialRequestPayload,
     bool enableDevMetrics = false,
   })  : _useStaticContent = false,
-        _isModule = false,
-        _devMetricsEnabled = enableDevMetrics;
+        _isModule = false;
 
   /// Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
   DuitDriver.static(
     this.content, {
     required this.transportOptions,
     this.eventHandler,
-    this.concurrentModeEnabled = false,
-    this.workerPool,
-    this.workerPoolConfiguration,
     bool enableDevMetrics = false,
   })  : _useStaticContent = true,
         source = "",
         initialRequestPayload = null,
-        _isModule = false,
-        _devMetricsEnabled = enableDevMetrics;
+        _isModule = false;
 
   /// Creates a new [DuitDriver] instance that is controlled from native code
   DuitDriver.module()
@@ -128,10 +107,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
         initialRequestPayload = null,
         _isModule = true,
         eventHandler = null,
-        concurrentModeEnabled = false,
         transportOptions = EmptyTransportOptions(),
-        _driverChannel = const MethodChannel("duit:driver"),
-        _devMetricsEnabled = false;
+        _driverChannel = const MethodChannel("duit:driver");
 
   //</editor-fold">
 
@@ -165,23 +142,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
   Future<void> init() async {
     onInit?.call();
 
-    if (_devMetricsEnabled) {
-      DevMetrics().init(source);
-    }
-
     if (_layout != null) {
       await Future.delayed(Duration.zero);
       streamController.sink.add(_layout);
     } else {
-      ViewAttribute.attributeParser = AttributeParser();
-
-      final wp = await _getWorkerPool();
-
-      if (wp != null && wp.initialized == false) {
-        assert(
-            workerPoolConfiguration != null, "Worker pool is not configured");
-        await wp.initWithConfiguration(workerPoolConfiguration!);
-      }
+      _addParsers();
 
       if (_isModule && !_isChannelInitialized) {
         await _initMethodChannel();
@@ -189,7 +154,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
       transport ??= _getTransport(
         transportOptions.type,
-        workerPool: wp,
       );
 
       await scriptRunner?.initWithTransport(transport!);
@@ -199,7 +163,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
       if (_useStaticContent) {
         json = content;
       } else {
-        DevMetrics().add(ConnectionStartMessage());
         json = await transport?.connect(
           initialData: initialRequestPayload,
         );
@@ -245,6 +208,16 @@ final class DuitDriver with DriverHooks implements UIDriver {
     return _layout?.render();
   }
 
+  void _addParsers() {
+    try {
+      ViewAttribute.attributeParser = AttributeParser();
+      ServerEvent.eventParser = EventParser();
+    } catch (_) {
+      //Safely handle the case of assigning parsers during
+      //multiple driver initializations as part of running tests
+    }
+  }
+
   //</editor-fold>
 
   //<editor-fold desc="Actions & Events">
@@ -260,101 +233,84 @@ final class DuitDriver with DriverHooks implements UIDriver {
   ///
   /// Returns: A [Future] that completes with [void].
   FutureOr<void> _resolveEvent(dynamic eventData) async {
-    ServerEvent? event;
+    ServerEvent event;
 
     if (eventData is ServerEvent) {
       event = eventData;
     } else {
-      event = ServerEvent.fromJson(eventData, this);
+      event = ServerEvent.parseEvent(eventData);
     }
 
     onEventReceived?.call(event);
-    if (event != null) {
-      switch (event.type) {
-        case ServerEventType.update:
-          final updEvent = event as UpdateEvent;
-          updEvent.updates.forEach((key, value) async {
-            await _updateAttributes(key, value);
-          });
-          break;
-        case ServerEventType.layoutUpdate:
-          final layoutUpdateEvent = event as LayoutUpdateEvent;
-          final newLayout = await layoutUpdateEvent.layout?.parse();
-
-          if (newLayout != null) {
-            _layout = newLayout;
-            streamController.sink.add(_layout);
-          }
-
-          break;
-        case ServerEventType.navigation:
-          assert(eventHandler != null, "NavigationResolver is not set");
-          final navEvent = event as NavigationEvent;
-          await eventHandler?.handleNavigation(
+    switch (event) {
+      case UpdateEvent():
+        event.updates.forEach((key, value) async {
+          await _updateAttributes(key, value);
+        });
+        break;
+      case NavigationEvent():
+        assert(
+            eventHandler != null, "ExternalEventHandler instance is not set");
+        await eventHandler?.handleNavigation(
+          buildContext,
+          event.path,
+          event.extra,
+        );
+        break;
+      case OpenUrlEvent():
+        assert(
+            eventHandler != null, "ExternalEventHandler instance is not set");
+        await eventHandler?.handleOpenUrl(event.url);
+        break;
+      case CustomEvent():
+        if (_isModule) {
+          await emitNativeEvent(event.key, event.extra);
+        } else {
+          await eventHandler?.handleCustomEvent(
             buildContext,
-            navEvent.path,
-            navEvent.extra,
+            event.key,
+            event.extra,
           );
-          break;
-        case ServerEventType.openUrl:
-          assert(eventHandler != null, "NavigationResolver is not set");
-          final urlEvent = event as OpenUrlEvent;
-          await eventHandler?.handleOpenUrl(urlEvent.url);
-          break;
-        case ServerEventType.custom:
-          final customEvent = event as CustomEvent;
-          if (_isModule) {
-            await emitNativeEvent(customEvent.key, customEvent.extra);
-          } else {
-            await eventHandler?.handleCustomEvent(
-              buildContext,
-              customEvent.key,
-              customEvent.extra,
-            );
-          }
-          break;
-        case ServerEventType.sequenced:
-          final sequence = event as SequencedEventGroup;
-          for (final entry in sequence.events) {
-            await _resolveEvent(entry.event);
-            await Future.delayed(entry.delay);
-          }
-          break;
-        case ServerEventType.grouped:
-          final group = event as CommonEventGroup;
-          for (final entry in group.events) {
-            _resolveEvent(entry.event);
-          }
-          break;
-        case ServerEventType.animationTrigger:
-          final trigger = event as AnimationTriggerEvent;
-          await _resolveAnimationTrigger(trigger);
-          break;
-        case ServerEventType.timer:
-          final timerEvent = event as TimerEvent;
-          Timer(
-            timerEvent.timerDelay,
-            () async {
-              await _resolveEvent(timerEvent.event);
-            },
-          );
-          break;
-      }
+        }
+        break;
+      case SequencedEventGroup():
+        for (final entry in event.events) {
+          await _resolveEvent(entry.event);
+          await Future.delayed(entry.delay);
+        }
+        break;
+      case CommonEventGroup():
+        for (final entry in event.events) {
+          _resolveEvent(entry.event);
+        }
+        break;
+      case AnimationTriggerEvent():
+        await _resolveAnimationTrigger(event);
+        break;
+      case TimerEvent():
+        final evt = event;
+        Timer(
+          evt.timerDelay,
+          () async {
+            await _resolveEvent(evt.payload);
+          },
+        );
+        break;
     }
 
     onEventHandled?.call();
   }
 
-  Map<String, dynamic> _preparePayload(List<ActionDependency> deps) {
+  Map<String, dynamic> _preparePayload(Iterable<ActionDependency> deps) {
     final Map<String, dynamic> payload = {};
 
     if (deps.isNotEmpty) {
       for (final dependency in deps) {
         final controller = _viewControllers[dependency.id];
         if (controller != null) {
-          if (controller.attributes?.payload is AttendedModel) {
-            final model = controller.attributes?.payload as AttendedModel;
-            payload[dependency.target] = model.collect();
+          final attribute = controller.attributes.payload;
+          if (attribute is AttendedModel) {
+            payload[dependency.target] = attribute.collect();
           }
         }
       }
@@ -367,9 +323,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
   Future<void> execute(ServerAction action) async {
     beforeActionCallback?.call(action);
 
-    switch (action.executionType) {
+    switch (action) {
       //transport
-      case 0:
+      case TransportAction():
         try {
           final payload = _preparePayload(action.dependsOn);
 
@@ -384,26 +340,27 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
         break;
       //local execution
-      case 1:
+      case LocalAction():
         try {
-          await _resolveEvent(action.payload);
+          await _resolveEvent(action.event);
         } catch (e) {
           debugPrint(e.toString());
         }
         break;
       //script
-      case 2:
+      case ScriptAction():
         try {
           final body = _preparePayload(action.dependsOn);
-          final script = action.script as DuitScript;
+          final script = action.script;
 
           final scriptInvocationResult = await scriptRunner?.runScript(
             script.functionName,
-            url: action.event,
-            meta: action.script?.meta,
+            url: action.eventName,
+            meta: action.script.meta,
             body: body,
           );
-          _resolveEvent(scriptInvocationResult);
+
+          await _resolveEvent(scriptInvocationResult);
         } catch (e) {
           debugPrint(e.toString());
         }
@@ -430,25 +387,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
     final description = DuitRegistry.getComponentDescription(tag!);
 
     if (description != null) {
-      Map<String, dynamic> component;
-
-      if (concurrentModeEnabled) {
-        final response = await workerPool!.perform((params) {
-          return JsonUtils.fillComponentProperties(
-            params["layout"],
-            params["data"],
-          );
-        }, {
-          "layout": description.data,
-          "data": json,
-        });
-        component = response.result as Map<String, dynamic>;
-      } else {
-        component = JsonUtils.fillComponentProperties(
-          description.data,
-          json,
-        );
-      }
+      final component = JsonUtils.mergeWithDataSource(
+        description,
+        json,
+      );
 
       final attributes = ViewAttribute.createAttributes(
         ElementType.subtree,
@@ -511,7 +453,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// Returns:
   /// - An instance of the transport class based on the specified [type].
   /// - If the [type] is not recognized, it returns an instance of [HttpTransport].
-  Transport _getTransport(String type, {WorkerPool? workerPool}) {
+  Transport _getTransport(String type) {
     if (_isModule) {
       return NativeTransport(this);
     }
@@ -521,8 +463,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         {
           return HttpTransport(
             source,
-            concurrencyEnabled: concurrentModeEnabled,
-            workerPool: workerPool,
             options: transportOptions as HttpTransportOptions,
           );
         }
@@ -530,8 +470,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         {
           return WSTransport(
             source,
-            workerPool: workerPool,
-            concurrencyEnabled: concurrentModeEnabled,
             options: transportOptions as WebSocketTransportOptions,
           );
         }
@@ -539,28 +477,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
         {
           return HttpTransport(
             source,
-            concurrencyEnabled: concurrentModeEnabled,
-            workerPool: workerPool,
             options: transportOptions as HttpTransportOptions,
           );
         }
     }
-  }
-
-  Future<WorkerPool?> _getWorkerPool() async {
-    if (concurrentModeEnabled) {
-      if (workerPool != null) {
-        return workerPool!;
-      }
-
-      final sharedPool = DuitRegistry.workerPool();
-      if (sharedPool != null) {
-        return workerPool = sharedPool;
-      }
-
-      return null;
-    }
-    return null;
   }
 
   /// Initializes the driver as a module.

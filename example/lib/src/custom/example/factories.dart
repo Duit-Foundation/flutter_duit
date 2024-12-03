@@ -1,19 +1,18 @@
-import 'package:duit_kernel/duit_kernel.dart';
 import 'package:example/src/custom/example/attributes.dart';
 import 'package:example/src/custom/example/model.dart';
 import 'package:example/src/custom/example/widget.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_duit/flutter_duit.dart';
 
 DuitAttributes exAttributeFactory(
   String type,
   Map<String, dynamic>? json,
 ) {
-  return ExampleCustomWidgetAttributes(random: json?["random"] ?? "no random")
-      as DuitAttributes;
+  return ExampleCustomWidgetAttributes.fromJson(json ?? {});
 }
 
 Widget exBuildFactory(
-  TreeElement model, [
+  ElementTreeEntry model, [
   Iterable<Widget> subviews = const {},
 ]) {
   final m = model as ExampleCustomWidget;
@@ -29,12 +28,12 @@ Widget exBuildFactory(
   );
 }
 
-TreeElement exModelFactory(
+ElementTreeEntry exModelFactory(
   String id,
   bool controlled,
   ViewAttribute attributes,
   UIElementController? controller, [
-  Iterable<TreeElement> subviews = const {},
+  Iterable<ElementTreeEntry> subviews = const {},
 ]) {
   return ExampleCustomWidget(
     id: id,

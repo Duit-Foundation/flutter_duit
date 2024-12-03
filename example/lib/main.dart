@@ -2,11 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:duit_kernel/duit_kernel.dart';
+import 'package:dio/dio.dart';
+import 'package:example/src/custom/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-
-import 'src/custom/index.dart';
 
 class CustomDecoder extends Converter<Uint8List, Map<String, dynamic>> {
   @override
@@ -59,6 +58,13 @@ void main() async {
     attributesFactory: exAttributeFactory,
   );
 
+  final dio = Dio();
+
+  final res = await dio.get<List>("http://localhost:8999/components");
+
+  final comps = res.data!.cast<Map<String, dynamic>>();
+  await DuitRegistry.registerComponents(comps);
+
   runApp(const MyApp());
 }
 
@@ -90,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     driver1 = DuitDriver(
-      "/some_endpoint",
+      "/example_screen",
       transportOptions: HttpTransportOptions(
         defaultHeaders: {
           "Content-Type": "application/json",

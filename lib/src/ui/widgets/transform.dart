@@ -5,7 +5,7 @@ import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitTransform extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<DuitAttributes> attributes;
+  final ViewAttribute<TransformAttributes> attributes;
   final Widget child;
 
   const DuitTransform({
@@ -69,13 +69,15 @@ class DuitTransform extends StatelessWidget with AnimatedAttributes {
       );
     }
 
-    return SizedBox.shrink(child: child);
+    return SizedBox.shrink(
+      child: child,
+    );
   }
 }
 
 class DuitControlledTransform extends StatefulWidget with AnimatedAttributes {
   final Widget child;
-  final UIElementController<DuitAttributes> controller;
+  final UIElementController<TransformAttributes> controller;
 
   const DuitControlledTransform({
     super.key,

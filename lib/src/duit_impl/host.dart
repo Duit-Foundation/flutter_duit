@@ -105,10 +105,7 @@ class _DuitViewHostState extends State<DuitViewHost> {
                 child: _StackWrapper(
                   invertStack: widget.invertStack,
                   content: () {
-                    final devM = DevMetrics();
-                    devM.add(RenderStartMessage());
                     final content = snapshot.data!.render();
-                    devM.add(RenderEndMessage());
                     return content;
                   }(),
                   child: widget.child,

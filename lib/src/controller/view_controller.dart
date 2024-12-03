@@ -14,7 +14,7 @@ final class ViewController<T>
   /// This property holds the attributes of the UI element that the `ViewController` controls.
   /// It can be used to access and modify the attributes of the UI element.
   @override
-  ViewAttribute<T>? attributes;
+  ViewAttribute<T> attributes;
 
   /// The server action associated with the UI element.
   ///
@@ -58,8 +58,8 @@ final class ViewController<T>
     required this.id,
     required this.driver,
     required this.type,
+    required this.attributes,
     this.action,
-    this.attributes,
     this.tag,
   });
 
@@ -115,8 +115,7 @@ final class ViewController<T>
   }
 
   @override
-  void dispose() {
+  void detach() {
     driver.detachController(this.id);
-    super.dispose();
   }
 }
