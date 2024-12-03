@@ -1,7 +1,5 @@
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/animations/animated_prop_helper.dart";
 
 final class ConstrainedBoxAttributes extends AnimatedPropertyOwner
     implements DuitAttributes<ConstrainedBoxAttributes> {

@@ -29,21 +29,23 @@ mixin ListUtils<T extends StatefulWidget> on State<T> {
   //<editor-fold desc="Methods">
   void attachOnScrollCallback(UIElementController controller) {
     _controller = controller;
-    final attrs = _controller?.attributes!.payload as ListViewAttributes;
+    final attrs = _controller?.attributes.payload as ListViewAttributes;
     final extent = attrs.scrollEndReachedThreshold ?? 150;
     _scrollController = ScrollController()
-      ..addListener(() async {
-        if (_scrollController.position.maxScrollExtent -
-                _scrollController.offset <=
-            extent) {
-          if (!_isExecuting && !_isEOL) {
-            _isExecuting = true;
-            await _controller?.performRelatedActionAsync();
-            _isEOL = true;
-            _isExecuting = false;
+      ..addListener(
+        () async {
+          if (_scrollController.position.maxScrollExtent -
+                  _scrollController.offset <=
+              extent) {
+            if (!_isExecuting && !_isEOL) {
+              _isExecuting = true;
+              await _controller?.performRelatedActionAsync();
+              _isEOL = true;
+              _isExecuting = false;
+            }
           }
-        }
-      });
+        },
+      );
   }
 
 //</editor-fold>

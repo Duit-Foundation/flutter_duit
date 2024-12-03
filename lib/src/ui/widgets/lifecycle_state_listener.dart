@@ -13,7 +13,7 @@ class DuitLifecycleStateListener extends InheritedWidget
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    final attrs = controller.attributes!.payload;
+    final attrs = controller.attributes.payload;
     switch (state) {
       case AppLifecycleState.resumed:
         controller.performAction(attrs.onResumed);

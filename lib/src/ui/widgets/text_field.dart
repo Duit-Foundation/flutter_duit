@@ -27,7 +27,7 @@ class _DuitTextFieldState extends State<DuitTextField>
     focusNode = FocusNode();
     textEditingController.addListener(() {
       final text = textEditingController.text;
-      final data = widget.controller.attributes?.payload as TextFieldAttributes;
+      final data = widget.controller.attributes.payload;
       data.update(text);
       widget.controller.performRelatedAction();
     });

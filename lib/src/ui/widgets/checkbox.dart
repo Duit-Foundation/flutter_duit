@@ -1,4 +1,3 @@
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
@@ -27,7 +26,7 @@ class _DuitCheckboxState extends State<DuitCheckbox>
   }
 
   void _onChange(bool? value) {
-    final data = widget.controller.attributes?.payload as CheckboxAttributes;
+    final data = widget.controller.attributes.payload;
     data.update(value ?? false);
     widget.controller.performRelatedAction();
     setState(() {
