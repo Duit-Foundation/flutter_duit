@@ -4,7 +4,7 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
 final class NativeTransport extends Transport {
-  final DuitDriver driver;
+  final UIDriver driver;
 
   NativeTransport(this.driver) : super("");
 
@@ -12,15 +12,33 @@ final class NativeTransport extends Transport {
   Future<Map<String, dynamic>?> connect({
     Map<String, dynamic>? initialData,
   }) async {
-    return await driver.emitNativeEvent<Map<String, dynamic>>(
+    try {
+      return await driver.driverChannel?.invokeMethod<Map<String, dynamic>>(
       "duit_connect",
-      {...?initialData},
+      {...?initialData,},
     );
+    } catch (e, s) {
+      driver.logger?.error(
+        "NativeTransport connect error",
+        error: e,
+        stackTrace: s
+      );
+      rethrow;
+    }
   }
 
   @override
   void dispose() {
-    driver.emitNativeEvent("duit_dispose");
+    try {
+      driver.driverChannel?.invokeMethod("duit_dispose");
+    } catch (e, s) {
+      driver.logger?.error(
+        "NativeTransport dispose error",
+        error: e,
+        stackTrace: s
+      );
+      rethrow;
+    }
   }
 
   @override
@@ -28,7 +46,7 @@ final class NativeTransport extends Transport {
     ServerAction action,
     Map<String, dynamic> payload,
   ) async {
-    return await driver.emitNativeEvent<Map<String, dynamic>>(
+    return await driver.driverChannel?.invokeMethod<Map<String, dynamic>>(
       "duit_execute",
       payload,
     );
@@ -40,7 +58,7 @@ final class NativeTransport extends Transport {
     Map<String, dynamic> meta,
     Map<String, dynamic> body,
   ) async {
-    return await driver.emitNativeEvent<Map<String, dynamic>>(
+    return await driver.driverChannel?.invokeMethod<Map<String, dynamic>>(
       "duit_request",
       {
         "url": url,

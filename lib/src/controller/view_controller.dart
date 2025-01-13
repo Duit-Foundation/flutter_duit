@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/foundation.dart';
 
@@ -78,8 +80,16 @@ final class ViewController<T>
   /// server action is not null. It executes the server action using the driver.
   @override
   void performRelatedAction() {
-    if (action != null) {
-      driver.execute(action!);
+    try {
+      if (action != null) {
+        driver.execute(action!);
+      }
+    } catch (e, s) {
+      driver.logger?.error(
+        "Error while perform performRelatedAction method",
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 
@@ -89,16 +99,27 @@ final class ViewController<T>
       if (action != null) {
         await driver.execute(action!);
       }
-    } catch (e) {
-      //TODO: logging
-      rethrow;
+    } catch (e, s) {
+      driver.logger?.error(
+        "Error while perform performRelatedActionAsync method",
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 
   @override
   void performAction(ServerAction? action) {
-    if (action != null) {
-      driver.execute(action);
+    try {
+      if (action != null) {
+        driver.execute(action);
+      }
+    } catch (e, s) {
+      driver.logger?.error(
+        "Error while performing performAction method",
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 
@@ -108,14 +129,34 @@ final class ViewController<T>
       if (action != null) {
         await driver.execute(action);
       }
-    } catch (e) {
-      //TODO: logging
-      rethrow;
+    } catch (e, s) {
+      driver.logger?.error(
+        "Error while performing performActionAsync method",
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 
   @override
   void detach() {
     driver.detachController(this.id);
+  }
+
+  @override
+  late final StreamController<AnimationCommand> commandChannel;
+
+  @override
+  FutureOr<void> emitCommand(AnimationCommand command) {
+    commandChannel.add(command);
+  }
+
+  @override
+  void removeCommandListener() => commandChannel.close();
+
+  @override
+  void listenCommand(Future<void> Function(AnimationCommand command) callback) {
+    commandChannel = StreamController<AnimationCommand>();
+    commandChannel.stream.listen(callback);
   }
 }

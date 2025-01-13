@@ -17,7 +17,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// ```dart
 /// final customAttributes = AttributeParser._parseCustomWidgetAttributes(json, tag);
 /// ```
-final class AttributeParser implements AttributeParserBase {
+final class DefaultAttributeParser implements AttributeParserBase {
   /// Parses custom widget attributes based on the specified JSON object and tag.
   ///
   /// This method retrieves the attributes mapper for the given tag from the `DUITRegistry`.
@@ -30,16 +30,14 @@ final class AttributeParser implements AttributeParserBase {
   ///
   /// Returns:
   /// The parsed attributes for the custom widget.
-  static _parseCustomWidgetAttributes(JSONObject? json, String? tag) {
+  _parseCustomWidgetAttributes(JSONObject? json, String? tag) {
     assert(tag != null, "Custom widget must have specified tag");
 
-    if (tag is String) {
-      final attributesMapper = DuitRegistry.getAttributesFactory(tag);
-      if (attributesMapper != null) {
-        return attributesMapper(tag, json);
-      } else {
-        return EmptyAttributes();
-      }
+    final attributesMapper = DuitRegistry.getAttributesFactory(tag!);
+    if (attributesMapper != null) {
+      return attributesMapper(tag, json);
+    } else {
+      return EmptyAttributes();
     }
   }
 
@@ -113,6 +111,6 @@ final class AttributeParser implements AttributeParserBase {
       ElementType.empty || String() => EmptyAttributes(),
     };
 
-    return ViewAttribute(payload: payload, id: id ?? "none");
+    return ViewAttribute(payload: payload, id: id ?? "null_id");
   }
 }

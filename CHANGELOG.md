@@ -1,3 +1,12 @@
+## 3.1.0
+
+- Improve library exports
+- Added `customActionExecutor` property to `DuitDriver` consructors
+- Added `customEventResolver` property to `DuitDriver` consructors
+- Added `logger` property to `DuitDriver` consructors
+- Added error logging and animation command handling for `ViewController`
+- Removed related code for event handling and action execution from `DuitDriver`
+
 ## 3.0.0
 
 - Migration to duit_kernel v3
