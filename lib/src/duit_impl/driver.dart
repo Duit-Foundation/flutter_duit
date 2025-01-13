@@ -151,7 +151,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         isModule = true,
         externalEventHandler = null,
         transportOptions = EmptyTransportOptions(),
-        _driverChannel = const MethodChannel("duit:driver");
+        driverChannel = const MethodChannel("duit:driver");
 
   //</editor-fold">
 
@@ -203,9 +203,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
         json = content;
       } else {
         try {
-        json = await transport?.connect(
-          initialData: initialRequestPayload,
-        );
+          json = await transport?.connect(
+            initialData: initialRequestPayload,
+          );
         } catch (e, s) {
           logger?.error(
             "Failed conneting to server",
@@ -295,21 +295,21 @@ final class DuitDriver with DriverHooks implements UIDriver {
   Future<void> execute(ServerAction action) async {
     beforeActionCallback?.call(action);
 
-        try {
+    try {
       final event = await actionExecutor.executeAction(
         action,
       );
 
-          if (event != null) {
+      if (event != null && buildContext.mounted) {
         eventResolver.resolveEvent(buildContext, event);
-          }
-        } catch (e) {
+      }
+    } catch (e) {
       logger?.error(
         "Error executing action",
         error: e,
       );
     } finally {
-    afterActionCallback?.call();
+      afterActionCallback?.call();
     }
   }
 
