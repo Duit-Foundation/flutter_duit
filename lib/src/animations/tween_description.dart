@@ -1,7 +1,7 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-import 'index.dart';
 import 'tween.dart';
 
 /// Base class for describing a Tween object, parsing json into concrete Tween types

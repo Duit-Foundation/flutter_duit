@@ -10,9 +10,6 @@ import "package:flutter_duit/src/ui/models/attended_model.dart";
 import "package:flutter_duit/src/ui/models/element_type.dart";
 import "package:flutter_duit/src/ui/models/ui_tree.dart";
 import "package:flutter_duit/src/utils/index.dart";
-import "package:flutter_duit/src/animations/index.dart";
-
-import "event.dart";
 
 final class _DriverFinalizationController {
   final DuitDriver d;
@@ -25,7 +22,6 @@ final class _DriverFinalizationController {
 }
 
 final class DuitDriver with DriverHooks implements UIDriver {
-  //<editor-fold desc="Properties and Ctor">
   @protected
   @override
   final String source;
@@ -58,10 +54,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   final Map<String, UIElementController> _viewControllers = {};
 
-  @protected
-  final ExternalEventHandler? eventHandler;
+  @override
+  ExternalEventHandler? externalEventHandler;
 
-  @protected
   @override
   ScriptRunner? scriptRunner;
 
@@ -72,41 +67,89 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   final Map<String, dynamic>? initialRequestPayload;
 
-  final bool _useStaticContent, _isModule;
+  late final bool _useStaticContent;
   bool _isChannelInitialized = false;
 
-  late final MethodChannel _driverChannel;
+  late final Map<String, dynamic>? content;
 
-  @protected
-  Map<String, dynamic>? content;
+  @override
+  late final ActionExecutor actionExecutor;
+
+  @override
+  late final EventResolver eventResolver;
+
+  @override
+  MethodChannel? driverChannel;
+
+  @override
+  late final bool isModule;
+
+  @override
+  late DebugLogger? logger;
 
   DuitDriver(
     this.source, {
     required this.transportOptions,
-    this.eventHandler,
+    this.externalEventHandler,
     this.initialRequestPayload,
+    this.logger,
+    EventResolver? customEventResolver,
+    ActionExecutor? customActionExecutor,
+    DebugLogger? customLogger,
     bool enableDevMetrics = false,
-  })  : _useStaticContent = false,
-        _isModule = false;
+  }) {
+    logger = customLogger ?? DefaultLogger.instance;
+
+    _useStaticContent = false;
+    actionExecutor = customActionExecutor ??
+        DefaultActionExecutor(
+          driver: this,
+          logger: logger,
+        );
+    eventResolver = customEventResolver ??
+        DefaultEventResolver(
+          driver: this,
+          logger: logger,
+        );
+    isModule = false;
+  }
 
   /// Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
   DuitDriver.static(
     this.content, {
     required this.transportOptions,
-    this.eventHandler,
+    this.externalEventHandler,
+    this.logger,
+    EventResolver? customEventResolver,
+    ActionExecutor? customActionExecutor,
+    DebugLogger? customLogger,
     bool enableDevMetrics = false,
-  })  : _useStaticContent = true,
-        source = "",
-        initialRequestPayload = null,
-        _isModule = false;
+    this.source = "",
+    this.initialRequestPayload,
+  }) {
+    logger = customLogger ?? DefaultLogger.instance;
+
+    _useStaticContent = true;
+    isModule = false;
+    eventResolver = customEventResolver ??
+        DefaultEventResolver(
+          driver: this,
+          logger: logger,
+        );
+    actionExecutor = customActionExecutor ??
+        DefaultActionExecutor(
+          driver: this,
+          logger: logger,
+        );
+  }
 
   /// Creates a new [DuitDriver] instance that is controlled from native code
   DuitDriver.module()
       : _useStaticContent = false,
         source = "",
         initialRequestPayload = null,
-        _isModule = true,
-        eventHandler = null,
+        isModule = true,
+        externalEventHandler = null,
         transportOptions = EmptyTransportOptions(),
         _driverChannel = const MethodChannel("duit:driver");
 
@@ -125,15 +168,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   @protected
   @override
-  void detachController(String id) {
-    _viewControllers.remove(id)?.dispose();
-  }
+  void detachController(String id) => _viewControllers.remove(id)?.dispose();
 
   @protected
   @override
-  UIElementController? getController(String id) {
-    return _viewControllers[id];
-  }
+  UIElementController? getController(String id) => _viewControllers[id];
 
   //</editor-fold>
 
@@ -148,7 +187,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     } else {
       _addParsers();
 
-      if (_isModule && !_isChannelInitialized) {
+      if (isModule && !_isChannelInitialized) {
         await _initMethodChannel();
       }
 
@@ -163,14 +202,38 @@ final class DuitDriver with DriverHooks implements UIDriver {
       if (_useStaticContent) {
         json = content;
       } else {
+        try {
         json = await transport?.connect(
           initialData: initialRequestPayload,
         );
+        } catch (e, s) {
+          logger?.error(
+            "Failed conneting to server",
+            error: e,
+            stackTrace: s,
+          );
+          streamController.sink.addError(e);
+        }
       }
 
       if (transport is Streamer) {
         final streamer = transport as Streamer;
-        streamer.eventStream.listen(_resolveEvent);
+        streamer.eventStream.listen(
+          (d) async {
+            try {
+              if (buildContext.mounted) {
+                await eventResolver.resolveEvent(buildContext, d);
+              }
+            } catch (e, s) {
+              logger?.error(
+                "Error while processing event from transport stream",
+                error: e,
+                stackTrace: s,
+              );
+              streamController.sink.addError(e);
+            }
+          },
+        );
       }
 
       _layout = DuitTree(json: json!, driver: this);
@@ -179,7 +242,12 @@ final class DuitDriver with DriverHooks implements UIDriver {
         streamController.sink.add(
           await _layout!.parse(),
         );
-      } catch (e) {
+      } catch (e, s) {
+        logger?.error(
+          "Layout parse failed",
+          error: e,
+          stackTrace: s,
+        );
         streamController.sink.addError(e);
       }
 
@@ -210,8 +278,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   void _addParsers() {
     try {
-      ViewAttribute.attributeParser = AttributeParser();
-      ServerEvent.eventParser = EventParser();
+      ViewAttribute.attributeParser = DefaultAttributeParser();
+      ServerAction.setActionParser(DefaultActionParser());
+      ServerEvent.eventParser = DefaultEventParser();
     } catch (_) {
       //Safely handle the case of assigning parsers during
       //multiple driver initializations as part of running tests
@@ -221,161 +290,26 @@ final class DuitDriver with DriverHooks implements UIDriver {
   //</editor-fold>
 
   //<editor-fold desc="Actions & Events">
-  /// Resolves a server event from a JSON object.
-  ///
-  /// This method takes a [eventData] object representing a server event and converts
-  /// it into a [ServerEvent] object. If the [eventData] object is valid and represents
-  /// a recognized server event type, it creates an instance of the corresponding
-  /// event class and assigns it to the [event] variable.
-  ///
-  /// Parameters:
-  /// - [json]: The JSON object representing a server event.
-  ///
-  /// Returns: A [Future] that completes with [void].
-  FutureOr<void> _resolveEvent(dynamic eventData) async {
-    ServerEvent event;
-
-    if (eventData is ServerEvent) {
-      event = eventData;
-    } else {
-      event = ServerEvent.parseEvent(eventData);
-    }
-
-    onEventReceived?.call(event);
-    switch (event) {
-      case UpdateEvent():
-        event.updates.forEach((key, value) async {
-          await _updateAttributes(key, value);
-        });
-        break;
-      case NavigationEvent():
-        assert(
-            eventHandler != null, "ExternalEventHandler instance is not set");
-        await eventHandler?.handleNavigation(
-          buildContext,
-          event.path,
-          event.extra,
-        );
-        break;
-      case OpenUrlEvent():
-        assert(
-            eventHandler != null, "ExternalEventHandler instance is not set");
-        await eventHandler?.handleOpenUrl(event.url);
-        break;
-      case CustomEvent():
-        if (_isModule) {
-          await emitNativeEvent(event.key, event.extra);
-        } else {
-          await eventHandler?.handleCustomEvent(
-            buildContext,
-            event.key,
-            event.extra,
-          );
-        }
-        break;
-      case SequencedEventGroup():
-        for (final entry in event.events) {
-          await _resolveEvent(entry.event);
-          await Future.delayed(entry.delay);
-        }
-        break;
-      case CommonEventGroup():
-        for (final entry in event.events) {
-          _resolveEvent(entry.event);
-        }
-        break;
-      case AnimationTriggerEvent():
-        await _resolveAnimationTrigger(event);
-        break;
-      case TimerEvent():
-        final evt = event;
-        Timer(
-          evt.timerDelay,
-          () async {
-            await _resolveEvent(evt.payload);
-          },
-        );
-        break;
-    }
-
-    onEventHandled?.call();
-  }
-
-  Map<String, dynamic> _preparePayload(Iterable<ActionDependency> deps) {
-    final Map<String, dynamic> payload = {};
-
-    if (deps.isNotEmpty) {
-      for (final dependency in deps) {
-        final controller = _viewControllers[dependency.id];
-        if (controller != null) {
-          final attribute = controller.attributes.payload;
-          if (attribute is AttendedModel) {
-            payload[dependency.target] = attribute.collect();
-          }
-        }
-      }
-    }
-
-    return payload;
-  }
 
   @override
   Future<void> execute(ServerAction action) async {
     beforeActionCallback?.call(action);
 
-    switch (action) {
-      //transport
-      case TransportAction():
         try {
-          final payload = _preparePayload(action.dependsOn);
+      final event = await actionExecutor.executeAction(
+        action,
+      );
 
-          final event = await transport?.execute(action, payload);
-          //case with http request
           if (event != null) {
-            await _resolveEvent(event);
+        eventResolver.resolveEvent(buildContext, event);
           }
         } catch (e) {
-          debugPrint(e.toString());
-        }
-
-        break;
-      //local execution
-      case LocalAction():
-        try {
-          await _resolveEvent(action.event);
-        } catch (e) {
-          debugPrint(e.toString());
-        }
-        break;
-      //script
-      case ScriptAction():
-        try {
-          final body = _preparePayload(action.dependsOn);
-          final script = action.script;
-
-          final scriptInvocationResult = await scriptRunner?.runScript(
-            script.functionName,
-            url: action.eventName,
-            meta: action.script.meta,
-            body: body,
-          );
-
-          await _resolveEvent(scriptInvocationResult);
-        } catch (e) {
-          debugPrint(e.toString());
-        }
-
-        break;
-    }
-
+      logger?.error(
+        "Error executing action",
+        error: e,
+      );
+    } finally {
     afterActionCallback?.call();
-  }
-
-  Future<void> _resolveAnimationTrigger(AnimationTriggerEvent event) async {
-    final controller = _viewControllers[event.command.controllerId];
-
-    if (controller != null) {
-      controller.emitCommand(event.command);
     }
   }
 
@@ -402,40 +336,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
     }
   }
 
-  /// Updates the attributes of a controller.
-  ///
-  /// This method is called to update the attributes of a controller based on the
-  /// provided [json] object.
-  ///
-  /// Parameters:
-  /// - [id]: The id of the controller.
-  /// - [json]: The json object containing the updated attributes.
-  Future<void> _updateAttributes(String id, JSONObject json) async {
-    final controller = _viewControllers[id];
-    if (controller != null) {
-      if (controller.type == ElementType.component) {
-        await _resolveComponentUpdate(controller, json);
-        return;
-      }
-
-      final attributes = ViewAttribute.createAttributes(
-        controller.type,
-        json,
-        controller.tag,
-      );
-
-      controller.updateState(attributes);
-    }
-  }
-
   @protected
   @override
   Future<void> evalScript(String source) async {
     await scriptRunner?.eval(source);
-  }
-
-  Future<T?> emitNativeEvent<T>(String event, [Object? data]) async {
-    return await _driverChannel.invokeMethod<T>(event, data);
   }
 
   // </editor-fold>
@@ -454,7 +358,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// - An instance of the transport class based on the specified [type].
   /// - If the [type] is not recognized, it returns an instance of [HttpTransport].
   Transport _getTransport(String type) {
-    if (_isModule) {
+    if (isModule) {
       return NativeTransport(this);
     }
 
@@ -485,10 +389,13 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   /// Initializes the driver as a module.
   Future<void> _initMethodChannel() async {
-    _driverChannel.setMethodCallHandler((call) async {
+    driverChannel?.setMethodCallHandler((call) async {
       switch (call.method) {
         case "duit_event":
-          await _resolveEvent(call.arguments as Map<String, dynamic>);
+          await eventResolver.resolveEvent(
+            buildContext,
+            call.arguments as Map<String, dynamic>,
+          );
           break;
         case "duit_layout":
           final json = call.arguments as Map<String, dynamic>;
@@ -513,7 +420,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     String id,
     Map<String, dynamic> json,
   ) =>
-      _updateAttributes(
+      updateAttributes(
         id,
         json,
       );
@@ -525,10 +432,53 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   @visibleForTesting
   Future<void> resolveTestEvent(dynamic eventData) async {
-    await _resolveEvent(eventData);
+    await eventResolver.resolveEvent(buildContext, eventData);
   }
 
   @visibleForTesting
   int get controllersCount => _viewControllers.length;
+
+  @override
+  Map<String, dynamic> preparePayload(
+    Iterable<ActionDependency> dependencies,
+  ) {
+    final Map<String, dynamic> payload = {};
+
+    if (dependencies.isNotEmpty) {
+      for (final dependency in dependencies) {
+        final controller = _viewControllers[dependency.id];
+        if (controller != null) {
+          final attribute = controller.attributes.payload;
+          if (attribute is AttendedModel) {
+            payload[dependency.target] = attribute.collect();
+          }
+        }
+      }
+    }
+
+    return payload;
+  }
+
+  @override
+  Future<void> updateAttributes(
+    String controllerId,
+    Map<String, dynamic> json,
+  ) async {
+    final controller = _viewControllers[controllerId];
+    if (controller != null) {
+      if (controller.type == ElementType.component) {
+        await _resolveComponentUpdate(controller, json);
+        return;
+      }
+
+      final attributes = ViewAttribute.createAttributes(
+        controller.type,
+        json,
+        controller.tag,
+      );
+
+      controller.updateState(attributes);
+    }
+  }
 //</editor-fold>
 }
