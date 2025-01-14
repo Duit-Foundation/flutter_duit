@@ -775,16 +775,21 @@ final class AttributeValueMapper {
         "blur" || 0 => ImageFilter.blur(
             sigmaX: NumUtils.toDoubleWithNullReplacement(value["radiusX"]),
             sigmaY: NumUtils.toDoubleWithNullReplacement(value["radiusY"]),
-            tileMode: TileMode.values.byName(value["tileMode"]),
+            tileMode: value["tileMode"] != null
+                ? TileMode.values.byName(value["tileMode"])
+                : TileMode.clamp,
           ),
-        "compose" || 1 => ImageFilter.compose(
-            outer: toImageFilter(
-              value["outer"],
-            ),
-            inner: toImageFilter(
-              value["inner"],
-            ),
-          ),
+        "compose" || 1 => () {
+            final outerFilter =
+                value.containsKey("outer") ? value["outer"] : const {};
+            final innerFilter =
+                value.containsKey("inner") ? value["inner"] : const {};
+
+            return ImageFilter.compose(
+              outer: toImageFilter(outerFilter["filter"]),
+              inner: toImageFilter(innerFilter["filter"]),
+            );
+          }(),
         "dilate" || 2 => ImageFilter.dilate(
             radiusX: NumUtils.toDoubleWithNullReplacement(value["radiusX"]),
             radiusY: NumUtils.toDoubleWithNullReplacement(value["radiusY"]),
@@ -794,7 +799,7 @@ final class AttributeValueMapper {
             radiusY: NumUtils.toDoubleWithNullReplacement(value["radiusY"]),
           ),
         "matrix" || 4 => ImageFilter.matrix(
-            Float64List.fromList(value["matrix"] as List<double>),
+            Float64List.fromList(value["matrix4"] as List<double>),
             filterQuality: toFilterQuality(value["filterQuality"]),
           ),
         Object() ||
@@ -1102,92 +1107,85 @@ final class AttributeValueMapper {
   /// final jsonString = '{"activeColor": 4294901760, "defaultColor": 4278190080}';
   /// final mspColor = convertToMSPColor(jsonString);
   /// ```
-  static MaterialStateProperty<Color>? toMSPColor(JSONObject? json) {
+  static WidgetStateProperty<Color>? toMSPColor(JSONObject? json) {
     if (json == null) return null;
 
-    return MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.disabled)) {
-        return ColorUtils.tryParseColor(json[MaterialState.disabled.name]);
+    return WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return ColorUtils.tryParseColor(json[WidgetState.disabled.name]);
       }
 
-      if (states.contains(MaterialState.selected)) {
-        return ColorUtils.tryParseColor(json[MaterialState.selected.name]);
+      if (states.contains(WidgetState.selected)) {
+        return ColorUtils.tryParseColor(json[WidgetState.selected.name]);
       }
 
-      if (states.contains(MaterialState.error)) {
-        return ColorUtils.tryParseColor(json[MaterialState.error.name]);
+      if (states.contains(WidgetState.error)) {
+        return ColorUtils.tryParseColor(json[WidgetState.error.name]);
       }
 
-      if (states.contains(MaterialState.pressed)) {
-        return ColorUtils.tryParseColor(json[MaterialState.pressed.name]);
+      if (states.contains(WidgetState.pressed)) {
+        return ColorUtils.tryParseColor(json[WidgetState.pressed.name]);
       }
 
-      if (states.contains(MaterialState.hovered)) {
-        return ColorUtils.tryParseColor(json[MaterialState.hovered.name]);
+      if (states.contains(WidgetState.hovered)) {
+        return ColorUtils.tryParseColor(json[WidgetState.hovered.name]);
       }
 
-      if (states.contains(MaterialState.focused)) {
-        return ColorUtils.tryParseColor(json[MaterialState.focused.name]);
+      if (states.contains(WidgetState.focused)) {
+        return ColorUtils.tryParseColor(json[WidgetState.focused.name]);
       }
 
-      if (states.contains(MaterialState.dragged)) {
-        return ColorUtils.tryParseColor(json[MaterialState.dragged.name]);
+      if (states.contains(WidgetState.dragged)) {
+        return ColorUtils.tryParseColor(json[WidgetState.dragged.name]);
       }
 
       return Colors.black;
     });
   }
 
-  static MaterialStateProperty<double>? toMSPDouble(JSONObject? json) {
+  static WidgetStateProperty<double>? toMSPDouble(JSONObject? json) {
     if (json == null) return null;
 
-    return MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.disabled)) {
+    return WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
         return NumUtils.toDoubleWithNullReplacement(
-          json[MaterialState.disabled.name],
-          0,
+          json[WidgetState.disabled.name],
         );
       }
 
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return NumUtils.toDoubleWithNullReplacement(
-          json[MaterialState.selected.name],
-          0,
+          json[WidgetState.selected.name],
         );
       }
 
-      if (states.contains(MaterialState.error)) {
+      if (states.contains(WidgetState.error)) {
         return NumUtils.toDoubleWithNullReplacement(
-          json[MaterialState.error.name],
-          0,
+          json[WidgetState.error.name],
         );
       }
 
-      if (states.contains(MaterialState.pressed)) {
+      if (states.contains(WidgetState.pressed)) {
         return NumUtils.toDoubleWithNullReplacement(
-          json[MaterialState.pressed.name],
-          0,
+          json[WidgetState.pressed.name],
         );
       }
 
-      if (states.contains(MaterialState.hovered)) {
+      if (states.contains(WidgetState.hovered)) {
         return NumUtils.toDoubleWithNullReplacement(
-          json[MaterialState.hovered.name],
-          0,
+          json[WidgetState.hovered.name],
         );
       }
 
-      if (states.contains(MaterialState.focused)) {
+      if (states.contains(WidgetState.focused)) {
         return NumUtils.toDoubleWithNullReplacement(
-          json[MaterialState.focused.name],
-          0,
+          json[WidgetState.focused.name],
         );
       }
 
-      if (states.contains(MaterialState.dragged)) {
+      if (states.contains(WidgetState.dragged)) {
         return NumUtils.toDoubleWithNullReplacement(
-          json[MaterialState.dragged.name],
-          0,
+          json[WidgetState.dragged.name],
         );
       }
 
