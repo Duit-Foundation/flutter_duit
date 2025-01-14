@@ -105,6 +105,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.intrinsicHeight => IntrinsicHeightAttributes.fromJson(data),
       ElementType.rotatedBox => RotatedBoxAttributes.fromJson(data),
       ElementType.constrainedBox => ConstrainedBoxAttributes.fromJson(data),
+      ElementType.backdropFilter => BackdropFilterAttributes.fromJson(data),
       ElementType.subtree ||
       ElementType.component =>
         SubtreeAttributes.fromJson(data),

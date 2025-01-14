@@ -47,7 +47,10 @@ sealed class NumUtils {
   /// The [value] parameter represents the value to convert, and the [replacement] parameter represents the value to use as a replacement for null.
   ///
   /// Returns the converted double value.
-  static double toDoubleWithNullReplacement(dynamic value, double replacement) {
+  static double toDoubleWithNullReplacement(
+    dynamic value, [
+    double replacement = 0.0,
+  ]) {
     if (value is double) {
       return value;
     }

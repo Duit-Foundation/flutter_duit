@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -760,6 +761,50 @@ final class AttributeValueMapper {
     }
 
     return BlendMode.src;
+  }
+
+  static ImageFilter toImageFilter(dynamic value) {
+    if (value == null) return ImageFilter.blur();
+
+    if (value is ImageFilter) return value;
+
+    if (value is Map) {
+      final fType = value["type"];
+
+      return switch (fType) {
+        "blur" || 0 => ImageFilter.blur(
+            sigmaX: NumUtils.toDoubleWithNullReplacement(value["radiusX"]),
+            sigmaY: NumUtils.toDoubleWithNullReplacement(value["radiusY"]),
+            tileMode: TileMode.values.byName(value["tileMode"]),
+          ),
+        "compose" || 1 => ImageFilter.compose(
+            outer: toImageFilter(
+              value["outer"],
+            ),
+            inner: toImageFilter(
+              value["inner"],
+            ),
+          ),
+        "dilate" || 2 => ImageFilter.dilate(
+            radiusX: NumUtils.toDoubleWithNullReplacement(value["radiusX"]),
+            radiusY: NumUtils.toDoubleWithNullReplacement(value["radiusY"]),
+          ),
+        "erode" || 3 => ImageFilter.erode(
+            radiusX: NumUtils.toDoubleWithNullReplacement(value["radiusX"]),
+            radiusY: NumUtils.toDoubleWithNullReplacement(value["radiusY"]),
+          ),
+        "matrix" || 4 => ImageFilter.matrix(
+            Float64List.fromList(value["matrix"] as List<double>),
+            filterQuality: toFilterQuality(value["filterQuality"]),
+          ),
+        Object() ||
+        null ||
+        String() =>
+          throw ArgumentError.value(fType, "type", "Invalid ImageFilter type"),
+      };
+    }
+
+    return ImageFilter.blur();
   }
 
   /// Converts a string value to a [VerticalDirection] value.
