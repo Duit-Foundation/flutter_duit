@@ -17,8 +17,8 @@ class CheckboxAttributes extends AttendedModel<bool>
   final String? semanticLabel;
   final double? splashRadius;
   final BorderSide? side;
-  final MaterialStateProperty<Color>? fillColor;
-  final MaterialStateProperty<Color>? overlayColor;
+  final WidgetStateProperty<Color>? fillColor;
+  final WidgetStateProperty<Color>? overlayColor;
   final Color? checkColor;
   final Color? splashColor;
   final Color? activeColor;
