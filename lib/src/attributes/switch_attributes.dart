@@ -10,11 +10,11 @@ final class SwitchAttributes extends AttendedModel<bool>
       hoverColor,
       activeTrackColor,
       inactiveTrackColor;
-  final MaterialStateProperty<Color>? overlayColor,
+  final WidgetStateProperty<Color>? overlayColor,
       trackColor,
       thumbColor,
       trackOutlineColor;
-  final MaterialStateProperty<double>? trackOutlineWidth;
+  final WidgetStateProperty<double>? trackOutlineWidth;
   final double? splashRadius;
   final MaterialTapTargetSize? materialTapTargetSize;
   final bool? autofocus;

@@ -9,7 +9,7 @@ final class SliderAttributes extends AttendedModel<double>
   final int? divisions;
   final String? label;
   final Color? activeColor, inactiveColor, secondaryActiveColor, thumbColor;
-  final MaterialStateProperty<Color>? overlayColor;
+  final WidgetStateProperty<Color>? overlayColor;
   final bool autofocus;
   final ServerAction? onChanged, onChangeStart, onChangeEnd;
   final SliderInteraction? allowedInteraction;

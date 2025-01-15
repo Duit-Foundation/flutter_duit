@@ -45,8 +45,8 @@ final class RadioAttributes extends AnimatedPropertyOwner
   final dynamic value;
   final bool? toggleable, autofocus;
   final Color? activeColor, focusColor, hoverColor;
-  final MaterialStateProperty<Color>? fillColor;
-  final MaterialStateProperty<Color>? overlayColor;
+  final WidgetStateProperty<Color>? fillColor;
+  final WidgetStateProperty<Color>? overlayColor;
   final double? splashRadius;
   final MaterialTapTargetSize? materialTapTargetSize;
   final VisualDensity? visualDensity;
