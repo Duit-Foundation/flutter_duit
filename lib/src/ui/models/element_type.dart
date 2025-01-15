@@ -42,4 +42,5 @@ final class ElementType {
   static const intrinsicHeight = "IntrinsicHeight";
   static const rotatedBox = "RotatedBox";
   static const constrainedBox = "ConstrainedBox";
+  static const backdropFilter = "BackdropFilter";
 }

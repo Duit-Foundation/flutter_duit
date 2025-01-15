@@ -2,11 +2,12 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
+import 'package:flutter_duit/src/ui/models/element_models.dart';
+import 'package:flutter_duit/src/ui/models/element_type.dart';
+import 'package:flutter_duit/src/ui/models/type_def.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-import 'element_models.dart';
-import 'element_type.dart';
 
 /// Represents a DUIT element in the DUIT element tree.
 ///
@@ -1154,6 +1155,33 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         );
 
         return ConstrainedBoxUIElement<ConstrainedBoxAttributes>(
+          type: type,
+          id: id,
+          controlled: controlled,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+        );
+      case ElementType.backdropFilter:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<BackdropFilterAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return BackdropFilterModel(
           type: type,
           id: id,
           controlled: controlled,

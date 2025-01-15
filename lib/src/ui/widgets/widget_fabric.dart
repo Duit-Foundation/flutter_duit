@@ -510,6 +510,19 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.backdropFilter:
+        final it = model as BackdropFilterModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledBackdropFilter(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitBackdropFilter(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:
