@@ -39,24 +39,6 @@ sealed class JsonUtils {
     }
   }
 
-  static T valueOrDefault<T>(
-    String key,
-    Map<String, dynamic> map,
-  ) {
-    if (map.containsKey(key)) {
-      return map[key];
-    } else {
-      return switch (T) {
-        String => "",
-        num => 0,
-        bool => false,
-        List() => const [],
-        Map() => const {},
-        Type() => throw UnimplementedError(),
-      } as T;
-    }
-  }
-
   static void assertFields(Map<String, dynamic> map, Iterable<String> fields) {
     for (var field in fields) {
       if (!map.containsKey(field)) {
