@@ -1,8 +1,8 @@
 import 'package:duit_kernel/duit_kernel.dart';
 
-import 'child.dart';
-import 'element.dart';
-import 'element_type.dart';
+import "package:flutter_duit/src/ui/models/child.dart";
+import "package:flutter_duit/src/ui/models/element.dart";
+import "package:flutter_duit/src/ui/models/element_type.dart";
 
 final class MetaUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
@@ -588,6 +588,24 @@ final class AnimatedSizeUIElement<T> extends DuitElement<T>
   DuitElement child;
 
   AnimatedSizeUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
+final class AnimatedOpacityUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  AnimatedOpacityUIElement({
     required super.type,
     required super.id,
     required super.controlled,

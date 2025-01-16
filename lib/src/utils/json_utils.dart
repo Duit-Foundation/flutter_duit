@@ -1,6 +1,6 @@
 import 'package:duit_kernel/duit_kernel.dart';
 
-class JsonUtils {
+sealed class JsonUtils {
   ///Modifies the original [model] object by adding values from the [dataSource]
   ///object to it if there are [ValueReference] objects in the attributes
   static Map<String, dynamic> mergeWithDataSource(
@@ -25,5 +25,25 @@ class JsonUtils {
     }
 
     return model.data;
+  }
+
+  static T? nullOrParse<T>(
+    String key,
+    Map<String, dynamic> map,
+    T Function(Map<String, dynamic>) f,
+  ) {
+    if (map.containsKey(key)) {
+      return f(map[key]);
+    } else {
+      return null;
+    }
+  }
+
+  static void assertFields(Map<String, dynamic> map, Iterable<String> fields) {
+    for (var field in fields) {
+      if (!map.containsKey(field)) {
+        throw ArgumentError("Field $field is required");
+      }
+    }
   }
 }

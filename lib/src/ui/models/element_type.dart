@@ -43,4 +43,5 @@ final class ElementType {
   static const rotatedBox = "RotatedBox";
   static const constrainedBox = "ConstrainedBox";
   static const backdropFilter = "BackdropFilter";
+  static const animatedOpacity = "AnimatedOpacity";
 }
