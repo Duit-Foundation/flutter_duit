@@ -523,6 +523,15 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+
+      case ElementType.animatedOpacity:
+        final it = model as AnimatedOpacityModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedOpacity(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:

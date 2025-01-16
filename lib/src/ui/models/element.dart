@@ -8,7 +8,6 @@ import 'package:flutter_duit/src/ui/models/type_def.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-
 /// Represents a DUIT element in the DUIT element tree.
 ///
 /// The [DuitElement] class represents an individual DUIT element in the DUIT element tree.
@@ -1182,6 +1181,33 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         );
 
         return BackdropFilterModel(
+          type: type,
+          id: id,
+          controlled: controlled,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+        );
+      case ElementType.animatedOpacity:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedOpacityAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AnimatedOpacityModel(
           type: type,
           id: id,
           controlled: controlled,

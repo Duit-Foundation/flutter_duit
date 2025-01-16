@@ -1,7 +1,7 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/ui/models/element_type.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter_duit/src/attributes/index.dart";
+import "package:flutter_duit/src/ui/models/element_type.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 /// The `AttributeParser` class is responsible for parsing and mapping attributes for different DUIT elements.
 ///
@@ -30,7 +30,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
   ///
   /// Returns:
   /// The parsed attributes for the custom widget.
-  _parseCustomWidgetAttributes(JSONObject? json, String? tag) {
+  dynamic _parseCustomWidgetAttributes(JSONObject? json, String? tag) {
     assert(tag != null, "Custom widget must have specified tag");
 
     final attributesMapper = DuitRegistry.getAttributesFactory(tag!);
@@ -106,6 +106,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.rotatedBox => RotatedBoxAttributes.fromJson(data),
       ElementType.constrainedBox => ConstrainedBoxAttributes.fromJson(data),
       ElementType.backdropFilter => BackdropFilterAttributes.fromJson(data),
+      ElementType.animatedOpacity => AnimatedOpacityAttributes.fromJson(data),
       ElementType.subtree ||
       ElementType.component =>
         SubtreeAttributes.fromJson(data),
