@@ -14,6 +14,8 @@ Map<String, dynamic> _createWidget(
     "controlled": controlled,
     "attributes": {
       "opacity": opacity,
+      "affectedProperties": ["opacity"],
+      "parentBuilderId": "builder",
     },
     "child": {
       "type": "Text",
