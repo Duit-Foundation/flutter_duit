@@ -3,7 +3,6 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/animations/tween.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitAnimationBuilder extends StatefulWidget {
@@ -21,139 +20,71 @@ class DuitAnimationBuilder extends StatefulWidget {
 }
 
 class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, TweenHelper {
   final _controllers = <String, AnimationController>{};
   final _animations = <String, Animation>{};
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     widget.controller.listenCommand(_handleCommand);
     final attrs = widget.controller.attributes.payload;
-    for (var animation in attrs.tweenDescriptions) {
+    for (var description in attrs.tweenDescriptions) {
       final controller = AnimationController(
         vsync: this,
-        duration: animation.duration,
+        duration: description.duration,
       );
 
-      final tween = switch (animation.runtimeType) {
-        ColorTweenDescription => ColorTween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        TweenDescription => Tween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        TextStyleTweenDescription => TextStyleTween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        DecorationTweenDescription => DecorationTween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        AlignmentTweenDescription => AlignmentTween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        EdgeInsetsTweenDescription => EdgeInsetsTween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        BoxConstraintsTweenDescription => BoxConstraintsTween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        SizeTweenDescription => SizeTween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        BorderTweenDescription => BorderTween(
-            begin: animation.begin,
-            end: animation.end,
-          ).animate(
-            CurvedAnimation(
-              parent: controller,
-              curve: animation.curve,
-            ),
-          ),
-        Type() => throw UnimplementedError(),
-      };
+      //Handle group of tween descriptions
+      if (description is TweenDescriptionGroup) {
+        //Use groupId as key instead of animatedPropKey
+        _controllers[description.groupId] = controller;
 
-      _animations[animation.animatedPropKey] = tween;
-      _controllers[animation.animatedPropKey] = controller;
+        for (var groupMember in description.tweens) {
+          final tween = createTween(groupMember);
 
-      if (animation.trigger == AnimationTrigger.onEnter) {
-        switch (animation.method) {
-          case AnimationMethod.forward:
-            controller.forward();
-            break;
-          case AnimationMethod.repeat:
-            controller.repeat(
-              reverse: animation.reverseOnRepeat,
-            );
-            break;
-          case AnimationMethod.reverse:
-            controller.reverse();
-            break;
-          case AnimationMethod.toggle:
-            if (controller.isCompleted) {
-              controller.reverse();
-            } else {
-              controller.forward();
-            }
-            break;
+          final animation = animate(
+            tween,
+            controller,
+            groupMember.interval,
+            groupMember.curve,
+          );
+
+          _animations[groupMember.animatedPropKey] = animation;
+
+          launch(
+            description,
+            controller,
+          );
         }
+      } else {
+        //Handle single tween description
+        final tween = createTween(description);
+
+        _controllers[description.animatedPropKey] = controller;
+
+        final animation = animate(
+          tween,
+          controller,
+          description.interval,
+          description.curve,
+        );
+
+        _animations[description.animatedPropKey] = animation;
+
+        launch(
+          description,
+          controller,
+        );
       }
     }
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controllers.forEach((_, controller) {
-      controller.dispose();
-    });
+    _controllers.forEach(
+      (_, c) => c.dispose(),
+    );
     widget.controller.removeCommandListener();
     super.dispose();
   }
@@ -173,11 +104,7 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
           controller.reverse();
           break;
         case AnimationMethod.toggle:
-          if (controller.isAnimating || controller.isCompleted) {
-            controller.reverse();
-          } else {
-            controller.forward();
-          }
+          handleToggleMethod(controller);
           break;
       }
     }
@@ -185,18 +112,20 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
 
   @override
   Widget build(BuildContext context) {
+    final wC = widget.controller;
+
     return AnimatedBuilder(
       animation: Listenable.merge(
-        _animations.values.toList(),
+        _animations.values,
       ),
       builder: (context, child) {
         final dataObj = <String, dynamic>{};
 
-        _animations.forEach((key, animation) {
-          dataObj[key] = animation.value;
-        });
-
-        final wC = widget.controller;
+        _animations.forEach(
+          (key, animation) {
+            dataObj[key] = animation.value;
+          },
+        );
 
         return DuitAnimationContext(
           data: dataObj,

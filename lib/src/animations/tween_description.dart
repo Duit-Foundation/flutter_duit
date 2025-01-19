@@ -4,6 +4,51 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 import 'tween.dart';
 
+extension type _TweenView(Map<String, dynamic> value) implements Map {
+  AnimationMethod get method {
+    final val = value["method"];
+    return switch (val) {
+      0 || "forvard" => AnimationMethod.forward,
+      1 || "repeat" => AnimationMethod.repeat,
+      2 || "reverse" => AnimationMethod.reverse,
+      3 || "toggle" => AnimationMethod.toggle,
+      Object() || null => AnimationMethod.forward,
+    };
+  }
+
+  AnimationInterval? get interval {
+    final interval = value["interval"];
+    if (interval == null) {
+      return null;
+    }
+
+    if (interval is Map) {
+      return AnimationInterval(
+        NumUtils.toDoubleWithNullReplacement(interval["begin"], 0.0),
+        NumUtils.toDoubleWithNullReplacement(interval["end"], 1.0),
+      );
+    }
+
+    if (interval is List) {
+      return AnimationInterval(
+        interval[0],
+        interval[1],
+      );
+    }
+
+    return null;
+  }
+
+  AnimationTrigger get trigger {
+    final trigger = value["trigger"];
+    return switch (trigger) {
+      0 || "onEnter" => AnimationTrigger.onEnter,
+      1 || "onAction" => AnimationTrigger.onAction,
+      Object() || null => AnimationTrigger.onEnter,
+    };
+  }
+}
+
 /// Base class for describing a Tween object, parsing json into concrete Tween types
 base class DuitTweenDescription<T> {
   final String animatedPropKey;
@@ -13,8 +58,9 @@ base class DuitTweenDescription<T> {
   final AnimationTrigger trigger;
   final AnimationMethod method;
   final bool reverseOnRepeat;
+  final AnimationInterval? interval;
 
-  DuitTweenDescription({
+  const DuitTweenDescription({
     required this.animatedPropKey,
     required this.duration,
     required this.begin,
@@ -23,29 +69,34 @@ base class DuitTweenDescription<T> {
     this.curve = Curves.linear,
     this.method = AnimationMethod.forward,
     this.reverseOnRepeat = false,
+    this.interval,
   });
 
-  static AnimationMethod _methodFromValue(dynamic value) {
-    return switch (value) {
-      0 => AnimationMethod.forward,
-      1 => AnimationMethod.repeat,
-      2 => AnimationMethod.reverse,
-      3 => AnimationMethod.toggle,
-      Object() || null => AnimationMethod.forward,
-    };
-  }
-
-  static AnimationTrigger _triggerFromValue(dynamic value) {
-    return switch (value) {
-      0 => AnimationTrigger.onEnter,
-      1 => AnimationTrigger.onAction,
-      Object() || null => AnimationTrigger.onEnter,
-    };
-  }
-
   /// Deserializes a [json] object into a [DuitTweenDescription]
-  static DuitTweenDescription fromJson<T>(JSONObject json) {
+  static DuitTweenDescription fromJson(JSONObject json) {
     final type = json["type"] as String;
+
+    final view = _TweenView(json);
+
+    if (type == "group") {
+      assert(json.containsKey("tweens"),
+          "Group object must have **tweens** property");
+      assert(json["tweens"] is List,
+          "Group object **tweens** property must be a list");
+
+      return TweenDescriptionGroup(
+        duration: AttributeValueMapper.toDuration(json["duration"]),
+        groupId: json["groupId"],
+        tweens: (json["tweens"] as List)
+            .cast<Map<String, dynamic>>()
+            .map((tween) => DuitTweenDescription.fromJson(tween))
+            .toList(),
+        method: view.method,
+        reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+        trigger: view.trigger,
+      );
+    }
+
     return switch (type) {
       "colorTween" => ColorTweenDescription(
           animatedPropKey: json["animatedPropKey"],
@@ -53,19 +104,21 @@ base class DuitTweenDescription<T> {
           begin: ColorUtils.tryParseColor(json["begin"]),
           end: ColorUtils.tryParseColor(json["end"]),
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
-        ) as DuitTweenDescription,
+          interval: view.interval,
+        ),
       "tween" => TweenDescription(
           animatedPropKey: json["animatedPropKey"],
           duration: AttributeValueMapper.toDuration(json["duration"]),
           begin: NumUtils.toDoubleWithNullReplacement(json["begin"], 0.0),
           end: NumUtils.toDoubleWithNullReplacement(json["end"], 0.0),
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+          interval: view.interval,
         ),
       "textStyleTween" => TextStyleTweenDescription(
           animatedPropKey: json["animatedPropKey"],
@@ -73,9 +126,10 @@ base class DuitTweenDescription<T> {
           begin: AttributeValueMapper.toTextStyle(json["begin"])!,
           end: AttributeValueMapper.toTextStyle(json["end"])!,
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+          interval: view.interval,
         ),
       "decorationTween" => DecorationTweenDescription(
           animatedPropKey: json["animatedPropKey"],
@@ -83,9 +137,10 @@ base class DuitTweenDescription<T> {
           begin: AttributeValueMapper.toDecoration(json["begin"])!,
           end: AttributeValueMapper.toDecoration(json["end"])!,
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+          interval: view.interval,
         ),
       "alignmentTween" => AlignmentTweenDescription(
           animatedPropKey: json["animatedPropKey"],
@@ -93,9 +148,10 @@ base class DuitTweenDescription<T> {
           begin: AttributeValueMapper.toAlignment(json["begin"]),
           end: AttributeValueMapper.toAlignment(json["end"]),
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+          interval: view.interval,
         ),
       "edgeInsetsTween" => EdgeInsetsTweenDescription(
           animatedPropKey: json["animatedPropKey"],
@@ -103,9 +159,10 @@ base class DuitTweenDescription<T> {
           begin: AttributeValueMapper.toEdgeInsets(json["begin"]),
           end: AttributeValueMapper.toEdgeInsets(json["end"]),
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+          interval: view.interval,
         ),
       "boxConstraintsTween" => BoxConstraintsTweenDescription(
           animatedPropKey: json["animatedPropKey"],
@@ -113,9 +170,10 @@ base class DuitTweenDescription<T> {
           begin: AttributeValueMapper.toBoxConstraints(json["begin"]),
           end: AttributeValueMapper.toBoxConstraints(json["end"]),
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+          interval: view.interval,
         ),
       "sizeTween" => SizeTweenDescription(
           animatedPropKey: json["animatedPropKey"],
@@ -123,9 +181,10 @@ base class DuitTweenDescription<T> {
           begin: AttributeValueMapper.toSize(json["begin"]),
           end: AttributeValueMapper.toSize(json["end"]),
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+          interval: view.interval,
         ),
       "borderTween" => BorderTweenDescription(
           animatedPropKey: json["animatedPropKey"],
@@ -133,9 +192,10 @@ base class DuitTweenDescription<T> {
           begin: AttributeValueMapper.toBorder(json["begin"])!,
           end: AttributeValueMapper.toBorder(json["end"])!,
           curve: AttributeValueMapper.toCurve(json["curve"]),
-          trigger: _triggerFromValue(json["trigger"]),
-          method: _methodFromValue(json["method"]),
+          trigger: view.trigger,
+          method: view.method,
           reverseOnRepeat: json["reverseOnRepeat"] ?? false,
+          interval: view.interval,
         ),
       String() => throw UnimplementedError(),
     };
