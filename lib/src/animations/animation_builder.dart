@@ -104,11 +104,7 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
           controller.reverse();
           break;
         case AnimationMethod.toggle:
-          if (controller.status.isForwardOrCompleted) {
-            controller.reverse();
-          } else {
-            controller.forward();
-          }
+          handleToggleMethod(controller);
           break;
       }
     }

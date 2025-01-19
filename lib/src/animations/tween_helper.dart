@@ -5,6 +5,19 @@ import 'package:flutter_duit/src/animations/index.dart';
 mixin TweenHelper<T extends StatefulWidget> on State<T> {
   TextDirection? _textDirection;
 
+  void handleToggleMethod(AnimationController controller) {
+    final isForwardOrCompleted = switch (controller.status) {
+      AnimationStatus.completed || AnimationStatus.forward => true,
+      AnimationStatus.dismissed || AnimationStatus.reverse => false,
+    };
+
+    if (isForwardOrCompleted) {
+      controller.reverse();
+    } else {
+      controller.forward();
+    }
+  }
+
   void launch(
     DuitTweenDescription animation,
     AnimationController controller,
@@ -23,11 +36,7 @@ mixin TweenHelper<T extends StatefulWidget> on State<T> {
           controller.reverse();
           break;
         case AnimationMethod.toggle:
-          if (controller.status.isForwardOrCompleted) {
-            controller.reverse();
-          } else {
-            controller.forward();
-          }
+          handleToggleMethod(controller);
           break;
       }
     }
