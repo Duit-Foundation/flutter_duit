@@ -95,16 +95,16 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
     if (controller != null) {
       switch (command.method) {
         case AnimationMethod.forward:
-          controller.forward();
+          await controller.forward();
           break;
         case AnimationMethod.repeat:
-          controller.repeat();
+          await controller.repeat();
           break;
         case AnimationMethod.reverse:
-          controller.reverse();
+          await controller.reverse();
           break;
         case AnimationMethod.toggle:
-          handleToggleMethod(controller);
+          await handleToggleMethod(controller);
           break;
       }
     }
