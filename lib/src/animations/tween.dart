@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 import 'index.dart';
 
+final class TweenDescriptionGroup extends DuitTweenDescription<void> {
+  final Iterable<DuitTweenDescription> tweens;
+  final String groupId;
+
+  const TweenDescriptionGroup({
+    required super.duration,
+    required this.groupId,
+    required this.tweens,
+    super.method,
+    super.reverseOnRepeat,
+    super.trigger,
+  }) : super(
+          animatedPropKey: "",
+          end: null,
+          begin: null,
+        );
+}
+
 /// [Tween] description
 final class TweenDescription extends DuitTweenDescription<double> {
   TweenDescription({
@@ -12,6 +30,7 @@ final class TweenDescription extends DuitTweenDescription<double> {
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
 
@@ -26,6 +45,7 @@ final class ColorTweenDescription extends DuitTweenDescription<Color> {
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
 
@@ -40,6 +60,7 @@ final class TextStyleTweenDescription extends DuitTweenDescription<TextStyle> {
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
 
@@ -55,6 +76,7 @@ final class DecorationTweenDescription
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
 
@@ -69,6 +91,7 @@ final class AlignmentTweenDescription
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
 
@@ -83,6 +106,7 @@ final class EdgeInsetsTweenDescription
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
 
@@ -97,6 +121,7 @@ final class BoxConstraintsTweenDescription
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
 
@@ -110,6 +135,7 @@ final class SizeTweenDescription extends DuitTweenDescription<Size> {
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
 
@@ -123,5 +149,6 @@ final class BorderTweenDescription extends DuitTweenDescription<Border> {
     super.trigger,
     super.method,
     super.reverseOnRepeat,
+    super.interval,
   });
 }
