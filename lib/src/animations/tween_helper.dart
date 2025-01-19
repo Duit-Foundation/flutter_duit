@@ -23,7 +23,7 @@ mixin TweenHelper<T extends StatefulWidget> on State<T> {
           controller.reverse();
           break;
         case AnimationMethod.toggle:
-          if (controller.isForwardOrCompleted) {
+          if (controller.status.isForwardOrCompleted) {
             controller.reverse();
           } else {
             controller.forward();
