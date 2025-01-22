@@ -88,7 +88,7 @@ class _DuitViewHostState extends State<DuitViewHost> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: widget.driver.stream,
+      stream: widget.driver.eventStream,
       builder: (context, snapshot) {
         widget.driver.context = context;
 
@@ -104,10 +104,9 @@ class _DuitViewHostState extends State<DuitViewHost> {
                 gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
                 child: _StackWrapper(
                   invertStack: widget.invertStack,
-                  content: () {
-                    final content = snapshot.data!.render();
-                    return content;
-                  }(),
+                  content: (snapshot.data as UIDriverViewEvent)
+                      .model
+                      .build(),
                   child: widget.child,
                 ),
               )

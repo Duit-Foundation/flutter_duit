@@ -1,3 +1,4 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_duit/flutter_duit.dart';
@@ -29,7 +30,7 @@ void main() {
         await tester.pumpAndSettle();
 
         final errorText = find.text(
-          "Invalid argument(s): Cant infer element type from json schema: invalid_type with id= 1",
+          "Instance of 'UIDriverErrorEvent'",
         );
 
         expect(errorText, findsOneWidget);
@@ -54,7 +55,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        expect(tester.takeException(), isInstanceOf<ArgumentError>());
+        expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
       });
     });
 

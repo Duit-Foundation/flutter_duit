@@ -1,12 +1,10 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_duit/src/ui/index.dart' show DuitElement;
 import 'package:flutter_duit/src/utils/index.dart';
-
-import 'element.dart';
 
 final class DuitTree extends ElementTree {
   Widget? _root;
-  final _dm = DevMetrics();
 
   DuitTree({
     required JSONObject json,
@@ -15,23 +13,19 @@ final class DuitTree extends ElementTree {
 
   @override
   Future<ElementTree> parse() async {
-    _dm.add(ParseModelStartMessage());
     uiRoot = DuitElement.fromJson(
       json,
       driver,
     );
-    _dm.add(ParseModelEndMessage());
     return this;
   }
 
   @override
   ElementTree parseSync() {
-    _dm.add(ParseModelStartMessage());
     uiRoot = DuitElement.fromJson(
       json,
       driver,
     );
-    _dm.add(ParseModelEndMessage());
     return this;
   }
 
