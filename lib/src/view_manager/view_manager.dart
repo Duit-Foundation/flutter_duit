@@ -16,8 +16,6 @@ import 'package:flutter/material.dart';
 abstract base class ViewManager {
   late final UIDriver driver;
 
-  ViewManager();
-
   Future<DuitView?> prepareLayout(Map<String, dynamic> json);
 
   Widget build([String tag = ""]);
