@@ -91,6 +91,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     ActionExecutor? customActionExecutor,
     DebugLogger? customLogger,
     bool enableDevMetrics = false,
+    bool shared = false,
   }) {
     logger = customLogger ?? DefaultLogger.instance;
 
@@ -106,7 +107,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
           logger: logger,
         );
     isModule = false;
-    _viewManager = SimpleViewManager();
+    _viewManager = shared ? MultiViewManager() : SimpleViewManager();
   }
 
   /// Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
@@ -121,6 +122,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     bool enableDevMetrics = false,
     this.source = "",
     this.initialRequestPayload,
+    bool shared = false,
   }) {
     logger = customLogger ?? DefaultLogger.instance;
 
@@ -136,7 +138,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
           driver: this,
           logger: logger,
         );
-    _viewManager = SimpleViewManager();
+    _viewManager = shared ? MultiViewManager() : SimpleViewManager();
   }
 
   /// Creates a new [DuitDriver] instance that is controlled from native code
@@ -159,7 +161,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     final hasController = _viewControllers.containsKey(id);
     assert(!hasController,
         "ViewController with id already exists. You cannot attach controller to driver because it  contains element for id ($id)");
-
     _viewControllers[id] = controller;
   }
 
@@ -247,6 +248,10 @@ final class DuitDriver with DriverHooks implements UIDriver {
         eventStreamController.sink.add(
           UIDriverViewEvent(view),
         );
+      } else {
+        final err = FormatException(
+            "Invalid layout structure. Received map keys: ${json.keys}");
+        throw err;
       }
     } catch (e, s) {
       logger?.error(
