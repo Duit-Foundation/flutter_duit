@@ -53,6 +53,8 @@ class DuitViewHost extends StatefulWidget {
 
   final Widget Function(BuildContext context, Object? err)? errorWidgetBuilder;
 
+  final String viewTag;
+
   /// Creates a new `DuitViewHost` widget.
   ///
   /// The [driver] parameter is required and should be an instance of `UIDriver`.
@@ -69,6 +71,7 @@ class DuitViewHost extends StatefulWidget {
     this.gestureInterceptor,
     this.gestureInterceptorBehavior = GestureInterceptorBehavior.always,
     this.errorWidgetBuilder,
+    this.viewTag = "",
   }) : assert(
           showChildInsteadOfPlaceholder == true ? child != null : true,
           "Child must not be null if showChildInsteadOfPlaceholder property is set to true",
@@ -106,7 +109,7 @@ class _DuitViewHostState extends State<DuitViewHost> {
                   invertStack: widget.invertStack,
                   content: (snapshot.data as UIDriverViewEvent)
                       .model
-                      .build(),
+                      .build(widget.viewTag),
                   child: widget.child,
                 ),
               )
