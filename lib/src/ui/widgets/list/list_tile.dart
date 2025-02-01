@@ -1,41 +1,13 @@
-import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/cupertino.dart';
 
-final class DisposableListTile extends StatefulWidget {
-  final UIDriver driver;
-  final Widget child;
-  final String id;
-
-  DisposableListTile({
-    required this.id,
-    required this.child,
-    required this.driver,
-  }) : super(key: Key(id));
-
-  @override
-  State<DisposableListTile> createState() => _DisposableListTileState();
-}
-
-class _DisposableListTileState extends State<DisposableListTile> {
-  @override
-  void dispose() async {
-    widget.driver.detachController(widget.id);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
-}
-
-final class CommonListTile extends StatelessWidget {
+// The widget acts as a wrapper that creates keys for components when using lists
+final class DuitListTile extends StatelessWidget {
   final Widget child;
 
-  const CommonListTile({
-    super.key,
+  DuitListTile({
     required this.child,
-  });
+    required String id,
+  }) : super(key: ValueKey(id));
 
   @override
   Widget build(BuildContext context) {

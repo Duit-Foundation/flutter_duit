@@ -2,10 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
+import 'package:flutter_duit/src/ui/widgets/list/list_tile.dart';
 import 'package:flutter_duit/src/ui/widgets/list/list_utils.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-import 'list_tile.dart';
 
 final class DuitListViewBuilder extends StatefulWidget {
   final UIElementController<ListViewAttributes> controller;
@@ -33,23 +33,15 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
   Widget? buildItem(BuildContext context, int index) {
     final item = attributes.childObjects![index];
 
-    final alreadyParsed = item["alreadyParsed"] == true;
     final driver = widget.controller.driver;
-
-    if (alreadyParsed) {
-      driver.detachController(item["id"]);
-    }
 
     final layout = parseLayoutSync(
       item,
       driver,
     );
 
-    item["alreadyParsed"] = true;
-
-    return DisposableListTile(
+    return DuitListTile(
       id: item["id"],
-      driver: driver,
       child: layout.render(),
     );
   }

@@ -13,7 +13,7 @@ DuitAttributes exAttributeFactory(
 
 Widget exBuildFactory(
   ElementTreeEntry model, [
-  Iterable<Widget> subviews = const {},
+  Iterable<Widget> subviews = const [],
 ]) {
   final m = model as ExampleCustomWidget;
   Widget? child;
@@ -23,7 +23,7 @@ Widget exBuildFactory(
   }
 
   return ExampleWidget(
-    controller: m.viewController!,
+    controller: m.viewController!.cast<ExampleCustomWidgetAttributes>(),
     child: child,
   );
 }
@@ -33,7 +33,7 @@ ElementTreeEntry exModelFactory(
   bool controlled,
   ViewAttribute attributes,
   UIElementController? controller, [
-  Iterable<ElementTreeEntry> subviews = const {},
+  Iterable<ElementTreeEntry> subviews = const [],
 ]) {
   return ExampleCustomWidget(
     id: id,

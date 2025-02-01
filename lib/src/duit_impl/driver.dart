@@ -155,13 +155,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
   //<editor-fold desc="Controller related methods">
   @protected
   @override
-  void attachController(String id, UIElementController controller) {
-    _viewManager.addController(id, controller);
-    // final hasController = _viewControllers.containsKey(id);
-    // assert(!hasController,
-    //     "ViewController with id already exists. You cannot attach controller to driver because it  contains element for id ($id)");
-    // _viewControllers[id] = controller;
-  }
+  void attachController(String id, UIElementController controller) =>
+      _viewManager.addController(id, controller);
 
   @protected
   @override
@@ -274,9 +269,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
   void dispose() {
     onDispose?.call();
     transport?.dispose();
-    // _viewControllers
-    //   ..forEach((_, c) => c.dispose())
-    //   ..clear();
     eventStreamController.close();
   }
 
@@ -497,7 +489,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
     int state,
   ) {
     _viewManager.notifyWidgetDisplayStateChanged(viewTag, state);
-    logger?.info("Widget $viewTag state changed to $state");
+    logger?.info(
+        "Widget with tag ${viewTag.isEmpty ? "*root*" : viewTag} state changed to $state");
   }
 
   @override

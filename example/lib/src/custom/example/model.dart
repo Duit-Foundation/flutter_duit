@@ -1,3 +1,4 @@
+import 'package:example/src/custom/index.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
 // Use CustomUiElement instead of DuitElement
@@ -9,6 +10,6 @@ final class ExampleCustomWidget extends CustomUiElement {
     required super.controlled,
     required super.subviews,
   }) : super(
-          tag: "ExampleCustomWidget",
+          tag: exampleCustomWidget,
         );
 }

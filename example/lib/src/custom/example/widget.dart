@@ -1,9 +1,10 @@
+import "package:example/src/custom/example/attributes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
 class ExampleWidget extends StatefulWidget {
   final Widget? child;
-  final UIElementController controller;
+  final UIElementController<ExampleCustomWidgetAttributes> controller;
 
   const ExampleWidget({
     super.key,
@@ -16,7 +17,9 @@ class ExampleWidget extends StatefulWidget {
 }
 
 class _ExampleWidgetState extends State<ExampleWidget>
-    with ViewControllerChangeListener<ExampleWidget, dynamic> {
+    with
+        ViewControllerChangeListener<ExampleWidget,
+            ExampleCustomWidgetAttributes> {
   @override
   void initState() {
     attachStateToController(

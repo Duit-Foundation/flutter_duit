@@ -2,9 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
+import 'package:flutter_duit/src/ui/widgets/list/list_tile.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-import 'list_tile.dart';
 import 'list_utils.dart';
 
 final class DuitListViewSeparated extends StatefulWidget {
@@ -31,24 +31,14 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
 
   Widget? buildItem(BuildContext context, int index) {
     final item = attributes.childObjects![index];
-
-    final alreadyParsed = item["alreadyParsed"] == true;
     final driver = widget.controller.driver;
-
-    if (alreadyParsed) {
-      driver.detachController(item["id"]);
-    }
-
     final layout = parseLayoutSync(
       item,
       driver,
     );
 
-    item["alreadyParsed"] = true;
-
-    return DisposableListTile(
+    return DuitListTile(
       id: item["id"],
-      driver: driver,
       child: layout.render(),
     );
   }
@@ -59,15 +49,10 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
     }
 
     final driver = widget.controller.driver;
-
-    final layout = parseLayoutSync(
+    return parseLayoutSync(
       attributes.separator!,
       driver,
-    );
-
-    return _separatorView = CommonListTile(
-      child: layout.render(),
-    );
+    ).render();
   }
 
   @override
