@@ -1,3 +1,11 @@
+## 3.2.0
+
+- BackdropFilter and AnimatedOpacity widgets
+- Staggered animations support
+- Driver shared mode
+- Embedded components
+- Improve connect response handling
+
 ## 3.1.0
 
 - Improve library exports
