@@ -159,4 +159,16 @@ final class ViewController<T>
     commandChannel = StreamController<AnimationCommand>();
     commandChannel.stream.listen(callback);
   }
+
+  @override
+  UIElementController<R> cast<R>() {
+    return ViewController(
+      id: id,
+      driver: driver,
+      type: type,
+      attributes: attributes.cast<R>(),
+      action: action,
+      tag: tag,
+    );
+  }
 }

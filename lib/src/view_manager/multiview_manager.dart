@@ -30,14 +30,13 @@ final class MultiViewManager extends SimpleViewManager {
           final widgets = collection.entries.cast<MapEntry<String, dynamic>>();
 
           for (final widget in widgets) {
-          await _layout.prepareModel(
+            await _layout.prepareModel(
               <String, dynamic>{
                 widget.key: widget.value,
               },
-            driver,
-          );
+              driver,
+            );
           }
-
           return _layout;
         }
         return null;
