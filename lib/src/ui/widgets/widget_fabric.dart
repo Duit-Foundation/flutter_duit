@@ -536,7 +536,7 @@ mixin WidgetFabric {
       case ElementType.remote:
         final it = model as RemoteWidgetModel;
 
-        return DuitRemoteWidget(
+        return DuitRemoteSubtree(
           controller: it.viewController!,
         );
       case ElementType.empty:

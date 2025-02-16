@@ -1,20 +1,21 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-final class RemoteAttributes implements DuitAttributes<RemoteAttributes> {
+final class RemoteSubtreeAttributes
+    implements DuitAttributes<RemoteSubtreeAttributes> {
   final Map<String, dynamic>? data;
   final String downloadPath;
   final Map<String, dynamic>? meta;
   final Iterable<ActionDependency> dependencies;
 
-  RemoteAttributes({
+  RemoteSubtreeAttributes({
     required this.downloadPath,
     required this.dependencies,
     this.data,
     this.meta,
   });
 
-  factory RemoteAttributes.fromJson(JSONObject json) {
+  factory RemoteSubtreeAttributes.fromJson(JSONObject json) {
     Iterable<ActionDependency> deps;
     final hasProperty = json.containsKey("dependsOn");
     if (hasProperty &&
@@ -27,7 +28,7 @@ final class RemoteAttributes implements DuitAttributes<RemoteAttributes> {
       deps = const [];
     }
 
-    return RemoteAttributes(
+    return RemoteSubtreeAttributes(
       downloadPath: json["downloadPath"],
       data: json,
       meta: json["meta"],
@@ -36,8 +37,8 @@ final class RemoteAttributes implements DuitAttributes<RemoteAttributes> {
   }
 
   @override
-  RemoteAttributes copyWith(RemoteAttributes other) {
-    return RemoteAttributes(
+  RemoteSubtreeAttributes copyWith(RemoteSubtreeAttributes other) {
+    return RemoteSubtreeAttributes(
       data: other.data ?? data,
       downloadPath: downloadPath, //copying is prohibited
       meta: meta, //copying is prohibited

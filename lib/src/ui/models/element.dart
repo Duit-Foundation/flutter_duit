@@ -1224,7 +1224,8 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
         );
       case ElementType.remote:
-        final attributes = ViewAttribute.createAttributes<RemoteAttributes>(
+        final attributes =
+            ViewAttribute.createAttributes<RemoteSubtreeAttributes>(
           type,
           attributesObject,
           tag,
