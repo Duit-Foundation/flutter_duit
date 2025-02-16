@@ -532,6 +532,13 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+
+      case ElementType.remote:
+        final it = model as RemoteWidgetModel;
+
+        return DuitRemoteWidget(
+          controller: it.viewController!,
+        );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:

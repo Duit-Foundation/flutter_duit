@@ -110,6 +110,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.subtree ||
       ElementType.component =>
         SubtreeAttributes.fromJson(data),
+      ElementType.remote => RemoteAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

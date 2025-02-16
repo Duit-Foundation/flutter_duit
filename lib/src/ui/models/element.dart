@@ -1223,6 +1223,28 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           ),
           child: child,
         );
+      case ElementType.remote:
+        final attributes = ViewAttribute.createAttributes<RemoteAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return RemoteWidgetModel(
+          type: type,
+          id: id,
+          controlled: controlled,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+        );
       case ElementType.empty:
         return EmptyUIElement<EmptyAttributes>();
       case ElementType.component:
