@@ -1,4 +1,7 @@
+import "dart:async";
+
 import "package:flutter/widgets.dart";
+import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
 double getFateTransitionOpacity(WidgetTester tester, Finder finder) {
@@ -22,4 +25,44 @@ double getOpacity(WidgetTester tester, Finder finder) {
         ),
       )
       .opacity;
+}
+
+final class MockTransport extends Transport {
+  final Map<String, dynamic> mustReturnThis;
+
+  MockTransport(
+    super.url,
+    this.mustReturnThis,
+  );
+
+  @override
+  Future<Map<String, dynamic>?> connect({Map<String, dynamic>? initialData}) {
+    throw UnimplementedError();
+  }
+
+  @override
+  void dispose() {}
+
+  @override
+  FutureOr<Map<String, dynamic>?> execute(
+      ServerAction action, Map<String, dynamic> payload) {
+    throw UnimplementedError();
+  }
+
+  @override
+  FutureOr<Map<String, dynamic>?> request(
+    String url,
+    Map<String, dynamic> meta,
+    Map<String, dynamic> body, [
+    Map<String, dynamic>? returnValue,
+  ]) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return mustReturnThis;
+  }
+}
+
+extension TransportExtension on UIDriver {
+  void applyMockTransport(Map<String, dynamic> mustReturnThis) {
+    transport = MockTransport("", mustReturnThis);
+  }
 }

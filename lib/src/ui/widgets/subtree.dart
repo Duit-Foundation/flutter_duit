@@ -31,6 +31,6 @@ class _DuitComponentState extends State<DuitSubtree>
 
   @override
   Widget build(BuildContext context) {
-    return subtreeChild ?? const SizedBox.shrink();
+    return subtreeChild;
   }
 }

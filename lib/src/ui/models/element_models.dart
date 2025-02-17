@@ -762,3 +762,16 @@ final class EmptyUIElement<T> extends DuitElement<T> {
     super.id = "",
   });
 }
+
+final class RemoteUIElement<T> extends DuitElement<T> {
+  //<editor-fold desc="Properties and ctor">
+
+  RemoteUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    super.viewController,
+    super.attributes,
+  });
+//</editor-fold>
+}
