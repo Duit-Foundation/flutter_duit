@@ -756,6 +756,24 @@ final class BackdropFilterUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
+final class SafeAreaUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  SafeAreaUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class EmptyUIElement<T> extends DuitElement<T> {
   EmptyUIElement({
     super.type = ElementType.empty,

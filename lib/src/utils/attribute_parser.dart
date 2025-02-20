@@ -107,6 +107,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.constrainedBox => ConstrainedBoxAttributes.fromJson(data),
       ElementType.backdropFilter => BackdropFilterAttributes.fromJson(data),
       ElementType.animatedOpacity => AnimatedOpacityAttributes.fromJson(data),
+      ElementType.safeArea => SafeAreaAttributes.fromJson(data),
       ElementType.subtree ||
       ElementType.component =>
         SubtreeAttributes.fromJson(data),
