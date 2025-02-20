@@ -29,8 +29,8 @@ final class RemoteSubtreeAttributes
     }
 
     return RemoteSubtreeAttributes(
-      downloadPath: json["downloadPath"],
-      data: json,
+      downloadPath: json["downloadPath"] ?? "",
+      data: json["data"],
       meta: json["meta"],
       dependencies: deps,
     );

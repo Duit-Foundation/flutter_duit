@@ -533,7 +533,7 @@ mixin WidgetFabric {
           child: child,
         );
 
-      case ElementType.remote:
+      case ElementType.remoteSubtree:
         final it = model as RemoteWidgetModel;
 
         return DuitRemoteSubtree(

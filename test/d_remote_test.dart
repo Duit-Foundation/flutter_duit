@@ -13,7 +13,7 @@ void main() {
         (tester) async {
           final driver = DuitDriver.static(
             {
-              "type": "Remote",
+              "type": "RemoteSubtree",
               "controlled": true,
               "id": "remote",
               "attributes": {
@@ -58,6 +58,82 @@ void main() {
           await tester.pumpAndSettle(const Duration(seconds: 1));
 
           expect(find.byKey(const Key("text")), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        "must apply content update",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "RemoteSubtree",
+              "controlled": true,
+              "id": "remote",
+              "attributes": {
+                "downloadPath": "/widgets/remote",
+                "meta": {
+                  "method": "GET",
+                },
+                "dependsOn": [],
+              },
+            },
+            transportOptions: HttpTransportOptions(),
+            enableDevMetrics: false,
+          )..applyMockTransport(
+              {
+                "type": "Text",
+                "id": "text",
+                "controlled": false,
+                "attributes": {
+                  "data": "Hello, World!",
+                  "style": {
+                    "color": "#DCDCDC",
+                    "fontSize": 14.0,
+                    "fontWeight": 700,
+                  }
+                },
+              },
+            );
+
+          await tester.pumpWidget(
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: DuitViewHost(
+                driver: driver,
+              ),
+            ),
+          );
+
+          await tester.pumpAndSettle();
+
+          expect(find.byKey(const Key("remote")), findsOneWidget);
+
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+
+          expect(find.byKey(const Key("text")), findsOneWidget);
+
+          await driver.updateTestAttributes(
+            "remote",
+            {
+              "data": {
+                "type": "Text",
+                "id": "text_updated",
+                "controlled": false,
+                "attributes": {
+                  "data": "Hello, World!",
+                  "style": {
+                    "color": "#DCDCDC",
+                    "fontSize": 14.0,
+                    "fontWeight": 700,
+                  }
+                },
+              },
+            },
+          );
+
+          await tester.pumpAndSettle();
+
+          expect(find.byKey(const Key("text_updated")), findsOneWidget);
         },
       );
     },
