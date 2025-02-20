@@ -1223,6 +1223,32 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           ),
           child: child,
         );
+      case ElementType.safeArea:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes = ViewAttribute.createAttributes<SafeAreaAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SafeAreaUiElement<SafeAreaAttributes>(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.empty:
         return EmptyUIElement<EmptyAttributes>();
       case ElementType.component:
