@@ -44,5 +44,6 @@ final class ElementType {
   static const constrainedBox = "ConstrainedBox";
   static const backdropFilter = "BackdropFilter";
   static const animatedOpacity = "AnimatedOpacity";
+  static const remoteSubtree = "RemoteSubtree";
   static const safeArea = "SafeArea";
 }

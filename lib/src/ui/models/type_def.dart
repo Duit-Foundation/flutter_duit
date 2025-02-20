@@ -7,3 +7,4 @@ typedef ConstrainedBoxModel = ConstrainedBoxUIElement<ConstrainedBoxAttributes>;
 typedef BackdropFilterModel = BackdropFilterUIElement<BackdropFilterAttributes>;
 typedef AnimatedOpacityModel
     = AnimatedOpacityUIElement<AnimatedOpacityAttributes>;
+typedef RemoteWidgetModel = RemoteUIElement<RemoteSubtreeAttributes>;

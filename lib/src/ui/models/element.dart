@@ -1223,6 +1223,29 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           ),
           child: child,
         );
+              case ElementType.remoteSubtree:
+        final attributes =
+            ViewAttribute.createAttributes<RemoteSubtreeAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return RemoteWidgetModel(
+          type: type,
+          id: id,
+          controlled: controlled,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+        );
       case ElementType.safeArea:
         final child = DuitElement.fromJson(json["child"], driver);
 

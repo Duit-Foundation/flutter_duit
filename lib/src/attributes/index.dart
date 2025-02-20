@@ -38,4 +38,5 @@ export 'intrinsic_height_attributes.dart';
 export 'rotated_box_attributes.dart';
 export 'constrained_box_attributes.dart';
 export 'backdrop_filter_attributes.dart';
+export 'remote_subtree_attributes.dart';
 export 'safe_area_attributes.dart';

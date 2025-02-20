@@ -532,6 +532,12 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.remoteSubtree:
+        final it = model as RemoteWidgetModel;
+
+        return DuitRemoteSubtree(
+          controller: it.viewController!,
+        );
       case ElementType.safeArea:
         final it = model as SafeAreaUiElement<SafeAreaAttributes>;
         final child = getWidgetFromElement(it.child);

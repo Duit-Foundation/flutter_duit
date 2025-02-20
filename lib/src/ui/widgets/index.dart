@@ -40,4 +40,5 @@ export 'intrinsic_height.dart';
 export 'rotated_box.dart';
 export 'constrained_box.dart';
 export 'backdrop_filter.dart';
+export 'remote_subtree.dart';
 export 'safe_area.dart';
