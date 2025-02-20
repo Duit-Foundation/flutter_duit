@@ -34,4 +34,3 @@ build/
 **/goldens/linux
 **/goldens/windows
 coverage
-example/pubspec.lock
