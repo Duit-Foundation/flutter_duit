@@ -532,6 +532,19 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.safeArea:
+        final it = model as SafeAreaUiElement<SafeAreaAttributes>;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSafeArea(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSafeArea(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.custom:
