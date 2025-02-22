@@ -23,7 +23,7 @@ Widget exBuildFactory(
   }
 
   return ExampleWidget(
-    controller: m.viewController!.cast<ExampleCustomWidgetAttributes>(),
+    controller: m.viewController!,
     child: child,
   );
 }

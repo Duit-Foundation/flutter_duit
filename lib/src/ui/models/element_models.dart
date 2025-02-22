@@ -289,18 +289,20 @@ final class StackUIElement<T> extends DuitElement<T>
   });
 }
 
-base class CustomUiElement extends DuitElement<dynamic> {
+base class CustomUiElement<T> extends DuitElement<T> {
   final Iterable<ElementTreeEntry> subviews;
 
   CustomUiElement({
     required super.id,
     required super.controlled,
-    required super.viewController,
-    required super.attributes,
+    required UIElementController? viewController,
+    required ViewAttribute? attributes,
     required super.tag,
     this.subviews = const {},
   }) : super(
           type: ElementType.custom,
+          viewController: viewController?.cast<T>(),
+          attributes: attributes?.cast<T>(),
         );
 }
 
