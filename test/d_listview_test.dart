@@ -117,22 +117,26 @@ Map<String, dynamic> _createWidget() {
 }
 
 void main() {
-  DuitRegistry.registerComponents([
-    {
-      "tag": "c",
-      "layoutRoot": {
-        "type": "Container",
-        "tag": "c",
-        "id": "ckk",
-        "controlled": false,
-        "attributes": {
-          "color": "#DCDCDC",
-          "width": 100,
-          "height": 1000,
-        },
-      },
-    }
-  ]);
+  setUpAll(
+    () async {
+      await DuitRegistry.registerComponents([
+        {
+          "tag": "c",
+          "layoutRoot": {
+            "type": "Container",
+            "tag": "c",
+            "id": "ckk",
+            "controlled": false,
+            "attributes": {
+              "color": "#DCDCDC",
+              "width": 100,
+              "height": 1000,
+            },
+          },
+        }
+      ]);
+    },
+  );
 
   testWidgets(
       "Checking the correct creation and destruction of component controllers when scrolling in ListView.builder",

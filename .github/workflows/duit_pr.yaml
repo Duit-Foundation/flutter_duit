@@ -2,13 +2,13 @@ name: Duit PR CI
 
 on: [pull_request]
 
-env:
-  IS_CI: true
-  FLUTTER_VERSION: "3.22.3"
-
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        flutter-version: [ '3.22.3', '3.24.3', '3.27.3' ]
     steps:
       - name: Checkout repo
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -16,10 +16,10 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: ${{ matrix.flutter-version }}
           channel: 'stable'
           cache: true
       - run: flutter pub get
-      - run: flutter test --no-pub --coverage --test-randomize-ordering-seed=random
+      - run: flutter test --no-pub --test-randomize-ordering-seed=random
     permissions:
       id-token: write

@@ -162,7 +162,7 @@ final class ViewController<T>
 
   @override
   UIElementController<R> cast<R>() {
-    return ViewController(
+    final controller = ViewController(
       id: id,
       driver: driver,
       type: type,
@@ -170,5 +170,10 @@ final class ViewController<T>
       action: action,
       tag: tag,
     );
+
+    //re-attach new controller instance
+    driver.attachController(id, controller);
+
+    return controller;
   }
 }
