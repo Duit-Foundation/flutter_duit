@@ -6,7 +6,11 @@ import "package:flutter_test/flutter_test.dart";
 import "mocks/component_template.dart";
 
 void main() {
-  DuitRegistry.registerComponents([componentTemplate]);
+  setUpAll(
+    () async {
+      await DuitRegistry.registerComponents([componentTemplate]);
+    },
+  );
 
   group("DuitComponent widget tests", () {
     testWidgets("must merge with data correctly", (tester) async {
