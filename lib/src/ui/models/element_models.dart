@@ -704,6 +704,24 @@ final class IntrinsicHeightUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
+final class IntrinsicWidthUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  DuitElement child;
+
+  IntrinsicWidthUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+
+//</editor-fold>
+}
+
 final class RotatedBoxUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">

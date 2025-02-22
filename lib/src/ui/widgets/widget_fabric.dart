@@ -483,7 +483,19 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.intrinsicWidth:
+        final it = model as IntrinsicWidthUiElement<IntrinsicWidthAttributes>;
+        final child = getWidgetFromElement(it.child);
 
+        return it.controlled
+            ? DuitControlledIntrinsicWidth(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitIntrinsicWidth(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.rotatedBox:
         final it = model as RotatedBoxUIElement<RotatedBoxAttributes>;
         final child = getWidgetFromElement(it.child);

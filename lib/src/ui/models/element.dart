@@ -1116,6 +1116,34 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
         );
 
+      case ElementType.intrinsicWidth:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<IntrinsicWidthAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return IntrinsicWidthUiElement<IntrinsicWidthAttributes>(
+          type: type,
+          id: id,
+          attributes: attributes,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+
       case ElementType.rotatedBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -1223,7 +1251,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           ),
           child: child,
         );
-              case ElementType.remoteSubtree:
+      case ElementType.remoteSubtree:
         final attributes =
             ViewAttribute.createAttributes<RemoteSubtreeAttributes>(
           type,
