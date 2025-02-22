@@ -15,6 +15,8 @@ class CustomDecoder extends Converter<Uint8List, Map<String, dynamic>> {
 }
 
 final class _Handler implements ExternalEventHandler {
+  const _Handler();
+
   @override
   FutureOr<void> handleCustomEvent(
       BuildContext context, String key, Object? extra) {
@@ -104,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
         baseUrl: "http://localhost:8999",
         decoder: CustomDecoder(),
       ),
-      eventHandler: _Handler(),
+      externalEventHandler: const _Handler(),
     );
     super.initState();
   }
