@@ -37,6 +37,7 @@ export 'repaint_boundary.dart';
 export 'overflow_box.dart';
 export 'implicit_animations/index.dart';
 export 'intrinsic_height.dart';
+export 'intrinsic_width.dart';
 export 'rotated_box.dart';
 export 'constrained_box.dart';
 export 'backdrop_filter.dart';
