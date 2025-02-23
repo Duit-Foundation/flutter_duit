@@ -3,15 +3,15 @@ import 'package:flutter_duit/flutter_duit.dart';
 
 final class SafeAreaAttributes extends AnimatedPropertyOwner
     implements DuitAttributes<SafeAreaAttributes> {
-  final bool? left, top, right, bottom;
+  final bool left, top, right, bottom;
   final EdgeInsets? minimum;
   final bool? maintainBottomViewPadding;
 
   SafeAreaAttributes({
-    this.left,
-    this.top,
-    this.right,
-    this.bottom,
+    required this.left,
+    required this.top,
+    required this.right,
+    required this.bottom,
     this.minimum,
     this.maintainBottomViewPadding,
     required super.affectedProperties,
@@ -21,22 +21,10 @@ final class SafeAreaAttributes extends AnimatedPropertyOwner
   @override
   SafeAreaAttributes copyWith(other) {
     return SafeAreaAttributes(
-      left: assignIfNotNull(
-        other.left,
-        left,
-      ),
-      top: assignIfNotNull(
-        other.top,
-        top,
-      ),
-      right: assignIfNotNull(
-        other.right,
-        right,
-      ),
-      bottom: assignIfNotNull(
-        other.bottom,
-        bottom,
-      ),
+      left: other.left,
+      top: other.top,
+      right: other.right,
+      bottom: other.bottom,
       minimum: assignIfNotNull(
         other.minimum,
         minimum,
@@ -55,10 +43,10 @@ final class SafeAreaAttributes extends AnimatedPropertyOwner
   factory SafeAreaAttributes.fromJson(Map<String, dynamic> json) {
     final view = AnimatedPropHelper(json);
     return SafeAreaAttributes(
-      left: view['left'],
-      top: view['top'],
-      right: view['right'],
-      bottom: view['bottom'],
+      left: view['left'] ?? true,
+      top: view['top'] ?? true,
+      right: view['right'] ?? true,
+      bottom: view['bottom'] ?? true,
       minimum: AttributeValueMapper.toEdgeInsets(view['minimum']),
       maintainBottomViewPadding: view['maintainBottomViewPadding'],
       affectedProperties: view.affectedProperties,
