@@ -17,10 +17,10 @@ class DuitSafeArea extends StatelessWidget with AnimatedAttributes {
     final attrs = mergeWithAttributes(context, attributes.payload);
     return SafeArea(
       key: Key(attributes.id),
-      top: attrs.top ?? true,
-      left: attrs.left ?? true,
-      right: attrs.right ?? true,
-      bottom: attrs.bottom ?? true,
+      top: attrs.top,
+      left: attrs.left,
+      right: attrs.right,
+      bottom: attrs.bottom,
       minimum: attrs.minimum ?? EdgeInsets.zero,
       maintainBottomViewPadding: attrs.maintainBottomViewPadding ?? false,
       child: child,
@@ -61,12 +61,13 @@ class _DuitControlledSafeAreaState extends State<DuitControlledSafeArea>
       attributes,
     );
     return SafeArea(
-        key: Key(widget.controller.id),
-        top: attrs.top ?? true,
-        left: attrs.left ?? true,
-        bottom: attrs.bottom ?? true,
-        right: attrs.right ?? true,
-        minimum: attrs.minimum ?? EdgeInsets.zero,
-        child: widget.child);
+      key: Key(widget.controller.id),
+      top: attrs.top,
+      left: attrs.left,
+      right: attrs.right,
+      bottom: attrs.bottom,
+      minimum: attrs.minimum ?? EdgeInsets.zero,
+      child: widget.child,
+    );
   }
 }
