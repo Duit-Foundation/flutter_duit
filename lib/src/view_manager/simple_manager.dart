@@ -76,6 +76,14 @@ base class SimpleViewManager extends ViewManager {
 
   @override
   void addController(String id, UIElementController controller) {
+    final alreadyContains = _viewControllers.containsKey(id);
+
+    if (alreadyContains) {
+      driver.logger?.warn(
+        "Controller with id=$id already exists and it will be overriden \n This could happen because two or more controlled widgets have the same id parameter",
+      );
+    }
+
     _viewControllers[id] = controller;
   }
 

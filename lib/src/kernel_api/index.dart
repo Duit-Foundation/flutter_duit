@@ -21,4 +21,13 @@ export 'package:duit_kernel/duit_kernel.dart'
         ActionExecutor,
         EventResolver,
         ViewAttribute,
-        ServerAction;
+        ServerAction,
+        AssetThemeLoader,
+        StaticThemeLoader,
+        ResourceLoader,
+        ThemeToken,
+        UnknownThemeToken,
+        DefaultThemeToken,
+        DuitTheme,
+        ThemePreprocessor,
+        CustomTokenizer;
