@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:example/src/custom/index.dart';
+import 'package:example/src/theme/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
@@ -53,14 +54,25 @@ final class _Handler implements ExternalEventHandler {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final dio = Dio();
+
+  DuitRegistry.configure(
+    logger: DefaultLogger.instance,
+    themeLoader: HttpThemeLoader(
+      dio,
+      "http://localhost:8999/theme",
+    ),
+  );
+
+  await DuitRegistry.initTheme();
+
   DuitRegistry.register(
     exampleCustomWidget,
     modelFactory: exModelFactory,
     buildFactory: exBuildFactory,
     attributesFactory: exAttributeFactory,
   );
-
-  final dio = Dio();
 
   final res = await dio.get<List>("http://localhost:8999/components");
 
