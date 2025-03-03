@@ -63,7 +63,8 @@ final class RichTextAttributes extends AnimatedPropertyOwner
       style: AttributeValueMapper.toTextStyle(json['style']),
       strutStyle: AttributeValueMapper.toStrutStyle(json['strutStyle']),
       textAlign: AttributeValueMapper.toTextAlign(json['textAlign']),
-      textDirection: AttributeValueMapper.toTextDirection(json['textDirection']),
+      textDirection:
+          AttributeValueMapper.toTextDirection(json['textDirection']),
       softWrap: json['softWrap'],
       overflow: AttributeValueMapper.toTextOverflow(json['overflow']),
       maxLines: NumUtils.toInt(json['maxLines']),

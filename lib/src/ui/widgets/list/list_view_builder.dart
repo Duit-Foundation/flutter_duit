@@ -6,7 +6,6 @@ import 'package:flutter_duit/src/ui/widgets/list/list_tile.dart';
 import 'package:flutter_duit/src/ui/widgets/list/list_utils.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-
 final class DuitListViewBuilder extends StatefulWidget {
   final UIElementController<ListViewAttributes> controller;
 

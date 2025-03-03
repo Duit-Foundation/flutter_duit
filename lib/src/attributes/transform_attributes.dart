@@ -34,7 +34,10 @@ base class TransformAttributes extends AnimatedPropertyOwner {
         return FlipTransform.fromJson(data);
       default:
         return TransformAttributes(
-            type: 'none', parentBuilderId: '', affectedProperties: null,);
+          type: 'none',
+          parentBuilderId: '',
+          affectedProperties: null,
+        );
     }
   }
 }
@@ -236,7 +239,8 @@ final class FlipTransform extends TransformAttributes
       origin: AttributeValueMapper.toOffset(json['origin']),
       alignment: AttributeValueMapper.toAlignment(json['alignment']),
       transformHitTests: json['transformHitTests'] ?? true,
-      filterQuality: AttributeValueMapper.toFilterQuality(json['filterQuality']),
+      filterQuality:
+          AttributeValueMapper.toFilterQuality(json['filterQuality']),
       parentBuilderId: json['parentBuilderId'],
       affectedProperties: Set.from(
         json['affectedProperties'] ?? {},

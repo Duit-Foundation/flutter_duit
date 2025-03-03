@@ -84,7 +84,8 @@ class CheckboxAttributes extends AttendedModel<bool>
       overlayColor: AttributeValueMapper.toMSPColor(json["overlayColor"]),
       activeColor: ColorUtils.tryParseColor(json["activeColor"]),
       focusColor: ColorUtils.tryParseColor(json["focusColor"]),
-      visualDensity: AttributeValueMapper.toVisualDensity(json["visualDensity"]),
+      visualDensity:
+          AttributeValueMapper.toVisualDensity(json["visualDensity"]),
     );
   }
 

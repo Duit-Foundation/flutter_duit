@@ -232,7 +232,8 @@ void main() {
         affectedProperties: null,
       );
 
-      expect(() => attrs.dispatchInternalCall("invalid"), throwsUnimplementedError);
+      expect(() => attrs.dispatchInternalCall("invalid"),
+          throwsUnimplementedError);
     });
   });
 }

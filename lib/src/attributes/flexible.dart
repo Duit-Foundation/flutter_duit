@@ -38,7 +38,8 @@ final class RowAttributes extends FlexAttributes
     return RowAttributes(
       mainAxisAlignment:
           AttributeValueMapper.toMainAxisAlignment(json["mainAxisAlignment"]),
-      textDirection: AttributeValueMapper.toTextDirection(json["textDirection"]),
+      textDirection:
+          AttributeValueMapper.toTextDirection(json["textDirection"]),
       crossAxisAlignment:
           AttributeValueMapper.toCrossAxisAlignment(json["crossAxisAlignment"]),
       clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),
@@ -88,7 +89,8 @@ final class ColumnAttributes extends FlexAttributes
     return ColumnAttributes(
       mainAxisAlignment:
           AttributeValueMapper.toMainAxisAlignment(json["mainAxisAlignment"]),
-      textDirection: AttributeValueMapper.toTextDirection(json["textDirection"]),
+      textDirection:
+          AttributeValueMapper.toTextDirection(json["textDirection"]),
       crossAxisAlignment:
           AttributeValueMapper.toCrossAxisAlignment(json["crossAxisAlignment"]),
       clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),

@@ -84,7 +84,8 @@ final class RadioAttributes extends AnimatedPropertyOwner
       splashRadius: NumUtils.toDouble(json['splashRadius']),
       materialTapTargetSize: AttributeValueMapper.toMaterialTapTargetSize(
           json['materialTapTargetSize']),
-      visualDensity: AttributeValueMapper.toVisualDensity(json['visualDensity']),
+      visualDensity:
+          AttributeValueMapper.toVisualDensity(json['visualDensity']),
       parentBuilderId: json['parentBuilderId'],
       affectedProperties: Set.from(
         json['affectedProperties'] ?? {},

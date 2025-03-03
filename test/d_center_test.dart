@@ -26,7 +26,6 @@ Map<String, dynamic> _createWidget([bool? controlled = false]) {
 
 void main() {
   group("DuitCenter widget tests", () {
-
     testWidgets("check center", (tester) async {
       final driver = DuitDriver.static(
         _createWidget(true),
@@ -67,7 +66,8 @@ void main() {
 
       expect(center, equals(cont));
 
-      final cWidget = tester.widget(find.byKey(const ValueKey("centerId"))) as Center;
+      final cWidget =
+          tester.widget(find.byKey(const ValueKey("centerId"))) as Center;
 
       expect(cWidget.widthFactor, 0.5);
       expect(cWidget.heightFactor, 1.5);

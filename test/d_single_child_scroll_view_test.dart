@@ -31,7 +31,8 @@ Map<String, dynamic> _createWidget1() {
 }
 
 void main() {
-  testWidgets('SingleChildScrollView scrolls correctly', (WidgetTester tester) async {
+  testWidgets('SingleChildScrollView scrolls correctly',
+      (WidgetTester tester) async {
     final driver = DuitDriver.static(
       _createWidget1(),
       transportOptions: HttpTransportOptions(),

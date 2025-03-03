@@ -14,15 +14,14 @@ final class NativeTransport extends Transport {
   }) async {
     try {
       return await driver.driverChannel?.invokeMethod<Map<String, dynamic>>(
-      "duit_connect",
-      {...?initialData,},
-    );
-    } catch (e, s) {
-      driver.logger?.error(
-        "NativeTransport connect error",
-        error: e,
-        stackTrace: s
+        "duit_connect",
+        {
+          ...?initialData,
+        },
       );
+    } catch (e, s) {
+      driver.logger
+          ?.error("NativeTransport connect error", error: e, stackTrace: s);
       rethrow;
     }
   }
@@ -32,11 +31,8 @@ final class NativeTransport extends Transport {
     try {
       driver.driverChannel?.invokeMethod("duit_dispose");
     } catch (e, s) {
-      driver.logger?.error(
-        "NativeTransport dispose error",
-        error: e,
-        stackTrace: s
-      );
+      driver.logger
+          ?.error("NativeTransport dispose error", error: e, stackTrace: s);
       rethrow;
     }
   }

@@ -88,11 +88,7 @@ Map<String, dynamic> _createWidget() {
         "id": "subtree",
         "controlled": true,
         "attributes": {},
-        "child": {
-          "type": "Empty",
-          "id": "t1x",
-          "attributes": {}
-        }
+        "child": {"type": "Empty", "id": "t1x", "attributes": {}}
       }
     ]
   };
