@@ -44,7 +44,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final RenderBox box =
-      tester.renderObject(find.byKey(const ValueKey("c1")));
+          tester.renderObject(find.byKey(const ValueKey("c1")));
 
       await tester.pumpAndSettle();
 

@@ -52,7 +52,8 @@ final class TextFieldAttributes extends AttendedModel<String>
       style: AttributeValueMapper.toTextStyle(json['style']),
       keyboardType: AttributeValueMapper.toTextInputType(json["keyboardType"]),
       textAlign: AttributeValueMapper.toTextAlign(json['textAlign']),
-      textDirection: AttributeValueMapper.toTextDirection(json['textDirection']),
+      textDirection:
+          AttributeValueMapper.toTextDirection(json['textDirection']),
       obscuringCharacter: json['obscuringCharacter'],
       obscureText: json['obscureText'],
       autocorrect: json['autocorrect'],

@@ -91,7 +91,12 @@ void main() {
 
         box = find.byKey(const ValueKey("container"));
 
-        expect(box, paints..rect(color: Colors.white,));
+        expect(
+            box,
+            paints
+              ..rect(
+                color: Colors.white,
+              ));
       });
     },
   );

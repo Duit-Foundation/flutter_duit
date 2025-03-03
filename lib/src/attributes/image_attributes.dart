@@ -87,7 +87,8 @@ final class ImageAttributes extends AnimatedPropertyOwner
       isAntiAlias: json['isAntiAlias'],
       matchTextDirection: json['matchTextDirection'],
       gaplessPlayback: json['gaplessPlayback'],
-      filterQuality: AttributeValueMapper.toFilterQuality(json['filterQuality']),
+      filterQuality:
+          AttributeValueMapper.toFilterQuality(json['filterQuality']),
       alignment: AttributeValueMapper.toAlignment(json['alignment']),
       repeat: AttributeValueMapper.toImageRepeat(json['repeat']),
       color: json['color'] != null

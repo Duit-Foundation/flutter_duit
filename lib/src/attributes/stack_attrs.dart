@@ -24,7 +24,8 @@ final class StackAttributes extends AnimatedPropertyOwner
   factory StackAttributes.fromJson(JSONObject json) {
     return StackAttributes(
       alignment: AttributeValueMapper.toAlignmentDirectional(json["alignment"]),
-      textDirection: AttributeValueMapper.toTextDirection(json["textDirection"]),
+      textDirection:
+          AttributeValueMapper.toTextDirection(json["textDirection"]),
       fit: AttributeValueMapper.toStackFit(json["fit"]),
       clipBehavior: AttributeValueMapper.toClip(json["clipBehavior"]),
       parentBuilderId: json["parentBuilderId"],

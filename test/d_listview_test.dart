@@ -119,6 +119,8 @@ Map<String, dynamic> _createWidget() {
 void main() {
   setUpAll(
     () async {
+      DuitRegistry.configure();
+
       await DuitRegistry.registerComponents([
         {
           "tag": "c",
@@ -143,8 +145,7 @@ void main() {
       (tester) async {
     final driver = DuitDriver.static(
       _createWidget(),
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
 
     await tester.pumpWidget(

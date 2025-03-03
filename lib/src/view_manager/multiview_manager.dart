@@ -56,9 +56,8 @@ final class MultiViewManager extends SimpleViewManager {
   void notifyWidgetDisplayStateChanged(
     String viewTag,
     int state,
-  ) {
-    _layout.changeViewState(viewTag, state);
-  }
+  ) =>
+      _layout.changeViewState(viewTag, state);
 
   @override
   bool isWidgetReady(String viewTag) {

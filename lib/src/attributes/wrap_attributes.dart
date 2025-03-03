@@ -29,7 +29,8 @@ final class WrapAttributes extends AnimatedPropertyOwner
   factory WrapAttributes.fromJson(Map<String, dynamic> json) {
     return WrapAttributes(
       direction: AttributeValueMapper.toAxis(json['direction']),
-      textDirection: AttributeValueMapper.toTextDirection(json['textDirection']),
+      textDirection:
+          AttributeValueMapper.toTextDirection(json['textDirection']),
       verticalDirection:
           AttributeValueMapper.toVerticalDirection(json['verticalDirection']),
       alignment: AttributeValueMapper.toWrapAlignment(json['alignment']),
