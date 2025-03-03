@@ -145,8 +145,7 @@ void main() {
       (tester) async {
     final driver = DuitDriver.static(
       _createWidget(),
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
 
     await tester.pumpWidget(

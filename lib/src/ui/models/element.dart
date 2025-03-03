@@ -1059,7 +1059,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: false,
         );
       case ElementType.listView:
-        List<DuitElement> arr = [];
+        final List<DuitElement> arr = [];
 
         if (json["children"] != null) {
           json["children"].forEach((element) {
@@ -1074,13 +1074,21 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           id: id,
         );
 
+        bool isControlledByDefault = true;
+
+        if (attributes.payload.type != 0) {
+          isControlledByDefault = true;
+        }
+
+        final controlState = isControlledByDefault || controlled;
+
         return ListViewUIElement<ListViewAttributes>(
           type: type,
           id: id,
-          attributes: _attachAttributes(controlled, attributes),
+          attributes: _attachAttributes(controlState, attributes),
           viewController: _createAndAttachController(
             id,
-            controlled,
+            controlState,
             attributes,
             serverAction,
             driver,
@@ -1088,7 +1096,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             tag,
           ),
           children: arr,
-          controlled: controlled,
+          controlled: controlState,
         );
       case ElementType.intrinsicHeight:
         final child = DuitElement.fromJson(json["child"], driver);
@@ -1422,10 +1430,6 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
     String type,
     String? tag,
   ) {
-    if (!controlled) {
-      return null;
-    }
-
     final controller = switch (controlled) {
       false => null,
       true => ViewController<T>(
@@ -1449,7 +1453,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
     bool controlled,
     ViewAttribute<T> attributes,
   ) {
-    if (controlled) {
+    if (!controlled) {
       return attributes;
     }
 

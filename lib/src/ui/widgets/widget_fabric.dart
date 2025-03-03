@@ -430,9 +430,15 @@ mixin WidgetFabric {
       case ElementType.listView:
         final it = model as ListViewUIElement<ListViewAttributes>;
 
-        final attrs = it.attributes!.payload;
+        int widgetType;
 
-        switch (attrs.type) {
+        if (!it.controlled) {
+          widgetType = it.attributes!.payload.type;
+        } else {
+          widgetType = it.viewController!.attributes.payload.type;
+        }
+
+        switch (widgetType) {
           case 0:
             List<Widget> arr = [];
 
