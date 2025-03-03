@@ -4,6 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
 void main() {
+  setUpAll(
+    () async {
+      DuitRegistry.configure();
+    },
+  );
   group(
     "DuitHost widget tests",
     () {

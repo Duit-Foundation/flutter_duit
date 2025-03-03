@@ -8,6 +8,8 @@ import "mocks/component_template.dart";
 void main() {
   setUpAll(
     () async {
+      DuitRegistry.configure();
+      
       await DuitRegistry.registerComponents([componentTemplate]);
     },
   );

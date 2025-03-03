@@ -79,7 +79,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           children: arr,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -112,7 +112,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           children: arr,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           controlled: controlled,
           viewController: _createAndAttachController(
             id,
@@ -138,7 +138,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           child: child,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -164,7 +164,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           child: child,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -197,18 +197,18 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: wId,
           child: child,
-          attributes: attributes,
+          attributes: null,
           viewController: controller ??
               _createAndAttachController(
                 wId,
-                controlled,
+                true,
                 attributes,
                 serverAction,
                 driver,
                 type,
                 tag,
               ),
-          controlled: controlled,
+          controlled: true,
         );
       case ElementType.coloredBox:
         final child = DuitElement.fromJson(json["child"], driver);
@@ -224,7 +224,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           child: child,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -251,17 +251,17 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           child: child,
-          attributes: attributes,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
             type,
             tag,
           ),
-          controlled: controlled,
+          controlled: true,
         );
       case ElementType.sizedBox:
         final child = DuitElement.fromJson(json["child"], driver);
@@ -277,7 +277,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           child: child,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -309,7 +309,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             type,
             tag,
           ),
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           controlled: controlled,
         );
       case ElementType.text:
@@ -332,7 +332,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             type,
             tag,
           ),
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           controlled: controlled,
         );
       case ElementType.elevatedButton:
@@ -349,7 +349,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return ElevatedButtonUIElement<ElevatedButtonAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             true,
@@ -413,7 +413,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             type,
             tag,
           ),
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           controlled: controlled,
           children: arr,
         );
@@ -445,7 +445,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             type,
             tag,
           ),
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           controlled: controlled,
           children: arr,
         );
@@ -462,7 +462,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return ExpandedUiElement<ExpandedAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -488,7 +488,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return PaddingUiElement<PaddingAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -514,7 +514,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return PositionedUiElement<PositionedAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -541,7 +541,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return DecoratedBoxUiElement<DecoratedBoxAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -567,7 +567,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return CheckboxUIElement<CheckboxAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
             true,
@@ -586,10 +586,11 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           tag,
           id: id,
         );
+
         return ImageUIElement<ImageAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -611,17 +612,17 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return SwitchUiElement<SwitchAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
             type,
             tag,
           ),
-          controlled: controlled,
+          controlled: true,
         );
       case ElementType.radio:
         final attributes = ViewAttribute.createAttributes<RadioAttributes>(
@@ -633,7 +634,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return RadioUIElement<RadioAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -652,20 +653,21 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           tag,
           id: id,
         );
+
         return SliderUIElement<SliderAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
             type,
             tag,
           ),
-          controlled: controlled,
+          controlled: true,
         );
       case ElementType.container:
         final child = DuitElement.fromJson(json["child"], driver);
@@ -680,7 +682,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return ContainerUiElement<ContainerAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -706,10 +708,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return SubtreeUIElement<SubtreeAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
@@ -717,7 +719,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             tag,
           ),
           child: child,
-          controlled: controlled,
+          controlled: true,
         );
       case ElementType.gestureDetector:
         final child = DuitElement.fromJson(json["child"], driver);
@@ -733,10 +735,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return GestureDetectorUiElement<GestureDetectorAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
@@ -744,7 +746,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             tag,
           ),
           child: child,
-          controlled: controlled,
+          controlled: true,
         );
       case ElementType.align:
         final child = DuitElement.fromJson(json["child"], driver);
@@ -759,7 +761,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return AlignUiElement<AlignAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -788,7 +790,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             return TransformUiElement<ScaleTransform>(
               type: type,
               id: id,
-              attributes: castedAttrs,
+              attributes: _attachAttributes(controlled, castedAttrs),
               viewController: _createAndAttachController(
                 id,
                 controlled,
@@ -806,7 +808,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             return TransformUiElement<TranslateTransform>(
               type: type,
               id: id,
-              attributes: castedAttrs,
+              attributes: _attachAttributes(controlled, castedAttrs),
               viewController: _createAndAttachController(
                 id,
                 controlled,
@@ -824,7 +826,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             return TransformUiElement<RotateTransform>(
               type: type,
               id: id,
-              attributes: castedAttrs,
+              attributes: _attachAttributes(controlled, castedAttrs),
               viewController: _createAndAttachController(
                 id,
                 controlled,
@@ -854,10 +856,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return RadioGroupContextUiElement<RadioGroupContextAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
@@ -865,7 +867,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             tag,
           ),
           child: child,
-          controlled: controlled,
+          controlled: true,
         );
       case ElementType.singleChildScrollview:
         final child = DuitElement.fromJson(json["child"], driver);
@@ -881,7 +883,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return SingleChildScrollviewUiElement<SingleChildScrollviewAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -907,7 +909,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return OpacityUiElement<OpacityAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -934,7 +936,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return IgnorePointerUiElement<IgnorePointerAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -961,7 +963,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return RepaintBoundaryUIElement<RepaintBoundaryAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -988,7 +990,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return OverflowBoxUIElement<OverflowBoxAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -1014,10 +1016,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return MetaUiElement<MetaAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
@@ -1025,7 +1027,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             tag,
           ),
           child: child,
-          controlled: controlled,
+          controlled: true,
         );
       case ElementType.lifecycleStateListener:
         final child = DuitElement.fromJson(json["child"], driver);
@@ -1075,7 +1077,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return ListViewUIElement<ListViewAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -1103,7 +1105,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           controlled: controlled,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -1130,7 +1132,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return IntrinsicWidthUiElement<IntrinsicWidthAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -1158,7 +1160,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           controlled: controlled,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -1185,7 +1187,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           controlled: controlled,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -1212,7 +1214,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           controlled: controlled,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -1238,11 +1240,11 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return AnimatedOpacityModel(
           type: type,
           id: id,
-          controlled: controlled,
-          attributes: attributes,
+          controlled: true,
+          attributes: null,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
@@ -1263,10 +1265,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return RemoteWidgetModel(
           type: type,
           id: id,
-          controlled: controlled,
+          controlled: true,
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
             attributes,
             serverAction,
             driver,
@@ -1287,7 +1289,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return SafeAreaUiElement<SafeAreaAttributes>(
           type: type,
           id: id,
-          attributes: attributes,
+          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
             controlled,
@@ -1306,17 +1308,12 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         final providedData = json["data"] as Map<String, dynamic>;
 
         final model = DuitRegistry.getComponentDescription(tag!);
-        final dm = DevMetrics();
 
         if (model != null) {
-          dm.add(StartMergeMessage());
           final data = JsonUtils.mergeWithDataSource(
             model,
             providedData,
           );
-          dm
-            ..add(EndMergeMessage())
-            ..add(LogMergeInfo());
 
           final child = DuitElement.fromJson(data, driver);
 
@@ -1332,7 +1329,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             type: type,
             id: id,
             controlled: true,
-            attributes: attributes,
+            attributes: null,
             viewController: _createAndAttachController(
               id,
               true,
@@ -1367,7 +1364,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
               tag,
             );
 
-            final children = <DuitElement>{};
+            final children = <DuitElement>[];
 
             if (json["children"] != null) {
               json["children"].forEach(
@@ -1425,6 +1422,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
     String type,
     String? tag,
   ) {
+    if (!controlled) {
+      return null;
+    }
+
     final controller = switch (controlled) {
       false => null,
       true => ViewController<T>(
@@ -1442,6 +1443,17 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
     }
 
     return controller;
+  }
+
+  static ViewAttribute<T>? _attachAttributes<T>(
+    bool controlled,
+    ViewAttribute<T> attributes,
+  ) {
+    if (controlled) {
+      return attributes;
+    }
+
+    return null;
   }
 
   /// Renders the DUIT element to a Flutter widget.

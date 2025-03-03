@@ -18,6 +18,9 @@ import "package:flutter_duit/src/utils/index.dart";
 /// final customAttributes = AttributeParser._parseCustomWidgetAttributes(json, tag);
 /// ```
 final class DefaultAttributeParser implements AttributeParserBase {
+
+  const DefaultAttributeParser();
+
   /// Parses custom widget attributes based on the specified JSON object and tag.
   ///
   /// This method retrieves the attributes mapper for the given tag from the `DUITRegistry`.

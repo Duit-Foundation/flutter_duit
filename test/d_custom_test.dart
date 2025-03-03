@@ -8,8 +8,8 @@ void main() {
   group(
     "Custom widget tests",
     () {
-      setUpAll(() {
-        regCustom();
+      setUpAll(() async {
+        await regCustom();
       });
 
       testWidgets(
@@ -107,6 +107,39 @@ void main() {
           await t.pumpAndSettle();
 
           expect(find.byType(SizedBox), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        "must use provided theme",
+        (t) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "Custom",
+              "tag": exampleCustomWidget,
+              "attributes": {
+                "theme": "custom_1",
+              },
+              "id": "custom",
+              "controlled": true,
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await t.pumpWidget(
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: DuitViewHost(
+                driver: driver,
+              ),
+            ),
+          );
+
+          await t.pumpAndSettle();
+
+          expect(find.byType(Text), findsOneWidget);
+
+          expect(find.text("100500"), findsOneWidget);
         },
       );
     },

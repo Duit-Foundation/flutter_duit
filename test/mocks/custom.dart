@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
+import '../utils.dart';
+
 final class ExampleCustomWidgetAttributes extends AnimatedPropertyOwner
     implements DuitAttributes<ExampleCustomWidgetAttributes> {
   final String? random;
@@ -145,8 +147,22 @@ class _ExampleWidgetState extends State<ExampleWidget>
   }
 }
 
-void regCustom() {
-  DuitRegistry.configure();
+Future<void> regCustom() async {
+  DuitRegistry.configure(
+    themeLoader: const MockThemeLoader(
+      {
+        "custom_1": {
+          "type": exampleCustomWidget,
+          "data": {
+            "random": "100500",
+          }
+        }
+      },
+    ),
+  );
+
+  DuitRegistry.initTheme();
+
   DuitRegistry.register(
     exampleCustomWidget,
     modelFactory: exModelFactory,
