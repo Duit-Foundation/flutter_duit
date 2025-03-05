@@ -1,3 +1,11 @@
+## 3.3.0
+
+- WASM-compatible WebSocket transport
+- New widgets: RemoteSubtree, SafeArea, IntrinsicWidth
+- Custom widget controller auto-typecast
+- Rebinding the controller after type casting
+- Fixed attributes to object assigning
+
 ## 3.2.0
 
 - BackdropFilter and AnimatedOpacity widgets

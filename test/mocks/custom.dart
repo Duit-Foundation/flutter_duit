@@ -148,7 +148,7 @@ class _ExampleWidgetState extends State<ExampleWidget>
 }
 
 Future<void> regCustom() async {
-  DuitRegistry.configure(
+  await DuitRegistry.configure(
     themeLoader: const MockThemeLoader(
       {
         "custom_1": {
