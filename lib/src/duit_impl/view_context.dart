@@ -12,14 +12,11 @@ class DuitViewContext extends InheritedWidget
 
   final SliverGridDelegatesRegistry sliverGridDelegatesRegistry;
 
-  final SliverChildListDelegateRegistry sliverChildListDelegateRegistry;
-
   const DuitViewContext({
     super.key,
     required Widget child,
     required this.gestureInterceptorBehavior,
     required this.sliverGridDelegatesRegistry,
-    required this.sliverChildListDelegateRegistry,
     this.gestureInterceptor,
   }) : super(child: child);
 

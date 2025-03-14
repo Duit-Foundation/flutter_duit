@@ -25,7 +25,7 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
   @override
   void initState() {
     attachStateToController(widget.controller);
-    attachOnScrollCallback(widget.controller);
+    attachOnScrollCallback<ListViewAttributes>(widget.controller);
     super.initState();
   }
 

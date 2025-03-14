@@ -467,6 +467,44 @@ mixin WidgetFabric {
           default:
             return const SizedBox.shrink();
         }
+      case ElementType.gridView:
+        final it = model as GridViewModel;
+
+        GridConstructor widgetType;
+
+        if (!it.controlled) {
+          widgetType = it.attributes!.payload.constructor;
+        } else {
+          widgetType = it.viewController!.attributes.payload.constructor;
+        }
+
+        switch (widgetType) {
+          case GridConstructor.common:
+          case GridConstructor.count:
+          case GridConstructor.extent:
+            final arr = <Widget>[];
+
+            for (var element in it.children) {
+              final children = getWidgetFromElement(element);
+              arr.add(children);
+            }
+
+            if (!it.controlled) {
+              return DuitGridView(
+                attributes: it.attributes!,
+                children: arr,
+              );
+            } else {
+              return DuitControlledGridView(
+                controller: it.viewController!,
+                children: arr,
+              );
+            }
+          case GridConstructor.builder:
+            return const SizedBox.shrink();
+          default:
+            return const SizedBox.shrink();
+        }
 
       case ElementType.meta:
         final it = model as MetaUiElement<MetaAttributes>;
