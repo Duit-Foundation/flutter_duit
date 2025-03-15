@@ -99,3 +99,20 @@ final class MockThemeLoader implements ResourceLoader<DuitTheme> {
     return tp.tokenize(theme);
   }
 }
+
+Future<void> pumpDriver(
+  WidgetTester tester,
+  UIDriver driver, [
+  Key? key,
+]) async {
+  await tester.pumpWidget(
+    Directionality(
+      key: key,
+      textDirection: TextDirection.ltr,
+      child: DuitViewHost(
+        driver: driver,
+      ),
+    ),
+  );
+  await tester.pumpAndSettle();
+}

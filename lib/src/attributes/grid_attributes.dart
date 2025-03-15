@@ -284,6 +284,59 @@ final class GridViewAttributes
             0.0,
           ),
         );
+      case GridConstructor.extent:
+        final maxCrossAxisExtent = json["maxCrossAxisExtent"];
+        assert(maxCrossAxisExtent != null,
+            "maxCrossAxisExtent property cannot be null");
+        return GridViewAttributes.extent(
+          maxCrossAxisExtent: NumUtils.toDoubleWithNullReplacement(
+            maxCrossAxisExtent,
+          ),
+          reverse: json["reverse"] ?? false,
+          cacheExtent: NumUtils.toDouble(json["cacheExtent"]),
+          clipBehavior: AttributeValueMapper.toClipNonNull(
+            json["clipBehavior"],
+            Clip.hardEdge,
+          ),
+          dragStartBehavior: AttributeValueMapper.toDragStartBehavior(
+            json["dragStartBehavior"],
+          ),
+          keyboardDismissBehavior:
+              AttributeValueMapper.toKeyboardDismissBehavior(
+            json["keyboardDismissBehavior"],
+          ),
+          padding: AttributeValueMapper.toEdgeInsets(
+            json["padding"],
+          ),
+          physics: AttributeValueMapper.toScrollPhysics(
+            json["physics"],
+          ),
+          primary: json["primary"],
+          shrinkWrap: json["shrinkWrap"] ?? false,
+          scrollDirection: AttributeValueMapper.toAxis(
+            json["scrollDirection"],
+          ),
+          semanticChildCount: json["semanticChildCount"],
+          addAutomaticKeepAlives: json["addAutomaticKeepAlives"] ?? true,
+          addRepaintBoundaries: json["addRepaintBoundaries"] ?? true,
+          addSemanticIndexes: json["addSemanticIndexes"] ?? true,
+          restorationId: json["restorationId"],
+          hitTestBehavior: AttributeValueMapper.toHitTestBehavior(
+            json["hitTestBehavior"],
+          ),
+          childAspectRatio: NumUtils.toDoubleWithNullReplacement(
+            json["childAspectRatio"],
+            1.0,
+          ),
+          crossAxisSpacing: NumUtils.toDoubleWithNullReplacement(
+            json["crossAxisSpacing"],
+            0.0,
+          ),
+          mainAxisSpacing: NumUtils.toDoubleWithNullReplacement(
+            json["mainAxisSpacing"],
+            0.0,
+          ),
+        );
       case GridConstructor.builder:
         final gridDelegateKey = json["sliverGridDelegateKey"];
         assert(gridDelegateKey != null && gridDelegateKey.isNotEmpty,
@@ -581,8 +634,6 @@ final class GridViewAttributes
           ),
         );
     }
-
-    throw UnimplementedError();
   }
 
   @override
