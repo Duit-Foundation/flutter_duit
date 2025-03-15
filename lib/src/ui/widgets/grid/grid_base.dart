@@ -29,7 +29,9 @@ final class DuitGridView extends StatelessWidget {
             attrs.sliverGridDelegateOptions,
           );
         } else {
-          throw UnimplementedError("SliverGridDelegate builder not found");
+          throw ArgumentError(
+            "SliverGridDelegate builder not found in DuitViewContext",
+          );
         }
 
         return GridView(

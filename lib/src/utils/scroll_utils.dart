@@ -1,9 +1,7 @@
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
-mixin ListUtils<T extends StatefulWidget> on State<T> {
+mixin ScrollUtils<T extends StatefulWidget> on State<T> {
   //<editor-fold desc="Properties and getters">
   late final ScrollController _scrollController;
   bool _isExecuting = false;

@@ -280,8 +280,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
   void _addParsers() {
     try {
       ViewAttribute.attributeParser = const DefaultAttributeParser();
-      ServerAction.setActionParser(DefaultActionParser());
-      ServerEvent.eventParser = DefaultEventParser();
+      ServerAction.setActionParser(const DefaultActionParser());
+      ServerEvent.eventParser = const DefaultEventParser();
     } catch (e) {
       //Safely handle the case of assigning parsers during
       //multiple driver initializations as part of running tests
