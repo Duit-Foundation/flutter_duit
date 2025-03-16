@@ -38,6 +38,13 @@ class _DuitGridBuilderState extends State<DuitGridBuilder>
   }
 
   @override
+  void initState() {
+    attachStateToController(widget.controller);
+    attachOnScrollCallback(widget.controller);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SliverGridDelegate delegate;
     final viewCtx = DuitViewContext.of(context);

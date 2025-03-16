@@ -47,8 +47,10 @@ final class MockTransport extends Transport {
 
   @override
   FutureOr<Map<String, dynamic>?> execute(
-      ServerAction action, Map<String, dynamic> payload) {
-    throw UnimplementedError();
+    ServerAction action,
+    Map<String, dynamic> payload,
+  ) async {
+    return mustReturnThis;
   }
 
   @override
@@ -64,7 +66,7 @@ final class MockTransport extends Transport {
 }
 
 extension TransportExtension on UIDriver {
-  void applyMockTransport(Map<String, dynamic> mustReturnThis) {
+  void applyMockTransport(dynamic mustReturnThis) {
     transport = MockTransport("", mustReturnThis);
   }
 }
@@ -104,6 +106,7 @@ Future<void> pumpDriver(
   WidgetTester tester,
   UIDriver driver, [
   Key? key,
+  SliverGridDelegatesRegistry? sliverGridDelegatesRegistry,
 ]) async {
   await tester.pumpWidget(
     Directionality(
@@ -111,6 +114,7 @@ Future<void> pumpDriver(
       textDirection: TextDirection.ltr,
       child: DuitViewHost(
         driver: driver,
+        sliverGridDelegatesRegistry: sliverGridDelegatesRegistry ?? const {},
       ),
     ),
   );
