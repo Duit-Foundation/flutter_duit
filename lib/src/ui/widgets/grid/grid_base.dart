@@ -52,7 +52,7 @@ final class DuitGridView extends StatelessWidget {
           keyboardDismissBehavior: attrs.keyboardDismissBehavior,
           clipBehavior: attrs.clipBehavior,
           restorationId: attrs.restorationId,
-          hitTestBehavior: attrs.hitTestBehavior,
+          // hitTestBehavior: attrs.hitTestBehavior,
           children: children,
         );
       case GridConstructor.count:
@@ -76,7 +76,7 @@ final class DuitGridView extends StatelessWidget {
           keyboardDismissBehavior: attrs.keyboardDismissBehavior,
           clipBehavior: attrs.clipBehavior,
           restorationId: attrs.restorationId,
-          hitTestBehavior: attrs.hitTestBehavior,
+          // hitTestBehavior: attrs.hitTestBehavior,
           children: children,
         );
       case GridConstructor.extent:
@@ -100,7 +100,7 @@ final class DuitGridView extends StatelessWidget {
           keyboardDismissBehavior: attrs.keyboardDismissBehavior,
           clipBehavior: attrs.clipBehavior,
           restorationId: attrs.restorationId,
-          hitTestBehavior: attrs.hitTestBehavior,
+          // hitTestBehavior: attrs.hitTestBehavior,
           children: children,
         );
       default:
@@ -170,7 +170,7 @@ class _DuitControlledGridViewState extends State<DuitControlledGridView>
           keyboardDismissBehavior: attrs.keyboardDismissBehavior,
           clipBehavior: attrs.clipBehavior,
           restorationId: attrs.restorationId,
-          hitTestBehavior: attrs.hitTestBehavior,
+          // hitTestBehavior: attrs.hitTestBehavior,
           children: widget.children,
         );
       case GridConstructor.count:
@@ -194,7 +194,7 @@ class _DuitControlledGridViewState extends State<DuitControlledGridView>
           keyboardDismissBehavior: attrs.keyboardDismissBehavior,
           clipBehavior: attrs.clipBehavior,
           restorationId: attrs.restorationId,
-          hitTestBehavior: attrs.hitTestBehavior,
+          // hitTestBehavior: attrs.hitTestBehavior,
           children: widget.children,
         );
       case GridConstructor.extent:
@@ -218,7 +218,7 @@ class _DuitControlledGridViewState extends State<DuitControlledGridView>
           keyboardDismissBehavior: attrs.keyboardDismissBehavior,
           clipBehavior: attrs.clipBehavior,
           restorationId: attrs.restorationId,
-          hitTestBehavior: attrs.hitTestBehavior,
+          // hitTestBehavior: attrs.hitTestBehavior,
           children: widget.children,
         );
       default:

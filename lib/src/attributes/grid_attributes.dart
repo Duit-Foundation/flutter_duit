@@ -44,7 +44,12 @@ final class GridViewAttributes
   final Axis scrollDirection;
   final int? semanticChildCount;
   final String? restorationId;
+  /*NOTE
+  * HitTestBehavior is not supported in the minimum version of Flutter for the flutter_duit package (v3.22.3). 
+  * If a decision is made to stop supporting compatibility with this version of the framework, 
+  * it will be possible to return support for HitTestBehavior for GridView by removing the comments
   final HitTestBehavior hitTestBehavior;
+  */
   //GridView.count
   final int crossAxisCount;
 
@@ -79,7 +84,7 @@ final class GridViewAttributes
     this.clipBehavior = Clip.hardEdge,
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.restorationId,
-    this.hitTestBehavior = HitTestBehavior.opaque,
+    // this.hitTestBehavior = HitTestBehavior.opaque,
   })  : constructor = GridConstructor.common,
         crossAxisCount = 0,
         childAspectRatio = 0.0,
@@ -111,7 +116,7 @@ final class GridViewAttributes
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.restorationId,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
+    // this.hitTestBehavior = HitTestBehavior.opaque,
   })  : constructor = GridConstructor.count,
         maxCrossAxisExtent = 0.0,
         sliverGridDelegateKey = "",
@@ -142,7 +147,7 @@ final class GridViewAttributes
     this.clipBehavior = Clip.hardEdge,
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.restorationId,
-    this.hitTestBehavior = HitTestBehavior.opaque,
+    // this.hitTestBehavior = HitTestBehavior.opaque,
   })  : constructor = GridConstructor.builder,
         crossAxisCount = 0,
         childAspectRatio = 0.0,
@@ -171,7 +176,7 @@ final class GridViewAttributes
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.restorationId,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
+    // this.hitTestBehavior = HitTestBehavior.opaque,
   })  : constructor = GridConstructor.extent,
         crossAxisCount = 0,
         sliverGridDelegateKey = "",
@@ -269,8 +274,8 @@ final class GridViewAttributes
           addRepaintBoundaries: json["addRepaintBoundaries"] ?? true,
           addSemanticIndexes: json["addSemanticIndexes"] ?? true,
           restorationId: json["restorationId"],
-          hitTestBehavior:
-              AttributeValueMapper.toHitTestBehavior(json["hitTestBehavior"]),
+          // hitTestBehavior:
+          //     AttributeValueMapper.toHitTestBehavior(json["hitTestBehavior"]),
           childAspectRatio: NumUtils.toDoubleWithNullReplacement(
             json["childAspectRatio"],
             1.0,
@@ -321,9 +326,9 @@ final class GridViewAttributes
           addRepaintBoundaries: json["addRepaintBoundaries"] ?? true,
           addSemanticIndexes: json["addSemanticIndexes"] ?? true,
           restorationId: json["restorationId"],
-          hitTestBehavior: AttributeValueMapper.toHitTestBehavior(
-            json["hitTestBehavior"],
-          ),
+          // hitTestBehavior: AttributeValueMapper.toHitTestBehavior(
+          //   json["hitTestBehavior"],
+          // ),
           childAspectRatio: NumUtils.toDoubleWithNullReplacement(
             json["childAspectRatio"],
             1.0,
@@ -445,10 +450,10 @@ final class GridViewAttributes
             restorationId,
             other.restorationId,
           ),
-          hitTestBehavior: assignIfNotNull(
-            hitTestBehavior,
-            other.hitTestBehavior,
-          ),
+          // hitTestBehavior: assignIfNotNull(
+          //   hitTestBehavior,
+          //   other.hitTestBehavior,
+          // ),
           childAspectRatio: assignIfNotNull(
             childAspectRatio,
             other.childAspectRatio,

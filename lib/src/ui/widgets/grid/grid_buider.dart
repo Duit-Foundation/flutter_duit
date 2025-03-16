@@ -83,7 +83,7 @@ class _DuitGridBuilderState extends State<DuitGridBuilder>
       clipBehavior: attributes.clipBehavior,
       restorationId: attributes.restorationId,
       controller: scrollController,
-      hitTestBehavior: attributes.hitTestBehavior,
+      // hitTestBehavior: attributes.hitTestBehavior,
       semanticChildCount: attributes.semanticChildCount,
     );
   }
