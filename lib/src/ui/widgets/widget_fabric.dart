@@ -6,6 +6,7 @@ import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 import 'package:flutter_duit/src/animations/animation_builder.dart';
 import 'package:flutter_duit/src/ui/models/type_def.dart';
+import 'package:flutter_duit/src/ui/widgets/grid/grid_buider.dart';
 
 import 'index.dart';
 
@@ -462,6 +463,46 @@ mixin WidgetFabric {
             );
           case 2:
             return DuitListViewSeparated(
+              controller: it.viewController!,
+            );
+          default:
+            return const SizedBox.shrink();
+        }
+      case ElementType.gridView:
+        final it = model as GridViewModel;
+
+        GridConstructor widgetType;
+
+        if (!it.controlled) {
+          widgetType = it.attributes!.payload.constructor;
+        } else {
+          widgetType = it.viewController!.attributes.payload.constructor;
+        }
+
+        switch (widgetType) {
+          case GridConstructor.common:
+          case GridConstructor.count:
+          case GridConstructor.extent:
+            final arr = <Widget>[];
+
+            for (var element in it.children) {
+              final children = getWidgetFromElement(element);
+              arr.add(children);
+            }
+
+            if (!it.controlled) {
+              return DuitGridView(
+                attributes: it.attributes!,
+                children: arr,
+              );
+            } else {
+              return DuitControlledGridView(
+                controller: it.viewController!,
+                children: arr,
+              );
+            }
+          case GridConstructor.builder:
+            return DuitGridBuilder(
               controller: it.viewController!,
             );
           default:

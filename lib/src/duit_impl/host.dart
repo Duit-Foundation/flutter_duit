@@ -54,6 +54,8 @@ class DuitViewHost extends StatefulWidget {
 
   final String viewTag;
 
+  final SliverGridDelegatesRegistry sliverGridDelegatesRegistry;
+
   /// Creates a new `DuitViewHost` widget.
   ///
   /// The [driver] parameter is required and should be an instance of `UIDriver`.
@@ -71,6 +73,7 @@ class DuitViewHost extends StatefulWidget {
     this.gestureInterceptorBehavior = GestureInterceptorBehavior.always,
     this.errorWidgetBuilder,
     this.viewTag = "",
+    this.sliverGridDelegatesRegistry = const {},
   }) : assert(
           showChildInsteadOfPlaceholder == true ? child != null : true,
           "Child must not be null if showChildInsteadOfPlaceholder property is set to true",
@@ -115,6 +118,7 @@ class _DuitViewHostState extends State<DuitViewHost> {
           return DuitViewContext(
             gestureInterceptor: widget.gestureInterceptor,
             gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
+            sliverGridDelegatesRegistry: widget.sliverGridDelegatesRegistry,
             child: _StackWrapper(
               invertStack: widget.invertStack,
               content: content,

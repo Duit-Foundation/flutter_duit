@@ -23,14 +23,12 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
     final driver = _controller.driver;
     final attrs = _controller.attributes.payload;
 
-    switch (attrs.runtimeType) {
-      case SubtreeAttributes:
+    switch (attrs) {
+      case SubtreeAttributes():
         try {
-          final subtree = attrs as SubtreeAttributes;
-
-          if (subtree.data != null) {
+          if (attrs.data != null) {
             final layoutTree = await parseLayout(
-              subtree.data!,
+              attrs.data!,
               driver,
             );
 
@@ -46,13 +44,11 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
             stackTrace: s,
           );
         }
-      case RemoteSubtreeAttributes:
+      case RemoteSubtreeAttributes():
         try {
-          final remoteSubtree = attrs as RemoteSubtreeAttributes;
-
-          if (remoteSubtree.data != null) {
+          if (attrs.data != null) {
             final layoutTree = await parseLayout(
-              remoteSubtree.data!,
+              attrs.data!,
               driver,
             );
 

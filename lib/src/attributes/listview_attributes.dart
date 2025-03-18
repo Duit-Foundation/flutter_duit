@@ -4,13 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-enum ArrayMergeStrategy {
-  addToEnd,
-  addToStart,
-  replace,
-}
-
-final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
+final class ListViewAttributes
+    implements DuitAttributes<ListViewAttributes>, DynamicChildHolder {
   //<editor-fold desc="Flutter widget props">
   final Axis? scrollDirection;
   final bool? reverse,
@@ -38,9 +33,12 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
   ///
   /// 2 - ListView.separated
   final int type;
-  final JSONObject? separator;
-  final List<JSONObject>? childObjects;
+  final Map<String, dynamic>? separator;
+  @override
+  final List<Map<String, dynamic>>? childObjects;
+  @override
   final ArrayMergeStrategy? mergeStrategy;
+  @override
   final double? scrollEndReachedThreshold;
 
   //</editor-fold>
@@ -147,7 +145,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           padding: AttributeValueMapper.toNullableEdgeInsets(json["padding"]),
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
           childObjects: children,
-          mergeStrategy: ArrayMergeStrategy.values[json["mergeStrategy"] ?? 0],
+          mergeStrategy: ArrayMergeStrategy.fromValue(json["mergeStrategy"]),
           scrollEndReachedThreshold: NumUtils.toDouble(
             json["scrollEndReachedThreshold"],
           ),
@@ -181,7 +179,7 @@ final class ListViewAttributes implements DuitAttributes<ListViewAttributes> {
           itemExtent: NumUtils.toDouble(json["itemExtent"]),
           separator: separator,
           childObjects: children,
-          mergeStrategy: ArrayMergeStrategy.values[json["mergeStrategy"] ?? 0],
+          mergeStrategy: ArrayMergeStrategy.fromValue(json["mergeStrategy"]),
           scrollEndReachedThreshold: NumUtils.toDouble(
             json["scrollEndReachedThreshold"],
           ),

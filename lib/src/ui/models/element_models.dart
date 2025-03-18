@@ -655,6 +655,24 @@ final class ListViewUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
+final class GridViewUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  //<editor-fold desc="Properties and ctor">
+  @override
+  List<DuitElement> children;
+
+  GridViewUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+    required this.children,
+  });
+
+//</editor-fold>
+}
+
 final class ImageUIElement<T> extends DuitElement<T> {
   //<editor-fold desc="Properties and ctor">
 

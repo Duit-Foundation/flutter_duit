@@ -2,8 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/ui/widgets/list/list_tile.dart';
-import 'package:flutter_duit/src/ui/widgets/list/list_utils.dart';
+import 'package:flutter_duit/src/ui/widgets/tile.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 final class DuitListViewBuilder extends StatefulWidget {
@@ -21,11 +20,11 @@ final class DuitListViewBuilder extends StatefulWidget {
 class _DuitListViewBuilderState extends State<DuitListViewBuilder>
     with
         ViewControllerChangeListener<DuitListViewBuilder, ListViewAttributes>,
-        ListUtils {
+        ScrollUtils {
   @override
   void initState() {
     attachStateToController(widget.controller);
-    attachOnScrollCallback(widget.controller);
+    attachOnScrollCallback<ListViewAttributes>(widget.controller);
     super.initState();
   }
 
@@ -39,7 +38,7 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
       driver,
     );
 
-    return DuitListTile(
+    return DuitTile(
       id: item["id"],
       child: layout.render(),
     );

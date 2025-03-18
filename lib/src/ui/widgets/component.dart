@@ -5,8 +5,8 @@ import "package:flutter_duit/src/duit_impl/subtree_holder.dart";
 
 ///Wraps a subtree of component widgets and controls its updating]
 class DuitComponent extends StatefulWidget {
-  final Widget child;
   final UIElementController<SubtreeAttributes> controller;
+  final Widget child;
 
   const DuitComponent({
     super.key,
@@ -31,6 +31,6 @@ class _DuitComponentState extends State<DuitComponent>
 
   @override
   Widget build(BuildContext context) {
-    return subtreeChild ?? const SizedBox.shrink();
+    return subtreeChild;
   }
 }

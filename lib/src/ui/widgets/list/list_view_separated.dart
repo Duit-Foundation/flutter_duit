@@ -2,10 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
-import 'package:flutter_duit/src/ui/widgets/list/list_tile.dart';
+import 'package:flutter_duit/src/ui/widgets/tile.dart';
 import 'package:flutter_duit/src/utils/index.dart';
-
-import 'list_utils.dart';
 
 final class DuitListViewSeparated extends StatefulWidget {
   final UIElementController<ListViewAttributes> controller;
@@ -19,7 +17,7 @@ final class DuitListViewSeparated extends StatefulWidget {
 class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
     with
         ViewControllerChangeListener<DuitListViewSeparated, ListViewAttributes>,
-        ListUtils {
+        ScrollUtils {
   Widget? _separatorView;
 
   @override
@@ -37,7 +35,7 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
       driver,
     );
 
-    return DuitListTile(
+    return DuitTile(
       id: item["id"],
       child: layout.render(),
     );

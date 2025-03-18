@@ -526,6 +526,23 @@ final class AttributeValueMapper {
     return null;
   }
 
+  static Clip toClipNonNull(String? value, Clip? defaultValue) {
+    if (value == null) return defaultValue ?? Clip.hardEdge;
+
+    switch (value) {
+      case "hardEdge":
+        return Clip.hardEdge;
+      case "antiAlias":
+        return Clip.antiAlias;
+      case "antiAliasWithSaveLayer":
+        return Clip.antiAliasWithSaveLayer;
+      case "none":
+        return Clip.none;
+    }
+
+    return defaultValue ?? Clip.hardEdge;
+  }
+
   /// Converts a string value to a [MainAxisSize] value.
   ///
   /// Returns the corresponding [MainAxisSize] value for the given string [value].
