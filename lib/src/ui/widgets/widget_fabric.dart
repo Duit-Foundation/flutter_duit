@@ -628,6 +628,19 @@ mixin WidgetFabric {
         }
 
         return const DuitEmptyView();
+      case ElementType.card:
+        final it = model as CardModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledCard(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitCard(
+                attributes: it.attributes!,
+                child: child,
+              );
       default:
         return const SizedBox.shrink();
     }

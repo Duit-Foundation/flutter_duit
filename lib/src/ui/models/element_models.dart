@@ -1,8 +1,9 @@
 import 'package:duit_kernel/duit_kernel.dart';
-
+import 'package:flutter_duit/src/attributes/card_attributes.dart';
+import 'package:flutter_duit/src/attributes/index.dart';
+import 'package:flutter_duit/src/ui/models/element.dart';
+import 'package:flutter_duit/src/ui/models/element_type.dart';
 import "package:flutter_duit/src/ui/models/child.dart";
-import "package:flutter_duit/src/ui/models/element.dart";
-import "package:flutter_duit/src/ui/models/element_type.dart";
 
 final class MetaUiElement<T> extends DuitElement<T>
     implements SingleChildLayout {
@@ -830,4 +831,18 @@ final class RemoteUIElement<T> extends DuitElement<T> {
     super.attributes,
   });
 //</editor-fold>
+}
+
+/// A UI element that represents a Card widget.
+final class CardUIElement<T extends CardAttributes> extends DuitElement<T> {
+  final DuitElement child;
+
+  CardUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
 }

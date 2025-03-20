@@ -48,4 +48,5 @@ final class ElementType {
   static const remoteSubtree = "RemoteSubtree";
   static const safeArea = "SafeArea";
   static const gridView = "GridView";
+  static const card = "Card";
 }

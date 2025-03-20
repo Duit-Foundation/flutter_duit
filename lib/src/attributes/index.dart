@@ -42,3 +42,4 @@ export 'backdrop_filter_attributes.dart';
 export 'remote_subtree_attributes.dart';
 export 'safe_area_attributes.dart';
 export 'grid_attributes.dart';
+export 'card_attributes.dart';

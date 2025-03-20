@@ -9,3 +9,4 @@ typedef AnimatedOpacityModel
     = AnimatedOpacityUIElement<AnimatedOpacityAttributes>;
 typedef RemoteWidgetModel = RemoteUIElement<RemoteSubtreeAttributes>;
 typedef GridViewModel = GridViewUIElement<GridViewAttributes>;
+typedef CardModel = CardUIElement<CardAttributes>;
