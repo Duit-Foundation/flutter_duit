@@ -1455,4 +1455,57 @@ final class AttributeValueMapper {
     return Duration(milliseconds: value.toInt());
   }
 //</editor-fold>
+
+  static BorderRadius? toBorderRadius(JSONObject? json) {
+    if (json == null) return null;
+
+    return BorderRadius.only(
+      topLeft:
+          Radius.circular(NumUtils.toDouble(json['topLeft']?['radius']) ?? 0),
+      topRight:
+          Radius.circular(NumUtils.toDouble(json['topRight']?['radius']) ?? 0),
+      bottomLeft: Radius.circular(
+          NumUtils.toDouble(json['bottomLeft']?['radius']) ?? 0),
+      bottomRight: Radius.circular(
+          NumUtils.toDouble(json['bottomRight']?['radius']) ?? 0),
+    );
+  }
+
+  static ShapeBorder? toShapeBorder(JSONObject? json) {
+    if (json == null) return null;
+
+    final type = json['type'] as String?;
+    if (type == null) return null;
+
+    switch (type) {
+      case 'RoundedRectangleBorder':
+        return RoundedRectangleBorder(
+          borderRadius:
+              toBorderRadius(json['borderRadius']) ?? BorderRadius.zero,
+          side: toBorderSide(json['side']),
+        );
+      case 'CircleBorder':
+        return CircleBorder(
+          side: toBorderSide(json['side']),
+        );
+      case 'StadiumBorder':
+        return StadiumBorder(
+          side: toBorderSide(json['side']),
+        );
+      case 'BeveledRectangleBorder':
+        return BeveledRectangleBorder(
+          borderRadius:
+              toBorderRadius(json['borderRadius']) ?? BorderRadius.zero,
+          side: toBorderSide(json['side']),
+        );
+      case 'ContinuousRectangleBorder':
+        return ContinuousRectangleBorder(
+          borderRadius:
+              toBorderRadius(json['borderRadius']) ?? BorderRadius.zero,
+          side: toBorderSide(json['side']),
+        );
+      default:
+        return null;
+    }
+  }
 }
