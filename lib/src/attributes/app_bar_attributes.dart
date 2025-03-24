@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
-/// Represents the attributes for an AppBar widget.
+/// A class that represents the attributes for an AppBar widget.
 ///
-/// This class implements the [DuitAttributes] interface, allowing it to be used with DUIT widgets.
+/// This class contains all the customizable properties that can be applied to an AppBar,
+/// including visual properties like colors and dimensions, as well as child widgets
+/// like the leading widget, title, and actions.
+///
+/// Properties are divided into two main categories:
+/// - Widget properties (leading, title, bottom, etc.) that represent child widgets
+/// - Visual properties (colors, dimensions, etc.) that control the AppBar's appearance
 final class AppBarAttributes extends AnimatedPropertyOwner
     implements DuitAttributes<AppBarAttributes> {
   // NOTE: children properties with [Widget] type
-  final Map<String, dynamic>? leading, title, bottom, flexibleSpace;
-  final List<Map<String, dynamic>>? actions;
+  final NonChildWidget? leading, title, bottom, flexibleSpace;
+  final List<NonChildWidget>? actions;
 
   //NOTE: other attributes properties
   final EdgeInsetsGeometry? actionsPadding;
@@ -28,7 +34,7 @@ final class AppBarAttributes extends AnimatedPropertyOwner
   final bool? centerTitle;
   final ShapeBorder? shape;
   final Clip? clipBehavior;
-  
+
   const AppBarAttributes({
     required this.automaticallyImplyLeading,
     required this.excludeHeaderSemantics,

@@ -112,6 +112,35 @@ void main() {
 
         expect(widget, findsOneWidget);
       });
+
+      testWidgets("must update attributes", (tester) async {
+        final driver = DuitDriver.static(
+          _createWidget("topLeft", true),
+          transportOptions: EmptyTransportOptions(),
+          enableDevMetrics: false,
+        );
+        await tester.pumpWidget(
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: DuitViewHost(
+              driver: driver,
+            ),
+          ),
+        );
+
+        await tester.pumpAndSettle();
+
+        await driver.updateTestAttributes("alignId", {
+          "alignment": "bottomRight",
+        });
+
+        await tester.pumpAndSettle();
+
+        final widget =
+            tester.widget(find.byKey(const ValueKey("alignId"))) as Align;
+
+        expect(widget.alignment, equals(Alignment.bottomRight));
+      });
     },
   );
 }

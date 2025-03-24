@@ -612,6 +612,12 @@ mixin WidgetFabric {
               );
       case ElementType.empty:
         return const DuitEmptyView();
+      case ElementType.appBar:
+        final it = model as AppBarModel;
+
+        return DuitAppBar(
+          controller: it.viewController!,
+        );
       case ElementType.custom:
         final customWidgetModel = model as CustomUiElement;
         if (customWidgetModel.tag != null) {

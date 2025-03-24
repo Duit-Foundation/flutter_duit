@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/widgets/tile.dart';
-import 'package:flutter_duit/src/utils/index.dart';
 
 final class DuitListViewSeparated extends StatefulWidget {
   final UIElementController<ListViewAttributes> controller;
@@ -17,7 +16,8 @@ final class DuitListViewSeparated extends StatefulWidget {
 class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
     with
         ViewControllerChangeListener<DuitListViewSeparated, ListViewAttributes>,
-        ScrollUtils {
+        ScrollUtils,
+        OutOfBoundWidgetBuilder {
   Widget? _separatorView;
 
   @override
@@ -28,16 +28,14 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
   }
 
   Widget? buildItem(BuildContext context, int index) {
-    final item = attributes.childObjects![index];
-    final driver = widget.controller.driver;
-    final layout = parseLayoutSync(
+    final item = attributes.childObjects?[index];
+    return buildOutOfBoundWidget(
       item,
-      driver,
-    );
-
-    return DuitTile(
-      id: item["id"],
-      child: layout.render(),
+      widget.controller.driver,
+      (child) => DuitTile(
+        id: item?["id"],
+        child: child,
+      ),
     );
   }
 
@@ -47,10 +45,9 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
     }
 
     final driver = widget.controller.driver;
-    return parseLayoutSync(
-      attributes.separator!,
-      driver,
-    ).render();
+    return _separatorView =
+        buildOutOfBoundWidget(attributes.separator, driver, null) ??
+            const SizedBox.shrink();
   }
 
   @override
