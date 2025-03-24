@@ -49,4 +49,5 @@ final class ElementType {
   static const safeArea = "SafeArea";
   static const gridView = "GridView";
   static const card = "Card";
+  static const appBar = "AppBar";
 }
