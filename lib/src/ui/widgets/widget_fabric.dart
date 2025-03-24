@@ -6,7 +6,6 @@ import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 import 'package:flutter_duit/src/animations/animation_builder.dart';
 import 'package:flutter_duit/src/ui/models/type_def.dart';
-import 'package:flutter_duit/src/ui/widgets/grid/grid_buider.dart';
 
 import 'index.dart';
 
