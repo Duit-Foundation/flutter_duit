@@ -2,6 +2,14 @@
 
 <!--- Describe your changes in detail -->
 
+## Issue
+
+<!--- Add link to issue here -->
+
+## Related PRs
+
+<!--- Add links to all related PRs in other duit repositories -->
+
 ## Type of Change
 
 <!--- Put an `x` in all the boxes that apply: -->
