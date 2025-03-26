@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -109,10 +110,9 @@ Future<void> pumpDriver(
   SliverGridDelegatesRegistry? sliverGridDelegatesRegistry,
 ]) async {
   await tester.pumpWidget(
-    Directionality(
+    MaterialApp(
       key: key,
-      textDirection: TextDirection.ltr,
-      child: DuitViewHost(
+      home: DuitViewHost(
         driver: driver,
         sliverGridDelegatesRegistry: sliverGridDelegatesRegistry ?? const {},
       ),

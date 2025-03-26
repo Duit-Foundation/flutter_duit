@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 
-class DuitAppBar extends StatefulWidget with AnimatedAttributes {
+class DuitAppBar extends StatefulWidget
+    with AnimatedAttributes
+    implements PreferredSizeWidget {
   final UIElementController<AppBarAttributes> controller;
   const DuitAppBar({
     super.key,
@@ -11,6 +13,9 @@ class DuitAppBar extends StatefulWidget with AnimatedAttributes {
 
   @override
   State<DuitAppBar> createState() => _DuitAppBarState();
+  
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _DuitAppBarState extends State<DuitAppBar>
