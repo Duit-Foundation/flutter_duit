@@ -427,7 +427,7 @@ final class AttributeValueMapper {
   /// Returns the corresponding [AlignmentDirectional] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid alignment, returns [AlignmentDirectional.centerStart] as the default.
-  static AlignmentGeometry toAlignmentDirectional(String? value) {
+  static AlignmentDirectional toAlignmentDirectional(String? value) {
     if (value == null) return AlignmentDirectional.topStart;
 
     switch (value) {
@@ -1507,5 +1507,31 @@ final class AttributeValueMapper {
       default:
         return null;
     }
+  }
+
+  static FloatingActionButtonLocation? toFABLocation(dynamic value) {
+    if (value == null) return null;
+
+    return switch (value) {
+      "centerDocked" || 0 => FloatingActionButtonLocation.centerDocked,
+      "centerFloat" || 1 => FloatingActionButtonLocation.centerFloat,
+      "centerTop" || 2 => FloatingActionButtonLocation.centerTop,
+      "endDocked" || 3 => FloatingActionButtonLocation.endDocked,
+      "endFloat" || 4 => FloatingActionButtonLocation.endFloat,
+      "endTop" || 5 => FloatingActionButtonLocation.endTop,
+      "startDocked" || 6 => FloatingActionButtonLocation.startDocked,
+      "startFloat" || 7 => FloatingActionButtonLocation.startFloat,
+      "startTop" || 8 => FloatingActionButtonLocation.startTop,
+      "miniCenterDocked" || 9 => FloatingActionButtonLocation.miniCenterDocked,
+      "miniCenterFloat" || 10 => FloatingActionButtonLocation.miniCenterFloat,
+      "miniCenterTop" || 11 => FloatingActionButtonLocation.miniCenterTop,
+      "miniEndDocked" || 12 => FloatingActionButtonLocation.miniEndDocked,
+      "miniEndFloat" || 13 => FloatingActionButtonLocation.miniEndFloat,
+      "miniEndTop" || 14 => FloatingActionButtonLocation.miniEndTop,
+      "miniStartDocked" || 15 => FloatingActionButtonLocation.miniStartDocked,
+      "miniStartFloat" || 16 => FloatingActionButtonLocation.miniStartFloat,
+      "miniStartTop" || 17 => FloatingActionButtonLocation.miniStartTop,
+      _ => null,
+    };
   }
 }

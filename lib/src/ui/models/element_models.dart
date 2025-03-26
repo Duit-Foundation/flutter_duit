@@ -853,6 +853,14 @@ final class AppBarUiElement<T> extends DuitElement<T> {
     required super.id,
     required super.controlled,
     required super.viewController,
-    required super.attributes,
+  });
+}
+
+final class ScaffoldUiElement<T> extends DuitElement<T> {
+  ScaffoldUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
   });
 }

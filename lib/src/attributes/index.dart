@@ -44,3 +44,4 @@ export 'safe_area_attributes.dart';
 export 'grid_attributes.dart';
 export 'card_attributes.dart';
 export 'app_bar_attributes.dart';
+export 'scaffold_attributes.dart';
