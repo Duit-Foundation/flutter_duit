@@ -617,6 +617,12 @@ mixin WidgetFabric {
         return DuitAppBar(
           controller: it.viewController!,
         );
+      case ElementType.scaffold:
+        final it = model as ScaffoldModel;
+
+        return DuitScaffold(
+          controller: it.viewController!,
+        );
       case ElementType.custom:
         final customWidgetModel = model as CustomUiElement;
         if (customWidgetModel.tag != null) {

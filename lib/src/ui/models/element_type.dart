@@ -50,4 +50,5 @@ final class ElementType {
   static const gridView = "GridView";
   static const card = "Card";
   static const appBar = "AppBar";
+  static const scaffold = "Scaffold";
 }

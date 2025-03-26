@@ -1428,10 +1428,31 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return AppBarModel(
           type: type,
           id: id,
-          attributes: _attachAttributes(controlled, attributes),
           viewController: _createAndAttachController(
             id,
-            controlled,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: true,
+        );
+      case ElementType.scaffold:
+        final attributes = ViewAttribute.createAttributes<ScaffoldAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return ScaffoldModel(
+          type: type,
+          id: id,
+          viewController: _createAndAttachController(
+            id,
+            true,
             attributes,
             serverAction,
             driver,
