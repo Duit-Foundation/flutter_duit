@@ -846,3 +846,13 @@ final class CardUIElement<T extends CardAttributes> extends DuitElement<T> {
     required this.child,
   });
 }
+
+final class AppBarUiElement<T> extends DuitElement<T> {
+  AppBarUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+  });
+}

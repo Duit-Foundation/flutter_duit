@@ -20,7 +20,8 @@ final class DuitListViewBuilder extends StatefulWidget {
 class _DuitListViewBuilderState extends State<DuitListViewBuilder>
     with
         ViewControllerChangeListener<DuitListViewBuilder, ListViewAttributes>,
-        ScrollUtils {
+        ScrollUtils,
+        OutOfBoundWidgetBuilder {
   @override
   void initState() {
     attachStateToController(widget.controller);

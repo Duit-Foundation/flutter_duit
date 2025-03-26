@@ -117,6 +117,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
         SubtreeAttributes.fromJson(data),
       ElementType.remoteSubtree => RemoteSubtreeAttributes.fromJson(data),
       ElementType.card => CardAttributes.fromJson(data),
+      ElementType.appBar => AppBarAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

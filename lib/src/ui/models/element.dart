@@ -1417,6 +1417,29 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         }
 
         return EmptyUIElement<EmptyAttributes>();
+      case ElementType.appBar:
+        final attributes = ViewAttribute.createAttributes<AppBarAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AppBarModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: true,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);
