@@ -70,23 +70,24 @@ void main() {
       testWidgets(
         "must build with AppBar widget",
         (tester) async {
-          final driver = DuitDriver.static(
-            {
-              "type": "Scaffold",
-              "id": "scaffold",
-              "attributes": {
-                "appBar": {
-                  "type": "AppBar",
-                  "id": "appBar",
-                  "controlled": true,
-                  "attributes": {},
+          await pumpDriver(
+            tester,
+            DuitDriver.static(
+              {
+                "type": "Scaffold",
+                "id": "scaffold",
+                "attributes": {
+                  "appBar": {
+                    "type": "AppBar",
+                    "id": "appBar",
+                    "controlled": true,
+                    "attributes": {},
+                  },
                 },
               },
-            },
-            transportOptions: EmptyTransportOptions(),
+              transportOptions: EmptyTransportOptions(),
+            ),
           );
-
-          await pumpDriver(tester, driver);
 
           final appBar = find.byKey(const Key("appBar"));
           expect(appBar, findsOneWidget);

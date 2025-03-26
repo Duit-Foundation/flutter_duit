@@ -13,9 +13,11 @@ class DuitAppBar extends StatefulWidget
 
   @override
   State<DuitAppBar> createState() => _DuitAppBarState();
-  
+
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(
+        controller.attributes.payload.toolbarHeight ?? kToolbarHeight,
+      );
 }
 
 class _DuitAppBarState extends State<DuitAppBar>

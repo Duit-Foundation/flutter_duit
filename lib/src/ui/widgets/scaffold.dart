@@ -35,7 +35,7 @@ class _DuitScaffoldState extends State<DuitScaffold>
         null,
       ),
       body: buildOutOfBoundWidget(
-        attributes.appBar,
+        attributes.body,
         driver,
         null,
       ),
