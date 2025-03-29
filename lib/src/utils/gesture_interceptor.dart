@@ -18,6 +18,11 @@ enum GestureType {
   onPanUpdate,
   onPanEnd,
   onPanCancel,
+  //InkWell spec
+  onSecondaryTapDown,
+  onSecondaryTapCancel,
+  onSecondaryTap,
+  onSecondaryTapUp
 }
 
 ///Properties enum that determine how the interceptor will be invoked

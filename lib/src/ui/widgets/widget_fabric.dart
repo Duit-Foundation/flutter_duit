@@ -623,6 +623,14 @@ mixin WidgetFabric {
         return DuitScaffold(
           controller: it.viewController!,
         );
+      case ElementType.inkWell:
+        final it = model as InkWellModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitInkWell(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.custom:
         final customWidgetModel = model as CustomUiElement;
         if (customWidgetModel.tag != null) {
