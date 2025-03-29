@@ -51,4 +51,5 @@ final class ElementType {
   static const card = "Card";
   static const appBar = "AppBar";
   static const scaffold = "Scaffold";
+  static const inkWell = "InkWell";
 }

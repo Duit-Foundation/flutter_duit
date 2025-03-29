@@ -1461,6 +1461,31 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           ),
           controlled: true,
         );
+      case ElementType.inkWell:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes = ViewAttribute.createAttributes<InkWellAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return InkWellModel(
+          type: type,
+          id: id,
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: true,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);
