@@ -112,9 +112,11 @@ Future<void> pumpDriver(
   await tester.pumpWidget(
     MaterialApp(
       key: key,
-      home: DuitViewHost(
-        driver: driver,
-        sliverGridDelegatesRegistry: sliverGridDelegatesRegistry ?? const {},
+      home: Material(
+        child: DuitViewHost(
+          driver: driver,
+          sliverGridDelegatesRegistry: sliverGridDelegatesRegistry ?? const {},
+        ),
       ),
     ),
   );

@@ -5,22 +5,22 @@ import 'package:flutter_duit/src/duit_impl/view_context.dart';
 extension type ActionUtils(Map<String, dynamic> json) {
   ServerAction? parseAction(String key) {
     final Map<String, dynamic>? action = json[key];
-    if (action == null) null;
-    return ServerAction.parse(action!);
+    if (action == null) return null;
+    return ServerAction.parse(action);
   }
 }
 
 mixin ActionHandler {
-  Function([Object? gestureInfo])? performAction(
+  void Function([Object? gestureInfo])? performAction(
     BuildContext context,
     UIElementController controller,
     ServerAction? action, {
     required GestureType type,
     bool performActionAsync = false,
   }) {
-    if (action == null) null;
+    if (action == null) return null;
 
-    return ([Object? gestureInfo]) {
+    void performer([Object? gestureInfo]) {
       final viewCtx = DuitViewContext.of(context);
 
       if (viewCtx.gestureInterceptorBehavior ==
@@ -37,6 +37,8 @@ mixin ActionHandler {
       performActionAsync
           ? controller.performActionAsync(action)
           : controller.performAction(action);
-    };
+    }
+
+    return performer;
   }
 }
