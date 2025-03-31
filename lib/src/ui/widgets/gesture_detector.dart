@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/attributes/index.dart";
-import "package:flutter_duit/src/duit_impl/view_context.dart";
 
 class DuitGestureDetector extends StatefulWidget {
   final Widget child;
@@ -20,184 +19,120 @@ class DuitGestureDetector extends StatefulWidget {
 class _DuitGestureDetectorState extends State<DuitGestureDetector>
     with
         ViewControllerChangeListener<DuitGestureDetector,
-            GestureDetectorAttributes> {
+            GestureDetectorAttributes>,
+        ActionHandler {
   @override
   void initState() {
     attachStateToController(widget.controller);
     super.initState();
   }
 
-  void _performAction(
-    ServerAction? action, {
-    required GestureType type,
-    Object? gestureInfo,
-  }) {
-    final viewCtx = DuitViewContext.of(context);
-
-    if (viewCtx.gestureInterceptorBehavior ==
-        GestureInterceptorBehavior.onlyWithAction) {
-      if (action != null) {
-        viewCtx.gestureInterceptor?.call(type, gestureInfo: gestureInfo);
-      }
-
-      widget.controller.performAction(action);
-      return;
-    }
-
-    viewCtx.gestureInterceptor?.call(type, gestureInfo: gestureInfo);
-    widget.controller.performAction(action);
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       key: Key(widget.controller.id),
-      onTap: attributes.onTap != null
-          ? () {
-              _performAction(
-                attributes.onTap,
-                type: GestureType.onTap,
-              );
-            }
-          : null,
-      onTapUp: attributes.onTapUp != null
-          ? (info) {
-              _performAction(
-                attributes.onTapUp,
-                type: GestureType.onTapUp,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onTapDown: attributes.onTapDown != null
-          ? (info) {
-              _performAction(
-                attributes.onTapDown,
-                type: GestureType.onTapDown,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onTapCancel: attributes.onTapCancel != null
-          ? () {
-              _performAction(
-                attributes.onTapCancel,
-                type: GestureType.onTapCancel,
-              );
-            }
-          : null,
-      onDoubleTap: attributes.onDoubleTap != null
-          ? () {
-              _performAction(
-                attributes.onDoubleTap,
-                type: GestureType.onDoubleTap,
-              );
-            }
-          : null,
-      onDoubleTapDown: attributes.onDoubleTapDown != null
-          ? (info) {
-              _performAction(
-                attributes.onDoubleTapDown,
-                type: GestureType.onDoubleTapDown,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onDoubleTapCancel: attributes.onDoubleTapCancel != null
-          ? () {
-              _performAction(
-                attributes.onDoubleTapCancel,
-                type: GestureType.onDoubleTapCancel,
-              );
-            }
-          : null,
-      onLongPress: attributes.onLongPress != null
-          ? () {
-              _performAction(
-                attributes.onLongPress,
-                type: GestureType.onLongPress,
-              );
-            }
-          : null,
-      onLongPressStart: attributes.onLongPressStart != null
-          ? (info) {
-              _performAction(
-                attributes.onLongPressStart,
-                type: GestureType.onLongPressStart,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onLongPressMoveUpdate: attributes.onLongPressMoveUpdate != null
-          ? (info) {
-              _performAction(
-                attributes.onLongPressMoveUpdate,
-                type: GestureType.onLongPressMoveUpdate,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onLongPressUp: attributes.onLongPressUp != null
-          ? () {
-              _performAction(
-                attributes.onLongPressUp,
-                type: GestureType.onLongPressUp,
-              );
-            }
-          : null,
-      onLongPressEnd: attributes.onLongPressEnd != null
-          ? (info) {
-              _performAction(
-                attributes.onLongPressEnd,
-                type: GestureType.onLongPressEnd,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onPanStart: attributes.onPanStart != null
-          ? (info) {
-              _performAction(
-                attributes.onPanStart,
-                type: GestureType.onPanStart,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onPanDown: attributes.onPanDown != null
-          ? (info) {
-              _performAction(
-                attributes.onPanDown,
-                type: GestureType.onPanDown,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onPanUpdate: attributes.onPanUpdate != null
-          ? (info) {
-              _performAction(
-                attributes.onPanUpdate,
-                type: GestureType.onPanUpdate,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onPanEnd: attributes.onPanEnd != null
-          ? (info) {
-              _performAction(
-                attributes.onPanEnd,
-                type: GestureType.onPanEnd,
-                gestureInfo: info,
-              );
-            }
-          : null,
-      onPanCancel: attributes.onPanCancel != null
-          ? () {
-              _performAction(
-                attributes.onPanCancel,
-                type: GestureType.onPanCancel,
-              );
-            }
-          : null,
+      onTap: performAction(
+        context,
+        widget.controller,
+        attributes.onTap,
+        type: GestureType.onTap,
+      ),
+      onTapUp: performAction(
+        context,
+        widget.controller,
+        attributes.onTapUp,
+        type: GestureType.onTapUp,
+      ),
+      onTapDown: performAction(
+        context,
+        widget.controller,
+        attributes.onTapDown,
+        type: GestureType.onTapDown,
+      ),
+      onTapCancel: performAction(
+        context,
+        widget.controller,
+        attributes.onTapCancel,
+        type: GestureType.onTapCancel,
+      ),
+      onDoubleTap: performAction(
+        context,
+        widget.controller,
+        attributes.onDoubleTap,
+        type: GestureType.onDoubleTap,
+      ),
+      onDoubleTapDown: performAction(
+        context,
+        widget.controller,
+        attributes.onDoubleTap,
+        type: GestureType.onDoubleTapDown,
+      ),
+      onDoubleTapCancel: performAction(
+        context,
+        widget.controller,
+        attributes.onDoubleTapCancel,
+        type: GestureType.onDoubleTapCancel,
+      ),
+      onLongPress: performAction(
+        context,
+        widget.controller,
+        attributes.onLongPress,
+        type: GestureType.onLongPress,
+      ),
+      onLongPressStart: performAction(
+        context,
+        widget.controller,
+        attributes.onLongPressStart,
+        type: GestureType.onLongPressStart,
+      ),
+      onLongPressMoveUpdate: performAction(
+        context,
+        widget.controller,
+        attributes.onLongPressMoveUpdate,
+        type: GestureType.onLongPressMoveUpdate,
+      ),
+      onLongPressUp: performAction(
+        context,
+        widget.controller,
+        attributes.onLongPressUp,
+        type: GestureType.onLongPressUp,
+      ),
+      onLongPressEnd: performAction(
+        context,
+        widget.controller,
+        attributes.onLongPressEnd,
+        type: GestureType.onLongPressEnd,
+      ),
+      onPanStart: performAction(
+        context,
+        widget.controller,
+        attributes.onPanStart,
+        type: GestureType.onPanStart,
+      ),
+      onPanDown: performAction(
+        context,
+        widget.controller,
+        attributes.onPanDown,
+        type: GestureType.onPanDown,
+      ),
+      onPanUpdate: performAction(
+        context,
+        widget.controller,
+        attributes.onPanUpdate,
+        type: GestureType.onPanUpdate,
+      ),
+      onPanEnd: performAction(
+        context,
+        widget.controller,
+        attributes.onPanEnd,
+        type: GestureType.onPanEnd,
+      ),
+      onPanCancel: performAction(
+        context,
+        widget.controller,
+        attributes.onPanCancel,
+        type: GestureType.onPanCancel,
+      ),
       behavior: attributes.behavior,
       dragStartBehavior: attributes.dragStartBehavior,
       excludeFromSemantics: attributes.excludeFromSemantics ?? false,

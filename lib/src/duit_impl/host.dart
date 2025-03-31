@@ -70,7 +70,7 @@ class DuitViewHost extends StatefulWidget {
     this.showChildInsteadOfPlaceholder = false,
     this.placeholder,
     this.gestureInterceptor,
-    this.gestureInterceptorBehavior = GestureInterceptorBehavior.always,
+    this.gestureInterceptorBehavior = GestureInterceptorBehavior.onlyWithAction,
     this.errorWidgetBuilder,
     this.viewTag = "",
     this.sliverGridDelegatesRegistry = const {},
