@@ -8,6 +8,8 @@ The framework consists of several parts:
 - [Go DSL](https://github.com/lesleysin/duit_go)
 - [TypeScript DSL](https://github.com/lesleysin/duit_js)
 
+#### Are you using Duit in production? [Contact us](mailto://duit_foundation@gmail.com) and tell us about your experience!
+
 ## Core features
 
 - Flexible framework architecture that allows easy integration with new and existing Flutter applications
