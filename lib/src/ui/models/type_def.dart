@@ -13,3 +13,4 @@ typedef CardModel = CardUIElement<CardAttributes>;
 typedef AppBarModel = AppBarUiElement<AppBarAttributes>;
 typedef ScaffoldModel = ScaffoldUiElement<ScaffoldAttributes>;
 typedef InkWellModel = InkWellUIElement<InkWellAttributes>;
+typedef CarouselViewModel = CarouselViewUIElement<CarouselViewAttributes>;

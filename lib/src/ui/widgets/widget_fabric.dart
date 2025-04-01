@@ -660,6 +660,24 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.carouselView:
+        final it = model as CarouselViewModel;
+        List<Widget> arr = [];
+
+        for (var element in it.children) {
+          final children = getWidgetFromElement(element);
+          arr.add(children);
+        }
+
+        return it.controlled
+            ? DuitControlledCarouselView(
+                controller: it.viewController!,
+                children: arr,
+              )
+            : DuitCarouselView(
+                attributes: it.attributes!,
+                children: arr,
+              );
       default:
         return const SizedBox.shrink();
     }

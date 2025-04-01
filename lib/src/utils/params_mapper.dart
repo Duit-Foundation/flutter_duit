@@ -271,8 +271,8 @@ final class AttributeValueMapper {
     );
   }
 
-  static Axis toAxis(String? value) {
-    if (value == null) return Axis.vertical;
+  static Axis toAxis(String? value, [Axis? defaultValue]) {
+    if (value == null) return defaultValue ?? Axis.vertical;
 
     switch (value) {
       case "horizontal":
