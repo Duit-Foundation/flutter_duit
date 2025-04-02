@@ -1296,8 +1296,9 @@ final class AttributeValueMapper {
     return DragStartBehavior.start;
   }
 
-  static HitTestBehavior toHitTestBehavior(String? behavior) {
-    if (behavior == null) return HitTestBehavior.deferToChild;
+  static HitTestBehavior toHitTestBehavior(String? behavior,
+      [HitTestBehavior? defaultValue]) {
+    if (behavior == null) return defaultValue ?? HitTestBehavior.deferToChild;
 
     switch (behavior) {
       case "deferToChild":

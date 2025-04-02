@@ -241,8 +241,10 @@ final class GridViewAttributes
             json["clipBehavior"],
             Clip.hardEdge,
           ),
-          hitTestBehavior:
-              AttributeValueMapper.toHitTestBehavior(json["hitTestBehavior"]),
+          hitTestBehavior: AttributeValueMapper.toHitTestBehavior(
+            json["hitTestBehavior"],
+            HitTestBehavior.opaque,
+          ),
         );
       case GridConstructor.count:
         final crossAxisCount = json["crossAxisCount"];
@@ -271,8 +273,10 @@ final class GridViewAttributes
           addRepaintBoundaries: json["addRepaintBoundaries"] ?? true,
           addSemanticIndexes: json["addSemanticIndexes"] ?? true,
           restorationId: json["restorationId"],
-          hitTestBehavior:
-              AttributeValueMapper.toHitTestBehavior(json["hitTestBehavior"]),
+          hitTestBehavior: AttributeValueMapper.toHitTestBehavior(
+            json["hitTestBehavior"],
+            HitTestBehavior.opaque,
+          ),
           childAspectRatio: NumUtils.toDoubleWithNullReplacement(
             json["childAspectRatio"],
             1.0,
@@ -300,6 +304,10 @@ final class GridViewAttributes
             json["clipBehavior"],
             Clip.hardEdge,
           ),
+          hitTestBehavior: AttributeValueMapper.toHitTestBehavior(
+            json["hitTestBehavior"],
+            HitTestBehavior.opaque,
+          ),
           dragStartBehavior: AttributeValueMapper.toDragStartBehavior(
             json["dragStartBehavior"],
           ),
@@ -323,9 +331,6 @@ final class GridViewAttributes
           addRepaintBoundaries: json["addRepaintBoundaries"] ?? true,
           addSemanticIndexes: json["addSemanticIndexes"] ?? true,
           restorationId: json["restorationId"],
-          hitTestBehavior: AttributeValueMapper.toHitTestBehavior(
-            json["hitTestBehavior"],
-          ),
           childAspectRatio: NumUtils.toDoubleWithNullReplacement(
             json["childAspectRatio"],
             1.0,
@@ -370,8 +375,10 @@ final class GridViewAttributes
             json["clipBehavior"],
             Clip.hardEdge,
           ),
-          hitTestBehavior:
-              AttributeValueMapper.toHitTestBehavior(json["hitTestBehavior"]),
+          hitTestBehavior: AttributeValueMapper.toHitTestBehavior(
+            json["hitTestBehavior"],
+            HitTestBehavior.opaque,
+          ),
         );
     }
 
