@@ -271,8 +271,8 @@ final class AttributeValueMapper {
     );
   }
 
-  static Axis toAxis(String? value) {
-    if (value == null) return Axis.vertical;
+  static Axis toAxis(String? value, [Axis? defaultValue]) {
+    if (value == null) return defaultValue ?? Axis.vertical;
 
     switch (value) {
       case "horizontal":
@@ -1296,8 +1296,9 @@ final class AttributeValueMapper {
     return DragStartBehavior.start;
   }
 
-  static HitTestBehavior toHitTestBehavior(String? behavior) {
-    if (behavior == null) return HitTestBehavior.deferToChild;
+  static HitTestBehavior toHitTestBehavior(String? behavior,
+      [HitTestBehavior? defaultValue]) {
+    if (behavior == null) return defaultValue ?? HitTestBehavior.deferToChild;
 
     switch (behavior) {
       case "deferToChild":

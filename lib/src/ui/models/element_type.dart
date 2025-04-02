@@ -52,4 +52,5 @@ final class ElementType {
   static const appBar = "AppBar";
   static const scaffold = "Scaffold";
   static const inkWell = "InkWell";
+  static const carouselView = "CarouselView";
 }

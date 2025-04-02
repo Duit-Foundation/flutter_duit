@@ -6,7 +6,7 @@ issue_tracker: https://github.com/Duit-Foundation/flutter_duit/issues
 
 environment:
   sdk: '>=3.4.4 <4.0.0'
-  flutter: ">=1.17.0"
+  flutter: ">=3.24.0 <4.0.0"
 
 dependencies:
   duit_kernel: ^3.2.0

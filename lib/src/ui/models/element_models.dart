@@ -878,3 +878,18 @@ final class InkWellUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class CarouselViewUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  CarouselViewUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.attributes,
+    required super.viewController,
+    required this.children,
+  });
+}
