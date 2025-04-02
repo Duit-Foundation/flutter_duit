@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:math";
 
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
@@ -28,6 +29,12 @@ double getOpacity(WidgetTester tester, Finder finder) {
         ),
       )
       .opacity;
+}
+
+String generateHexColor(int index) {
+  final rng = Random(index);
+  final randomNumber = rng.nextInt(0x1000000); // 0x1000000 == 16777216
+  return '#${randomNumber.toRadixString(16).padLeft(6, '0')}';
 }
 
 final class MockTransport extends Transport {
