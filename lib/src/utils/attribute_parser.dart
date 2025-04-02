@@ -121,6 +121,8 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.scaffold => ScaffoldAttributes.fromJson(data),
       ElementType.inkWell => InkWellAttributes.fromJson(data),
       ElementType.carouselView => CarouselViewAttributes.fromJson(data),
+      ElementType.animatedContainer =>
+        AnimatedContainerAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

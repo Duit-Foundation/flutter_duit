@@ -893,3 +893,17 @@ final class CarouselViewUIElement<T> extends DuitElement<T>
     required this.children,
   });
 }
+
+final class AnimatedContainerUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  AnimatedContainerUIElement({
+    required super.type,
+    required super.id,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}

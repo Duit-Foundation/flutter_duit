@@ -509,8 +509,8 @@ final class AttributeValueMapper {
   /// Returns the corresponding [Clip] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid clip value, returns [Clip.none] as the default.
-  static Clip? toClip(String? value) {
-    if (value == null) return null;
+  static Clip toClip(String? value, [Clip? defaultValue]) {
+    if (value == null) return defaultValue ?? Clip.hardEdge;
 
     switch (value) {
       case "hardEdge":
@@ -523,7 +523,7 @@ final class AttributeValueMapper {
         return Clip.none;
     }
 
-    return null;
+    return defaultValue ?? Clip.hardEdge;
   }
 
   static Clip toClipNonNull(String? value, Clip? defaultValue) {
