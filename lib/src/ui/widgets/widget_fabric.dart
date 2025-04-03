@@ -678,6 +678,14 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 children: arr,
               );
+      case ElementType.animatedContainer:
+        final it = model as AnimatedContainerModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedContainer(
+          controller: it.viewController!,
+          child: child,
+        );
       default:
         return const SizedBox.shrink();
     }

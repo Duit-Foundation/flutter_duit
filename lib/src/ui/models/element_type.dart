@@ -53,4 +53,5 @@ final class ElementType {
   static const scaffold = "Scaffold";
   static const inkWell = "InkWell";
   static const carouselView = "CarouselView";
+  static const animatedContainer = "AnimatedContainer";
 }
