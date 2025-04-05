@@ -1,3 +1,8 @@
+## 3.4.0
+
+- New widgets: AnimatedContainer, CarouselView, InkWell, Scaffold, AppBar, Card, GridView
+- Flutter SDK minimum version increased
+
 ## 3.3.0
 
 - WASM-compatible WebSocket transport
