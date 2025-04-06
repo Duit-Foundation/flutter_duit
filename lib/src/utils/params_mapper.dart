@@ -145,6 +145,42 @@ final class AttributeValueMapper {
     return null;
   }
 
+  static TextDecoration? toTextDecoration(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case 'none':
+        return TextDecoration.none;
+      case 'underline':
+        return TextDecoration.underline;
+      case 'overline':
+        return TextDecoration.overline;
+      case 'lineThrough':
+        return TextDecoration.lineThrough;
+      default:
+        return null;
+    }
+  }
+
+  static TextDecorationStyle? toTextDecorationStyle(String? value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case 'solid':
+        return TextDecorationStyle.solid;
+      case 'double':
+        return TextDecorationStyle.double;
+      case 'dotted':
+        return TextDecorationStyle.dotted;
+      case 'dashed':
+        return TextDecorationStyle.dashed;
+      case 'wavy':
+        return TextDecorationStyle.wavy;
+      default:
+        return null;
+    }
+  }
+
   /// Converts an integer value to a [FontWeight] value.
   ///
   /// Returns the corresponding [FontWeight] value for the given integer [value].
@@ -230,6 +266,11 @@ final class AttributeValueMapper {
       letterSpacing: NumUtils.toDouble(json["letterSpacing"]),
       wordSpacing: NumUtils.toDouble(json["wordSpacing"]),
       height: NumUtils.toDouble(json["height"]),
+      decoration: toTextDecoration(json["decoration"]),
+      decorationColor:
+          ColorUtils.tryParseNullableColor(json['decorationColor']),
+      decorationStyle: toTextDecorationStyle(json['decorationStyle']),
+      decorationThickness: NumUtils.toDouble(json['decorationThickness']),
     );
   }
 
