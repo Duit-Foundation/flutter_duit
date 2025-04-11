@@ -907,3 +907,17 @@ final class AnimatedContainerUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class AnimatedAlignUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  AnimatedAlignUIElement({
+    required super.type,
+    required super.id,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}

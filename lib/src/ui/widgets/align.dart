@@ -21,7 +21,7 @@ class DuitAlign extends StatelessWidget with AnimatedAttributes {
 
     return Align(
       key: Key(attributes.id),
-      alignment: attrs.alignment ?? Alignment.center,
+      alignment: attrs.alignment,
       widthFactor: attrs.widthFactor,
       heightFactor: attrs.heightFactor,
       child: child,
@@ -60,7 +60,7 @@ class _DuitControlledAlignState extends State<DuitControlledAlign>
 
     return Align(
       key: Key(widget.controller.id),
-      alignment: attrs.alignment ?? Alignment.center,
+      alignment: attrs.alignment,
       widthFactor: attrs.widthFactor,
       heightFactor: attrs.heightFactor,
       child: widget.child,
