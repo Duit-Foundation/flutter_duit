@@ -123,6 +123,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.carouselView => CarouselViewAttributes.fromJson(data),
       ElementType.animatedContainer =>
         AnimatedContainerAttributes.fromJson(data),
+      ElementType.animatedAlign => AnimatedAlignAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

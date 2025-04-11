@@ -504,8 +504,6 @@ mixin WidgetFabric {
             return DuitGridBuilder(
               controller: it.viewController!,
             );
-          default:
-            return const SizedBox.shrink();
         }
 
       case ElementType.meta:
@@ -678,6 +676,14 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 children: arr,
               );
+      case ElementType.animatedAlign:
+        final it = model as AnimatedAlignModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedAlign(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.animatedContainer:
         final it = model as AnimatedContainerModel;
         final child = getWidgetFromElement(it.child);
