@@ -47,3 +47,4 @@ export 'app_bar_attributes.dart';
 export 'scaffold_attributes.dart';
 export 'inkwell_attributes.dart';
 export 'carousel_view_attributes.dart';
+export 'animated_rotation_attributes.dart';

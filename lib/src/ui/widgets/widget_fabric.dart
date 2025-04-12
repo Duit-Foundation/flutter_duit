@@ -684,6 +684,14 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.animatedRotation:
+        final it = model as AnimatedRotationModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedRotation(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.animatedContainer:
         final it = model as AnimatedContainerModel;
         final child = getWidgetFromElement(it.child);

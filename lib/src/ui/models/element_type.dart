@@ -55,4 +55,5 @@ final class ElementType {
   static const carouselView = "CarouselView";
   static const animatedContainer = "AnimatedContainer";
   static const animatedAlign = "AnimatedAlign";
+  static const animatedRotation = "AnimatedRotation";
 }

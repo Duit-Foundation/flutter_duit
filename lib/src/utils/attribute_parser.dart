@@ -124,6 +124,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.animatedContainer =>
         AnimatedContainerAttributes.fromJson(data),
       ElementType.animatedAlign => AnimatedAlignAttributes.fromJson(data),
+      ElementType.animatedRotation => AnimatedRotationAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 
