@@ -17,3 +17,5 @@ typedef CarouselViewModel = CarouselViewUIElement<CarouselViewAttributes>;
 typedef AnimatedContainerModel
     = AnimatedContainerUIElement<AnimatedContainerAttributes>;
 typedef AnimatedAlignModel = AnimatedAlignUIElement<AnimatedAlignAttributes>;
+typedef AnimatedRotationModel
+    = AnimatedRotationUIElement<AnimatedRotationAttributes>;

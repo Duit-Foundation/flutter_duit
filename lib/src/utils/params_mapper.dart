@@ -434,8 +434,8 @@ final class AttributeValueMapper {
   /// Returns the corresponding [Alignment] value for the given string [value].
   /// If [value] is `null`, returns `null`.
   /// If [value] is not a valid alignment, returns [Alignment.center] as the default.
-  static AlignmentGeometry toAlignment(dynamic value) {
-    if (value == null) return Alignment.topLeft;
+  static Alignment toAlignment(dynamic value, [Alignment? defaultValue]) {
+    if (value == null) return defaultValue ?? Alignment.topLeft;
 
     if (value is Alignment) return value;
 
@@ -460,7 +460,7 @@ final class AttributeValueMapper {
         return Alignment.centerRight;
     }
 
-    return Alignment.topLeft;
+    return defaultValue ?? Alignment.topLeft;
   }
 
   /// Converts a string value to an [AlignmentDirectional] value.
