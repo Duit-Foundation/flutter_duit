@@ -1,3 +1,4 @@
+import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/ui/models/element_models.dart";
 
@@ -19,3 +20,5 @@ typedef AnimatedContainerModel
 typedef AnimatedAlignModel = AnimatedAlignUIElement<AnimatedAlignAttributes>;
 typedef AnimatedRotationModel
     = AnimatedRotationUIElement<AnimatedRotationAttributes>;
+typedef AnimatedPaddingModel
+    = AnimatedPaddingUIElement<AnimatedPaddingAttributes>;

@@ -1597,6 +1597,32 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           child: child,
         );
+      case ElementType.animatedPadding:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedPaddingAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AnimatedPaddingModel(
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          id: id,
+          controlled: true,
+          type: type,
+          child: child,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);
