@@ -19,3 +19,5 @@ typedef AnimatedContainerModel
 typedef AnimatedAlignModel = AnimatedAlignUIElement<AnimatedAlignAttributes>;
 typedef AnimatedRotationModel
     = AnimatedRotationUIElement<AnimatedRotationAttributes>;
+typedef AnimatedPaddingModel
+    = AnimatedPaddingUIElement<AnimatedPaddingAttributes>;
