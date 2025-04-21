@@ -34,14 +34,10 @@ jobs:
         run: |
           flutter test --no-pub --coverage --test-randomize-ordering-seed=random
 
-  upload-coverage-report:
-    runs-on: ubuntu-latest
-    steps:
       - name: Upload coverage to Coveralls
-      -  uses: coverallsapp/github-action@master
-         with:
+        uses: coverallsapp/github-action@master
+        with:
           github-token: ${{ secrets.FLUTTER_DUIT_COVERALLS_REPO_TOKEN }}
           path-to-lcov: coverage/lcov.info
-          flag-name: UNIT
-          format: lcov
+          flag-name: flutter-${{ matrix.flutter-version }}-UNIT
           parallel: true
