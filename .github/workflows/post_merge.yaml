@@ -41,3 +41,13 @@ jobs:
           path-to-lcov: coverage/lcov.info
           flag-name: flutter-${{ matrix.flutter-version }}-UNIT
           parallel: true
+
+  finish:
+    needs: post-merge-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Finish Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.FLUTTER_DUIT_COVERALLS_REPO_TOKEN }}
+          parallel-finished: true
