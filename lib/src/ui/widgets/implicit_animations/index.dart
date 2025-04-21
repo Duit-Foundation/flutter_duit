@@ -1,3 +1,7 @@
 export "animated_size.dart";
 export "animated_opacity.dart";
 export "animated_container.dart";
+export "animated_align.dart";
+export "animated_rotation.dart";
+export "animated_padding.dart";
+export "animated_positioned.dart";

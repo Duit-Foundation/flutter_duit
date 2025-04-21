@@ -57,4 +57,5 @@ final class ElementType {
   static const animatedAlign = "AnimatedAlign";
   static const animatedRotation = "AnimatedRotation";
   static const animatedPadding = "AnimatedPadding";
+  static const animatedPositioned = "AnimatedPositioned";
 }

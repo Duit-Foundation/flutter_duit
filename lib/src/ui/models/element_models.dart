@@ -949,3 +949,17 @@ final class AnimatedPaddingUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class AnimatedPositionedUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  AnimatedPositionedUIElement({
+    required super.type,
+    required super.id,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}

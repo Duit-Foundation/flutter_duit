@@ -21,3 +21,5 @@ typedef AnimatedRotationModel
     = AnimatedRotationUIElement<AnimatedRotationAttributes>;
 typedef AnimatedPaddingModel
     = AnimatedPaddingUIElement<AnimatedPaddingAttributes>;
+typedef AnimatedPositionedModel
+    = AnimatedPositionedUIElement<AnimatedPositionedAttributes>;
