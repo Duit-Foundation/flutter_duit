@@ -51,3 +51,4 @@ export 'inkwell.dart';
 export 'carouse_view.dart';
 export 'animated_align.dart';
 export 'animated_rotation.dart';
+export 'animated_padding.dart';

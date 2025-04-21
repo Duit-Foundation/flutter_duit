@@ -22,7 +22,7 @@ class DuitPadding extends StatelessWidget with AnimatedAttributes {
     );
     return Padding(
       key: Key(attributes.id),
-      padding: attrs.padding ?? EdgeInsets.zero,
+      padding: attrs.padding,
       child: child,
     );
   }
@@ -60,7 +60,7 @@ class _DuitControlledPaddingState extends State<DuitControlledPadding>
 
     return Padding(
       key: Key(widget.controller.id),
-      padding: attrs.padding ?? EdgeInsets.zero,
+      padding: attrs.padding,
       child: widget.child,
     );
   }

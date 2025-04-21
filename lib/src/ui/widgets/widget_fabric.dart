@@ -692,6 +692,14 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.animatedPadding:
+        final it = model as AnimatedPaddingModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedPadding(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.animatedContainer:
         final it = model as AnimatedContainerModel;
         final child = getWidgetFromElement(it.child);
