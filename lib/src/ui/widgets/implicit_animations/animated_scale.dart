@@ -22,6 +22,12 @@ class _DuitAnimatedScaleState extends State<DuitAnimatedScale>
         ViewControllerChangeListener<DuitAnimatedScale,
             AnimatedScaleAttributes>,
         OnAnimationEnd {
+
+  @override
+  void initState() {
+    attachStateToController(widget.controller);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return AnimatedScale(

@@ -247,11 +247,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           id: id,
         );
 
-        return AnimatedSizeUIElement(
+        return AnimatedSizeModel(
           type: type,
           id: id,
           child: child,
-          attributes: null,
           viewController: _createAndAttachController(
             id,
             true,

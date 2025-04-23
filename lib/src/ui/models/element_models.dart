@@ -592,7 +592,6 @@ final class AnimatedSizeUIElement<T> extends DuitElement<T>
     required super.type,
     required super.id,
     required super.controlled,
-    required super.attributes,
     required super.viewController,
     required this.child,
   });

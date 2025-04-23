@@ -28,6 +28,7 @@ class _DuitAnimatedSizeState extends State<DuitAnimatedSize>
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
+      key: ValueKey(widget.controller.id),
       duration: attributes.duration,
       clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
       alignment: attributes.alignment ?? Alignment.center,

@@ -63,7 +63,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.animatedSize:
-        final it = model as AnimatedSizeUIElement<AnimatedSizeAttributes>;
+        final it = model as AnimatedSizeModel;
 
         final child = getWidgetFromElement(it.child);
 
