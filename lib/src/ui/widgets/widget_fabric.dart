@@ -708,6 +708,14 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.animatedPositioned:
+        final it = model as AnimatedPositionedModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedPositioned(
+          controller: it.viewController!,
+          child: child,
+        );
       default:
         return const SizedBox.shrink();
     }
