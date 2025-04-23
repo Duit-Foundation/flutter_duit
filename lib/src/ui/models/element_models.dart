@@ -963,3 +963,17 @@ final class AnimatedPositionedUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class AnimatedScaleUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  AnimatedScaleUIElement({
+    required super.type,
+    required super.id,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}

@@ -716,6 +716,14 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.animatedScale:
+        final it = model as AnimatedScaleModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedScale(
+          controller: it.viewController!,
+          child: child,
+        );
       default:
         return const SizedBox.shrink();
     }
