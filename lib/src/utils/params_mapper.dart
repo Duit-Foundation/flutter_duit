@@ -1576,4 +1576,310 @@ final class AttributeValueMapper {
       _ => null,
     };
   }
+
+  static WidgetStateProperty<TextStyle?> toWSPTextStyle(
+      Map<String, dynamic> value) {
+    return WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return toTextStyle(value[WidgetState.disabled.name]);
+      }
+
+      if (states.contains(WidgetState.selected)) {
+        return toTextStyle(value[WidgetState.selected.name]);
+      }
+
+      if (states.contains(WidgetState.error)) {
+        return toTextStyle(value[WidgetState.error.name]);
+      }
+
+      if (states.contains(WidgetState.pressed)) {
+        return toTextStyle(value[WidgetState.pressed.name]);
+      }
+
+      if (states.contains(WidgetState.hovered)) {
+        return toTextStyle(value[WidgetState.hovered.name]);
+      }
+
+      if (states.contains(WidgetState.focused)) {
+        return toTextStyle(value[WidgetState.focused.name]);
+      }
+
+      if (states.contains(WidgetState.dragged)) {
+        return toTextStyle(value[WidgetState.dragged.name]);
+      }
+
+      return null;
+    });
+  }
+
+  static WidgetStateProperty<T?> toWidgetStateProperty<T>(
+    Map<String, dynamic> value,
+  ) {
+    return WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.disabled)) {
+        return switch (T) {
+          Color => ColorUtils.tryParseNullableColor(
+              value[WidgetState.disabled.name],
+            ),
+          EdgeInsetsGeometry => toEdgeInsets(
+              value[WidgetState.disabled.name],
+            ),
+          Size => toSize(
+              value[WidgetState.disabled.name],
+            ),
+          double => NumUtils.toDouble(
+              value[WidgetState.disabled.name],
+            ),
+          OutlinedBorder => toShapeBorder(
+              value[WidgetState.disabled.name],
+            ),
+          TextStyle => toTextStyle(
+              value[WidgetState.disabled.name],
+            ),
+          BorderSide => toBorderSide(
+              value[WidgetState.disabled.name],
+            ),
+          _ => null,
+        } as T?;
+      }
+
+      if (states.contains(WidgetState.selected)) {
+        return switch (T) {
+          Color => ColorUtils.tryParseNullableColor(
+              value[WidgetState.selected.name],
+            ),
+          EdgeInsetsGeometry => toEdgeInsets(
+              value[WidgetState.selected.name],
+            ),
+          Size => toSize(
+              value[WidgetState.selected.name],
+            ),
+          double => NumUtils.toDouble(
+              value[WidgetState.selected.name],
+            ),
+          OutlinedBorder => toShapeBorder(
+              value[WidgetState.selected.name],
+            ),
+          TextStyle => toTextStyle(
+              value[WidgetState.selected.name],
+            ),
+          BorderSide => toBorderSide(
+              value[WidgetState.selected.name],
+            ),
+          _ => null,
+        } as T?;
+      }
+
+      if (states.contains(WidgetState.error)) {
+        return switch (T) {
+          Color => ColorUtils.tryParseNullableColor(
+              value[WidgetState.error.name],
+            ),
+          EdgeInsetsGeometry => toEdgeInsets(
+              value[WidgetState.error.name],
+            ),
+          Size => toSize(
+              value[WidgetState.error.name],
+            ),
+          double => NumUtils.toDouble(
+              value[WidgetState.error.name],
+            ),
+          OutlinedBorder => toShapeBorder(
+              value[WidgetState.error.name],
+            ),
+          TextStyle => toTextStyle(
+              value[WidgetState.error.name],
+            ),
+          BorderSide => toBorderSide(
+              value[WidgetState.error.name],
+            ),
+          _ => null,
+        } as T?;
+      }
+
+      if (states.contains(WidgetState.pressed)) {
+        return switch (T) {
+          Color => ColorUtils.tryParseNullableColor(
+              value[WidgetState.pressed.name],
+            ),
+          EdgeInsetsGeometry => toEdgeInsets(
+              value[WidgetState.pressed.name],
+            ),
+          Size => toSize(
+              value[WidgetState.pressed.name],
+            ),
+          double => NumUtils.toDouble(
+              value[WidgetState.pressed.name],
+            ),
+          OutlinedBorder => toShapeBorder(
+              value[WidgetState.pressed.name],
+            ),
+          TextStyle => toTextStyle(
+              value[WidgetState.pressed.name],
+            ),
+          BorderSide => toBorderSide(
+              value[WidgetState.pressed.name],
+            ),
+          _ => null,
+        } as T?;
+      }
+
+      if (states.contains(WidgetState.hovered)) {
+        return switch (T) {
+          Color => ColorUtils.tryParseNullableColor(
+              value[WidgetState.hovered.name],
+            ),
+          EdgeInsetsGeometry => toEdgeInsets(
+              value[WidgetState.hovered.name],
+            ),
+          Size => toSize(
+              value[WidgetState.hovered.name],
+            ),
+          double => NumUtils.toDouble(
+              value[WidgetState.hovered.name],
+            ),
+          OutlinedBorder => toShapeBorder(
+              value[WidgetState.hovered.name],
+            ),
+          TextStyle => toTextStyle(
+              value[WidgetState.hovered.name],
+            ),
+          BorderSide => toBorderSide(
+              value[WidgetState.hovered.name],
+            ),
+          _ => null,
+        } as T?;
+      }
+
+      if (states.contains(WidgetState.focused)) {
+        return switch (T) {
+          Color => ColorUtils.tryParseNullableColor(
+              value[WidgetState.focused.name],
+            ),
+          EdgeInsetsGeometry => toEdgeInsets(
+              value[WidgetState.focused.name],
+            ),
+          Size => toSize(
+              value[WidgetState.focused.name],
+            ),
+          double => NumUtils.toDouble(
+              value[WidgetState.focused.name],
+            ),
+          OutlinedBorder => toShapeBorder(
+              value[WidgetState.focused.name],
+            ),
+          TextStyle => toTextStyle(
+              value[WidgetState.focused.name],
+            ),
+          BorderSide => toBorderSide(
+              value[WidgetState.focused.name],
+            ),
+          _ => null,
+        } as T?;
+      }
+
+      if (states.contains(WidgetState.dragged)) {
+        return switch (T) {
+          Color => ColorUtils.tryParseNullableColor(
+              value[WidgetState.dragged.name],
+            ),
+          EdgeInsetsGeometry => toEdgeInsets(
+              value[WidgetState.dragged.name],
+            ),
+          Size => toSize(
+              value[WidgetState.dragged.name],
+            ),
+          double => NumUtils.toDouble(
+              value[WidgetState.dragged.name],
+            ),
+          OutlinedBorder => toShapeBorder(
+              value[WidgetState.dragged.name],
+            ),
+          TextStyle => toTextStyle(
+              value[WidgetState.dragged.name],
+            ),
+          BorderSide => toBorderSide(
+              value[WidgetState.dragged.name],
+            ),
+          _ => null,
+        } as T?;
+      }
+
+      return null;
+    });
+  }
+
+  static ButtonStyle? toButtonStyle(dynamic value) {
+    if (value == null) return null;
+
+    if (value is Map) {
+      final {
+        "textStyle": textStyle,
+        "backgroundColor": backgroundColor,
+        "foregroundColor": foregroundColor,
+        "overlayColor": overlayColor,
+        "shadowColor": shadowColor,
+        "surfaceTintColor": surfaceTintColor,
+        "elevation": elevation,
+        "padding": padding,
+        "minimumSize": minimumSize,
+        "maximumSize": maximumSize,
+        "iconColor": iconColor,
+        "iconSize": iconSize,
+        "side": side,
+        "shape": shape,
+        "visualDensity": visualDensity,
+        "tapTargetSize": tapTargetSize,
+        "animationDuration": int? animationDuration,
+        "enableFeedback": bool? enableFeedback,
+        "alignment": alignment,
+      } = value;
+
+      return ButtonStyle(
+        textStyle: textStyle == null
+            ? null
+            : toWidgetStateProperty<TextStyle>(textStyle),
+        backgroundColor: backgroundColor == null
+            ? null
+            : toWidgetStateProperty<Color>(backgroundColor),
+        foregroundColor: foregroundColor == null
+            ? null
+            : toWidgetStateProperty<Color>(foregroundColor),
+        overlayColor: overlayColor == null
+            ? null
+            : toWidgetStateProperty<Color>(overlayColor),
+        shadowColor: shadowColor == null
+            ? null
+            : toWidgetStateProperty<Color>(shadowColor),
+        surfaceTintColor: surfaceTintColor == null
+            ? null
+            : toWidgetStateProperty<Color>(surfaceTintColor),
+        elevation:
+            elevation == null ? null : toWidgetStateProperty<double>(elevation),
+        padding: padding == null
+            ? null
+            : toWidgetStateProperty<EdgeInsetsGeometry>(padding),
+        minimumSize: minimumSize == null
+            ? null
+            : toWidgetStateProperty<Size>(minimumSize),
+        maximumSize: maximumSize == null
+            ? null
+            : toWidgetStateProperty<Size>(maximumSize),
+        iconColor:
+            iconColor == null ? null : toWidgetStateProperty<Color>(iconColor),
+        iconSize:
+            iconSize == null ? null : toWidgetStateProperty<double>(iconSize),
+        side: side == null ? null : toWidgetStateProperty<BorderSide>(side),
+        shape:
+            shape == null ? null : toWidgetStateProperty<OutlinedBorder>(shape),
+        visualDensity: toVisualDensity(visualDensity),
+        tapTargetSize: toMaterialTapTargetSize(tapTargetSize),
+        animationDuration:
+            animationDuration == null ? null : toDuration(animationDuration),
+        enableFeedback: enableFeedback,
+        alignment: toAlignment(alignment),
+      );
+    }
+    return null;
+  }
 }
