@@ -300,8 +300,8 @@ base class CustomUiElement<T> extends DuitElement<T> {
     this.subviews = const {},
   }) : super(
           type: ElementType.custom,
-          viewController: viewController?.cast<T>(),
-          attributes: attributes?.cast<T>(),
+          // viewController: viewController?.cast<T>(),
+          // attributes: attributes?.cast<T>(),
         );
 }
 

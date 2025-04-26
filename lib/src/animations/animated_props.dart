@@ -48,4 +48,40 @@ mixin AnimatedAttributes on Widget {
 
     return dA.copyWith(newAttr);
   }
+
+  DuitDataSource mergeWithDataSource(
+    BuildContext context,
+    DuitDataSource dataSource,
+  ) {
+    final parentId = dataSource.parentBuilderId;
+
+    if (parentId == null) {
+      return dataSource;
+    }
+
+    final animationContext = DuitAnimationContext.maybeOf(context);
+    if (animationContext == null) {
+      return dataSource;
+    }
+
+    if (animationContext.parentId != parentId) {
+      return dataSource;
+    }
+
+    final affectedProps = dataSource.affectedProperties;
+
+    if (affectedProps == null || affectedProps.isEmpty) {
+      return dataSource;
+    }
+
+    final animatedProperties = <String, dynamic>{};
+
+    for (final prop in affectedProps) {
+      animatedProperties[prop] = animationContext.data[prop];
+    }
+
+    dataSource.addAll(animatedProperties);
+
+    return dataSource;
+  }
 }

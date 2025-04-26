@@ -7,7 +7,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitAnimationBuilder extends StatefulWidget {
   final Widget child;
-  final UIElementController<AnimatedBuilderAttributes> controller;
+  final UIElementController controller;
 
   const DuitAnimationBuilder({
     super.key,
@@ -26,9 +26,9 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
 
   @override
   void didChangeDependencies() {
-    widget.controller.listenCommand(_handleCommand);
+    // widget.controller.listenCommand(_handleCommand);
     final attrs = widget.controller.attributes.payload;
-    for (var description in attrs.tweenDescriptions) {
+    for (var description in []) {
       final controller = AnimationController(
         vsync: this,
         duration: description.duration,
@@ -129,7 +129,7 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
 
         return DuitAnimationContext(
           data: dataObj,
-          parentId: wC.attributes.payload.persistentId ?? wC.id,
+          parentId: wC.attributes.payload.tryGetString("persistentId") ?? wC.id,
           //Priority use of persistentId
           child: child ?? const SizedBox.shrink(),
         );

@@ -10,13 +10,13 @@ import 'package:flutter/foundation.dart';
 /// mixin to provide change notification to listeners.
 final class ViewController<T>
     with ChangeNotifier
-    implements UIElementController<T> {
+    implements UIElementController {
   /// The attributes associated with the UI element.
   ///
   /// This property holds the attributes of the UI element that the `ViewController` controls.
   /// It can be used to access and modify the attributes of the UI element.
   @override
-  ViewAttribute<T> attributes;
+  ViewAttribute attributes;
 
   /// The server action associated with the UI element.
   ///
@@ -69,8 +69,8 @@ final class ViewController<T>
   ///
   /// The [newAttrs] parameter specifies the new attributes to be applied to the UI element.
   @override
-  void updateState(ViewAttribute newState) {
-    attributes = newState.cast<T>();
+  void updateState(Map<String, dynamic> newState) {
+    attributes.payload.addAll(newState);
     notifyListeners();
   }
 
@@ -147,8 +147,8 @@ final class ViewController<T>
   late final StreamController<AnimationCommand> commandChannel;
 
   @override
-  FutureOr<void> emitCommand(AnimationCommand command) {
-    commandChannel.add(command);
+  FutureOr<void> emitCommand(RemoteCommand command) {
+    // commandChannel.add(command);
   }
 
   @override
@@ -160,20 +160,20 @@ final class ViewController<T>
     commandChannel.stream.listen(callback);
   }
 
-  @override
-  UIElementController<R> cast<R>() {
-    final controller = ViewController(
-      id: id,
-      driver: driver,
-      type: type,
-      attributes: attributes.cast<R>(),
-      action: action,
-      tag: tag,
-    );
+  // @override
+  // UIElementController cast<R>() {
+  //   final controller = ViewController(
+  //     id: id,
+  //     driver: driver,
+  //     type: type,
+  //     attributes: attributes.cast<R>(),
+  //     action: action,
+  //     tag: tag,
+  //   );
 
-    //re-attach new controller instance
-    driver.attachController(id, controller);
+  //   //re-attach new controller instance
+  //   driver.attachController(id, controller);
 
-    return controller;
-  }
+  //   return controller;
+  // }
 }

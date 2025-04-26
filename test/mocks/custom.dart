@@ -1,172 +1,172 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_duit/flutter_duit.dart';
 
-import '../utils.dart';
+// import '../utils.dart';
 
-final class ExampleCustomWidgetAttributes extends AnimatedPropertyOwner
-    implements DuitAttributes<ExampleCustomWidgetAttributes> {
-  final String? random;
+// final class ExampleCustomWidgetAttributes extends AnimatedPropertyOwner
+//     implements DuitAttributes<ExampleCustomWidgetAttributes> {
+//   final String? random;
 
-  ExampleCustomWidgetAttributes({
-    required this.random,
-    required super.parentBuilderId,
-    required super.affectedProperties,
-  });
+//   ExampleCustomWidgetAttributes({
+//     required this.random,
+//     required super.parentBuilderId,
+//     required super.affectedProperties,
+//   });
 
-  factory ExampleCustomWidgetAttributes.fromJson(Map<String, dynamic> json) {
-    final view = AnimatedPropHelper(json);
+//   factory ExampleCustomWidgetAttributes.fromJson(Map<String, dynamic> json) {
+//     final view = AnimatedPropHelper(json);
 
-    return ExampleCustomWidgetAttributes(
-      random: view["random"],
-      parentBuilderId: view.parentBuilderId,
-      affectedProperties: view.affectedProperties,
-    );
-  }
+//     return ExampleCustomWidgetAttributes(
+//       random: view["random"],
+//       parentBuilderId: view.parentBuilderId,
+//       affectedProperties: view.affectedProperties,
+//     );
+//   }
 
-  @override
-  ExampleCustomWidgetAttributes copyWith(other) {
-    return ExampleCustomWidgetAttributes(
-        random: other.random ?? random,
-        parentBuilderId: other.parentBuilderId ?? parentBuilderId,
-        affectedProperties: other.affectedProperties ?? affectedProperties);
-  }
+//   @override
+//   ExampleCustomWidgetAttributes copyWith(other) {
+//     return ExampleCustomWidgetAttributes(
+//         random: other.random ?? random,
+//         parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+//         affectedProperties: other.affectedProperties ?? affectedProperties);
+//   }
 
-  @override
-  ReturnT dispatchInternalCall<ReturnT>(
-    String methodName, {
-    Iterable? positionalParams,
-    Map<String, dynamic>? namedParams,
-  }) {
-    return switch (methodName) {
-      "fromJson" =>
-        ExampleCustomWidgetAttributes.fromJson(positionalParams!.first)
-            as ReturnT,
-      String() => throw UnimplementedError("$methodName is not implemented"),
-    };
-  }
-}
+//   @override
+//   ReturnT dispatchInternalCall<ReturnT>(
+//     String methodName, {
+//     Iterable? positionalParams,
+//     Map<String, dynamic>? namedParams,
+//   }) {
+//     return switch (methodName) {
+//       "fromJson" =>
+//         ExampleCustomWidgetAttributes.fromJson(positionalParams!.first)
+//             as ReturnT,
+//       String() => throw UnimplementedError("$methodName is not implemented"),
+//     };
+//   }
+// }
 
-const exampleCustomWidget = "ExampleCustomWidget";
+// const exampleCustomWidget = "ExampleCustomWidget";
 
-DuitAttributes exAttributeFactory(
-  String type,
-  Map<String, dynamic>? json,
-) {
-  return ExampleCustomWidgetAttributes.fromJson(json ?? {});
-}
+// DuitAttributes exAttributeFactory(
+//   String type,
+//   Map<String, dynamic>? json,
+// ) {
+//   return ExampleCustomWidgetAttributes.fromJson(json ?? {});
+// }
 
-Widget exBuildFactory(
-  ElementTreeEntry model, [
-  Iterable<Widget> subviews = const [],
-]) {
-  final m = model as ExampleCustomWidget;
-  Widget? child;
+// Widget exBuildFactory(
+//   ElementTreeEntry model, [
+//   Iterable<Widget> subviews = const [],
+// ]) {
+//   final m = model as ExampleCustomWidget;
+//   Widget? child;
 
-  if (subviews.isNotEmpty) {
-    child = subviews.first;
-  }
+//   if (subviews.isNotEmpty) {
+//     child = subviews.first;
+//   }
 
-  return ExampleWidget(
-    controller: m.viewController!,
-    child: child,
-  );
-}
+//   return ExampleWidget(
+//     controller: m.viewController!,
+//     child: child,
+//   );
+// }
 
-ElementTreeEntry exModelFactory(
-  String id,
-  bool controlled,
-  ViewAttribute attributes,
-  UIElementController? controller, [
-  Iterable<ElementTreeEntry> subviews = const [],
-]) {
-  return ExampleCustomWidget(
-    id: id,
-    attributes: attributes,
-    viewController: controller,
-    controlled: controlled,
-    subviews: subviews,
-  );
-}
+// ElementTreeEntry exModelFactory(
+//   String id,
+//   bool controlled,
+//   ViewAttribute attributes,
+//   UIElementController? controller, [
+//   Iterable<ElementTreeEntry> subviews = const [],
+// ]) {
+//   return ExampleCustomWidget(
+//     id: id,
+//     attributes: attributes,
+//     viewController: controller,
+//     controlled: controlled,
+//     subviews: subviews,
+//   );
+// }
 
-final class ExampleCustomWidget
-    extends CustomUiElement<ExampleCustomWidgetAttributes> {
-  ExampleCustomWidget({
-    required super.id,
-    required super.attributes,
-    required super.viewController,
-    required super.controlled,
-    required super.subviews,
-  }) : super(
-          tag: exampleCustomWidget,
-        );
-}
+// final class ExampleCustomWidget
+//     extends CustomUiElement<ExampleCustomWidgetAttributes> {
+//   ExampleCustomWidget({
+//     required super.id,
+//     required super.attributes,
+//     required super.viewController,
+//     required super.controlled,
+//     required super.subviews,
+//   }) : super(
+//           tag: exampleCustomWidget,
+//         );
+// }
 
-class ExampleWidget extends StatefulWidget {
-  final Widget? child;
-  final UIElementController<ExampleCustomWidgetAttributes> controller;
+// class ExampleWidget extends StatefulWidget {
+//   final Widget? child;
+//   final UIElementController<ExampleCustomWidgetAttributes> controller;
 
-  ExampleWidget({
-    super.key,
-    required UIElementController controller,
-    this.child,
-  }) : controller = controller.cast<ExampleCustomWidgetAttributes>();
+//   ExampleWidget({
+//     super.key,
+//     required UIElementController controller,
+//     this.child,
+//   }) : controller = controller.cast<ExampleCustomWidgetAttributes>();
 
-  @override
-  State<ExampleWidget> createState() => _ExampleWidgetState();
-}
+//   @override
+//   State<ExampleWidget> createState() => _ExampleWidgetState();
+// }
 
-class _ExampleWidgetState extends State<ExampleWidget>
-    with
-        ViewControllerChangeListener<ExampleWidget,
-            ExampleCustomWidgetAttributes> {
-  @override
-  void initState() {
-    attachStateToController(
-      widget.controller,
-    );
-    super.initState();
-  }
+// class _ExampleWidgetState extends State<ExampleWidget>
+//     with
+//         ViewControllerChangeListener<ExampleWidget,
+//             ExampleCustomWidgetAttributes> {
+//   @override
+//   void initState() {
+//     attachStateToController(
+//       widget.controller,
+//     );
+//     super.initState();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.green,
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        children: [
-          Text(attributes.random ?? ""),
-          widget.child ??
-              Container(
-                color: Colors.red,
-                width: 25,
-                height: 25,
-              ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       color: Colors.green,
+//       padding: const EdgeInsets.all(12),
+//       child: Column(
+//         children: [
+//           Text(attributes.random ?? ""),
+//           widget.child ??
+//               Container(
+//                 color: Colors.red,
+//                 width: 25,
+//                 height: 25,
+//               ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-Future<void> regCustom() async {
-  await DuitRegistry.configure(
-    themeLoader: const MockThemeLoader(
-      {
-        "custom_1": {
-          "type": exampleCustomWidget,
-          "data": {
-            "random": "100500",
-          }
-        }
-      },
-    ),
-  );
+// Future<void> regCustom() async {
+//   await DuitRegistry.configure(
+//     themeLoader: const MockThemeLoader(
+//       {
+//         "custom_1": {
+//           "type": exampleCustomWidget,
+//           "data": {
+//             "random": "100500",
+//           }
+//         }
+//       },
+//     ),
+//   );
 
-  DuitRegistry.initTheme();
+//   DuitRegistry.initTheme();
 
-  DuitRegistry.register(
-    exampleCustomWidget,
-    modelFactory: exModelFactory,
-    buildFactory: exBuildFactory,
-    attributesFactory: exAttributeFactory,
-  );
-}
+//   DuitRegistry.register(
+//     exampleCustomWidget,
+//     modelFactory: exModelFactory,
+//     buildFactory: exBuildFactory,
+//     attributesFactory: exAttributeFactory,
+//   );
+// }

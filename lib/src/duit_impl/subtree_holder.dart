@@ -20,93 +20,93 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
   }
 
   Future<void> _listener() async {
-    final driver = _controller.driver;
-    final attrs = _controller.attributes.payload;
+    // final driver = _controller.driver;
+    // final attrs = _controller.attributes.payload;
 
-    switch (attrs) {
-      case SubtreeAttributes():
-        try {
-          if (attrs.data != null) {
-            final layoutTree = await parseLayout(
-              attrs.data!,
-              driver,
-            );
+    // switch (attrs) {
+    //   case SubtreeAttributes():
+    //     try {
+    //       if (attrs.data != null) {
+    //         final layoutTree = await parseLayout(
+    //           attrs.data!,
+    //           driver,
+    //         );
 
-            final newChild = layoutTree.render();
-            setState(() {
-              subtreeChild = newChild;
-            });
-          }
-        } catch (e, s) {
-          driver.logger?.error(
-            "Failed to handle subtree update",
-            error: e,
-            stackTrace: s,
-          );
-        }
-      case RemoteSubtreeAttributes():
-        try {
-          if (attrs.data != null) {
-            final layoutTree = await parseLayout(
-              attrs.data!,
-              driver,
-            );
+    //         final newChild = layoutTree.render();
+    //         setState(() {
+    //           subtreeChild = newChild;
+    //         });
+    //       }
+    //     } catch (e, s) {
+    //       driver.logger?.error(
+    //         "Failed to handle subtree update",
+    //         error: e,
+    //         stackTrace: s,
+    //       );
+    //     }
+    //   case RemoteSubtreeAttributes():
+    //     try {
+    //       if (attrs.data != null) {
+    //         final layoutTree = await parseLayout(
+    //           attrs.data!,
+    //           driver,
+    //         );
 
-            final newChild = layoutTree.render();
-            setState(() {
-              subtreeChild = newChild;
-            });
-          }
-        } catch (e, s) {
-          driver.logger?.error(
-            "Failed to handle remote subtree update",
-            error: e,
-            stackTrace: s,
-          );
-          rethrow;
-        }
-      default:
-        _controller.driver.logger?.warn(
-          "SubtreeHolder was been triggered, but received attributes of type ${_controller.attributes.payload.runtimeType} not supported",
-        );
-        break;
-    }
+    //         final newChild = layoutTree.render();
+    //         setState(() {
+    //           subtreeChild = newChild;
+    //         });
+    //       }
+    //     } catch (e, s) {
+    //       driver.logger?.error(
+    //         "Failed to handle remote subtree update",
+    //         error: e,
+    //         stackTrace: s,
+    //       );
+    //       rethrow;
+    //     }
+    //   default:
+    //     _controller.driver.logger?.warn(
+    //       "SubtreeHolder was been triggered, but received attributes of type ${_controller.attributes.payload.runtimeType} not supported",
+    //     );
+    //     break;
+    // }
   }
 
   Future<void> _loadRemoteContent() async {
-    final remoteWidgetData =
-        _controller.attributes.payload as RemoteSubtreeAttributes;
+    // final remoteWidgetData =
+    //     _controller.attributes.payload as RemoteSubtreeAttributes;
 
-    final driver = _controller.driver;
-    try {
-      final body = driver.preparePayload(
-        remoteWidgetData.dependencies,
-      );
+    // final driver = _controller.driver;
+    // try {
+    //   final body = driver.preparePayload(
+    //     remoteWidgetData.dependencies,
+    //   );
 
-      final layout = await driver.transport?.request(
-        remoteWidgetData.downloadPath,
-        remoteWidgetData.meta ?? const {},
-        body,
-      );
+    //   final layout = await driver.transport?.request(
+    //     remoteWidgetData.downloadPath,
+    //     remoteWidgetData.meta ?? const {},
+    //     body,
+    //   );
 
-      if (layout != null) {
-        final layoutTree = await parseLayout(
-          layout,
-          driver,
-        );
+    //   if (layout != null) {
+    //     final layoutTree = await parseLayout(
+    //       layout,
+    //       driver,
+    //     );
 
-        final newChild = layoutTree.render();
-        setState(() {
-          subtreeChild = newChild;
-        });
-      }
-    } catch (e, s) {
-      driver.logger?.error(
-        "Failed to load remote widget",
-        error: e,
-        stackTrace: s,
-      );
-    }
+    //     final newChild = layoutTree.render();
+    //     setState(() {
+    //       subtreeChild = newChild;
+    //     });
+    //   }
+    // } catch (e, s) {
+    //   driver.logger?.error(
+    //     "Failed to load remote widget",
+    //     error: e,
+    //     stackTrace: s,
+    //   );
+    // }
   }
 
   void _listenControllerUpdateStateEvent() {

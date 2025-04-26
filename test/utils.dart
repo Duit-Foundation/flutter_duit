@@ -78,36 +78,36 @@ extension TransportExtension on UIDriver {
   }
 }
 
-final class CustomWidgetThemeToken extends ThemeToken {
-  CustomWidgetThemeToken(Map<String, dynamic> themeData)
-      : super(
-          const {},
-          themeData,
-          exampleCustomWidget,
-        );
-}
+// final class CustomWidgetThemeToken extends ThemeToken {
+//   CustomWidgetThemeToken(Map<String, dynamic> themeData)
+//       : super(
+//           const {},
+//           themeData,
+//           exampleCustomWidget,
+//         );
+// }
 
-final class MockThemeLoader implements ResourceLoader<DuitTheme> {
-  final Map<String, dynamic> theme;
+// final class MockThemeLoader implements ResourceLoader<DuitTheme> {
+//   final Map<String, dynamic> theme;
 
-  const MockThemeLoader(this.theme);
+//   const MockThemeLoader(this.theme);
 
-  @override
-  Future<DuitTheme> load() async {
-    final tp = ThemePreprocessor(
-      customWidgetTokenizer: (type, themeData) {
-        final token = switch (type) {
-          exampleCustomWidget => CustomWidgetThemeToken(themeData),
-          _ => null,
-        };
+//   @override
+//   Future<DuitTheme> load() async {
+//     final tp = ThemePreprocessor(
+//       customWidgetTokenizer: (type, themeData) {
+//         final token = switch (type) {
+//           exampleCustomWidget => CustomWidgetThemeToken(themeData),
+//           _ => null,
+//         };
 
-        return token;
-      },
-    );
+//         return token;
+//       },
+//     );
 
-    return tp.tokenize(theme);
-  }
-}
+//     return tp.tokenize(theme);
+//   }
+// }
 
 Future<void> pumpDriver(
   WidgetTester tester,

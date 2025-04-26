@@ -4,7 +4,7 @@ import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_test/flutter_test.dart";
 
 ///Create widget templates for testing
-const _uncText = {
+final _uncText = {
   "type": "Text",
   "id": "text",
   "controlled": false,
@@ -18,7 +18,7 @@ const _uncText = {
   },
 };
 
-const _uncTextWithoutData = {
+final _uncTextWithoutData = {
   "type": "Text",
   "id": "1",
   "controlled": false,
@@ -31,7 +31,7 @@ const _uncTextWithoutData = {
   },
 };
 
-const _cTextWithoutData = {
+final _cTextWithoutData = {
   "type": "Text",
   "id": "1",
   "controlled": true,
@@ -44,7 +44,7 @@ const _cTextWithoutData = {
   },
 };
 
-const _textWithPropAnimation = {
+final _textWithPropAnimation = {
   "type": "AnimatedBuilder",
   "id": "builder",
   "controlled": true,
@@ -199,7 +199,18 @@ void main() {
 
     testWidgets("check update when data prop is empty or null", (tester) async {
       final driver = DuitDriver.static(
-        _cTextWithoutData,
+        {
+          "type": "Text",
+          "id": "1",
+          "controlled": true,
+          "attributes": {
+            "data": "Good bye, World!",
+            "style": {
+              "fontSize": 12.0,
+              "fontWeight": 200,
+            }
+          },
+        },
         transportOptions: HttpTransportOptions(),
         enableDevMetrics: false,
       );

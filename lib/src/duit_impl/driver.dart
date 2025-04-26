@@ -279,7 +279,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   void _addParsers() {
     try {
-      ViewAttribute.attributeParser = const DefaultAttributeParser();
+      // ViewAttribute.attributeParser = const DefaultAttributeParser();
       ServerAction.setActionParser(const DefaultActionParser());
       ServerEvent.eventParser = const DefaultEventParser();
     } catch (e) {
@@ -330,13 +330,13 @@ final class DuitDriver with DriverHooks implements UIDriver {
         json,
       );
 
-      final attributes = ViewAttribute.createAttributes(
-        ElementType.subtree,
-        component,
-        tag,
-      );
+      // final attributes = ViewAttribute.createAttributes(
+      //   ElementType.subtree,
+      //   component,
+      //   tag,
+      // );
 
-      controller.updateState(attributes);
+      controller.updateState(component);
     }
   }
 
@@ -452,7 +452,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         if (controller != null) {
           final attribute = controller.attributes.payload;
           if (attribute is AttendedModel) {
-            payload[dependency.target] = attribute.collect();
+            // payload[dependency.target] = attribute.collect();
           }
         }
       }
@@ -473,13 +473,13 @@ final class DuitDriver with DriverHooks implements UIDriver {
         return;
       }
 
-      final attributes = ViewAttribute.createAttributes(
-        controller.type,
-        json,
-        controller.tag,
-      );
+      // final attributes = ViewAttribute.createAttributes(
+      //   controller.type,
+      //   json,
+      //   controller.tag,
+      // );
 
-      controller.updateState(attributes);
+      controller.updateState(json);
     }
   }
 
