@@ -25,6 +25,22 @@ Map<String, dynamic> _createWidget() {
     },
     "attributes": {
       "autofocus": false,
+      "onLongPress": {
+        "executionType": 1, //local
+        "event": "local_exec",
+        "payload": {
+          "type": "update",
+          "updates": {
+            "t1": {
+              "data": "Long pressed!",
+              "style": {
+                "fontSize": 48.0,
+                "fontWeight": 400,
+              }
+            },
+          },
+        },
+      },
     },
     "child": {
       "type": "Text",
@@ -96,13 +112,24 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        final text = find.text("Pressed!");
+        var text = find.text("Pressed!");
         expect(text, findsOneWidget);
 
-        final widget = tester.widget(find.text("Pressed!")) as Text;
+        Text widget = tester.widget(text);
 
         expect(widget.style?.fontWeight, equals(FontWeight.w800));
         expect(widget.style?.fontSize, equals(24.0));
+
+        await tester.longPress(button);
+        await tester.pumpAndSettle();
+
+        text = find.text("Long pressed!");
+        expect(text, findsOneWidget);
+
+        widget = tester.widget(text);
+        expect(text, findsOneWidget);
+        expect(widget.style?.fontWeight, equals(FontWeight.w400));
+        expect(widget.style?.fontSize, equals(48.0));
       });
     },
   );
