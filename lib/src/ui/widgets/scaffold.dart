@@ -4,10 +4,12 @@ import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitScaffold extends StatefulWidget {
   final UIElementController<ScaffoldAttributes> controller;
+  final Widget child;
 
   const DuitScaffold({
     super.key,
     required this.controller,
+    required this.child,
   });
 
   @override
@@ -34,11 +36,7 @@ class _DuitScaffoldState extends State<DuitScaffold>
         driver,
         null,
       ),
-      body: buildOutOfBoundWidget(
-        attributes.body,
-        driver,
-        null,
-      ),
+      body: widget.child,
       floatingActionButton: buildOutOfBoundWidget(
         attributes.floatingActionButton,
         driver,

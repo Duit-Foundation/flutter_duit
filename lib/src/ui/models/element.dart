@@ -1439,6 +1439,8 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: true,
         );
       case ElementType.scaffold:
+        final child = DuitElement.fromJson(json["child"], driver);
+
         final attributes = ViewAttribute.createAttributes<ScaffoldAttributes>(
           type,
           attributesObject,
@@ -1459,6 +1461,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             tag,
           ),
           controlled: true,
+          child: child,
         );
       case ElementType.inkWell:
         final child = DuitElement.fromJson(json["child"], driver);
