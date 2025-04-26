@@ -35,7 +35,10 @@ class _DuitAnimatedOpacityState extends State<DuitAnimatedOpacity>
       duration: attributes.duration,
       curve: attributes.curve,
       opacity: attributes.opacity,
-      onEnd: onEndHandler(widget.controller),
+      onEnd: onEndHandler(
+        attributes.onEnd,
+        widget.controller.performAction,
+      ),
       child: widget.child,
     );
   }

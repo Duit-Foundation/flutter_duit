@@ -37,6 +37,10 @@ class _DuitAnimatedRotationState extends State<DuitAnimatedRotation>
       filterQuality: attributes.filterQuality,
       turns: attributes.turns,
       curve: attributes.curve,
+      onEnd: onEndHandler(
+        attributes.onEnd,
+        widget.controller.performAction,
+      ),
       child: widget.child,
     );
   }

@@ -20,7 +20,8 @@ class DuitAnimatedAlign extends StatefulWidget {
 class _DuitAnimatedAlignState extends State<DuitAnimatedAlign>
     with
         ViewControllerChangeListener<DuitAnimatedAlign,
-            AnimatedAlignAttributes>, OnAnimationEnd {
+            AnimatedAlignAttributes>,
+        OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -36,7 +37,10 @@ class _DuitAnimatedAlignState extends State<DuitAnimatedAlign>
       heightFactor: attributes.heightFactor,
       duration: attributes.duration,
       curve: attributes.curve,
-      onEnd: onEndHandler(widget.controller),
+      onEnd: onEndHandler(
+        attributes.onEnd,
+        widget.controller.performAction,
+      ),
       child: widget.child,
     );
   }

@@ -38,7 +38,7 @@ final class AnimatedScaleAttributes extends ImplicitAnimatable
       alignment: other.alignment,
       duration: other.duration,
       curve: other.curve,
-      onEnd: other.onEnd,
+      onEnd: other.onEnd ?? onEnd,
       filterQuality: other.filterQuality ?? filterQuality,
     );
   }

@@ -95,7 +95,7 @@ final class AnimatedAlignAttributes extends ImplicitAnimatable
       heightFactor: other.heightFactor ?? heightFactor,
       duration: duration,
       curve: other.curve,
-      onEnd: other.onEnd,
+      onEnd: other.onEnd ?? onEnd,
     );
   }
 

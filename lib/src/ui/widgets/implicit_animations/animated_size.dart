@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/animation_attributes/animated_size_attributes.dart";
 
 class DuitAnimatedSize extends StatefulWidget {
@@ -18,7 +19,8 @@ class DuitAnimatedSize extends StatefulWidget {
 
 class _DuitAnimatedSizeState extends State<DuitAnimatedSize>
     with
-        ViewControllerChangeListener<DuitAnimatedSize, AnimatedSizeAttributes> {
+        ViewControllerChangeListener<DuitAnimatedSize, AnimatedSizeAttributes>,
+        OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -34,6 +36,10 @@ class _DuitAnimatedSizeState extends State<DuitAnimatedSize>
       alignment: attributes.alignment ?? Alignment.center,
       curve: attributes.curve,
       reverseDuration: attributes.reverseDuration,
+      onEnd: onEndHandler(
+        attributes.onEnd,
+        widget.controller.performAction,
+      ),
       child: widget.child,
     );
   }

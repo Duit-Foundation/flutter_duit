@@ -36,4 +36,51 @@ void main() {
       expect(find.text("Some text"), findsOneWidget);
     },
   );
+
+  testWidgets("DuitAnimatedAlign must call onEnd", (tester) async {
+    final driver = DuitDriver.static(
+      {
+        "type": "AnimatedAlign",
+        "id": "align",
+        "attributes": {
+          "alignment": "bottomRight",
+          "duration": 100,
+          "onEnd": {
+            "executionType": 1, //local
+            "event": "local_exec",
+            "payload": {
+              "type": "update",
+              "updates": {
+                "text": {
+                  "data": "END",
+                },
+              }
+            },
+          },
+        },
+        "child": {
+          "type": "Text",
+          "id": "text",
+          "controlled": true,
+          "attributes": {
+            "data": "Some text",
+          },
+        }
+      },
+      transportOptions: EmptyTransportOptions(),
+    );
+
+    await pumpDriver(
+      tester,
+      driver,
+    );
+
+    await driver.updateTestAttributes("align", {
+      "alignment": "bottomLeft",
+    });
+
+    await tester.pumpAndSettle();
+
+    expect(find.text("END"), findsOneWidget);
+  });
 }

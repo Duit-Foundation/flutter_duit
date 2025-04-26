@@ -81,7 +81,7 @@ final class AnimatedOpacityAttributes extends ImplicitAnimatable
       opacity: other.opacity,
       duration: other.duration,
       curve: other.curve,
-      onEnd: other.onEnd,
+      onEnd: other.onEnd ?? onEnd,
     );
   }
 

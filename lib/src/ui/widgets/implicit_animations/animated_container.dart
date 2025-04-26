@@ -34,7 +34,10 @@ class _DuitAnimatedContainerState extends State<DuitAnimatedContainer>
       key: ValueKey(widget.controller.id),
       duration: attributes.duration,
       curve: attributes.curve,
-      onEnd: onEndHandler(widget.controller),
+      onEnd: onEndHandler(
+        attributes.onEnd,
+        widget.controller.performAction,
+      ),
       width: attributes.width,
       height: attributes.height,
       color: attributes.color,
