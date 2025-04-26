@@ -4,7 +4,6 @@ import 'package:flutter_duit/flutter_duit.dart';
 final class ScaffoldAttributes implements DuitAttributes<ScaffoldAttributes> {
   //TODO: implement Drawer and related props
   final NonChildWidget? appBar,
-      body,
       bottomNavigationBar,
       floatingActionButton,
       bottomSheet;
@@ -25,7 +24,6 @@ final class ScaffoldAttributes implements DuitAttributes<ScaffoldAttributes> {
     required this.persistentFooterAlignment,
     this.appBar,
     this.backgroundColor,
-    this.body,
     this.bottomNavigationBar,
     // this.drawer,
     // this.endDrawer,
@@ -45,7 +43,6 @@ final class ScaffoldAttributes implements DuitAttributes<ScaffoldAttributes> {
       appBar: json["appBar"],
       backgroundColor:
           ColorUtils.tryParseNullableColor(json["backgroundColor"]),
-      body: json["body"],
       bottomNavigationBar: json["bottomNavigationBar"],
       // drawer: json["drawer"],
       // endDrawer: json["endDrawer"],
@@ -73,7 +70,6 @@ final class ScaffoldAttributes implements DuitAttributes<ScaffoldAttributes> {
         primary: other.primary,
         appBar: other.appBar ?? appBar,
         backgroundColor: other.backgroundColor ?? backgroundColor,
-        body: other.body ?? body,
         bottomNavigationBar: other.bottomNavigationBar ?? bottomNavigationBar,
         // drawer: other.drawer ?? drawer,
         // endDrawer: other.endDrawer ?? endDrawer,

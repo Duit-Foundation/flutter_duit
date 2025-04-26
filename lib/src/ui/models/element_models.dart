@@ -855,12 +855,17 @@ final class AppBarUiElement<T> extends DuitElement<T> {
   });
 }
 
-final class ScaffoldUiElement<T> extends DuitElement<T> {
+final class ScaffoldUiElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
   ScaffoldUiElement({
     required super.type,
     required super.id,
     required super.controlled,
     required super.viewController,
+    required this.child,
   });
 }
 

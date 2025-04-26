@@ -617,9 +617,11 @@ mixin WidgetFabric {
         );
       case ElementType.scaffold:
         final it = model as ScaffoldModel;
+        final child = getWidgetFromElement(it.child);
 
         return DuitScaffold(
           controller: it.viewController!,
+          child: child,
         );
       case ElementType.inkWell:
         final it = model as InkWellModel;

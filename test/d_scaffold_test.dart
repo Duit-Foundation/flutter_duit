@@ -43,14 +43,13 @@ void main() {
             {
               "type": "Scaffold",
               "id": "scaffold",
-              "attributes": {
-                "body": {
-                  "type": "Text",
-                  "id": "text",
-                  "controlled": false,
-                  "attributes": {
-                    "data": "Hello, world!",
-                  },
+              "attributes": {},
+              "child": {
+                "type": "Text",
+                "id": "text",
+                "controlled": false,
+                "attributes": {
+                  "data": "Hello, world!",
                 },
               },
             },
