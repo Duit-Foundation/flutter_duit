@@ -185,7 +185,7 @@ final class AnimatedContainerAttributes extends ImplicitAnimatable
       foregroundDecoration: other.foregroundDecoration ?? foregroundDecoration,
       duration: duration, //copy prohibited
       curve: other.curve,
-      onEnd: other.onEnd,
+      onEnd: other.onEnd ?? onEnd,
     );
   }
 

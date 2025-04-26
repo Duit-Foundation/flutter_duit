@@ -38,6 +38,10 @@ class _DuitAnimatedPositionedState extends State<DuitAnimatedPositioned>
       left: attributes.left,
       duration: attributes.duration,
       curve: attributes.curve,
+      onEnd: onEndHandler(
+        attributes.onEnd,
+        widget.controller.performAction,
+      ),
       child: widget.child,
     );
   }

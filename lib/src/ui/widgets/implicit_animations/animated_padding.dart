@@ -35,7 +35,10 @@ class _DuitAnimatedPaddingState extends State<DuitAnimatedPadding>
       padding: attributes.padding,
       duration: attributes.duration,
       curve: attributes.curve,
-      onEnd: onEndHandler(widget.controller),
+      onEnd: onEndHandler(
+        attributes.onEnd,
+        widget.controller.performAction,
+      ),
       child: widget.child,
     );
   }

@@ -81,7 +81,7 @@ final class AnimatedPaddingAttributes extends ImplicitAnimatable
       padding: other.padding,
       duration: other.duration,
       curve: other.curve,
-      onEnd: other.onEnd,
+      onEnd: other.onEnd ?? onEnd,
     );
   }
 
