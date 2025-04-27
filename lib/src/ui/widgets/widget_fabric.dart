@@ -739,6 +739,24 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.customScrollView:
+        final it = model as CustomScrollViewModel;
+
+        final arr = <Widget>[];
+
+        for (var element in it.children) {
+          arr.add(getWidgetFromElement(element));
+        }
+
+        return it.controlled
+            ? DuitControlledCustomScrollView(
+                controller: it.viewController!,
+                children: arr,
+              )
+            : DuitCustomScrollView(
+                attributes: it.attributes!,
+                children: arr,
+              );
       default:
         return const SizedBox.shrink();
     }

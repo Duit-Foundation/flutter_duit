@@ -1704,6 +1704,44 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.customScrollView:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            arr.add(
+              DuitElement.fromJson(
+                element,
+                driver,
+              ),
+            );
+          });
+        }
+
+        final attributes =
+            ViewAttribute.createAttributes<CustomScrollViewAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return CustomScrollViewModel(
+          id: id,
+          type: type,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: controlled,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);

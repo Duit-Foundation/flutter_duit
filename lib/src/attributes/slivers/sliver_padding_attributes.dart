@@ -20,7 +20,7 @@ final class SliverPaddingAttributes extends AnimatedPropertyOwner
     final animation = AnimatedPropHelper(json);
     return SliverPaddingAttributes(
       padding: AttributeValueMapper.toEdgeInsets(json['padding']),
-      needsBoxAdapter: json['wrapChild'] ?? false,
+      needsBoxAdapter: json['needsBoxAdapter'] ?? false,
       parentBuilderId: animation.parentBuilderId,
       affectedProperties: animation.affectedProperties,
     );

@@ -20,6 +20,7 @@ class DuitSliverPadding extends StatelessWidget with AnimatedAttributes {
     );
 
     return SliverPadding(
+      key: Key(attributes.id),
       padding: attrs.padding,
       sliver: attrs.needsBoxAdapter ? SliverToBoxAdapter(child: child) : child,
     );
