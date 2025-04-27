@@ -726,6 +726,19 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.sliverPadding:
+        final it = model as SliverPaddingModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverPadding(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverPadding(
+                attributes: it.attributes!,
+                child: child,
+              );
       default:
         return const SizedBox.shrink();
     }
