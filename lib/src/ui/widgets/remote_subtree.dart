@@ -21,6 +21,7 @@ class _DuitRemoteSubtreeState extends State<DuitRemoteSubtree>
     attachStateToController(
       widget.controller,
       const SizedBox.shrink(),
+      remote: true,
     );
     super.initState();
   }
@@ -28,7 +29,7 @@ class _DuitRemoteSubtreeState extends State<DuitRemoteSubtree>
   @override
   Widget build(BuildContext context) {
     return KeyedSubtree(
-      key: Key(widget.controller.id),
+      key: ValueKey(widget.controller.id),
       child: subtreeChild,
     );
   }

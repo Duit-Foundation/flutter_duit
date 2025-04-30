@@ -10,7 +10,5 @@ final class DuitTile extends StatelessWidget {
   }) : super(key: ValueKey(id));
 
   @override
-  Widget build(BuildContext context) {
-    return child;
-  }
+  Widget build(BuildContext context) => child;
 }

@@ -5,6 +5,7 @@ import 'animation_context.dart';
 
 mixin AnimatedAttributes on Widget {
   /// Merges the [attributes] with the animated properties in the [DuitAnimationContext].
+  @Deprecated("Use `mergeWithAttributes` instead")
   T mergeWithAttributes<T>(
     BuildContext context,
     T attributes,

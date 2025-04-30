@@ -64,12 +64,6 @@ mixin ViewControllerChangeListener<T extends StatefulWidget> on State<T> {
   }
 
   void _listener() {
-    // final newState = _controller.attributes.cast<AttrType>();
-    // final attrs = attributes as DuitAttributes<AttrType>;
-
-    // setState(() {
-    //   attributes = attrs.copyWith(newState.payload);
-    // });
     setState(() {});
   }
 
@@ -77,16 +71,11 @@ mixin ViewControllerChangeListener<T extends StatefulWidget> on State<T> {
   void updateStateManually(
     DuitDataSource newState, {
     String? widgetId,
-  }) {
-    // _controller.updateState(ViewAttribute<AttrType>(
-    //   payload: newState,
-    //   id: widgetId ?? "none",
-    // ));
-  }
+  }) =>
+      _controller.updateState(newState);
 
-  void _listenControllerUpdateStateEvent() {
-    _controller.addListener(_listener);
-  }
+  void _listenControllerUpdateStateEvent() =>
+      _controller.addListener(_listener);
 
   @override
   void didChangeDependencies() {

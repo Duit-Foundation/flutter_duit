@@ -76,10 +76,9 @@ packages:
   duit_kernel:
     dependency: transitive
     description:
-      name: duit_kernel
-      sha256: "97b2ac1677712b1716ac31a68ea31a1e4987dfbc4cb4882bd3ad3710872ef65d"
-      url: "https://pub.dev"
-    source: hosted
+      path: "../../duit_kernel"
+      relative: true
+    source: path
     version: "3.3.2"
   fake_async:
     dependency: transitive
@@ -281,4 +280,4 @@ packages:
     version: "1.1.1"
 sdks:
   dart: ">=3.5.0 <4.0.0"
-  flutter: ">=3.24.0"
+  flutter: ">=3.24.3"

@@ -329,13 +329,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         description,
         json,
       );
-
-      // final attributes = ViewAttribute.createAttributes(
-      //   ElementType.subtree,
-      //   component,
-      //   tag,
-      // );
-
       controller.updateState(component);
     }
   }
@@ -472,13 +465,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         await _resolveComponentUpdate(controller, json);
         return;
       }
-
-      // final attributes = ViewAttribute.createAttributes(
-      //   controller.type,
-      //   json,
-      //   controller.tag,
-      // );
-
       controller.updateState(json);
     }
   }

@@ -1,72 +1,73 @@
-// import "package:flutter/material.dart";
-// import "package:flutter_duit/flutter_duit.dart";
-// import "package:flutter_duit/src/attributes/index.dart";
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
-// class DuitRepaintBoundary extends StatelessWidget {
-//   final Widget child;
-//   final ViewAttribute<RepaintBoundaryAttributes> attributes;
+class DuitRepaintBoundary extends StatelessWidget {
+  final Widget child;
+  final ViewAttribute attributes;
 
-//   const DuitRepaintBoundary({
-//     super.key,
-//     required this.child,
-//     required this.attributes,
-//   });
+  const DuitRepaintBoundary({
+    super.key,
+    required this.child,
+    required this.attributes,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final attrs = attributes.payload;
+  @override
+  Widget build(BuildContext context) {
+    final attrs = DuitDataSource(attributes.payload);
 
-//     if (attrs.childIndex == null) {
-//       return RepaintBoundary(
-//         child: child,
-//       );
-//     } else {
-//       return RepaintBoundary.wrap(
-//         child,
-//         attrs.childIndex!,
-//       );
-//     }
-//   }
-// }
+    final index = attrs.tryGetInt(key: "childIndex");
 
-// class DuitControlledRepaintBoundary extends StatefulWidget {
-//   final Widget child;
-//   final UIElementController<RepaintBoundaryAttributes> controller;
+    if (index == null) {
+      return RepaintBoundary(
+        child: child,
+      );
+    } else {
+      return RepaintBoundary.wrap(
+        child,
+        index,
+      );
+    }
+  }
+}
 
-//   const DuitControlledRepaintBoundary({
-//     super.key,
-//     required this.child,
-//     required this.controller,
-//   });
+class DuitControlledRepaintBoundary extends StatefulWidget {
+  final Widget child;
+  final UIElementController controller;
 
-//   @override
-//   State<DuitControlledRepaintBoundary> createState() =>
-//       _DuitControlledRepaintBoundaryState();
-// }
+  const DuitControlledRepaintBoundary({
+    super.key,
+    required this.child,
+    required this.controller,
+  });
 
-// class _DuitControlledRepaintBoundaryState
-//     extends State<DuitControlledRepaintBoundary>
-//     with
-//         ViewControllerChangeListener<DuitControlledRepaintBoundary,
-//             RepaintBoundaryAttributes> {
-//   @override
-//   void initState() {
-//     attachStateToController(widget.controller);
-//     super.initState();
-//   }
+  @override
+  State<DuitControlledRepaintBoundary> createState() =>
+      _DuitControlledRepaintBoundaryState();
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     if (attributes.childIndex == null) {
-//       return RepaintBoundary(
-//         key: Key(widget.controller.id),
-//         child: widget.child,
-//       );
-//     } else {
-//       return RepaintBoundary.wrap(
-//         widget.child,
-//         attributes.childIndex!,
-//       );
-//     }
-//   }
-// }
+class _DuitControlledRepaintBoundaryState
+    extends State<DuitControlledRepaintBoundary>
+    with ViewControllerChangeListener {
+  @override
+  void initState() {
+    attachStateToController(widget.controller);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final index = attributes.tryGetInt(key: "childIndex");
+
+    if (index == null) {
+      return RepaintBoundary(
+        child: widget.child,
+      );
+    } else {
+      return RepaintBoundary.wrap(
+        widget.child,
+        index,
+      );
+    }
+  }
+}

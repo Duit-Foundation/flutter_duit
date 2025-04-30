@@ -1,7 +1,6 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitText extends StatelessWidget with AnimatedAttributes {
@@ -14,22 +13,19 @@ final class DuitText extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(context) {
-    final attrs = mergeWithDataSource(
-      context,
-      attributes.payload,
-    );
+    final attrs = attributes.payload;
 
     final data = attrs.tryGetString("data");
     if (data == null || data.isEmpty) {
       return const SizedBox.shrink();
     }
 
+
     return Text(
       key: Key(attributes.id),
       data,
       textAlign: attrs.textAlign(),
-      textDirection: attrs.textDirection(),
-      // style: attrs.style,
+      style: attrs.textStyle(),
       maxLines: attrs.tryGetInt(key: "maxLines"),
       semanticsLabel: attrs.tryGetString("semanticsLabel"),
       overflow: attrs.textOverflow(),
@@ -75,7 +71,7 @@ class _DuitControlledTextState extends State<DuitControlledText>
       key: Key(widget.controller.id),
       textAlign: attrs.textAlign(),
       textDirection: attrs.textDirection(),
-      // style: attrs.style,
+      style: attrs.textStyle(),
       maxLines: attrs.tryGetInt(key: "maxLines"),
       semanticsLabel: attrs.tryGetString("semanticsLabel"),
       overflow: attrs.textOverflow(),

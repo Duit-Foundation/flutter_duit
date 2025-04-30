@@ -1,92 +1,93 @@
-// import "package:flutter/gestures.dart";
-// import "package:flutter/material.dart";
-// import "package:flutter_duit/flutter_duit.dart";
-// import "package:flutter_duit/src/attributes/index.dart";
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/attributes/index.dart";
 
-// final class DuitListView extends StatelessWidget {
-//   final ViewAttribute<ListViewAttributes> attributes;
-//   final List<Widget> children;
+final class DuitListView extends StatelessWidget {
+  final ViewAttribute attributes;
+  final List<Widget> children;
 
-//   const DuitListView({
-//     super.key,
-//     required this.attributes,
-//     required this.children,
-//   });
+  const DuitListView({
+    super.key,
+    required this.attributes,
+    required this.children,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final attrs = attributes.payload;
-//     return ListView(
-//       key: Key(attributes.id),
-//       scrollDirection: attrs.scrollDirection ?? Axis.vertical,
-//       reverse: attrs.reverse ?? false,
-//       primary: attrs.primary,
-//       physics: attrs.physics,
-//       shrinkWrap: attrs.shrinkWrap ?? false,
-//       padding: attrs.padding,
-//       itemExtent: attrs.itemExtent,
-//       cacheExtent: attrs.cacheExtent,
-//       semanticChildCount: attrs.semanticChildCount,
-//       dragStartBehavior: attrs.dragStartBehavior ?? DragStartBehavior.start,
-//       keyboardDismissBehavior: attrs.keyboardDismissBehavior ??
-//           ScrollViewKeyboardDismissBehavior.manual,
-//       clipBehavior: attrs.clipBehavior ?? Clip.hardEdge,
-//       restorationId: attrs.restorationId,
-//       addAutomaticKeepAlives: attrs.addAutomaticKeepAlives ?? true,
-//       addRepaintBoundaries: attrs.addRepaintBoundaries ?? true,
-//       addSemanticIndexes: attrs.addSemanticIndexes ?? true,
-//       children: children,
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    final attrs = DuitDataSource(attributes.payload);
+    return ListView(
+      key: Key(attributes.id),
+      scrollDirection: attrs.axis(),
+      reverse: attrs.getBool("reverse", defaultValue: false),
+      primary: attrs.tryGetBool("primary"),
+      physics: attrs.scrollPhysics(),
+      shrinkWrap: attrs.getBool("shrinkWrap", defaultValue: false),
+      padding: attrs.edgeInsets(),
+      itemExtent: attrs.tryGetDouble(key: "itemExtent"),
+      cacheExtent: attrs.tryGetDouble(key: "cacheExtent"),
+      semanticChildCount: attrs.tryGetInt(key: "semanticChildCount"),
+      dragStartBehavior: attrs.dragStartBehavior(),
+      keyboardDismissBehavior: attrs.keyboardDismissBehavior(),
+      clipBehavior: attrs.clipBehavior(),
+      restorationId: attrs.tryGetString("restorationId"),
+      addAutomaticKeepAlives:
+          attrs.getBool("addAutomaticKeepAlives", defaultValue: true),
+      addRepaintBoundaries:
+          attrs.getBool("addRepaintBoundaries", defaultValue: true),
+      addSemanticIndexes:
+          attrs.getBool("addSemanticIndexes", defaultValue: true),
+      children: children,
+    );
+  }
+}
 
-// final class DuitControlledListView extends StatefulWidget {
-//   final UIElementController<ListViewAttributes> controller;
-//   final List<Widget> children;
+final class DuitControlledListView extends StatefulWidget {
+  final UIElementController controller;
+  final List<Widget> children;
 
-//   const DuitControlledListView({
-//     super.key,
-//     required this.controller,
-//     required this.children,
-//   });
+  const DuitControlledListView({
+    super.key,
+    required this.controller,
+    required this.children,
+  });
 
-//   @override
-//   State<DuitControlledListView> createState() => _DuitControlledListViewState();
-// }
+  @override
+  State<DuitControlledListView> createState() => _DuitControlledListViewState();
+}
 
-// class _DuitControlledListViewState extends State<DuitControlledListView>
-//     with
-//         ViewControllerChangeListener<DuitControlledListView,
-//             ListViewAttributes> {
-//   @override
-//   void initState() {
-//     attachStateToController(widget.controller);
-//     super.initState();
-//   }
+class _DuitControlledListViewState extends State<DuitControlledListView>
+    with ViewControllerChangeListener {
+  @override
+  void initState() {
+    attachStateToController(widget.controller);
+    super.initState();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView(
-//       key: Key(widget.controller.id),
-//       scrollDirection: attributes.scrollDirection ?? Axis.vertical,
-//       reverse: attributes.reverse ?? false,
-//       primary: attributes.primary,
-//       physics: attributes.physics,
-//       shrinkWrap: attributes.shrinkWrap ?? false,
-//       padding: attributes.padding,
-//       itemExtent: attributes.itemExtent,
-//       cacheExtent: attributes.cacheExtent,
-//       semanticChildCount: attributes.semanticChildCount,
-//       dragStartBehavior:
-//           attributes.dragStartBehavior ?? DragStartBehavior.start,
-//       keyboardDismissBehavior: attributes.keyboardDismissBehavior ??
-//           ScrollViewKeyboardDismissBehavior.manual,
-//       clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
-//       restorationId: attributes.restorationId,
-//       addAutomaticKeepAlives: attributes.addAutomaticKeepAlives ?? true,
-//       addRepaintBoundaries: attributes.addRepaintBoundaries ?? true,
-//       addSemanticIndexes: attributes.addSemanticIndexes ?? true,
-//       children: widget.children,
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      key: Key(widget.controller.id),
+      scrollDirection: attributes.axis(),
+      reverse: attributes.getBool("reverse", defaultValue: false),
+      primary: attributes.tryGetBool("primary"),
+      physics: attributes.scrollPhysics(),
+      shrinkWrap: attributes.getBool("shrinkWrap", defaultValue: false),
+      padding: attributes.edgeInsets(),
+      itemExtent: attributes.tryGetDouble(key: "itemExtent"),
+      cacheExtent: attributes.tryGetDouble(key: "cacheExtent"),
+      semanticChildCount: attributes.tryGetInt(key: "semanticChildCount"),
+      dragStartBehavior: attributes.dragStartBehavior(),
+      keyboardDismissBehavior: attributes.keyboardDismissBehavior(),
+      clipBehavior: attributes.clipBehavior(),
+      restorationId: attributes.tryGetString("restorationId"),
+      addAutomaticKeepAlives:
+          attributes.getBool("addAutomaticKeepAlives", defaultValue: true),
+      addRepaintBoundaries:
+          attributes.getBool("addRepaintBoundaries", defaultValue: true),
+      addSemanticIndexes:
+          attributes.getBool("addSemanticIndexes", defaultValue: true),
+      children: widget.children,
+    );
+  }
+}
