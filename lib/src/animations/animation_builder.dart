@@ -129,7 +129,7 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
 
         return DuitAnimationContext(
           data: dataObj,
-          parentId: wC.attributes.payload.tryGetString("persistentId") ?? wC.id,
+          parentId: wC.attributes.payload["persistentId"] ?? wC.id,
           //Priority use of persistentId
           child: child ?? const SizedBox.shrink(),
         );
