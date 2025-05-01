@@ -1,9 +1,9 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
+import 'package:flutter_duit/src/ui/models/grid_constructor.dart';
 import 'package:flutter_duit/src/ui/models/type_def.dart';
 // import 'package:flutter_duit/src/ui/models/type_def.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
@@ -36,7 +36,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
     Map<String, dynamic>? json,
     UIDriver driver,
   ) {
-    if (json == null) return EmptyUIElement<EmptyAttributes>();
+    if (json == null) return EmptyUIElement();
 
     final String type = json["type"];
     final String id = json["id"];
@@ -76,7 +76,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        final el = RowUIElement<RowAttributes>(
+        final el = RowUIElement(
           type: type,
           id: id,
           children: arr,
@@ -110,7 +110,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return ColumnUIElement<ColumnAttributes>(
+        return ColumnUIElement(
           type: type,
           id: id,
           children: arr,
@@ -136,7 +136,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return CenterUIElement<CenterAttributes>(
+        return CenterUIElement(
           type: type,
           id: id,
           child: child,
@@ -162,7 +162,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return FittedBoxUiElement<FittedBoxAttributes>(
+        return FittedBoxUiElement(
           type: type,
           id: id,
           child: child,
@@ -193,7 +193,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
         final controller = driver.getController(wId);
 
         //Priority use of  persistentId property for animatedBuilder
-        return AnimatedBuilderUIElement<AnimatedBuilderAttributes>(
+        return AnimatedBuilderUIElement(
           type: type,
           id: wId,
           child: child,
@@ -220,7 +220,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return ColoredBoxUIElement<ColoredBoxAttributes>(
+        return ColoredBoxUIElement(
           type: type,
           id: id,
           child: child,
@@ -271,7 +271,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return SizedBoxUIElement<SizedBoxAttributes>(
+        return SizedBoxUIElement(
           type: type,
           id: id,
           child: child,
@@ -295,7 +295,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return RichTextUIElement<RichTextAttributes>(
+        return RichTextUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -318,7 +318,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return TextUIElement<TextAttributes>(
+        return TextUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -343,7 +343,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return ElevatedButtonUIElement<ElevatedButtonAttributes>(
+        return ElevatedButtonUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -367,7 +367,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return TextFieldUIElement<TextFieldAttributes>(
+        return TextFieldUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -398,7 +398,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return StackUIElement<StackAttributes>(
+        return StackUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -430,7 +430,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return WrapUIElement<WrapAttributes>(
+        return WrapUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -456,7 +456,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return ExpandedUiElement<ExpandedAttributes>(
+        return ExpandedUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -482,7 +482,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return PaddingUiElement<PaddingAttributes>(
+        return PaddingUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -508,7 +508,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return PositionedUiElement<PositionedAttributes>(
+        return PositionedUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -534,7 +534,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return DecoratedBoxUiElement<DecoratedBoxAttributes>(
+        return DecoratedBoxUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -560,7 +560,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
         );
         //controlled by default
         //extends AttendedModel
-        return CheckboxUIElement<CheckboxAttributes>(
+        return CheckboxUIElement(
           type: type,
           id: id,
           attributes: null,
@@ -583,7 +583,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return ImageUIElement<ImageAttributes>(
+        return ImageUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -605,7 +605,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           tag,
           id: id,
         );
-        return SwitchUiElement<SwitchAttributes>(
+        return SwitchUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -627,7 +627,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           tag,
           id: id,
         );
-        return RadioUIElement<RadioAttributes>(
+        return RadioUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -650,7 +650,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return SliderUIElement<SliderAttributes>(
+        return SliderUIElement(
           type: type,
           id: id,
           attributes: null,
@@ -675,7 +675,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return ContainerUiElement<ContainerAttributes>(
+        return ContainerUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -701,7 +701,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return SubtreeUIElement<SubtreeAttributes>(
+        return SubtreeUIElement(
           type: type,
           id: id,
           attributes: null,
@@ -727,7 +727,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return GestureDetectorUiElement<GestureDetectorAttributes>(
+        return GestureDetectorUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -753,7 +753,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return AlignUiElement<AlignAttributes>(
+        return AlignUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -781,7 +781,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
 
         switch (attributes.payload["type"]) {
           case "scale":
-            return TransformUiElement<ScaleTransform>(
+            return TransformUiElement(
               type: type,
               id: id,
               attributes: _attachAttributes(controlled, attributes),
@@ -798,7 +798,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
               controlled: controlled,
             );
           case "translate":
-            return TransformUiElement<TranslateTransform>(
+            return TransformUiElement(
               type: type,
               id: id,
               attributes: _attachAttributes(controlled, attributes),
@@ -815,7 +815,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
               controlled: controlled,
             );
           case "rotate":
-            return TransformUiElement<RotateTransform>(
+            return TransformUiElement(
               type: type,
               id: id,
               attributes: _attachAttributes(controlled, attributes),
@@ -833,7 +833,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
             );
         }
 
-        return EmptyUIElement<EmptyAttributes>();
+        return EmptyUIElement();
       case ElementType.radioGroupContext:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -844,7 +844,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return RadioGroupContextUiElement<RadioGroupContextAttributes>(
+        return RadioGroupContextUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -870,7 +870,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return SingleChildScrollviewUiElement<SingleChildScrollviewAttributes>(
+        return SingleChildScrollviewUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -896,7 +896,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return OpacityUiElement<OpacityAttributes>(
+        return OpacityUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -922,7 +922,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return IgnorePointerUiElement<IgnorePointerAttributes>(
+        return IgnorePointerUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -948,7 +948,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return RepaintBoundaryUIElement<RepaintBoundaryAttributes>(
+        return RepaintBoundaryUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -974,7 +974,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return OverflowBoxUIElement<OverflowBoxAttributes>(
+        return OverflowBoxUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1000,7 +1000,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return MetaUiElement<MetaAttributes>(
+        return MetaUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -1028,8 +1028,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
 
         //[controlled] - always false
         //[ViewController] necessary and created directly
-        return LifecycleStateListenerUiElement<
-            LifecycleStateListenerAttributes>(
+        return LifecycleStateListenerUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -1068,7 +1067,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
 
         final controlState = isControlledByDefault || controlled;
 
-        return ListViewUIElement<ListViewAttributes>(
+        return ListViewUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlState, attributes),
@@ -1162,7 +1161,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return IntrinsicWidthUiElement<IntrinsicWidthAttributes>(
+        return IntrinsicWidthUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1189,7 +1188,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return RotatedBoxUIElement<RotatedBoxAttributes>(
+        return RotatedBoxUIElement(
           type: type,
           id: id,
           controlled: controlled,
@@ -1215,7 +1214,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return ConstrainedBoxUIElement<ConstrainedBoxAttributes>(
+        return ConstrainedBoxUIElement(
           type: type,
           id: id,
           controlled: controlled,
@@ -1315,7 +1314,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           id: id,
         );
 
-        return SafeAreaUiElement<SafeAreaAttributes>(
+        return SafeAreaUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1358,7 +1357,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.empty:
-        return EmptyUIElement<EmptyAttributes>();
+        return EmptyUIElement();
       case ElementType.component:
         final providedData = json["data"] as Map<String, dynamic>;
 
@@ -1379,7 +1378,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
             id: id,
           );
 
-          return ComponentUIElement<SubtreeAttributes>(
+          return ComponentUIElement(
             child: child,
             type: type,
             id: id,
@@ -1397,7 +1396,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
           );
         }
 
-        return EmptyUIElement<EmptyAttributes>();
+        return EmptyUIElement();
       case ElementType.appBar:
         final attributes = ViewAttribute.createAttributes(
           type,
@@ -1706,7 +1705,7 @@ base class DuitElement<T> extends ElementTreeEntry with WidgetFabric {
             ) as CustomUiElement;
           }
         }
-        return EmptyUIElement<EmptyAttributes>();
+        return EmptyUIElement();
       default:
         throw ArgumentError(
           "Cant infer element type from json schema: $type with id= $id",

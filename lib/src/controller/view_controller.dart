@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 /// The controller for a UI element.
 ///
@@ -147,8 +148,8 @@ final class ViewController<T>
   late final StreamController<AnimationCommand> commandChannel;
 
   @override
-  FutureOr<void> emitCommand(RemoteCommand command) {
-    // commandChannel.add(command);
+  FutureOr<void> emitCommand(AnimationCommand command) {
+    commandChannel.add(command);
   }
 
   @override
@@ -159,21 +160,4 @@ final class ViewController<T>
     commandChannel = StreamController<AnimationCommand>();
     commandChannel.stream.listen(callback);
   }
-
-  // @override
-  // UIElementController cast<R>() {
-  //   final controller = ViewController(
-  //     id: id,
-  //     driver: driver,
-  //     type: type,
-  //     attributes: attributes.cast<R>(),
-  //     action: action,
-  //     tag: tag,
-  //   );
-
-  //   //re-attach new controller instance
-  //   driver.attachController(id, controller);
-
-  //   return controller;
-  // }
 }

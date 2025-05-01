@@ -13,13 +13,15 @@ final class DuitText extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(context) {
-    final attrs = attributes.payload;
+    final attrs = mergeWithDataSource(
+      context,
+      attributes.payload,
+    );
 
     final data = attrs.tryGetString("data");
     if (data == null || data.isEmpty) {
       return const SizedBox.shrink();
     }
-
 
     return Text(
       key: Key(attributes.id),

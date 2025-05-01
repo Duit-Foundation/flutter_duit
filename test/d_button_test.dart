@@ -91,7 +91,7 @@ void main() {
       testWidgets("check action execution", (tester) async {
         final driver = DuitDriver.static(
           _createWidget(),
-          transportOptions: HttpTransportOptions(),
+          transportOptions: EmptyTransportOptions(),
           enableDevMetrics: false,
         );
 

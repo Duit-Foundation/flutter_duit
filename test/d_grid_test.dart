@@ -1,4 +1,3 @@
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -243,7 +242,7 @@ void main() {
               const ValueKey("firts_case"),
             );
 
-            expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
+            expect(tester.takeException(), isInstanceOf<AssertionError>());
 
             driver = DuitDriver.static(
               {
@@ -264,7 +263,7 @@ void main() {
               const ValueKey("second_case"),
             );
 
-            expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
+            expect(tester.takeException(), isInstanceOf<AssertionError>());
           },
         );
       });
@@ -356,8 +355,7 @@ void main() {
                 driver,
               );
 
-              expect(
-                  tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
+              expect(tester.takeException(), isInstanceOf<AssertionError>());
             },
           );
         },
@@ -450,7 +448,7 @@ void main() {
               await pumpDriver(
                 tester,
                 driver,
-                null,
+                const Key("value"),
                 {
                   "delegate1": (_) =>
                       const SliverGridDelegateWithFixedCrossAxisCount(
@@ -466,7 +464,10 @@ void main() {
               expect(grid, findsOneWidget);
 
               final scroll = find.byType(Scrollable);
+              expect(scroll, findsOneWidget);
               var itemLast = find.byKey(const ValueKey("10"));
+
+              await tester.pumpAndSettle();
 
               await tester.scrollUntilVisible(
                 itemLast,

@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_test/flutter_test.dart";
 
 ///Create widget templates for testing
@@ -234,17 +233,6 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(text, findsOneWidget);
-    });
-
-    test("check attributes", () async {
-      final attrs = TextAttributes(
-        data: "",
-        parentBuilderId: null,
-        affectedProperties: null,
-      );
-
-      expect(() => attrs.dispatchInternalCall("invalid"),
-          throwsUnimplementedError);
     });
   });
 }

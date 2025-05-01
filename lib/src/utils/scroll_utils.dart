@@ -1,3 +1,4 @@
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
@@ -26,11 +27,15 @@ mixin ScrollUtils<T extends StatefulWidget> on State<T> {
   //</editor-fold>
 
   //<editor-fold desc="Methods">
-  void attachOnScrollCallback<D extends DynamicChildHolder>(
-      UIElementController controller) {
+  void attachOnScrollCallback(
+    UIElementController controller,
+  ) {
     _controller = controller;
-    final attrs = _controller?.attributes.payload as D;
-    final extent = attrs.scrollEndReachedThreshold ?? 150;
+    final attrs = _controller!.attributes.payload;
+    final extent = attrs.getInt(
+      key: "scrollEndReachedThreshold",
+      defaultValue: 150,
+    );
     _scrollController = ScrollController()
       ..addListener(
         () async {

@@ -19,7 +19,7 @@ class DuitGridBuilder extends StatefulWidget {
 class _DuitGridBuilderState extends State<DuitGridBuilder>
     with ViewControllerChangeListener, ScrollUtils {
   Widget? buildItem(BuildContext context, int index) {
-    final item = (attributes as Map)["childObjects"]![index];
+    final item = attributes["childObjects"][index];
 
     final driver = widget.controller.driver;
 
@@ -51,7 +51,7 @@ class _DuitGridBuilderState extends State<DuitGridBuilder>
 
     if (delegateBuilder != null) {
       delegate = delegateBuilder.call(
-        attributes["sliverGridDelegateOptions"],
+        attributes["sliverGridDelegateOptions"] ?? const {},
       );
     } else {
       throw ArgumentError(

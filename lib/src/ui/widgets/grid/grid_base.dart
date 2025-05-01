@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/view_context.dart";
+import "package:flutter_duit/src/ui/models/grid_constructor.dart";
 
 final class DuitGridView extends StatelessWidget {
   final ViewAttribute attributes;
@@ -154,7 +154,7 @@ class _DuitControlledGridViewState extends State<DuitControlledGridView>
 
         if (delegateBuilder != null) {
           delegate = delegateBuilder.call(
-            attrs["sliverGridDelegateOptions"] ?? {},
+            attrs["sliverGridDelegateOptions"] ?? const {},
           );
         } else {
           throw ArgumentError(

@@ -1,4 +1,4 @@
-import 'package:flutter_duit/src/animations/index.dart';
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, dynamic> _builder(

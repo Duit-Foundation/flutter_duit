@@ -3,7 +3,7 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
+
 
 class DuitAnimationBuilder extends StatefulWidget {
   final Widget child;
@@ -28,7 +28,8 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
   void didChangeDependencies() {
     // widget.controller.listenCommand(_handleCommand);
     final attrs = widget.controller.attributes.payload;
-    for (var description in []) {
+    final tweens = attrs.getTweens();
+    for (var description in tweens) {
       final controller = AnimationController(
         vsync: this,
         duration: description.duration,

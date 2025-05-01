@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/widgets/tile.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
@@ -22,7 +20,7 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
   @override
   void initState() {
     attachStateToController(widget.controller);
-    attachOnScrollCallback<ListViewAttributes>(widget.controller);
+    attachOnScrollCallback(widget.controller);
     super.initState();
   }
 

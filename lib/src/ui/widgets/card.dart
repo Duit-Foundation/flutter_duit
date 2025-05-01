@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 /// Виджет Card в не контроллируемом варианте
 class DuitCard extends StatelessWidget with AnimatedAttributes {
