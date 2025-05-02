@@ -1,28 +1,6 @@
 import 'package:flutter_duit/src/animations/index.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Map<String, dynamic> _builder(
-  List<Map<String, dynamic>> tweens, {
-  Set<String>? props,
-}) =>
-    {
-      "type": "AnimatedBuilder",
-      "id": "builder",
-      "controlled": true,
-      "attributes": {
-        "tweenDescriptions": tweens,
-      },
-      "child": {
-        "type": "SizedBox",
-        "id": "container",
-        "controlled": false,
-        "attributes": {
-          "parentBuilderId": "builder",
-          "affectedProperties": props,
-        },
-      }
-    };
-
 final groupTween = {
   "type": "group",
   "tweens": [
