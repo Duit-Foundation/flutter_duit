@@ -1,13 +1,13 @@
 import "package:flutter/material.dart";
 
 class DuitAnimationContext extends InheritedWidget {
-  final Map<String, dynamic> data;
+  final Map<String, Animation> streams;
   final String parentId;
 
   const DuitAnimationContext({
     super.key,
     required Widget child,
-    required this.data,
+    required this.streams,
     required this.parentId,
   }) : super(child: child);
 
