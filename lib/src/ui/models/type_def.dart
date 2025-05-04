@@ -25,3 +25,6 @@ typedef AnimatedPositionedModel
     = AnimatedPositionedUIElement<AnimatedPositionedAttributes>;
 typedef AnimatedScaleModel = AnimatedScaleUIElement<AnimatedScaleAttributes>;
 typedef AnimatedSizeModel = AnimatedSizeUIElement<AnimatedSizeAttributes>;
+typedef SliverPaddingModel = SliverPaddingUIElement<SliverPaddingAttributes>;
+typedef CustomScrollViewModel
+    = CustomScrollViewUIElement<CustomScrollViewAttributes>;

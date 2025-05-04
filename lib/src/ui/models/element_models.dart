@@ -981,3 +981,33 @@ final class AnimatedScaleUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class SliverPaddingUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverPaddingUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class CustomScrollViewUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  CustomScrollViewUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.children,
+  });
+}

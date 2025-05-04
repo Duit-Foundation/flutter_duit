@@ -726,6 +726,37 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.sliverPadding:
+        final it = model as SliverPaddingModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverPadding(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverPadding(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.customScrollView:
+        final it = model as CustomScrollViewModel;
+
+        final arr = <Widget>[];
+
+        for (var element in it.children) {
+          arr.add(getWidgetFromElement(element));
+        }
+
+        return it.controlled
+            ? DuitControlledCustomScrollView(
+                controller: it.viewController!,
+                children: arr,
+              )
+            : DuitCustomScrollView(
+                attributes: it.attributes!,
+                children: arr,
+              );
       default:
         return const SizedBox.shrink();
     }
