@@ -6,10 +6,10 @@ import 'utils.dart';
 
 void main() {
   group(
-    "SliverPadding tests",
+    "SliverFillRemaining tests",
     () {
       testWidgets(
-        "DuitSliverPadding must renders correctly",
+        "DuitSliverFillRemaining must renders correctly",
         (tester) async {
           final driver = DuitDriver.static(
             {
@@ -19,12 +19,11 @@ void main() {
               "attributes": {},
               "children": [
                 {
-                  "type": "SliverPadding",
+                  "type": "SliverFillRemaining",
                   "id": "sliver1",
                   "controlled": false,
                   "attributes": {
-                    "padding": 10.0,
-                    "needsBoxAdapter": true,
+                    "hasScrollBody": false,
                   },
                   "child": {
                     "type": "Text",
@@ -56,22 +55,21 @@ void main() {
       );
 
       testWidgets(
-        "DuitControlledSliverPadding must renders correctly",
+        "DuitControlledSliverFillRemaining must renders correctly",
         (tester) async {
           final driver = DuitDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
-              "contolled": false,
+              "contolled": true,
               "attributes": {},
               "children": [
                 {
-                  "type": "SliverPadding",
+                  "type": "SliverFillRemaining",
                   "id": "sliver1",
                   "controlled": true,
                   "attributes": {
-                    "padding": 10.0,
-                    "needsBoxAdapter": true,
+                    "hasScrollBody": false,
                   },
                   "child": {
                     "type": "Text",
@@ -101,23 +99,15 @@ void main() {
           expect(find.byKey(const ValueKey("text")), findsOneWidget);
 
           await driver.updateTestAttributes("sliver1", {
-            "padding": [
-              12,
-              24,
-            ],
+            "hasScrollBody": true,
           });
 
           await tester.pumpAndSettle();
-
-          final SliverPadding sliver =
+          final SliverFillRemaining sliver =
               tester.widget(find.byKey(const ValueKey("sliver1")));
-          expect(
-            sliver.padding,
-            const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 12,
-            ),
-          );
+          expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
+          expect(find.byKey(const ValueKey("text")), findsOneWidget);
+          expect(sliver.hasScrollBody, true);
         },
       );
     },
