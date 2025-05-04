@@ -34,7 +34,7 @@ mixin AnimatedAttributes on Widget {
     final animatedProperties = <String, dynamic>{};
 
     for (final prop in attributes.affectedProperties!) {
-      animatedProperties[prop] = animationContext.data[prop];
+      animatedProperties[prop] = animationContext.streams[prop]?.value;
     }
 
     final dA = attributes as DuitAttributes;
