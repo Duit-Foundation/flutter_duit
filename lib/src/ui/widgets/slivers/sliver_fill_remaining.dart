@@ -18,7 +18,9 @@ class DuitSliverFillRemaining extends StatelessWidget {
       key: ValueKey(attributes.id),
       hasScrollBody: attributes.payload.hasScrollBody,
       fillOverscroll: attributes.payload.fillOverscroll,
-      child: child,
+      child: attributes.payload.needsBoxAdapter
+          ? SliverToBoxAdapter(child: child)
+          : child,
     );
   }
 }
@@ -55,7 +57,9 @@ class _DuitControlledSliverFillRemainingState
       key: ValueKey(widget.controller.id),
       hasScrollBody: attributes.hasScrollBody,
       fillOverscroll: attributes.fillOverscroll,
-      child: widget.child,
+      child: attributes.needsBoxAdapter
+          ? SliverToBoxAdapter(child: widget.child)
+          : widget.child,
     );
   }
 }

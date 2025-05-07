@@ -1,18 +1,23 @@
 import 'package:flutter_duit/flutter_duit.dart';
+import 'package:flutter_duit/src/attributes/slivers/sliver_props.dart';
 
 final class SliverFillRemainingAttributes
-    implements DuitAttributes<SliverFillRemainingAttributes> {
+    implements DuitAttributes<SliverFillRemainingAttributes>, DuitSliverProps {
   final bool hasScrollBody, fillOverscroll;
+  @override
+  final bool needsBoxAdapter;
 
   const SliverFillRemainingAttributes({
     required this.hasScrollBody,
     required this.fillOverscroll,
+    required this.needsBoxAdapter,
   });
 
   factory SliverFillRemainingAttributes.fromJson(Map<String, dynamic> json) {
     return SliverFillRemainingAttributes(
       hasScrollBody: json["hasScrollBody"] ?? true,
       fillOverscroll: json["fillOverscroll"] ?? false,
+      needsBoxAdapter: json["needsBoxAdapter"] ?? false,
     );
   }
 
@@ -21,6 +26,7 @@ final class SliverFillRemainingAttributes
     return SliverFillRemainingAttributes(
       hasScrollBody: other.hasScrollBody,
       fillOverscroll: other.fillOverscroll,
+      needsBoxAdapter: other.needsBoxAdapter,
     );
   }
 
