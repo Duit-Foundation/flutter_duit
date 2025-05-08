@@ -28,3 +28,5 @@ typedef AnimatedSizeModel = AnimatedSizeUIElement<AnimatedSizeAttributes>;
 typedef SliverPaddingModel = SliverPaddingUIElement<SliverPaddingAttributes>;
 typedef CustomScrollViewModel
     = CustomScrollViewUIElement<CustomScrollViewAttributes>;
+typedef SliverFillRemainingModel
+    = SliverFillRemainingUIElement<SliverFillRemainingAttributes>;

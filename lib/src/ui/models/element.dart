@@ -1742,6 +1742,33 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           children: arr,
           controlled: controlled,
         );
+      case ElementType.sliverFillRemaining:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverFillRemainingAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverFillRemainingModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);

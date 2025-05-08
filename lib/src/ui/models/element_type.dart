@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 final class ElementType {
   static const row = "Row";
   static const column = "Column";
@@ -61,4 +63,5 @@ final class ElementType {
   static const animatedScale = "AnimatedScale";
   static const sliverPadding = "SliverPadding";
   static const customScrollView = "CustomScrollView";
+  static const sliverFillRemaining = "SliverFillRemaining";
 }

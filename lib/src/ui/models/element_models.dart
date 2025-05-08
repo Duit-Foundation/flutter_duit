@@ -1011,3 +1011,18 @@ final class CustomScrollViewUIElement<T> extends DuitElement<T>
     required this.children,
   });
 }
+
+final class SliverFillRemainingUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverFillRemainingUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}

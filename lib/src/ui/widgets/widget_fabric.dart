@@ -757,6 +757,19 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 children: arr,
               );
+      case ElementType.sliverFillRemaining:
+        final it = model as SliverFillRemainingModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverFillRemaining(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverFillRemaining(
+                attributes: it.attributes!,
+                child: child,
+              );
       default:
         return const SizedBox.shrink();
     }

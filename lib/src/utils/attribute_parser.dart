@@ -131,6 +131,8 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.animatedScale => AnimatedScaleAttributes.fromJson(data),
       ElementType.sliverPadding => SliverPaddingAttributes.fromJson(data),
       ElementType.customScrollView => CustomScrollViewAttributes.fromJson(data),
+      ElementType.sliverFillRemaining =>
+        SliverFillRemainingAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 
