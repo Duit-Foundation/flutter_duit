@@ -64,4 +64,5 @@ final class ElementType {
   static const sliverPadding = "SliverPadding";
   static const customScrollView = "CustomScrollView";
   static const sliverFillRemaining = "SliverFillRemaining";
+  static const sliverFillViewport = "SliverFillViewport";
 }

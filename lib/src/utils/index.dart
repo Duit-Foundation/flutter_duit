@@ -17,3 +17,4 @@ export 'scroll_utils.dart';
 export 'out_of_bound_widget_builder.dart';
 export 'non_child_widget.dart';
 export 'action_utils.dart';
+export 'child_delegate_builder.dart';
