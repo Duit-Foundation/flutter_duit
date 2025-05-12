@@ -59,8 +59,16 @@ class _DuitControlledSliverFillViewportState
     super.initState();
   }
 
-  Widget? _buildItem(BuildContext constext, int index) {
-    final item = attributes.childObjects?[index];
+  Widget? _buildItem(BuildContext context, int index) {
+    final list = attributes.childObjects ?? const [];
+    final ln = list.length;
+
+    if (index >= ln - 1 || ln == 0) {
+      return null;
+    }
+
+    final item = list[index];
+
     return buildOutOfBoundWidget(
       item,
       widget.controller.driver,
