@@ -1,15 +1,21 @@
 import 'package:flutter_duit/flutter_duit.dart';
+import 'package:flutter_duit/src/attributes/slivers/sliver_props.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 final class SliverFillViewportAttributes
-    implements DuitAttributes<SliverFillViewportAttributes> {
+    implements
+        DuitAttributes<SliverFillViewportAttributes>,
+        SliverChildDelegateProps {
   final double viewportFraction;
-  final bool padEnds,
-      isBuilderDelegate,
+  final bool padEnds;
+  @override
+  final List<NonChildWidget>? childObjects;
+  @override
+  final bool isBuilderDelegate,
       addAutomaticKeepAlives,
       addRepaintBoundaries,
       addSemanticIndexes;
-  final List<NonChildWidget>? childObjects;
+  @override
   final int? childCount;
 
   const SliverFillViewportAttributes({
