@@ -14,9 +14,10 @@ final class DuitSliverFillViewport extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    assert(!attributes.payload.isBuilderDelegate,
+    assert(attributes.payload.isBuilderDelegate == false,
         "Builder delegate not supported for uncontrolled widget variant");
     return SliverFillViewport(
+      key: ValueKey(attributes.id),
       delegate: buildDelegate(
         false,
         children: children,
@@ -79,6 +80,7 @@ class _DuitControlledSliverFillViewportState
   @override
   Widget build(BuildContext context) {
     return SliverFillViewport(
+      key: ValueKey(widget.controller.id),
       delegate: buildDelegate(
         attributes.isBuilderDelegate,
         builder: _buildItem,
