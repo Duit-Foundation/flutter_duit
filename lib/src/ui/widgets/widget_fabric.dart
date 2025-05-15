@@ -770,6 +770,14 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.sliverToBoxAdapter:
+        final it = model as SliverToBoxAdapterModel;
+        final child = getWidgetFromElement(it.child);
+
+        return SliverToBoxAdapter(
+          key: ValueKey(it.id),
+          child: child,
+        );
       default:
         return const SizedBox.shrink();
     }

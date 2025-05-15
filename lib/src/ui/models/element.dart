@@ -1769,6 +1769,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.sliverToBoxAdapter:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return SliverToBoxAdapterModel(
+          type: type,
+          id: id,
+          child: child,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);
