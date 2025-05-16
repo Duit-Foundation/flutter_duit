@@ -770,6 +770,24 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.sliverFillViewport:
+        final it = model as SliverFillViewportModel;
+
+        final arr = <Widget>[];
+
+        for (var element in it.children) {
+          arr.add(getWidgetFromElement(element));
+        }
+
+        return it.controlled
+            ? DuitControlledSliverFillViewport(
+                controller: it.viewController!,
+                children: arr,
+              )
+            : DuitSliverFillViewport(
+                attributes: it.attributes!,
+                children: arr,
+              );
       default:
         return const SizedBox.shrink();
     }

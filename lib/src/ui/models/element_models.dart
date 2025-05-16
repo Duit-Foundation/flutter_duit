@@ -1026,3 +1026,18 @@ final class SliverFillRemainingUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class SliverFillViewportUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  SliverFillViewportUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.children,
+  });
+}

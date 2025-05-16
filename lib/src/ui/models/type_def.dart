@@ -30,3 +30,5 @@ typedef CustomScrollViewModel
     = CustomScrollViewUIElement<CustomScrollViewAttributes>;
 typedef SliverFillRemainingModel
     = SliverFillRemainingUIElement<SliverFillRemainingAttributes>;
+typedef SliverFillViewportModel
+    = SliverFillViewportUIElement<SliverFillViewportAttributes>;
