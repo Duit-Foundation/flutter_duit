@@ -31,3 +31,5 @@ typedef CustomScrollViewModel
 typedef SliverFillRemainingModel
     = SliverFillRemainingUIElement<SliverFillRemainingAttributes>;
 typedef SliverToBoxAdapterModel = SliverToBoxAdapterUIElement<EmptyAttributes>;
+typedef SliverFillViewportModel
+    = SliverFillViewportUIElement<SliverFillViewportAttributes>;
