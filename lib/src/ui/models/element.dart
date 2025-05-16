@@ -1776,6 +1776,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           type: type,
           id: id,
           child: child,
+        );
       case ElementType.sliverFillViewport:
         final List<DuitElement> arr = [];
 
