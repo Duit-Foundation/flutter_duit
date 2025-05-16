@@ -1027,6 +1027,18 @@ final class SliverFillRemainingUIElement<T> extends DuitElement<T>
   });
 }
 
+final class SliverToBoxAdapterUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverToBoxAdapterUIElement({
+    required super.type,
+    required super.id,
+    required this.child,
+  });
+}
+
 final class SliverFillViewportUIElement<T> extends DuitElement<T>
     implements MultiChildLayout {
   @override
