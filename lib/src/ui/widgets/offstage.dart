@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 
-class DuitOffstage extends StatelessWidget with AnimatedAttributes {
+class DuitOffstage extends StatelessWidget {
   final Widget child;
   final ViewAttribute<OffstageAttributes> attributes;
 
@@ -14,7 +14,7 @@ class DuitOffstage extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(context, attributes.payload);
+    final attrs = attributes.payload;
     return Offstage(
       key: Key(attributes.id),
       offstage: attrs.offstage,
@@ -23,7 +23,7 @@ class DuitOffstage extends StatelessWidget with AnimatedAttributes {
   }
 }
 
-class DuitControlledOffstage extends StatefulWidget with AnimatedAttributes {
+class DuitControlledOffstage extends StatefulWidget {
   final Widget child;
   final UIElementController<OffstageAttributes> controller;
 
@@ -49,10 +49,9 @@ class _DuitControlledOffstageState extends State<DuitControlledOffstage>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(context, attributes);
     return Offstage(
       key: Key(widget.controller.id),
-      offstage: attrs.offstage,
+      offstage: attributes.offstage,
       child: widget.child,
     );
   }
