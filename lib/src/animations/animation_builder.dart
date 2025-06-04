@@ -116,19 +116,11 @@ class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
 
     return AnimatedBuilder(
       animation: Listenable.merge(
-        _animations.values,
+        _controllers.values,
       ),
       builder: (context, child) {
-        final dataObj = <String, dynamic>{};
-
-        _animations.forEach(
-          (key, animation) {
-            dataObj[key] = animation.value;
-          },
-        );
-
         return DuitAnimationContext(
-          data: dataObj,
+          streams: _animations,
           parentId: wC.attributes.payload.persistentId ?? wC.id,
           //Priority use of persistentId
           child: child ?? const SizedBox.shrink(),

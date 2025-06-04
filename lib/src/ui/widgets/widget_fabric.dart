@@ -738,6 +738,18 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.offstage:
+        final it = model as OffstageUIElement<OffstageAttributes>;
+        final child = getWidgetFromElement(it.child);
+        return it.controlled
+            ? DuitControlledOffstage(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitOffstage(
+                attributes: it.attributes!,
+                child: child,
+              );
       default:
         return const SizedBox.shrink();
     }

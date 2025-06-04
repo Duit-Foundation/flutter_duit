@@ -986,13 +986,28 @@ final class AbsorbPointerUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   @override
   DuitElement child;
-
-  AbsorbPointerUIElement({
+  
+   AbsorbPointerUIElement({
     required super.type,
     required super.id,
     required super.viewController,
     required super.controlled,
     required this.child,
     required super.attributes,
+  });
+}
+
+final class OffstageUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  OffstageUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
   });
 }

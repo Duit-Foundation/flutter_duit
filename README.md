@@ -68,6 +68,12 @@ DuitViewHost(
 
 [Learn more about project state](https://github.com/Duit-Foundation/flutter_duit/issues)
 
+## Contributors
+
+<a href="https://github.com/Duit-Foundation/flutter_duit/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Duit-Foundation/flutter_duit" />
+</a>
+
 ## License
 
 MIT
