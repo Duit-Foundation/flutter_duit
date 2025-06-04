@@ -49,3 +49,4 @@ export 'inkwell_attributes.dart';
 export 'carousel_view_attributes.dart';
 export 'animated_rotation_attributes.dart';
 export 'animated_scale_attributes.dart';
+export 'offstage_attributes.dart';

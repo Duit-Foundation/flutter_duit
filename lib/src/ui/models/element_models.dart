@@ -981,3 +981,18 @@ final class AnimatedScaleUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class OffstageUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  OffstageUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+}
