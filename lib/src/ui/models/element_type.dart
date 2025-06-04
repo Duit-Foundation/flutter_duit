@@ -59,5 +59,6 @@ final class ElementType {
   static const animatedPadding = "AnimatedPadding";
   static const animatedPositioned = "AnimatedPositioned";
   static const animatedScale = "AnimatedScale";
+  static const absorbPointer = "AbsorbPointer";
   static const offstage = "Offstage";
 }

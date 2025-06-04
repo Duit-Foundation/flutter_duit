@@ -726,13 +726,30 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.absorbPointer:
+        final it = model as AbsorbPointerUIElement<AbsorbPointerAttributes>;
+        final child = getWidgetFromElement(it.child);
+        return it.controlled
+            ? DuitControlledAbsorbPointer(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitAbsorbPointer(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.offstage:
         final it = model as OffstageUIElement<OffstageAttributes>;
         final child = getWidgetFromElement(it.child);
         return it.controlled
             ? DuitControlledOffstage(
-                controller: it.viewController!, child: child)
-            : DuitOffstage(attributes: it.attributes!, child: child);
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitOffstage(
+                attributes: it.attributes!,
+                child: child,
+              );
       default:
         return const SizedBox.shrink();
     }

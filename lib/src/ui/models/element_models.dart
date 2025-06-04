@@ -982,6 +982,21 @@ final class AnimatedScaleUIElement<T> extends DuitElement<T>
   });
 }
 
+final class AbsorbPointerUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+  
+   AbsorbPointerUIElement({
+    required super.type,
+    required super.id,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+    required super.attributes,
+  });
+}
+
 final class OffstageUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   @override

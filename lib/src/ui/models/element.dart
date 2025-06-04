@@ -1678,6 +1678,34 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
         );
 
+      case ElementType.absorbPointer:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AbsorbPointerAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AbsorbPointerUIElement<AbsorbPointerAttributes>(
+          type: type,
+          id: id,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlled,
+          child: child,
+          attributes: attributes,
+        );
+          
       case ElementType.offstage:
         final child = DuitElement.fromJson(json["child"], driver);
         final attributes =
