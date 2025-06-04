@@ -1704,6 +1704,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlled,
           child: child,
           attributes: attributes,
+        );
           
       case ElementType.offstage:
         final child = DuitElement.fromJson(json["child"], driver);
