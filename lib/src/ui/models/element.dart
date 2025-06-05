@@ -1709,8 +1709,11 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.offstage:
         final child = DuitElement.fromJson(json["child"], driver);
         final attributes = ViewAttribute.createAttributes<OffstageAttributes>(
-            type, attributesObject, tag,
-            id: id);
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
 
         return OffstageUIElement<OffstageAttributes>(
           type: type,

@@ -750,6 +750,42 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.pageView:
+        final it = model as PageViewUIElement<PageViewAttributes>;
+
+        int widgetType;
+
+        if (!it.controlled) {
+          widgetType = it.attributes!.payload.type;
+        } else {
+          widgetType = it.viewController!.attributes.payload.type;
+        }
+
+        switch (widgetType) {
+          case 0:
+            List<Widget> arr = [];
+
+            for (var element in it.children) {
+              final children = getWidgetFromElement(element);
+              arr.add(children);
+            }
+
+            return it.controlled
+                ? DuitControlledPageView(
+                    controller: it.viewController!,
+                    children: arr,
+                  )
+                : DuitPageView(
+                    attributes: it.attributes!,
+                    children: arr,
+                  );
+          case 1:
+            return DuitPageViewBuilder(
+              controller: it.viewController!,
+            );
+          default:
+            return const SizedBox.shrink();
+        }
       default:
         return const SizedBox.shrink();
     }
