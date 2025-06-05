@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -1879,6 +1880,20 @@ final class AttributeValueMapper {
         enableFeedback: enableFeedback,
         alignment: toAlignment(alignment),
       );
+    }
+    return null;
+  }
+
+  static ScrollBehavior? toScrollBehavior(dynamic value) {
+    if (value == null) return null;
+
+    switch (value) {
+      case "scrollBehavior":
+        return const ScrollBehavior();
+      case "materialScrollBehavior":
+        return const MaterialScrollBehavior();
+      case "cupertinoScrollBehavior":
+        return const CupertinoScrollBehavior();
     }
     return null;
   }
