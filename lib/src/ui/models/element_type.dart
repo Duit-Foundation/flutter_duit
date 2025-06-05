@@ -61,4 +61,5 @@ final class ElementType {
   static const animatedScale = "AnimatedScale";
   static const absorbPointer = "AbsorbPointer";
   static const offstage = "Offstage";
+  static const pageView = "PageView";
 }

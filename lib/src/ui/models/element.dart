@@ -1705,11 +1705,12 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
           attributes: attributes,
         );
-          
+
       case ElementType.offstage:
         final child = DuitElement.fromJson(json["child"], driver);
-        final attributes =
-            ViewAttribute.createAttributes<OffstageAttributes>(type, attributesObject, tag, id: id);
+        final attributes = ViewAttribute.createAttributes<OffstageAttributes>(
+            type, attributesObject, tag,
+            id: id);
 
         return OffstageUIElement<OffstageAttributes>(
           type: type,
@@ -1719,6 +1720,46 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
               id, controlled, attributes, serverAction, driver, type, tag),
           attributes: attributes,
           child: child,
+        );
+      case ElementType.pageView:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            arr.add(DuitElement.fromJson(element, driver));
+          });
+        }
+
+        final attributes = ViewAttribute.createAttributes<PageViewAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        bool isControlledByDefault = true;
+
+        if (attributes.payload.type != 0) {
+          isControlledByDefault = true;
+        }
+
+        final controlState = isControlledByDefault || controlled;
+
+        return PageViewUIElement<PageViewAttributes>(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlState, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlState,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: controlState,
         );
 
       case ElementType.custom:
