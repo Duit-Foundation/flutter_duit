@@ -66,4 +66,5 @@ final class ElementType {
   static const sliverFillRemaining = "SliverFillRemaining";
   static const sliverToBoxAdapter = "SliverToBoxAdapter";
   static const sliverFillViewport = "SliverFillViewport";
+  static const sliverOpacity = "SliverOpacity";
 }

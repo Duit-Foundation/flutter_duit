@@ -1053,3 +1053,18 @@ final class SliverFillViewportUIElement<T> extends DuitElement<T>
     required this.children,
   });
 }
+
+final class SliverOpacityUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverOpacityUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
