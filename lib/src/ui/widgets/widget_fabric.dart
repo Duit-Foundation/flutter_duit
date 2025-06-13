@@ -796,6 +796,19 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 children: arr,
               );
+      case ElementType.sliverVisibility:
+        final it = model as SliverVisibilityModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverVisibility(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverVisibility(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.sliverOpacity:
         final it = model as SliverOpacityModel;
         final child = getWidgetFromElement(it.child);
