@@ -1842,6 +1842,32 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.sliverAnimatedOpacity:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverAnimatedOpacityAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverAnimatedOpacityModel(
+          type: type,
+          id: id,
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: true,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);

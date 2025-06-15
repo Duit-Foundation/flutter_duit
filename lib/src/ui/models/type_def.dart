@@ -35,3 +35,5 @@ typedef SliverToBoxAdapterModel = SliverToBoxAdapterUIElement<EmptyAttributes>;
 typedef SliverFillViewportModel
     = SliverFillViewportUIElement<SliverFillViewportAttributes>;
 typedef SliverOpacityModel = SliverOpacityUIElement<SliverOpacityAttributes>;
+typedef SliverAnimatedOpacityModel
+    = SliverAnimatedOpacityUIElement<SliverAnimatedOpacityAttributes>;
