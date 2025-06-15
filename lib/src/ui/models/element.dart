@@ -1856,6 +1856,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         return SliverAnimatedOpacityModel(
           type: type,
           id: id,
+          attributes: _attachAttributes(true, attributes),
           viewController: _createAndAttachController(
             id,
             true,
@@ -1867,6 +1868,33 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           ),
           child: child,
           controlled: true,
+        );
+      case ElementType.sliverVisibility:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverVisibilityAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverVisibilityModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
         );
       case ElementType.custom:
         if (tag != null) {

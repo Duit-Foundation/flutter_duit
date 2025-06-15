@@ -1077,6 +1077,22 @@ final class SliverAnimatedOpacityUIElement<T> extends DuitElement<T>
   SliverAnimatedOpacityUIElement({
     required super.type,
     required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class SliverVisibilityUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverVisibilityUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
     required super.viewController,
     required super.controlled,
     required this.child,

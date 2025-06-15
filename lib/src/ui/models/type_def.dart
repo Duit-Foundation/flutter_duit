@@ -1,4 +1,3 @@
-import "package:flutter/material.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/ui/models/element_models.dart";
 
@@ -35,5 +34,7 @@ typedef SliverToBoxAdapterModel = SliverToBoxAdapterUIElement<EmptyAttributes>;
 typedef SliverFillViewportModel
     = SliverFillViewportUIElement<SliverFillViewportAttributes>;
 typedef SliverOpacityModel = SliverOpacityUIElement<SliverOpacityAttributes>;
+typedef SliverVisibilityModel
+    = SliverVisibilityUIElement<SliverVisibilityAttributes>;
 typedef SliverAnimatedOpacityModel
     = SliverAnimatedOpacityUIElement<SliverAnimatedOpacityAttributes>;
