@@ -6,3 +6,4 @@ export "animated_rotation.dart";
 export "animated_padding.dart";
 export "animated_positioned.dart";
 export "animated_scale.dart";
+export "animated_cross_fade.dart";

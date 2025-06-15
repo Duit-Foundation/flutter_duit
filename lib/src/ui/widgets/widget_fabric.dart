@@ -750,6 +750,19 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.animatedCrossFade:
+        final it = model as AnimatedCrossFadeModel;
+        List<Widget> arr = [];
+
+        for (var element in it.children) {
+          final children = getWidgetFromElement(element);
+          arr.add(children);
+        }
+
+        return DuitAnimatedCrossFade(
+          controller: it.viewController!,
+          children: arr,
+        );
       default:
         return const SizedBox.shrink();
     }

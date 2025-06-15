@@ -1011,3 +1011,18 @@ final class OffstageUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class AnimatedCrossFadeUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  AnimatedCrossFadeUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.children,
+  });
+}

@@ -1707,11 +1707,11 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
           attributes: attributes,
         );
-          
       case ElementType.offstage:
         final child = DuitElement.fromJson(json["child"], driver);
-        final attributes =
-            ViewAttribute.createAttributes<OffstageAttributes>(type, attributesObject, tag, id: id);
+        final attributes = ViewAttribute.createAttributes<OffstageAttributes>(
+            type, attributesObject, tag,
+            id: id);
 
         return OffstageUIElement<OffstageAttributes>(
           type: type,
@@ -1722,7 +1722,43 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           attributes: attributes,
           child: child,
         );
+      case ElementType.animatedCrossFade:
+        final List<DuitElement> arr = [];
 
+        if (json["children"] != null) {
+          assert(
+            (json["children"] as List).length == 2,
+            "Expected 2 children in AnimatedCrossFade",
+          );
+          json["children"].forEach((element) {
+            arr.add(DuitElement.fromJson(element, driver));
+          });
+        }
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedCrossFadeAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AnimatedCrossFadeModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(true, attributes),
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: true,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);
