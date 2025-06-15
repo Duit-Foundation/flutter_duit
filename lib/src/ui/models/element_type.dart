@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 final class ElementType {
   static const row = "Row";
   static const column = "Column";
@@ -68,4 +66,5 @@ final class ElementType {
   static const sliverFillViewport = "SliverFillViewport";
   static const sliverOpacity = "SliverOpacity";
   static const sliverVisibility = "SliverVisibility";
+  static const sliverAnimatedOpacity = "SliverAnimatedOpacity";
 }

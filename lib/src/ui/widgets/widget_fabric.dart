@@ -822,6 +822,14 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.sliverAnimatedOpacity:
+        final it = model as SliverAnimatedOpacityModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitSliverAnimatedOpacity(
+          controller: it.viewController!,
+          child: child,
+        );
       default:
         return const SizedBox.shrink();
     }

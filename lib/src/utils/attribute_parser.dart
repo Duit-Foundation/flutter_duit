@@ -137,6 +137,8 @@ final class DefaultAttributeParser implements AttributeParserBase {
         SliverFillViewportAttributes.fromJson(data),
       ElementType.sliverOpacity => SliverOpacityAttributes.fromJson(data),
       ElementType.sliverVisibility => SliverVisibilityAttributes.fromJson(data),
+      ElementType.sliverAnimatedOpacity =>
+        SliverAnimatedOpacityAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

@@ -4,3 +4,4 @@ export 'sliver_fill_remaining.dart';
 export 'sliver_fill_viewport.dart';
 export 'sliver_opacity.dart';
 export 'sliver_visibility.dart';
+export 'sliver_animated_opacity.dart';
