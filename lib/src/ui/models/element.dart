@@ -1073,10 +1073,12 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           id: id,
         );
 
-        bool isControlledByDefault = true;
+        bool isControlledByDefault = false;
 
         if (attributes.payload.type != 0) {
           isControlledByDefault = true;
+        } else {
+          isControlledByDefault = controlled;
         }
 
         final controlState = isControlledByDefault || controlled;
@@ -1378,7 +1380,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.empty:
         return EmptyUIElement<EmptyAttributes>();
       case ElementType.component:
-        final providedData = json["data"] as Map<String, dynamic>;
+        final providedData = Map<String, dynamic>.from(json["data"]);
 
         final model = DuitRegistry.getComponentDescription(tag!);
 

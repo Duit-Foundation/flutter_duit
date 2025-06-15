@@ -18,8 +18,6 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
         ViewControllerChangeListener<DuitListViewSeparated, ListViewAttributes>,
         ScrollUtils,
         OutOfBoundWidgetBuilder {
-  Widget? _separatorView;
-
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -40,14 +38,9 @@ class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
   }
 
   Widget buildSeparator(BuildContext context, int index) {
-    if (_separatorView != null) {
-      return _separatorView!;
-    }
-
     final driver = widget.controller.driver;
-    return _separatorView =
-        buildOutOfBoundWidget(attributes.separator, driver, null) ??
-            const SizedBox.shrink();
+    return buildOutOfBoundWidget(attributes.separator, driver, null) ??
+        const SizedBox.shrink();
   }
 
   @override
