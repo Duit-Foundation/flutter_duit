@@ -1,4 +1,7 @@
-[![Coverage Status](https://coveralls.io/repos/github/Duit-Foundation/flutter_duit/badge.svg?branch=main)](https://coveralls.io/github/Duit-Foundation/flutter_duit?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/Duit-Foundation/flutter_duit/badge.svg?branch=main)](https://coveralls.io/github/Duit-Foundation/flutter_duit?branch=main) ![Pub Version](https://img.shields.io/pub/v/flutter_duit) ![Pub Points](https://img.shields.io/pub/points/flutter_duit) ![GitHub Org's stars](https://img.shields.io/github/stars/Duit-Foundation)
+
+
+
 
 # Duit - drived UI tooklit. 
 
