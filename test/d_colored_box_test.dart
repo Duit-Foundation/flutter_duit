@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
+import 'utils.dart';
+
 void main() {
   group("DuitColoredBox widget tests", () {
     testWidgets("check color", (WidgetTester tester) async {
@@ -9,7 +11,9 @@ void main() {
         {
           "type": "ColoredBox",
           "id": "colored",
-          "attributes": {"color": "#933C3C"},
+          "attributes": {
+            "color": "#933C3C",
+          },
         },
         transportOptions: HttpTransportOptions(),
       );
@@ -80,5 +84,42 @@ void main() {
 
       expect(coloredBox, paints..rect(color: const Color(0xFFDCDCDC)));
     });
+
+    testWidgets(
+      "must update attributes",
+      (tester) async {
+        final driver = DuitDriver.static(
+          {
+            "type": "ColoredBox",
+            "id": "colored",
+            "controlled": true,
+            "attributes": {
+              "color": Colors.red,
+            },
+          },
+          transportOptions: EmptyTransportOptions(),
+        );
+
+        await pumpDriver(
+          tester,
+          driver,
+        );
+
+        var coloredFinder = find.byKey(const ValueKey("colored"));
+        var coloredWidget = tester.widget<ColoredBox>(coloredFinder);
+        expect(coloredFinder, findsOneWidget);
+        expect(coloredWidget.color, Colors.red);
+
+        await driver.updateTestAttributes("colored", {
+          "color": Colors.black,
+        });
+
+        await tester.pumpAndSettle();
+
+        coloredFinder = find.byKey(const ValueKey("colored"));
+        coloredWidget = tester.widget<ColoredBox>(coloredFinder);
+        expect(coloredWidget.color, Colors.black);
+      },
+    );
   });
 }

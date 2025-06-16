@@ -2,8 +2,12 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
-Map<String, dynamic> _createWidget(BoxConstraints value,
-    [bool? controlled = false]) {
+import "utils.dart";
+
+Map<String, dynamic> _createWidget(
+  BoxConstraints value, [
+  bool? controlled = false,
+]) {
   return {
     "type": "ConstrainedBox",
     "id": "constraint",
@@ -40,8 +44,7 @@ void main() {
             minWidth: 100,
           ),
         ),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -62,5 +65,52 @@ void main() {
       expect(containerSize.width, equals(500));
       expect(containerSize.height, equals(200));
     });
+
+    testWidgets(
+      "must update attributes",
+      (tester) async {
+        final driver = DuitDriver.static(
+          _createWidget(
+            const BoxConstraints(
+              maxHeight: 500,
+              maxWidth: 500,
+              minHeight: 200,
+              minWidth: 100,
+            ),
+            true,
+          ),
+          transportOptions: EmptyTransportOptions(),
+        );
+
+        await pumpDriver(tester, driver);
+
+        final constrBoxFinder = find.byKey(const ValueKey("constraint"));
+        expect(constrBoxFinder, findsOneWidget);
+
+        await driver.updateTestAttributes("constraint", {
+          "constraints": {
+            "minWidth": 100,
+            "minHeight": 100,
+            "maxWidth": 200,
+            "maxHeight": 200,
+          },
+        });
+
+        await tester.pumpAndSettle();
+
+        final constrBoxWidget = tester
+            .widget<ConstrainedBox>(find.byKey(const ValueKey("constraint")));
+
+        expect(
+          constrBoxWidget.constraints,
+          const BoxConstraints(
+            minHeight: 100,
+            minWidth: 100,
+            maxHeight: 200,
+            maxWidth: 200,
+          ),
+        );
+      },
+    );
   });
 }
