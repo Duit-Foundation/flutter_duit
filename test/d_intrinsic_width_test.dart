@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Map<String, dynamic> _createWidget() {
+import 'utils.dart';
+
+Map<String, dynamic> _createWidget([bool isControlled = false]) {
   return {
     "type": "IntrinsicWidth",
     "id": "intrinsicWidthId",
-    "controlled": false,
-    // "attributes": {
-    //   "top": top,
-    //   "bottom": bottom,
-    //   "left": left,
-    //   "right": right,
-    //   "minimum": [0, 0],
-    //   "maintainBottomViewPadding": false,
-    // },
+    "controlled": isControlled,
+    "attributes": {
+      "stepWidth": 10.0,
+    },
     "child": {
       "type": "Container",
       "id": "conId",
@@ -48,5 +45,34 @@ void main() {
 
       expect(widget, findsOneWidget);
     });
+
+    testWidgets(
+      "must update attributes",
+      (tester) async {
+        final driver = DuitDriver.static(
+          _createWidget(true),
+          transportOptions: HttpTransportOptions(),
+          enableDevMetrics: false,
+        );
+
+        await pumpDriver(tester, driver);
+
+        var widget = find.byKey(const ValueKey("intrinsicWidthId"));
+        expect(widget, findsOneWidget);
+
+        await driver.updateTestAttributes(
+          "intrinsicWidthId",
+          {
+            "stepWidth": 12.0,
+          },
+        );
+
+        await tester.pumpAndSettle();
+
+        widget = find.byKey(const ValueKey("intrinsicWidthId"));
+        final intrW = tester.widget<IntrinsicWidth>(widget);
+        expect(intrW.stepWidth, 12.0);
+      },
+    );
   });
 }

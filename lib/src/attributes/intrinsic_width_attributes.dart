@@ -1,4 +1,5 @@
 import 'package:flutter_duit/flutter_duit.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents the attributes for an IntrinsicWidth widget.
 ///
@@ -7,17 +8,18 @@ final class IntrinsicWidthAttributes extends AnimatedPropertyOwner
     implements DuitAttributes<IntrinsicWidthAttributes> {
   final double? stepWidth, stepHeight;
 
-  IntrinsicWidthAttributes(
-      {this.stepWidth,
-      this.stepHeight,
-      required super.affectedProperties,
-      required super.parentBuilderId});
+  IntrinsicWidthAttributes({
+    this.stepWidth,
+    this.stepHeight,
+    required super.affectedProperties,
+    required super.parentBuilderId,
+  });
 
   factory IntrinsicWidthAttributes.fromJson(Map<String, dynamic> json) {
     final view = AnimatedPropHelper(json);
     return IntrinsicWidthAttributes(
-      stepWidth: json["stepWidth"],
-      stepHeight: json["stepHeight"],
+      stepWidth: NumUtils.toDouble(json["stepWidth"]),
+      stepHeight: NumUtils.toDouble(json["stepHeight"]),
       parentBuilderId: view.parentBuilderId,
       affectedProperties: view.affectedProperties,
     );
@@ -26,11 +28,10 @@ final class IntrinsicWidthAttributes extends AnimatedPropertyOwner
   @override
   IntrinsicWidthAttributes copyWith(IntrinsicWidthAttributes other) {
     return IntrinsicWidthAttributes(
-      stepWidth: assignIfNotNull(other.stepWidth, stepWidth),
-      stepHeight: assignIfNotNull(other.stepHeight, stepHeight),
-      parentBuilderId: assignIfNotNull(other.parentBuilderId, parentBuilderId),
-      affectedProperties:
-          assignIfNotNull(other.affectedProperties, affectedProperties),
+      stepWidth: other.stepWidth ?? stepWidth,
+      stepHeight: other.stepHeight ?? stepHeight,
+      parentBuilderId: other.parentBuilderId,
+      affectedProperties: other.affectedProperties,
     );
   }
 
