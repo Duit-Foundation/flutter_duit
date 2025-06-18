@@ -1951,6 +1951,33 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           }
         }
         return EmptyUIElement<EmptyAttributes>();
+      case ElementType.sliverIgnorePointer:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverIgnorePointerAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverIgnorePointerUIElement<SliverIgnorePointerAttributes>(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       default:
         throw ArgumentError(
           "Cant infer element type from json schema: $type with id= $id",
