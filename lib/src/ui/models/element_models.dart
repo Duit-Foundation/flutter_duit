@@ -1098,3 +1098,18 @@ final class SliverVisibilityUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class SliverSafeAreaUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverSafeAreaUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
