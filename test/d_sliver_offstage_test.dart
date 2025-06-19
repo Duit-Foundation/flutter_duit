@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_duit/flutter_duit.dart';
 
 import 'utils.dart';
 
 void main() {
   group(
-    "SliverPadding tests",
+    "DuitSliverOffstage tests",
     () {
       testWidgets(
-        "DuitSliverPadding must renders correctly",
+        "must renders correctly",
         (tester) async {
           final driver = DuitDriver.static(
             {
@@ -19,11 +19,11 @@ void main() {
               "attributes": {},
               "children": [
                 {
-                  "type": "SliverPadding",
+                  "type": "SliverOffstage",
                   "id": "sliver1",
                   "controlled": false,
                   "attributes": {
-                    "padding": 10.0,
+                    "offstage": false,
                     "needsBoxAdapter": true,
                   },
                   "child": {
@@ -31,7 +31,7 @@ void main() {
                     "id": "text",
                     "controlled": false,
                     "attributes": {
-                      "data": "Some text",
+                      "data": "Controlled text",
                       "style": {
                         "color": "#DCDCDC",
                         "fontSize": 64.0,
@@ -52,11 +52,12 @@ void main() {
 
           expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
           expect(find.byKey(const ValueKey("text")), findsOneWidget);
+          expect(find.text("Controlled text"), findsOneWidget);
         },
       );
 
       testWidgets(
-        "DuitControlledSliverPadding must update attributes",
+        "must update attributes",
         (tester) async {
           final driver = DuitDriver.static(
             {
@@ -66,11 +67,11 @@ void main() {
               "attributes": {},
               "children": [
                 {
-                  "type": "SliverPadding",
+                  "type": "SliverOffstage",
                   "id": "sliver1",
                   "controlled": true,
                   "attributes": {
-                    "padding": 10.0,
+                    "offstage": false,
                     "needsBoxAdapter": true,
                   },
                   "child": {
@@ -78,7 +79,7 @@ void main() {
                     "id": "text",
                     "controlled": false,
                     "attributes": {
-                      "data": "Some text",
+                      "data": "Controlled text",
                       "style": {
                         "color": "#DCDCDC",
                         "fontSize": 64.0,
@@ -99,25 +100,20 @@ void main() {
 
           expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
           expect(find.byKey(const ValueKey("text")), findsOneWidget);
+          expect(find.text("Controlled text"), findsOneWidget);
 
-          await driver.updateTestAttributes("sliver1", {
-            "padding": [
-              12,
-              24,
-            ],
-          });
+          driver.updateAttributes(
+            "sliver1",
+            {
+              "offstage": true,
+            },
+          );
 
           await tester.pumpAndSettle();
 
-          final SliverPadding sliver =
-              tester.widget(find.byKey(const ValueKey("sliver1")));
-          expect(
-            sliver.padding,
-            const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 12,
-            ),
-          );
+          expect(find.byKey(const ValueKey("sliver1")), findsNothing);
+          expect(find.byKey(const ValueKey("text")), findsNothing);
+          expect(find.text("Controlled text"), findsNothing);
         },
       );
     },
