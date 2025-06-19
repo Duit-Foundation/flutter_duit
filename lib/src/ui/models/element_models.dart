@@ -1113,3 +1113,18 @@ final class SliverOffstageUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class SliverIgnorePointerUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverIgnorePointerUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}

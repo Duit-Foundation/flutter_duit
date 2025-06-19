@@ -6,3 +6,4 @@ export "sliver_opacity_attributes.dart";
 export "sliver_visibility_attributes.dart";
 export "sliver_animated_opacity_attributes.dart";
 export "sliver_offstage_attributes.dart";
+export "sliver_ignore_pointer_attributes.dart";

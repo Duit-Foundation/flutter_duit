@@ -68,4 +68,5 @@ final class ElementType {
   static const sliverVisibility = "SliverVisibility";
   static const sliverAnimatedOpacity = "SliverAnimatedOpacity";
   static const sliverOffstage = "SliverOffstage";
+  static const sliverIgnorePointer = "SliverIgnorePointer";
 }
