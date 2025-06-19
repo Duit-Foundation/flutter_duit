@@ -843,6 +843,19 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.sliverSafeArea:
+        final it = model as SliverSafeAreaModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverSafeArea(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverSafeArea(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.sliverIgnorePointer:
         final it = model as SliverIgnorePointerModel;
         final child = getWidgetFromElement(it.child);
