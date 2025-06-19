@@ -39,3 +39,6 @@ typedef SliverVisibilityModel
 typedef SliverAnimatedOpacityModel
     = SliverAnimatedOpacityUIElement<SliverAnimatedOpacityAttributes>;
 typedef SliverSafeAreaModel = SliverSafeAreaUIElement<SliverSafeAreaAttributes>;
+typedef SliverOffstageModel = SliverOffstageUIElement<SliverOffstageAttributes>;
+typedef SliverIgnorePointerModel
+    = SliverIgnorePointerUIElement<SliverIgnorePointerAttributes>;
