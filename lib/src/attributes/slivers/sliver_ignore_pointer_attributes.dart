@@ -4,20 +4,18 @@ import 'package:flutter_duit/src/attributes/slivers/sliver_props.dart';
 final class SliverIgnorePointerAttributes
     implements DuitAttributes<SliverIgnorePointerAttributes>, DuitSliverProps {
   final bool ignoring;
-  final bool? ignoringSemantics;
+
   @override
   final bool needsBoxAdapter;
 
   const SliverIgnorePointerAttributes({
     required this.ignoring,
-    required this.ignoringSemantics,
     required this.needsBoxAdapter,
   });
 
   factory SliverIgnorePointerAttributes.fromJson(Map<String, dynamic> json) {
     return SliverIgnorePointerAttributes(
       ignoring: json["ignoring"] ?? true,
-      ignoringSemantics: json["ignoringSemantics"],
       needsBoxAdapter: json["needsBoxAdapter"] ?? false,
     );
   }
@@ -26,7 +24,6 @@ final class SliverIgnorePointerAttributes
   SliverIgnorePointerAttributes copyWith(SliverIgnorePointerAttributes other) {
     return SliverIgnorePointerAttributes(
       ignoring: other.ignoring,
-      ignoringSemantics: other.ignoringSemantics ?? ignoringSemantics,
       needsBoxAdapter: other.needsBoxAdapter,
     );
   }
