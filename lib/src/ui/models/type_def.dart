@@ -38,3 +38,5 @@ typedef SliverVisibilityModel
     = SliverVisibilityUIElement<SliverVisibilityAttributes>;
 typedef SliverAnimatedOpacityModel
     = SliverAnimatedOpacityUIElement<SliverAnimatedOpacityAttributes>;
+typedef SliverIgnorePointerModel
+    = SliverIgnorePointerUIElement<SliverIgnorePointerAttributes>;

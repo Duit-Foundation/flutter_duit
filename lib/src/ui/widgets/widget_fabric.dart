@@ -830,6 +830,18 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.sliverIgnorePointer:
+        final it = model as SliverIgnorePointerModel;
+        final child = getWidgetFromElement(it.child);
+        return it.controlled
+            ? DuitControlledSliverIgnorePointer(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverIgnorePointer(
+                attributes: it.attributes!,
+                child: child,
+              );
       default:
         return const SizedBox.shrink();
     }
