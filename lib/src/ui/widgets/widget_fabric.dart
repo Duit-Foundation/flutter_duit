@@ -809,6 +809,19 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.sliverOffstage:
+        final it = model as SliverOffstageModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverOffstage(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverOffstage(
+                attributes: it.attributes!,
+                child: child,
+              );
       case ElementType.sliverOpacity:
         final it = model as SliverOpacityModel;
         final child = getWidgetFromElement(it.child);
