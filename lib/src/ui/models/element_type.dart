@@ -62,4 +62,5 @@ final class ElementType {
   static const absorbPointer = "AbsorbPointer";
   static const offstage = "Offstage";
   static const animatedCrossFade = "AnimatedCrossFade";
+  static const animatedSlide = "AnimatedSlide";
 }
