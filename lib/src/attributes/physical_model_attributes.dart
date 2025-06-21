@@ -106,6 +106,8 @@ final class AnimatedPhysicalModelAttributes extends ImplicitAnimatable
   @override
   final ShapeBorder? shape;
 
+  final bool animateColor, animateShadowColor;
+
   const AnimatedPhysicalModelAttributes({
     required this.elevation,
     this.color,
@@ -116,6 +118,8 @@ final class AnimatedPhysicalModelAttributes extends ImplicitAnimatable
     required super.curve,
     required super.duration,
     required super.onEnd,
+    required this.animateColor,
+    required this.animateShadowColor,
   });
 
   factory AnimatedPhysicalModelAttributes.fromJson(Map<String, dynamic> json) {
@@ -136,6 +140,8 @@ final class AnimatedPhysicalModelAttributes extends ImplicitAnimatable
         json,
         ServerAction.parse,
       ),
+      animateColor: json['animateColor'] ?? true,
+      animateShadowColor: json['animateShadowColor'] ?? true,
     );
   }
 
@@ -151,6 +157,8 @@ final class AnimatedPhysicalModelAttributes extends ImplicitAnimatable
       duration: duration, //copy prohibited
       curve: other.curve,
       onEnd: other.onEnd ?? onEnd,
+      animateColor: other.animateColor,
+      animateShadowColor: other.animateShadowColor,
     );
   }
 

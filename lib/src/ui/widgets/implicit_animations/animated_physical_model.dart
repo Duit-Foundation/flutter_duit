@@ -36,6 +36,8 @@ class _DuitAnimatedPhysicalModelState extends State<DuitAnimatedPhysicalModel>
       elevation: attributes.elevation,
       color: attributes.color ?? Colors.transparent,
       shadowColor: attributes.shadowColor ?? Colors.black,
+      animateColor: attributes.animateColor,
+      animateShadowColor: attributes.animateShadowColor,
       clipBehavior: attributes.clipBehavior,
       borderRadius: attributes.borderRadius,
       shape: attributes.shape != null ? BoxShape.rectangle : BoxShape.rectangle,
