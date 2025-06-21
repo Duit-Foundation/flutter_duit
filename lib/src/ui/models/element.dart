@@ -1759,6 +1759,59 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           children: arr,
           controlled: true,
         );
+      case ElementType.physicalModel:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<PhysicalModelAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return PhysicalModelModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.animatedPhysicalModel:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedPhysicalModelAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AnimatedPhysicalModelModel(
+          type: type,
+          id: id,
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: true,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);

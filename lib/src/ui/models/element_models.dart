@@ -1026,3 +1026,32 @@ final class AnimatedCrossFadeUIElement<T> extends DuitElement<T>
     required this.children,
   });
 }
+
+final class PhysicalModelUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  PhysicalModelUIElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+    required this.child,
+  });
+}
+
+final class AnimatedPhysicalModelUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  AnimatedPhysicalModelUIElement({
+    required super.type,
+    required super.id,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}

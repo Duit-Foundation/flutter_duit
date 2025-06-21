@@ -51,3 +51,4 @@ export 'inkwell.dart';
 export 'carouse_view.dart';
 export 'absorb_pointer.dart';
 export 'offstage.dart';
+export 'physical_model.dart';
