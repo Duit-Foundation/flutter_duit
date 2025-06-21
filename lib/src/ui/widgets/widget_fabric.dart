@@ -763,6 +763,27 @@ mixin WidgetFabric {
           controller: it.viewController!,
           children: arr,
         );
+      case ElementType.physicalModel:
+        final it = model as PhysicalModelModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledPhysicalModel(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitPhysicalModel(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.animatedPhysicalModel:
+        final it = model as AnimatedPhysicalModelModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedPhysicalModel(
+          controller: it.viewController!,
+          child: child,
+        );
       default:
         return const SizedBox.shrink();
     }
