@@ -22,7 +22,7 @@ class DuitPhysicalModel extends StatelessWidget with AnimatedAttributes {
       shadowColor: attrs.shadowColor,
       clipBehavior: attrs.clipBehavior,
       borderRadius: attrs.borderRadius,
-      shape: attrs.shape ?? BoxShape.rectangle,
+      shape: attrs.shape,
       child: child,
     );
   }
@@ -71,7 +71,7 @@ class _DuitControlledPhysicalModelState
       shadowColor: attrs.shadowColor,
       clipBehavior: attrs.clipBehavior,
       borderRadius: attrs.borderRadius,
-      shape: attrs.shape ?? BoxShape.rectangle,
+      shape: attrs.shape,
       child: widget.child,
     );
   }
