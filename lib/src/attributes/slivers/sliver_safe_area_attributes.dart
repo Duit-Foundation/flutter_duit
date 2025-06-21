@@ -22,7 +22,6 @@ final class SliverSafeAreaAttributes
   });
 
   factory SliverSafeAreaAttributes.fromJson(Map<String, dynamic> json) {
-    final animation = AnimatedPropHelper(json);
     return SliverSafeAreaAttributes(
       left: json['left'] ?? true,
       top: json['top'] ?? true,

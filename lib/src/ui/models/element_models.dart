@@ -1143,3 +1143,18 @@ final class SliverIgnorePointerUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class SliverListUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  SliverListUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.children,
+  });
+}

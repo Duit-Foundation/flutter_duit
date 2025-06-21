@@ -2005,6 +2005,46 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           }
         }
         return EmptyUIElement<EmptyAttributes>();
+      case ElementType.sliverList:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            arr.add(DuitElement.fromJson(element, driver));
+          });
+        }
+
+        final attributes = ViewAttribute.createAttributes<SliverListAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        bool isControlledByDefault = false;
+
+        if (attributes.payload.type != 0) {
+          isControlledByDefault = true;
+        }
+
+        final controlState = isControlledByDefault || controlled;
+
+        return SliverListModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlState, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlState,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: controlState,
+        );
       case ElementType.sliverIgnorePointer:
         final child = DuitElement.fromJson(json["child"], driver);
 
