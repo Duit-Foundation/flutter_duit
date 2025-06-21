@@ -18,11 +18,11 @@ class DuitPhysicalModel extends StatelessWidget with AnimatedAttributes {
     return PhysicalModel(
       key: Key(attributes.id),
       elevation: attrs.elevation,
-      color: attrs.color ?? Colors.transparent,
-      shadowColor: attrs.shadowColor ?? Colors.black,
+      color: attrs.color,
+      shadowColor: attrs.shadowColor,
       clipBehavior: attrs.clipBehavior,
       borderRadius: attrs.borderRadius,
-      shape: attrs.shape != null ? BoxShape.rectangle : BoxShape.rectangle,
+      shape: attrs.shape ?? BoxShape.rectangle,
       child: child,
     );
   }
@@ -67,11 +67,11 @@ class _DuitControlledPhysicalModelState
     return PhysicalModel(
       key: Key(widget.controller.id),
       elevation: attrs.elevation,
-      color: attrs.color ?? Colors.transparent,
-      shadowColor: attrs.shadowColor ?? Colors.black,
+      color: attrs.color,
+      shadowColor: attrs.shadowColor,
       clipBehavior: attrs.clipBehavior,
       borderRadius: attrs.borderRadius,
-      shape: attrs.shape != null ? BoxShape.rectangle : BoxShape.rectangle,
+      shape: attrs.shape ?? BoxShape.rectangle,
       child: widget.child,
     );
   }

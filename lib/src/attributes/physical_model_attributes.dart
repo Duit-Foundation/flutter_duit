@@ -5,11 +5,11 @@ import 'package:flutter_duit/src/utils/index.dart';
 
 abstract interface class _PhysicalModelProps {
   abstract final double elevation;
-  abstract final Color? color;
-  abstract final Color? shadowColor;
+  abstract final Color color;
+  abstract final Color shadowColor;
   abstract final Clip clipBehavior;
   abstract final BorderRadius? borderRadius;
-  abstract final ShapeBorder? shape;
+  abstract final BoxShape shape;
 }
 
 /// Represents the attributes for a PhysicalModel widget.
@@ -20,23 +20,23 @@ final class PhysicalModelAttributes extends AnimatedPropertyOwner
   @override
   final double elevation;
   @override
-  final Color? color;
+  final Color color;
   @override
-  final Color? shadowColor;
+  final Color shadowColor;
   @override
   final Clip clipBehavior;
   @override
   final BorderRadius? borderRadius;
   @override
-  final ShapeBorder? shape;
+  final BoxShape shape;
 
   const PhysicalModelAttributes({
     required this.elevation,
-    this.color,
-    this.shadowColor,
+    required this.color,
+    required this.shadowColor,
     required this.clipBehavior,
     this.borderRadius,
-    this.shape,
+    required this.shape,
     required super.parentBuilderId,
     required super.affectedProperties,
   });
@@ -45,14 +45,14 @@ final class PhysicalModelAttributes extends AnimatedPropertyOwner
     final view = AnimatedPropHelper(json);
     return PhysicalModelAttributes(
       elevation: NumUtils.toDoubleWithNullReplacement(json['elevation'], 0.0),
-      color: ColorUtils.tryParseNullableColor(json['color']),
-      shadowColor: ColorUtils.tryParseNullableColor(json['shadowColor']),
+      color: ColorUtils.tryParseColor(json['color']),
+      shadowColor: ColorUtils.tryParseColor(json['shadowColor']),
       clipBehavior: AttributeValueMapper.toClip(
         json['clipBehavior'],
         Clip.none,
       ),
       borderRadius: AttributeValueMapper.toBorderRadius(json['borderRadius']),
-      shape: AttributeValueMapper.toShapeBorder(json['shape']),
+      shape: AttributeValueMapper.toBoxShape(json['shape']),
       parentBuilderId: view.parentBuilderId,
       affectedProperties: view.affectedProperties,
     );
@@ -62,11 +62,11 @@ final class PhysicalModelAttributes extends AnimatedPropertyOwner
   PhysicalModelAttributes copyWith(other) {
     return PhysicalModelAttributes(
       elevation: other.elevation,
-      color: other.color ?? color,
-      shadowColor: other.shadowColor ?? shadowColor,
+      color: other.color,
+      shadowColor: other.shadowColor,
       clipBehavior: other.clipBehavior,
       borderRadius: other.borderRadius ?? borderRadius,
-      shape: other.shape ?? shape,
+      shape: other.shape,
       parentBuilderId: other.parentBuilderId,
       affectedProperties: other.affectedProperties,
     );
@@ -96,25 +96,25 @@ final class AnimatedPhysicalModelAttributes extends ImplicitAnimatable
   @override
   final double elevation;
   @override
-  final Color? color;
+  final Color color;
   @override
-  final Color? shadowColor;
+  final Color shadowColor;
   @override
   final Clip clipBehavior;
   @override
   final BorderRadius? borderRadius;
   @override
-  final ShapeBorder? shape;
+  final BoxShape shape;
 
   final bool animateColor, animateShadowColor;
 
   const AnimatedPhysicalModelAttributes({
     required this.elevation,
-    this.color,
-    this.shadowColor,
+    required this.color,
+    required this.shadowColor,
     required this.clipBehavior,
     this.borderRadius,
-    this.shape,
+    required this.shape,
     required super.curve,
     required super.duration,
     required super.onEnd,
@@ -125,14 +125,14 @@ final class AnimatedPhysicalModelAttributes extends ImplicitAnimatable
   factory AnimatedPhysicalModelAttributes.fromJson(Map<String, dynamic> json) {
     return AnimatedPhysicalModelAttributes(
       elevation: NumUtils.toDoubleWithNullReplacement(json['elevation'], 0.0),
-      color: ColorUtils.tryParseNullableColor(json['color']),
-      shadowColor: ColorUtils.tryParseNullableColor(json['shadowColor']),
+      color: ColorUtils.tryParseColor(json['color']),
+      shadowColor: ColorUtils.tryParseColor(json['shadowColor']),
       clipBehavior: AttributeValueMapper.toClip(
         json['clipBehavior'],
         Clip.none,
       ),
       borderRadius: AttributeValueMapper.toBorderRadius(json['borderRadius']),
-      shape: AttributeValueMapper.toShapeBorder(json['shape']),
+      shape: AttributeValueMapper.toBoxShape(json['shape']),
       duration: AttributeValueMapper.toDuration(json["duration"]),
       curve: AttributeValueMapper.toCurve(json["curve"]),
       onEnd: JsonUtils.nullOrParse(
@@ -149,11 +149,11 @@ final class AnimatedPhysicalModelAttributes extends ImplicitAnimatable
   AnimatedPhysicalModelAttributes copyWith(other) {
     return AnimatedPhysicalModelAttributes(
       elevation: other.elevation,
-      color: other.color ?? color,
-      shadowColor: other.shadowColor ?? shadowColor,
+      color: other.color,
+      shadowColor: other.shadowColor,
       clipBehavior: other.clipBehavior,
       borderRadius: other.borderRadius ?? borderRadius,
-      shape: other.shape ?? shape,
+      shape: other.shape,
       duration: duration, //copy prohibited
       curve: other.curve,
       onEnd: other.onEnd ?? onEnd,

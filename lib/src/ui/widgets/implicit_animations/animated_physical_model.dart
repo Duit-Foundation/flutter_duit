@@ -34,13 +34,13 @@ class _DuitAnimatedPhysicalModelState extends State<DuitAnimatedPhysicalModel>
     return AnimatedPhysicalModel(
       key: ValueKey(widget.controller.id),
       elevation: attributes.elevation,
-      color: attributes.color ?? Colors.transparent,
-      shadowColor: attributes.shadowColor ?? Colors.black,
+      color: attributes.color,
+      shadowColor: attributes.shadowColor,
       animateColor: attributes.animateColor,
       animateShadowColor: attributes.animateShadowColor,
       clipBehavior: attributes.clipBehavior,
       borderRadius: attributes.borderRadius,
-      shape: attributes.shape != null ? BoxShape.rectangle : BoxShape.rectangle,
+      shape: attributes.shape,
       duration: attributes.duration,
       curve: attributes.curve,
       onEnd: onEndHandler(
