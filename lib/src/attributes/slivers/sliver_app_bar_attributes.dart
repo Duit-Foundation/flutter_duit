@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/slivers/sliver_props.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 final class SliverAppBarAttributes extends AnimatedPropertyOwner
-    implements DuitAttributes<SliverAppBarAttributes>, DuitSliverProps {
+    implements DuitAttributes<SliverAppBarAttributes> {
   final NonChildWidget? leading, title, bottom, flexibleSpace;
   final List<NonChildWidget>? actions;
   final EdgeInsetsGeometry? actionsPadding;
@@ -33,9 +32,6 @@ final class SliverAppBarAttributes extends AnimatedPropertyOwner
   final ShapeBorder? shape;
   final Clip? clipBehavior;
 
-  @override
-  final bool needsBoxAdapter;
-
   const SliverAppBarAttributes({
     required this.automaticallyImplyLeading,
     required this.excludeHeaderSemantics,
@@ -47,7 +43,6 @@ final class SliverAppBarAttributes extends AnimatedPropertyOwner
     required this.pinned,
     required this.snap,
     required this.stretch,
-    required this.needsBoxAdapter,
     required this.collapsedHeight,
     required this.stretchTriggerOffset,
     this.leading,
@@ -94,7 +89,6 @@ final class SliverAppBarAttributes extends AnimatedPropertyOwner
       pinned: view["pinned"] ?? false,
       snap: view["snap"] ?? false,
       stretch: view["stretch"] ?? false,
-      needsBoxAdapter: json['needsBoxAdapter'] ?? false,
       flexibleSpace: view["flexibleSpace"],
       leading: view["leading"],
       title: view["title"],
@@ -111,7 +105,7 @@ final class SliverAppBarAttributes extends AnimatedPropertyOwner
           ColorUtils.tryParseNullableColor(view["surfaceTintColor"]),
       shadowColor: ColorUtils.tryParseNullableColor(view["shadowColor"]),
       elevation: NumUtils.toDouble(view["elevation"]),
-      scrolledUnderElevation: view["scrolledUnderElevation"],
+      scrolledUnderElevation: NumUtils.toDouble(view["scrolledUnderElevation"]),
       toolbarHeight: NumUtils.toDouble(view["toolbarHeight"]),
       leadingWidth: NumUtils.toDouble(view["leadingWidth"]),
       titleSpacing: NumUtils.toDouble(view["titleSpacing"]),
@@ -142,7 +136,6 @@ final class SliverAppBarAttributes extends AnimatedPropertyOwner
       pinned: other.pinned,
       snap: other.snap,
       stretch: other.stretch,
-      needsBoxAdapter: needsBoxAdapter,
       actionsPadding: other.actionsPadding ?? actionsPadding,
       backgroundColor: other.backgroundColor ?? backgroundColor,
       foregroundColor: other.foregroundColor ?? foregroundColor,
