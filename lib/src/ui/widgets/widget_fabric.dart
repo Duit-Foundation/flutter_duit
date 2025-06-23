@@ -868,6 +868,11 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.flexibleSpaceBar:
+        final it = model as FlexibleSpaceBarModel;
+        return DuitFlexibleSpaceBar(
+          controller: it.viewController!,
+        );
       default:
         return const SizedBox.shrink();
     }

@@ -2032,6 +2032,30 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
           controlled: controlled,
         );
+      case ElementType.flexibleSpaceBar:
+        final attributes =
+            ViewAttribute.createAttributes<FlexibleSpaceBarAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return FlexibleSpaceBarModel(
+          type: type,
+          id: id,
+          controlled: true,
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          attributes: _attachAttributes(true, attributes),
+        );
       default:
         throw ArgumentError(
           "Cant infer element type from json schema: $type with id= $id",

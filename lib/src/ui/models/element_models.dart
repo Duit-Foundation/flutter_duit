@@ -1143,3 +1143,13 @@ final class SliverIgnorePointerUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class FlexibleSpaceBarUiElement<T> extends DuitElement<T> {
+  FlexibleSpaceBarUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+  });
+}

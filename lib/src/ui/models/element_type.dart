@@ -59,6 +59,7 @@ final class ElementType {
   static const animatedPadding = "AnimatedPadding";
   static const animatedPositioned = "AnimatedPositioned";
   static const animatedScale = "AnimatedScale";
+  static const flexibleSpaceBar = "FlexibleSpaceBar";
   static const sliverPadding = "SliverPadding";
   static const customScrollView = "CustomScrollView";
   static const sliverFillRemaining = "SliverFillRemaining";

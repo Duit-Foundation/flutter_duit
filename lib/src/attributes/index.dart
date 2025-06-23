@@ -49,4 +49,5 @@ export 'inkwell_attributes.dart';
 export 'carousel_view_attributes.dart';
 export 'animated_rotation_attributes.dart';
 export 'animated_scale_attributes.dart';
+export 'flexible_space_bar_attributes.dart';
 export 'slivers/index.dart';
