@@ -71,4 +71,5 @@ final class ElementType {
   static const sliverOffstage = "SliverOffstage";
   static const sliverIgnorePointer = "SliverIgnorePointer";
   static const sliverSafeArea = "SliverSafeArea";
+  static const sliverAppBar = "SliverAppBar";
 }

@@ -2056,6 +2056,30 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           ),
           attributes: _attachAttributes(true, attributes),
         );
+      case ElementType.sliverAppBar:
+        final attributes =
+            ViewAttribute.createAttributes<SliverAppBarAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverAppBarModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(true, attributes),
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: true,
+        );
       default:
         throw ArgumentError(
           "Cant infer element type from json schema: $type with id= $id",

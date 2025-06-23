@@ -1153,3 +1153,13 @@ final class FlexibleSpaceBarUiElement<T> extends DuitElement<T> {
     required super.attributes,
   });
 }
+
+final class SliverAppBarUiElement<T> extends DuitElement<T> {
+  SliverAppBarUiElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+  });
+}

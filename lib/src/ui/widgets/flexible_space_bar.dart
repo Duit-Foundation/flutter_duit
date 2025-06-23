@@ -40,6 +40,7 @@ class _DuitFlexibleSpaceBarState extends State<DuitFlexibleSpaceBar>
   Widget build(BuildContext context) {
     final attrs = widget.mergeWithAttributes(context, attributes);
     return FlexibleSpaceBar(
+      key: ValueKey(widget.controller.id),
       title: _build(attrs.title),
       background: _build(attrs.background),
       centerTitle: attrs.centerTitle,

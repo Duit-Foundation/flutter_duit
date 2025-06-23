@@ -868,6 +868,11 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
                 child: child,
               );
+      case ElementType.sliverAppBar:
+        final it = model as SliverAppBarModel;
+        return DuitSliverAppBar(
+          controller: it.viewController!,
+        );
       case ElementType.flexibleSpaceBar:
         final it = model as FlexibleSpaceBarModel;
         return DuitFlexibleSpaceBar(
