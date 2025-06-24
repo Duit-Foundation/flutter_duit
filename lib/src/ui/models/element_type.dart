@@ -64,4 +64,5 @@ final class ElementType {
   static const animatedCrossFade = "AnimatedCrossFade";
   static const physicalModel = "PhysicalModel";
   static const animatedPhysicalModel = "AnimatedPhysicalModel";
+  static const animatedSlide = "AnimatedSlide";
 }

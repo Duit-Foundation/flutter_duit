@@ -763,6 +763,14 @@ mixin WidgetFabric {
           controller: it.viewController!,
           children: arr,
         );
+      case ElementType.animatedSlide:
+        final it = model as AnimatedSlideModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedSlide(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.physicalModel:
         final it = model as PhysicalModelModel;
         final child = getWidgetFromElement(it.child);

@@ -136,6 +136,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.physicalModel => PhysicalModelAttributes.fromJson(data),
       ElementType.animatedPhysicalModel =>
         AnimatedPhysicalModelAttributes.fromJson(data),
+      ElementType.animatedSlide => AnimatedSlideAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

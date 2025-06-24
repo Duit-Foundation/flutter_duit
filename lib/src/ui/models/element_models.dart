@@ -1027,6 +1027,20 @@ final class AnimatedCrossFadeUIElement<T> extends DuitElement<T>
   });
 }
 
+final class AnimatedSlideUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  AnimatedSlideUIElement({
+    required super.type,
+    required super.id,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
 final class PhysicalModelUIElement<T> extends DuitElement<T>
     implements SingleChildLayout {
   @override

@@ -30,3 +30,4 @@ typedef AnimatedCrossFadeModel
 typedef PhysicalModelModel = PhysicalModelUIElement<PhysicalModelAttributes>;
 typedef AnimatedPhysicalModelModel
     = AnimatedPhysicalModelUIElement<AnimatedPhysicalModelAttributes>;
+typedef AnimatedSlideModel = AnimatedSlideUIElement<AnimatedSlideAttributes>;
