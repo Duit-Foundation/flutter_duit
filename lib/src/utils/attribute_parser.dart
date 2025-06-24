@@ -133,6 +133,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.offstage => OffstageAttributes.fromJson(data),
       ElementType.animatedCrossFade =>
         AnimatedCrossFadeAttributes.fromJson(data),
+      ElementType.animatedSlide => AnimatedSlideAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 
