@@ -1158,3 +1158,23 @@ final class SliverListUIElement<T> extends DuitElement<T>
     required this.children,
   });
 }
+
+final class FlexibleSpaceBarUiElement<T> extends DuitElement<T> {
+  FlexibleSpaceBarUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+  });
+}
+
+final class SliverAppBarUiElement<T> extends DuitElement<T> {
+  SliverAppBarUiElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+  });
+}

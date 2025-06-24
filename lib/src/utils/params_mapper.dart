@@ -1882,4 +1882,59 @@ final class AttributeValueMapper {
     }
     return null;
   }
+
+  /// Converts a string value to a [CollapseMode] value.
+  ///
+  /// Returns the corresponding [CollapseMode] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  static CollapseMode toCollapseMode(String? value) {
+    if (value == null) return CollapseMode.parallax;
+
+    switch (value) {
+      case "parallax":
+        return CollapseMode.parallax;
+      case "pin":
+        return CollapseMode.pin;
+      case "none":
+        return CollapseMode.none;
+    }
+
+    return CollapseMode.parallax;
+  }
+
+  /// Converts a list of string values to a list of [StretchMode] values.
+  ///
+  /// Returns the corresponding list of [StretchMode] values for the given list of strings [value].
+  /// If [value] is `null`, returns `null`.
+  static List<StretchMode> toStretchModes(List<String>? value) {
+    if (value == null) return const [StretchMode.zoomBackground];
+
+    final stretchModes = <StretchMode>[];
+    for (final item in value) {
+      stretchModes.add(toStretchMode(item));
+    }
+
+    return stretchModes.isNotEmpty
+        ? stretchModes
+        : const [StretchMode.zoomBackground];
+  }
+
+  /// Converts a string value to a [StretchMode] value.
+  ///
+  /// Returns the corresponding [StretchMode] value for the given string [value].
+  /// If [value] is `null`, returns `null`.
+  static StretchMode toStretchMode(String? value) {
+    if (value == null) return StretchMode.zoomBackground;
+
+    switch (value) {
+      case "zoomBackground":
+        return StretchMode.zoomBackground;
+      case "blurBackground":
+        return StretchMode.blurBackground;
+      case "fadeTitle":
+        return StretchMode.fadeTitle;
+    }
+
+    return StretchMode.zoomBackground;
+  }
 }

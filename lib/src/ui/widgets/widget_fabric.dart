@@ -908,6 +908,16 @@ mixin WidgetFabric {
           default:
             return const SizedBox.shrink();
         }
+      case ElementType.sliverAppBar:
+        final it = model as SliverAppBarModel;
+        return DuitSliverAppBar(
+          controller: it.viewController!,
+        );
+      case ElementType.flexibleSpaceBar:
+        final it = model as FlexibleSpaceBarModel;
+        return DuitFlexibleSpaceBar(
+          controller: it.viewController!,
+        );
       default:
         return const SizedBox.shrink();
     }

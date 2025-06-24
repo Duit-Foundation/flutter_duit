@@ -42,4 +42,7 @@ typedef SliverSafeAreaModel = SliverSafeAreaUIElement<SliverSafeAreaAttributes>;
 typedef SliverOffstageModel = SliverOffstageUIElement<SliverOffstageAttributes>;
 typedef SliverIgnorePointerModel
     = SliverIgnorePointerUIElement<SliverIgnorePointerAttributes>;
+typedef FlexibleSpaceBarModel
+    = FlexibleSpaceBarUiElement<FlexibleSpaceBarAttributes>;
+typedef SliverAppBarModel = SliverAppBarUiElement<SliverAppBarAttributes>;
 typedef SliverListModel = SliverListUIElement<SliverListAttributes>;
