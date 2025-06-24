@@ -27,4 +27,7 @@ typedef AnimatedScaleModel = AnimatedScaleUIElement<AnimatedScaleAttributes>;
 typedef AnimatedSizeModel = AnimatedSizeUIElement<AnimatedSizeAttributes>;
 typedef AnimatedCrossFadeModel
     = AnimatedCrossFadeUIElement<AnimatedCrossFadeAttributes>;
+typedef PhysicalModelModel = PhysicalModelUIElement<PhysicalModelAttributes>;
+typedef AnimatedPhysicalModelModel
+    = AnimatedPhysicalModelUIElement<AnimatedPhysicalModelAttributes>;
 typedef AnimatedSlideModel = AnimatedSlideUIElement<AnimatedSlideAttributes>;
