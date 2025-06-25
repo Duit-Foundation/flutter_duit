@@ -13,12 +13,10 @@ class DuitAnimatedCrossFade extends StatefulWidget {
   });
 
   @override
-  State<DuitAnimatedCrossFade> createState() =>
-      _DuitAnimatedCrossFadeState();
+  State<DuitAnimatedCrossFade> createState() => _DuitAnimatedCrossFadeState();
 }
 
-class _DuitAnimatedCrossFadeState
-    extends State<DuitAnimatedCrossFade>
+class _DuitAnimatedCrossFadeState extends State<DuitAnimatedCrossFade>
     with
         ViewControllerChangeListener<DuitAnimatedCrossFade,
             AnimatedCrossFadeAttributes> {

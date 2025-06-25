@@ -9,18 +9,12 @@ Map<String, dynamic> _createWidget([bool isControlled = false]) {
     'type': 'Offstage',
     'id': 'offstage_test',
     'controlled': isControlled,
-    'attributes' : {
-      'offstage': true
-    },
+    'attributes': {'offstage': true},
     'child': {
       'type': 'Container',
       'id': 'con',
       'controlled': false,
-      'attributes' : {
-        'color': '#DCDCDC',
-        'width': 50,
-        'height': 50
-      }
+      'attributes': {'color': '#DCDCDC', 'width': 50, 'height': 50}
     }
   };
 }

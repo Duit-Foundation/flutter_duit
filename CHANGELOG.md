@@ -1,3 +1,9 @@
+## 3.6.0
+
+- New widgets: Offstage, AbsorbPointer, AnimatedCrossFade, AnimatedSlide, PhysicalModel, AnimatedPhysicalModel, CustomScrollView, SliverPadding, SliverFillRemaining, SliverToBoxAdapter, SliverFillViewport, SliverOpacity, SliverVisibility, SliverAnimatedOpacity, SliverSafeArea, SliverOffstage, SliverIgnorePointer, SliverList, SliverAppBar, FlexibleSpaceBar and SliverGrid (+21)
+- Improved providing of animated values
+- Fixed ListView.separated separator behavior
+
 ## 3.5.0
 
 - Added missing props for ElevatedButton attributes

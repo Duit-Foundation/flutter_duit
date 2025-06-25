@@ -49,5 +49,6 @@ final class SliverAnimatedOpacityAttributes extends ImplicitAnimatable
     String methodName, {
     Iterable? positionalParams,
     Map<String, dynamic>? namedParams,
-  }) => throw UnimplementedError();
+  }) =>
+      throw UnimplementedError();
 }

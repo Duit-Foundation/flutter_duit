@@ -76,7 +76,6 @@ void main() {
           );
 
           await tester.pumpAndSettle();
-          ;
 
           var renderObject = tester
               .renderObject(find.byKey(const ValueKey("con1"))) as RenderBox;
