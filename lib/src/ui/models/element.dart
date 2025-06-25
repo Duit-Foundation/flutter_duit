@@ -1137,6 +1137,46 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlState,
           children: arr,
         );
+      case ElementType.sliverGrid:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            arr.add(DuitElement.fromJson(element, driver));
+          });
+        }
+
+        final attributes = ViewAttribute.createAttributes<SliverGridAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        bool isControlledByDefault = false;
+
+        if (attributes.payload.constructor == GridConstructor.builder) {
+          isControlledByDefault = true;
+        }
+
+        final controlState = isControlledByDefault || controlled;
+
+        return SliverGridModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlState, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlState,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlState,
+          children: arr,
+        );
       case ElementType.intrinsicHeight:
         final child = DuitElement.fromJson(json["child"], driver);
 

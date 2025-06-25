@@ -918,6 +918,43 @@ mixin WidgetFabric {
         return DuitFlexibleSpaceBar(
           controller: it.viewController!,
         );
+      case ElementType.sliverGrid:
+        final it = model as SliverGridModel;
+        GridConstructor widgetType;
+
+        if (!it.controlled) {
+          widgetType = it.attributes!.payload.constructor;
+        } else {
+          widgetType = it.viewController!.attributes.payload.constructor;
+        }
+
+        switch (widgetType) {
+          case GridConstructor.common:
+          case GridConstructor.count:
+          case GridConstructor.extent:
+            final arr = <Widget>[];
+
+            for (var element in it.children) {
+              final children = getWidgetFromElement(element);
+              arr.add(children);
+            }
+
+            if (!it.controlled) {
+              return DuitSliverGrid(
+                attributes: it.attributes!,
+                children: arr,
+              );
+            } else {
+              return DuitControlledSliverGrid(
+                controller: it.viewController!,
+                children: arr,
+              );
+            }
+          case GridConstructor.builder:
+            return DuitSliverGridBuilder(
+              controller: it.viewController!,
+            );
+        }
       default:
         return const SizedBox.shrink();
     }

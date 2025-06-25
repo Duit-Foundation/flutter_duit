@@ -10,3 +10,4 @@ export "sliver_ignore_pointer_attributes.dart";
 export "sliver_safe_area_attributes.dart";
 export "sliver_app_bar_attributes.dart";
 export "sliver_list_attributes.dart";
+export "sliver_grid_attributes.dart";

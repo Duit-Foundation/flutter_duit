@@ -73,4 +73,5 @@ final class ElementType {
   static const sliverSafeArea = "SliverSafeArea";
   static const sliverList = "SliverList";
   static const sliverAppBar = "SliverAppBar";
+  static const sliverGrid = "SliverGrid";
 }
