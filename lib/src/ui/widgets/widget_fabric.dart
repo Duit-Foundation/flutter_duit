@@ -792,6 +792,235 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.sliverPadding:
+        final it = model as SliverPaddingModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverPadding(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverPadding(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.customScrollView:
+        final it = model as CustomScrollViewModel;
+
+        final arr = <Widget>[];
+
+        for (var element in it.children) {
+          arr.add(getWidgetFromElement(element));
+        }
+
+        return it.controlled
+            ? DuitControlledCustomScrollView(
+                controller: it.viewController!,
+                children: arr,
+              )
+            : DuitCustomScrollView(
+                attributes: it.attributes!,
+                children: arr,
+              );
+      case ElementType.sliverFillRemaining:
+        final it = model as SliverFillRemainingModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverFillRemaining(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverFillRemaining(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.sliverToBoxAdapter:
+        final it = model as SliverToBoxAdapterModel;
+        final child = getWidgetFromElement(it.child);
+
+        return SliverToBoxAdapter(
+          key: ValueKey(it.id),
+          child: child,
+        );
+      case ElementType.sliverFillViewport:
+        final it = model as SliverFillViewportModel;
+
+        final arr = <Widget>[];
+
+        for (var element in it.children) {
+          arr.add(getWidgetFromElement(element));
+        }
+
+        return it.controlled
+            ? DuitControlledSliverFillViewport(
+                controller: it.viewController!,
+                children: arr,
+              )
+            : DuitSliverFillViewport(
+                attributes: it.attributes!,
+                children: arr,
+              );
+      case ElementType.sliverVisibility:
+        final it = model as SliverVisibilityModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverVisibility(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverVisibility(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.sliverOffstage:
+        final it = model as SliverOffstageModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverOffstage(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverOffstage(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.sliverOpacity:
+        final it = model as SliverOpacityModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverOpacity(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverOpacity(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.sliverAnimatedOpacity:
+        final it = model as SliverAnimatedOpacityModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitSliverAnimatedOpacity(
+          controller: it.viewController!,
+          child: child,
+        );
+      case ElementType.sliverSafeArea:
+        final it = model as SliverSafeAreaModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledSliverSafeArea(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverSafeArea(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.sliverIgnorePointer:
+        final it = model as SliverIgnorePointerModel;
+        final child = getWidgetFromElement(it.child);
+        return it.controlled
+            ? DuitControlledSliverIgnorePointer(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitSliverIgnorePointer(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.sliverList:
+        final it = model as SliverListModel;
+
+        int widgetType;
+
+        if (!it.controlled) {
+          widgetType = it.attributes!.payload.type;
+        } else {
+          widgetType = it.viewController!.attributes.payload.type;
+        }
+
+        switch (widgetType) {
+          case 0:
+            List<Widget> arr = [];
+
+            for (var element in it.children) {
+              final children = getWidgetFromElement(element);
+              arr.add(children);
+            }
+
+            return it.controlled
+                ? DuitControlledSliverList(
+                    controller: it.viewController!,
+                    children: arr,
+                  )
+                : DuitSliverList(
+                    attributes: it.attributes!,
+                    children: arr,
+                  );
+          case 1:
+            return DuitSliverListBuilder(
+              controller: it.viewController!,
+            );
+          case 2:
+            return DuitSliverListSeparated(
+              controller: it.viewController!,
+            );
+          default:
+            return const SizedBox.shrink();
+        }
+      case ElementType.sliverAppBar:
+        final it = model as SliverAppBarModel;
+        return DuitSliverAppBar(
+          controller: it.viewController!,
+        );
+      case ElementType.flexibleSpaceBar:
+        final it = model as FlexibleSpaceBarModel;
+        return DuitFlexibleSpaceBar(
+          controller: it.viewController!,
+        );
+      case ElementType.sliverGrid:
+        final it = model as SliverGridModel;
+        GridConstructor widgetType;
+
+        if (!it.controlled) {
+          widgetType = it.attributes!.payload.constructor;
+        } else {
+          widgetType = it.viewController!.attributes.payload.constructor;
+        }
+
+        switch (widgetType) {
+          case GridConstructor.common:
+          case GridConstructor.count:
+          case GridConstructor.extent:
+            final arr = <Widget>[];
+
+            for (var element in it.children) {
+              final children = getWidgetFromElement(element);
+              arr.add(children);
+            }
+
+            if (!it.controlled) {
+              return DuitSliverGrid(
+                attributes: it.attributes!,
+                children: arr,
+              );
+            } else {
+              return DuitControlledSliverGrid(
+                controller: it.viewController!,
+                children: arr,
+              );
+            }
+          case GridConstructor.builder:
+            return DuitSliverGridBuilder(
+              controller: it.viewController!,
+            );
+        }
       default:
         return const SizedBox.shrink();
     }

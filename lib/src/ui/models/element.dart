@@ -1139,6 +1139,46 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlState,
           children: arr,
         );
+      case ElementType.sliverGrid:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            arr.add(DuitElement.fromJson(element, driver));
+          });
+        }
+
+        final attributes = ViewAttribute.createAttributes<SliverGridAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        bool isControlledByDefault = false;
+
+        if (attributes.payload.constructor == GridConstructor.builder) {
+          isControlledByDefault = true;
+        }
+
+        final controlState = isControlledByDefault || controlled;
+
+        return SliverGridModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlState, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlState,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlState,
+          children: arr,
+        );
       case ElementType.intrinsicHeight:
         final child = DuitElement.fromJson(json["child"], driver);
 
@@ -1838,6 +1878,279 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
           controlled: true,
         );
+      case ElementType.sliverPadding:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverPaddingAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverPaddingModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.customScrollView:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            arr.add(
+              DuitElement.fromJson(
+                element,
+                driver,
+              ),
+            );
+          });
+        }
+
+        final attributes =
+            ViewAttribute.createAttributes<CustomScrollViewAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return CustomScrollViewModel(
+          id: id,
+          type: type,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: controlled,
+        );
+      case ElementType.sliverFillRemaining:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverFillRemainingAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverFillRemainingModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.sliverToBoxAdapter:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        return SliverToBoxAdapterModel(
+          type: type,
+          id: id,
+          child: child,
+        );
+      case ElementType.sliverFillViewport:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            arr.add(
+              DuitElement.fromJson(
+                element,
+                driver,
+              ),
+            );
+          });
+        }
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverFillViewportAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverFillViewportModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: controlled,
+        );
+      case ElementType.sliverOpacity:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverOpacityAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverOpacityModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.sliverAnimatedOpacity:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverAnimatedOpacityAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverAnimatedOpacityModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(true, attributes),
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: true,
+        );
+      case ElementType.sliverVisibility:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverVisibilityAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverVisibilityModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.sliverOffstage:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverOffstageAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverOffstageModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.sliverSafeArea:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverSafeAreaAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverSafeAreaModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
       case ElementType.custom:
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);
@@ -1893,6 +2206,121 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           }
         }
         return EmptyUIElement<EmptyAttributes>();
+      case ElementType.sliverList:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          json["children"].forEach((element) {
+            arr.add(DuitElement.fromJson(element, driver));
+          });
+        }
+
+        final attributes = ViewAttribute.createAttributes<SliverListAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        bool isControlledByDefault = false;
+
+        if (attributes.payload.type != 0) {
+          isControlledByDefault = true;
+        }
+
+        final controlState = isControlledByDefault || controlled;
+
+        return SliverListModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlState, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlState,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: controlState,
+        );
+      case ElementType.sliverIgnorePointer:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<SliverIgnorePointerAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverIgnorePointerUIElement<SliverIgnorePointerAttributes>(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.flexibleSpaceBar:
+        final attributes =
+            ViewAttribute.createAttributes<FlexibleSpaceBarAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return FlexibleSpaceBarModel(
+          type: type,
+          id: id,
+          controlled: true,
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          attributes: _attachAttributes(true, attributes),
+        );
+      case ElementType.sliverAppBar:
+        final attributes =
+            ViewAttribute.createAttributes<SliverAppBarAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return SliverAppBarModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(true, attributes),
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: true,
+        );
       default:
         throw ArgumentError(
           "Cant infer element type from json schema: $type with id= $id",

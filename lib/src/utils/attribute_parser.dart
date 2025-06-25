@@ -129,6 +129,24 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.animatedPositioned =>
         AnimatedPositionedAttributes.fromJson(data),
       ElementType.animatedScale => AnimatedScaleAttributes.fromJson(data),
+      ElementType.sliverPadding => SliverPaddingAttributes.fromJson(data),
+      ElementType.customScrollView => CustomScrollViewAttributes.fromJson(data),
+      ElementType.sliverFillRemaining =>
+        SliverFillRemainingAttributes.fromJson(data),
+      ElementType.sliverFillViewport =>
+        SliverFillViewportAttributes.fromJson(data),
+      ElementType.sliverOpacity => SliverOpacityAttributes.fromJson(data),
+      ElementType.sliverVisibility => SliverVisibilityAttributes.fromJson(data),
+      ElementType.sliverAnimatedOpacity =>
+        SliverAnimatedOpacityAttributes.fromJson(data),
+      ElementType.sliverSafeArea => SliverSafeAreaAttributes.fromJson(data),
+      ElementType.sliverOffstage => SliverOffstageAttributes.fromJson(data),
+      ElementType.sliverIgnorePointer =>
+        SliverIgnorePointerAttributes.fromJson(data),
+      ElementType.sliverAppBar => SliverAppBarAttributes.fromJson(data),
+      ElementType.flexibleSpaceBar => FlexibleSpaceBarAttributes.fromJson(data),
+      ElementType.sliverList => SliverListAttributes.fromJson(data),
+      ElementType.sliverGrid => SliverGridAttributes.fromJson(data),
       ElementType.absorbPointer => AbsorbPointerAttributes.fromJson(data),
       ElementType.offstage => OffstageAttributes.fromJson(data),
       ElementType.animatedCrossFade =>

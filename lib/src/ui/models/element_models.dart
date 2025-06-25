@@ -1069,3 +1069,215 @@ final class AnimatedPhysicalModelUIElement<T> extends DuitElement<T>
     required this.child,
   });
 }
+
+final class SliverPaddingUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverPaddingUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class CustomScrollViewUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  CustomScrollViewUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.children,
+  });
+}
+
+final class SliverFillRemainingUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverFillRemainingUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class SliverToBoxAdapterUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverToBoxAdapterUIElement({
+    required super.type,
+    required super.id,
+    required this.child,
+  });
+}
+
+final class SliverFillViewportUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  SliverFillViewportUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.children,
+  });
+}
+
+final class SliverOpacityUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverOpacityUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class SliverAnimatedOpacityUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverAnimatedOpacityUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class SliverVisibilityUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverVisibilityUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class SliverSafeAreaUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverSafeAreaUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class SliverOffstageUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverOffstageUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class SliverIgnorePointerUIElement<T> extends DuitElement<T>
+    implements SingleChildLayout {
+  @override
+  DuitElement child;
+
+  SliverIgnorePointerUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.child,
+  });
+}
+
+final class SliverListUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  SliverListUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.children,
+  });
+}
+
+final class FlexibleSpaceBarUiElement<T> extends DuitElement<T> {
+  FlexibleSpaceBarUiElement({
+    required super.type,
+    required super.id,
+    required super.controlled,
+    required super.viewController,
+    required super.attributes,
+  });
+}
+
+final class SliverAppBarUiElement<T> extends DuitElement<T> {
+  SliverAppBarUiElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+  });
+}
+
+final class SliverGridUIElement<T> extends DuitElement<T>
+    implements MultiChildLayout {
+  @override
+  List<DuitElement> children;
+
+  SliverGridUIElement({
+    required super.type,
+    required super.id,
+    required super.attributes,
+    required super.viewController,
+    required super.controlled,
+    required this.children,
+  });
+}

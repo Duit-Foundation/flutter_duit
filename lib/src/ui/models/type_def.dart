@@ -25,6 +25,28 @@ typedef AnimatedPositionedModel
     = AnimatedPositionedUIElement<AnimatedPositionedAttributes>;
 typedef AnimatedScaleModel = AnimatedScaleUIElement<AnimatedScaleAttributes>;
 typedef AnimatedSizeModel = AnimatedSizeUIElement<AnimatedSizeAttributes>;
+typedef SliverPaddingModel = SliverPaddingUIElement<SliverPaddingAttributes>;
+typedef CustomScrollViewModel
+    = CustomScrollViewUIElement<CustomScrollViewAttributes>;
+typedef SliverFillRemainingModel
+    = SliverFillRemainingUIElement<SliverFillRemainingAttributes>;
+typedef SliverToBoxAdapterModel = SliverToBoxAdapterUIElement<EmptyAttributes>;
+typedef SliverFillViewportModel
+    = SliverFillViewportUIElement<SliverFillViewportAttributes>;
+typedef SliverOpacityModel = SliverOpacityUIElement<SliverOpacityAttributes>;
+typedef SliverVisibilityModel
+    = SliverVisibilityUIElement<SliverVisibilityAttributes>;
+typedef SliverAnimatedOpacityModel
+    = SliverAnimatedOpacityUIElement<SliverAnimatedOpacityAttributes>;
+typedef SliverSafeAreaModel = SliverSafeAreaUIElement<SliverSafeAreaAttributes>;
+typedef SliverOffstageModel = SliverOffstageUIElement<SliverOffstageAttributes>;
+typedef SliverIgnorePointerModel
+    = SliverIgnorePointerUIElement<SliverIgnorePointerAttributes>;
+typedef FlexibleSpaceBarModel
+    = FlexibleSpaceBarUiElement<FlexibleSpaceBarAttributes>;
+typedef SliverAppBarModel = SliverAppBarUiElement<SliverAppBarAttributes>;
+typedef SliverListModel = SliverListUIElement<SliverListAttributes>;
+typedef SliverGridModel = SliverGridUIElement<SliverGridAttributes>;
 typedef AnimatedCrossFadeModel
     = AnimatedCrossFadeUIElement<AnimatedCrossFadeAttributes>;
 typedef PhysicalModelModel = PhysicalModelUIElement<PhysicalModelAttributes>;

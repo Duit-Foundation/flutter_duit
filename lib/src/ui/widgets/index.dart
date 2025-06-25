@@ -49,6 +49,8 @@ export 'app_bar.dart';
 export 'scaffold.dart';
 export 'inkwell.dart';
 export 'carouse_view.dart';
+export 'flexible_space_bar.dart';
+export 'slivers/index.dart';
 export 'absorb_pointer.dart';
 export 'offstage.dart';
 export 'physical_model.dart';
