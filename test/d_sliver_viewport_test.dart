@@ -4,155 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'utils.dart';
 
-// {
-//   "type": "CustomScrollView",
-//   "id": "custom_view",
-//   "contolled": false,
-//   "attributes": {},
-//   "children": [
-//     {
-//       "type": "SliverFillViewport",
-//       "id": "sliver1",
-//       "controlled": false,
-//       "attributes": {
-//         "viewportFraction": 0.1,
-//         "isBuilderDelegate": false,
-//         "childObjects": [
-//           {
-//             "type": "Container",
-//             "id": "1",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#FF0000",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "2",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#4287f5",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "3",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#f5aa42",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "4",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#DCDCDC",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "44dg",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#FF0000",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "4vfgeer3",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#DCDCDC",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "4bnnvcc",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#FF0000",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "`zxc4",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#DCDCDC",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "4bvbz",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#FF0000",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "4zx",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#DCDCDC",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "cv4",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#FF0000",
-//             },
-//           },
-//           {
-//             "type": "Container",
-//             "id": "dsf4",
-//             "controlled": false,
-//             "attributes": {
-//               "color": "#DCDCDC",
-//             },
-//           },
-//         ],
-//       },
-//       "children": [
-//         {
-//           "type": "Container",
-//           "id": "1",
-//           "controlled": false,
-//           "attributes": {
-//             "color": "#FF0000",
-//           },
-//         },
-//         {
-//           "type": "Container",
-//           "id": "2",
-//           "controlled": false,
-//           "attributes": {
-//             "color": "#4287f5",
-//           },
-//         },
-//         {
-//           "type": "Container",
-//           "id": "3",
-//           "controlled": false,
-//           "attributes": {
-//             "color": "#f5aa42",
-//           },
-//         },
-//         {
-//           "type": "Container",
-//           "id": "4",
-//           "controlled": false,
-//           "attributes": {
-//             "color": "#FF0000",
-//           },
-//         }
-//       ],
-//     },
-//   ],
-// },
+
 
 void main() {
   group(
@@ -165,7 +17,7 @@ void main() {
             {
               "type": "CustomScrollView",
               "id": "custom_view",
-              "contolled": false,
+              "controlled": false,
               "attributes": {},
               "children": [
                 {
@@ -228,7 +80,7 @@ void main() {
             {
               "type": "CustomScrollView",
               "id": "custom_view",
-              "contolled": false,
+              "controlled": false,
               "attributes": {},
               "children": [
                 {
@@ -301,7 +153,7 @@ void main() {
             {
               "type": "CustomScrollView",
               "id": "custom_view",
-              "contolled": false,
+              "controlled": false,
               "attributes": {},
               "children": [
                 {

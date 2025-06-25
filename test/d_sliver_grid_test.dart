@@ -7,7 +7,7 @@ import "utils.dart";
 
 void main() {
   group(
-    "DuitGridView tests",
+    "DuitSliverGrid tests",
     () {
       final arr = [];
 
@@ -222,7 +222,7 @@ void main() {
           (tester) async {
             var driver = DuitDriver.static(
               {
-                "type": "GridView",
+                "type": "SliverGrid",
                 "controlled": true,
                 "id": "grid",
                 "children": arr,
@@ -244,7 +244,7 @@ void main() {
 
             driver = DuitDriver.static(
               {
-                "type": "GridView",
+                "type": "SliverGrid",
                 "controlled": true,
                 "id": "grid",
                 "children": arr,
@@ -351,7 +351,7 @@ void main() {
             (tester) async {
               final driver = DuitDriver.static(
                 {
-                  "type": "GridView",
+                  "type": "SliverGrid",
                   "controlled": true,
                   "id": "grid",
                   "children": arr,

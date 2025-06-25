@@ -107,18 +107,6 @@ final class SliverGridAttributes
           addAutomaticKeepAlives: json["addAutomaticKeepAlives"] ?? true,
           addRepaintBoundaries: json["addRepaintBoundaries"] ?? true,
           addSemanticIndexes: json["addSemanticIndexes"] ?? true,
-          // childAspectRatio: NumUtils.toDoubleWithNullReplacement(
-          //   json["childAspectRatio"],
-          //   1.0,
-          // ),
-          // crossAxisSpacing: NumUtils.toDoubleWithNullReplacement(
-          //   json["crossAxisSpacing"],
-          //   0.0,
-          // ),
-          // mainAxisSpacing: NumUtils.toDoubleWithNullReplacement(
-          //   json["mainAxisSpacing"],
-          //   0.0,
-          // ),
         );
       case GridConstructor.count:
         final crossAxisCount = json["crossAxisCount"];

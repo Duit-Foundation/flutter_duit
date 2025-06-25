@@ -15,7 +15,7 @@ void main() {
             {
               "type": "CustomScrollView",
               "id": "custom_view",
-              "contolled": false,
+              "controlled": false,
               "attributes": {},
               "children": [
                 {
@@ -61,7 +61,7 @@ void main() {
             {
               "type": "CustomScrollView",
               "id": "custom_view",
-              "contolled": true,
+              "controlled": true,
               "attributes": {},
               "children": [
                 {

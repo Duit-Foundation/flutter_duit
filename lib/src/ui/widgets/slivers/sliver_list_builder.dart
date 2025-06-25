@@ -3,7 +3,7 @@ import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/widgets/tile.dart';
 
-final class DuitSliverListBuilder extends StatefulWidget {
+class DuitSliverListBuilder extends StatefulWidget {
   final UIElementController<SliverListAttributes> controller;
 
   const DuitSliverListBuilder({
@@ -28,7 +28,7 @@ class _DuitSliverListBuilderState extends State<DuitSliverListBuilder>
     super.initState();
   }
 
-  Widget? buildItem(BuildContext context, int index) {
+  Widget? _buildItem(BuildContext context, int index) {
     final list = attributes.childObjects ?? const [];
     final item = list[index];
 
@@ -44,7 +44,7 @@ class _DuitSliverListBuilderState extends State<DuitSliverListBuilder>
     isEOL = false;
     return SliverList.builder(
       key: Key(widget.controller.id),
-      itemBuilder: buildItem,
+      itemBuilder: _buildItem,
       itemCount: attributes.childObjects?.length ?? 0,
       addAutomaticKeepAlives: attributes.addAutomaticKeepAlives,
       addRepaintBoundaries: attributes.addRepaintBoundaries,

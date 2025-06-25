@@ -62,6 +62,8 @@ class _DuitSliverGridBuilderState extends State<DuitSliverGridBuilder>
       );
     }
 
+    // Reset the end-of-list flag to allow loading more data if the grid is rebuilt
+    // (e.g., when new items are added to the list)
     isEOL = false;
     return SliverGrid.builder(
       key: Key(widget.controller.id),
