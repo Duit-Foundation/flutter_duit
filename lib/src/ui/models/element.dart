@@ -1073,10 +1073,12 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           id: id,
         );
 
-        bool isControlledByDefault = true;
+        bool isControlledByDefault = false;
 
         if (attributes.payload.type != 0) {
           isControlledByDefault = true;
+        } else {
+          isControlledByDefault = controlled;
         }
 
         final controlState = isControlledByDefault || controlled;
@@ -1418,7 +1420,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.empty:
         return EmptyUIElement<EmptyAttributes>();
       case ElementType.component:
-        final providedData = json["data"] as Map<String, dynamic>;
+        final providedData = Map<String, dynamic>.from(json["data"]);
 
         final model = DuitRegistry.getComponentDescription(tag!);
 
@@ -1716,6 +1718,165 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: true,
           type: type,
           child: child,
+        );
+
+      case ElementType.absorbPointer:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AbsorbPointerAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AbsorbPointerUIElement<AbsorbPointerAttributes>(
+          type: type,
+          id: id,
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          controlled: controlled,
+          child: child,
+          attributes: attributes,
+        );
+      case ElementType.offstage:
+        final child = DuitElement.fromJson(json["child"], driver);
+        final attributes = ViewAttribute.createAttributes<OffstageAttributes>(
+            type, attributesObject, tag,
+            id: id);
+
+        return OffstageUIElement<OffstageAttributes>(
+          type: type,
+          id: id,
+          controlled: controlled,
+          viewController: _createAndAttachController(
+              id, controlled, attributes, serverAction, driver, type, tag),
+          attributes: attributes,
+          child: child,
+        );
+      case ElementType.animatedCrossFade:
+        final List<DuitElement> arr = [];
+
+        if (json["children"] != null) {
+          assert(
+            (json["children"] as List).length == 2,
+            "Expected 2 children in AnimatedCrossFade",
+          );
+          json["children"].forEach((element) {
+            arr.add(DuitElement.fromJson(element, driver));
+          });
+        }
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedCrossFadeAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AnimatedCrossFadeModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(true, attributes),
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          children: arr,
+          controlled: true,
+        );
+      case ElementType.animatedSlide:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedSlideAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AnimatedSlideModel(
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          id: id,
+          controlled: true,
+          type: type,
+          child: child,
+        );
+      case ElementType.physicalModel:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<PhysicalModelAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return PhysicalModelModel(
+          type: type,
+          id: id,
+          attributes: _attachAttributes(controlled, attributes),
+          viewController: _createAndAttachController(
+            id,
+            controlled,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: controlled,
+        );
+      case ElementType.animatedPhysicalModel:
+        final child = DuitElement.fromJson(json["child"], driver);
+
+        final attributes =
+            ViewAttribute.createAttributes<AnimatedPhysicalModelAttributes>(
+          type,
+          attributesObject,
+          tag,
+          id: id,
+        );
+
+        return AnimatedPhysicalModelModel(
+          type: type,
+          id: id,
+          viewController: _createAndAttachController(
+            id,
+            true,
+            attributes,
+            serverAction,
+            driver,
+            type,
+            tag,
+          ),
+          child: child,
+          controlled: true,
         );
       case ElementType.sliverPadding:
         final child = DuitElement.fromJson(json["child"], driver);

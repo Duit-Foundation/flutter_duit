@@ -74,4 +74,10 @@ final class ElementType {
   static const sliverList = "SliverList";
   static const sliverAppBar = "SliverAppBar";
   static const sliverGrid = "SliverGrid";
+  static const absorbPointer = "AbsorbPointer";
+  static const offstage = "Offstage";
+  static const animatedCrossFade = "AnimatedCrossFade";
+  static const physicalModel = "PhysicalModel";
+  static const animatedPhysicalModel = "AnimatedPhysicalModel";
+  static const animatedSlide = "AnimatedSlide";
 }

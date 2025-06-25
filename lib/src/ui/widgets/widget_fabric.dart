@@ -726,6 +726,72 @@ mixin WidgetFabric {
           controller: it.viewController!,
           child: child,
         );
+      case ElementType.absorbPointer:
+        final it = model as AbsorbPointerUIElement<AbsorbPointerAttributes>;
+        final child = getWidgetFromElement(it.child);
+        return it.controlled
+            ? DuitControlledAbsorbPointer(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitAbsorbPointer(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.offstage:
+        final it = model as OffstageUIElement<OffstageAttributes>;
+        final child = getWidgetFromElement(it.child);
+        return it.controlled
+            ? DuitControlledOffstage(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitOffstage(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.animatedCrossFade:
+        final it = model as AnimatedCrossFadeModel;
+        List<Widget> arr = [];
+
+        for (var element in it.children) {
+          final children = getWidgetFromElement(element);
+          arr.add(children);
+        }
+
+        return DuitAnimatedCrossFade(
+          controller: it.viewController!,
+          children: arr,
+        );
+      case ElementType.animatedSlide:
+        final it = model as AnimatedSlideModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedSlide(
+          controller: it.viewController!,
+          child: child,
+        );
+      case ElementType.physicalModel:
+        final it = model as PhysicalModelModel;
+        final child = getWidgetFromElement(it.child);
+
+        return it.controlled
+            ? DuitControlledPhysicalModel(
+                controller: it.viewController!,
+                child: child,
+              )
+            : DuitPhysicalModel(
+                attributes: it.attributes!,
+                child: child,
+              );
+      case ElementType.animatedPhysicalModel:
+        final it = model as AnimatedPhysicalModelModel;
+        final child = getWidgetFromElement(it.child);
+
+        return DuitAnimatedPhysicalModel(
+          controller: it.viewController!,
+          child: child,
+        );
       case ElementType.sliverPadding:
         final it = model as SliverPaddingModel;
         final child = getWidgetFromElement(it.child);

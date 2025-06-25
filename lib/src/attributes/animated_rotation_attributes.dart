@@ -25,7 +25,8 @@ final class AnimatedRotationAttributes extends ImplicitAnimatable
         json['alignment'],
         Alignment.center,
       ),
-      filterQuality: AttributeValueMapper.toFilterQuality(json['filterQuality']),
+      filterQuality:
+          AttributeValueMapper.toFilterQuality(json['filterQuality']),
       duration: AttributeValueMapper.toDuration(json['duration']),
       curve: AttributeValueMapper.toCurve(json['curve']),
       onEnd: ActionUtils(json).parseAction('onEnd'),
@@ -40,7 +41,7 @@ final class AnimatedRotationAttributes extends ImplicitAnimatable
       duration: other.duration,
       curve: other.curve,
       onEnd: other.onEnd ?? onEnd,
-      filterQuality: other.filterQuality ?? filterQuality, 
+      filterQuality: other.filterQuality ?? filterQuality,
     );
   }
 

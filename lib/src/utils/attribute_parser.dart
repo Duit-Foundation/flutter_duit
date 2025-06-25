@@ -147,6 +147,14 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.flexibleSpaceBar => FlexibleSpaceBarAttributes.fromJson(data),
       ElementType.sliverList => SliverListAttributes.fromJson(data),
       ElementType.sliverGrid => SliverGridAttributes.fromJson(data),
+      ElementType.absorbPointer => AbsorbPointerAttributes.fromJson(data),
+      ElementType.offstage => OffstageAttributes.fromJson(data),
+      ElementType.animatedCrossFade =>
+        AnimatedCrossFadeAttributes.fromJson(data),
+      ElementType.physicalModel => PhysicalModelAttributes.fromJson(data),
+      ElementType.animatedPhysicalModel =>
+        AnimatedPhysicalModelAttributes.fromJson(data),
+      ElementType.animatedSlide => AnimatedSlideAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

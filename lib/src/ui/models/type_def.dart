@@ -47,3 +47,9 @@ typedef FlexibleSpaceBarModel
 typedef SliverAppBarModel = SliverAppBarUiElement<SliverAppBarAttributes>;
 typedef SliverListModel = SliverListUIElement<SliverListAttributes>;
 typedef SliverGridModel = SliverGridUIElement<SliverGridAttributes>;
+typedef AnimatedCrossFadeModel
+    = AnimatedCrossFadeUIElement<AnimatedCrossFadeAttributes>;
+typedef PhysicalModelModel = PhysicalModelUIElement<PhysicalModelAttributes>;
+typedef AnimatedPhysicalModelModel
+    = AnimatedPhysicalModelUIElement<AnimatedPhysicalModelAttributes>;
+typedef AnimatedSlideModel = AnimatedSlideUIElement<AnimatedSlideAttributes>;

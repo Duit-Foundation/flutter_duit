@@ -1,3 +1,11 @@
+## 3.5.0
+
+- Added missing props for ElevatedButton attributes
+- Passing Scaffold body property through widget child instead of attributes
+- Fixed `onEnd` callback on implicitly animated widgets
+- Added text decoration attributes to TextStyle
+- New windgets: AnimatedAlign, AnimatedPositioned, AnimatedPadding, AnimatedRotation, AnimatedScale
+
 ## 3.4.0
 
 - New widgets: AnimatedContainer, CarouselView, InkWell, Scaffold, AppBar, Card, GridView
