@@ -46,3 +46,4 @@ typedef FlexibleSpaceBarModel
     = FlexibleSpaceBarUiElement<FlexibleSpaceBarAttributes>;
 typedef SliverAppBarModel = SliverAppBarUiElement<SliverAppBarAttributes>;
 typedef SliverListModel = SliverListUIElement<SliverListAttributes>;
+typedef SliverGridModel = SliverGridUIElement<SliverGridAttributes>;

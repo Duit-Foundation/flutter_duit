@@ -146,6 +146,7 @@ final class DefaultAttributeParser implements AttributeParserBase {
       ElementType.sliverAppBar => SliverAppBarAttributes.fromJson(data),
       ElementType.flexibleSpaceBar => FlexibleSpaceBarAttributes.fromJson(data),
       ElementType.sliverList => SliverListAttributes.fromJson(data),
+      ElementType.sliverGrid => SliverGridAttributes.fromJson(data),
       ElementType.empty || String() => EmptyAttributes(),
     };
 

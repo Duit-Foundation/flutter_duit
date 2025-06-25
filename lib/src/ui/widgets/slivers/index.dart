@@ -12,3 +12,5 @@ export 'sliver_app_bar.dart';
 export 'sliver_list.dart';
 export 'sliver_list_builder.dart';
 export 'sliver_list_separated.dart';
+export 'sliver_grid_base.dart';
+export 'sliver_grid_builder.dart';
