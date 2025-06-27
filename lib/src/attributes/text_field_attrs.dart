@@ -44,7 +44,8 @@ final class TextFieldAttributes extends AttendedModel<String>
     this.minLines,
     this.readOnly,
     this.showCursor,
-  }) : super(value: "");
+    String? value,
+  }) : super(value: value ?? "");
 
   factory TextFieldAttributes.fromJson(JSONObject json) {
     return TextFieldAttributes(
@@ -66,6 +67,7 @@ final class TextFieldAttributes extends AttendedModel<String>
       maxLines: json['maxLines'],
       minLines: json['minLines'],
       maxLength: json['maxLength'],
+      value: json['value'],
     );
   }
 
@@ -90,6 +92,7 @@ final class TextFieldAttributes extends AttendedModel<String>
       maxLines: other.maxLines ?? maxLines,
       minLines: other.minLines ?? minLines,
       maxLength: other.maxLength ?? maxLength,
+      value: other.value,
     );
   }
 

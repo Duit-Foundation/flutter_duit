@@ -37,6 +37,8 @@ final class SafeAreaAttributes extends AnimatedPropertyOwner
         other.parentBuilderId,
         parentBuilderId,
       ),
+      maintainBottomViewPadding:
+          other.maintainBottomViewPadding ?? maintainBottomViewPadding,
     );
   }
 

@@ -23,7 +23,7 @@ class _DuitTextFieldState extends State<DuitTextField>
   @override
   void initState() {
     attachStateToController(widget.controller);
-    textEditingController = TextEditingController();
+    textEditingController = TextEditingController(text: attributes.value);
     focusNode = FocusNode();
     textEditingController.addListener(() {
       final text = textEditingController.text;
@@ -32,6 +32,26 @@ class _DuitTextFieldState extends State<DuitTextField>
       widget.controller.performRelatedAction();
     });
     super.initState();
+  }
+
+  void _syncControllerWithValue() {
+    if (textEditingController.text != attributes.value) {
+      textEditingController.text = attributes.value;
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant DuitTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _syncControllerWithValue();
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+    if (mounted) {
+      _syncControllerWithValue();
+    }
   }
 
   @override

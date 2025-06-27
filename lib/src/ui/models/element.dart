@@ -838,6 +838,24 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
               child: child,
               controlled: controlled,
             );
+          case "flip":
+            final castedAttrs = attributes.cast<FlipTransform>();
+            return TransformUiElement<FlipTransform>(
+              type: type,
+              id: id,
+              attributes: _attachAttributes(controlled, castedAttrs),
+              viewController: _createAndAttachController(
+                id,
+                controlled,
+                castedAttrs,
+                serverAction,
+                driver,
+                type,
+                tag,
+              ),
+              child: child,
+              controlled: controlled,
+            );
         }
 
         return EmptyUIElement<EmptyAttributes>();
@@ -1190,7 +1208,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           id: id,
         );
 
-        return IntrinsicHeightUIElement(
+        return IntrinsicHeightUIElement<IntrinsicHeightAttributes>(
           type: type,
           id: id,
           controlled: controlled,

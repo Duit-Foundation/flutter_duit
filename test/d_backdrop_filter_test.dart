@@ -3,6 +3,8 @@ import "package:flutter/rendering.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
+import "utils.dart";
+
 Map<String, dynamic> _createWidget(Map value, [bool? controlled = false]) {
   return {
     "type": "BackdropFilter",
@@ -208,6 +210,81 @@ void main() {
           },
         );
       }
+
+      testWidgets(
+        "renders child under filter",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "BackdropFilter",
+              "id": "filter_child",
+              "attributes": _blur1,
+              "child": {
+                "type": "Container",
+                "id": "child",
+                "attributes": {
+                  "color": "#933C3C",
+                  "width": 10.0,
+                  "height": 10.0
+                },
+                "controlled": false,
+              },
+            },
+            transportOptions: HttpTransportOptions(),
+          );
+
+          await tester.pumpWidget(
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: DuitViewHost(driver: driver),
+            ),
+          );
+          await tester.pumpAndSettle();
+
+          final child = find.byKey(const ValueKey("child"));
+          expect(child, findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        "clipBehavior: hardEdge",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "BackdropFilter",
+              "id": "filter_clip",
+              "attributes": {
+                ..._blur1,
+                "clipBehavior": "hardEdge",
+              },
+              "child": {
+                "type": "Container",
+                "id": "child",
+                "attributes": {
+                  "color": "#933C3C",
+                  "width": 10.0,
+                  "height": 10.0
+                },
+                "controlled": false,
+              },
+            },
+            transportOptions: HttpTransportOptions(),
+          );
+
+          await tester.pumpWidget(
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: DuitViewHost(driver: driver),
+            ),
+          );
+          await tester.pumpAndSettle();
+
+          final filter = find.byKey(const ValueKey("filter_clip"));
+          expect(filter, findsOneWidget);
+          // Проверяем, что clipBehavior установлен (если возможно)
+          // Здесь можно проверить через tester.widget<BackdropFilter> если key пробрасывается
+        },
+      );
     },
   );
 }

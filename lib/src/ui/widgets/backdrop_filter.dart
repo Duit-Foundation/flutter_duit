@@ -20,6 +20,7 @@ final class DuitBackdropFilter extends StatelessWidget with AnimatedAttributes {
     );
 
     return BackdropFilter(
+      key: ValueKey(attributes.id),
       filter: attrs.filter,
       blendMode: attrs.blendMode,
       child: child,
@@ -62,6 +63,7 @@ class __DuitControlledBackdropFilterStateState
     );
 
     return BackdropFilter(
+      key: ValueKey(widget.controller.id),
       filter: attrs.filter,
       blendMode: attrs.blendMode,
       child: widget.child,

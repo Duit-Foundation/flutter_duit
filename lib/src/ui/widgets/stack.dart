@@ -20,7 +20,7 @@ class DuitStack extends StatelessWidget with AnimatedAttributes {
     );
 
     return Stack(
-      key: Key(attributes.id),
+      key: ValueKey(attributes.id),
       alignment: attrs.alignment ?? AlignmentDirectional.topStart,
       textDirection: attrs.textDirection,
       fit: attrs.fit ?? StackFit.loose,
@@ -59,6 +59,7 @@ class _DuitControlledStackState extends State<DuitControlledStack>
       attributes,
     );
     return Stack(
+      key: ValueKey(widget.controller.id),
       alignment: attrs.alignment ?? AlignmentDirectional.topStart,
       textDirection: attrs.textDirection,
       fit: attrs.fit ?? StackFit.loose,

@@ -95,6 +95,70 @@ void main() {
           expect(posWidget.bottom, 12);
         },
       );
+
+      testWidgets(
+        "must update attributes",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "Stack",
+              "id": "stack_ctrl",
+              "controlled": true,
+              "attributes": {
+                "fit": "loose",
+                "alignment": "center",
+                "clipBehavior": "hardEdge",
+                "textDirection": "ltr"
+              },
+              "children": [
+                {
+                  "type": "Positioned",
+                  "id": "w1_ctrl",
+                  "controlled": false,
+                  "attributes": {
+                    "top": 0,
+                    "left": 0,
+                  },
+                  "child": {
+                    "type": "Container",
+                    "id": "c1",
+                    "controlled": false,
+                    "attributes": {
+                      "color": "#075eeb",
+                    },
+                  },
+                },
+              ]
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await pumpDriver(tester, driver);
+
+          var stackFinder = find.byKey(const ValueKey("stack_ctrl"));
+          expect(stackFinder, findsOneWidget);
+          var stackWidget = tester.widget<Stack>(stackFinder);
+          expect(stackWidget.fit, StackFit.loose);
+          expect(stackWidget.alignment, AlignmentDirectional.center);
+          expect(stackWidget.clipBehavior, Clip.hardEdge);
+          expect(stackWidget.textDirection, TextDirection.ltr);
+
+          await driver.updateTestAttributes("stack_ctrl", {
+            "fit": "expand",
+            "alignment": "bottomEnd",
+            "clipBehavior": "none",
+            "textDirection": "rtl"
+          });
+          await tester.pumpAndSettle();
+
+          stackFinder = find.byKey(const ValueKey("stack_ctrl"));
+          stackWidget = tester.widget<Stack>(stackFinder);
+          expect(stackWidget.fit, StackFit.expand);
+          expect(stackWidget.alignment, AlignmentDirectional.bottomEnd);
+          expect(stackWidget.clipBehavior, Clip.none);
+          expect(stackWidget.textDirection, TextDirection.rtl);
+        },
+      );
     },
   );
 }

@@ -28,22 +28,10 @@ final class BackdropFilterAttributes extends AnimatedPropertyOwner
   @override
   BackdropFilterAttributes copyWith(BackdropFilterAttributes other) {
     return BackdropFilterAttributes(
-      blendMode: assignIfNotNull(
-        other.blendMode,
-        blendMode,
-      ),
-      filter: assignIfNotNull(
-        other.filter,
-        filter,
-      ),
-      parentBuilderId: assignIfNotNull(
-        other.parentBuilderId,
-        parentBuilderId,
-      ),
-      affectedProperties: assignIfNotNull(
-        other.affectedProperties,
-        affectedProperties,
-      ),
+      blendMode: other.blendMode,
+      filter: other.filter,
+      parentBuilderId: other.parentBuilderId ?? parentBuilderId,
+      affectedProperties: other.affectedProperties ?? affectedProperties,
     );
   }
 
