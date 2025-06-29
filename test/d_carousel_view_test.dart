@@ -1,3 +1,4 @@
+import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -81,6 +82,227 @@ void main() {
           );
 
           expect(tester.takeException(), isA<UnimplementedError>());
+        },
+      );
+
+      testWidgets(
+        "must update attributes",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "CarouselView",
+              "controlled": true,
+              "id": "car_ctrl",
+              "children": [
+                {
+                  "type": "Container",
+                  "controlled": false,
+                  "id": "0",
+                  "attributes": {"color": "#FF0000"},
+                },
+                {
+                  "type": "Container",
+                  "controlled": false,
+                  "id": "1",
+                  "attributes": {"color": "#00FF00"},
+                },
+              ],
+              "attributes": {
+                "constructor": "common",
+                "itemExtent": 100.0,
+                "backgroundColor": "#FFFFFF",
+                "elevation": 2.0,
+                "shape": {
+                  "type": "RoundedRectangleBorder",
+                  "borderRadius": {
+                    "radius": 8.0,
+                  },
+                },
+                "itemSnapping": true,
+                "shrinkExtent": 0.0,
+                "scrollDirection": "vertical",
+                "enableSplash": false,
+                "reverse": true,
+              },
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await pumpDriver(
+            tester,
+            driver,
+          );
+
+          expect(find.byKey(const ValueKey("car_ctrl")), findsOneWidget);
+          expect(find.byKey(const ValueKey("0")), findsOneWidget);
+          expect(find.byKey(const ValueKey("1")), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        "must render with empty children",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "CarouselView",
+              "controlled": false,
+              "id": "car_empty",
+              "children": [],
+              "attributes": {
+                "constructor": "common",
+                "itemExtent": 100.0,
+              },
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await pumpDriver(
+            tester,
+            driver,
+          );
+
+          expect(find.byKey(const ValueKey("car_empty")), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        "must render with one child",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "CarouselView",
+              "controlled": false,
+              "id": "car_one",
+              "children": [
+                {
+                  "type": "Container",
+                  "controlled": false,
+                  "id": "only",
+                  "attributes": {"color": "#123456"},
+                },
+              ],
+              "attributes": {
+                "constructor": "common",
+                "itemExtent": 100.0,
+              },
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await pumpDriver(
+            tester,
+            driver,
+          );
+
+          expect(find.byKey(const ValueKey("car_one")), findsOneWidget);
+          expect(find.byKey(const ValueKey("only")), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        "must render with reverse and vertical scroll",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "CarouselView",
+              "controlled": false,
+              "id": "car_vert",
+              "children": [
+                {
+                  "type": "Container",
+                  "controlled": false,
+                  "id": "a",
+                  "attributes": {"color": "#111111"},
+                },
+                {
+                  "type": "Container",
+                  "controlled": false,
+                  "id": "b",
+                  "attributes": {"color": "#222222"},
+                },
+              ],
+              "attributes": {
+                "constructor": "common",
+                "itemExtent": 100.0,
+                "scrollDirection": "vertical",
+                "reverse": true,
+              },
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await pumpDriver(
+            tester,
+            driver,
+          );
+
+          expect(find.byKey(const ValueKey("car_vert")), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        "must render with itemSnapping and shrinkExtent",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "CarouselView",
+              "controlled": false,
+              "id": "car_snap",
+              "children": [
+                {
+                  "type": "Container",
+                  "controlled": false,
+                  "id": "snap1",
+                  "attributes": {"color": "#333333"},
+                },
+                {
+                  "type": "Container",
+                  "controlled": false,
+                  "id": "snap2",
+                  "attributes": {"color": "#444444"},
+                },
+              ],
+              "attributes": {
+                "constructor": "common",
+                "itemExtent": 100.0,
+                "itemSnapping": true,
+                "shrinkExtent": 50.0,
+              },
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await pumpDriver(
+            tester,
+            driver,
+          );
+
+          expect(find.byKey(const ValueKey("car_snap")), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        "must throw ArgumentError for invalid constructor",
+        (tester) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "CarouselView",
+              "controlled": false,
+              "id": "car_invalid",
+              "children": [],
+              "attributes": {
+                "constructor": "invalid_type",
+              },
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await pumpDriver(
+            tester,
+            driver,
+          );
+
+          expect(tester.takeException(), isA<UIDriverErrorEvent>());
         },
       );
     },

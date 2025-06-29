@@ -5,21 +5,21 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/attributes/index.dart";
 
-class DuitAnimationBuilder extends StatefulWidget {
+class DuitAnimatedBuilder extends StatefulWidget {
   final Widget child;
   final UIElementController<AnimatedBuilderAttributes> controller;
 
-  const DuitAnimationBuilder({
+  const DuitAnimatedBuilder({
     super.key,
     required this.child,
     required this.controller,
   });
 
   @override
-  State<DuitAnimationBuilder> createState() => _DuitAnimationBuilderState();
+  State<DuitAnimatedBuilder> createState() => _DuitAnimatedBuilderState();
 }
 
-class _DuitAnimationBuilderState extends State<DuitAnimationBuilder>
+class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
     with TickerProviderStateMixin, TweenHelper {
   final _controllers = <String, AnimationController>{};
   final _animations = <String, Animation>{};

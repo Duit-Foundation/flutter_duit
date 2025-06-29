@@ -33,5 +33,16 @@ void main() {
 
       expect(find.byKey(const ValueKey("intrinsicHeightId")), findsOneWidget);
     });
+
+    testWidgets("controlled variant", (tester) async {
+      final driver = DuitDriver.static(
+        _createWidget(true),
+        transportOptions: HttpTransportOptions(),
+      );
+
+      await pumpDriver(tester, driver);
+
+      expect(find.byKey(const ValueKey("intrinsicHeightId")), findsOneWidget);
+    });
   });
 }

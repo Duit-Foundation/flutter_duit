@@ -203,6 +203,22 @@ void main() {
           throwsUnimplementedError,
         );
       });
+
+      test("test TweenDescriptionGroup parsing and structure", () {
+        final group = DuitTweenDescription.fromJson(groupTween);
+        expect(group, isA<TweenDescriptionGroup>());
+
+        final groupCasted = group as TweenDescriptionGroup;
+
+        expect(groupCasted.groupId, 'group');
+        expect(groupCasted.tweens.length, 2);
+        expect(groupCasted.tweens.first, isA<TweenDescription>());
+        expect(groupCasted.tweens.first.animatedPropKey, 'width');
+        expect(groupCasted.tweens.last.animatedPropKey, 'height');
+        expect(groupCasted.duration, const Duration(milliseconds: 500));
+        expect(groupCasted.method.index, 0);
+        expect(groupCasted.trigger.index, 0);
+      });
     },
   );
 }

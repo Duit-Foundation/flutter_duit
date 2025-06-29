@@ -76,7 +76,7 @@ mixin WidgetFabric {
 
         final child = getWidgetFromElement(it.child);
 
-        return DuitAnimationBuilder(
+        return DuitAnimatedBuilder(
           controller: it.viewController!,
           child: child,
         );
