@@ -18,6 +18,7 @@ const _blur1 = {
     "type": 0,
     "sigmaX": "6",
     "sigmaY": "6",
+    "tileMode": "clamp",
   },
 };
 const _blur2 = {

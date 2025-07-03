@@ -78,7 +78,8 @@ void main() {
             ),
           );
 
-          final callback = widget.controller.attributes.payload.onEnd;
+          final callback =
+              widget.controller.attributes.payload.getAction("onEnd");
           expect(callback, isNotNull);
           expect(callback, isA<LocalAction>());
           expect(fW.onEnd, isNotNull);
@@ -115,7 +116,8 @@ void main() {
             ),
           );
 
-          final callback = widget.controller.attributes.payload.onEnd;
+          final callback =
+              widget.controller.attributes.payload.getAction("onEnd");
 
           expect(callback, isNull);
           expect(callback, isA<void>());

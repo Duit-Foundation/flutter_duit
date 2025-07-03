@@ -68,8 +68,7 @@ void main() {
             child: DuitViewHost(
               driver: DuitDriver.static(
                 _createWidget(),
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
+                transportOptions: EmptyTransportOptions(),
               ),
             ),
           ),
@@ -91,8 +90,7 @@ void main() {
       testWidgets("check action execution", (tester) async {
         final driver = DuitDriver.static(
           _createWidget(),
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
 
         await tester.pumpWidget(

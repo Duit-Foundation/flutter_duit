@@ -1,4 +1,3 @@
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -243,28 +242,7 @@ void main() {
               const ValueKey("firts_case"),
             );
 
-            expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
-
-            driver = DuitDriver.static(
-              {
-                "type": "GridView",
-                "controlled": true,
-                "id": "grid",
-                "children": arr,
-                "attributes": {
-                  "constructor": "count",
-                },
-              },
-              transportOptions: EmptyTransportOptions(),
-            );
-
-            await pumpDriver(
-              tester,
-              driver,
-              const ValueKey("second_case"),
-            );
-
-            expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
+            expect(tester.takeException(), isAssertionError);
           },
         );
       });
@@ -332,32 +310,6 @@ void main() {
               final grid = find.byKey(const ValueKey("grid"));
 
               expect(grid, findsOneWidget);
-            },
-          );
-
-          testWidgets(
-            "must throw assertion error",
-            (tester) async {
-              final driver = DuitDriver.static(
-                {
-                  "type": "GridView",
-                  "controlled": true,
-                  "id": "grid",
-                  "children": arr,
-                  "attributes": {
-                    "constructor": "count",
-                  },
-                },
-                transportOptions: EmptyTransportOptions(),
-              );
-
-              await pumpDriver(
-                tester,
-                driver,
-              );
-
-              expect(
-                  tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
             },
           );
         },

@@ -15,7 +15,7 @@ void main() {
             "id": "animated_physical_model",
             "attributes": {
               "duration": 300,
-              "curve": "easeInOut",
+              "curve": "ease",
               "elevation": 4.0,
               "color": [255, 0, 0, 1],
               "shadowColor": [0, 0, 0, 1],

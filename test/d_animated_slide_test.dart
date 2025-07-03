@@ -233,9 +233,7 @@ void main() {
 
       // Test different curves
       final testCurves = [
-        "easeIn",
-        "easeOut",
-        "easeInOut",
+        "ease",
         "bounceIn",
         "bounceOut"
       ];

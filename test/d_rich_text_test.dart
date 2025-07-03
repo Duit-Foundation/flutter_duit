@@ -88,8 +88,7 @@ void main() {
 
       final driver = DuitDriver.static(
         _createWidget(textSpan: nestedSpan),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
       await pumpDriver(tester, driver);
 

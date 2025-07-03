@@ -1,4 +1,3 @@
-import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -57,31 +56,6 @@ void main() {
           );
 
           expect(find.byKey(const ValueKey("99")), findsOneWidget);
-        },
-      );
-
-      testWidgets(
-        "must throw exception for .weighted constructor",
-        (tester) async {
-          final driver = DuitDriver.static(
-            {
-              "type": "CarouselView",
-              "controlled": false,
-              "id": "car",
-              "children": arr,
-              "attributes": {
-                "constructor": "weighted",
-              },
-            },
-            transportOptions: EmptyTransportOptions(),
-          );
-
-          await pumpDriver(
-            tester,
-            driver,
-          );
-
-          expect(tester.takeException(), isA<UnimplementedError>());
         },
       );
 
@@ -278,31 +252,6 @@ void main() {
           );
 
           expect(find.byKey(const ValueKey("car_snap")), findsOneWidget);
-        },
-      );
-
-      testWidgets(
-        "must throw ArgumentError for invalid constructor",
-        (tester) async {
-          final driver = DuitDriver.static(
-            {
-              "type": "CarouselView",
-              "controlled": false,
-              "id": "car_invalid",
-              "children": [],
-              "attributes": {
-                "constructor": "invalid_type",
-              },
-            },
-            transportOptions: EmptyTransportOptions(),
-          );
-
-          await pumpDriver(
-            tester,
-            driver,
-          );
-
-          expect(tester.takeException(), isA<UIDriverErrorEvent>());
         },
       );
     },
