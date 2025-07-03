@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitSliverOpacity extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<SliverOpacityAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitSliverOpacity({
@@ -14,18 +13,20 @@ class DuitSliverOpacity extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(context, attributes.payload);
+    final attrs = mergeWithDataSource(context, attributes.payload);
     return SliverOpacity(
       key: ValueKey(attributes.id),
-      opacity: attrs.opacity,
-      sliver: attrs.needsBoxAdapter ? SliverToBoxAdapter(child: child) : child,
+      opacity: attrs.getDouble(key: "opacity", defaultValue: 1.0),
+      sliver: attrs.getBool("needsBoxAdapter")
+          ? SliverToBoxAdapter(child: child)
+          : child,
     );
   }
 }
 
 class DuitControlledSliverOpacity extends StatefulWidget
     with AnimatedAttributes {
-  final UIElementController<SliverOpacityAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledSliverOpacity({
@@ -42,8 +43,7 @@ class DuitControlledSliverOpacity extends StatefulWidget
 class _DuitControlledSliverOpacityState
     extends State<DuitControlledSliverOpacity>
     with
-        ViewControllerChangeListener<DuitControlledSliverOpacity,
-            SliverOpacityAttributes> {
+        ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -52,11 +52,11 @@ class _DuitControlledSliverOpacityState
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(context, attributes);
+    final attrs = widget.mergeWithDataSource(context, attributes);
     return SliverOpacity(
       key: ValueKey(widget.controller.id),
-      opacity: attrs.opacity,
-      sliver: attrs.needsBoxAdapter
+      opacity: attrs.getDouble(key: "opacity", defaultValue: 1.0),
+      sliver: attrs.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: widget.child)
           : widget.child,
     );

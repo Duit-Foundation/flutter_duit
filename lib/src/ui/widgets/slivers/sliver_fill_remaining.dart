@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitSliverFillRemaining extends StatelessWidget {
-  final ViewAttribute<SliverFillRemainingAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitSliverFillRemaining({
@@ -16,9 +15,10 @@ class DuitSliverFillRemaining extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverFillRemaining(
       key: ValueKey(attributes.id),
-      hasScrollBody: attributes.payload.hasScrollBody,
-      fillOverscroll: attributes.payload.fillOverscroll,
-      child: attributes.payload.needsBoxAdapter
+      hasScrollBody:
+          attributes.payload.getBool("hasScrollBody", defaultValue: true),
+      fillOverscroll: attributes.payload.getBool("fillOverscroll"),
+      child: attributes.payload.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: child)
           : child,
     );
@@ -26,7 +26,7 @@ class DuitSliverFillRemaining extends StatelessWidget {
 }
 
 class DuitControlledSliverFillRemaining extends StatefulWidget {
-  final UIElementController<SliverFillRemainingAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledSliverFillRemaining({
@@ -43,8 +43,7 @@ class DuitControlledSliverFillRemaining extends StatefulWidget {
 class _DuitControlledSliverFillRemainingState
     extends State<DuitControlledSliverFillRemaining>
     with
-        ViewControllerChangeListener<DuitControlledSliverFillRemaining,
-            SliverFillRemainingAttributes> {
+        ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -55,9 +54,9 @@ class _DuitControlledSliverFillRemainingState
   Widget build(BuildContext context) {
     return SliverFillRemaining(
       key: ValueKey(widget.controller.id),
-      hasScrollBody: attributes.hasScrollBody,
-      fillOverscroll: attributes.fillOverscroll,
-      child: attributes.needsBoxAdapter
+      hasScrollBody: attributes.getBool("hasScrollBody", defaultValue: true),
+      fillOverscroll: attributes.getBool("fillOverscroll"),
+      child: attributes.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: widget.child)
           : widget.child,
     );

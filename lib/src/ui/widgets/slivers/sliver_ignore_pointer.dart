@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitSliverIgnorePointer extends StatelessWidget {
-  final ViewAttribute<SliverIgnorePointerAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitSliverIgnorePointer({
@@ -17,14 +16,19 @@ class DuitSliverIgnorePointer extends StatelessWidget {
     final attrs = attributes.payload;
     return SliverIgnorePointer(
       key: ValueKey(attributes.id),
-      ignoring: attrs.ignoring,
-      sliver: attrs.needsBoxAdapter ? SliverToBoxAdapter(child: child) : child,
+      ignoring: attrs.getBool(
+        "ignoring",
+        defaultValue: true,
+      ),
+      sliver: attrs.getBool("needsBoxAdapter")
+          ? SliverToBoxAdapter(child: child)
+          : child,
     );
   }
 }
 
 class DuitControlledSliverIgnorePointer extends StatefulWidget {
-  final UIElementController<SliverIgnorePointerAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledSliverIgnorePointer({
@@ -40,9 +44,7 @@ class DuitControlledSliverIgnorePointer extends StatefulWidget {
 
 class _DuitControlledSliverIgnorePointerState
     extends State<DuitControlledSliverIgnorePointer>
-    with
-        ViewControllerChangeListener<DuitControlledSliverIgnorePointer,
-            SliverIgnorePointerAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -54,8 +56,11 @@ class _DuitControlledSliverIgnorePointerState
     final attrs = attributes;
     return SliverIgnorePointer(
       key: ValueKey(widget.controller.id),
-      ignoring: attrs.ignoring,
-      sliver: attrs.needsBoxAdapter
+      ignoring: attributes.getBool(
+        "ignoring",
+        defaultValue: true,
+      ),
+      sliver: attributes.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: widget.child)
           : widget.child,
     );

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/animations/index.dart';
-import 'package:flutter_duit/src/attributes/slivers/index.dart';
 
 class DuitSliverAnimatedOpacity extends StatefulWidget {
-  final UIElementController<SliverAnimatedOpacityAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitSliverAnimatedOpacity({
@@ -20,8 +19,7 @@ class DuitSliverAnimatedOpacity extends StatefulWidget {
 
 class _DuitSliverAnimatedOpacityState extends State<DuitSliverAnimatedOpacity>
     with
-        ViewControllerChangeListener<DuitSliverAnimatedOpacity,
-            SliverAnimatedOpacityAttributes>,
+        ViewControllerChangeListener,
         OnAnimationEnd {
   @override
   void initState() {
@@ -33,14 +31,14 @@ class _DuitSliverAnimatedOpacityState extends State<DuitSliverAnimatedOpacity>
   Widget build(BuildContext context) {
     return SliverAnimatedOpacity(
       key: ValueKey(widget.controller.id),
-      opacity: attributes.opacity,
-      duration: attributes.duration,
-      curve: attributes.curve,
+      opacity: attributes.getDouble(key: "opacity", defaultValue: 1.0),
+      duration: attributes.duration(),
+      curve: attributes.curve(defaultValue: Curves.linear)!,
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
-      sliver: attributes.needsBoxAdapter
+      sliver: attributes.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: widget.child)
           : widget.child,
     );

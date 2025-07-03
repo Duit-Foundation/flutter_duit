@@ -1,10 +1,9 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitTextField extends StatefulWidget {
-  final UIElementController<TextFieldAttributes> controller;
+  final UIElementController controller;
 
   const DuitTextField({
     super.key,
@@ -16,27 +15,29 @@ class DuitTextField extends StatefulWidget {
 }
 
 class _DuitTextFieldState extends State<DuitTextField>
-    with ViewControllerChangeListener<DuitTextField, TextFieldAttributes> {
-  late final TextEditingController textEditingController;
-  late final FocusNode focusNode;
+    with ViewControllerChangeListener {
+  late final TextEditingController _textEditingController;
+  late final FocusNode _focusNode;
 
   @override
   void initState() {
     attachStateToController(widget.controller);
-    textEditingController = TextEditingController(text: attributes.value);
-    focusNode = FocusNode();
-    textEditingController.addListener(() {
-      final text = textEditingController.text;
+    _textEditingController = TextEditingController(
+      text: attributes.tryGetString("value"),
+    );
+    _focusNode = FocusNode();
+    _textEditingController.addListener(() {
+      final text = _textEditingController.text;
       final data = widget.controller.attributes.payload;
-      data.update(text);
+      data.update("value", (v) => text);
       widget.controller.performRelatedAction();
     });
     super.initState();
   }
 
   void _syncControllerWithValue() {
-    if (textEditingController.text != attributes.value) {
-      textEditingController.text = attributes.value;
+    if (_textEditingController.text != attributes.tryGetString("value")) {
+      _textEditingController.text = attributes.getString(key: "value");
     }
   }
 
@@ -56,36 +57,42 @@ class _DuitTextFieldState extends State<DuitTextField>
 
   @override
   void dispose() {
-    textEditingController.dispose();
-    focusNode.dispose();
+    _textEditingController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      focusNode: focusNode,
+      focusNode: _focusNode,
       onTapOutside: (_) {
-        focusNode.unfocus();
+        _focusNode.unfocus();
       },
       key: Key(widget.controller.id),
-      controller: textEditingController,
-      decoration: attributes.decoration,
-      style: attributes.style,
-      textDirection: attributes.textDirection,
-      textAlign: attributes.textAlign ?? TextAlign.start,
-      obscuringCharacter: attributes.obscuringCharacter ?? "*",
-      obscureText: attributes.obscureText ?? false,
-      autofocus: attributes.autofocus ?? false,
-      enabled: attributes.enabled,
-      enableSuggestions: attributes.enableSuggestions ?? true,
-      readOnly: attributes.readOnly ?? false,
-      expands: attributes.expands ?? false,
-      maxLines: attributes.maxLines,
-      maxLength: attributes.maxLength,
-      minLines: attributes.minLines,
-      showCursor: attributes.showCursor,
-      keyboardType: attributes.keyboardType,
+      controller: _textEditingController,
+      decoration: attributes.inputDecoration(),
+      style: attributes.textStyle(),
+      textDirection: attributes.textDirection(),
+      textAlign: attributes.textAlign(defaultValue: TextAlign.start)!,
+      obscuringCharacter: attributes.getString(
+        key: "obscuringCharacter",
+        defaultValue: "•",
+      ),
+      obscureText: attributes.getBool("obscureText"),
+      autofocus: attributes.getBool("autofocus"),
+      enabled: attributes.getBool("enabled"),
+      enableSuggestions: attributes.getBool(
+        "enableSuggestions",
+        defaultValue: true,
+      ),
+      readOnly: attributes.getBool("readOnly"),
+      expands: attributes.getBool("expands"),
+      maxLines: attributes.tryGetInt(key: "maxLines"),
+      maxLength: attributes.tryGetInt(key: "maxLength"),
+      minLines: attributes.tryGetInt(key: "minLines"),
+      showCursor: attributes.tryGetBool("showCursor"),
+      keyboardType: attributes.textInputType(),
     );
   }
 }

@@ -1,11 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import 'package:flutter_duit/src/duit_impl/index.dart';
 
 class DuitColoredBox extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<ColoredBoxAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitColoredBox({
@@ -16,17 +15,17 @@ class DuitColoredBox extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(context, attributes.payload);
+    final attrs = mergeWithDataSource(context, attributes.payload);
     return ColoredBox(
       key: Key(attributes.id),
-      color: attrs.color,
+      color: attrs.parseColor(),
       child: child,
     );
   }
 }
 
 class DuitControlledColoredBox extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<ColoredBoxAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledColoredBox({
@@ -41,9 +40,7 @@ class DuitControlledColoredBox extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledColoredBoxState extends State<DuitControlledColoredBox>
-    with
-        ViewControllerChangeListener<DuitControlledColoredBox,
-            ColoredBoxAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -52,13 +49,13 @@ class _DuitControlledColoredBoxState extends State<DuitControlledColoredBox>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
     return ColoredBox(
       key: Key(widget.controller.id),
-      color: attrs.color,
+      color: attrs.parseColor(),
       child: widget.child,
     );
   }

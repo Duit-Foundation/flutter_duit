@@ -1,12 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/widgets/tile.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 final class DuitListViewBuilder extends StatefulWidget {
-  final UIElementController<ListViewAttributes> controller;
+  final UIElementController controller;
 
   const DuitListViewBuilder({
     super.key,
@@ -18,19 +17,16 @@ final class DuitListViewBuilder extends StatefulWidget {
 }
 
 class _DuitListViewBuilderState extends State<DuitListViewBuilder>
-    with
-        ViewControllerChangeListener<DuitListViewBuilder, ListViewAttributes>,
-        ScrollUtils,
-        OutOfBoundWidgetBuilder {
+    with ViewControllerChangeListener, ScrollUtils, OutOfBoundWidgetBuilder {
   @override
   void initState() {
     attachStateToController(widget.controller);
-    attachOnScrollCallback<ListViewAttributes>(widget.controller);
+    attachOnScrollCallback(widget.controller);
     super.initState();
   }
 
   Widget? buildItem(BuildContext context, int index) {
-    final item = attributes.childObjects![index];
+    final item = attributes.childObjects()[index];
 
     final driver = widget.controller.driver;
 
@@ -50,26 +46,33 @@ class _DuitListViewBuilderState extends State<DuitListViewBuilder>
     isEOL = false;
     return ListView.builder(
       key: Key(widget.controller.id),
-      scrollDirection: attributes.scrollDirection ?? Axis.vertical,
-      reverse: attributes.reverse ?? false,
-      primary: attributes.primary,
-      physics: attributes.physics,
-      shrinkWrap: attributes.shrinkWrap ?? false,
-      padding: attributes.padding,
-      itemExtent: attributes.itemExtent,
-      cacheExtent: attributes.cacheExtent,
-      semanticChildCount: attributes.semanticChildCount,
-      dragStartBehavior:
-          attributes.dragStartBehavior ?? DragStartBehavior.start,
-      keyboardDismissBehavior: attributes.keyboardDismissBehavior ??
-          ScrollViewKeyboardDismissBehavior.manual,
-      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
-      restorationId: attributes.restorationId,
-      addAutomaticKeepAlives: attributes.addAutomaticKeepAlives ?? true,
-      addRepaintBoundaries: attributes.addRepaintBoundaries ?? true,
-      addSemanticIndexes: attributes.addSemanticIndexes ?? true,
+      scrollDirection: attributes.axis(),
+      reverse: attributes.getBool("reverse"),
+      primary: attributes.tryGetBool("primary"),
+      physics: attributes.scrollPhysics(),
+      shrinkWrap: attributes.getBool("shrinkWrap"),
+      padding: attributes.edgeInsets(),
+      itemExtent: attributes.tryGetDouble(key: "itemExtent"),
+      cacheExtent: attributes.tryGetDouble(key: "cacheExtent"),
+      semanticChildCount: attributes.tryGetInt(key: "semanticChildCount"),
+      dragStartBehavior: attributes.dragStartBehavior(),
+      keyboardDismissBehavior: attributes.keyboardDismissBehavior(),
+      clipBehavior: attributes.clipBehavior()!,
+      restorationId: attributes.tryGetString("restorationId"),
+      addAutomaticKeepAlives: attributes.getBool(
+        "addAutomaticKeepAlives",
+        defaultValue: true,
+      ),
+      addRepaintBoundaries: attributes.getBool(
+        "addRepaintBoundaries",
+        defaultValue: true,
+      ),
+      addSemanticIndexes: attributes.getBool(
+        "addSemanticIndexes",
+        defaultValue: true,
+      ),
       itemBuilder: buildItem,
-      itemCount: attributes.childObjects?.length ?? 0,
+      itemCount: attributes.childObjects().length,
       controller: scrollController,
     );
   }

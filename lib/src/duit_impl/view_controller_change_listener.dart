@@ -42,10 +42,9 @@ import 'package:flutter/material.dart';
 ///
 /// The following properties are available in the `ViewControllerChangeListener` mixin:
 /// - `attributes`: The current attributes of the `UIElementController`. These attributes can be used to build the UI.
-mixin ViewControllerChangeListener<T extends StatefulWidget, AttrType>
-    on State<T> {
-  late AttrType attributes;
-  late UIElementController<AttrType> _controller;
+mixin ViewControllerChangeListener<T extends StatefulWidget> on State<T> {
+  late DuitDataSource attributes;
+  late UIElementController _controller;
 
   /// Attaches the state to a [UIElementController].
   ///
@@ -59,29 +58,22 @@ mixin ViewControllerChangeListener<T extends StatefulWidget, AttrType>
   ///   super.initState();
   /// }
   /// ```
-  void attachStateToController(UIElementController<AttrType> controller) {
+  void attachStateToController(UIElementController controller) {
     _controller = controller;
     attributes = _controller.attributes.payload;
   }
 
   void _listener() {
-    final newState = _controller.attributes.cast<AttrType>();
-    final attrs = attributes as DuitAttributes<AttrType>;
+    final newState = _controller.attributes.payload;
 
     setState(() {
-      attributes = attrs.copyWith(newState.payload);
+      attributes = newState;
     });
   }
 
   /// Updates the state of the `UIElementController` manually.
-  void updateStateManually(
-    AttrType newState, {
-    String? widgetId,
-  }) {
-    _controller.updateState(ViewAttribute<AttrType>(
-      payload: newState,
-      id: widgetId ?? "none",
-    ));
+  void updateStateManually(Map<String, dynamic> newState) {
+    _controller.updateState(newState);
   }
 
   void _listenControllerUpdateStateEvent() {

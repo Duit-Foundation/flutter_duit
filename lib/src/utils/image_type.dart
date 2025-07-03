@@ -7,5 +7,12 @@ enum ImageType {
   network,
 
   /// The image is loaded from memory.
-  memory,
+  memory;
+
+  static ImageType fromString(String type) {
+    return ImageType.values.firstWhere(
+      (e) => e.name == type,
+      orElse: () => ImageType.network,
+    );
+  }
 }

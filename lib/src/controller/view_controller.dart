@@ -10,13 +10,13 @@ import 'package:flutter/foundation.dart';
 /// mixin to provide change notification to listeners.
 final class ViewController<T>
     with ChangeNotifier
-    implements UIElementController<T> {
+    implements UIElementController {
   /// The attributes associated with the UI element.
   ///
   /// This property holds the attributes of the UI element that the `ViewController` controls.
   /// It can be used to access and modify the attributes of the UI element.
   @override
-  ViewAttribute<T> attributes;
+  ViewAttribute attributes;
 
   /// The server action associated with the UI element.
   ///
@@ -69,8 +69,8 @@ final class ViewController<T>
   ///
   /// The [newAttrs] parameter specifies the new attributes to be applied to the UI element.
   @override
-  void updateState(ViewAttribute newState) {
-    attributes = newState.cast<T>();
+  void updateState(Map<String, dynamic> newState) {
+    attributes.payload.addAll(newState);
     notifyListeners();
   }
 
@@ -139,41 +139,22 @@ final class ViewController<T>
   }
 
   @override
-  void detach() {
-    driver.detachController(this.id);
-  }
+  void detach() => driver.detachController(id);
 
   @override
-  late final StreamController<AnimationCommand> commandChannel;
+  late final StreamController<RemoteCommand> commandChannel;
 
   @override
-  FutureOr<void> emitCommand(AnimationCommand command) {
-    commandChannel.add(command);
-  }
+  FutureOr<void> emitCommand(RemoteCommand command) async =>
+      commandChannel.add(command);
 
   @override
   void removeCommandListener() => commandChannel.close();
 
   @override
-  void listenCommand(Future<void> Function(AnimationCommand command) callback) {
-    commandChannel = StreamController<AnimationCommand>();
-    commandChannel.stream.listen(callback);
-  }
-
-  @override
-  UIElementController<R> cast<R>() {
-    final controller = ViewController(
-      id: id,
-      driver: driver,
-      type: type,
-      attributes: attributes.cast<R>(),
-      action: action,
-      tag: tag,
-    );
-
-    //re-attach new controller instance
-    driver.attachController(id, controller);
-
-    return controller;
+  void listenCommand(CommandListener callback) {
+    commandChannel = StreamController<RemoteCommand>()..stream.listen(callback);
   }
 }
+
+typedef CommandListener = Future<void> Function(RemoteCommand command);

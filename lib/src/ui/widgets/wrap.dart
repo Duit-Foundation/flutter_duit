@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitWrap extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<WrapAttributes> attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitWrap({
@@ -14,25 +13,35 @@ class DuitWrap extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(context, attributes.payload);
+    final attrs = mergeWithDataSource(context, attributes.payload);
     return Wrap(
       key: Key(attributes.id),
-      alignment: attrs.alignment ?? WrapAlignment.start,
-      runAlignment: attrs.runAlignment ?? WrapAlignment.start,
-      spacing: attrs.spacing,
-      runSpacing: attrs.runSpacing,
-      direction: attrs.direction ?? Axis.horizontal,
-      textDirection: attrs.textDirection,
-      verticalDirection: attrs.verticalDirection ?? VerticalDirection.down,
-      clipBehavior: attrs.clipBehavior ?? Clip.none,
-      crossAxisAlignment: attrs.crossAxisAlignment ?? WrapCrossAlignment.start,
+      alignment: attrs.wrapAlignment(
+        defaultValue: WrapAlignment.start,
+      )!,
+      runAlignment: attrs.wrapAlignment(
+        key: "runAlignment",
+        defaultValue: WrapAlignment.start,
+      )!,
+      spacing: attrs.getDouble(key: "spacing"),
+      runSpacing: attrs.getDouble(key: "runSpacing"),
+      direction: attrs.axis(
+        key: "direction",
+        defaultValue: Axis.horizontal,
+      ),
+      textDirection: attrs.textDirection(),
+      verticalDirection: attrs.verticalDirection(),
+      clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
+      crossAxisAlignment: attrs.wrapCrossAlignment(
+        defaultValue: WrapCrossAlignment.start,
+      )!,
       children: children,
     );
   }
 }
 
 class DuitControlledWrap extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<WrapAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
 
   const DuitControlledWrap({
@@ -46,7 +55,7 @@ class DuitControlledWrap extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledWrapState extends State<DuitControlledWrap>
-    with ViewControllerChangeListener<DuitControlledWrap, WrapAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -55,22 +64,32 @@ class _DuitControlledWrapState extends State<DuitControlledWrap>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return Wrap(
       key: Key(widget.controller.id),
-      alignment: attrs.alignment ?? WrapAlignment.start,
-      runAlignment: attrs.runAlignment ?? WrapAlignment.start,
-      spacing: attrs.spacing,
-      runSpacing: attrs.runSpacing,
-      direction: attrs.direction ?? Axis.horizontal,
-      textDirection: attrs.textDirection,
-      crossAxisAlignment: attrs.crossAxisAlignment ?? WrapCrossAlignment.start,
-      verticalDirection: attrs.verticalDirection ?? VerticalDirection.down,
-      clipBehavior: attrs.clipBehavior ?? Clip.none,
+      alignment: attrs.wrapAlignment(
+        defaultValue: WrapAlignment.start,
+      )!,
+      runAlignment: attrs.wrapAlignment(
+        key: "runAlignment",
+        defaultValue: WrapAlignment.start,
+      )!,
+      spacing: attrs.getDouble(key: "spacing"),
+      runSpacing: attrs.getDouble(key: "runSpacing"),
+      direction: attrs.axis(
+        key: "direction",
+        defaultValue: Axis.horizontal,
+      ),
+      textDirection: attrs.textDirection(),
+      verticalDirection: attrs.verticalDirection(),
+      clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
+      crossAxisAlignment: attrs.wrapCrossAlignment(
+        defaultValue: WrapCrossAlignment.start,
+      )!,
       children: widget.children,
     );
   }

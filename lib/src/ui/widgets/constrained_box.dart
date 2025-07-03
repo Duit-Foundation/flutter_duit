@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitConstrainedBox extends StatelessWidget with AnimatedAttributes {
   final Widget child;
-  final ViewAttribute<ConstrainedBoxAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitConstrainedBox({
     super.key,
@@ -14,14 +13,16 @@ class DuitConstrainedBox extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return ConstrainedBox(
       key: ValueKey(attributes.id),
-      constraints: attrs.constraints,
+      constraints: attrs.boxConstraints(
+        defaultValue: const BoxConstraints(),
+      )!,
       child: child,
     );
   }
@@ -30,7 +31,7 @@ class DuitConstrainedBox extends StatelessWidget with AnimatedAttributes {
 class DuitControlledConstrainedBox extends StatefulWidget
     with AnimatedAttributes {
   final Widget child;
-  final UIElementController<ConstrainedBoxAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledConstrainedBox({
     super.key,
@@ -46,8 +47,7 @@ class DuitControlledConstrainedBox extends StatefulWidget
 class _DuitControlledConstrainedBoxState
     extends State<DuitControlledConstrainedBox>
     with
-        ViewControllerChangeListener<DuitControlledConstrainedBox,
-            ConstrainedBoxAttributes> {
+        ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -56,14 +56,16 @@ class _DuitControlledConstrainedBoxState
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return ConstrainedBox(
       key: ValueKey(widget.controller.id),
-      constraints: attrs.constraints,
+      constraints: attrs.boxConstraints(
+        defaultValue: const BoxConstraints(),
+      )!,
       child: widget.child,
     );
   }

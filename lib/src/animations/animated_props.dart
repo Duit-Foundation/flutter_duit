@@ -3,49 +3,43 @@ import 'package:flutter/material.dart';
 
 import 'animation_context.dart';
 
+//TOOD: doc it
 mixin AnimatedAttributes on Widget {
   /// Merges the [attributes] with the animated properties in the [DuitAnimationContext].
-  T mergeWithAttributes<T>(
+  DuitDataSource mergeWithDataSource(
     BuildContext context,
-    T attributes,
+    DuitDataSource dataSource,
   ) {
-    if (attributes is! AnimatedPropertyOwner) {
-      return attributes;
-    }
+    final parentId = dataSource.parentBuilderId;
 
-    if (attributes.parentBuilderId == null) {
-      return attributes;
+    if (parentId == null) {
+      return dataSource;
     }
 
     final animationContext = DuitAnimationContext.maybeOf(context);
     if (animationContext == null) {
-      return attributes;
+      return dataSource;
     }
 
-    if (animationContext.parentId != attributes.parentBuilderId) {
-      return attributes;
+    if (animationContext.parentId != parentId) {
+      return dataSource;
     }
 
-    if (attributes.affectedProperties == null ||
-        attributes.affectedProperties!.isEmpty) {
-      return attributes;
+    final affectedProps = dataSource.affectedProperties;
+
+    if (affectedProps == null || affectedProps.isEmpty) {
+      return dataSource;
     }
 
     final animatedProperties = <String, dynamic>{};
 
-    for (final prop in attributes.affectedProperties!) {
-      animatedProperties[prop] = animationContext.streams[prop]?.value;
+    for (final prop in affectedProps) {
+      final value = animationContext.streams[prop]?.value;
+      if (value != null) {
+        animatedProperties[prop] = value;
+      }
     }
 
-    final dA = attributes as DuitAttributes;
-
-    final newAttr = dA.dispatchInternalCall<DuitAttributes>(
-      "fromJson",
-      positionalParams: [
-        animatedProperties,
-      ],
-    );
-
-    return dA.copyWith(newAttr);
+    return dataSource..addAll(animatedProperties);
   }
 }

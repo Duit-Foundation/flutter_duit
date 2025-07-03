@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitOpacity extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<OpacityAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitOpacity({
@@ -14,21 +13,24 @@ class DuitOpacity extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return Opacity(
       key: Key(attributes.id),
-      opacity: attrs.opacity,
+      opacity: attrs.getDouble(
+        key: "opacity",
+        defaultValue: 1.0,
+      ),
       child: child,
     );
   }
 }
 
 class DuitControlledOpacity extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<OpacityAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledOpacity({
@@ -42,8 +44,7 @@ class DuitControlledOpacity extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledOpacityState extends State<DuitControlledOpacity>
-    with
-        ViewControllerChangeListener<DuitControlledOpacity, OpacityAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -52,14 +53,17 @@ class _DuitControlledOpacityState extends State<DuitControlledOpacity>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return Opacity(
       key: Key(widget.controller.id),
-      opacity: attrs.opacity,
+      opacity: attrs.getDouble(
+        key: "opacity",
+        defaultValue: 1.0,
+      ),
       child: widget.child,
     );
   }

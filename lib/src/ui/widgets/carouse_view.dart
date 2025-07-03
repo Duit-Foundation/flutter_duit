@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 final class DuitCarouselView extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<CarouselViewAttributes> attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitCarouselView({
@@ -14,41 +13,30 @@ final class DuitCarouselView extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
-    return switch (attrs.constructor) {
-      CarouselViewConstructor.common => CarouselView(
-          key: Key(attributes.id),
-          itemExtent: attrs.itemExtent,
-          backgroundColor: attrs.backgroundColor,
-          elevation: attrs.elevation,
-          shape: attrs.shape,
-          overlayColor: attrs.overlayColor,
-          itemSnapping: attrs.itemSnapping,
-          shrinkExtent: attrs.shrinkExtent,
-          scrollDirection: attrs.scrollDirection,
-          reverse: attrs.reverse,
-          children: children,
-        ),
-      _ => throw UnimplementedError(
-          "CarouselView.weighted constructor not implemented, available only in main channel https://github.com/flutter/flutter/issues/153002"),
-      // CarouselViewConstructor.weighted => CarouselView.weighted(
-      //     key: Key(attributes.id),
-      //     flexWeights: attrs.flexWeights,
-      //     consumeMaxWeight: attrs.consumeMaxWeight,
-      //     reverse: attrs.reverse,
-      //     children: children,
-      //   ),
-    };
+    return CarouselView(
+      key: Key(attributes.id),
+      itemExtent: attrs.getDouble(key: "itemExtent"),
+      backgroundColor: attrs.tryParseColor(key: "backgroundColor"),
+      elevation: attrs.tryGetDouble(key: "elevation"),
+      shape: attrs.shapeBorder(),
+      overlayColor: attrs.widgetStateProperty<Color>(key: "overlayColor"),
+      itemSnapping: attrs.getBool("itemSnapping", defaultValue: true),
+      shrinkExtent: attrs.getDouble(key: "shrinkExtent"),
+      scrollDirection: attrs.axis(defaultValue: Axis.horizontal),
+      reverse: attrs.getBool("reverse"),
+      children: children,
+    );
   }
 }
 
 class DuitControlledCarouselView extends StatefulWidget
     with AnimatedAttributes {
-  final UIElementController<CarouselViewAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
 
   const DuitControlledCarouselView({
@@ -63,9 +51,7 @@ class DuitControlledCarouselView extends StatefulWidget
 }
 
 class _DuitControlledCarouselViewState extends State<DuitControlledCarouselView>
-    with
-        ViewControllerChangeListener<DuitControlledCarouselView,
-            CarouselViewAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -74,34 +60,23 @@ class _DuitControlledCarouselViewState extends State<DuitControlledCarouselView>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
-    return switch (attrs.constructor) {
-      CarouselViewConstructor.common => CarouselView(
-          key: Key(widget.controller.id),
-          itemExtent: attrs.itemExtent,
-          backgroundColor: attrs.backgroundColor,
-          elevation: attrs.elevation,
-          shape: attrs.shape,
-          overlayColor: attrs.overlayColor,
-          itemSnapping: attrs.itemSnapping,
-          shrinkExtent: attrs.shrinkExtent,
-          scrollDirection: attrs.scrollDirection,
-          reverse: attrs.reverse,
-          children: widget.children,
-        ),
-      _ => throw UnimplementedError(
-          "CarouselView.weighted constructor not implemented, available only in main channel https://github.com/flutter/flutter/issues/153002"),
-      // CarouselViewConstructor.weighted => CarouselView.weighted(
-      //     key: Key(attributes.id),
-      //     flexWeights: attrs.flexWeights,
-      //     consumeMaxWeight: attrs.consumeMaxWeight,
-      //     reverse: attrs.reverse,
-      //     children: children,
-      //   ),
-    };
+    return CarouselView(
+      key: Key(widget.controller.id),
+      itemExtent: attrs.getDouble(key: "itemExtent"),
+      backgroundColor: attrs.tryParseColor(key: "backgroundColor"),
+      elevation: attrs.tryGetDouble(key: "elevation"),
+      shape: attrs.shapeBorder(),
+      overlayColor: attrs.widgetStateProperty<Color>(key: "overlayColor"),
+      itemSnapping: attrs.getBool("itemSnapping", defaultValue: true),
+      shrinkExtent: attrs.getDouble(key: "shrinkExtent"),
+      scrollDirection: attrs.axis(defaultValue: Axis.horizontal),
+      reverse: attrs.getBool("reverse"),
+      children: widget.children,
+    );
   }
 }

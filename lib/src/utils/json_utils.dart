@@ -26,24 +26,4 @@ sealed class JsonUtils {
 
     return model.data;
   }
-
-  static T? nullOrParse<T>(
-    String key,
-    Map<String, dynamic> map,
-    T Function(Map<String, dynamic>) f,
-  ) {
-    if (map.containsKey(key)) {
-      return f(map[key]);
-    } else {
-      return null;
-    }
-  }
-
-  static void assertFields(Map<String, dynamic> map, Iterable<String> fields) {
-    for (var field in fields) {
-      if (!map.containsKey(field)) {
-        throw ArgumentError("Field $field is required");
-      }
-    }
-  }
 }

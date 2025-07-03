@@ -3,7 +3,7 @@ import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 import "package:flutter_duit/src/ui/models/child.dart";
 
-final class MetaUiElement<T> extends DuitElement<T>
+final class MetaUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -21,7 +21,7 @@ final class MetaUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class SingleChildScrollviewUiElement<T> extends DuitElement<T>
+final class SingleChildScrollviewUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -39,7 +39,7 @@ final class SingleChildScrollviewUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class IgnorePointerUiElement<T> extends DuitElement<T>
+final class IgnorePointerUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -57,7 +57,7 @@ final class IgnorePointerUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class OpacityUiElement<T> extends DuitElement<T>
+final class OpacityUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -75,7 +75,7 @@ final class OpacityUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class LifecycleStateListenerUiElement<T> extends DuitElement<T>
+final class LifecycleStateListenerUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -93,7 +93,7 @@ final class LifecycleStateListenerUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class RadioGroupContextUiElement<T> extends DuitElement<T>
+final class RadioGroupContextUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -111,7 +111,7 @@ final class RadioGroupContextUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class TransformUiElement<T> extends DuitElement<T>
+final class TransformUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -129,7 +129,7 @@ final class TransformUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class AlignUiElement<T> extends DuitElement<T>
+final class AlignUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -147,7 +147,7 @@ final class AlignUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class GestureDetectorUiElement<T> extends DuitElement<T>
+final class GestureDetectorUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -165,7 +165,7 @@ final class GestureDetectorUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class ContainerUiElement<T> extends DuitElement<T>
+final class ContainerUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -183,7 +183,7 @@ final class ContainerUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class DecoratedBoxUiElement<T> extends DuitElement<T>
+final class DecoratedBoxUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -201,7 +201,7 @@ final class DecoratedBoxUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class PositionedUiElement<T> extends DuitElement<T>
+final class PositionedUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -219,7 +219,7 @@ final class PositionedUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class PaddingUiElement<T> extends DuitElement<T>
+final class PaddingUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -237,7 +237,7 @@ final class PaddingUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class FittedBoxUiElement<T> extends DuitElement<T>
+final class FittedBoxUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -255,7 +255,7 @@ final class FittedBoxUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class ExpandedUiElement<T> extends DuitElement<T>
+final class ExpandedUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -273,7 +273,7 @@ final class ExpandedUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class StackUIElement<T> extends DuitElement<T>
+final class StackUIElement extends DuitElement
     implements MultiChildLayout {
   @override
   List<DuitElement> children = const [];
@@ -288,7 +288,7 @@ final class StackUIElement<T> extends DuitElement<T>
   });
 }
 
-base class CustomUiElement<T> extends DuitElement<T> {
+base class CustomUiElement extends DuitElement {
   final Iterable<ElementTreeEntry> subviews;
 
   CustomUiElement({
@@ -300,12 +300,12 @@ base class CustomUiElement<T> extends DuitElement<T> {
     this.subviews = const {},
   }) : super(
           type: ElementType.custom,
-          viewController: viewController?.cast<T>(),
-          attributes: attributes?.cast<T>(),
+          viewController: viewController,
+          attributes: attributes,
         );
 }
 
-final class ElevatedButtonUIElement<T> extends DuitElement<T>
+final class ElevatedButtonUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -323,7 +323,7 @@ final class ElevatedButtonUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class CenterUIElement<T> extends DuitElement<T>
+final class CenterUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -341,7 +341,7 @@ final class CenterUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class ColoredBoxUIElement<T> extends DuitElement<T>
+final class ColoredBoxUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -358,7 +358,7 @@ final class ColoredBoxUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class AnimatedBuilderUIElement<T> extends DuitElement<T>
+final class AnimatedBuilderUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -375,7 +375,7 @@ final class AnimatedBuilderUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class ColumnUIElement<T> extends DuitElement<T>
+final class ColumnUIElement extends DuitElement
     implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -392,7 +392,7 @@ final class ColumnUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class RowUIElement<T> extends DuitElement<T> implements MultiChildLayout {
+final class RowUIElement extends DuitElement implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
   List<DuitElement> children;
@@ -408,7 +408,7 @@ final class RowUIElement<T> extends DuitElement<T> implements MultiChildLayout {
 //</editor-fold>
 }
 
-final class WrapUIElement<T> extends DuitElement<T>
+final class WrapUIElement extends DuitElement
     implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -425,7 +425,7 @@ final class WrapUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class SizedBoxUIElement<T> extends DuitElement<T>
+final class SizedBoxUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -442,7 +442,7 @@ final class SizedBoxUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class RepaintBoundaryUIElement<T> extends DuitElement<T>
+final class RepaintBoundaryUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -459,7 +459,7 @@ final class RepaintBoundaryUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class RichTextUIElement<T> extends DuitElement<T> {
+final class RichTextUIElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
 
   RichTextUIElement({
@@ -477,7 +477,7 @@ final class RichTextUIElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
-final class TextUIElement<T> extends DuitElement<T> {
+final class TextUIElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
 
   TextUIElement({
@@ -495,7 +495,7 @@ final class TextUIElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
-final class CheckboxUIElement<T> extends DuitElement<T> {
+final class CheckboxUIElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
 
   CheckboxUIElement({
@@ -508,7 +508,7 @@ final class CheckboxUIElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
-final class RadioUIElement<T> extends DuitElement<T> {
+final class RadioUIElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
 
   RadioUIElement({
@@ -521,7 +521,7 @@ final class RadioUIElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
-final class SliderUIElement<T> extends DuitElement<T> {
+final class SliderUIElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
 
   SliderUIElement({
@@ -534,7 +534,7 @@ final class SliderUIElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
-final class TextFieldUIElement<T> extends DuitElement<T> {
+final class TextFieldUIElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
   TextFieldUIElement({
     required super.type,
@@ -546,7 +546,7 @@ final class TextFieldUIElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
-final class ComponentUIElement<T> extends DuitElement<T>
+final class ComponentUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -564,7 +564,7 @@ final class ComponentUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class OverflowBoxUIElement<T> extends DuitElement<T>
+final class OverflowBoxUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -582,7 +582,7 @@ final class OverflowBoxUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class AnimatedSizeUIElement<T> extends DuitElement<T>
+final class AnimatedSizeUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -599,7 +599,7 @@ final class AnimatedSizeUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class AnimatedOpacityUIElement<T> extends DuitElement<T>
+final class AnimatedOpacityUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -617,7 +617,7 @@ final class AnimatedOpacityUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class SubtreeUIElement<T> extends DuitElement<T>
+final class SubtreeUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -635,7 +635,7 @@ final class SubtreeUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class ListViewUIElement<T> extends DuitElement<T>
+final class ListViewUIElement extends DuitElement
     implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -653,7 +653,7 @@ final class ListViewUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class GridViewUIElement<T> extends DuitElement<T>
+final class GridViewUIElement extends DuitElement
     implements MultiChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -671,7 +671,7 @@ final class GridViewUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class ImageUIElement<T> extends DuitElement<T> {
+final class ImageUIElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
 
   ImageUIElement({
@@ -684,7 +684,7 @@ final class ImageUIElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
-final class SwitchUiElement<T> extends DuitElement<T> {
+final class SwitchUiElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
 
   SwitchUiElement({
@@ -702,7 +702,7 @@ final class SwitchUiElement<T> extends DuitElement<T> {
 //</editor-fold>
 }
 
-final class IntrinsicHeightUIElement<T> extends DuitElement<T>
+final class IntrinsicHeightUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -720,7 +720,7 @@ final class IntrinsicHeightUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class IntrinsicWidthUiElement<T> extends DuitElement<T>
+final class IntrinsicWidthUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -738,7 +738,7 @@ final class IntrinsicWidthUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class RotatedBoxUIElement<T> extends DuitElement<T>
+final class RotatedBoxUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -756,7 +756,7 @@ final class RotatedBoxUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class ConstrainedBoxUIElement<T> extends DuitElement<T>
+final class ConstrainedBoxUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -774,7 +774,7 @@ final class ConstrainedBoxUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class BackdropFilterUIElement<T> extends DuitElement<T>
+final class BackdropFilterUIElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -792,7 +792,7 @@ final class BackdropFilterUIElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class SafeAreaUiElement<T> extends DuitElement<T>
+final class SafeAreaUiElement extends DuitElement
     implements SingleChildLayout {
   //<editor-fold desc="Properties and ctor">
   @override
@@ -810,14 +810,14 @@ final class SafeAreaUiElement<T> extends DuitElement<T>
 //</editor-fold>
 }
 
-final class EmptyUIElement<T> extends DuitElement<T> {
+final class EmptyUIElement extends DuitElement {
   EmptyUIElement({
     super.type = ElementType.empty,
     super.id = "",
   });
 }
 
-final class RemoteUIElement<T> extends DuitElement<T> {
+final class RemoteUIElement extends DuitElement {
   //<editor-fold desc="Properties and ctor">
 
   RemoteUIElement({
@@ -831,7 +831,7 @@ final class RemoteUIElement<T> extends DuitElement<T> {
 }
 
 /// A UI element that represents a Card widget.
-final class CardUIElement<T> extends DuitElement<T>
+final class CardUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -846,7 +846,7 @@ final class CardUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AppBarUiElement<T> extends DuitElement<T> {
+final class AppBarUiElement extends DuitElement {
   AppBarUiElement({
     required super.type,
     required super.id,
@@ -855,7 +855,7 @@ final class AppBarUiElement<T> extends DuitElement<T> {
   });
 }
 
-final class ScaffoldUiElement<T> extends DuitElement<T>
+final class ScaffoldUiElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -869,7 +869,7 @@ final class ScaffoldUiElement<T> extends DuitElement<T>
   });
 }
 
-final class InkWellUIElement<T> extends DuitElement<T>
+final class InkWellUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -883,7 +883,7 @@ final class InkWellUIElement<T> extends DuitElement<T>
   });
 }
 
-final class CarouselViewUIElement<T> extends DuitElement<T>
+final class CarouselViewUIElement extends DuitElement
     implements MultiChildLayout {
   @override
   List<DuitElement> children;
@@ -898,7 +898,7 @@ final class CarouselViewUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedContainerUIElement<T> extends DuitElement<T>
+final class AnimatedContainerUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -912,7 +912,7 @@ final class AnimatedContainerUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedAlignUIElement<T> extends DuitElement<T>
+final class AnimatedAlignUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -926,7 +926,7 @@ final class AnimatedAlignUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedRotationUIElement<T> extends DuitElement<T>
+final class AnimatedRotationUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -940,7 +940,7 @@ final class AnimatedRotationUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedPaddingUIElement<T> extends DuitElement<T>
+final class AnimatedPaddingUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -954,7 +954,7 @@ final class AnimatedPaddingUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedPositionedUIElement<T> extends DuitElement<T>
+final class AnimatedPositionedUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -968,7 +968,7 @@ final class AnimatedPositionedUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedScaleUIElement<T> extends DuitElement<T>
+final class AnimatedScaleUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -982,7 +982,7 @@ final class AnimatedScaleUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AbsorbPointerUIElement<T> extends DuitElement<T>
+final class AbsorbPointerUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -997,7 +997,7 @@ final class AbsorbPointerUIElement<T> extends DuitElement<T>
   });
 }
 
-final class OffstageUIElement<T> extends DuitElement<T>
+final class OffstageUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1012,7 +1012,7 @@ final class OffstageUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedCrossFadeUIElement<T> extends DuitElement<T>
+final class AnimatedCrossFadeUIElement extends DuitElement
     implements MultiChildLayout {
   @override
   List<DuitElement> children;
@@ -1027,7 +1027,7 @@ final class AnimatedCrossFadeUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedSlideUIElement<T> extends DuitElement<T>
+final class AnimatedSlideUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1041,7 +1041,7 @@ final class AnimatedSlideUIElement<T> extends DuitElement<T>
   });
 }
 
-final class PhysicalModelUIElement<T> extends DuitElement<T>
+final class PhysicalModelUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1056,7 +1056,7 @@ final class PhysicalModelUIElement<T> extends DuitElement<T>
   });
 }
 
-final class AnimatedPhysicalModelUIElement<T> extends DuitElement<T>
+final class AnimatedPhysicalModelUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1070,7 +1070,7 @@ final class AnimatedPhysicalModelUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverPaddingUIElement<T> extends DuitElement<T>
+final class SliverPaddingUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1085,7 +1085,7 @@ final class SliverPaddingUIElement<T> extends DuitElement<T>
   });
 }
 
-final class CustomScrollViewUIElement<T> extends DuitElement<T>
+final class CustomScrollViewUIElement extends DuitElement
     implements MultiChildLayout {
   @override
   List<DuitElement> children;
@@ -1100,7 +1100,7 @@ final class CustomScrollViewUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverFillRemainingUIElement<T> extends DuitElement<T>
+final class SliverFillRemainingUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1115,7 +1115,7 @@ final class SliverFillRemainingUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverToBoxAdapterUIElement<T> extends DuitElement<T>
+final class SliverToBoxAdapterUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1127,7 +1127,7 @@ final class SliverToBoxAdapterUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverFillViewportUIElement<T> extends DuitElement<T>
+final class SliverFillViewportUIElement extends DuitElement
     implements MultiChildLayout {
   @override
   List<DuitElement> children;
@@ -1142,7 +1142,7 @@ final class SliverFillViewportUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverOpacityUIElement<T> extends DuitElement<T>
+final class SliverOpacityUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1157,7 +1157,7 @@ final class SliverOpacityUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverAnimatedOpacityUIElement<T> extends DuitElement<T>
+final class SliverAnimatedOpacityUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1172,7 +1172,7 @@ final class SliverAnimatedOpacityUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverVisibilityUIElement<T> extends DuitElement<T>
+final class SliverVisibilityUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1187,7 +1187,7 @@ final class SliverVisibilityUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverSafeAreaUIElement<T> extends DuitElement<T>
+final class SliverSafeAreaUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1202,7 +1202,7 @@ final class SliverSafeAreaUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverOffstageUIElement<T> extends DuitElement<T>
+final class SliverOffstageUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1217,7 +1217,7 @@ final class SliverOffstageUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverIgnorePointerUIElement<T> extends DuitElement<T>
+final class SliverIgnorePointerUIElement extends DuitElement
     implements SingleChildLayout {
   @override
   DuitElement child;
@@ -1232,7 +1232,7 @@ final class SliverIgnorePointerUIElement<T> extends DuitElement<T>
   });
 }
 
-final class SliverListUIElement<T> extends DuitElement<T>
+final class SliverListUIElement extends DuitElement
     implements MultiChildLayout {
   @override
   List<DuitElement> children;
@@ -1247,7 +1247,7 @@ final class SliverListUIElement<T> extends DuitElement<T>
   });
 }
 
-final class FlexibleSpaceBarUiElement<T> extends DuitElement<T> {
+final class FlexibleSpaceBarUiElement extends DuitElement {
   FlexibleSpaceBarUiElement({
     required super.type,
     required super.id,
@@ -1257,7 +1257,7 @@ final class FlexibleSpaceBarUiElement<T> extends DuitElement<T> {
   });
 }
 
-final class SliverAppBarUiElement<T> extends DuitElement<T> {
+final class SliverAppBarUiElement extends DuitElement {
   SliverAppBarUiElement({
     required super.type,
     required super.id,
@@ -1267,7 +1267,7 @@ final class SliverAppBarUiElement<T> extends DuitElement<T> {
   });
 }
 
-final class SliverGridUIElement<T> extends DuitElement<T>
+final class SliverGridUIElement extends DuitElement
     implements MultiChildLayout {
   @override
   List<DuitElement> children;

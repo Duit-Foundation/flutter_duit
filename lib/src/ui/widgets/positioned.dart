@@ -1,11 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitPositioned extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<PositionedAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitPositioned({
@@ -16,23 +15,23 @@ class DuitPositioned extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
     return Positioned(
       key: Key(attributes.id),
-      top: attrs.top,
-      left: attrs.left,
-      right: attrs.right,
-      bottom: attrs.bottom,
+      top: attrs.tryGetDouble(key: "top"),
+      left: attrs.tryGetDouble(key: "left"),
+      right: attrs.tryGetDouble(key: "right"),
+      bottom: attrs.tryGetDouble(key: "bottom"),
       child: child,
     );
   }
 }
 
 class DuitControlledPositioned extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<PositionedAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledPositioned({
@@ -47,9 +46,7 @@ class DuitControlledPositioned extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledPositionedState extends State<DuitControlledPositioned>
-    with
-        ViewControllerChangeListener<DuitControlledPositioned,
-            PositionedAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -58,17 +55,17 @@ class _DuitControlledPositionedState extends State<DuitControlledPositioned>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return Positioned(
       key: Key(widget.controller.id),
-      top: attrs.top,
-      left: attrs.left,
-      right: attrs.right,
-      bottom: attrs.bottom,
+      top: attrs.tryGetDouble(key: "top"),
+      left: attrs.tryGetDouble(key: "left"),
+      right: attrs.tryGetDouble(key: "right"),
+      bottom: attrs.tryGetDouble(key: "bottom"),
       child: widget.child,
     );
   }

@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitAlign extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<AlignAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitAlign({
@@ -14,23 +13,23 @@ class DuitAlign extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return Align(
       key: Key(attributes.id),
-      alignment: attrs.alignment,
-      widthFactor: attrs.widthFactor,
-      heightFactor: attrs.heightFactor,
+      alignment: attrs.alignment(defaultValue: Alignment.center)!,
+      widthFactor: attrs.tryGetDouble(key: "widthFactor"),
+      heightFactor: attrs.tryGetDouble(key: "heightFactor"),
       child: child,
     );
   }
 }
 
 class DuitControlledAlign extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<AlignAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledAlign({
@@ -44,7 +43,7 @@ class DuitControlledAlign extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledAlignState extends State<DuitControlledAlign>
-    with ViewControllerChangeListener<DuitControlledAlign, AlignAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -53,16 +52,16 @@ class _DuitControlledAlignState extends State<DuitControlledAlign>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return Align(
       key: Key(widget.controller.id),
-      alignment: attrs.alignment,
-      widthFactor: attrs.widthFactor,
-      heightFactor: attrs.heightFactor,
+      alignment: attrs.alignment(defaultValue: Alignment.center)!,
+      widthFactor: attrs.tryGetDouble(key: "widthFactor"),
+      heightFactor: attrs.tryGetDouble(key: "heightFactor"),
       child: widget.child,
     );
   }

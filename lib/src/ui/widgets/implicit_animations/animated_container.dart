@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/animations/index.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitAnimatedContainer extends StatefulWidget {
-  final UIElementController<AnimatedContainerAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitAnimatedContainer({
@@ -18,10 +17,7 @@ class DuitAnimatedContainer extends StatefulWidget {
 }
 
 class _DuitAnimatedContainerState extends State<DuitAnimatedContainer>
-    with
-        ViewControllerChangeListener<DuitAnimatedContainer,
-            AnimatedContainerAttributes>,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,23 +28,24 @@ class _DuitAnimatedContainerState extends State<DuitAnimatedContainer>
   Widget build(BuildContext context) {
     return AnimatedContainer(
       key: ValueKey(widget.controller.id),
-      duration: attributes.duration,
-      curve: attributes.curve,
+      duration: attributes.duration(),
+      curve: attributes.curve(defaultValue: Curves.linear)!,
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
-      width: attributes.width,
-      height: attributes.height,
-      color: attributes.color,
-      foregroundDecoration: attributes.foregroundDecoration,
-      decoration: attributes.decoration,
-      clipBehavior: attributes.clipBehavior,
-      constraints: attributes.constraints,
-      padding: attributes.padding,
-      margin: attributes.margin,
-      alignment: attributes.alignment,
-      transformAlignment: attributes.transformAlignment,
+      width: attributes.tryGetDouble(key: "width"),
+      height: attributes.tryGetDouble(key: "height"),
+      color: attributes.tryParseColor(key: "color"),
+      foregroundDecoration: attributes.decoration(key: "foregroundDecoration"),
+      decoration: attributes.decoration(),
+      clipBehavior: attributes.clipBehavior(defaultValue: Clip.none)!,
+      constraints: attributes.boxConstraints(),
+      padding: attributes.edgeInsets(),
+      margin: attributes.edgeInsets(key: "margin"),
+      alignment: attributes.alignment(defaultValue: Alignment.center)!,
+      transformAlignment: attributes.alignment(),
+      child: widget.child,
     );
   }
 }

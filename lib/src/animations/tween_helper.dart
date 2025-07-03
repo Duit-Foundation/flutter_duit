@@ -1,6 +1,5 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/animations/index.dart';
 
 mixin TweenHelper<T extends StatefulWidget> on State<T> {
   TextDirection? _textDirection;

@@ -1,10 +1,9 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitCenter extends StatelessWidget {
-  final ViewAttribute<CenterAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitCenter({
@@ -15,18 +14,18 @@ class DuitCenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = attributes.payload;
+    final attrs = attributes.payload;
     return Center(
       key: Key(attributes.id),
-      widthFactor: state.widthFactor,
-      heightFactor: state.heightFactor,
+      widthFactor: attrs.tryGetDouble(key: "widthFactor"),
+      heightFactor: attrs.tryGetDouble(key: "heightFactor"),
       child: child,
     );
   }
 }
 
 class DuitControlledCenter extends StatefulWidget {
-  final UIElementController<CenterAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledCenter({
@@ -40,7 +39,7 @@ class DuitControlledCenter extends StatefulWidget {
 }
 
 class _DuitControlledCenterState extends State<DuitControlledCenter>
-    with ViewControllerChangeListener<DuitControlledCenter, CenterAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -51,8 +50,8 @@ class _DuitControlledCenterState extends State<DuitControlledCenter>
   Widget build(BuildContext context) {
     return Center(
       key: Key(widget.controller.id),
-      widthFactor: attributes.widthFactor,
-      heightFactor: attributes.heightFactor,
+      widthFactor: attributes.tryGetDouble(key: "widthFactor"),
+      heightFactor: attributes.tryGetDouble(key: "heightFactor"),
       child: widget.child,
     );
   }

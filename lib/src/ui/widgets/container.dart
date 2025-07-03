@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitContainer extends StatelessWidget with AnimatedAttributes {
   final Widget child;
-  final ViewAttribute<ContainerAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitContainer({
     super.key,
@@ -14,19 +13,19 @@ class DuitContainer extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(context, attributes.payload);
+    final attrs = mergeWithDataSource(context, attributes.payload);
     return Container(
       key: Key(attributes.id),
-      alignment: attrs.alignment,
-      constraints: attrs.constraints,
-      padding: attrs.padding,
-      margin: attrs.margin,
-      width: attrs.width,
-      height: attrs.height,
-      color: attrs.color,
-      clipBehavior: attrs.clipBehavior,
-      decoration: attrs.decoration,
-      transformAlignment: attrs.transformAlignment,
+      alignment: attrs.alignment(),
+      constraints: attrs.boxConstraints(),
+      padding: attrs.edgeInsets(),
+      margin: attrs.edgeInsets(key: "margin"),
+      width: attrs.tryGetDouble(key: "width"),
+      height: attrs.tryGetDouble(key: "height"),
+      color: attrs.tryParseColor(key: "color"),
+      clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
+      decoration: attrs.decoration(),
+      transformAlignment: attrs.alignment(),
       child: child,
     );
   }
@@ -34,7 +33,7 @@ class DuitContainer extends StatelessWidget with AnimatedAttributes {
 
 class DuitControlledContainer extends StatefulWidget with AnimatedAttributes {
   final Widget child;
-  final UIElementController<ContainerAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledContainer({
     super.key,
@@ -48,9 +47,7 @@ class DuitControlledContainer extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledContainerState extends State<DuitControlledContainer>
-    with
-        ViewControllerChangeListener<DuitControlledContainer,
-            ContainerAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(
@@ -61,22 +58,22 @@ class _DuitControlledContainerState extends State<DuitControlledContainer>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
     return Container(
       key: Key(widget.controller.id),
-      alignment: attrs.alignment,
-      constraints: attrs.constraints,
-      padding: attrs.padding,
-      margin: attrs.margin,
-      width: attrs.width,
-      height: attrs.height,
-      color: attrs.color,
-      clipBehavior: attrs.clipBehavior,
-      decoration: attrs.decoration,
-      transformAlignment: attrs.transformAlignment,
+      alignment: attrs.alignment(),
+      constraints: attrs.boxConstraints(),
+      padding: attrs.edgeInsets(),
+      margin: attrs.edgeInsets(key: "margin"),
+      width: attrs.tryGetDouble(key: "width"),
+      height: attrs.tryGetDouble(key: "height"),
+      color: attrs.tryParseColor(key: "color"),
+      clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
+      decoration: attrs.decoration(),
+      transformAlignment: attrs.alignment(),
       child: widget.child,
     );
   }

@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitIntrinsicWidth extends StatelessWidget with AnimatedAttributes {
   final Widget child;
-  final ViewAttribute<IntrinsicWidthAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitIntrinsicWidth({
     super.key,
@@ -14,11 +13,11 @@ class DuitIntrinsicWidth extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(context, attributes.payload);
+    final attrs = mergeWithDataSource(context, attributes.payload);
     return IntrinsicWidth(
       key: Key(attributes.id),
-      stepWidth: attrs.stepWidth,
-      stepHeight: attrs.stepHeight,
+      stepWidth: attrs.tryGetDouble(key: "stepWidth"),
+      stepHeight: attrs.tryGetDouble(key: "stepHeight"),
       child: child,
     );
   }
@@ -27,7 +26,7 @@ class DuitIntrinsicWidth extends StatelessWidget with AnimatedAttributes {
 class DuitControlledIntrinsicWidth extends StatefulWidget
     with AnimatedAttributes {
   final Widget child;
-  final UIElementController<IntrinsicWidthAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledIntrinsicWidth({
     super.key,
@@ -42,9 +41,7 @@ class DuitControlledIntrinsicWidth extends StatefulWidget
 
 class _DuitControlledIntrinsicWidthState
     extends State<DuitControlledIntrinsicWidth>
-    with
-        ViewControllerChangeListener<DuitControlledIntrinsicWidth,
-            IntrinsicWidthAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(
@@ -55,14 +52,15 @@ class _DuitControlledIntrinsicWidthState
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
     return IntrinsicWidth(
         key: Key(widget.controller.id),
-        stepWidth: attrs.stepWidth,
-        stepHeight: attrs.stepHeight,
-        child: widget.child);
+      stepWidth: attrs.tryGetDouble(key: "stepWidth"),
+      stepHeight: attrs.tryGetDouble(key: "stepHeight"),
+      child: widget.child,
+    );
   }
 }

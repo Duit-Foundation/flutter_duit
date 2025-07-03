@@ -1,11 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitRadio extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<RadioAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitRadio({
     super.key,
@@ -20,31 +19,31 @@ class DuitRadio extends StatelessWidget with AnimatedAttributes {
   Widget build(BuildContext context) {
     final groupContext = RadioGroupContext.maybeOf(context);
     assert(groupContext != null, 'RadioGroupContext not found in context');
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
     return Radio(
       key: Key(attributes.id),
-      value: attrs.value,
+      value: attrs["value"],
       groupValue: groupContext?.groupValue,
       onChanged: (value) => _onChangeHandler(context, value),
-      toggleable: attrs.toggleable ?? false,
-      autofocus: attrs.autofocus ?? false,
-      activeColor: attrs.activeColor,
-      focusColor: attrs.focusColor,
-      hoverColor: attrs.hoverColor,
-      fillColor: attrs.fillColor,
-      overlayColor: attrs.overlayColor,
-      splashRadius: attrs.splashRadius,
-      materialTapTargetSize: attrs.materialTapTargetSize,
-      visualDensity: attrs.visualDensity,
+      toggleable: attrs.getBool("toggleable"),
+      autofocus: attrs.getBool("autofocus"),
+      activeColor: attrs.tryParseColor(key: "activeColor"),
+      focusColor: attrs.tryParseColor(key: "focusColor"),
+      hoverColor: attrs.tryParseColor(key: "hoverColor"),
+      fillColor: attrs.widgetStateProperty<Color>(key: "fillColor"),
+      overlayColor: attrs.widgetStateProperty<Color>(key: "overlayColor"),
+      splashRadius: attrs.tryGetDouble(key: "splashRadius"),
+      materialTapTargetSize: attrs.materialTapTargetSize(),
+      visualDensity: attrs.visualDensity(),
     );
   }
 }
 
 final class DuitControlledRadio extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<RadioAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledRadio({
     super.key,
@@ -56,7 +55,7 @@ final class DuitControlledRadio extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledRadioState extends State<DuitControlledRadio>
-    with ViewControllerChangeListener<DuitControlledRadio, RadioAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -71,26 +70,26 @@ class _DuitControlledRadioState extends State<DuitControlledRadio>
   Widget build(BuildContext context) {
     final groupContext = RadioGroupContext.maybeOf(context);
     assert(groupContext != null, 'RadioGroupContext not found in context');
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return Radio(
       key: Key(widget.controller.id),
-      value: attrs.value,
+      value: attrs["value"],
       groupValue: groupContext?.groupValue,
-      onChanged: _onChangeHandler,
-      toggleable: attrs.toggleable ?? false,
-      autofocus: attrs.autofocus ?? false,
-      activeColor: attrs.activeColor,
-      focusColor: attrs.focusColor,
-      hoverColor: attrs.hoverColor,
-      fillColor: attrs.fillColor,
-      overlayColor: attrs.overlayColor,
-      splashRadius: attrs.splashRadius,
-      materialTapTargetSize: attrs.materialTapTargetSize,
-      visualDensity: attrs.visualDensity,
+      onChanged: (value) => _onChangeHandler(value),
+      toggleable: attrs.getBool("toggleable"),
+      autofocus: attrs.getBool("autofocus"),
+      activeColor: attrs.tryParseColor(key: "activeColor"),
+      focusColor: attrs.tryParseColor(key: "focusColor"),
+      hoverColor: attrs.tryParseColor(key: "hoverColor"),
+      fillColor: attrs.widgetStateProperty<Color>(key: "fillColor"),
+      overlayColor: attrs.widgetStateProperty<Color>(key: "overlayColor"),
+      splashRadius: attrs.tryGetDouble(key: "splashRadius"),
+      materialTapTargetSize: attrs.materialTapTargetSize(),
+      visualDensity: attrs.visualDensity(),
     );
   }
 }
@@ -123,7 +122,7 @@ final class RadioGroupContext extends InheritedWidget {
 }
 
 class DuitRadioGroupContextProvider extends StatefulWidget {
-  final UIElementController<RadioGroupContextAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitRadioGroupContextProvider({
@@ -139,9 +138,7 @@ class DuitRadioGroupContextProvider extends StatefulWidget {
 
 class _DuitRadioGroupContextProviderState
     extends State<DuitRadioGroupContextProvider>
-    with
-        ViewControllerChangeListener<DuitRadioGroupContextProvider,
-            RadioGroupContextAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -149,13 +146,10 @@ class _DuitRadioGroupContextProviderState
   }
 
   void _onChangeHandler(dynamic value) {
-    updateStateManually(
-      RadioGroupContextAttributes(
-        value: value,
-        groupValue: value,
-      ),
-      widgetId: widget.controller.id,
-    );
+    updateStateManually(<String, dynamic>{
+      "value": value,
+      "groupValue": value,
+    });
     widget.controller.performRelatedAction();
   }
 
@@ -163,7 +157,7 @@ class _DuitRadioGroupContextProviderState
   Widget build(BuildContext context) {
     return RadioGroupContext(
       key: Key(widget.controller.id),
-      groupValue: attributes.groupValue,
+      groupValue: attributes["groupValue"],
       updater: _onChangeHandler,
       child: widget.child,
     );

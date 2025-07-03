@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 final class DuitSliverFillViewport extends StatelessWidget
     with ChildDelegateBuilder {
-  final ViewAttribute<SliverFillViewportAttributes> attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
   const DuitSliverFillViewport({
     super.key,
@@ -14,25 +13,39 @@ final class DuitSliverFillViewport extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    assert(attributes.payload.isBuilderDelegate == false,
+    assert(attributes.payload.getBool("isBuilderDelegate") == false,
         "Builder delegate not supported for uncontrolled widget variant");
     return SliverFillViewport(
       key: ValueKey(attributes.id),
       delegate: buildDelegate(
         false,
         children: children,
-        addAutomaticKeepAlives: attributes.payload.addAutomaticKeepAlives,
-        addRepaintBoundaries: attributes.payload.addRepaintBoundaries,
-        addSemanticIndexes: attributes.payload.addSemanticIndexes,
+        addAutomaticKeepAlives: attributes.payload.getBool(
+          "addAutomaticKeepAlives",
+          defaultValue: true,
+        ),
+        addRepaintBoundaries: attributes.payload.getBool(
+          "addRepaintBoundaries",
+          defaultValue: true,
+        ),
+        addSemanticIndexes: attributes.payload.getBool(
+          "addSemanticIndexes",
+        ),
       ),
-      viewportFraction: attributes.payload.viewportFraction,
-      padEnds: attributes.payload.padEnds,
+      viewportFraction: attributes.payload.getDouble(
+        key: "viewportFraction",
+        defaultValue: 1.0,
+      ),
+      padEnds: attributes.payload.getBool(
+        "padEnds",
+        defaultValue: true,
+      ),
     );
   }
 }
 
 final class DuitControlledSliverFillViewport extends StatefulWidget {
-  final UIElementController<SliverFillViewportAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
 
   const DuitControlledSliverFillViewport({
@@ -49,8 +62,7 @@ final class DuitControlledSliverFillViewport extends StatefulWidget {
 class _DuitControlledSliverFillViewportState
     extends State<DuitControlledSliverFillViewport>
     with
-        ViewControllerChangeListener<DuitControlledSliverFillViewport,
-            SliverFillViewportAttributes>,
+        ViewControllerChangeListener,
         OutOfBoundWidgetBuilder,
         ChildDelegateBuilder {
   @override
@@ -60,7 +72,7 @@ class _DuitControlledSliverFillViewportState
   }
 
   Widget? _buildItem(BuildContext context, int index) {
-    final list = attributes.childObjects ?? const [];
+    final list = attributes.childObjects();
     final item = list[index];
 
     return buildOutOfBoundWidget(
@@ -75,16 +87,28 @@ class _DuitControlledSliverFillViewportState
     return SliverFillViewport(
       key: ValueKey(widget.controller.id),
       delegate: buildDelegate(
-        attributes.isBuilderDelegate,
+        attributes.getBool("isBuilderDelegate"),
         builder: _buildItem,
         children: widget.children,
-        addAutomaticKeepAlives: attributes.addAutomaticKeepAlives,
-        addRepaintBoundaries: attributes.addRepaintBoundaries,
-        addSemanticIndexes: attributes.addSemanticIndexes,
-        childCount: attributes.childCount,
+        addAutomaticKeepAlives: attributes.getBool(
+          "addAutomaticKeepAlives",
+          defaultValue: true,
+        ),
+        addRepaintBoundaries: attributes.getBool(
+          "addRepaintBoundaries",
+          defaultValue: true,
+        ),
+        addSemanticIndexes: attributes.getBool("addSemanticIndexes"),
+        childCount: attributes.tryGetInt(key: "childCount"),
       ),
-      viewportFraction: attributes.viewportFraction,
-      padEnds: attributes.padEnds,
+      viewportFraction: attributes.getDouble(
+        key: "viewportFraction",
+        defaultValue: 1.0,
+      ),
+      padEnds: attributes.getBool(
+        "padEnds",
+        defaultValue: true,
+      ),
     );
   }
 }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/animations/index.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitAnimatedScale extends StatefulWidget {
-  final UIElementController<AnimatedScaleAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitAnimatedScale({
@@ -18,10 +17,7 @@ class DuitAnimatedScale extends StatefulWidget {
 }
 
 class _DuitAnimatedScaleState extends State<DuitAnimatedScale>
-    with
-        ViewControllerChangeListener<DuitAnimatedScale,
-            AnimatedScaleAttributes>,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,13 +28,16 @@ class _DuitAnimatedScaleState extends State<DuitAnimatedScale>
   Widget build(BuildContext context) {
     return AnimatedScale(
       key: ValueKey(widget.controller.id),
-      scale: attributes.scale,
-      duration: attributes.duration,
-      alignment: attributes.alignment,
-      curve: attributes.curve,
-      filterQuality: attributes.filterQuality,
+      scale: attributes.getDouble(
+        key: "scale",
+        defaultValue: 1.0,
+      ),
+      duration: attributes.duration(),
+      alignment: attributes.alignment(defaultValue: Alignment.center)!,
+      curve: attributes.curve(defaultValue: Curves.linear)!,
+      filterQuality: attributes.filterQuality(),
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
       child: widget.child,

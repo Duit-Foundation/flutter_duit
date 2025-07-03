@@ -1,20 +1,22 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
   late Widget subtreeChild;
   late UIElementController _controller;
+  late bool isRemote;
 
   void attachStateToController(
     UIElementController controller,
-    Widget child,
-  ) {
+    Widget child, {
+    bool remote = false,
+  }) {
     _controller = controller;
     subtreeChild = child;
+    isRemote = remote;
 
-    if (_controller.attributes.payload is RemoteSubtreeAttributes) {
+    if (isRemote) {
       _loadRemoteContent();
     }
   }
@@ -23,69 +25,60 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
     final driver = _controller.driver;
     final attrs = _controller.attributes.payload;
 
-    switch (attrs) {
-      case SubtreeAttributes():
-        try {
-          if (attrs.data != null) {
-            final layoutTree = await parseLayout(
-              attrs.data!,
-              driver,
-            );
-
-            final newChild = layoutTree.render();
-            setState(() {
-              subtreeChild = newChild;
-            });
-          }
-        } catch (e, s) {
-          driver.logger?.error(
-            "Failed to handle subtree update",
-            error: e,
-            stackTrace: s,
+    if (isRemote) {
+      try {
+        if (attrs["data"] != null) {
+          final layoutTree = await parseLayout(
+            attrs["data"],
+            driver,
           );
-        }
-      case RemoteSubtreeAttributes():
-        try {
-          if (attrs.data != null) {
-            final layoutTree = await parseLayout(
-              attrs.data!,
-              driver,
-            );
 
-            final newChild = layoutTree.render();
-            setState(() {
-              subtreeChild = newChild;
-            });
-          }
-        } catch (e, s) {
-          driver.logger?.error(
-            "Failed to handle remote subtree update",
-            error: e,
-            stackTrace: s,
-          );
-          rethrow;
+          final newChild = layoutTree.render();
+          setState(() {
+            subtreeChild = newChild;
+          });
         }
-      default:
-        _controller.driver.logger?.warn(
-          "SubtreeHolder was been triggered, but received attributes of type ${_controller.attributes.payload.runtimeType} not supported",
+      } catch (e, s) {
+        driver.logger?.error(
+          "Failed to handle remote subtree update",
+          error: e,
+          stackTrace: s,
         );
-        break;
+        rethrow;
+      }
+    } else {
+      try {
+        final layoutTree = await parseLayout(
+          attrs,
+          driver,
+        );
+
+        final newChild = layoutTree.render();
+        setState(() {
+          subtreeChild = newChild;
+        });
+      } catch (e, s) {
+        driver.logger?.error(
+          "Failed to handle subtree update",
+          error: e,
+          stackTrace: s,
+        );
+      }
     }
   }
 
   Future<void> _loadRemoteContent() async {
-    final remoteWidgetData =
-        _controller.attributes.payload as RemoteSubtreeAttributes;
+    final remoteWidgetData = DuitDataSource(_controller.attributes.payload);
 
     final driver = _controller.driver;
     try {
       final body = driver.preparePayload(
-        remoteWidgetData.dependencies,
+        remoteWidgetData.getActionDependencies(),
       );
 
       final layout = await driver.transport?.request(
-        remoteWidgetData.downloadPath,
-        remoteWidgetData.meta ?? const {},
+        remoteWidgetData.getString(key: "downloadPath"),
+        remoteWidgetData["meta"] ?? const {},
         body,
       );
 
