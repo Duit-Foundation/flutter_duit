@@ -46,8 +46,7 @@ class DuitControlledSliverPadding extends StatefulWidget
 
 class _DuitControlledSliverPaddingState
     extends State<DuitControlledSliverPadding>
-    with
-        ViewControllerChangeListener {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);

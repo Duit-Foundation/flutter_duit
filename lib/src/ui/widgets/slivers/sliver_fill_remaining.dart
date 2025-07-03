@@ -42,8 +42,7 @@ class DuitControlledSliverFillRemaining extends StatefulWidget {
 
 class _DuitControlledSliverFillRemainingState
     extends State<DuitControlledSliverFillRemaining>
-    with
-        ViewControllerChangeListener {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);

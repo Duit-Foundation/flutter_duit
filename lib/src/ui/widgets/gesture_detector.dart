@@ -16,9 +16,7 @@ class DuitGestureDetector extends StatefulWidget {
 }
 
 class _DuitGestureDetectorState extends State<DuitGestureDetector>
-    with
-        ViewControllerChangeListener,
-        ActionHandler {
+    with ViewControllerChangeListener, ActionHandler {
   @override
   void initState() {
     attachStateToController(widget.controller);

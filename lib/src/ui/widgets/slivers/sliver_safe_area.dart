@@ -46,8 +46,7 @@ class DuitControlledSliverSafeArea extends StatefulWidget {
 
 class _DuitControlledSliverSafeAreaState
     extends State<DuitControlledSliverSafeArea>
-    with
-        ViewControllerChangeListener {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);

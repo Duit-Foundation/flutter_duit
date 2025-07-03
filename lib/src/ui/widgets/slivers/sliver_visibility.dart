@@ -49,9 +49,7 @@ class DuitControlledSliverVisibility extends StatefulWidget {
 
 class _DuitControlledSliverVisibilityState
     extends State<DuitControlledSliverVisibility>
-    with
-        ViewControllerChangeListener,
-        OutOfBoundWidgetBuilder {
+    with ViewControllerChangeListener, OutOfBoundWidgetBuilder {
   @override
   void initState() {
     attachStateToController(widget.controller);

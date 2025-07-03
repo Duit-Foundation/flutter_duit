@@ -39,8 +39,7 @@ class DuitControlledAbsorbPointer extends StatefulWidget {
 
 class _DuitControlledAbsorbPointerState
     extends State<DuitControlledAbsorbPointer>
-    with
-        ViewControllerChangeListener {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);

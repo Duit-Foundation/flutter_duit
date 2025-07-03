@@ -51,8 +51,7 @@ class DuitControlledCustomScrollView extends StatefulWidget {
 
 class _DuitControlledCustomScrollViewState
     extends State<DuitControlledCustomScrollView>
-    with
-        ViewControllerChangeListener {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);

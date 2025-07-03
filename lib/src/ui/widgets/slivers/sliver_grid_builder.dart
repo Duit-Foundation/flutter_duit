@@ -33,7 +33,7 @@ class _DuitSliverGridBuilderState extends State<DuitSliverGridBuilder>
       item,
       driver,
       (child) => DuitTile(
-        id: item?["id"],
+        id: item["id"],
         child: child,
       ),
     );
@@ -44,8 +44,7 @@ class _DuitSliverGridBuilderState extends State<DuitSliverGridBuilder>
     SliverGridDelegate delegate;
     final viewCtx = DuitViewContext.of(context);
 
-    final delegateBuilder =
-        viewCtx.sliverGridDelegatesRegistry[
+    final delegateBuilder = viewCtx.sliverGridDelegatesRegistry[
         attributes.getString(key: "sliverGridDelegateKey")];
 
     if (delegateBuilder != null) {

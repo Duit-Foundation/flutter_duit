@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/ui/widgets/tile.dart';
@@ -13,10 +12,7 @@ final class DuitListViewSeparated extends StatefulWidget {
 }
 
 class _DuitListViewSeparatedState extends State<DuitListViewSeparated>
-    with
-        ViewControllerChangeListener,
-        ScrollUtils,
-        OutOfBoundWidgetBuilder {
+    with ViewControllerChangeListener, ScrollUtils, OutOfBoundWidgetBuilder {
   @override
   void initState() {
     attachStateToController(widget.controller);

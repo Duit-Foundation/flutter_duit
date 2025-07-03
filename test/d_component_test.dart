@@ -68,10 +68,10 @@ void main() {
       final containerWithDefaultColorValue =
           find.byKey(const Key("container2"));
       expect(containerWithDefaultColorValue, findsOneWidget);
-      // expect(
-      //   (tester.firstWidget(containerWithDefaultColorValue) as Container).color,
-      //   ColorUtils.tryParseColor("#DCDCDC"),
-      // );
+      expect(
+        (tester.firstWidget(containerWithDefaultColorValue) as Container).color,
+        const Color.fromRGBO(220, 220, 220, 1),
+      );
     });
 
     testWidgets("must return empty view when tag is invalid", (tester) async {
@@ -138,7 +138,7 @@ void main() {
 
       final fCont = container.first.evaluate().first.widget as Container;
 
-      // expect(fCont.color, ColorUtils.tryParseColor("#DCDCDC"));
+      expect(fCont.color, const Color.fromRGBO(220, 220, 220, 1));
     });
 
     testWidgets("must register embedded component", (tester) async {

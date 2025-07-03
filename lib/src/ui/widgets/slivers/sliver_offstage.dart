@@ -40,8 +40,7 @@ class DuitControlledSliverOffstage extends StatefulWidget {
 
 class _DuitControlledSliverOffstageState
     extends State<DuitControlledSliverOffstage>
-    with
-        ViewControllerChangeListener {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);

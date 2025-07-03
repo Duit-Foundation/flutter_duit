@@ -53,7 +53,6 @@ class _DuitControlledSliverIgnorePointerState
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes;
     return SliverIgnorePointer(
       key: ValueKey(widget.controller.id),
       ignoring: attributes.getBool(

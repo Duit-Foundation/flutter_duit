@@ -61,8 +61,7 @@ final class DuitControlledListView extends StatefulWidget {
 }
 
 class _DuitControlledListViewState extends State<DuitControlledListView>
-    with
-        ViewControllerChangeListener {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);

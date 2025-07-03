@@ -18,9 +18,7 @@ class DuitSliverAnimatedOpacity extends StatefulWidget {
 }
 
 class _DuitSliverAnimatedOpacityState extends State<DuitSliverAnimatedOpacity>
-    with
-        ViewControllerChangeListener,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);

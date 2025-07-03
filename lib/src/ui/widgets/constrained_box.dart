@@ -46,8 +46,7 @@ class DuitControlledConstrainedBox extends StatefulWidget
 
 class _DuitControlledConstrainedBoxState
     extends State<DuitControlledConstrainedBox>
-    with
-        ViewControllerChangeListener {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);

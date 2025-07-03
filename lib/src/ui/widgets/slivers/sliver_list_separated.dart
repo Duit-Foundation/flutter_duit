@@ -13,9 +13,7 @@ final class DuitSliverListSeparated extends StatefulWidget {
 }
 
 class _DuitSliverListSeparatedState extends State<DuitSliverListSeparated>
-    with ViewControllerChangeListener,
-        ScrollUtils,
-        OutOfBoundWidgetBuilder {
+    with ViewControllerChangeListener, ScrollUtils, OutOfBoundWidgetBuilder {
   @override
   void initState() {
     attachStateToController(widget.controller);

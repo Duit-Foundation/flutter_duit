@@ -57,7 +57,7 @@ class _DuitControlledIntrinsicWidthState
       attributes,
     );
     return IntrinsicWidth(
-        key: Key(widget.controller.id),
+      key: Key(widget.controller.id),
       stepWidth: attrs.tryGetDouble(key: "stepWidth"),
       stepHeight: attrs.tryGetDouble(key: "stepHeight"),
       child: widget.child,

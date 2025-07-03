@@ -3,9 +3,7 @@ import 'package:flutter_duit/flutter_duit.dart';
 
 import '../utils.dart';
 
-
 const exampleCustomWidget = "ExampleCustomWidget";
-
 
 Widget exBuildFactory(
   ElementTreeEntry model, [
@@ -40,8 +38,7 @@ ElementTreeEntry exModelFactory(
   );
 }
 
-final class ExampleCustomWidget
-    extends CustomUiElement {
+final class ExampleCustomWidget extends CustomUiElement {
   ExampleCustomWidget({
     required super.id,
     required super.attributes,
@@ -57,7 +54,7 @@ class ExampleWidget extends StatefulWidget {
   final Widget? child;
   final UIElementController controller;
 
-  ExampleWidget({
+  const ExampleWidget({
     super.key,
     required this.controller,
     this.child,
@@ -71,9 +68,7 @@ class _ExampleWidgetState extends State<ExampleWidget>
     with ViewControllerChangeListener {
   @override
   void initState() {
-    attachStateToController(
-      widget.controller,
-    );
+    attachStateToController(widget.controller);
     super.initState();
   }
 
