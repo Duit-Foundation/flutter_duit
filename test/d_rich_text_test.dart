@@ -27,8 +27,7 @@ void main() {
     testWidgets("check widget", (tester) async {
       final driver = DuitDriver.static(
         _createWidget(),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
       await pumpDriver(tester, driver);
       expect(find.byKey(const Key("richTextId")), findsOneWidget);
@@ -39,8 +38,7 @@ void main() {
         (tester) async {
       final driver = DuitDriver.static(
         _createWidget(isControlled: true),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
       await pumpDriver(tester, driver);
       expect(find.byKey(const Key("richTextId")), findsOneWidget);

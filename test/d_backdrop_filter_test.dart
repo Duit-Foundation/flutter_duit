@@ -158,8 +158,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(_blur1),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
                 child: Container(color: Colors.red),
               ),
@@ -186,8 +185,7 @@ void main() {
                 child: DuitViewHost(
                   driver: DuitDriver.static(
                     _createWidget(filter.$1),
-                    transportOptions: HttpTransportOptions(),
-                    enableDevMetrics: false,
+                    transportOptions: EmptyTransportOptions(),
                   ),
                   child: Container(color: Colors.red),
                 ),

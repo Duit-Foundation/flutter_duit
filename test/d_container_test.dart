@@ -25,8 +25,7 @@ void main() {
             },
             "controlled": false,
           },
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
@@ -63,8 +62,7 @@ void main() {
             },
             "controlled": true,
           },
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(

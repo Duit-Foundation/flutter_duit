@@ -82,8 +82,7 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _uncText,
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
+              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -101,8 +100,7 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _uncTextWithoutData,
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
+              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -116,8 +114,7 @@ void main() {
     testWidgets("check text update process", (tester) async {
       final driver = DuitDriver.static(
         _cTextWithoutData,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -150,8 +147,7 @@ void main() {
     testWidgets("check animation", (tester) async {
       final driver = DuitDriver.static(
         _textWithPropAnimation,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -177,8 +173,7 @@ void main() {
     testWidgets("check widget key assignment", (tester) async {
       final driver = DuitDriver.static(
         _uncText,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -199,8 +194,7 @@ void main() {
     testWidgets("check update when data prop is empty or null", (tester) async {
       final driver = DuitDriver.static(
         _cTextWithoutData,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(

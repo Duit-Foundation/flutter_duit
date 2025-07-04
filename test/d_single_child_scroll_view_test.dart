@@ -35,8 +35,7 @@ void main() {
       (WidgetTester tester) async {
     final driver = DuitDriver.static(
       _createWidget1(),
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
 
     await tester.pumpWidget(
@@ -93,8 +92,7 @@ void main() {
           ),
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
@@ -141,8 +139,7 @@ void main() {
           ),
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
@@ -182,8 +179,7 @@ void main() {
           },
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
@@ -227,8 +223,7 @@ void main() {
           ),
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
@@ -266,8 +261,7 @@ void main() {
           },
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(

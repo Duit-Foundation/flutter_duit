@@ -57,8 +57,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   w,
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -95,8 +94,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(0.5),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),

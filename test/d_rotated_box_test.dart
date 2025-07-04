@@ -28,8 +28,7 @@ void main() {
     testWidgets("check widget stateless variant", (tester) async {
       final driver = DuitDriver.static(
         _createWidget(false, 1),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -54,8 +53,7 @@ void main() {
     testWidgets("check rotation", (tester) async {
       final driver = DuitDriver.static(
         _createWidget(true),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(

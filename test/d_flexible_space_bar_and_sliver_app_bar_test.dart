@@ -176,7 +176,6 @@ void main() {
             controlledFlexibleSpaceBar: false,
           ),
           transportOptions: EmptyTransportOptions(),
-          enableDevMetrics: false,
         );
 
         await pumpDriver(tester, driver);
@@ -197,8 +196,7 @@ void main() {
           _createWidget(
             controlledFlexibleSpaceBar: true,
           ),
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
 
         await tester.pumpWidget(
@@ -244,7 +242,6 @@ void main() {
         final driver = DuitDriver.static(
           _createWidget(),
           transportOptions: EmptyTransportOptions(),
-          enableDevMetrics: false,
         );
 
         await pumpDriver(tester, driver);
@@ -284,7 +281,6 @@ void main() {
         final driver = DuitDriver.static(
           _createWidget(),
           transportOptions: EmptyTransportOptions(),
-          enableDevMetrics: false,
         );
 
         await pumpDriver(tester, driver);

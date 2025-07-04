@@ -23,8 +23,7 @@ void main() {
           "tag": "x",
           "data": componentTemplateData,
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -50,8 +49,7 @@ void main() {
           "tag": "x",
           "data": componentTemplateData2,
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -82,8 +80,7 @@ void main() {
           "tag": "invalid_tag",
           "data": componentTemplateData2,
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -110,8 +107,7 @@ void main() {
           "tag": "x",
           "data": componentTemplateData,
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -168,8 +164,7 @@ void main() {
             }
           ],
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(

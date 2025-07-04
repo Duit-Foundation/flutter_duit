@@ -28,9 +28,8 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _createWidget(),
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
-            ),
+              transportOptions: EmptyTransportOptions(),
+            ),  
           ),
         ),
       );

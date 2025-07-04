@@ -56,8 +56,7 @@ void main() {
       testWidgets("check element alignment", (tester) async {
         final driver = DuitDriver.static(
           _createWidget(alignments.first, true),
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
 
         await tester.pumpWidget(
@@ -97,8 +96,7 @@ void main() {
             child: DuitViewHost(
               driver: DuitDriver.static(
                 _createWidget("topLeft"),
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
+                transportOptions: EmptyTransportOptions(),
               ),
             ),
           ),
@@ -117,7 +115,6 @@ void main() {
         final driver = DuitDriver.static(
           _createWidget("topLeft", true),
           transportOptions: EmptyTransportOptions(),
-          enableDevMetrics: false,
         );
         await tester.pumpWidget(
           Directionality(
