@@ -3,7 +3,6 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitAnimatedBuilder extends StatefulWidget {
   final Widget child;
