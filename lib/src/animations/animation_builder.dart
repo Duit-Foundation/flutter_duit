@@ -89,8 +89,9 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
     super.dispose();
   }
 
-  Future<void> _handleCommand(AnimationCommand command) async {
-    final controller = _controllers[command.animatedPropKey];
+  //TODO: Implement this
+  Future<void> _handleCommand(RemoteCommand command) async {
+    // final controller = _controllers[command.animatedPropKey];
 
     //   if (controller != null) {
     //     switch (command.method) {
