@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitAbsorbPointer extends StatelessWidget {
   final Widget child;
-  final ViewAttribute<AbsorbPointerAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitAbsorbPointer({
     super.key,
@@ -17,7 +16,7 @@ class DuitAbsorbPointer extends StatelessWidget {
     final attrs = attributes.payload;
     return AbsorbPointer(
       key: Key(attributes.id),
-      absorbing: attrs.absorbing,
+      absorbing: attrs.getBool("absorbing"),
       child: child,
     );
   }
@@ -25,7 +24,7 @@ class DuitAbsorbPointer extends StatelessWidget {
 
 class DuitControlledAbsorbPointer extends StatefulWidget {
   final Widget child;
-  final UIElementController<AbsorbPointerAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledAbsorbPointer({
     super.key,
@@ -40,9 +39,7 @@ class DuitControlledAbsorbPointer extends StatefulWidget {
 
 class _DuitControlledAbsorbPointerState
     extends State<DuitControlledAbsorbPointer>
-    with
-        ViewControllerChangeListener<DuitControlledAbsorbPointer,
-            AbsorbPointerAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -53,7 +50,7 @@ class _DuitControlledAbsorbPointerState
   Widget build(BuildContext context) {
     return AbsorbPointer(
       key: Key(widget.controller.id),
-      absorbing: attributes.absorbing,
+      absorbing: attributes.getBool("absorbing"),
       child: widget.child,
     );
   }

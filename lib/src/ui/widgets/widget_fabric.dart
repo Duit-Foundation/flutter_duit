@@ -1,19 +1,33 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/models/element.dart';
 import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
 import 'package:flutter_duit/src/animations/animation_builder.dart';
-import 'package:flutter_duit/src/ui/models/type_def.dart';
+import 'package:flutter_duit/src/ui/widgets/grid_constructor.dart';
 
 import 'index.dart';
 
+/// A mixin that provides a method to convert a [DuitElement] into a [Widget].
+///
+/// This mixin contains a static map that maps element types to their corresponding
+/// widget constructors. It provides a method [getWidgetFromElement] that takes a
+/// [DuitElement] and returns the corresponding [Widget].
+///
+/// Example usage:
+/// ```dart
+/// final widget = getWidgetFromElement(element);
+/// ```
+///
+/// The [getWidgetFromElement] method uses the static map to determine the
+/// appropriate widget constructor based on the element type.
 mixin WidgetFabric {
+  static const mp = <String, dynamic>{};
+
   Widget getWidgetFromElement(DuitElement model) {
     switch (model.type) {
       case ElementType.column:
-        final it = model as ColumnUIElement<ColumnAttributes>;
+        final it = model as ColumnUIElement;
         List<Widget> arr = [];
 
         for (var element in it.children) {
@@ -31,7 +45,7 @@ mixin WidgetFabric {
                 children: arr,
               );
       case ElementType.row:
-        final it = model as RowUIElement<RowAttributes>;
+        final it = model as RowUIElement;
         List<Widget> arr = [];
 
         for (var element in it.children) {
@@ -49,7 +63,7 @@ mixin WidgetFabric {
                 children: arr,
               );
       case ElementType.coloredBox:
-        final it = model as ColoredBoxUIElement<ColoredBoxAttributes>;
+        final it = model as ColoredBoxUIElement;
 
         final child = getWidgetFromElement(it.child);
 
@@ -63,7 +77,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.animatedSize:
-        final it = model as AnimatedSizeModel;
+        final it = model as AnimatedSizeUIElement;
 
         final child = getWidgetFromElement(it.child);
 
@@ -72,7 +86,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.animatedBuilder:
-        final it = model as AnimatedBuilderUIElement<AnimatedBuilderAttributes>;
+        final it = model as AnimatedBuilderUIElement;
 
         final child = getWidgetFromElement(it.child);
 
@@ -81,7 +95,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.center:
-        final it = model as CenterUIElement<CenterAttributes>;
+        final it = model as CenterUIElement;
 
         final child = getWidgetFromElement(it.child);
 
@@ -95,7 +109,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.sizedBox:
-        final it = model as SizedBoxUIElement<SizedBoxAttributes>;
+        final it = model as SizedBoxUIElement;
 
         final child = getWidgetFromElement(it.child);
 
@@ -109,7 +123,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.text:
-        final it = model as TextUIElement<TextAttributes>;
+        final it = model as TextUIElement;
 
         return it.controlled
             ? DuitControlledText(
@@ -119,7 +133,7 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
               );
       case ElementType.richText:
-        final it = model as RichTextUIElement<RichTextAttributes>;
+        final it = model as RichTextUIElement;
 
         return it.controlled
             ? DuitControlledRichText(
@@ -129,13 +143,13 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
               );
       case ElementType.textField:
-        final it = model as TextFieldUIElement<TextFieldAttributes>;
+        final it = model as TextFieldUIElement;
 
         return DuitTextField(
           controller: it.viewController!,
         );
       case ElementType.elevatedButton:
-        final it = model as ElevatedButtonUIElement<ElevatedButtonAttributes>;
+        final it = model as ElevatedButtonUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitElevatedButton(
@@ -143,7 +157,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.stack:
-        final it = model as StackUIElement<StackAttributes>;
+        final it = model as StackUIElement;
         List<Widget> arr = [];
 
         for (var element in it.children) {
@@ -161,7 +175,7 @@ mixin WidgetFabric {
                 children: arr,
               );
       case ElementType.wrap:
-        final it = model as WrapUIElement<WrapAttributes>;
+        final it = model as WrapUIElement;
         List<Widget> arr = [];
 
         for (var element in it.children) {
@@ -179,7 +193,7 @@ mixin WidgetFabric {
                 children: arr,
               );
       case ElementType.expanded:
-        final it = model as ExpandedUiElement<ExpandedAttributes>;
+        final it = model as ExpandedUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -192,7 +206,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.positioned:
-        final it = model as PositionedUiElement<PositionedAttributes>;
+        final it = model as PositionedUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -205,7 +219,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.padding:
-        final it = model as PaddingUiElement<PaddingAttributes>;
+        final it = model as PaddingUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -218,7 +232,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.decoratedBox:
-        final it = model as DecoratedBoxUiElement<DecoratedBoxAttributes>;
+        final it = model as DecoratedBoxUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -231,13 +245,13 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.checkbox:
-        final it = model as CheckboxUIElement<CheckboxAttributes>;
+        final it = model as CheckboxUIElement;
 
         return DuitCheckbox(
           controller: it.viewController!,
         );
       case ElementType.container:
-        final it = model as ContainerUiElement<ContainerAttributes>;
+        final it = model as ContainerUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -250,7 +264,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.gestureDetector:
-        final it = model as GestureDetectorUiElement<GestureDetectorAttributes>;
+        final it = model as GestureDetectorUiElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitGestureDetector(
@@ -258,7 +272,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.align:
-        final it = model as AlignUiElement<AlignAttributes>;
+        final it = model as AlignUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -271,7 +285,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.transform:
-        final it = model as TransformUiElement<TransformAttributes>;
+        final it = model as TransformUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -284,7 +298,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.image:
-        final it = model as ImageUIElement<ImageAttributes>;
+        final it = model as ImageUIElement;
 
         return it.controlled
             ? DuitControlledImage(
@@ -294,7 +308,7 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
               );
       case ElementType.radio:
-        final it = model as RadioUIElement<RadioAttributes>;
+        final it = model as RadioUIElement;
 
         return it.controlled
             ? DuitControlledRadio(
@@ -304,14 +318,13 @@ mixin WidgetFabric {
                 attributes: it.attributes!,
               );
       case ElementType.switchW:
-        final it = model as SwitchUiElement<SwitchAttributes>;
+        final it = model as SwitchUiElement;
 
         return DuitSwitch(
           controller: it.viewController!,
         );
       case ElementType.radioGroupContext:
-        final it =
-            model as RadioGroupContextUiElement<RadioGroupContextAttributes>;
+        final it = model as RadioGroupContextUiElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitRadioGroupContextProvider(
@@ -319,13 +332,13 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.slider:
-        final it = model as SliderUIElement<SliderAttributes>;
+        final it = model as SliderUIElement;
 
         return DuitSlider(
           controller: it.viewController!,
         );
       case ElementType.fittedBox:
-        final it = model as FittedBoxUiElement<FittedBoxAttributes>;
+        final it = model as FittedBoxUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -338,8 +351,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.lifecycleStateListener:
-        final it = model as LifecycleStateListenerUiElement<
-            LifecycleStateListenerAttributes>;
+        final it = model as LifecycleStateListenerUiElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitLifecycleStateListener(
@@ -347,8 +359,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.singleChildScrollview:
-        final it = model
-            as SingleChildScrollviewUiElement<SingleChildScrollviewAttributes>;
+        final it = model as SingleChildScrollviewUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -361,7 +372,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.ignorePointer:
-        final it = model as IgnorePointerUiElement<IgnorePointerAttributes>;
+        final it = model as IgnorePointerUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -374,7 +385,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.opacity:
-        final it = model as OpacityUiElement<OpacityAttributes>;
+        final it = model as OpacityUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -387,14 +398,14 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.component:
-        final it = model as ComponentUIElement<SubtreeAttributes>;
+        final it = model as ComponentUIElement;
         final child = getWidgetFromElement(it.child);
         return DuitComponent(
           controller: it.viewController!,
           child: child,
         );
       case ElementType.repaintBoundary:
-        final it = model as RepaintBoundaryUIElement<RepaintBoundaryAttributes>;
+        final it = model as RepaintBoundaryUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -407,7 +418,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.overflowBox:
-        final it = model as OverflowBoxUIElement<OverflowBoxAttributes>;
+        final it = model as OverflowBoxUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -420,7 +431,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.subtree:
-        final it = model as SubtreeUIElement<SubtreeAttributes>;
+        final it = model as SubtreeUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitSubtree(
@@ -428,14 +439,15 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.listView:
-        final it = model as ListViewUIElement<ListViewAttributes>;
+        final it = model as ListViewUIElement;
 
         int widgetType;
 
         if (!it.controlled) {
-          widgetType = it.attributes!.payload.type;
+          widgetType = it.attributes!.payload.getInt(key: "type");
         } else {
-          widgetType = it.viewController!.attributes.payload.type;
+          widgetType =
+              it.viewController!.attributes.payload.getInt(key: "type");
         }
 
         switch (widgetType) {
@@ -468,14 +480,18 @@ mixin WidgetFabric {
             return const SizedBox.shrink();
         }
       case ElementType.gridView:
-        final it = model as GridViewModel;
+        final it = model as GridViewUIElement;
 
         GridConstructor widgetType;
 
         if (!it.controlled) {
-          widgetType = it.attributes!.payload.constructor;
+          widgetType = GridConstructor.fromValue(
+            it.attributes!.payload.getString(key: "constructor"),
+          );
         } else {
-          widgetType = it.viewController!.attributes.payload.constructor;
+          widgetType = GridConstructor.fromValue(
+            it.viewController!.attributes.payload.getString(key: "constructor"),
+          );
         }
 
         switch (widgetType) {
@@ -491,11 +507,13 @@ mixin WidgetFabric {
 
             if (!it.controlled) {
               return DuitGridView(
+                constructor: widgetType,
                 attributes: it.attributes!,
                 children: arr,
               );
             } else {
               return DuitControlledGridView(
+                constructor: widgetType,
                 controller: it.viewController!,
                 children: arr,
               );
@@ -507,7 +525,7 @@ mixin WidgetFabric {
         }
 
       case ElementType.meta:
-        final it = model as MetaUiElement<MetaAttributes>;
+        final it = model as MetaUiElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitMetaWidget(
@@ -515,7 +533,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.intrinsicHeight:
-        final it = model as IntrinsicHeightUIElement<IntrinsicHeightAttributes>;
+        final it = model as IntrinsicHeightUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -528,7 +546,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.intrinsicWidth:
-        final it = model as IntrinsicWidthUiElement<IntrinsicWidthAttributes>;
+        final it = model as IntrinsicWidthUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -541,7 +559,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.rotatedBox:
-        final it = model as RotatedBoxUIElement<RotatedBoxAttributes>;
+        final it = model as RotatedBoxUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -554,7 +572,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.constrainedBox:
-        final it = model as ConstrainedBoxModel;
+        final it = model as ConstrainedBoxUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -567,7 +585,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.backdropFilter:
-        final it = model as BackdropFilterModel;
+        final it = model as BackdropFilterUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -581,7 +599,7 @@ mixin WidgetFabric {
               );
 
       case ElementType.animatedOpacity:
-        final it = model as AnimatedOpacityModel;
+        final it = model as AnimatedOpacityUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedOpacity(
@@ -589,13 +607,13 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.remoteSubtree:
-        final it = model as RemoteWidgetModel;
+        final it = model as RemoteUIElement;
 
         return DuitRemoteSubtree(
           controller: it.viewController!,
         );
       case ElementType.safeArea:
-        final it = model as SafeAreaUiElement<SafeAreaAttributes>;
+        final it = model as SafeAreaUiElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -610,13 +628,13 @@ mixin WidgetFabric {
       case ElementType.empty:
         return const DuitEmptyView();
       case ElementType.appBar:
-        final it = model as AppBarModel;
+        final it = model as AppBarUiElement;
 
         return DuitAppBar(
           controller: it.viewController!,
         );
       case ElementType.scaffold:
-        final it = model as ScaffoldModel;
+        final it = model as ScaffoldUiElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitScaffold(
@@ -624,7 +642,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.inkWell:
-        final it = model as InkWellModel;
+        final it = model as InkWellUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitInkWell(
@@ -648,7 +666,7 @@ mixin WidgetFabric {
 
         return const DuitEmptyView();
       case ElementType.card:
-        final it = model as CardModel;
+        final it = model as CardUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -661,7 +679,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.carouselView:
-        final it = model as CarouselViewModel;
+        final it = model as CarouselViewUIElement;
         List<Widget> arr = [];
 
         for (var element in it.children) {
@@ -679,7 +697,7 @@ mixin WidgetFabric {
                 children: arr,
               );
       case ElementType.animatedAlign:
-        final it = model as AnimatedAlignModel;
+        final it = model as AnimatedAlignUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedAlign(
@@ -687,7 +705,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.animatedRotation:
-        final it = model as AnimatedRotationModel;
+        final it = model as AnimatedRotationUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedRotation(
@@ -695,7 +713,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.animatedPadding:
-        final it = model as AnimatedPaddingModel;
+        final it = model as AnimatedPaddingUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedPadding(
@@ -703,7 +721,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.animatedContainer:
-        final it = model as AnimatedContainerModel;
+        final it = model as AnimatedContainerUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedContainer(
@@ -711,7 +729,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.animatedPositioned:
-        final it = model as AnimatedPositionedModel;
+        final it = model as AnimatedPositionedUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedPositioned(
@@ -719,7 +737,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.animatedScale:
-        final it = model as AnimatedScaleModel;
+        final it = model as AnimatedScaleUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedScale(
@@ -727,7 +745,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.absorbPointer:
-        final it = model as AbsorbPointerUIElement<AbsorbPointerAttributes>;
+        final it = model as AbsorbPointerUIElement;
         final child = getWidgetFromElement(it.child);
         return it.controlled
             ? DuitControlledAbsorbPointer(
@@ -739,7 +757,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.offstage:
-        final it = model as OffstageUIElement<OffstageAttributes>;
+        final it = model as OffstageUIElement;
         final child = getWidgetFromElement(it.child);
         return it.controlled
             ? DuitControlledOffstage(
@@ -751,7 +769,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.animatedCrossFade:
-        final it = model as AnimatedCrossFadeModel;
+        final it = model as AnimatedCrossFadeUIElement;
         List<Widget> arr = [];
 
         for (var element in it.children) {
@@ -764,7 +782,7 @@ mixin WidgetFabric {
           children: arr,
         );
       case ElementType.animatedSlide:
-        final it = model as AnimatedSlideModel;
+        final it = model as AnimatedSlideUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedSlide(
@@ -772,7 +790,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.physicalModel:
-        final it = model as PhysicalModelModel;
+        final it = model as PhysicalModelUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -785,7 +803,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.animatedPhysicalModel:
-        final it = model as AnimatedPhysicalModelModel;
+        final it = model as AnimatedPhysicalModelUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitAnimatedPhysicalModel(
@@ -793,7 +811,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.sliverPadding:
-        final it = model as SliverPaddingModel;
+        final it = model as SliverPaddingUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -806,7 +824,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.customScrollView:
-        final it = model as CustomScrollViewModel;
+        final it = model as CustomScrollViewUIElement;
 
         final arr = <Widget>[];
 
@@ -824,7 +842,7 @@ mixin WidgetFabric {
                 children: arr,
               );
       case ElementType.sliverFillRemaining:
-        final it = model as SliverFillRemainingModel;
+        final it = model as SliverFillRemainingUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -837,7 +855,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.sliverToBoxAdapter:
-        final it = model as SliverToBoxAdapterModel;
+        final it = model as SliverToBoxAdapterUIElement;
         final child = getWidgetFromElement(it.child);
 
         return SliverToBoxAdapter(
@@ -845,7 +863,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.sliverFillViewport:
-        final it = model as SliverFillViewportModel;
+        final it = model as SliverFillViewportUIElement;
 
         final arr = <Widget>[];
 
@@ -863,7 +881,7 @@ mixin WidgetFabric {
                 children: arr,
               );
       case ElementType.sliverVisibility:
-        final it = model as SliverVisibilityModel;
+        final it = model as SliverVisibilityUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -876,7 +894,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.sliverOffstage:
-        final it = model as SliverOffstageModel;
+        final it = model as SliverOffstageUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -889,7 +907,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.sliverOpacity:
-        final it = model as SliverOpacityModel;
+        final it = model as SliverOpacityUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -902,7 +920,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.sliverAnimatedOpacity:
-        final it = model as SliverAnimatedOpacityModel;
+        final it = model as SliverAnimatedOpacityUIElement;
         final child = getWidgetFromElement(it.child);
 
         return DuitSliverAnimatedOpacity(
@@ -910,7 +928,7 @@ mixin WidgetFabric {
           child: child,
         );
       case ElementType.sliverSafeArea:
-        final it = model as SliverSafeAreaModel;
+        final it = model as SliverSafeAreaUIElement;
         final child = getWidgetFromElement(it.child);
 
         return it.controlled
@@ -923,7 +941,7 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.sliverIgnorePointer:
-        final it = model as SliverIgnorePointerModel;
+        final it = model as SliverIgnorePointerUIElement;
         final child = getWidgetFromElement(it.child);
         return it.controlled
             ? DuitControlledSliverIgnorePointer(
@@ -935,14 +953,15 @@ mixin WidgetFabric {
                 child: child,
               );
       case ElementType.sliverList:
-        final it = model as SliverListModel;
+        final it = model as SliverListUIElement;
 
         int widgetType;
 
         if (!it.controlled) {
-          widgetType = it.attributes!.payload.type;
+          widgetType = it.attributes!.payload.getInt(key: "type");
         } else {
-          widgetType = it.viewController!.attributes.payload.type;
+          widgetType =
+              it.viewController!.attributes.payload.getInt(key: "type");
         }
 
         switch (widgetType) {
@@ -975,23 +994,28 @@ mixin WidgetFabric {
             return const SizedBox.shrink();
         }
       case ElementType.sliverAppBar:
-        final it = model as SliverAppBarModel;
+        final it = model as SliverAppBarUiElement;
         return DuitSliverAppBar(
           controller: it.viewController!,
         );
       case ElementType.flexibleSpaceBar:
-        final it = model as FlexibleSpaceBarModel;
+        final it = model as FlexibleSpaceBarUiElement;
         return DuitFlexibleSpaceBar(
           controller: it.viewController!,
         );
       case ElementType.sliverGrid:
-        final it = model as SliverGridModel;
+        final it = model as SliverGridUIElement;
+
         GridConstructor widgetType;
 
         if (!it.controlled) {
-          widgetType = it.attributes!.payload.constructor;
+          widgetType = GridConstructor.fromValue(
+            it.attributes!.payload.getString(key: "constructor"),
+          );
         } else {
-          widgetType = it.viewController!.attributes.payload.constructor;
+          widgetType = GridConstructor.fromValue(
+            it.viewController!.attributes.payload.getString(key: "constructor"),
+          );
         }
 
         switch (widgetType) {
@@ -1007,11 +1031,13 @@ mixin WidgetFabric {
 
             if (!it.controlled) {
               return DuitSliverGrid(
+                constructor: widgetType,
                 attributes: it.attributes!,
                 children: arr,
               );
             } else {
               return DuitControlledSliverGrid(
+                constructor: widgetType,
                 controller: it.viewController!,
                 children: arr,
               );

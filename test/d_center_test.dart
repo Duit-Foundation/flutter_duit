@@ -29,8 +29,7 @@ void main() {
     testWidgets("check center", (tester) async {
       final driver = DuitDriver.static(
         _createWidget(true),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -80,8 +79,7 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _createWidget(),
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
+              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),

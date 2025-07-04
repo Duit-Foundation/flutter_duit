@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitAnimatedOpacity extends StatefulWidget {
-  final UIElementController<AnimatedOpacityAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitAnimatedOpacity({
@@ -18,10 +17,7 @@ class DuitAnimatedOpacity extends StatefulWidget {
 }
 
 class _DuitAnimatedOpacityState extends State<DuitAnimatedOpacity>
-    with
-        ViewControllerChangeListener<DuitAnimatedOpacity,
-            AnimatedOpacityAttributes>,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,11 +28,14 @@ class _DuitAnimatedOpacityState extends State<DuitAnimatedOpacity>
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       key: ValueKey(widget.controller.id),
-      duration: attributes.duration,
-      curve: attributes.curve,
-      opacity: attributes.opacity,
+      duration: attributes.duration(),
+      curve: attributes.curve(defaultValue: Curves.linear)!,
+      opacity: attributes.getDouble(
+        key: "opacity",
+        defaultValue: 1.0,
+      ),
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
       child: widget.child,

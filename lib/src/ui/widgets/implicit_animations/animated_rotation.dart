@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/animations/index.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitAnimatedRotation extends StatefulWidget {
-  final UIElementController<AnimatedRotationAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitAnimatedRotation({
@@ -18,10 +17,7 @@ class DuitAnimatedRotation extends StatefulWidget {
 }
 
 class _DuitAnimatedRotationState extends State<DuitAnimatedRotation>
-    with
-        ViewControllerChangeListener<DuitAnimatedRotation,
-            AnimatedRotationAttributes>,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,13 +28,13 @@ class _DuitAnimatedRotationState extends State<DuitAnimatedRotation>
   Widget build(BuildContext context) {
     return AnimatedRotation(
       key: Key(widget.controller.id),
-      duration: attributes.duration,
-      alignment: attributes.alignment,
-      filterQuality: attributes.filterQuality,
-      turns: attributes.turns,
-      curve: attributes.curve,
+      duration: attributes.duration(),
+      alignment: attributes.alignment(defaultValue: Alignment.center)!,
+      filterQuality: attributes.filterQuality(),
+      turns: attributes.getDouble(key: "turns"),
+      curve: attributes.curve(defaultValue: Curves.linear)!,
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
       child: widget.child,

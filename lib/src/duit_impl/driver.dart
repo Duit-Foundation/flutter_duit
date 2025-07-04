@@ -279,7 +279,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   void _addParsers() {
     try {
-      ViewAttribute.attributeParser = const DefaultAttributeParser();
       ServerAction.setActionParser(const DefaultActionParser());
       ServerEvent.eventParser = const DefaultEventParser();
     } catch (e) {
@@ -319,7 +318,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   Future<void> _resolveComponentUpdate(
     UIElementController controller,
-    JSONObject json,
+    Map<String, dynamic> json,
   ) async {
     final tag = controller.tag;
     final description = DuitRegistry.getComponentDescription(tag!);
@@ -330,13 +329,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         json,
       );
 
-      final attributes = ViewAttribute.createAttributes(
-        ElementType.subtree,
-        component,
-        tag,
-      );
-
-      controller.updateState(attributes);
+      controller.updateState(component);
     }
   }
 
@@ -451,9 +444,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         final controller = _viewManager.getController(dependency.id);
         if (controller != null) {
           final attribute = controller.attributes.payload;
-          if (attribute is AttendedModel) {
-            payload[dependency.target] = attribute.collect();
-          }
+          payload[dependency.target] = attribute["value"];
         }
       }
     }
@@ -472,14 +463,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         await _resolveComponentUpdate(controller, json);
         return;
       }
-
-      final attributes = ViewAttribute.createAttributes(
-        controller.type,
-        json,
-        controller.tag,
-      );
-
-      controller.updateState(attributes);
+      controller.updateState(json);
     }
   }
 

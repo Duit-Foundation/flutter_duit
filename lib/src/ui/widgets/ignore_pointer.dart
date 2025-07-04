@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitIgnorePointer extends StatelessWidget {
-  final ViewAttribute<IgnorePointerAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitIgnorePointer({
@@ -17,14 +16,14 @@ class DuitIgnorePointer extends StatelessWidget {
     final attrs = attributes.payload;
     return IgnorePointer(
       key: Key(attributes.id),
-      ignoring: attrs.ignoring ?? true,
+      ignoring: attrs.getBool("ignoring"),
       child: child,
     );
   }
 }
 
 class DuitControlledIgnorePointer extends StatefulWidget {
-  final UIElementController<IgnorePointerAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledIgnorePointer({
@@ -40,9 +39,7 @@ class DuitControlledIgnorePointer extends StatefulWidget {
 
 class _DuitControlledIgnorePointerState
     extends State<DuitControlledIgnorePointer>
-    with
-        ViewControllerChangeListener<DuitControlledIgnorePointer,
-            IgnorePointerAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -53,7 +50,7 @@ class _DuitControlledIgnorePointerState
   Widget build(BuildContext context) {
     return IgnorePointer(
       key: Key(widget.controller.id),
-      ignoring: attributes.ignoring ?? true,
+      ignoring: attributes.getBool("ignoring"),
       child: widget.child,
     );
   }

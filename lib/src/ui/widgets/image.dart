@@ -1,82 +1,79 @@
-import "dart:typed_data";
-
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 import "package:flutter_duit/src/utils/image_type.dart";
 
 sealed class _ImageProducer {
-  static Widget memory(ImageAttributes? attrs, String id) {
+  static Widget memory(DuitDataSource attrs, String id) {
     return Image.memory(
       key: Key(id),
-      attrs?.byteData ?? Uint8List(0),
-      fit: attrs?.fit,
-      gaplessPlayback: attrs?.gaplessPlayback ?? false,
-      excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
-      scale: attrs?.scale ?? 1.0,
-      color: attrs?.color,
-      colorBlendMode: attrs?.colorBlendMode,
-      alignment: attrs?.alignment ?? Alignment.center,
-      repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
-      matchTextDirection: attrs?.matchTextDirection ?? false,
-      isAntiAlias: attrs?.isAntiAlias ?? false,
-      filterQuality: attrs?.filterQuality ?? FilterQuality.low,
-      cacheWidth: attrs?.cacheWidth,
-      cacheHeight: attrs?.cacheHeight,
-      width: attrs?.width,
-      height: attrs?.height,
+      attrs.uint8List(key: "byteData"),
+      fit: attrs.boxFit(),
+      gaplessPlayback: attrs.getBool("gaplessPlayback"),
+      excludeFromSemantics: attrs.getBool("excludeFromSemantics"),
+      scale: attrs.getDouble(key: "scale", defaultValue: 1.0),
+      color: attrs.tryParseColor(),
+      colorBlendMode: attrs.blendMode(),
+      alignment: attrs.alignment(defaultValue: Alignment.center)!,
+      repeat: attrs.imageRepeat(),
+      matchTextDirection: attrs.getBool("matchTextDirection"),
+      isAntiAlias: attrs.getBool("isAntiAlias"),
+      filterQuality: attrs.filterQuality(),
+      cacheWidth: attrs.tryGetInt(key: "cacheWidth"),
+      cacheHeight: attrs.tryGetInt(key: "cacheHeight"),
+      width: attrs.tryGetDouble(key: "width"),
+      height: attrs.tryGetDouble(key: "height"),
     );
   }
 
-  static Widget asset(ImageAttributes? attrs, String id) {
+  static Widget asset(DuitDataSource attrs, String id) {
     return Image.asset(
       key: Key(id),
-      attrs?.src ?? "",
-      fit: attrs?.fit,
-      gaplessPlayback: attrs?.gaplessPlayback ?? false,
-      excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
-      scale: attrs?.scale ?? 1.0,
-      color: attrs?.color,
-      colorBlendMode: attrs?.colorBlendMode,
-      alignment: attrs?.alignment ?? Alignment.center,
-      repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
-      matchTextDirection: attrs?.matchTextDirection ?? false,
-      isAntiAlias: attrs?.isAntiAlias ?? false,
-      filterQuality: attrs?.filterQuality ?? FilterQuality.low,
-      cacheWidth: attrs?.cacheWidth,
-      cacheHeight: attrs?.cacheHeight,
-      width: attrs?.width,
-      height: attrs?.height,
+      attrs.getString(key: "src"),
+      fit: attrs.boxFit(),
+      gaplessPlayback: attrs.getBool("gaplessPlayback"),
+      excludeFromSemantics: attrs.getBool("excludeFromSemantics"),
+      scale: attrs.getDouble(key: "scale", defaultValue: 1.0),
+      color: attrs.tryParseColor(),
+      colorBlendMode: attrs.blendMode(),
+      alignment: attrs.alignment(defaultValue: Alignment.center)!,
+      repeat: attrs.imageRepeat(),
+      matchTextDirection: attrs.getBool("matchTextDirection"),
+      isAntiAlias: attrs.getBool("isAntiAlias"),
+      filterQuality: attrs.filterQuality(),
+      cacheWidth: attrs.tryGetInt(key: "cacheWidth"),
+      cacheHeight: attrs.tryGetInt(key: "cacheHeight"),
+      width: attrs.tryGetDouble(key: "width"),
+      height: attrs.tryGetDouble(key: "height"),
     );
   }
 
-  static Widget network(ImageAttributes? attrs, String id) {
+  static Widget network(DuitDataSource attrs, String id) {
     return Image.network(
       key: Key(id),
-      attrs?.src ?? "",
-      fit: attrs?.fit,
-      gaplessPlayback: attrs?.gaplessPlayback ?? false,
-      excludeFromSemantics: attrs?.excludeFromSemantics ?? false,
-      scale: attrs?.scale ?? 1.0,
-      color: attrs?.color,
-      colorBlendMode: attrs?.colorBlendMode,
-      alignment: attrs?.alignment ?? Alignment.center,
-      repeat: attrs?.repeat ?? ImageRepeat.noRepeat,
-      matchTextDirection: attrs?.matchTextDirection ?? false,
-      isAntiAlias: attrs?.isAntiAlias ?? false,
-      filterQuality: attrs?.filterQuality ?? FilterQuality.low,
-      cacheWidth: attrs?.cacheWidth,
-      cacheHeight: attrs?.cacheHeight,
-      width: attrs?.width,
-      height: attrs?.height,
+      attrs.getString(key: "src"),
+      fit: attrs.boxFit(),
+      gaplessPlayback: attrs.getBool("gaplessPlayback"),
+      excludeFromSemantics: attrs.getBool("excludeFromSemantics"),
+      scale: attrs.getDouble(key: "scale", defaultValue: 1.0),
+      color: attrs.tryParseColor(),
+      colorBlendMode: attrs.blendMode(),
+      alignment: attrs.alignment(defaultValue: Alignment.center)!,
+      repeat: attrs.imageRepeat(),
+      matchTextDirection: attrs.getBool("matchTextDirection"),
+      isAntiAlias: attrs.getBool("isAntiAlias"),
+      filterQuality: attrs.filterQuality(),
+      cacheWidth: attrs.tryGetInt(key: "cacheWidth"),
+      cacheHeight: attrs.tryGetInt(key: "cacheHeight"),
+      width: attrs.tryGetDouble(key: "width"),
+      height: attrs.tryGetDouble(key: "height"),
     );
   }
 }
 
 class DuitImage extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<ImageAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitImage({
     super.key,
@@ -85,12 +82,14 @@ class DuitImage extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
-    return switch (attrs.type) {
+    final type = ImageType.fromString(attrs.getString(key: "type"));
+
+    return switch (type) {
       ImageType.memory => _ImageProducer.memory(attrs, attributes.id),
       ImageType.asset => _ImageProducer.asset(attrs, attributes.id),
       ImageType.network => _ImageProducer.network(attrs, attributes.id),
@@ -99,7 +98,7 @@ class DuitImage extends StatelessWidget with AnimatedAttributes {
 }
 
 class DuitControlledImage extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<ImageAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledImage({
     super.key,
@@ -111,7 +110,7 @@ class DuitControlledImage extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledImageState extends State<DuitControlledImage>
-    with ViewControllerChangeListener<DuitControlledImage, ImageAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -120,12 +119,14 @@ class _DuitControlledImageState extends State<DuitControlledImage>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
-    return switch (attrs.type) {
+    final type = ImageType.fromString(attrs.getString(key: "type"));
+
+    return switch (type) {
       ImageType.memory => _ImageProducer.memory(attrs, widget.controller.id),
       ImageType.asset => _ImageProducer.asset(attrs, widget.controller.id),
       ImageType.network => _ImageProducer.network(attrs, widget.controller.id),

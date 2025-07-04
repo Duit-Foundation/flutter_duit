@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitSliverSafeArea extends StatelessWidget {
-  final ViewAttribute<SliverSafeAreaAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitSliverSafeArea({
@@ -18,18 +17,20 @@ class DuitSliverSafeArea extends StatelessWidget {
 
     return SliverSafeArea(
       key: Key(attributes.id),
-      left: attrs.left,
-      top: attrs.top,
-      right: attrs.right,
-      bottom: attrs.bottom,
-      minimum: attrs.minimum ?? EdgeInsets.zero,
-      sliver: attrs.needsBoxAdapter ? SliverToBoxAdapter(child: child) : child,
+      left: attrs.getBool("left", defaultValue: true),
+      top: attrs.getBool("top", defaultValue: true),
+      right: attrs.getBool("right", defaultValue: true),
+      bottom: attrs.getBool("bottom", defaultValue: true),
+      minimum: attrs.edgeInsets(defaultValue: EdgeInsets.zero)!,
+      sliver: attrs.getBool("needsBoxAdapter")
+          ? SliverToBoxAdapter(child: child)
+          : child,
     );
   }
 }
 
 class DuitControlledSliverSafeArea extends StatefulWidget {
-  final UIElementController<SliverSafeAreaAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledSliverSafeArea({
@@ -45,9 +46,7 @@ class DuitControlledSliverSafeArea extends StatefulWidget {
 
 class _DuitControlledSliverSafeAreaState
     extends State<DuitControlledSliverSafeArea>
-    with
-        ViewControllerChangeListener<DuitControlledSliverSafeArea,
-            SliverSafeAreaAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -58,12 +57,12 @@ class _DuitControlledSliverSafeAreaState
   Widget build(BuildContext context) {
     return SliverSafeArea(
       key: ValueKey(widget.controller.id),
-      left: attributes.left,
-      top: attributes.top,
-      right: attributes.right,
-      bottom: attributes.bottom,
-      minimum: attributes.minimum ?? EdgeInsets.zero,
-      sliver: attributes.needsBoxAdapter
+      left: attributes.getBool("left", defaultValue: true),
+      top: attributes.getBool("top", defaultValue: true),
+      right: attributes.getBool("right", defaultValue: true),
+      bottom: attributes.getBool("bottom", defaultValue: true),
+      minimum: attributes.edgeInsets(defaultValue: EdgeInsets.zero)!,
+      sliver: attributes.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: widget.child)
           : widget.child,
     );

@@ -2,14 +2,14 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
-const _t1 = {
+final _t1 = <String, dynamic>{
   "type": "Text",
   "id": "tfgdfg1",
   "controlled": true,
   "attributes": {"data": "Text 1"}
 };
 
-const _t2 = {
+final _t2 = <String, dynamic>{
   "type": "Text",
   "id": "fgfgfbcb",
   "controlled": false,
@@ -107,8 +107,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),

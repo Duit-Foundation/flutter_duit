@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_test/flutter_test.dart";
 
 ///Create widget templates for testing
-const _uncText = {
+final _uncText = <String, dynamic>{
   "type": "Text",
   "id": "text",
   "controlled": false,
@@ -18,7 +17,7 @@ const _uncText = {
   },
 };
 
-const _uncTextWithoutData = {
+final _uncTextWithoutData = <String, dynamic>{
   "type": "Text",
   "id": "1",
   "controlled": false,
@@ -31,7 +30,7 @@ const _uncTextWithoutData = {
   },
 };
 
-const _cTextWithoutData = {
+final _cTextWithoutData = <String, dynamic>{
   "type": "Text",
   "id": "1",
   "controlled": true,
@@ -44,7 +43,7 @@ const _cTextWithoutData = {
   },
 };
 
-const _textWithPropAnimation = {
+final _textWithPropAnimation = <String, dynamic>{
   "type": "AnimatedBuilder",
   "id": "builder",
   "controlled": true,
@@ -83,8 +82,7 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _uncText,
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
+              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -102,8 +100,7 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _uncTextWithoutData,
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
+              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -117,8 +114,7 @@ void main() {
     testWidgets("check text update process", (tester) async {
       final driver = DuitDriver.static(
         _cTextWithoutData,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -151,8 +147,7 @@ void main() {
     testWidgets("check animation", (tester) async {
       final driver = DuitDriver.static(
         _textWithPropAnimation,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -178,8 +173,7 @@ void main() {
     testWidgets("check widget key assignment", (tester) async {
       final driver = DuitDriver.static(
         _uncText,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -200,8 +194,7 @@ void main() {
     testWidgets("check update when data prop is empty or null", (tester) async {
       final driver = DuitDriver.static(
         _cTextWithoutData,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -223,17 +216,6 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(text, findsOneWidget);
-    });
-
-    test("check attributes", () async {
-      final attrs = TextAttributes(
-        data: "",
-        parentBuilderId: null,
-        affectedProperties: null,
-      );
-
-      expect(() => attrs.dispatchInternalCall("invalid"),
-          throwsUnimplementedError);
     });
   });
 }

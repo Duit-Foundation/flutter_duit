@@ -42,8 +42,7 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _createWidget(),
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
+              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -67,8 +66,7 @@ void main() {
             bottom: true,
             controlled: true,
           ),
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(tester, driver);
@@ -120,8 +118,7 @@ void main() {
       };
       final driver = DuitDriver.static(
         widgetMap,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
       await tester.pumpWidget(
         Directionality(

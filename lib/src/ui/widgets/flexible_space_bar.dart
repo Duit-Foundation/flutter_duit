@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/flexible_space_bar_attributes.dart';
 
 class DuitFlexibleSpaceBar extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<FlexibleSpaceBarAttributes> controller;
+  final UIElementController controller;
 
   const DuitFlexibleSpaceBar({
     super.key,
@@ -15,10 +14,7 @@ class DuitFlexibleSpaceBar extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitFlexibleSpaceBarState extends State<DuitFlexibleSpaceBar>
-    with
-        ViewControllerChangeListener<DuitFlexibleSpaceBar,
-            FlexibleSpaceBarAttributes>,
-        OutOfBoundWidgetBuilder {
+    with ViewControllerChangeListener, OutOfBoundWidgetBuilder {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -38,16 +34,19 @@ class _DuitFlexibleSpaceBarState extends State<DuitFlexibleSpaceBar>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(context, attributes);
+    final attrs = widget.mergeWithDataSource(context, attributes);
     return FlexibleSpaceBar(
       key: ValueKey(widget.controller.id),
-      title: _build(attrs.title),
-      background: _build(attrs.background),
-      centerTitle: attrs.centerTitle,
-      expandedTitleScale: attrs.expandedTitleScale,
-      collapseMode: attrs.collapseMode,
-      stretchModes: attrs.stretchModes,
-      titlePadding: attrs.titlePadding,
+      title: _build(attrs["title"]),
+      background: _build(attrs["background"]),
+      centerTitle: attrs.tryGetBool("centerTitle"),
+      expandedTitleScale: attrs.getDouble(
+        key: "expandedTitleScale",
+        defaultValue: 1.5,
+      ),
+      collapseMode: attrs.collapseMode(),
+      stretchModes: attrs.stretchModes(),
+      titlePadding: attrs.edgeInsets(key: "titlePadding"),
     );
   }
 }

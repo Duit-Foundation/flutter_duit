@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitSliverOffstage extends StatelessWidget {
-  final ViewAttribute<SliverOffstageAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitSliverOffstage({
@@ -16,8 +15,8 @@ class DuitSliverOffstage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverOffstage(
       key: ValueKey(attributes.id),
-      offstage: attributes.payload.offstage,
-      sliver: attributes.payload.needsBoxAdapter
+      offstage: attributes.payload.getBool("offstage", defaultValue: true),
+      sliver: attributes.payload.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: child)
           : child,
     );
@@ -25,7 +24,7 @@ class DuitSliverOffstage extends StatelessWidget {
 }
 
 class DuitControlledSliverOffstage extends StatefulWidget {
-  final UIElementController<SliverOffstageAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledSliverOffstage({
@@ -41,9 +40,7 @@ class DuitControlledSliverOffstage extends StatefulWidget {
 
 class _DuitControlledSliverOffstageState
     extends State<DuitControlledSliverOffstage>
-    with
-        ViewControllerChangeListener<DuitControlledSliverOffstage,
-            SliverOffstageAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -54,8 +51,8 @@ class _DuitControlledSliverOffstageState
   Widget build(BuildContext context) {
     return SliverOffstage(
       key: ValueKey(widget.controller.id),
-      offstage: attributes.offstage,
-      sliver: attributes.needsBoxAdapter
+      offstage: attributes.getBool("offstage", defaultValue: true),
+      sliver: attributes.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: widget.child)
           : widget.child,
     );

@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 final class DuitFittedBox extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<FittedBoxAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitFittedBox({
@@ -14,23 +13,23 @@ final class DuitFittedBox extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return FittedBox(
       key: Key(attributes.id),
-      fit: attrs.fit ?? BoxFit.contain,
-      clipBehavior: attrs.clipBehavior ?? Clip.none,
-      alignment: attrs.alignment ?? Alignment.center,
+      fit: attrs.boxFit(defaultValue: BoxFit.contain)!,
+      clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
+      alignment: attrs.alignment(defaultValue: Alignment.center)!,
       child: child,
     );
   }
 }
 
 class DuitControlledFittedBox extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<FittedBoxAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledFittedBox({
@@ -45,9 +44,7 @@ class DuitControlledFittedBox extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledFittedBoxState extends State<DuitControlledFittedBox>
-    with
-        ViewControllerChangeListener<DuitControlledFittedBox,
-            FittedBoxAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -56,16 +53,16 @@ class _DuitControlledFittedBoxState extends State<DuitControlledFittedBox>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return FittedBox(
       key: Key(widget.controller.id),
-      fit: attrs.fit ?? BoxFit.contain,
-      clipBehavior: attrs.clipBehavior ?? Clip.none,
-      alignment: attrs.alignment ?? Alignment.center,
+      fit: attrs.boxFit(defaultValue: BoxFit.contain)!,
+      clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
+      alignment: attrs.alignment(defaultValue: Alignment.center)!,
       child: widget.child,
     );
   }

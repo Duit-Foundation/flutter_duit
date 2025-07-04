@@ -46,7 +46,7 @@ void main() {
 
           var meta = DuitMetaData.maybeOf(context);
 
-          var metaValue = meta!.value["value"];
+          var metaValue = meta!.value;
           expect(metaValue, isNotNull);
           expect(metaValue["foo"], "bar");
 
@@ -63,7 +63,7 @@ void main() {
 
           meta = DuitMetaData.maybeOf(context);
 
-          metaValue = meta!.value["value"];
+          metaValue = meta!.value;
           expect(metaValue, isNotNull);
           expect(metaValue["foo"], "baz");
           expect(metaValue["num"], 42);

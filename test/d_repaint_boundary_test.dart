@@ -29,7 +29,7 @@ void main() {
     testWidgets("check widget", (tester) async {
       final driver = DuitDriver.static(
         _createWidget(),
-        transportOptions: HttpTransportOptions(),
+        transportOptions: EmptyTransportOptions(),
       );
       await pumpDriver(tester, driver);
 
@@ -44,8 +44,7 @@ void main() {
       (tester) async {
         final driver = DuitDriver.static(
           _createWidget(isControlled: true),
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(tester, driver);

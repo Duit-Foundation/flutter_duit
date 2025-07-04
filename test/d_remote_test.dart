@@ -24,8 +24,7 @@ void main() {
                 "dependsOn": [],
               },
             },
-            transportOptions: HttpTransportOptions(),
-            enableDevMetrics: false,
+            transportOptions: EmptyTransportOptions(),
           )..applyMockTransport(
               {
                 "type": "Text",
@@ -77,8 +76,7 @@ void main() {
                 "dependsOn": [],
               },
             },
-            transportOptions: HttpTransportOptions(),
-            enableDevMetrics: false,
+            transportOptions: EmptyTransportOptions(),
           )..applyMockTransport(
               {
                 "type": "Text",

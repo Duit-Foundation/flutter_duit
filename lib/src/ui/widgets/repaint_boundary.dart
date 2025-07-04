@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitRepaintBoundary extends StatelessWidget {
   final Widget child;
-  final ViewAttribute<RepaintBoundaryAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitRepaintBoundary({
     super.key,
@@ -14,16 +13,17 @@ class DuitRepaintBoundary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = attributes.payload;
+    final childIndex = attributes.payload.tryGetInt(key: "childIndex");
 
-    if (attrs.childIndex == null) {
+    if (childIndex == null) {
       return RepaintBoundary(
+        key: Key(attributes.id),
         child: child,
       );
     } else {
       return RepaintBoundary.wrap(
         child,
-        attrs.childIndex!,
+        childIndex,
       );
     }
   }
@@ -31,7 +31,7 @@ class DuitRepaintBoundary extends StatelessWidget {
 
 class DuitControlledRepaintBoundary extends StatefulWidget {
   final Widget child;
-  final UIElementController<RepaintBoundaryAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledRepaintBoundary({
     super.key,
@@ -46,9 +46,7 @@ class DuitControlledRepaintBoundary extends StatefulWidget {
 
 class _DuitControlledRepaintBoundaryState
     extends State<DuitControlledRepaintBoundary>
-    with
-        ViewControllerChangeListener<DuitControlledRepaintBoundary,
-            RepaintBoundaryAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -57,7 +55,8 @@ class _DuitControlledRepaintBoundaryState
 
   @override
   Widget build(BuildContext context) {
-    if (attributes.childIndex == null) {
+    final childIndex = attributes.tryGetInt(key: "childIndex");
+    if (childIndex == null) {
       return RepaintBoundary(
         key: Key(widget.controller.id),
         child: widget.child,
@@ -65,7 +64,7 @@ class _DuitControlledRepaintBoundaryState
     } else {
       return RepaintBoundary.wrap(
         widget.child,
-        attributes.childIndex!,
+        childIndex,
       );
     }
   }

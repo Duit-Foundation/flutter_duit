@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitPhysicalModel extends StatelessWidget with AnimatedAttributes {
+  final ViewAttribute attributes;
   final Widget child;
-  final ViewAttribute<PhysicalModelAttributes> attributes;
 
   const DuitPhysicalModel({
     super.key,
@@ -14,15 +13,18 @@ class DuitPhysicalModel extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(context, attributes.payload);
+    final attrs = mergeWithDataSource(context, attributes.payload);
     return PhysicalModel(
       key: Key(attributes.id),
-      elevation: attrs.elevation,
-      color: attrs.color,
-      shadowColor: attrs.shadowColor,
-      clipBehavior: attrs.clipBehavior,
-      borderRadius: attrs.borderRadius,
-      shape: attrs.shape,
+      elevation: attrs.getDouble(key: "elevation"),
+      color: attrs.parseColor(),
+      shadowColor: attrs.parseColor(
+        key: "shadowColor",
+        defaultValue: const Color(0xFF000000),
+      ),
+      clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
+      borderRadius: attrs.borderRadius(),
+      shape: attrs.boxShape(defaultValue: BoxShape.rectangle)!,
       child: child,
     );
   }
@@ -30,8 +32,8 @@ class DuitPhysicalModel extends StatelessWidget with AnimatedAttributes {
 
 class DuitControlledPhysicalModel extends StatefulWidget
     with AnimatedAttributes {
+  final UIElementController controller;
   final Widget child;
-  final UIElementController<PhysicalModelAttributes> controller;
 
   const DuitControlledPhysicalModel({
     super.key,
@@ -46,9 +48,7 @@ class DuitControlledPhysicalModel extends StatefulWidget
 
 class _DuitControlledPhysicalModelState
     extends State<DuitControlledPhysicalModel>
-    with
-        ViewControllerChangeListener<DuitControlledPhysicalModel,
-            PhysicalModelAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(
@@ -59,19 +59,22 @@ class _DuitControlledPhysicalModelState
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return PhysicalModel(
       key: Key(widget.controller.id),
-      elevation: attrs.elevation,
-      color: attrs.color,
-      shadowColor: attrs.shadowColor,
-      clipBehavior: attrs.clipBehavior,
-      borderRadius: attrs.borderRadius,
-      shape: attrs.shape,
+      elevation: attrs.getDouble(key: "elevation"),
+      color: attrs.parseColor(),
+      shadowColor: attrs.parseColor(
+        key: "shadowColor",
+        defaultValue: const Color(0xFF000000),
+      ),
+      clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
+      borderRadius: attrs.borderRadius(),
+      shape: attrs.boxShape(defaultValue: BoxShape.rectangle)!,
       child: widget.child,
     );
   }

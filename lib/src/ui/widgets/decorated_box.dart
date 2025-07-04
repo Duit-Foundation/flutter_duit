@@ -1,11 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitDecoratedBox extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<DecoratedBoxAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitDecoratedBox({
@@ -16,14 +15,14 @@ class DuitDecoratedBox extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return DecoratedBox(
       key: Key(attributes.id),
-      decoration: attrs.decoration ?? const BoxDecoration(),
+      decoration: attrs.decoration(defaultValue: const BoxDecoration())!,
       child: child,
     );
   }
@@ -31,7 +30,7 @@ class DuitDecoratedBox extends StatelessWidget with AnimatedAttributes {
 
 class DuitControlledDecoratedBox extends StatefulWidget
     with AnimatedAttributes {
-  final UIElementController<DecoratedBoxAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledDecoratedBox({
@@ -46,9 +45,7 @@ class DuitControlledDecoratedBox extends StatefulWidget
 }
 
 class _DuitControlledDecoratedBoxState extends State<DuitControlledDecoratedBox>
-    with
-        ViewControllerChangeListener<DuitControlledDecoratedBox,
-            DecoratedBoxAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -57,14 +54,14 @@ class _DuitControlledDecoratedBoxState extends State<DuitControlledDecoratedBox>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return DecoratedBox(
       key: Key(widget.controller.id),
-      decoration: attrs.decoration ?? const BoxDecoration(),
+      decoration: attrs.decoration(defaultValue: const BoxDecoration())!,
       child: widget.child,
     );
   }

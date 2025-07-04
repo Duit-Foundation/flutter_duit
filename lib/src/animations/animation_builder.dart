@@ -3,11 +3,10 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitAnimatedBuilder extends StatefulWidget {
   final Widget child;
-  final UIElementController<AnimatedBuilderAttributes> controller;
+  final UIElementController controller;
 
   const DuitAnimatedBuilder({
     super.key,
@@ -28,7 +27,7 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
   void didChangeDependencies() {
     widget.controller.listenCommand(_handleCommand);
     final attrs = widget.controller.attributes.payload;
-    for (var description in attrs.tweenDescriptions) {
+    for (var description in attrs.tweens()) {
       final controller = AnimationController(
         vsync: this,
         duration: description.duration,
@@ -89,25 +88,29 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
     super.dispose();
   }
 
-  Future<void> _handleCommand(AnimationCommand command) async {
-    final controller = _controllers[command.animatedPropKey];
+  //TODO: Implement this
+  Future<void> _handleCommand(RemoteCommand command) async {
+    // final controller = _controllers[command.animatedPropKey];
 
-    if (controller != null) {
-      switch (command.method) {
-        case AnimationMethod.forward:
-          await controller.forward();
-          break;
-        case AnimationMethod.repeat:
-          await controller.repeat();
-          break;
-        case AnimationMethod.reverse:
-          await controller.reverse();
-          break;
-        case AnimationMethod.toggle:
-          await handleToggleMethod(controller);
-          break;
-      }
-    }
+    //   if (controller != null) {
+    //     switch (command.method) {
+    //       case AnimationMethod.forward:
+    //         await controller.forward();
+    //         break;
+    //       case AnimationMethod.repeat:
+    //         await controller.repeat();
+    //         break;
+    //       case AnimationMethod.reverse:
+    //         await controller.reverse();
+    //         break;
+    //       case AnimationMethod.toggle:
+    //         await handleToggleMethod(controller);
+    //         break;
+    //     }
+    //   } else {
+    //     // throw Exception("Controller not found");
+    //   }
+    // }
   }
 
   @override
@@ -121,7 +124,7 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
       builder: (context, child) {
         return DuitAnimationContext(
           streams: _animations,
-          parentId: wC.attributes.payload.persistentId ?? wC.id,
+          parentId: wC.attributes.payload.tryGetString("persistentId") ?? wC.id,
           //Priority use of persistentId
           child: child ?? const SizedBox.shrink(),
         );

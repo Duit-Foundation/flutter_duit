@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitCheckbox extends StatefulWidget {
-  final UIElementController<CheckboxAttributes> controller;
+  final UIElementController controller;
 
   const DuitCheckbox({
     super.key,
@@ -15,19 +14,18 @@ class DuitCheckbox extends StatefulWidget {
 }
 
 class _DuitCheckboxState extends State<DuitCheckbox>
-    with ViewControllerChangeListener<DuitCheckbox, CheckboxAttributes> {
+    with ViewControllerChangeListener {
   bool? _value;
 
   @override
   void initState() {
     attachStateToController(widget.controller);
-    _value = attributes.value;
+    _value = attributes.tryGetBool("value");
     super.initState();
   }
 
   void _onChange(bool? value) {
-    final data = widget.controller.attributes.payload;
-    data.update(value ?? false);
+    attributes.update("value", (value) => value ?? false);
     widget.controller.performRelatedAction();
     setState(() {
       _value = value;
@@ -39,19 +37,20 @@ class _DuitCheckboxState extends State<DuitCheckbox>
     return Checkbox(
       key: Key(widget.controller.id),
       value: _value,
-      tristate: attributes.tristate ?? true,
-      autofocus: attributes.autofocus ?? false,
-      checkColor: attributes.checkColor,
-      hoverColor: attributes.hoverColor,
-      fillColor: attributes.fillColor,
-      focusColor: attributes.focusColor,
-      overlayColor: attributes.overlayColor,
-      splashRadius: attributes.splashRadius,
-      semanticLabel: attributes.semanticLabel,
-      side: attributes.side,
-      activeColor: attributes.activeColor,
-      isError: attributes.isError ?? false,
-      visualDensity: attributes.visualDensity,
+      tristate: attributes.getBool("tristate"),
+      autofocus: attributes.getBool("autofocus"),
+      checkColor: attributes.tryParseColor(key: "checkColor"),
+      hoverColor: attributes.tryParseColor(key: "hoverColor"),
+      fillColor: attributes.widgetStateProperty<Color>(key: "fillColor"),
+      focusColor: attributes.tryParseColor(key: "focusColor"),
+      overlayColor: attributes.widgetStateProperty<Color>(key: "overlayColor"),
+      splashRadius: attributes.tryGetDouble(key: "splashRadius"),
+      semanticLabel: attributes.getString(key: "semanticLabel"),
+      side: attributes.borderSide(),
+      activeColor: attributes.tryParseColor(key: "activeColor"),
+      isError: attributes.getBool("isError"),
+      visualDensity: attributes.visualDensity(),
+      materialTapTargetSize: attributes.materialTapTargetSize(),
       onChanged: _onChange,
     );
   }

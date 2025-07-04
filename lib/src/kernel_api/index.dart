@@ -1,7 +1,6 @@
 export 'package:duit_kernel/duit_kernel.dart'
     show
         DuitRegistry,
-        DuitAttributes,
         ElementTree,
         ElementTreeEntry,
         Transport,

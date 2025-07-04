@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitSwitch extends StatefulWidget {
-  final UIElementController<SwitchAttributes> controller;
+  final UIElementController controller;
 
   const DuitSwitch({
     super.key,
@@ -15,19 +14,19 @@ class DuitSwitch extends StatefulWidget {
 }
 
 class _DuitSwitchState extends State<DuitSwitch>
-    with ViewControllerChangeListener<DuitSwitch, SwitchAttributes> {
+    with ViewControllerChangeListener {
   bool? _value;
 
   @override
   void initState() {
     attachStateToController(widget.controller);
-    _value = attributes.value;
+    _value = attributes.tryGetBool("value");
     super.initState();
   }
 
   void _onChange(bool val) {
     final data = widget.controller.attributes.payload;
-    data.update(val);
+    data.update("value", (v) => val);
     widget.controller.performRelatedAction();
     setState(() {
       _value = val;
@@ -40,19 +39,22 @@ class _DuitSwitchState extends State<DuitSwitch>
       key: Key(widget.controller.id),
       value: _value!,
       onChanged: _onChange,
-      activeColor: attributes.activeColor,
-      focusColor: attributes.focusColor,
-      hoverColor: attributes.hoverColor,
-      inactiveTrackColor: attributes.inactiveTrackColor,
-      activeTrackColor: attributes.inactiveTrackColor,
-      overlayColor: attributes.overlayColor,
-      trackColor: attributes.trackColor,
-      thumbColor: attributes.thumbColor,
-      trackOutlineColor: attributes.trackOutlineColor,
-      trackOutlineWidth: attributes.trackOutlineWidth,
-      splashRadius: attributes.splashRadius,
-      materialTapTargetSize: attributes.materialTapTargetSize,
-      autofocus: attributes.autofocus ?? false,
+      activeColor: attributes.tryParseColor(key: "activeColor"),
+      focusColor: attributes.tryParseColor(key: "focusColor"),
+      hoverColor: attributes.tryParseColor(key: "hoverColor"),
+      inactiveTrackColor: attributes.tryParseColor(key: "inactiveTrackColor"),
+      activeTrackColor: attributes.tryParseColor(key: "activeTrackColor"),
+      overlayColor: attributes.widgetStateProperty<Color>(key: "overlayColor"),
+      trackColor: attributes.widgetStateProperty<Color>(key: "trackColor"),
+      thumbColor: attributes.widgetStateProperty<Color>(key: "thumbColor"),
+      trackOutlineColor: attributes.widgetStateProperty<Color>(
+        key: "trackOutlineColor",
+      ),
+      trackOutlineWidth:
+          attributes.widgetStateProperty<double>(key: "trackOutlineWidth"),
+      splashRadius: attributes.tryGetDouble(key: "splashRadius"),
+      materialTapTargetSize: attributes.materialTapTargetSize(),
+      autofocus: attributes.getBool("autofocus"),
     );
   }
 }

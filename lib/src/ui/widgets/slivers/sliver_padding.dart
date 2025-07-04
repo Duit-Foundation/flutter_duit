@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitSliverPadding extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<SliverPaddingAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitSliverPadding({
@@ -14,22 +13,24 @@ class DuitSliverPadding extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return SliverPadding(
       key: Key(attributes.id),
-      padding: attrs.padding,
-      sliver: attrs.needsBoxAdapter ? SliverToBoxAdapter(child: child) : child,
+      padding: attrs.edgeInsets(defaultValue: EdgeInsets.zero)!,
+      sliver: attrs.getBool("needsBoxAdapter")
+          ? SliverToBoxAdapter(child: child)
+          : child,
     );
   }
 }
 
 class DuitControlledSliverPadding extends StatefulWidget
     with AnimatedAttributes {
-  final UIElementController<SliverPaddingAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledSliverPadding({
@@ -45,9 +46,7 @@ class DuitControlledSliverPadding extends StatefulWidget
 
 class _DuitControlledSliverPaddingState
     extends State<DuitControlledSliverPadding>
-    with
-        ViewControllerChangeListener<DuitControlledSliverPadding,
-            SliverPaddingAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -56,15 +55,15 @@ class _DuitControlledSliverPaddingState
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return SliverPadding(
       key: ValueKey(widget.controller.id),
-      padding: attrs.padding,
-      sliver: attrs.needsBoxAdapter
+      padding: attrs.edgeInsets(defaultValue: EdgeInsets.zero)!,
+      sliver: attrs.getBool("needsBoxAdapter")
           ? SliverToBoxAdapter(child: widget.child)
           : widget.child,
     );

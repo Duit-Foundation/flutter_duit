@@ -57,8 +57,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   w,
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -78,7 +77,8 @@ void main() {
             ),
           );
 
-          final callback = widget.controller.attributes.payload.onEnd;
+          final callback =
+              widget.controller.attributes.payload.getAction("onEnd");
           expect(callback, isNotNull);
           expect(callback, isA<LocalAction>());
           expect(fW.onEnd, isNotNull);
@@ -94,8 +94,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(0.5),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -115,7 +114,8 @@ void main() {
             ),
           );
 
-          final callback = widget.controller.attributes.payload.onEnd;
+          final callback =
+              widget.controller.attributes.payload.getAction("onEnd");
 
           expect(callback, isNull);
           expect(callback, isA<void>());

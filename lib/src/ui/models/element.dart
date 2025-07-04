@@ -1,10 +1,8 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/ui/models/element_models.dart';
 import 'package:flutter_duit/src/ui/models/element_type.dart';
-import 'package:flutter_duit/src/ui/models/type_def.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
@@ -13,13 +11,13 @@ import 'package:flutter_duit/src/utils/index.dart';
 /// The [DuitElement] class represents an individual DUIT element in the DUIT element tree.
 /// It holds information about the element's type, properties, and child elements.
 /// The [DuitElement] class provides methods for rendering the element to a Flutter widget and handling interactions.
-base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
+base class DuitElement extends ElementTreeEntry with WidgetFabric {
   //<editor-fold desc="Properties and ctor">
   @override
-  ViewAttribute<T>? attributes;
+  ViewAttribute? attributes;
 
   @override
-  UIElementController<T>? viewController;
+  UIElementController? viewController;
 
   DuitElement({
     required super.type,
@@ -34,7 +32,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
     Map<String, dynamic>? json,
     UIDriver driver,
   ) {
-    if (json == null) return EmptyUIElement<EmptyAttributes>();
+    if (json == null) return EmptyUIElement();
 
     final String type = json["type"];
     final String id = json["id"];
@@ -42,10 +40,8 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
     final String? tag = json["tag"];
 
     //Safe cast attributes to Map<String, dynamic>
-    final attributesObject = () {
-      final attrs = json["attributes"] ?? {};
-      return attrs.cast<String, dynamic>();
-    }();
+    final attributesObject =
+        Map<String, dynamic>.from(json["attributes"] ?? {});
 
     ServerAction? serverAction;
 
@@ -68,14 +64,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes = ViewAttribute.createAttributes<RowAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        final el = RowUIElement<RowAttributes>(
+        final el = RowUIElement(
           type: type,
           id: id,
           children: arr,
@@ -102,13 +98,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes = ViewAttribute.createAttributes<ColumnAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
+          id,
+          tag: tag,
         );
 
-        return ColumnUIElement<ColumnAttributes>(
+        return ColumnUIElement(
           type: type,
           id: id,
           children: arr,
@@ -127,14 +124,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.center:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<CenterAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return CenterUIElement<CenterAttributes>(
+        return CenterUIElement(
           type: type,
           id: id,
           child: child,
@@ -153,14 +150,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.fittedBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<FittedBoxAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return FittedBoxUiElement<FittedBoxAttributes>(
+        return FittedBoxUiElement(
           type: type,
           id: id,
           child: child,
@@ -179,21 +176,19 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedBuilder:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedBuilderAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        final wId = attributes.payload.persistentId ?? id;
+        final wId = attributes.payload.tryGetString("persistentId") ?? id;
 
-        final controller = driver.getController(wId)
-            as UIElementController<AnimatedBuilderAttributes>?;
+        final controller = driver.getController(wId);
 
         //Priority use of  persistentId property for animatedBuilder
-        return AnimatedBuilderUIElement<AnimatedBuilderAttributes>(
+        return AnimatedBuilderUIElement(
           type: type,
           id: wId,
           child: child,
@@ -213,14 +208,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.coloredBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<ColoredBoxAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return ColoredBoxUIElement<ColoredBoxAttributes>(
+        return ColoredBoxUIElement(
           type: type,
           id: id,
           child: child,
@@ -239,15 +234,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedSize:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedSizeAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedSizeModel(
+        return AnimatedSizeUIElement(
           type: type,
           id: id,
           child: child,
@@ -265,14 +259,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sizedBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<SizedBoxAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SizedBoxUIElement<SizedBoxAttributes>(
+        return SizedBoxUIElement(
           type: type,
           id: id,
           child: child,
@@ -289,14 +283,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.richText:
-        final attributes = ViewAttribute.createAttributes<RichTextAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return RichTextUIElement<RichTextAttributes>(
+        return RichTextUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -312,14 +306,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.text:
-        final attributes = ViewAttribute.createAttributes<TextAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return TextUIElement<TextAttributes>(
+        return TextUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -337,15 +331,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.elevatedButton:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<ElevatedButtonAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return ElevatedButtonUIElement<ElevatedButtonAttributes>(
+        return ElevatedButtonUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -362,14 +355,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: true,
         );
       case ElementType.textField:
-        final attributes = ViewAttribute.createAttributes<TextFieldAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return TextFieldUIElement<TextFieldAttributes>(
+        return TextFieldUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -393,14 +386,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes = ViewAttribute.createAttributes<StackAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return StackUIElement<StackAttributes>(
+        return StackUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -425,14 +418,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes = ViewAttribute.createAttributes<WrapAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return WrapUIElement<WrapAttributes>(
+        return WrapUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -451,14 +444,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.expanded:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<ExpandedAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return ExpandedUiElement<ExpandedAttributes>(
+        return ExpandedUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -477,14 +470,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.padding:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<PaddingAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return PaddingUiElement<PaddingAttributes>(
+        return PaddingUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -503,14 +496,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.positioned:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<PositionedAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return PositionedUiElement<PositionedAttributes>(
+        return PositionedUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -529,15 +522,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.decoratedBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<DecoratedBoxAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return DecoratedBoxUiElement<DecoratedBoxAttributes>(
+        return DecoratedBoxUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -555,15 +547,15 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         );
 
       case ElementType.checkbox:
-        final attributes = ViewAttribute.createAttributes<CheckboxAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
         //controlled by default
         //extends AttendedModel
-        return CheckboxUIElement<CheckboxAttributes>(
+        return CheckboxUIElement(
           type: type,
           id: id,
           attributes: null,
@@ -579,14 +571,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: true,
         );
       case ElementType.image:
-        final attributes = ViewAttribute.createAttributes<ImageAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return ImageUIElement<ImageAttributes>(
+        return ImageUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -602,13 +594,13 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.switchW:
-        final attributes = ViewAttribute.createAttributes<SwitchAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
-        return SwitchUiElement<SwitchAttributes>(
+        return SwitchUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -624,13 +616,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: true,
         );
       case ElementType.radio:
-        final attributes = ViewAttribute.createAttributes<RadioAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
-        return RadioUIElement<RadioAttributes>(
+
+        return RadioUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -646,14 +639,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.slider:
-        final attributes = ViewAttribute.createAttributes<SliderAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliderUIElement<SliderAttributes>(
+        return SliderUIElement(
           type: type,
           id: id,
           attributes: null,
@@ -671,14 +664,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.container:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<ContainerAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return ContainerUiElement<ContainerAttributes>(
+        return ContainerUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -697,14 +690,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.subtree:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<SubtreeAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SubtreeUIElement<SubtreeAttributes>(
+        return SubtreeUIElement(
           type: type,
           id: id,
           attributes: null,
@@ -723,15 +716,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.gestureDetector:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<GestureDetectorAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return GestureDetectorUiElement<GestureDetectorAttributes>(
+        return GestureDetectorUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -750,14 +742,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.align:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<AlignAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AlignUiElement<AlignAttributes>(
+        return AlignUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -776,24 +768,23 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.transform:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<TransformAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        switch (attributes.payload.type) {
+        switch (attributes.payload.tryGetString("type")) {
           case "scale":
-            final castedAttrs = attributes.cast<ScaleTransform>();
-            return TransformUiElement<ScaleTransform>(
+            return TransformUiElement(
               type: type,
               id: id,
-              attributes: _attachAttributes(controlled, castedAttrs),
+              attributes: _attachAttributes(controlled, attributes),
               viewController: _createAndAttachController(
                 id,
                 controlled,
-                castedAttrs,
+                attributes,
                 serverAction,
                 driver,
                 type,
@@ -803,15 +794,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
               controlled: controlled,
             );
           case "translate":
-            final castedAttrs = attributes.cast<TranslateTransform>();
-            return TransformUiElement<TranslateTransform>(
+            return TransformUiElement(
               type: type,
               id: id,
-              attributes: _attachAttributes(controlled, castedAttrs),
+              attributes: _attachAttributes(controlled, attributes),
               viewController: _createAndAttachController(
                 id,
                 controlled,
-                castedAttrs,
+                attributes,
                 serverAction,
                 driver,
                 type,
@@ -821,15 +811,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
               controlled: controlled,
             );
           case "rotate":
-            final castedAttrs = attributes.cast<RotateTransform>();
-            return TransformUiElement<RotateTransform>(
+            return TransformUiElement(
               type: type,
               id: id,
-              attributes: _attachAttributes(controlled, castedAttrs),
+              attributes: _attachAttributes(controlled, attributes),
               viewController: _createAndAttachController(
                 id,
                 controlled,
-                castedAttrs,
+                attributes,
                 serverAction,
                 driver,
                 type,
@@ -839,15 +828,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
               controlled: controlled,
             );
           case "flip":
-            final castedAttrs = attributes.cast<FlipTransform>();
-            return TransformUiElement<FlipTransform>(
+            return TransformUiElement(
               type: type,
               id: id,
-              attributes: _attachAttributes(controlled, castedAttrs),
+              attributes: _attachAttributes(controlled, attributes),
               viewController: _createAndAttachController(
                 id,
                 controlled,
-                castedAttrs,
+                attributes,
                 serverAction,
                 driver,
                 type,
@@ -858,19 +846,18 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             );
         }
 
-        return EmptyUIElement<EmptyAttributes>();
+        return EmptyUIElement();
       case ElementType.radioGroupContext:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<RadioGroupContextAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return RadioGroupContextUiElement<RadioGroupContextAttributes>(
+        return RadioGroupContextUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -889,15 +876,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.singleChildScrollview:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SingleChildScrollviewAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SingleChildScrollviewUiElement<SingleChildScrollviewAttributes>(
+        return SingleChildScrollviewUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -916,14 +902,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.opacity:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<OpacityAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return OpacityUiElement<OpacityAttributes>(
+        return OpacityUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -942,15 +928,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.ignorePointer:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<IgnorePointerAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return IgnorePointerUiElement<IgnorePointerAttributes>(
+        return IgnorePointerUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -969,15 +954,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.repaintBoundary:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<RepaintBoundaryAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return RepaintBoundaryUIElement<RepaintBoundaryAttributes>(
+        return RepaintBoundaryUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -996,15 +980,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.overflowBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<OverflowBoxAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return OverflowBoxUIElement<OverflowBoxAttributes>(
+        return OverflowBoxUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1023,14 +1006,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.meta:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<MetaAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return MetaUiElement<MetaAttributes>(
+        return MetaUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -1049,18 +1032,16 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.lifecycleStateListener:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<LifecycleStateListenerAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
         //[controlled] - always false
         //[ViewController] necessary and created directly
-        return LifecycleStateListenerUiElement<
-            LifecycleStateListenerAttributes>(
+        return LifecycleStateListenerUiElement(
           type: type,
           id: id,
           attributes: null,
@@ -1084,16 +1065,16 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes = ViewAttribute.createAttributes<ListViewAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
         bool isControlledByDefault = false;
 
-        if (attributes.payload.type != 0) {
+        if (attributes.payload.getInt(key: "type") != 0) {
           isControlledByDefault = true;
         } else {
           isControlledByDefault = controlled;
@@ -1101,7 +1082,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
 
         final controlState = isControlledByDefault || controlled;
 
-        return ListViewUIElement<ListViewAttributes>(
+        return ListViewUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlState, attributes),
@@ -1126,22 +1107,18 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes = ViewAttribute.createAttributes<GridViewAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
         bool isControlledByDefault = false;
 
-        if (attributes.payload.constructor == GridConstructor.builder) {
-          isControlledByDefault = true;
-        }
-
         final controlState = isControlledByDefault || controlled;
 
-        return GridViewModel(
+        return GridViewUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlState, attributes),
@@ -1166,22 +1143,18 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes = ViewAttribute.createAttributes<SliverGridAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
         bool isControlledByDefault = false;
 
-        if (attributes.payload.constructor == GridConstructor.builder) {
-          isControlledByDefault = true;
-        }
-
         final controlState = isControlledByDefault || controlled;
 
-        return SliverGridModel(
+        return SliverGridUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlState, attributes),
@@ -1200,15 +1173,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.intrinsicHeight:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<IntrinsicHeightAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return IntrinsicHeightUIElement<IntrinsicHeightAttributes>(
+        return IntrinsicHeightUIElement(
           type: type,
           id: id,
           controlled: controlled,
@@ -1228,15 +1200,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.intrinsicWidth:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<IntrinsicWidthAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return IntrinsicWidthUiElement<IntrinsicWidthAttributes>(
+        return IntrinsicWidthUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1256,14 +1227,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.rotatedBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<RotatedBoxAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return RotatedBoxUIElement<RotatedBoxAttributes>(
+        return RotatedBoxUIElement(
           type: type,
           id: id,
           controlled: controlled,
@@ -1282,15 +1253,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.constrainedBox:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<ConstrainedBoxAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return ConstrainedBoxUIElement<ConstrainedBoxAttributes>(
+        return ConstrainedBoxUIElement(
           type: type,
           id: id,
           controlled: controlled,
@@ -1309,15 +1279,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.backdropFilter:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<BackdropFilterAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return BackdropFilterModel(
+        return BackdropFilterUIElement(
           type: type,
           id: id,
           controlled: controlled,
@@ -1336,15 +1305,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedOpacity:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedOpacityAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedOpacityModel(
+        return AnimatedOpacityUIElement(
           type: type,
           id: id,
           controlled: true,
@@ -1361,15 +1329,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           child: child,
         );
       case ElementType.remoteSubtree:
-        final attributes =
-            ViewAttribute.createAttributes<RemoteSubtreeAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return RemoteWidgetModel(
+        return RemoteUIElement(
           type: type,
           id: id,
           controlled: true,
@@ -1386,14 +1353,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.safeArea:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<SafeAreaAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SafeAreaUiElement<SafeAreaAttributes>(
+        return SafeAreaUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1412,14 +1379,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.card:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<CardAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return CardModel(
+        return CardUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1436,7 +1403,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.empty:
-        return EmptyUIElement<EmptyAttributes>();
+        return EmptyUIElement();
       case ElementType.component:
         final providedData = Map<String, dynamic>.from(json["data"]);
 
@@ -1450,14 +1417,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
 
           final child = DuitElement.fromJson(data, driver);
 
-          final attributes = ViewAttribute.createAttributes<SubtreeAttributes>(
+          final attributes = ViewAttribute.from(
             type,
             attributesObject,
-            tag,
-            id: id,
+            id,
+            tag: tag,
           );
 
-          return ComponentUIElement<SubtreeAttributes>(
+          return ComponentUIElement(
             child: child,
             type: type,
             id: id,
@@ -1475,16 +1442,16 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           );
         }
 
-        return EmptyUIElement<EmptyAttributes>();
+        return EmptyUIElement();
       case ElementType.appBar:
-        final attributes = ViewAttribute.createAttributes<AppBarAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AppBarModel(
+        return AppBarUiElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -1501,14 +1468,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.scaffold:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<ScaffoldAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return ScaffoldModel(
+        return ScaffoldUiElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -1526,14 +1493,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.inkWell:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes = ViewAttribute.createAttributes<InkWellAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return InkWellModel(
+        return InkWellUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -1557,15 +1524,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes =
-            ViewAttribute.createAttributes<CarouselViewAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return CarouselViewModel(
+        return CarouselViewUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1584,15 +1550,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedContainer:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedContainerAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedContainerModel(
+        return AnimatedContainerUIElement(
           viewController: _createAndAttachController(
             id,
             true,
@@ -1610,15 +1575,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedAlign:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedAlignAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedAlignModel(
+        return AnimatedAlignUIElement(
           viewController: _createAndAttachController(
             id,
             true,
@@ -1636,15 +1600,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedRotation:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedRotationAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedRotationModel(
+        return AnimatedRotationUIElement(
           viewController: _createAndAttachController(
             id,
             true,
@@ -1662,15 +1625,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedPadding:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedPaddingAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedPaddingModel(
+        return AnimatedPaddingUIElement(
           viewController: _createAndAttachController(
             id,
             true,
@@ -1688,15 +1650,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedPositioned:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedPositionedAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedPositionedModel(
+        return AnimatedPositionedUIElement(
           viewController: _createAndAttachController(
             id,
             true,
@@ -1714,15 +1675,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedScale:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedScaleAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedScaleModel(
+        return AnimatedScaleUIElement(
           viewController: _createAndAttachController(
             id,
             true,
@@ -1741,15 +1701,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.absorbPointer:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AbsorbPointerAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AbsorbPointerUIElement<AbsorbPointerAttributes>(
+        return AbsorbPointerUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -1767,11 +1726,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         );
       case ElementType.offstage:
         final child = DuitElement.fromJson(json["child"], driver);
-        final attributes = ViewAttribute.createAttributes<OffstageAttributes>(
-            type, attributesObject, tag,
-            id: id);
+        final attributes =
+            ViewAttribute.from(type, attributesObject, id, tag: tag);
 
-        return OffstageUIElement<OffstageAttributes>(
+        return OffstageUIElement(
           type: type,
           id: id,
           controlled: controlled,
@@ -1793,15 +1751,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedCrossFadeAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedCrossFadeModel(
+        return AnimatedCrossFadeUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(true, attributes),
@@ -1820,15 +1777,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedSlide:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedSlideAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedSlideModel(
+        return AnimatedSlideUIElement(
           viewController: _createAndAttachController(
             id,
             true,
@@ -1846,15 +1802,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.physicalModel:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<PhysicalModelAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return PhysicalModelModel(
+        return PhysicalModelUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1873,15 +1828,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.animatedPhysicalModel:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<AnimatedPhysicalModelAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return AnimatedPhysicalModelModel(
+        return AnimatedPhysicalModelUIElement(
           type: type,
           id: id,
           viewController: _createAndAttachController(
@@ -1899,15 +1853,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverPadding:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverPaddingAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverPaddingModel(
+        return SliverPaddingUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1937,15 +1890,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes =
-            ViewAttribute.createAttributes<CustomScrollViewAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return CustomScrollViewModel(
+        return CustomScrollViewUIElement(
           id: id,
           type: type,
           attributes: _attachAttributes(controlled, attributes),
@@ -1964,15 +1916,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverFillRemaining:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverFillRemainingAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverFillRemainingModel(
+        return SliverFillRemainingUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -1991,7 +1942,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverToBoxAdapter:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        return SliverToBoxAdapterModel(
+        return SliverToBoxAdapterUIElement(
           type: type,
           id: id,
           child: child,
@@ -2010,15 +1961,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverFillViewportAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverFillViewportModel(
+        return SliverFillViewportUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -2037,15 +1987,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverOpacity:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverOpacityAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverOpacityModel(
+        return SliverOpacityUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -2064,15 +2013,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverAnimatedOpacity:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverAnimatedOpacityAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverAnimatedOpacityModel(
+        return SliverAnimatedOpacityUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(true, attributes),
@@ -2091,15 +2039,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverVisibility:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverVisibilityAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverVisibilityModel(
+        return SliverVisibilityUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -2118,15 +2065,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverOffstage:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverOffstageAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverOffstageModel(
+        return SliverOffstageUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -2145,15 +2091,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverSafeArea:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverSafeAreaAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverSafeAreaModel(
+        return SliverSafeAreaUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -2173,11 +2118,11 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
         if (tag != null) {
           final customModelFactory = DuitRegistry.getModelFactory(tag);
           if (customModelFactory != null) {
-            final attributes = ViewAttribute.createAttributes(
+            final attributes = ViewAttribute.from(
               type,
               attributesObject,
-              tag,
-              id: id,
+              id,
+              tag: tag,
             );
 
             final controller = _createAndAttachController(
@@ -2223,7 +2168,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
             ) as CustomUiElement;
           }
         }
-        return EmptyUIElement<EmptyAttributes>();
+        return EmptyUIElement();
       case ElementType.sliverList:
         final List<DuitElement> arr = [];
 
@@ -2233,22 +2178,22 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           });
         }
 
-        final attributes = ViewAttribute.createAttributes<SliverListAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
         bool isControlledByDefault = false;
 
-        if (attributes.payload.type != 0) {
+        if (attributes.payload.getInt(key: "type") != 0) {
           isControlledByDefault = true;
         }
 
         final controlState = isControlledByDefault || controlled;
 
-        return SliverListModel(
+        return SliverListUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlState, attributes),
@@ -2267,15 +2212,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
       case ElementType.sliverIgnorePointer:
         final child = DuitElement.fromJson(json["child"], driver);
 
-        final attributes =
-            ViewAttribute.createAttributes<SliverIgnorePointerAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: id,
         );
 
-        return SliverIgnorePointerUIElement<SliverIgnorePointerAttributes>(
+        return SliverIgnorePointerUIElement(
           type: type,
           id: id,
           attributes: _attachAttributes(controlled, attributes),
@@ -2292,15 +2236,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           controlled: controlled,
         );
       case ElementType.flexibleSpaceBar:
-        final attributes =
-            ViewAttribute.createAttributes<FlexibleSpaceBarAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return FlexibleSpaceBarModel(
+        return FlexibleSpaceBarUiElement(
           type: type,
           id: id,
           controlled: true,
@@ -2316,15 +2259,14 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
           attributes: _attachAttributes(true, attributes),
         );
       case ElementType.sliverAppBar:
-        final attributes =
-            ViewAttribute.createAttributes<SliverAppBarAttributes>(
+        final attributes = ViewAttribute.from(
           type,
           attributesObject,
-          tag,
-          id: id,
+          id,
+          tag: tag,
         );
 
-        return SliverAppBarModel(
+        return SliverAppBarUiElement(
           type: type,
           id: id,
           attributes: _attachAttributes(true, attributes),
@@ -2354,10 +2296,10 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
   /// The [_createAndAttachController] function is used to create and attach a controller to a specific element in the DUIT element tree.
   ///
   /// Returns the attached controller or null if the element is not controlled.
-  static UIElementController<T>? _createAndAttachController<T>(
+  static UIElementController? _createAndAttachController(
     String id,
     bool controlled,
-    ViewAttribute<T> attributes,
+    ViewAttribute attributes,
     ServerAction? action,
     UIDriver driver,
     String type,
@@ -2365,7 +2307,7 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
   ) {
     final controller = switch (controlled) {
       false => null,
-      true => ViewController<T>(
+      true => ViewController(
           id: id,
           driver: driver,
           action: action,
@@ -2382,9 +2324,9 @@ base class DuitElement<T> extends ElementTreeEntry<T> with WidgetFabric {
     return controller;
   }
 
-  static ViewAttribute<T>? _attachAttributes<T>(
+  static ViewAttribute? _attachAttributes(
     bool controlled,
-    ViewAttribute<T> attributes,
+    ViewAttribute attributes,
   ) {
     if (!controlled) {
       return attributes;

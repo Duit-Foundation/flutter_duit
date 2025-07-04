@@ -4,7 +4,6 @@ import 'dart:core';
 import 'dart:typed_data';
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/utils/index.dart';
 import 'package:http/http.dart' as http;
 
 import 'transport_utils.dart';
@@ -101,7 +100,7 @@ final class HttpTransport extends Transport {
   }
 
   @override
-  FutureOr<JSONObject?> execute(action, payload) async {
+  FutureOr<Map<String, dynamic>?> execute(action, payload) async {
     if (action is! TransportAction) return null;
 
     ///Prepare url and method

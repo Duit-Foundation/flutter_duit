@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitStack extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<StackAttributes> attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitStack({
@@ -14,24 +13,25 @@ class DuitStack extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return Stack(
       key: ValueKey(attributes.id),
-      alignment: attrs.alignment ?? AlignmentDirectional.topStart,
-      textDirection: attrs.textDirection,
-      fit: attrs.fit ?? StackFit.loose,
-      clipBehavior: attrs.clipBehavior ?? Clip.hardEdge,
+      alignment: attrs.alignmentDirectional(
+          defaultValue: AlignmentDirectional.topStart)!,
+      textDirection: attrs.textDirection(),
+      fit: attrs.stackFit(defaultValue: StackFit.loose)!,
+      clipBehavior: attrs.clipBehavior()!,
       children: children,
     );
   }
 }
 
 class DuitControlledStack extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<StackAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
 
   const DuitControlledStack({
@@ -45,7 +45,7 @@ class DuitControlledStack extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledStackState extends State<DuitControlledStack>
-    with ViewControllerChangeListener<DuitControlledStack, StackAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -54,16 +54,17 @@ class _DuitControlledStackState extends State<DuitControlledStack>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
     return Stack(
       key: ValueKey(widget.controller.id),
-      alignment: attrs.alignment ?? AlignmentDirectional.topStart,
-      textDirection: attrs.textDirection,
-      fit: attrs.fit ?? StackFit.loose,
-      clipBehavior: attrs.clipBehavior ?? Clip.hardEdge,
+      alignment: attrs.alignmentDirectional(
+          defaultValue: AlignmentDirectional.topStart)!,
+      textDirection: attrs.textDirection(),
+      fit: attrs.stackFit(defaultValue: StackFit.loose)!,
+      clipBehavior: attrs.clipBehavior()!,
       children: widget.children,
     );
   }

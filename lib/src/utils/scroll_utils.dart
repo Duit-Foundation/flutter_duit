@@ -8,7 +8,7 @@ mixin ScrollUtils<T extends StatefulWidget> on State<T> {
 
   /// Indicates if the list is at the end of list
   bool _isEOL = false;
-  UIElementController? _controller;
+  late UIElementController _controller;
 
   ScrollController get scrollController => _scrollController;
 
@@ -26,11 +26,13 @@ mixin ScrollUtils<T extends StatefulWidget> on State<T> {
   //</editor-fold>
 
   //<editor-fold desc="Methods">
-  void attachOnScrollCallback<D extends DynamicChildHolder>(
-      UIElementController controller) {
+  void attachOnScrollCallback(UIElementController controller) {
     _controller = controller;
-    final attrs = _controller?.attributes.payload as D;
-    final extent = attrs.scrollEndReachedThreshold ?? 150;
+    final attrs = _controller.attributes.payload;
+    final extent = attrs.tryGetDouble(
+      key: "scrollEndReachedThreshold",
+      defaultValue: 300,
+    )!;
     _scrollController = ScrollController()
       ..addListener(
         () async {
@@ -39,7 +41,7 @@ mixin ScrollUtils<T extends StatefulWidget> on State<T> {
               extent) {
             if (!_isExecuting && !_isEOL) {
               _isExecuting = true;
-              await _controller?.performRelatedActionAsync();
+              await _controller.performRelatedActionAsync();
               _isEOL = true;
               _isExecuting = false;
             }

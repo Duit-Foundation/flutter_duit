@@ -3,7 +3,6 @@ import "package:flutter/rendering.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
-
 Map<String, dynamic> _createWidget(Map value, [bool? controlled = false]) {
   return {
     "type": "BackdropFilter",
@@ -18,6 +17,7 @@ const _blur1 = {
     "type": 0,
     "sigmaX": "6",
     "sigmaY": "6",
+    "tileMode": "clamp",
   },
 };
 const _blur2 = {
@@ -158,8 +158,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(_blur1),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
                 child: Container(color: Colors.red),
               ),
@@ -186,8 +185,7 @@ void main() {
                 child: DuitViewHost(
                   driver: DuitDriver.static(
                     _createWidget(filter.$1),
-                    transportOptions: HttpTransportOptions(),
-                    enableDevMetrics: false,
+                    transportOptions: EmptyTransportOptions(),
                   ),
                   child: Container(color: Colors.red),
                 ),

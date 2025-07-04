@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitSafeArea extends StatelessWidget with AnimatedAttributes {
   final Widget child;
-  final ViewAttribute<SafeAreaAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitSafeArea({
     super.key,
@@ -14,15 +13,18 @@ class DuitSafeArea extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(context, attributes.payload);
+    final attrs = mergeWithDataSource(context, attributes.payload);
     return SafeArea(
       key: Key(attributes.id),
-      top: attrs.top,
-      left: attrs.left,
-      right: attrs.right,
-      bottom: attrs.bottom,
-      minimum: attrs.minimum ?? EdgeInsets.zero,
-      maintainBottomViewPadding: attrs.maintainBottomViewPadding ?? false,
+      top: attrs.getBool("top", defaultValue: true),
+      left: attrs.getBool("left", defaultValue: true),
+      right: attrs.getBool("right", defaultValue: true),
+      bottom: attrs.getBool("bottom", defaultValue: true),
+      minimum: attrs.edgeInsets(
+        key: "minimum",
+        defaultValue: EdgeInsets.zero,
+      )!,
+      maintainBottomViewPadding: attrs.getBool("maintainBottomViewPadding"),
       child: child,
     );
   }
@@ -30,7 +32,7 @@ class DuitSafeArea extends StatelessWidget with AnimatedAttributes {
 
 class DuitControlledSafeArea extends StatefulWidget with AnimatedAttributes {
   final Widget child;
-  final UIElementController<SafeAreaAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledSafeArea({
     super.key,
@@ -43,9 +45,7 @@ class DuitControlledSafeArea extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledSafeAreaState extends State<DuitControlledSafeArea>
-    with
-        ViewControllerChangeListener<DuitControlledSafeArea,
-            SafeAreaAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(
@@ -56,17 +56,21 @@ class _DuitControlledSafeAreaState extends State<DuitControlledSafeArea>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
     return SafeArea(
       key: Key(widget.controller.id),
-      top: attrs.top,
-      left: attrs.left,
-      right: attrs.right,
-      bottom: attrs.bottom,
-      minimum: attrs.minimum ?? EdgeInsets.zero,
+      top: attrs.getBool("top", defaultValue: true),
+      left: attrs.getBool("left", defaultValue: true),
+      right: attrs.getBool("right", defaultValue: true),
+      bottom: attrs.getBool("bottom", defaultValue: true),
+      minimum: attrs.edgeInsets(
+        key: "minimum",
+        defaultValue: EdgeInsets.zero,
+      )!,
+      maintainBottomViewPadding: attrs.getBool("maintainBottomViewPadding"),
       child: widget.child,
     );
   }

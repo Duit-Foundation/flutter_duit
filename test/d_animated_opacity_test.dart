@@ -37,8 +37,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(0.5),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -62,8 +61,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(null),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -83,8 +81,7 @@ void main() {
         (t) async {
           final driver = DuitDriver.static(
             _createWidget(0.5),
-            transportOptions: HttpTransportOptions(),
-            enableDevMetrics: false,
+            transportOptions: EmptyTransportOptions(),
           );
 
           await t.pumpWidget(

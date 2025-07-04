@@ -1,9 +1,8 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitIntrinsicHeight extends StatelessWidget {
-  final ViewAttribute<IntrinsicHeightAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitIntrinsicHeight({
@@ -22,7 +21,7 @@ class DuitIntrinsicHeight extends StatelessWidget {
 }
 
 class DuitControlledIntrinsicHeight extends StatefulWidget {
-  final UIElementController<IntrinsicHeightAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledIntrinsicHeight({

@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter_duit/src/transport/transport_utils.dart';
 
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/utils/index.dart';
 
 /// A WebSocket transport implementation for streaming data.
 ///
@@ -50,7 +49,7 @@ final class WSTransport extends Transport implements Streamer {
 
   @override
   Future<Map<String, dynamic>?> connect({
-    JSONObject? initialData,
+    Map<String, dynamic>? initialData,
   }) async {
     var urlString = _prepareUrl(url);
 
@@ -87,7 +86,7 @@ final class WSTransport extends Transport implements Streamer {
   }
 
   @override
-  FutureOr<JSONObject?> execute(action, payload) {
+  FutureOr<Map<String, dynamic>?> execute(action, payload) {
     final data = {
       "event": action.eventName,
       "payload": payload,

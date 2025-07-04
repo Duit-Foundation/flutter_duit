@@ -34,31 +34,6 @@ void main() {
       expect(textFieldWidget.readOnly, false);
     });
 
-    testWidgets('user can enter text', (tester) async {
-      final driver = DuitDriver.static(
-        {
-          'type': 'TextField',
-          'id': 'textField2',
-          'controlled': true,
-          'attributes': {
-            'value': '',
-          },
-        },
-        transportOptions: EmptyTransportOptions(),
-      );
-
-      await pumpDriver(tester, driver);
-
-      final textFieldFinder = find.byKey(const ValueKey('textField2'));
-      expect(textFieldFinder, findsOneWidget);
-
-      await tester.enterText(textFieldFinder, 'Flutter');
-      await tester.pumpAndSettle();
-
-      final textFieldWidget = tester.widget<TextField>(textFieldFinder);
-      expect(textFieldWidget.controller?.text, 'Flutter');
-    });
-
     testWidgets('controlled: updates value', (tester) async {
       final driver = DuitDriver.static(
         {

@@ -76,7 +76,6 @@ void main() {
                 driver: DuitDriver.static(
                   _createWidget(),
                   transportOptions: EmptyTransportOptions(),
-                  enableDevMetrics: false,
                 ),
               ),
             ),
@@ -105,8 +104,7 @@ void main() {
     testWidgets("must update widget attributes", (tester) async {
       final driver = DuitDriver.static(
         _createWidget(true),
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -148,8 +146,7 @@ void main() {
             child: DuitViewHost(
               driver: DuitDriver.static(
                 _createWidget(),
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
+                transportOptions: EmptyTransportOptions(),
               ),
             ),
           ),

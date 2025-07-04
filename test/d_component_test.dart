@@ -23,8 +23,7 @@ void main() {
           "tag": "x",
           "data": componentTemplateData,
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -50,8 +49,7 @@ void main() {
           "tag": "x",
           "data": componentTemplateData2,
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -70,7 +68,7 @@ void main() {
       expect(containerWithDefaultColorValue, findsOneWidget);
       expect(
         (tester.firstWidget(containerWithDefaultColorValue) as Container).color,
-        ColorUtils.tryParseColor("#DCDCDC"),
+        const Color.fromRGBO(220, 220, 220, 1),
       );
     });
 
@@ -82,8 +80,7 @@ void main() {
           "tag": "invalid_tag",
           "data": componentTemplateData2,
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -110,8 +107,7 @@ void main() {
           "tag": "x",
           "data": componentTemplateData,
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -138,7 +134,7 @@ void main() {
 
       final fCont = container.first.evaluate().first.widget as Container;
 
-      expect(fCont.color, ColorUtils.tryParseColor("#DCDCDC"));
+      expect(fCont.color, const Color.fromRGBO(220, 220, 220, 1));
     });
 
     testWidgets("must register embedded component", (tester) async {
@@ -168,8 +164,7 @@ void main() {
             }
           ],
         },
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(

@@ -1,10 +1,9 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitColumn extends StatelessWidget {
-  final ViewAttribute<ColumnAttributes> attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitColumn({
@@ -15,23 +14,29 @@ class DuitColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final attrs = attributes.payload;
     return Column(
       key: Key(attributes.id),
-      mainAxisAlignment:
-          attributes.payload.mainAxisAlignment ?? MainAxisAlignment.start,
-      mainAxisSize: attributes.payload.mainAxisSize ?? MainAxisSize.max,
-      crossAxisAlignment:
-          attributes.payload.crossAxisAlignment ?? CrossAxisAlignment.center,
-      textDirection: attributes.payload.textDirection,
-      verticalDirection:
-          attributes.payload.verticalDirection ?? VerticalDirection.down,
+      mainAxisAlignment: attrs.mainAxisAlignment(
+        defaultValue: MainAxisAlignment.start,
+      )!,
+      mainAxisSize: attrs.mainAxisSize(
+        defaultValue: MainAxisSize.max,
+      )!,
+      crossAxisAlignment: attrs.crossAxisAlignment(
+        defaultValue: CrossAxisAlignment.center,
+      )!,
+      textDirection: attrs.textDirection(),
+      verticalDirection: attrs.verticalDirection(
+        defaultValue: VerticalDirection.down,
+      ),
       children: children,
     );
   }
 }
 
 class DuitControlledColumn extends StatefulWidget {
-  final UIElementController<ColumnAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
 
   const DuitControlledColumn({
@@ -45,7 +50,7 @@ class DuitControlledColumn extends StatefulWidget {
 }
 
 class _DuitControlledColumnState extends State<DuitControlledColumn>
-    with ViewControllerChangeListener<DuitControlledColumn, ColumnAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -56,13 +61,19 @@ class _DuitControlledColumnState extends State<DuitControlledColumn>
   Widget build(BuildContext context) {
     return Column(
       key: Key(widget.controller.id),
-      mainAxisAlignment:
-          attributes.mainAxisAlignment ?? MainAxisAlignment.start,
-      mainAxisSize: attributes.mainAxisSize ?? MainAxisSize.max,
-      crossAxisAlignment:
-          attributes.crossAxisAlignment ?? CrossAxisAlignment.center,
-      textDirection: attributes.textDirection,
-      verticalDirection: attributes.verticalDirection ?? VerticalDirection.down,
+      mainAxisAlignment: attributes.mainAxisAlignment(
+        defaultValue: MainAxisAlignment.start,
+      )!,
+      mainAxisSize: attributes.mainAxisSize(
+        defaultValue: MainAxisSize.max,
+      )!,
+      crossAxisAlignment: attributes.crossAxisAlignment(
+        defaultValue: CrossAxisAlignment.center,
+      )!,
+      textDirection: attributes.textDirection(),
+      verticalDirection: attributes.verticalDirection(
+        defaultValue: VerticalDirection.down,
+      ),
       children: widget.children,
     );
   }

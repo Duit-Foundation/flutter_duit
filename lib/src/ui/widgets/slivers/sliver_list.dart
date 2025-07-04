@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 final class DuitSliverList extends StatelessWidget {
-  final ViewAttribute<SliverListAttributes> attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitSliverList({
@@ -17,16 +16,25 @@ final class DuitSliverList extends StatelessWidget {
     final attrs = attributes.payload;
     return SliverList.list(
       key: Key(attributes.id),
-      addAutomaticKeepAlives: attrs.addAutomaticKeepAlives,
-      addRepaintBoundaries: attrs.addRepaintBoundaries,
-      addSemanticIndexes: attrs.addSemanticIndexes,
+      addAutomaticKeepAlives: attrs.getBool(
+        "addAutomaticKeepAlives",
+        defaultValue: true,
+      ),
+      addRepaintBoundaries: attrs.getBool(
+        "addRepaintBoundaries",
+        defaultValue: true,
+      ),
+      addSemanticIndexes: attrs.getBool(
+        "addSemanticIndexes",
+        defaultValue: true,
+      ),
       children: children,
     );
   }
 }
 
 final class DuitControlledSliverList extends StatefulWidget {
-  final UIElementController<SliverListAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
 
   const DuitControlledSliverList({
@@ -41,9 +49,7 @@ final class DuitControlledSliverList extends StatefulWidget {
 }
 
 class _DuitControlledSliverListState extends State<DuitControlledSliverList>
-    with
-        ViewControllerChangeListener<DuitControlledSliverList,
-            SliverListAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -54,9 +60,18 @@ class _DuitControlledSliverListState extends State<DuitControlledSliverList>
   Widget build(BuildContext context) {
     return SliverList.list(
       key: Key(widget.controller.id),
-      addAutomaticKeepAlives: attributes.addAutomaticKeepAlives,
-      addRepaintBoundaries: attributes.addRepaintBoundaries,
-      addSemanticIndexes: attributes.addSemanticIndexes,
+      addAutomaticKeepAlives: attributes.getBool(
+        "addAutomaticKeepAlives",
+        defaultValue: true,
+      ),
+      addRepaintBoundaries: attributes.getBool(
+        "addRepaintBoundaries",
+        defaultValue: true,
+      ),
+      addSemanticIndexes: attributes.getBool(
+        "addSemanticIndexes",
+        defaultValue: true,
+      ),
       children: widget.children,
     );
   }

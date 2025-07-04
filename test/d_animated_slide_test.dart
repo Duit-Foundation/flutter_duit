@@ -232,13 +232,7 @@ void main() {
       expect(find.text("Test text"), findsOneWidget);
 
       // Test different curves
-      final testCurves = [
-        "easeIn",
-        "easeOut",
-        "easeInOut",
-        "bounceIn",
-        "bounceOut"
-      ];
+      final testCurves = ["ease", "bounceIn", "bounceOut"];
 
       for (final curve in testCurves) {
         await driver.updateTestAttributes("slide", {

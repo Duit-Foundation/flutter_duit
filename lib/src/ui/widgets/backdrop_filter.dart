@@ -1,9 +1,10 @@
+import "dart:ui";
+
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 final class DuitBackdropFilter extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<BackdropFilterAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitBackdropFilter({
@@ -14,15 +15,17 @@ final class DuitBackdropFilter extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return BackdropFilter(
       key: ValueKey(attributes.id),
-      filter: attrs.filter,
-      blendMode: attrs.blendMode,
+      filter: attrs.imageFilter(
+        defaultValue: ImageFilter.blur(),
+      )!,
+      blendMode: attrs.blendMode(defaultValue: BlendMode.srcOver),
       child: child,
     );
   }
@@ -30,7 +33,7 @@ final class DuitBackdropFilter extends StatelessWidget with AnimatedAttributes {
 
 class DuitControlledBackdropFilter extends StatefulWidget
     with AnimatedAttributes {
-  final UIElementController<BackdropFilterAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledBackdropFilter({
@@ -46,9 +49,7 @@ class DuitControlledBackdropFilter extends StatefulWidget
 
 class __DuitControlledBackdropFilterStateState
     extends State<DuitControlledBackdropFilter>
-    with
-        ViewControllerChangeListener<DuitControlledBackdropFilter,
-            BackdropFilterAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -57,15 +58,17 @@ class __DuitControlledBackdropFilterStateState
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return BackdropFilter(
       key: ValueKey(widget.controller.id),
-      filter: attrs.filter,
-      blendMode: attrs.blendMode,
+      filter: attrs.imageFilter(
+        defaultValue: ImageFilter.blur(),
+      )!,
+      blendMode: attrs.blendMode(defaultValue: BlendMode.srcOver),
       child: widget.child,
     );
   }

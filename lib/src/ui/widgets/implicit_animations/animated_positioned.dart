@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/animations/index.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitAnimatedPositioned extends StatefulWidget {
-  final UIElementController<AnimatedPositionedAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitAnimatedPositioned({
@@ -18,10 +17,7 @@ class DuitAnimatedPositioned extends StatefulWidget {
 }
 
 class _DuitAnimatedPositionedState extends State<DuitAnimatedPositioned>
-    with
-        ViewControllerChangeListener<DuitAnimatedPositioned,
-            AnimatedPositionedAttributes>,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,14 +28,14 @@ class _DuitAnimatedPositionedState extends State<DuitAnimatedPositioned>
   Widget build(BuildContext context) {
     return AnimatedPositioned(
       key: Key(widget.controller.id),
-      top: attributes.top,
-      right: attributes.right,
-      bottom: attributes.bottom,
-      left: attributes.left,
-      duration: attributes.duration,
-      curve: attributes.curve,
+      top: attributes.tryGetDouble(key: "top"),
+      right: attributes.tryGetDouble(key: "right"),
+      bottom: attributes.tryGetDouble(key: "bottom"),
+      left: attributes.tryGetDouble(key: "left"),
+      duration: attributes.duration(),
+      curve: attributes.curve(defaultValue: Curves.linear)!,
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
       child: widget.child,

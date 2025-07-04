@@ -1,11 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitSingleChildScrollView extends StatelessWidget {
-  final ViewAttribute<SingleChildScrollviewAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitSingleChildScrollView({
@@ -18,23 +17,27 @@ class DuitSingleChildScrollView extends StatelessWidget {
   Widget build(BuildContext context) {
     final attrs = attributes.payload;
     return SingleChildScrollView(
-      scrollDirection: attrs.scrollDirection ?? Axis.vertical,
-      reverse: attrs.reverse ?? false,
-      primary: attrs.primary,
-      padding: attrs.padding,
-      physics: attrs.physics,
-      restorationId: attrs.restorationId,
-      clipBehavior: attrs.clipBehavior ?? Clip.hardEdge,
-      keyboardDismissBehavior: attrs.keyboardDismissBehavior ??
-          ScrollViewKeyboardDismissBehavior.manual,
-      dragStartBehavior: attrs.dragStartBehavior ?? DragStartBehavior.start,
+      key: ValueKey(attributes.id),
+      scrollDirection: attrs.axis(),
+      reverse: attrs.getBool("reverse", defaultValue: false),
+      primary: attrs.tryGetBool("primary"),
+      padding: attrs.edgeInsets(),
+      physics: attrs.scrollPhysics(),
+      restorationId: attrs.tryGetString("restorationId"),
+      clipBehavior: attrs.clipBehavior()!,
+      keyboardDismissBehavior: attrs.keyboardDismissBehavior(
+        defaultValue: ScrollViewKeyboardDismissBehavior.manual,
+      ),
+      dragStartBehavior: attrs.dragStartBehavior(
+        defaultValue: DragStartBehavior.start,
+      ),
       child: child,
     );
   }
 }
 
 class DuitControlledSingleChildScrollView extends StatefulWidget {
-  final UIElementController<SingleChildScrollviewAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledSingleChildScrollView({
@@ -50,9 +53,7 @@ class DuitControlledSingleChildScrollView extends StatefulWidget {
 
 class _DuitControlledSingleChildScrollViewState
     extends State<DuitControlledSingleChildScrollView>
-    with
-        ViewControllerChangeListener<DuitControlledSingleChildScrollView,
-            SingleChildScrollviewAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -63,17 +64,19 @@ class _DuitControlledSingleChildScrollViewState
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       key: Key(widget.controller.id),
-      scrollDirection: attributes.scrollDirection ?? Axis.vertical,
-      reverse: attributes.reverse ?? false,
-      primary: attributes.primary,
-      padding: attributes.padding,
-      physics: attributes.physics,
-      restorationId: attributes.restorationId,
-      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
-      keyboardDismissBehavior: attributes.keyboardDismissBehavior ??
-          ScrollViewKeyboardDismissBehavior.manual,
-      dragStartBehavior:
-          attributes.dragStartBehavior ?? DragStartBehavior.start,
+      scrollDirection: attributes.axis(),
+      reverse: attributes.getBool("reverse", defaultValue: false),
+      primary: attributes.tryGetBool("primary"),
+      padding: attributes.edgeInsets(),
+      physics: attributes.scrollPhysics(),
+      restorationId: attributes.tryGetString("restorationId"),
+      clipBehavior: attributes.clipBehavior()!,
+      keyboardDismissBehavior: attributes.keyboardDismissBehavior(
+        defaultValue: ScrollViewKeyboardDismissBehavior.manual,
+      ),
+      dragStartBehavior: attributes.dragStartBehavior(
+        defaultValue: DragStartBehavior.start,
+      ),
       child: widget.child,
     );
   }

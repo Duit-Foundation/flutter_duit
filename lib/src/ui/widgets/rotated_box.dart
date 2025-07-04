@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitRotatedBox extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<RotatedBoxAttributes> attributes;
+  final ViewAttribute attributes;
   final Widget child;
 
   const DuitRotatedBox({
@@ -14,21 +13,21 @@ class DuitRotatedBox extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
     return RotatedBox(
       key: Key(attributes.id),
-      quarterTurns: attrs.quarterTurns,
+      quarterTurns: attrs.getInt(key: "quarterTurns"),
       child: child,
     );
   }
 }
 
 class DuitControlledRotatedBox extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<RotatedBoxAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledRotatedBox({
@@ -43,9 +42,7 @@ class DuitControlledRotatedBox extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledRotatedBoxState extends State<DuitControlledRotatedBox>
-    with
-        ViewControllerChangeListener<DuitControlledRotatedBox,
-            RotatedBoxAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -54,14 +51,14 @@ class _DuitControlledRotatedBoxState extends State<DuitControlledRotatedBox>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return RotatedBox(
       key: Key(widget.controller.id),
-      quarterTurns: attrs.quarterTurns,
+      quarterTurns: attrs.getInt(key: "quarterTurns"),
       child: widget.child,
     );
   }
