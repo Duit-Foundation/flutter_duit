@@ -15,7 +15,10 @@ class DuitExpanded extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       key: Key(attributes.id),
-      flex: attributes.payload.getInt(key: "flex"),
+      flex: attributes.payload.getInt(
+        key: "flex",
+        defaultValue: 1,
+      ),
       child: child,
     );
   }
@@ -47,7 +50,10 @@ class _DuitControlledExpandedState extends State<DuitControlledExpanded>
   Widget build(BuildContext context) {
     return Expanded(
       key: Key(widget.controller.id),
-      flex: attributes.getInt(key: "flex"),
+      flex: attributes.getInt(
+        key: "flex",
+        defaultValue: 1,
+      ),
       child: widget.child,
     );
   }
