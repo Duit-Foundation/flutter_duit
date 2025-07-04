@@ -25,7 +25,7 @@ class DuitContainer extends StatelessWidget with AnimatedAttributes {
       color: attrs.tryParseColor(key: "color"),
       clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
       decoration: attrs.decoration(),
-      transformAlignment: attrs.alignment(),
+      transformAlignment: attrs.alignment(key: "transformAlignment"),
       child: child,
     );
   }
@@ -73,7 +73,7 @@ class _DuitControlledContainerState extends State<DuitControlledContainer>
       color: attrs.tryParseColor(key: "color"),
       clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
       decoration: attrs.decoration(),
-      transformAlignment: attrs.alignment(),
+      transformAlignment: attrs.alignment(key: "transformAlignment"),
       child: widget.child,
     );
   }

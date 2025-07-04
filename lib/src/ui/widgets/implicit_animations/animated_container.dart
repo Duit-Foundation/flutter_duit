@@ -44,7 +44,7 @@ class _DuitAnimatedContainerState extends State<DuitAnimatedContainer>
       padding: attributes.edgeInsets(),
       margin: attributes.edgeInsets(key: "margin"),
       alignment: attributes.alignment(defaultValue: Alignment.center)!,
-      transformAlignment: attributes.alignment(),
+      transformAlignment: attributes.alignment(key: "transformAlignment"),
       child: widget.child,
     );
   }
