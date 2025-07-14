@@ -88,7 +88,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     EventResolver? customEventResolver,
     ActionExecutor? customActionExecutor,
     DebugLogger? customLogger,
-    bool enableDevMetrics = false,
     bool shared = false,
   }) {
     logger = customLogger ?? DefaultLogger.instance;
@@ -117,7 +116,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     EventResolver? customEventResolver,
     ActionExecutor? customActionExecutor,
     DebugLogger? customLogger,
-    bool enableDevMetrics = false,
     this.source = "",
     this.initialRequestPayload,
     bool shared = false,
