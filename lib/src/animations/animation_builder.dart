@@ -3,6 +3,7 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
+import "package:flutter_duit/src/controller/index.dart";
 
 class DuitAnimatedBuilder extends StatefulWidget {
   final Widget child;
@@ -88,29 +89,30 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
     super.dispose();
   }
 
-  //TODO: Implement this
   Future<void> _handleCommand(RemoteCommand command) async {
-    // final controller = _controllers[command.animatedPropKey];
-
-    //   if (controller != null) {
-    //     switch (command.method) {
-    //       case AnimationMethod.forward:
-    //         await controller.forward();
-    //         break;
-    //       case AnimationMethod.repeat:
-    //         await controller.repeat();
-    //         break;
-    //       case AnimationMethod.reverse:
-    //         await controller.reverse();
-    //         break;
-    //       case AnimationMethod.toggle:
-    //         await handleToggleMethod(controller);
-    //         break;
-    //     }
-    //   } else {
-    //     // throw Exception("Controller not found");
-    //   }
-    // }
+    switch (command) {
+      case AnimationCommand():
+        final controller = _controllers[command.animatedPropKey];
+        if (controller != null) {
+          switch (command.method) {
+            case AnimationMethod.forward:
+              await controller.forward();
+              break;
+            case AnimationMethod.repeat:
+              await controller.repeat();
+              break;
+            case AnimationMethod.reverse:
+              await controller.reverse();
+              break;
+            case AnimationMethod.toggle:
+              await handleToggleMethod(controller);
+              break;
+          }
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   @override

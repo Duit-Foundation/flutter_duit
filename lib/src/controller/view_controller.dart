@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_duit/src/controller/index.dart';
 
 /// The controller for a UI element.
 ///
@@ -145,8 +146,15 @@ final class ViewController<T>
   late final StreamController<RemoteCommand> commandChannel;
 
   @override
-  FutureOr<void> emitCommand(RemoteCommand command) async =>
-      commandChannel.add(command);
+  FutureOr<void> emitCommand(RemoteCommand command) async {
+    try {
+      final specifiedCommand = SpecCommand(command).specify();
+      commandChannel.add(specifiedCommand);
+    } catch (e, s) {
+      driver.logger
+          ?.error("Error while emitting command", error: e, stackTrace: s);
+    }
+  }
 
   @override
   void removeCommandListener() => commandChannel.close();

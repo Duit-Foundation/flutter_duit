@@ -49,7 +49,8 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(driver.controllersCount, 50);
+    expect(
+        driver.controllersCount, 50 + 1); // +1 default controller for overlays
 
     final scrollView = find.byType(Scrollable);
 

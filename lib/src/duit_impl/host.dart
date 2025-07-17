@@ -1,6 +1,7 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/duit_impl/view_context.dart';
+import 'package:flutter_duit/src/ui/widgets/overlay_trigger_listener.dart';
 import 'package:flutter_duit/src/utils/index.dart';
 
 /// A widget that hosts a DUIT view.
@@ -116,12 +117,16 @@ class _DuitViewHostState extends State<DuitViewHost> {
           widget.driver.notifyWidgetDisplayStateChanged(widget.viewTag, 1);
 
           return DuitViewContext(
+            logger: widget.driver.logger!,
             gestureInterceptor: widget.gestureInterceptor,
             gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
             sliverGridDelegatesRegistry: widget.sliverGridDelegatesRegistry,
             child: _StackWrapper(
               invertStack: widget.invertStack,
-              content: content,
+              content: DuitOverlayTriggerListener(
+                driver: widget.driver,
+                child: content,
+              ),
               child: widget.child,
             ),
           );

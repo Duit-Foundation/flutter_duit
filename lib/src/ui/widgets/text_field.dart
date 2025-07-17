@@ -23,20 +23,19 @@ class _DuitTextFieldState extends State<DuitTextField>
   void initState() {
     attachStateToController(widget.controller);
     _textEditingController = TextEditingController(
-      text: attributes.tryGetString("value"),
+      text: attributes.getString(key: "value"),
     );
     _focusNode = FocusNode();
     _textEditingController.addListener(() {
       final text = _textEditingController.text;
-      final data = widget.controller.attributes.payload;
-      data.update("value", (v) => text);
+      attributes.update("value", (v) => text);
       widget.controller.performRelatedAction();
     });
     super.initState();
   }
 
   void _syncControllerWithValue() {
-    if (_textEditingController.text != attributes.tryGetString("value")) {
+    if (_textEditingController.text != attributes.getString(key: "value")) {
       _textEditingController.text = attributes.getString(key: "value");
     }
   }
@@ -49,7 +48,6 @@ class _DuitTextFieldState extends State<DuitTextField>
 
   @override
   void setState(VoidCallback fn) {
-    super.setState(fn);
     if (mounted) {
       _syncControllerWithValue();
     }
@@ -81,7 +79,7 @@ class _DuitTextFieldState extends State<DuitTextField>
       ),
       obscureText: attributes.getBool("obscureText"),
       autofocus: attributes.getBool("autofocus"),
-      enabled: attributes.getBool("enabled"),
+      enabled: attributes.tryGetBool("enabled"),
       enableSuggestions: attributes.getBool(
         "enableSuggestions",
         defaultValue: true,
