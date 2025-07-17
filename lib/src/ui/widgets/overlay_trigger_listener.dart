@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/controller/data.dart';
 import 'package:flutter_duit/src/controller/index.dart';
+import 'package:flutter_duit/src/duit_impl/view_context.dart';
 
 class DuitOverlayTriggerListener extends StatefulWidget {
   final UIDriver driver;
@@ -68,8 +69,14 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
         // sheetAnimationStyle not supported
         builder: (context) {
           final body = buildOutOfBoundWidget(content, widget.driver, null);
-          assert(body != null, "Body must not be null");
-          return body!;
+          if (body == null) {
+            DuitViewContext.of(context).logger.error(
+                  "Failed to build bottom sheet content, body is null",
+                  stackTrace: StackTrace.current,
+                );
+            return const SizedBox.shrink();
+          }
+          return body;
         },
       ).whenComplete(() => _controller.performAction(command.onClose));
     } else {
@@ -80,11 +87,19 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
   void _handleClose() => Navigator.of(context).pop();
 
   Future<void> _listener(RemoteCommand command) async {
-    switch (command) {
-      case BottomSheetCommand():
-        _handleBottomSheetCommand(command);
-      default:
-        break;
+    try {
+      switch (command) {
+        case BottomSheetCommand():
+          _handleBottomSheetCommand(command);
+        default:
+          break;
+      }
+    } catch (e, s) {
+      DuitViewContext.of(context).logger.error(
+            "Error handling overlay command",
+            error: e,
+            stackTrace: s,
+          );
     }
   }
 

@@ -117,6 +117,7 @@ class _DuitViewHostState extends State<DuitViewHost> {
           widget.driver.notifyWidgetDisplayStateChanged(widget.viewTag, 1);
 
           return DuitViewContext(
+            logger: widget.driver.logger!,
             gestureInterceptor: widget.gestureInterceptor,
             gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
             sliverGridDelegatesRegistry: widget.sliverGridDelegatesRegistry,
