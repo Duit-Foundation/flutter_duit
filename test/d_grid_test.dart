@@ -319,7 +319,7 @@ void main() {
         "GridView.builder constructor",
         () {
           setUpAll(() async {
-            await DuitRegistry.configure();
+            await DuitRegistry.initialize();
 
             await DuitRegistry.registerComponents([
               {

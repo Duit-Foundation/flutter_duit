@@ -376,7 +376,7 @@ void main() {
         "SliverGrid.builder constructor",
         () {
           setUpAll(() async {
-            await DuitRegistry.configure();
+            await DuitRegistry.initialize();
 
             await DuitRegistry.registerComponents([
               {
