@@ -1,5 +1,6 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter_duit/src/ui/theme/preprocessor.dart";
+import "package:flutter_duit/src/ui/theme/tokens.dart";
 import "package:flutter_test/flutter_test.dart";
 
 final class _SomeWidgetThemeToken extends ThemeToken {
@@ -258,21 +259,14 @@ void main() {
         () {
           final preprocessor = DuitThemePreprocessor(
             overrideWidgetTokenizer: (type, themeData) {
-              switch (type) {
-                case "Text":
-                  return _OverridedTextThemeToken(
-                    themeData,
-                  );
-              }
-
               return null;
             },
           );
 
           final res = preprocessor.tokenize(
             const {
-              "align_1": {
-                "type": "Align",
+              "text_1": {
+                "type": "Text",
                 "data": {
                   "v": "1",
                 },
@@ -281,8 +275,8 @@ void main() {
           );
 
           expect(
-            res.getToken("align_1", "Align"),
-            isA<DefaultThemeToken>(),
+            res.getToken("text_1", "Text"),
+            isA<TextThemeToken>(),
           );
         },
       );
