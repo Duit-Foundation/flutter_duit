@@ -21,7 +21,8 @@ const _subviewsExcludedFields = {
   "bottomNavigationBar",
   "floatingActionButton",
   "bottomSheet",
-  "persistentFooterButtons"
+  "persistentFooterButtons",
+  "background",
 };
 
 /// A [ThemeToken] for attended widget-related themes.
