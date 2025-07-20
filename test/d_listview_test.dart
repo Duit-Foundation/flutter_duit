@@ -128,7 +128,7 @@ Map<String, dynamic> _createWidget(int type) {
 void main() {
   setUpAll(
     () async {
-      await DuitRegistry.configure();
+      await DuitRegistry.initialize();
 
       await DuitRegistry.registerComponents([
         {

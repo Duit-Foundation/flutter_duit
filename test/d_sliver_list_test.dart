@@ -243,7 +243,7 @@ Map<String, dynamic> _createSliverListSeparatedWidget() {
 void main() {
   setUpAll(
     () async {
-      await DuitRegistry.configure();
+      await DuitRegistry.initialize();
 
       await DuitRegistry.registerComponents([
         {

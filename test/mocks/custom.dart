@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-
-import '../utils.dart';
+import 'package:flutter_duit/src/ui/theme/preprocessor.dart';
 
 const exampleCustomWidget = "ExampleCustomWidget";
 
@@ -92,21 +91,36 @@ class _ExampleWidgetState extends State<ExampleWidget>
   }
 }
 
-Future<void> regCustom() async {
-  await DuitRegistry.configure(
-    themeLoader: const MockThemeLoader(
-      {
-        "custom_1": {
-          "type": exampleCustomWidget,
-          "data": {
-            "random": "100500",
-          }
-        }
-      },
-    ),
-  );
+final class CustomWidgetThemeToken extends ThemeToken {
+  CustomWidgetThemeToken(Map<String, dynamic> themeData)
+      : super(
+          const {},
+          themeData,
+          exampleCustomWidget,
+        );
+}
 
-  DuitRegistry.initTheme();
+Future<void> regCustom() async {
+  final themeData = DuitThemePreprocessor(
+    customWidgetTokenizer: (type, themeData) {
+      if (type == exampleCustomWidget) {
+        return CustomWidgetThemeToken(themeData);
+      }
+      return null;
+    },
+  ).tokenize(
+    {
+      "custom_1": {
+        "type": exampleCustomWidget,
+        "data": {
+          "random": "100500",
+        }
+      }
+    },
+  );
+  await DuitRegistry.initialize(
+    theme: themeData,
+  );
 
   DuitRegistry.register(
     exampleCustomWidget,

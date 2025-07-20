@@ -6,7 +6,7 @@ import 'package:flutter_duit/flutter_duit.dart';
 void main() {
   setUpAll(
     () async {
-      await DuitRegistry.configure();
+      await DuitRegistry.initialize();
     },
   );
   group(
