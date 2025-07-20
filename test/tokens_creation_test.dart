@@ -96,7 +96,7 @@ void main() {
               'type': ElementType.radioGroupContext,
               'data': {
                 'spacing': 8.0,
-                'groupValue': 'test_value', // исключенное поле
+                'groupValue': 'test_value',
               },
             },
           }),
@@ -129,7 +129,7 @@ void main() {
               'type': ElementType.radio,
               'data': {
                 'activeColor': '#FF5722',
-                'parentBuilderId': 'test_id', // исключенное поле
+                'parentBuilderId': 'test_id',
               },
             },
           }),
@@ -163,7 +163,7 @@ void main() {
               'type': ElementType.text,
               'data': {
                 'textAlign': 'center',
-                'data': 'Hello World', // исключенное поле
+                'data': 'Hello World',
               },
             },
           }),
@@ -196,7 +196,7 @@ void main() {
               'type': ElementType.container,
               'data': {
                 'padding': {'all': 16.0},
-                'affectedProperties': ['padding'], // исключенное поле
+                'affectedProperties': ['padding'],
               },
             },
           }),
@@ -228,7 +228,7 @@ void main() {
               'type': ElementType.image,
               'data': {
                 'width': 200.0,
-                'src': 'https://example.com/image.jpg', // исключенное поле
+                'src': 'https://example.com/image.jpg',
               },
             },
           }),
@@ -259,7 +259,7 @@ void main() {
               'type': ElementType.animatedOpacity,
               'data': {
                 'duration': 500,
-                'onEnd': 'callback', // исключенное поле
+                'onEnd': 'callback',
               },
             },
           }),
@@ -293,7 +293,7 @@ void main() {
                 'textAlign': 'justify',
                 'textSpan': {
                   'text': 'Sample text',
-                }, // исключенное поле
+                },
               },
             },
           }),
@@ -326,7 +326,7 @@ void main() {
               'type': ElementType.slider,
               'data': {
                 'min': 0.0,
-                'onChanged': 'callback', // исключенное поле
+                'onChanged': 'callback',
               },
             },
           }),
@@ -357,7 +357,7 @@ void main() {
               'type': ElementType.gestureDetector,
               'data': {
                 'behavior': 'opaque',
-                'onTap': 'callback', // исключенное поле
+                'onTap': 'callback',
               },
             },
           }),
@@ -388,7 +388,7 @@ void main() {
               'type': ElementType.appBar,
               'data': {
                 'elevation': 4.0,
-                'title': {'type': 'Text'}, // исключенное поле
+                'title': {'type': 'Text'},
               },
             },
           }),
@@ -421,7 +421,9 @@ void main() {
               'type': ElementType.gridView,
               'data': {
                 'scrollDirection': 'vertical',
-                'childObjects': [{'type': 'Container'}], // исключенное поле
+                'childObjects': [
+                  {'type': 'Container'}
+                ],
               },
             },
           }),
@@ -518,10 +520,10 @@ void main() {
               'type': ElementType.elevatedButton,
               'data': {
                 'style': {'backgroundColor': '#4CAF50'},
-                'parentBuilderId': 'test_id', // обычно исключенное поле, но не для DefaultThemeToken
-                'affectedProperties': ['color'], // обычно исключенное поле, но не для DefaultThemeToken
-                'onTap': 'callback', // обычно исключенное поле, но не для DefaultThemeToken
-                'value': true, // обычно исключенное поле, но не для DefaultThemeToken
+                'parentBuilderId': 'test_id',
+                'affectedProperties': ['color'],
+                'onTap': 'callback',
+                'value': true,
               },
             },
           }),
