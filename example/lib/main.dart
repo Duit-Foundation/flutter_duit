@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
-import 'package:example/src/custom/index.dart';
-import 'package:example/src/theme/loader.dart';
+import '../bench.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
@@ -55,29 +53,29 @@ final class _Handler implements ExternalEventHandler {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final dio = Dio();
+  // final dio = Dio();
 
-  DuitRegistry.configure(
-    logger: DefaultLogger.instance,
-    themeLoader: HttpThemeLoader(
-      dio,
-      "http://localhost:8999/theme",
-    ),
-  );
+  // DuitRegistry.configure(
+  //   logger: DefaultLogger.instance,
+  //   themeLoader: HttpThemeLoader(
+  //     dio,
+  //     "http://localhost:8999/theme",
+  //   ),
+  // );
 
-  await DuitRegistry.initTheme();
+  // await DuitRegistry.initTheme();
 
-  DuitRegistry.register(
-    exampleCustomWidget,
-    modelFactory: exModelFactory,
-    buildFactory: exBuildFactory,
-    attributesFactory: exAttributeFactory,
-  );
+  // DuitRegistry.register(
+  //   exampleCustomWidget,
+  //   modelFactory: exModelFactory,
+  //   buildFactory: exBuildFactory,
+  //   attributesFactory: exAttributeFactory,
+  // );
 
-  final res = await dio.get<List>("http://localhost:8999/components");
+  // final res = await dio.get<List>("http://localhost:8999/components");
 
-  final comps = res.data!.cast<Map<String, dynamic>>();
-  await DuitRegistry.registerComponents(comps);
+  // final comps = res.data!.cast<Map<String, dynamic>>();
+  // await DuitRegistry.registerComponents(comps);
 
   runApp(const MyApp());
 }
@@ -109,17 +107,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    driver1 = DuitDriver(
-      "/example_screen",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {
-          "Content-Type": "application/json",
+    driver1 = DuitDriver.static({
+      "type": "Row",
+      "id": "1",
+      "attributes": {
+        "mainAxisAlignment": "spaceBetween",
+      },
+      "children": [
+        {
+          "type": "Text",
+          "id": "2",
+          "controlled": true,
+          "attributes": {
+            "data": "Hello, World!",
+          }
         },
-        baseUrl: "http://localhost:8999",
-        decoder: CustomDecoder(),
-      ),
-      externalEventHandler: const _Handler(),
-    );
+        {
+          "type": "Text",
+          "id": "3",
+          "controlled": true,
+          "attributes": {
+            "data": "Hello, World!",
+          }
+        },
+        {
+          "type": "Text",
+          "id": "4",
+          "controlled": true,
+          "attributes": {
+            "data": "Hello, World!",
+          }
+        },
+      ]
+    }, transportOptions: EmptyTransportOptions());
     super.initState();
   }
 
@@ -134,11 +154,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: DuitViewHost(
-            driver: driver1,
-            errorWidgetBuilder: (context, error) => Text(error.toString()),
-            placeholder: const CircularProgressIndicator(),
-          ),
+          child: TextButton(
+              onPressed: () {
+                JsonParseBenchmark().report();
+                ParseAnBuildBenchmark().report();
+              },
+              child: Text("Run bench")),
         ),
       ),
     );

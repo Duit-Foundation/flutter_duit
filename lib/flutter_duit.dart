@@ -2,7 +2,7 @@ library flutter_duit;
 
 export "package:flutter_duit/src/duit_impl/index.dart";
 export "package:flutter_duit/src/ui/index.dart"
-    show CustomUiElement, DuitThemePreprocessor;
+    show DuitThemePreprocessor, DuitElement;
 export "package:flutter_duit/src/transport/transport_type.dart";
 export "package:flutter_duit/src/transport/options.dart";
 export "package:flutter_duit/src/kernel_api/index.dart";

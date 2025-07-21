@@ -8,46 +8,12 @@ Widget exBuildFactory(
   ElementTreeEntry model, [
   Iterable<Widget> subviews = const [],
 ]) {
-  final m = model as ExampleCustomWidget;
-  Widget? child;
-
-  if (subviews.isNotEmpty) {
-    child = subviews.first;
-  }
-
   return ExampleWidget(
-    controller: m.viewController!,
-    child: child,
+    controller: model.viewController,
+    child: model.child.renderView(),
   );
 }
 
-ElementTreeEntry exModelFactory(
-  String id,
-  bool controlled,
-  ViewAttribute attributes,
-  UIElementController? controller, [
-  Iterable<ElementTreeEntry> subviews = const [],
-]) {
-  return ExampleCustomWidget(
-    id: id,
-    attributes: attributes,
-    viewController: controller,
-    controlled: controlled,
-    subviews: subviews,
-  );
-}
-
-final class ExampleCustomWidget extends CustomUiElement {
-  ExampleCustomWidget({
-    required super.id,
-    required super.attributes,
-    required super.viewController,
-    required super.controlled,
-    required super.subviews,
-  }) : super(
-          tag: exampleCustomWidget,
-        );
-}
 
 class ExampleWidget extends StatefulWidget {
   final Widget? child;
@@ -124,7 +90,6 @@ Future<void> regCustom() async {
 
   DuitRegistry.register(
     exampleCustomWidget,
-    modelFactory: exModelFactory,
     buildFactory: exBuildFactory,
   );
 }

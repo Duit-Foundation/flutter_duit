@@ -6,7 +6,7 @@ import 'package:flutter_duit/src/ui/widgets/index.dart';
 
 part 'type_lookup.dart';
 
-extension type DuitElementModel._(Map<String, dynamic> json) {
+extension type NewDuitElement._(Map<String, dynamic> json) {
   @preferInline
   ViewAttribute get attributes => json["attributes"];
 
@@ -32,10 +32,10 @@ extension type DuitElementModel._(Map<String, dynamic> json) {
   operator [](String key) => json[key];
 
   @preferInline
-  List<DuitElementModel> get children => json["children"] ?? [];
+  List<NewDuitElement> get children => json["children"] ?? [];
 
   @preferInline
-  DuitElementModel get child => json["child"];
+  NewDuitElement get child => json["child"];
 
   @preferInline
   ViewAttribute _createAttributes() {
@@ -71,8 +71,7 @@ extension type DuitElementModel._(Map<String, dynamic> json) {
     Map<String, dynamic> data,
     UIDriver driver,
   ) {
-    final element = DuitElementModel._(data);
-    final type = element.type;
+    final element = NewDuitElement._(data);
 
     if (element.controlled) {
       final id = element.id;
@@ -83,35 +82,35 @@ extension type DuitElementModel._(Map<String, dynamic> json) {
       element._createAttributes();
     }
 
-    final lookupResult = _typeLookup[type];
+    // final lookupResult = _typeLookup[type];
 
-    switch (lookupResult) {
-      case 1:
-        if (data.containsKey("child")) {
-          _processElement(data, driver);
-          break;
-        }
-        break;
-      case 2:
-        if (data.containsKey("children")) {
-          final childrenData = (data["children"] as List);
+    // switch (lookupResult) {
+    //   case 1:
+    //     if (data.containsKey("child")) {
+    //       _processElement(data, driver);
+    //       break;
+    //     }
+    //     break;
+    //   case 2:
+    //     if (data.containsKey("children")) {
+    //       final childrenData = (data["children"] as List);
 
-          for (var element in childrenData) {
-            _processElement(element, driver);
-          }
-          break;
-        }
-        break;
-      default:
-        break;
-    }
+    //       for (var element in childrenData) {
+    //         _processElement(element, driver);
+    //       }
+    //       break;
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
 
-  factory DuitElementModel.fromJson(
+  factory NewDuitElement.fromJson(
     Map<String, dynamic> data,
     UIDriver driver,
   ) =>
-      DuitElementModel._(
+      NewDuitElement._(
         data,
       ).._processElement(
           data,
@@ -146,7 +145,7 @@ extension type DuitElementModel._(Map<String, dynamic> json) {
   Widget renderView() => _getWidgetFromElement(this);
 
   @preferInline
-  Widget _getWidgetFromElement(DuitElementModel element) {
+  Widget _getWidgetFromElement(NewDuitElement element) {
     switch (element.type) {
       case ElementType.text:
         return switch (element.controlled) {
