@@ -11,7 +11,9 @@ environment:
 
 dependencies:
   duit_kernel:
-    path: ../duit_kernel
+    git:
+      url: https://github.com/Duit-Foundation/duit_kernel.git
+      ref: models-rework
   flutter:
     sdk: flutter
   http: ^1.3.0
