@@ -42,6 +42,45 @@ void main() {
       );
 
       testWidgets(
+        "must render child",
+        (t) async {
+          final driver = DuitDriver.static(
+            {
+              "type": "Custom",
+              "tag": exampleCustomWidget,
+              "attributes": {},
+              "id": "custom",
+              "controlled": true,
+              "children": [
+                {
+                  "type": "Text",
+                  "attributes": {
+                    "data": "Hello",
+                  },
+                  "id": "text",
+                  "controlled": false,
+                },
+              ],
+            },
+            transportOptions: EmptyTransportOptions(),
+          );
+
+          await t.pumpWidget(
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: DuitViewHost(
+                driver: driver,
+              ),
+            ),
+          );
+
+          await t.pumpAndSettle();
+
+          expect(find.text("Hello"), findsOneWidget);
+        },
+      );
+
+      testWidgets(
         "must update custom widget",
         (t) async {
           final driver = DuitDriver.static(

@@ -1,4 +1,4 @@
-import 'package:flutter_duit/src/ui/models/element_type.dart';
+import 'package:flutter_duit/src/ui/element_type.dart';
 import 'package:flutter_duit/src/ui/theme/preprocessor.dart';
 import 'package:flutter_duit/src/ui/theme/tokens.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,7 +15,7 @@ void main() {
     group('AttendedWidgetThemeToken', () {
       test('should create token for checkbox with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.checkbox,
+          ElementType.checkbox.name,
           {
             'activeColor': '#FF0000',
             'checkColor': '#FFFFFF',
@@ -24,14 +24,14 @@ void main() {
         );
 
         expect(token, isA<AttendedWidgetThemeToken>());
-        expect(token.type, equals(ElementType.checkbox));
+        expect(token.type, equals(ElementType.checkbox.name));
         expect(token.widgetTheme['activeColor'], equals('#FF0000'));
         expect(token.widgetTheme['checkColor'], equals('#FFFFFF'));
       });
 
       test('should create token for switchW with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.switchW,
+          ElementType.switch_.name,
           {
             'activeColor': '#00FF00',
             'inactiveThumbColor': '#CCCCCC',
@@ -39,13 +39,13 @@ void main() {
         );
 
         expect(token, isA<AttendedWidgetThemeToken>());
-        expect(token.type, equals(ElementType.switchW));
+        expect(token.type, equals(ElementType.switch_.name));
         expect(token.widgetTheme['activeColor'], equals('#00FF00'));
       });
 
       test('should create token for textField with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.textField,
+          ElementType.textField.name,
           {
             'hintText': 'Enter text',
             'borderRadius': 8.0,
@@ -53,7 +53,7 @@ void main() {
         );
 
         expect(token, isA<AttendedWidgetThemeToken>());
-        expect(token.type, equals(ElementType.textField));
+        expect(token.type, equals(ElementType.textField.name));
         expect(token.widgetTheme['hintText'], equals('Enter text'));
       });
 
@@ -61,7 +61,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'attended_test': {
-              'type': ElementType.checkbox,
+              'type': ElementType.checkbox.name,
               'data': {
                 'activeColor': '#FF0000',
                 'value': true, // исключенное поле
@@ -76,7 +76,7 @@ void main() {
     group('RadioGroupContextThemeToken', () {
       test('should create token with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.radioGroupContext,
+          ElementType.radioGroupContext.name,
           {
             'spacing': 8.0,
             'direction': 'vertical',
@@ -84,7 +84,7 @@ void main() {
         );
 
         expect(token, isA<RadioGroupContextThemeToken>());
-        expect(token.type, equals(ElementType.radioGroupContext));
+        expect(token.type, equals(ElementType.radioGroupContext.name));
         expect(token.widgetTheme['spacing'], equals(8.0));
       });
 
@@ -93,7 +93,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'radio_group_test': {
-              'type': ElementType.radioGroupContext,
+              'type': ElementType.radioGroupContext.name,
               'data': {
                 'spacing': 8.0,
                 'groupValue': 'test_value',
@@ -108,7 +108,7 @@ void main() {
     group('RadioThemeToken', () {
       test('should create token with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.radio,
+          ElementType.radio.name,
           {
             'activeColor': '#FF5722',
             'focusColor': '#FFCCBC',
@@ -116,7 +116,7 @@ void main() {
         );
 
         expect(token, isA<RadioThemeToken>());
-        expect(token.type, equals(ElementType.radio));
+        expect(token.type, equals(ElementType.radio.name));
         expect(token.widgetTheme['activeColor'], equals('#FF5722'));
       });
 
@@ -126,7 +126,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'radio_test': {
-              'type': ElementType.radio,
+              'type': ElementType.radio.name,
               'data': {
                 'activeColor': '#FF5722',
                 'parentBuilderId': 'test_id',
@@ -141,7 +141,7 @@ void main() {
     group('TextThemeToken', () {
       test('should create token with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.text,
+          ElementType.text.name,
           {
             'textAlign': 'center',
             'style': {
@@ -152,7 +152,7 @@ void main() {
         );
 
         expect(token, isA<TextThemeToken>());
-        expect(token.type, equals(ElementType.text));
+        expect(token.type, equals(ElementType.text.name));
         expect(token.widgetTheme['textAlign'], equals('center'));
       });
 
@@ -160,7 +160,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'text_test': {
-              'type': ElementType.text,
+              'type': ElementType.text.name,
               'data': {
                 'textAlign': 'center',
                 'data': 'Hello World',
@@ -175,7 +175,7 @@ void main() {
     group('AnimatedPropOwnerThemeToken', () {
       test('should create token for align with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.align,
+          ElementType.align.name,
           {
             'alignment': 'center',
             'widthFactor': 1.0,
@@ -183,7 +183,7 @@ void main() {
         );
 
         expect(token, isA<AnimatedPropOwnerThemeToken>());
-        expect(token.type, equals(ElementType.align));
+        expect(token.type, equals(ElementType.align.name));
         expect(token.widgetTheme['alignment'], equals('center'));
       });
 
@@ -193,7 +193,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'animated_prop_test': {
-              'type': ElementType.container,
+              'type': ElementType.container.name,
               'data': {
                 'padding': {'all': 16.0},
                 'affectedProperties': ['padding'],
@@ -208,7 +208,7 @@ void main() {
     group('ImageThemeToken', () {
       test('should create token with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.image,
+          ElementType.image.name,
           {
             'width': 200.0,
             'height': 150.0,
@@ -217,7 +217,7 @@ void main() {
         );
 
         expect(token, isA<ImageThemeToken>());
-        expect(token.type, equals(ElementType.image));
+        expect(token.type, equals(ElementType.image.name));
         expect(token.widgetTheme['width'], equals(200.0));
       });
 
@@ -225,7 +225,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'image_test': {
-              'type': ElementType.image,
+              'type': ElementType.image.name,
               'data': {
                 'width': 200.0,
                 'src': 'https://example.com/image.jpg',
@@ -240,7 +240,7 @@ void main() {
     group('ImplicitAnimatableThemeToken', () {
       test('should create token for animatedOpacity with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.animatedOpacity,
+          ElementType.animatedOpacity.name,
           {
             'duration': 500,
             'opacity': 0.7,
@@ -248,7 +248,7 @@ void main() {
         );
 
         expect(token, isA<ImplicitAnimatableThemeToken>());
-        expect(token.type, equals(ElementType.animatedOpacity));
+        expect(token.type, equals(ElementType.animatedOpacity.name));
         expect(token.widgetTheme['duration'], equals(500));
       });
 
@@ -256,7 +256,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'implicit_anim_test': {
-              'type': ElementType.animatedOpacity,
+              'type': ElementType.animatedOpacity.name,
               'data': {
                 'duration': 500,
                 'onEnd': 'callback',
@@ -271,7 +271,7 @@ void main() {
     group('RichTextThemeToken', () {
       test('should create token with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.richText,
+          ElementType.richText.name,
           {
             'textAlign': 'justify',
             'softWrap': true,
@@ -279,7 +279,7 @@ void main() {
         );
 
         expect(token, isA<RichTextThemeToken>());
-        expect(token.type, equals(ElementType.richText));
+        expect(token.type, equals(ElementType.richText.name));
         expect(token.widgetTheme['textAlign'], equals('justify'));
       });
 
@@ -288,7 +288,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'rich_text_test': {
-              'type': ElementType.richText,
+              'type': ElementType.richText.name,
               'data': {
                 'textAlign': 'justify',
                 'textSpan': {
@@ -305,7 +305,7 @@ void main() {
     group('SliderThemeToken', () {
       test('should create token with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.slider,
+          ElementType.slider.name,
           {
             'min': 0.0,
             'max': 100.0,
@@ -314,7 +314,7 @@ void main() {
         );
 
         expect(token, isA<SliderThemeToken>());
-        expect(token.type, equals(ElementType.slider));
+        expect(token.type, equals(ElementType.slider.name));
         expect(token.widgetTheme['min'], equals(0.0));
       });
 
@@ -323,7 +323,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'slider_test': {
-              'type': ElementType.slider,
+              'type': ElementType.slider.name,
               'data': {
                 'min': 0.0,
                 'onChanged': 'callback',
@@ -338,7 +338,7 @@ void main() {
     group('ExcludeGestureCallbacksThemeToken', () {
       test('should create token for gestureDetector with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.gestureDetector,
+          ElementType.gestureDetector.name,
           {
             'behavior': 'opaque',
             'excludeFromSemantics': false,
@@ -346,7 +346,7 @@ void main() {
         );
 
         expect(token, isA<ExcludeGestureCallbacksThemeToken>());
-        expect(token.type, equals(ElementType.gestureDetector));
+        expect(token.type, equals(ElementType.gestureDetector.name));
         expect(token.widgetTheme['behavior'], equals('opaque'));
       });
 
@@ -354,7 +354,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'gesture_test': {
-              'type': ElementType.gestureDetector,
+              'type': ElementType.gestureDetector.name,
               'data': {
                 'behavior': 'opaque',
                 'onTap': 'callback',
@@ -369,7 +369,7 @@ void main() {
     group('ExcludeChildThemeToken', () {
       test('should create token for appBar with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.appBar,
+          ElementType.appBar.name,
           {
             'elevation': 4.0,
             'backgroundColor': '#2196F3',
@@ -377,7 +377,7 @@ void main() {
         );
 
         expect(token, isA<ExcludeChildThemeToken>());
-        expect(token.type, equals(ElementType.appBar));
+        expect(token.type, equals(ElementType.appBar.name));
         expect(token.widgetTheme['elevation'], equals(4.0));
       });
 
@@ -385,7 +385,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'exclude_child_test': {
-              'type': ElementType.appBar,
+              'type': ElementType.appBar.name,
               'data': {
                 'elevation': 4.0,
                 'title': {'type': 'Text'},
@@ -400,7 +400,7 @@ void main() {
     group('DynamicChildHolderThemeToken', () {
       test('should create token for gridView with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.gridView,
+          ElementType.gridView.name,
           {
             'scrollDirection': 'vertical',
             'reverse': false,
@@ -408,7 +408,7 @@ void main() {
         );
 
         expect(token, isA<DynamicChildHolderThemeToken>());
-        expect(token.type, equals(ElementType.gridView));
+        expect(token.type, equals(ElementType.gridView.name));
         expect(token.widgetTheme['scrollDirection'], equals('vertical'));
       });
 
@@ -418,7 +418,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'dynamic_child_test': {
-              'type': ElementType.gridView,
+              'type': ElementType.gridView.name,
               'data': {
                 'scrollDirection': 'vertical',
                 'childObjects': [
@@ -435,7 +435,7 @@ void main() {
     group('DefaultThemeToken', () {
       test('should create token for elevatedButton with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.elevatedButton,
+          ElementType.elevatedButton.name,
           {
             'style': {
               'backgroundColor': '#4CAF50',
@@ -446,13 +446,14 @@ void main() {
         );
 
         expect(token, isA<DefaultThemeToken>());
-        expect(token.type, equals(ElementType.elevatedButton));
-        expect(token.widgetTheme['style']['backgroundColor'], equals('#4CAF50'));
+        expect(token.type, equals(ElementType.elevatedButton.name));
+        expect(
+            token.widgetTheme['style']['backgroundColor'], equals('#4CAF50'));
       });
 
       test('should create token for center with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.center,
+          ElementType.center.name,
           {
             'widthFactor': 2.0,
             'heightFactor': 1.5,
@@ -460,14 +461,14 @@ void main() {
         );
 
         expect(token, isA<DefaultThemeToken>());
-        expect(token.type, equals(ElementType.center));
+        expect(token.type, equals(ElementType.center.name));
         expect(token.widgetTheme['widthFactor'], equals(2.0));
         expect(token.widgetTheme['heightFactor'], equals(1.5));
       });
 
       test('should create token for safeArea with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.safeArea,
+          ElementType.safeArea.name,
           {
             'left': true,
             'top': true,
@@ -478,27 +479,27 @@ void main() {
         );
 
         expect(token, isA<DefaultThemeToken>());
-        expect(token.type, equals(ElementType.safeArea));
+        expect(token.type, equals(ElementType.safeArea.name));
         expect(token.widgetTheme['left'], equals(true));
         expect(token.widgetTheme['bottom'], equals(false));
       });
 
       test('should create token for repaintBoundary with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.repaintBoundary,
+          ElementType.repaintBoundary.name,
           {
             'customProperty': 'test_value',
           },
         );
 
         expect(token, isA<DefaultThemeToken>());
-        expect(token.type, equals(ElementType.repaintBoundary));
+        expect(token.type, equals(ElementType.repaintBoundary.name));
         expect(token.widgetTheme['customProperty'], equals('test_value'));
       });
 
       test('should create token for ignorePointer with valid data', () {
         final token = preprocessor.createToken(
-          ElementType.ignorePointer,
+          ElementType.ignorePointer.name,
           {
             'ignoring': true,
             'ignoringSemantics': false,
@@ -506,7 +507,7 @@ void main() {
         );
 
         expect(token, isA<DefaultThemeToken>());
-        expect(token.type, equals(ElementType.ignorePointer));
+        expect(token.type, equals(ElementType.ignorePointer.name));
         expect(token.widgetTheme['ignoring'], equals(true));
         expect(token.widgetTheme['ignoringSemantics'], equals(false));
       });
@@ -517,7 +518,7 @@ void main() {
         expect(
           () => preprocessor.tokenize({
             'default_test': {
-              'type': ElementType.elevatedButton,
+              'type': ElementType.elevatedButton.name,
               'data': {
                 'style': {'backgroundColor': '#4CAF50'},
                 'parentBuilderId': 'test_id',
@@ -532,4 +533,4 @@ void main() {
       });
     });
   });
-} 
+}

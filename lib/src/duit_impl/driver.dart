@@ -5,9 +5,9 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/duit_impl/hooks.dart";
+import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
-import "package:flutter_duit/src/ui/models/element_type.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 final class DuitDriver with DriverHooks implements UIDriver {
@@ -457,7 +457,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   ) async {
     final controller = _viewManager.getController(controllerId);
     if (controller != null) {
-      if (controller.type == ElementType.component) {
+      if (controller.type == ElementType.component.name) {
         await _resolveComponentUpdate(controller, json);
         return;
       }

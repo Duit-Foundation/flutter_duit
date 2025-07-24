@@ -76,6 +76,7 @@ class _DuitControlledTextState extends State<DuitControlledText>
     }
 
     return Text(
+      key: Key(widget.controller.id),
       data,
       textAlign: attrs.textAlign(),
       textDirection: attrs.textDirection(),

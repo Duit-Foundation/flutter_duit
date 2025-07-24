@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/ui/theme/preprocessor.dart';
 
 const exampleCustomWidget = "ExampleCustomWidget";
 
@@ -10,7 +9,7 @@ Widget exBuildFactory(
 ]) {
   return ExampleWidget(
     controller: model.viewController,
-    child: model.child.renderView(),
+    child: subviews.isEmpty ? null : subviews.first,
   );
 }
 
@@ -69,6 +68,7 @@ final class CustomWidgetThemeToken extends ThemeToken {
 Future<void> regCustom() async {
   final themeData = DuitThemePreprocessor(
     customWidgetTokenizer: (type, themeData) {
+      print("type: $type");
       if (type == exampleCustomWidget) {
         return CustomWidgetThemeToken(themeData);
       }

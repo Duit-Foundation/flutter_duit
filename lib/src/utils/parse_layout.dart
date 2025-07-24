@@ -1,5 +1,5 @@
 import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/src/ui/models/ui_tree.dart';
+import 'package:flutter_duit/src/ui/index.dart';
 
 Future<ElementTree> parseLayout(
   Map<String, dynamic> data,

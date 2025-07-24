@@ -8,7 +8,10 @@ final class DuitTree extends ElementTree {
   DuitTree({
     required Map<String, dynamic> json,
     required UIDriver driver,
-  }) : super(json: json, driver: driver);
+  }) : super(
+          json: json,
+          driver: driver,
+        );
 
   @override
   Future<ElementTree> parse() async {

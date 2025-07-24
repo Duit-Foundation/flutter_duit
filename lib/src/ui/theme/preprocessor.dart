@@ -1,6 +1,5 @@
 import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/src/ui/models/element_type.dart';
-import 'package:flutter_duit/src/ui/theme/tokens.dart';
+import 'package:flutter_duit/src/ui/index.dart';
 
 /// A theme preprocessor implementation for Duit widgets.
 ///
@@ -53,8 +52,9 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
   ThemeToken createToken(
     String widgetType,
     Map<String, dynamic> themeData,
-  ) =>
-      switch (widgetType) {
+  ) {
+    final type = ElementType.valueOrNull(widgetType);
+    return switch (type) {
       ElementType.text => TextThemeToken(
           themeData,
         ),
@@ -85,19 +85,19 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
           themeData,
           widgetType,
         ),
-        ElementType.animatedOpacity ||
-        ElementType.animatedPositioned ||
-        ElementType.animatedScale ||
-        ElementType.animatedRotation ||
-        ElementType.animatedPadding ||
-        ElementType.animatedAlign ||
-        ElementType.animatedSize ||
-        ElementType.animatedPhysicalModel ||
-        ElementType.animatedSlide ||
-        ElementType.animatedContainer ||
-        ElementType.animatedCrossFade ||
-        ElementType.sliverAnimatedOpacity =>
-          ImplicitAnimatableThemeToken(
+      ElementType.animatedOpacity ||
+      ElementType.animatedPositioned ||
+      ElementType.animatedScale ||
+      ElementType.animatedRotation ||
+      ElementType.animatedPadding ||
+      ElementType.animatedAlign ||
+      ElementType.animatedSize ||
+      ElementType.animatedPhysicalModel ||
+      ElementType.animatedSlide ||
+      ElementType.animatedContainer ||
+      ElementType.animatedCrossFade ||
+      ElementType.sliverAnimatedOpacity =>
+        ImplicitAnimatableThemeToken(
           themeData,
           widgetType,
         ),
@@ -107,18 +107,18 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
           themeData,
           widgetType,
         ),
-        ElementType.appBar ||
-        ElementType.scaffold ||
-        ElementType.flexibleSpaceBar =>
-          ExcludeChildThemeToken(
+      ElementType.appBar ||
+      ElementType.scaffold ||
+      ElementType.flexibleSpaceBar =>
+        ExcludeChildThemeToken(
           themeData,
           widgetType,
         ),
       ElementType.gridView ||
-        ElementType.listView ||
-        ElementType.sliverList ||
-        ElementType.sliverAppBar ||
-        ElementType.sliverGrid =>
+      ElementType.listView ||
+      ElementType.sliverList ||
+      ElementType.sliverAppBar ||
+      ElementType.sliverGrid =>
         DynamicChildHolderThemeToken(
           themeData,
           widgetType,
@@ -127,32 +127,32 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
       ElementType.center ||
       ElementType.ignorePointer ||
       ElementType.repaintBoundary ||
-        ElementType.singleChildScrollview ||
-        ElementType.intrinsicHeight ||
-        ElementType.intrinsicWidth ||
-        ElementType.safeArea ||
-        ElementType.carouselView ||
-        ElementType.customScrollView ||
-        ElementType.sliverPadding ||
-        ElementType.sliverFillRemaining ||
-        ElementType.sliverToBoxAdapter ||
-        ElementType.sliverFillViewport ||
-        ElementType.sliverOpacity ||
-        ElementType.sliverVisibility ||
-        ElementType.absorbPointer ||
-        ElementType.offstage ||
-        ElementType.physicalModel ||
-        ElementType.sliverOffstage ||
-        ElementType.sliverIgnorePointer ||
-        ElementType.sliverSafeArea =>
+      ElementType.singleChildScrollview ||
+      ElementType.intrinsicHeight ||
+      ElementType.intrinsicWidth ||
+      ElementType.safeArea ||
+      ElementType.carouselView ||
+      ElementType.customScrollView ||
+      ElementType.sliverPadding ||
+      ElementType.sliverFillRemaining ||
+      ElementType.sliverToBoxAdapter ||
+      ElementType.sliverFillViewport ||
+      ElementType.sliverOpacity ||
+      ElementType.sliverVisibility ||
+      ElementType.absorbPointer ||
+      ElementType.offstage ||
+      ElementType.physicalModel ||
+      ElementType.sliverOffstage ||
+      ElementType.sliverIgnorePointer ||
+      ElementType.sliverSafeArea =>
         DefaultThemeToken(
           themeData,
           widgetType,
         ),
       ElementType.checkbox ||
-      ElementType.switchW ||
-        ElementType.textField ||
-        ElementType.meta =>
+      ElementType.switch_ ||
+      ElementType.textField ||
+      ElementType.meta =>
         AttendedWidgetThemeToken(
           themeData,
           widgetType,
@@ -166,17 +166,17 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
       ElementType.slider => SliderThemeToken(
           themeData,
         ),
-        ElementType.empty ||
-        ElementType.lifecycleStateListener ||
-        ElementType.component ||
-        ElementType.subtree ||
-        ElementType.animatedBuilder ||
-        ElementType.remoteSubtree =>
-          const UnknownThemeToken(),
-        ElementType.richText => RichTextThemeToken(
-            themeData,
-          ),
+      ElementType.lifecycleStateListener ||
+      ElementType.component ||
+      ElementType.subtree ||
+      ElementType.animatedBuilder ||
+      ElementType.remoteSubtree =>
+        const UnknownThemeToken(),
+      ElementType.richText => RichTextThemeToken(
+          themeData,
+        ),
       _ => customWidgetTokenizer?.call(widgetType, themeData) ??
           const UnknownThemeToken(),
-      };
+    };
+  }
 }

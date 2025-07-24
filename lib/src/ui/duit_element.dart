@@ -1,31 +1,17 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_duit/src/controller/index.dart';
-import 'package:flutter_duit/src/duit_impl/el.dart';
-import 'package:flutter_duit/src/ui/models/element_type.dart';
-// import 'package:flutter_duit/src/ui/models/element_models.dart';
-// import 'package:flutter_duit/src/ui/models/element_type.dart';
-// import 'package:flutter_duit/src/ui/widgets/index.dart';
-// import 'package:flutter_duit/src/utils/index.dart';
-
-part 'lookup.dart';
+import 'package:flutter_duit/src/ui/element_property_view.dart';
+import 'package:flutter_duit/src/ui/element_type.dart';
 
 /// Represents a DUIT element in the DUIT element tree.
 ///
 /// The [DuitElement] class represents an individual DUIT element in the DUIT element tree.
 /// It holds information about the element's type, properties, and child elements.
 /// The [DuitElement] class provides methods for rendering the element to a Flutter widget and handling interactions.
-base class DuitElement extends ElementTreeEntry {
-  // //<editor-fold desc="Properties and ctor">
-  // @override
-  // ViewAttribute? attributes;
-
-  // @override
-  // UIElementController? viewController;
+final class DuitElement extends ElementTreeEntry {
+  final ElementPropertyView _element;
 
   DuitElement._(this._element);
-
-  final NewDuitElement _element;
 
   @override
   UIElementController get viewController => _element["controller"];
@@ -37,26 +23,22 @@ base class DuitElement extends ElementTreeEntry {
   List<ElementTreeEntry> get children => _element["children"];
 
   @override
-  ElementTreeEntry get child => _element["child"];
+  ElementTreeEntry? get child => _element["child"];
 
-  // DuitElement({
-  //   required super.type,
-  //   required super.id,
-  //   super.controlled = false,
-  //   super.tag,
-  //   this.viewController,
-  //   this.attributes,
-  // });
+  ElementType get type => _element.type;
 
-  static DuitElement fromJson(
+  String? get tag => _element.tag;
+
+  @preferInline
+  ElementPropertyView get element => _element;
+
+  factory DuitElement.fromJson(
     Map<String, dynamic> json,
     UIDriver driver,
   ) {
-    final element = NewDuitElement.fromJson(json, driver);
+    final element = ElementPropertyView.fromJson(json, driver);
 
-    final lookupResult = _typeLookup[element.type];
-
-    switch (lookupResult) {
+    switch (element.type.childRelation) {
       case 1:
         if (json.containsKey("child")) {
           final child = (json["child"] as Map<String, dynamic>);
@@ -69,6 +51,7 @@ base class DuitElement extends ElementTreeEntry {
           for (var child in children) {
             DuitElement.fromJson(child, driver);
           }
+          return DuitElement._(element);
         }
         return DuitElement._(element);
       default:
@@ -80,10 +63,8 @@ base class DuitElement extends ElementTreeEntry {
   ///
   /// Returns the rendered Flutter widget.
   @override
-  Widget renderView() => _element.renderView();
+  Widget renderView() => _element.renderView(this);
 
   @override
   String toString() => _element.toString();
-
-//</editor-fold>
 }
