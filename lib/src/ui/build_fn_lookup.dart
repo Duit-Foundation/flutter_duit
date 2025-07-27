@@ -14,8 +14,8 @@ const _buildFnLookup = <ElementType, BuildFn>{
   //single-child elements
   ElementType.elevatedButton: _buildElevatedButton,
   ElementType.animatedBuilder: _buildMock,
-  ElementType.absorbPointer: _buildMock,
-  ElementType.offstage: _buildMock,
+  ElementType.absorbPointer: _buildAbsorbPointer,
+  ElementType.offstage: _buildOffstage,
   ElementType.decoratedBox: _buildMock,
   ElementType.center: _buildMock,
   ElementType.positioned: _buildMock,

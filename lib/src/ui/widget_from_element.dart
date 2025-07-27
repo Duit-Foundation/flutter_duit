@@ -110,6 +110,32 @@ Widget _buildColumn(ElementPropertyView model) {
   };
 }
 
+Widget _buildAbsorbPointer(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledAbsorbPointer(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitAbsorbPointer(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildOffstage(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledOffstage(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitOffstage(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
 @preferInline
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
