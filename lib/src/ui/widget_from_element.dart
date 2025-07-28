@@ -136,6 +136,152 @@ Widget _buildOffstage(ElementPropertyView model) {
   };
 }
 
+Widget _buildDecoratedBox(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledDecoratedBox(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitDecoratedBox(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildCenter(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledCenter(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitCenter(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildAlign(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledAlign(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitAlign(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildTransform(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledTransform(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitTransform(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildInkWell(ElementPropertyView model) => DuitInkWell(
+      controller: model.viewController,
+      child: _buildWidget(model.child),
+    );
+
+Widget _buildAppBar(ElementPropertyView model) => DuitAppBar(
+      controller: model.viewController,
+    );
+
+Widget _buildScaffold(ElementPropertyView model) => DuitScaffold(
+      controller: model.viewController,
+      child: _buildWidget(model.child),
+    );
+
+Widget _buildPositioned(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledPositioned(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitPositioned(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildSubtree(ElementPropertyView model) => DuitSubtree(
+      controller: model.viewController,
+      child: _buildWidget(model.child),
+    );
+
+Widget _buildMeta(ElementPropertyView model) => DuitMetaWidget(
+      controller: model.viewController,
+      child: _buildWidget(model.child),
+    );
+
+Widget _buildContainer(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledContainer(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitContainer(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildSizedBox(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledSizedBox(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitSizedBox(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildPadding(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledPadding(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitPadding(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildSingleChildScrollView(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledSingleChildScrollView(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitSingleChildScrollView(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildAnimatedBuilder(ElementPropertyView model) => DuitAnimatedBuilder(
+      controller: model.viewController,
+      child: _buildWidget(model.child),
+    );
+
 @preferInline
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
