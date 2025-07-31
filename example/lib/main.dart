@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-
-import '../bench.dart';
+import 'package:example/src/custom/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
@@ -65,12 +64,10 @@ void main() async {
 
   // await DuitRegistry.initTheme();
 
-  // DuitRegistry.register(
-  //   exampleCustomWidget,
-  //   modelFactory: exModelFactory,
-  //   buildFactory: exBuildFactory,
-  //   attributesFactory: exAttributeFactory,
-  // );
+  DuitRegistry.register(
+    exampleCustomWidget,
+    buildFactory: exampleBuildFactory,
+  );
 
   // final res = await dio.get<List>("http://localhost:8999/components");
 
@@ -107,39 +104,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    driver1 = DuitDriver.static({
-      "type": "Row",
-      "id": "1",
-      "attributes": {
-        "mainAxisAlignment": "spaceBetween",
+    driver1 = DuitDriver.static(
+      {
+        "type": "Text",
+        "id": "1",
+        "attributes": {
+          "data": "Hello, World!",
+        },
       },
-      "children": [
-        {
-          "type": "Text",
-          "id": "2",
-          "controlled": true,
-          "attributes": {
-            "data": "Hello, World!",
-          }
-        },
-        {
-          "type": "Text",
-          "id": "3",
-          "controlled": true,
-          "attributes": {
-            "data": "Hello, World!",
-          }
-        },
-        {
-          "type": "Text",
-          "id": "4",
-          "controlled": true,
-          "attributes": {
-            "data": "Hello, World!",
-          }
-        },
-      ]
-    }, transportOptions: EmptyTransportOptions());
+      transportOptions: EmptyTransportOptions(),
+    );
     super.initState();
   }
 
@@ -154,12 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: TextButton(
-              onPressed: () {
-                JsonParseBenchmark().report();
-                ParseAnBuildBenchmark().report();
-              },
-              child: Text("Run bench")),
+          child: DuitViewHost(
+            driver: driver1,
+          ),
         ),
       ),
     );
