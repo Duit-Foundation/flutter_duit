@@ -17,8 +17,7 @@ class DuitComponent extends StatefulWidget {
   State<DuitComponent> createState() => _DuitComponentState();
 }
 
-class _DuitComponentState extends State<DuitComponent>
-    with SubtreeHolder {
+class _DuitComponentState extends State<DuitComponent> with SubtreeHolder {
   @override
   void initState() {
     attachStateToController(

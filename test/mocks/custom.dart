@@ -13,7 +13,6 @@ Widget exBuildFactory(
   );
 }
 
-
 class ExampleWidget extends StatefulWidget {
   final Widget? child;
   final UIElementController controller;
