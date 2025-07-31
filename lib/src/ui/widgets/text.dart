@@ -25,7 +25,7 @@ final class DuitText extends StatelessWidget with AnimatedAttributes {
     }
 
     return Text(
-      key: Key(attributes.id),
+      key: ValueKey(attributes.id),
       data,
       textAlign: attrs.textAlign(),
       textDirection: attrs.textDirection(),
@@ -76,8 +76,8 @@ class _DuitControlledTextState extends State<DuitControlledText>
     }
 
     return Text(
-      key: Key(widget.controller.id),
       data,
+      key: ValueKey(widget.controller.id),
       textAlign: attrs.textAlign(),
       textDirection: attrs.textDirection(),
       style: attrs.textStyle(),
