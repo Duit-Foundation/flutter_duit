@@ -1,5 +1,4 @@
 export 'text.dart';
-export 'widget_fabric.dart';
 export 'elevated_button.dart';
 export 'row.dart';
 export 'column.dart';

@@ -1,9 +1,8 @@
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart'
     show Widget, SizedBox, SliverToBoxAdapter;
-import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/controller/index.dart';
-import 'package:flutter_duit/src/ui/element_type.dart';
+import 'package:flutter_duit/src/ui/index.dart';
 import 'package:flutter_duit/src/ui/widgets/grid_constructor.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
 import 'package:meta/meta.dart';

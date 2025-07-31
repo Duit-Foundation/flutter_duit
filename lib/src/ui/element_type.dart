@@ -114,7 +114,6 @@ enum ElementType {
     isControlledByDefault: true,
     childRelation: 1,
   ),
-  //NOTE: проверить передачу детей в компоненты
   component(
     name: "Component",
     isControlledByDefault: true,
@@ -434,7 +433,8 @@ enum ElementType {
         "Unknown element type: $name",
       ));
 
-  static ElementType? valueOrNull(String name) => _stringToTypeLookupTable[name];
+  static ElementType? valueOrNull(String name) =>
+      _stringToTypeLookupTable[name];
 }
 
 const _stringToTypeLookupTable = <String, ElementType>{
