@@ -77,7 +77,12 @@ mixin ViewControllerChangeListener<T extends StatefulWidget> on State<T> {
   }
 
   void _listenControllerUpdateStateEvent() {
-    _controller.addListener(_listener);
+    try {
+      _controller.addListener(_listener);
+    } catch (e) {
+      // Controller might be disposed - skip adding listener
+      return;
+    }
   }
 
   @override
@@ -88,9 +93,13 @@ mixin ViewControllerChangeListener<T extends StatefulWidget> on State<T> {
 
   @override
   void dispose() {
-    _controller
-      ..removeListener(_listener)
-      ..detach();
+    try {
+      _controller
+        ..removeListener(_listener)
+        ..detach();
+    } catch (e) {
+      // Controller might already be disposed - safe to ignore
+    }
     super.dispose();
   }
 }
