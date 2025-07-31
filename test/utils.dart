@@ -5,8 +5,6 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
-import "mocks/custom.dart";
-
 double getFateTransitionOpacity(WidgetTester tester, Finder finder) {
   return tester
       .widget<FadeTransition>(

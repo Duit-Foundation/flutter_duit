@@ -113,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       },
       transportOptions: EmptyTransportOptions(),
+      externalEventHandler: const _Handler(),
     );
     super.initState();
   }
