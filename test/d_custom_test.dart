@@ -19,7 +19,6 @@ void main() {
             {
               "type": "Custom",
               "tag": exampleCustomWidget,
-              "attributes": {},
               "id": "custom",
               "controlled": true,
             },
@@ -48,7 +47,6 @@ void main() {
             {
               "type": "Custom",
               "tag": exampleCustomWidget,
-              "attributes": {},
               "id": "custom",
               "controlled": true,
               "children": [
@@ -87,7 +85,6 @@ void main() {
             {
               "type": "Custom",
               "tag": exampleCustomWidget,
-              "attributes": {},
               "id": "custom",
               "controlled": true,
             },
@@ -127,7 +124,6 @@ void main() {
             {
               "type": "Custom",
               "tag": "invalid_tag",
-              "attributes": {},
               "id": "custom",
               "controlled": true,
             },

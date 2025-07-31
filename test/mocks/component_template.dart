@@ -1,13 +1,10 @@
-final componentTemplate = {
+final componentTemplate = <String, dynamic>{
   "tag": "x",
   "layoutRoot": {
     "type": "Column",
     "id": "col1",
     "controlled": false,
-    "attributes": {
-      "x": "x",
-    },
-    "children": [
+    "children": <Map<String, dynamic>>[
       {
         "type": "Container",
         "id": "container1",
@@ -88,7 +85,7 @@ final componentTemplate2 = {
   },
 };
 
-const componentTemplateData = {
+const componentTemplateData = <String, dynamic>{
   "secColor": "#03fcc2",
   "mainColor": "#075eeb",
 };

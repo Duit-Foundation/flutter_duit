@@ -9,7 +9,7 @@ Map<String, dynamic> _createSliverListWidget() {
     "type": "CustomScrollView",
     "id": "custom_view",
     "controlled": false,
-    "attributes": {},
+    "attributes": <String, dynamic>{},
     "children": [
       {
         "controlled": true,
@@ -83,7 +83,7 @@ Map<String, dynamic> _createSliverListCommonWidget([bool isControlled = true]) {
     "type": "CustomScrollView",
     "id": "custom_view",
     "controlled": false,
-    "attributes": {},
+    "attributes": <String, dynamic>{},
     "children": [
       {
         "controlled": isControlled,
@@ -137,7 +137,7 @@ Map<String, dynamic> _createSliverListControlledWidget() {
     "type": "CustomScrollView",
     "id": "custom_view",
     "controlled": false,
-    "attributes": {},
+    "attributes": <String, dynamic>{},
     "children": [
       {
         "controlled": true,
@@ -181,7 +181,7 @@ Map<String, dynamic> _createSliverListSeparatedWidget() {
     "type": "CustomScrollView",
     "id": "custom_view",
     "controlled": false,
-    "attributes": {},
+    "attributes": <String, dynamic>{},
     "children": [
       {
         "controlled": true,

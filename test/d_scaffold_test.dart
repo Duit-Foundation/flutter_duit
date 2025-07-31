@@ -43,7 +43,7 @@ void main() {
             {
               "type": "Scaffold",
               "id": "scaffold",
-              "attributes": {},
+              "attributes": <String, dynamic>{},
               "child": {
                 "type": "Text",
                 "id": "text",
@@ -80,7 +80,7 @@ void main() {
                     "type": "AppBar",
                     "id": "appBar",
                     "controlled": true,
-                    "attributes": {},
+                    "attributes": <String, dynamic>{},
                   },
                 },
               },

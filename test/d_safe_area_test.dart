@@ -11,11 +11,11 @@ Map<String, dynamic> _createWidget({
   bool right = true,
   controlled = false,
 }) {
-  return {
+  return <String, dynamic>{
     "type": "SafeArea",
     "id": "safeAreaId",
     "controlled": controlled,
-    "attributes": {
+    "attributes": <String, dynamic>{
       "top": top,
       "bottom": bottom,
       "left": left,
@@ -26,7 +26,7 @@ Map<String, dynamic> _createWidget({
       "type": "Container",
       "id": "conId",
       "controlled": false,
-      "attributes": {
+      "attributes": <String, dynamic>{
         "color": "#075eeb",
       },
     }
@@ -111,7 +111,7 @@ void main() {
     testWidgets(" minimum and maintainBottomViewPadding attributes",
         (tester) async {
       final widgetMap = _createWidget();
-      widgetMap["attributes"] = {
+      widgetMap["attributes"] = <String, dynamic>{
         ...widgetMap["attributes"],
         "minimum": [5.0, 6.0, 7.0, 8.0],
         "maintainBottomViewPadding": true,

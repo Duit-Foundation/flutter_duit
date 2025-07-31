@@ -8,10 +8,10 @@ void main() {
   group(
     'DuitCarouselView tests',
     () {
-      final arr = [];
+      final arr = <Map<String, dynamic>>[];
 
       for (var i = 0; i < 100; i++) {
-        arr.add({
+        arr.add(<String, dynamic>{
           "type": "Container",
           "controlled": false,
           "id": i.toString(),
@@ -121,7 +121,7 @@ void main() {
               "type": "CarouselView",
               "controlled": false,
               "id": "car_empty",
-              "children": [],
+              "children": <Map<String, dynamic>>[],
               "attributes": {
                 "constructor": "common",
                 "itemExtent": 100.0,

@@ -46,7 +46,7 @@ void main() {
         (t) async {
           final w = _createWidget(0.5);
 
-          w["attributes"] = {
+          w["attributes"] = <String, dynamic>{
             ...w["attributes"],
             "onEnd": _action,
           };

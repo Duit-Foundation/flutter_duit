@@ -8,7 +8,7 @@ void main() {
   group(
     "DuitGridView tests",
     () {
-      final arr = [];
+      final arr = <Map<String, dynamic>>[];
 
       for (var i = 0; i < 20; i++) {
         arr.add({

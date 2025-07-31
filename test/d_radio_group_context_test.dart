@@ -23,7 +23,7 @@ void main() {
                 "type": "Row",
                 "id": "row1",
                 "controlled": false,
-                "attributes": {},
+                "attributes": <String, dynamic>{},
                 "children": [
                   {
                     "type": "Radio",

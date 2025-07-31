@@ -68,7 +68,6 @@ final class CustomWidgetThemeToken extends ThemeToken {
 Future<void> regCustom() async {
   final themeData = DuitThemePreprocessor(
     customWidgetTokenizer: (type, themeData) {
-      print("type: $type");
       if (type == exampleCustomWidget) {
         return CustomWidgetThemeToken(themeData);
       }
