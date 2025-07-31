@@ -118,7 +118,7 @@ enum ElementType {
   component(
     name: "Component",
     isControlledByDefault: true,
-    childRelation: 0,
+    childRelation: 3,
   ),
   singleChildScrollview(
     name: "SingleChildScrollView",
@@ -383,7 +383,7 @@ enum ElementType {
   physicalModel(
     name: "PhysicalModel",
     isControlledByDefault: false,
-    childRelation: 0,
+    childRelation: 1,
   ),
   animatedPhysicalModel(
     name: "AnimatedPhysicalModel",
@@ -419,6 +419,7 @@ enum ElementType {
   /// - `0`: No child elements (leaf widgets like Text, Image)
   /// - `1`: Single child element (wrapper widgets like Container, Padding)
   /// - `2`: Multiple child elements (layout widgets like Row, Column, Stack)
+  /// - `3`: Component content
   final int childRelation;
 
   const ElementType({
@@ -516,4 +517,5 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "PhysicalModel": ElementType.physicalModel,
   "AnimatedPhysicalModel": ElementType.animatedPhysicalModel,
   "AnimatedSlide": ElementType.animatedSlide,
+  "AnimatedBuilder": ElementType.animatedBuilder,
 };

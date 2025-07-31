@@ -2,6 +2,7 @@ import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/src/ui/element_property_view.dart';
 import 'package:flutter_duit/src/ui/element_type.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 
 /// Represents a DUIT element in the DUIT element tree.
 ///
@@ -54,6 +55,25 @@ final class DuitElement extends ElementTreeEntry {
           return DuitElement._(element);
         }
         return DuitElement._(element);
+      case 3:
+        final providedData = Map<String, dynamic>.from(json["data"]);
+
+        final model = DuitRegistry.getComponentDescription(element.tag!);
+
+        if (model != null) {
+          final child = JsonUtils.mergeWithDataSource(
+            model,
+            providedData,
+          );
+
+          final childElement = DuitElement.fromJson(child, driver).element;
+          element.componentChild = childElement;
+
+          return DuitElement._(element);
+        }
+
+        return DuitElement._(element);
+
       default:
         return DuitElement._(element);
     }

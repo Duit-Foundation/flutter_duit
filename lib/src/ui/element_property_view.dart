@@ -1,9 +1,12 @@
 import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart' show Widget, SizedBox;
+import 'package:flutter/material.dart'
+    show Widget, SizedBox, SliverToBoxAdapter;
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/ui/element_type.dart';
+import 'package:flutter_duit/src/ui/widgets/grid_constructor.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
+import 'package:meta/meta.dart';
 
 part 'widget_from_element.dart';
 part 'build_fn_lookup.dart';
@@ -47,7 +50,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   /// final textStyle = attrs.payload.textStyle();
   /// ```
   @preferInline
-  ViewAttribute get attributes => json["attributes"];
+  ViewAttribute get attributes => json["_attributes"];
 
   /// Gets the controller for this UI element.
   ///
@@ -192,15 +195,16 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   @preferInline
   ElementPropertyView? get child => json["child"];
 
+  @internal
+  @preferInline
+  set componentChild(ElementPropertyView child) => json["child"] = child;
+
   @preferInline
   ViewAttribute _createAttributes() {
-    final attributes = json["attributes"];
-    if (attributes is ViewAttribute) {
-      return attributes;
-    }
-    return json["attributes"] = ViewAttribute.from(
+    final attributes = json["attributes"] ?? <String, dynamic>{};
+    return json["_attributes"] = ViewAttribute.from(
       type.name,
-      Map<String, dynamic>.from(attributes ?? {}),
+      attributes,
       id,
       tag: tag,
     );
@@ -212,13 +216,22 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
     if (controller is UIElementController) {
       return controller;
     }
-    final attributes = _createAttributes();
+
+    final attributes = json["attributes"] ?? <String, dynamic>{};
+    final attrs = ViewAttribute.from(
+      type.name,
+      attributes,
+      id,
+      tag: tag,
+    );
+
     return json["controller"] = ViewController(
       id: id,
       driver: driver!,
       type: type.name,
-      action: attributes.payload.getAction("action"),
-      attributes: attributes,
+      action: DuitDataSource(json).getAction("action"),
+      attributes: attrs,
+      tag: tag,
     );
   }
 
@@ -228,7 +241,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   ) {
     final element = ElementPropertyView._(data);
 
-    if (element.controlled) {
+    if (element.controlled || element.type.isControlledByDefault) {
       final id = element.id;
       final controller = element._createViewController(driver);
 
