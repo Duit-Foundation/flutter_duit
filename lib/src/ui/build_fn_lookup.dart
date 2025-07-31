@@ -11,7 +11,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.richText: _buildRichText,
   ElementType.checkbox: _buildCheckbox,
   ElementType.radio: _buildRadio,
-  //single-child elements
+  // Single-child elements
   ElementType.elevatedButton: _buildElevatedButton,
   ElementType.animatedBuilder: _buildAnimatedBuilder,
   ElementType.absorbPointer: _buildAbsorbPointer,
@@ -73,7 +73,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.physicalModel: _buildPhysicalModel,
   ElementType.animatedPhysicalModel: _buildAnimatedPhysicalModel,
   ElementType.animatedSlide: _buildAnimatedSlide,
-  //multi-child elements
+  // Multi-child elements
   ElementType.column: _buildColumn,
   ElementType.row: _buildRow,
   ElementType.stack: _buildStack,
