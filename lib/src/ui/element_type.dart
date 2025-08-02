@@ -1,3 +1,21 @@
+/// Defines the types of UI elements that can be rendered in the Duit framework.
+///
+/// This enum represents all supported Flutter widget types that can be created
+/// from JSON configuration. Each element type has specific properties that
+/// determine its behavior, rendering characteristics, and child relationship patterns.
+///
+/// The enum provides a mapping between string identifiers (used in JSON) and
+/// the corresponding element types, enabling dynamic widget creation based on
+/// configuration data.
+///
+/// Element types are categorized by their child relationship patterns:
+/// - **No children (0)**: Leaf widgets like Text, Image, TextField
+/// - **Single child (1)**: Wrapper widgets like Container, Padding, Center
+/// - **Multiple children (2)**: Layout widgets like Row, Column, Stack
+/// - **Component content (3)**: Special case for component-based elements
+///
+/// Some elements are controlled by default, meaning they have built-in state
+/// management capabilities and can respond to user interactions or programmatic updates.
 enum ElementType {
   row(
     name: "Row",
@@ -427,12 +445,49 @@ enum ElementType {
     required this.childRelation,
   });
 
+  /// Converts a string name to the corresponding [ElementType].
+  ///
+  /// This method performs a lookup in the internal mapping table to find
+  /// the element type that matches the provided string name.
+  ///
+  /// Parameters:
+  /// - [name]: The string identifier of the element type
+  ///
+  /// Returns the corresponding [ElementType] instance.
+  ///
+  /// Throws an [ArgumentError] if the name is not recognized.
+  ///
+  /// Example:
+  /// ```dart
+  /// final elementType = ElementType.value("Row");
+  /// // Returns ElementType.row
+  /// ```
   static ElementType value(String name) =>
       _stringToTypeLookupTable[name] ??
       (throw ArgumentError(
         "Unknown element type: $name",
       ));
 
+  /// Converts a string name to the corresponding [ElementType], or returns null.
+  ///
+  /// This method performs a lookup in the internal mapping table to find
+  /// the element type that matches the provided string name. Unlike [value],
+  /// this method returns null instead of throwing an exception if the name
+  /// is not recognized.
+  ///
+  /// Parameters:
+  /// - [name]: The string identifier of the element type
+  ///
+  /// Returns the corresponding [ElementType] instance, or null if not found.
+  ///
+  /// Example:
+  /// ```dart
+  /// final elementType = ElementType.valueOrNull("Row");
+  /// // Returns ElementType.row
+  ///
+  /// final unknownType = ElementType.valueOrNull("UnknownWidget");
+  /// // Returns null
+  /// ```
   static ElementType? valueOrNull(String name) =>
       _stringToTypeLookupTable[name];
 }
