@@ -65,6 +65,20 @@ final class DuitElement extends ElementTreeEntry {
   /// - **Component with data (case 3)**: Processes a component with
   ///   associated data that gets merged with the component's model
   ///
+  /// **Important Design Pattern Note:**
+  ///
+  /// The recursive calls to `DuitElement.fromJson()` in cases 1 and 2 are made
+  /// solely for their side effects. The returned `DuitElement` instances are
+  /// intentionally ignored because:
+  /// - `ElementPropertyView.fromJson()` already processes and stores child
+  ///   relationships internally during the initial parsing
+  /// - The JSON structure (`Map<String, dynamic>`) is modified in-place during
+  ///   processing, establishing the parent-child relationships
+  /// - No explicit parent-child linking is needed since the tree structure is
+  ///   maintained through the internal state of `ElementPropertyView`
+  /// - This approach avoids creating unnecessary object references and
+  ///   simplifies memory management
+  ///
   /// Parameters:
   /// - [json]: The JSON data representing the element and its children
   /// - [driver]: The UI driver instance for element creation
@@ -76,16 +90,7 @@ final class DuitElement extends ElementTreeEntry {
   ) {
     final element = ElementPropertyView.fromJson(json, driver);
 
-    //NOTE: This part of the method handles recursive processing of child elements
-    //
-    // IMPORTANT: The recursive calls to DuitElement.fromJson() are made for their side effects only.
-    // The returned DuitElement instances are intentionally ignored because:
-    // 1. ElementPropertyView.fromJson() already processes and stores child relationships internally
-    // 2. The JSON structure (Map<String, dynamic>) is modified in-place during processing
-    // 3. No explicit parent-child linking is needed since the tree structure is maintained
-    //    through the internal state of ElementPropertyView
-    //
-    // This approach avoids creating unnecessary object references and simplifies memory management.
+    // Recursive processing of child elements (see method documentation for design pattern details)
     switch (element.type.childRelation) {
       case 1:
         if (json.containsKey("child")) {
@@ -126,6 +131,26 @@ final class DuitElement extends ElementTreeEntry {
     }
   }
 
+  /// Returns the rendered Flutter [Widget] for this [DuitElement].
+  ///
+  /// This method delegates the rendering logic to the underlying [ElementPropertyView]
+  /// or custom element implementation, producing the corresponding Flutter widget tree.
+  ///
+  /// The returned widget reflects the current state and configuration of this element,
+  /// including all attributes, children, and any associated controllers.
+  ///
+  /// This method is typically called by the Duit framework to build the UI from the
+  /// element tree, and should not be called directly unless you are implementing
+  /// custom rendering logic.
+  ///
+  /// Returns:
+  ///   The root [Widget] representing this [DuitElement] in the Flutter widget tree.
+  ///
+  /// Example:
+  /// ```dart
+  /// final element = DuitElement.fromJson(json, driver);
+  /// final widget = element.renderView();
+  /// ```
   @override
   Widget renderView() => _element.renderView(this);
 

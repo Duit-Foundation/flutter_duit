@@ -210,7 +210,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   }
 
   @preferInline
-  UIElementController _createViewController([UIDriver? driver]) {
+  UIElementController _createViewController(UIDriver driver) {
     final controller = json["controller"];
     if (controller is UIElementController) {
       return controller;
@@ -226,7 +226,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
 
     return json["controller"] = ViewController(
       id: id,
-      driver: driver!,
+      driver: driver,
       type: type.name,
       action: DuitDataSource(json).getAction("action"),
       attributes: attrs,
