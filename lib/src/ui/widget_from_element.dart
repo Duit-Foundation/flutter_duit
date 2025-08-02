@@ -1,6 +1,5 @@
 part of 'element_property_view.dart';
 
-@preferInline
 Widget _buildText(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledText(controller: model.viewController),
@@ -8,7 +7,6 @@ Widget _buildText(ElementPropertyView model) {
   };
 }
 
-@preferInline
 Widget _buildRow(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledRow(
@@ -22,7 +20,6 @@ Widget _buildRow(ElementPropertyView model) {
   };
 }
 
-@preferInline
 Widget _buildStack(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledStack(
@@ -36,7 +33,6 @@ Widget _buildStack(ElementPropertyView model) {
   };
 }
 
-@preferInline
 Widget _buildElevatedButton(ElementPropertyView model) {
   return DuitElevatedButton(
     controller: model.viewController,
@@ -44,22 +40,18 @@ Widget _buildElevatedButton(ElementPropertyView model) {
   );
 }
 
-@preferInline
 Widget _buildTextField(ElementPropertyView model) => DuitTextField(
       controller: model.viewController,
     );
 
-@preferInline
 Widget _buildSlider(ElementPropertyView model) => DuitSlider(
       controller: model.viewController,
     );
 
-@preferInline
 Widget _buildSwitch(ElementPropertyView model) => DuitSwitch(
       controller: model.viewController,
     );
 
-@preferInline
 Widget _buildRichText(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledRichText(
@@ -71,12 +63,10 @@ Widget _buildRichText(ElementPropertyView model) {
   };
 }
 
-@preferInline
 Widget _buildCheckbox(ElementPropertyView model) => DuitCheckbox(
       controller: model.viewController,
     );
 
-@preferInline
 Widget _buildRadio(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledRadio(
@@ -88,7 +78,6 @@ Widget _buildRadio(ElementPropertyView model) {
   };
 }
 
-@preferInline
 Widget _buildRadioGroupContext(ElementPropertyView model) {
   return DuitRadioGroupContextProvider(
     controller: model.viewController,
@@ -96,7 +85,6 @@ Widget _buildRadioGroupContext(ElementPropertyView model) {
   );
 }
 
-@preferInline
 Widget _buildColumn(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledColumn(
@@ -876,7 +864,6 @@ Widget _buildWrap(ElementPropertyView model) {
   };
 }
 
-@preferInline
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();
@@ -899,7 +886,6 @@ Widget _buildWidget(dynamic widgetModel) {
   };
 }
 
-@preferInline
 Widget _buildFromElementPropertyView(ElementPropertyView model) {
   final builder = _buildFnLookup[model.type];
   return builder?.call(model) ?? const SizedBox.shrink();
