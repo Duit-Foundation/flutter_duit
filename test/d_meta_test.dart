@@ -17,7 +17,7 @@ void main() {
               "type": "Meta",
               "id": "meta1",
               "controlled": true,
-              "attributes": {
+              "attributes": <String, dynamic>{
                 "value": {
                   "foo": "bar",
                 }
@@ -26,7 +26,6 @@ void main() {
                 "type": "Container",
                 "id": "container1",
                 "controlled": false,
-                "attributes": {},
                 "child": {
                   "type": "Text",
                   "id": "text1",

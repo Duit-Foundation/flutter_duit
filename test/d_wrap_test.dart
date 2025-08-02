@@ -20,7 +20,7 @@ void main() {
                 "spacing": 12,
                 "runSpacing": 24,
               },
-              "children": [],
+              "children": <Map<String, dynamic>>[],
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -50,7 +50,7 @@ void main() {
                 "spacing": 12,
                 "runSpacing": 24,
               },
-              "children": [],
+              "children": <Map<String, dynamic>>[],
             },
             transportOptions: EmptyTransportOptions(),
           );

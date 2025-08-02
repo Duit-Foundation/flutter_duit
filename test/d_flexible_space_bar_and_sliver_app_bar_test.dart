@@ -151,7 +151,6 @@ Map<String, dynamic> _createWidget({
           "type": "SliverToBoxAdapter",
           "id": "adatp",
           "controlled": false,
-          "attributes": <String, dynamic>{},
           "child": {
             "type": "Container",
             "id": "cont",

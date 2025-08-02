@@ -13,8 +13,7 @@ void main() {
           "type": "CustomScrollView",
           "id": "custom_view",
           "controlled": false,
-          "attributes": {},
-          "children": [
+          "children": <Map<String, dynamic>>[
             {
               "type": "SliverToBoxAdapter",
               "id": "sliver1",

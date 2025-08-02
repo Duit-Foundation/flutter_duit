@@ -29,7 +29,7 @@ void main() {
             driver: DuitDriver.static(
               _createWidget(),
               transportOptions: EmptyTransportOptions(),
-            ),  
+            ),
           ),
         ),
       );

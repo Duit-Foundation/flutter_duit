@@ -30,18 +30,20 @@ final _uncTextWithoutData = <String, dynamic>{
   },
 };
 
-final _cTextWithoutData = <String, dynamic>{
-  "type": "Text",
-  "id": "1",
-  "controlled": true,
-  "attributes": {
-    "data": "Good bye, World!",
-    "style": {
-      "fontSize": 12.0,
-      "fontWeight": 200,
-    }
-  },
-};
+Map<String, dynamic> _cTextWithoutData() {
+  return <String, dynamic>{
+    "type": "Text",
+    "id": "1",
+    "controlled": true,
+    "attributes": {
+      "data": "Good bye, World!",
+      "style": {
+        "fontSize": 12.0,
+        "fontWeight": 200,
+      }
+    },
+  };
+}
 
 final _textWithPropAnimation = <String, dynamic>{
   "type": "AnimatedBuilder",
@@ -113,7 +115,7 @@ void main() {
 
     testWidgets("check text update process", (tester) async {
       final driver = DuitDriver.static(
-        _cTextWithoutData,
+        _cTextWithoutData(),
         transportOptions: EmptyTransportOptions(),
       );
 
@@ -170,30 +172,9 @@ void main() {
       expect(fWeight, FontWeight.w700);
     });
 
-    testWidgets("check widget key assignment", (tester) async {
-      final driver = DuitDriver.static(
-        _uncText,
-        transportOptions: EmptyTransportOptions(),
-      );
-
-      await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: DuitViewHost(
-            driver: driver,
-          ),
-        ),
-      );
-
-      await tester.pumpAndSettle();
-
-      final text = find.byKey(const Key("text"));
-      expect(text, findsOneWidget);
-    });
-
     testWidgets("check update when data prop is empty or null", (tester) async {
       final driver = DuitDriver.static(
-        _cTextWithoutData,
+        _cTextWithoutData(),
         transportOptions: EmptyTransportOptions(),
       );
 

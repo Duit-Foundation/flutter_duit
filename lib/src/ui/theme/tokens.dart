@@ -1,5 +1,5 @@
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/ui/models/element_type.dart';
+import 'package:duit_kernel/duit_kernel.dart';
+import 'package:flutter_duit/src/ui/index.dart';
 
 const _animatedOwnerExcludedFields = {
   "parentBuilderId",
@@ -53,7 +53,7 @@ final class RadioGroupContextThemeToken extends ThemeToken {
   ///
   /// The [data] map contains key-value pairs representing the theme
   /// properties for radio group context widgets.
-  const RadioGroupContextThemeToken(
+  RadioGroupContextThemeToken(
     Map<String, dynamic> data,
   ) : super(
           const {
@@ -61,7 +61,7 @@ final class RadioGroupContextThemeToken extends ThemeToken {
             "groupValue",
           },
           data,
-          ElementType.radioGroupContext,
+          ElementType.radioGroupContext.name,
         );
 }
 
@@ -74,7 +74,7 @@ final class RadioThemeToken extends ThemeToken {
   ///
   /// The [data] map contains key-value pairs representing the theme
   /// properties for radio button widgets.
-  const RadioThemeToken(
+  RadioThemeToken(
     Map<String, dynamic> data,
   ) : super(
           const {
@@ -82,7 +82,7 @@ final class RadioThemeToken extends ThemeToken {
             ..._animatedOwnerExcludedFields,
           },
           data,
-          ElementType.radio,
+          ElementType.radio.name,
         );
 }
 
@@ -94,14 +94,14 @@ final class TextThemeToken extends ThemeToken {
   ///
   /// The [data] map contains key-value pairs representing the theme
   /// properties for text widgets.
-  const TextThemeToken(Map<String, dynamic> data)
+  TextThemeToken(Map<String, dynamic> data)
       : super(
           const {
             "data",
             ..._animatedOwnerExcludedFields,
           },
           data,
-          ElementType.text,
+          ElementType.text.name,
         );
 }
 
@@ -130,7 +130,7 @@ final class ImageThemeToken extends ThemeToken {
   ///
   /// The [data] map contains key-value pairs representing the theme
   /// properties for image widgets.
-  const ImageThemeToken(Map<String, dynamic> data)
+  ImageThemeToken(Map<String, dynamic> data)
       : super(
           const {
             "type",
@@ -139,7 +139,7 @@ final class ImageThemeToken extends ThemeToken {
             ..._animatedOwnerExcludedFields,
           },
           data,
-          ElementType.image,
+          ElementType.image.name,
         );
 }
 
@@ -173,14 +173,14 @@ final class RichTextThemeToken extends ThemeToken {
   ///
   /// The [data] map contains key-value pairs representing the theme
   /// properties for rich text widgets.
-  const RichTextThemeToken(Map<String, dynamic> data)
+  RichTextThemeToken(Map<String, dynamic> data)
       : super(
           const {
             ..._animatedOwnerExcludedFields,
             "textSpan",
           },
           data,
-          ElementType.richText,
+          ElementType.richText.name,
         );
 }
 
@@ -193,7 +193,7 @@ final class SliderThemeToken extends ThemeToken {
   ///
   /// The [data] map contains key-value pairs representing the theme
   /// properties for slider widgets.
-  const SliderThemeToken(Map<String, dynamic> data)
+  SliderThemeToken(Map<String, dynamic> data)
       : super(
           const {
             ..._attendedWidgetExcludedFields,
@@ -202,7 +202,7 @@ final class SliderThemeToken extends ThemeToken {
             "onChangeEnd",
           },
           data,
-          ElementType.slider,
+          ElementType.slider.name,
         );
 }
 

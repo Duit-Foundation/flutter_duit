@@ -27,7 +27,7 @@ void main() {
             "child": {
               "type": "Container",
               "id": "child_container",
-              "attributes": {
+              "attributes": <String, dynamic>{
                 "width": 100,
                 "height": 100,
               }
@@ -82,7 +82,7 @@ void main() {
             "child": {
               "type": "Container",
               "id": "child_container",
-              "attributes": {
+              "attributes": <String, dynamic>{
                 "width": 100,
                 "height": 100,
               }
@@ -147,7 +147,7 @@ void main() {
             "child": {
               "type": "Container",
               "id": "child_container",
-              "attributes": {
+              "attributes": <String, dynamic>{
                 "width": 50,
                 "height": 50,
               }

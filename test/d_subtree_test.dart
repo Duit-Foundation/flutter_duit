@@ -19,7 +19,7 @@ final _t2 = <String, dynamic>{
 Map<String, dynamic> _createWidget() {
   return {
     "type": "Column",
-    "attributes": {},
+    "attributes": <String, dynamic>{},
     "controlled": false,
     "id": "col",
     "children": [
@@ -87,8 +87,12 @@ Map<String, dynamic> _createWidget() {
         "type": "Subtree",
         "id": "subtree",
         "controlled": true,
-        "attributes": {},
-        "child": {"type": "Empty", "id": "t1x", "attributes": {}}
+        "attributes": <String, dynamic>{},
+        "child": {
+          "type": "SizedBox",
+          "id": "t1x",
+          "attributes": <String, dynamic>{}
+        }
       }
     ]
   };

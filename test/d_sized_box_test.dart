@@ -16,7 +16,10 @@ void main() {
               "type": "SizedBox",
               "id": "sb1",
               "controlled": false,
-              "attributes": {"width": 100.0, "height": 50.0},
+              "attributes": {
+                "width": 100.0,
+                "height": 50.0,
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -42,7 +45,10 @@ void main() {
               "type": "SizedBox",
               "id": "sb1",
               "controlled": true,
-              "attributes": {"width": 100.0, "height": 50.0},
+              "attributes": {
+                "width": 100.0,
+                "height": 50.0,
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );

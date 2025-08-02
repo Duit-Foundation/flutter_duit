@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/ui/widgets/empty.dart";
 import "package:flutter_test/flutter_test.dart";
 
 import "mocks/component_template.dart";
@@ -94,7 +93,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final emptyWidget = find.byType(DuitEmptyView);
+      final emptyWidget = find.byType(SizedBox);
       expect(emptyWidget, findsOneWidget);
     });
 
@@ -146,7 +145,6 @@ void main() {
           "type": "Column",
           "id": "column1",
           "controlled": false,
-          "attributes": {},
           "children": [
             {
               "type": "Component",

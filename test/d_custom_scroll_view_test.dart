@@ -16,8 +16,7 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": false,
-              "attributes": {},
-              "children": [],
+              "children": <Map<String, dynamic>>[],
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -39,8 +38,7 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": true,
-              "attributes": {},
-              "children": [],
+              "children": <Map<String, dynamic>>[],
             },
             transportOptions: EmptyTransportOptions(),
           );

@@ -11,7 +11,6 @@ void main() {
         "type": "Column",
         "id": "col1",
         "controlled": false,
-        "attributes": {},
         "children": [
           {
             'type': 'TextField',

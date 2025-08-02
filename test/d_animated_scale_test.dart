@@ -13,8 +13,8 @@ void main() {
           "type": "Stack",
           "id": "stack",
           "controlled": false,
-          "attributes": {},
-          "children": [
+          "attributes": <String, dynamic>{},
+          "children": <Map<String, dynamic>>[
             {
               "type": "AnimatedScale",
               "id": "scale",

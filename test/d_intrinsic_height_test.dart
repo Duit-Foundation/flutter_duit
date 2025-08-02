@@ -9,7 +9,6 @@ Map<String, dynamic> _createWidget([bool isControlled = false]) {
     "type": "IntrinsicHeight",
     "id": "intrinsicHeightId",
     "controlled": isControlled,
-    "attributes": {},
     "child": {
       "type": "Container",
       "id": "conId",

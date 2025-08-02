@@ -16,8 +16,8 @@ void main() {
               "type": "Column",
               "id": "w1",
               "controlled": true,
-              "attributes": {},
-              "children": [],
+              "attributes": <String, dynamic>{},
+              "children": <Map<String, dynamic>>[],
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -42,8 +42,8 @@ void main() {
               "type": "Column",
               "id": "w1",
               "controlled": true,
-              "attributes": {},
-              "children": [],
+              "attributes": <String, dynamic>{},
+              "children": <Map<String, dynamic>>[],
             },
             transportOptions: EmptyTransportOptions(),
           );

@@ -285,15 +285,14 @@ void main() {
 
     final scroll = find.byType(Scrollable);
     final itemFirst = find.byKey(const ValueKey("1"));
-    final itemLast = find.byKey(const ValueKey("10"));
 
     await tester.scrollUntilVisible(
-      itemLast,
+      find.byKey(const ValueKey("10")),
       1000,
       scrollable: scroll,
     );
 
-    expect(itemLast, findsOneWidget);
+    expect(find.byKey(const ValueKey("10")), findsOneWidget);
     expect(driver.controllersCount == 10, false);
 
     await tester.scrollUntilVisible(

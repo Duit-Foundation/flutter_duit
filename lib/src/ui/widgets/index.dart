@@ -1,5 +1,4 @@
 export 'text.dart';
-export 'widget_fabric.dart';
 export 'elevated_button.dart';
 export 'row.dart';
 export 'column.dart';
@@ -54,3 +53,4 @@ export 'slivers/index.dart';
 export 'absorb_pointer.dart';
 export 'offstage.dart';
 export 'physical_model.dart';
+export 'animated_builder.dart';

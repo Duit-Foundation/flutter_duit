@@ -16,11 +16,14 @@ void main() {
               "type": "RadioGroupContext",
               "id": "group1",
               "controlled": true,
-              "attributes": {"groupValue": "a"},
+              "attributes": {
+                "groupValue": "a",
+              },
               "child": {
                 "type": "Row",
                 "id": "row1",
                 "controlled": false,
+                "attributes": <String, dynamic>{},
                 "children": [
                   {
                     "type": "Radio",

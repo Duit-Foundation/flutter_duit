@@ -30,6 +30,8 @@ class _DuitElevatedButtonState extends State<DuitElevatedButton>
     }
   }
 
+  void _performAction() => widget.controller.performRelatedAction();
+
   @override
   Widget build(BuildContext context) {
     final action = attributes.getAction("onLongPress");
@@ -37,7 +39,7 @@ class _DuitElevatedButtonState extends State<DuitElevatedButton>
       key: Key(widget.controller.id),
       autofocus: attributes.getBool("autofocus"),
       clipBehavior: attributes.clipBehavior(defaultValue: Clip.none)!,
-      onPressed: widget.controller.performRelatedAction,
+      onPressed: _performAction,
       style: attributes.buttonStyle(),
       onLongPress: () => _onLongPress(action),
       child: widget.child,
