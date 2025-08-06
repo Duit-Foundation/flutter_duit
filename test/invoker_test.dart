@@ -33,7 +33,7 @@ class _TestWidgetState extends State<TestWidget> with ActionInvoker {
 }
 
 void main() {
-  group('ActionCallbackOptimizer', () {
+  group('ActionInvoker', () {
     late _TestWidgetState widgetState;
 
     setUp(() {

@@ -130,9 +130,7 @@ final class ViewController<T>
           break;
       }
     } else {
-    } else {
       await driver.execute(action);
-    }
     }
   }
 

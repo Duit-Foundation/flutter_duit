@@ -13,35 +13,97 @@ import 'dart:async';
 /// ## Usage
 ///
 /// ```dart
-/// class MyWidget extends StatefulWidget {
+/// class SearchWidget extends StatefulWidget {
+///   const SearchWidget({super.key});
+///
 ///   @override
-///   State<MyWidget> createState() => _MyWidgetState();
+///   State<SearchWidget> createState() => _SearchWidgetState();
 /// }
 ///
-/// class _MyWidgetState extends State<MyWidget> with ActionCallbackOptimizer {
-///   void _handleSearch(String query) {
+/// class _SearchWidgetState extends State<SearchWidget> with ActionInvoker {
+///   final TextEditingController _searchController = TextEditingController();
+///   final ScrollController _scrollController = ScrollController();
+///
+///   String _searchResults = '';
+///   double _scrollPosition = 0.0;
+///
+///   @override
+///   void initState() {
+///     super.initState();
+///     _searchController.addListener(_handleSearchInput);
+///     _scrollController.addListener(_handleScroll);
+///   }
+///
+///   void _handleSearchInput() {
 ///     // Debounce search to avoid excessive API calls
 ///     debounceWithArgs(
 ///       'search',
-///       (String q) => _performSearch(q),
-///       query,
-///       duration: Duration(milliseconds: 300),
+///       (String query) => _performSearch(query),
+///       _searchController.text,
+///       duration: const Duration(milliseconds: 500),
 ///     );
 ///   }
 ///
 ///   void _handleScroll() {
 ///     // Throttle scroll events to improve performance
-///     throttle(
+///     throttleWithArgs(
 ///       'scroll',
-///       () => _updateScrollPosition(),
-///       duration: Duration(milliseconds: 100),
+///       (double position) => _updateScrollPosition(position),
+///       _scrollController.position.pixels,
+///       duration: const Duration(milliseconds: 100),
 ///     );
+///   }
+///
+///   void _performSearch(String query) async {
+///     if (query.isEmpty) {
+///       setState(() => _searchResults = '');
+///       return;
+///     }
+///
+///     // Simulate API call
+///     await Future.delayed(const Duration(milliseconds: 200));
+///     setState(() => _searchResults = 'Results for: $query');
+///   }
+///
+///   void _updateScrollPosition(double position) {
+///     setState(() => _scrollPosition = position);
 ///   }
 ///
 ///   @override
 ///   void dispose() {
+///     _searchController.dispose();
+///     _scrollController.dispose();
 ///     // Clean up all timers when widget is disposed
+///     cancelAll();
 ///     super.dispose();
+///   }
+///
+///   @override
+///   Widget build(BuildContext context) {
+///     return Column(
+///       children: [
+///         TextField(
+///           controller: _searchController,
+///           decoration: const InputDecoration(
+///             labelText: 'Search',
+///             hintText: 'Type to search...',
+///           ),
+///         ),
+///         const SizedBox(height: 16),
+///         Text(_searchResults),
+///         const SizedBox(height: 16),
+///         Expanded(
+///           child: ListView.builder(
+///             controller: _scrollController,
+///             itemCount: 100,
+///             itemBuilder: (context, index) => ListTile(
+///               title: Text('Item $index'),
+///             ),
+///           ),
+///         ),
+///         Text('Scroll position: ${_scrollPosition.toStringAsFixed(1)}'),
+///       ],
+///     );
 ///   }
 /// }
 /// ```
@@ -49,10 +111,11 @@ import 'dart:async';
 /// ## Key Features
 ///
 /// - **Lazy initialization**: Timers are only created when needed
-/// - **Memory management**: Automatic cleanup in dispose method
+/// - **Memory management**: Automatic cleanup with `cancelAll()` method
 /// - **Type safety**: Generic support for callback arguments
 /// - **Flexible keys**: Use string keys to manage multiple timers
 /// - **Status tracking**: Check active timers and their states
+/// - **Performance optimization**: Reduces unnecessary function calls
 ///
 /// ## When to Use
 ///
@@ -61,12 +124,25 @@ import 'dart:async';
 /// - Window resize events
 /// - Form validation
 /// - API calls that should wait for user to finish typing
+/// - Auto-save functionality
+/// - Real-time filtering
 ///
 /// **Throttle** is best for:
 /// - Scroll events
 /// - Button click handlers
 /// - Mouse move events
+/// - Touch events
 /// - Any event that should fire at most once per time period
+/// - Rate limiting API calls
+///
+/// ## Best Practices
+///
+/// - Always call `cancelAll()` in the `dispose()` method to prevent memory leaks
+/// - Use descriptive keys for your timers to make debugging easier
+/// - Choose appropriate durations based on your use case:
+///   - Debounce: 300-500ms for search, 100-200ms for validation
+///   - Throttle: 100-200ms for scroll, 50-100ms for mouse events
+/// - Consider the user experience when setting durations
 mixin ActionInvoker {
   /// Map to store debounce timers - initialized lazily
   ///
