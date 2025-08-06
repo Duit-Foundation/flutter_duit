@@ -91,10 +91,8 @@ mixin ActionInvoker {
   ///
   /// This getter ensures the throttle timers map is created only when needed,
   /// implementing lazy initialization pattern.
-  Map<String, Timer> get _throttleTimersMap {
-    _throttleTimers ??= <String, Timer>{};
-    return _throttleTimers!;
-  }
+  Map<String, Timer> get _throttleTimersMap =>
+      _throttleTimers ??= <String, Timer>{};
 
   // ===== DEBOUNCE METHODS =====
 

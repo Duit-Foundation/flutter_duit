@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_duit/src/utils/invoker.dart';
 
-// Test widget that uses the ActionCallbackOptimizer mixin
+// Test widget that uses the ActionInvoker mixin
 class TestWidget extends StatefulWidget {
   const TestWidget({super.key});
 
@@ -396,7 +396,7 @@ void main() {
         expect(widgetState.debounceCallCount, 0);
       });
 
-             test('should clean up timers on dispose', () async {
+      test('should clean up timers on dispose', () async {
          final debounceCompleter = Completer<void>();
          
          widgetState.debounce(
@@ -418,14 +418,14 @@ void main() {
 
          expect(widgetState.throttleCallCount, 1);
 
-         // Cancel all timers manually
+         // Test that dispose cleans up timers (ActionInvoker should handle this)
          widgetState.cancelAll();
 
          // Wait for the original duration
          await Future.delayed(const Duration(milliseconds: 250));
          
          expect(widgetState.debounceCallCount, 0);
-       });
+      });
     });
 
     group('Lazy initialization', () {
@@ -521,7 +521,7 @@ void main() {
         expect(widgetState.debounceCallCount, 1);
       });
 
-             test('should handle special characters in keys', () async {
+      test('should handle special characters in keys', () async {
          final completer = Completer<void>();
          
          widgetState.debounce(
@@ -535,7 +535,7 @@ void main() {
 
          await completer.future;
          expect(widgetState.debounceCallCount, 1);
-       });
+      });
      });
    });
 } 

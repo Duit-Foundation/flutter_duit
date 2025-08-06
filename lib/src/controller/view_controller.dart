@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import 'package:flutter_duit/src/utils/invoker.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 
 /// The controller for a UI element.
@@ -77,7 +77,7 @@ final class ViewController<T>
   }
 
   void _perform(ServerAction action) {
-    final opts = action?.executionOptions;
+    final opts = action.executionOptions;
     if (opts != null) {
       switch (opts.modifier) {
         case ExecutionModifier.throttle:
@@ -130,7 +130,9 @@ final class ViewController<T>
           break;
       }
     } else {
-      driver.execute(action);
+    } else {
+      await driver.execute(action);
+    }
     }
   }
 
