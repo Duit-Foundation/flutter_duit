@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:duit_kernel/duit_kernel.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_duit/src/utils/invoker.dart';
 import 'package:flutter_duit/src/controller/index.dart';
 
 /// The controller for a UI element.
@@ -10,7 +11,7 @@ import 'package:flutter_duit/src/controller/index.dart';
 /// It implements the [UIElementController] interface and uses the [ChangeNotifier]
 /// mixin to provide change notification to listeners.
 final class ViewController<T>
-    with ChangeNotifier
+    with ChangeNotifier, ActionInvoker
     implements UIElementController {
   /// The attributes associated with the UI element.
   ///
@@ -75,6 +76,64 @@ final class ViewController<T>
     notifyListeners();
   }
 
+  void _perform(ServerAction action) {
+    final opts = action.executionOptions;
+    if (opts != null) {
+      switch (opts.modifier) {
+        case ExecutionModifier.throttle:
+          throttleWithArgs(
+            action.eventName,
+            (arg) => driver.execute(arg),
+            action,
+            duration: opts.duration,
+          );
+          break;
+        case ExecutionModifier.debounce:
+          debounceWithArgs(
+            action.eventName,
+            (arg) => driver.execute(arg),
+            action,
+            duration: opts.duration,
+          );
+          break;
+        default:
+          driver.execute(action);
+          break;
+      }
+    } else {
+      driver.execute(action);
+    }
+  }
+
+  FutureOr<void> _performAsync(ServerAction action) async {
+    final opts = action.executionOptions;
+    if (opts != null) {
+      switch (opts.modifier) {
+        case ExecutionModifier.throttle:
+          throttleWithArgs(
+            action.eventName,
+            (arg) async => await driver.execute(arg),
+            action,
+            duration: opts.duration,
+          );
+          break;
+        case ExecutionModifier.debounce:
+          debounceWithArgs(
+            action.eventName,
+            (arg) async => await driver.execute(arg),
+            action,
+            duration: opts.duration,
+          );
+          break;
+        default:
+          await driver.execute(action);
+          break;
+      }
+    } else {
+      await driver.execute(action);
+    }
+  }
+
   /// Performs the related action of the UI element.
   ///
   /// This method is called when the UI element is interacted with and the associated
@@ -83,7 +142,7 @@ final class ViewController<T>
   void performRelatedAction() {
     try {
       if (action != null) {
-        driver.execute(action!);
+        _perform(action!);
       }
     } catch (e, s) {
       driver.logger?.error(
@@ -98,7 +157,7 @@ final class ViewController<T>
   Future<void> performRelatedActionAsync() async {
     try {
       if (action != null) {
-        await driver.execute(action!);
+        await _performAsync(action!);
       }
     } catch (e, s) {
       driver.logger?.error(
@@ -113,7 +172,7 @@ final class ViewController<T>
   void performAction(ServerAction? action) {
     try {
       if (action != null) {
-        driver.execute(action);
+        _perform(action);
       }
     } catch (e, s) {
       driver.logger?.error(
@@ -128,7 +187,7 @@ final class ViewController<T>
   Future<void> performActionAsync(ServerAction? action) async {
     try {
       if (action != null) {
-        await driver.execute(action);
+        await _performAsync(action);
       }
     } catch (e, s) {
       driver.logger?.error(
@@ -140,7 +199,10 @@ final class ViewController<T>
   }
 
   @override
-  void detach() => driver.detachController(id);
+  void detach() {
+    driver.detachController(id);
+    cancelAll();
+  }
 
   @override
   late final StreamController<RemoteCommand> commandChannel;
