@@ -21,11 +21,14 @@ final class DuitElement extends ElementTreeEntry {
   /// Use [DuitElement.fromJson] to create instances.
   DuitElement._(this._element);
 
-  @override
-  UIElementController get viewController => _element["controller"];
+  factory DuitElement.wrap(ElementPropertyView element) =>
+      DuitElement._(element);
 
   @override
-  ViewAttribute get attributes => _element["attributes"];
+  UIElementController get viewController => _element.viewController;
+
+  @override
+  ViewAttribute get attributes => _element.attributes;
 
   @override
   List<ElementTreeEntry> get children => _element["children"];

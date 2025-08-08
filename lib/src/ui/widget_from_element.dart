@@ -887,6 +887,9 @@ Widget _buildWidget(dynamic widgetModel) {
 }
 
 Widget _buildFromElementPropertyView(ElementPropertyView model) {
-  final builder = _buildFnLookup[model.type];
-  return builder?.call(model) ?? const SizedBox.shrink();
+  // Support rendering of Custom widgets at any level in the tree
+  if (model.type == ElementType.custom) {
+    return _buildCustomWidget(DuitElement.wrap(model));
+  }
+  return _buildFnLookup[model.type]?.call(model) ?? const SizedBox.shrink();
 }
