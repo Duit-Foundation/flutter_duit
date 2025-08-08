@@ -100,9 +100,10 @@ final class DuitElement extends ElementTreeEntry {
         return DuitElement._(element);
       case 2:
         if (json.containsKey("children")) {
-          final children = (json["children"] as List<Map<String, dynamic>>);
-          for (var child in children) {
-            DuitElement.fromJson(child, driver);
+          json["children"] =
+              List<Map<String, dynamic>>.from(json["children"] ?? []);
+          for (var child in json["children"]) {
+            DuitElement.fromJson(child as Map<String, dynamic>, driver);
           }
           return DuitElement._(element);
         }
