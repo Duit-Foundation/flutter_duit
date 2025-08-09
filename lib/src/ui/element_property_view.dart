@@ -5,6 +5,7 @@ import 'package:flutter_duit/src/controller/index.dart';
 import 'package:flutter_duit/src/ui/index.dart';
 import 'package:flutter_duit/src/ui/widgets/grid_constructor.dart';
 import 'package:flutter_duit/src/ui/widgets/index.dart';
+import 'package:flutter_duit/src/utils/index.dart';
 import 'package:meta/meta.dart';
 
 part 'widget_from_element.dart';
@@ -178,7 +179,11 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   ///     .toList();
   /// ```
   @preferInline
-  List<ElementPropertyView> get children => json["children"] ?? [];
+  List<ElementPropertyView> get children =>
+      JsonUtils.extractList<ElementPropertyView>(
+        json,
+        "children",
+      );
 
   /// Gets the single child element of this UI element.
   ///
@@ -197,6 +202,9 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   @internal
   @preferInline
   set componentChild(ElementPropertyView child) => json["child"] = child;
+
+  @preferInline
+  void overwrite(ElementPropertyView other) => json.addAll(other.json);
 
   @preferInline
   ViewAttribute _createAttributes() {

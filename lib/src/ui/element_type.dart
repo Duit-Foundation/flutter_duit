@@ -416,6 +416,11 @@ enum ElementType {
     name: "AnimatedSlide",
     isControlledByDefault: true,
     childRelation: 1,
+  ),
+  fragment(
+    name: "Fragment",
+    isControlledByDefault: false,
+    childRelation: 4,
   );
 
   /// The string identifier name of the UI element type.
@@ -437,6 +442,7 @@ enum ElementType {
   /// - `1`: Single child element (wrapper widgets like Container, Padding)
   /// - `2`: Multiple child elements (layout widgets like Row, Column, Stack)
   /// - `3`: Component content
+  /// - `4`: Fragment content
   final int childRelation;
 
   const ElementType({
@@ -573,4 +579,5 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "AnimatedPhysicalModel": ElementType.animatedPhysicalModel,
   "AnimatedSlide": ElementType.animatedSlide,
   "AnimatedBuilder": ElementType.animatedBuilder,
+  "Fragment": ElementType.fragment,
 };

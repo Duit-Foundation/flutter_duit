@@ -26,4 +26,34 @@ sealed class JsonUtils {
 
     return model.data;
   }
+
+  /// Safely extracts a child map from JSON data.
+  ///
+  /// Returns null if the key doesn't exist or the value is not a valid Map.
+  @preferInline
+  static Map<String, dynamic>? extractMap(
+    Map<String, dynamic> json,
+    String key,
+  ) {
+    final value = json[key];
+    if (value is Map<String, dynamic>) {
+      return value;
+    }
+    return null;
+  }
+
+  /// Safely extracts a list of child maps from JSON data.
+  ///
+  /// Returns an empty list if the key doesn't exist or contains invalid data.
+  @preferInline
+  static List<T> extractList<T>(
+    Map<String, dynamic> json,
+    String key,
+  ) {
+    final value = json[key];
+    if (value is List) {
+      return value.whereType<T>().toList();
+    }
+    return [];
+  }
 }
