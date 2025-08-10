@@ -86,7 +86,7 @@ packages:
     description:
       path: "."
       ref: v4
-      resolved-ref: "998cb07da5e576c8d9b92a0c4919bd5e6393cf89"
+      resolved-ref: "0c50fdeaf89cfdba24b3d2a55804378ecd9af9a2"
       url: "https://github.com/Duit-Foundation/duit_kernel.git"
     source: git
     version: "3.3.2"
