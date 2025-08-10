@@ -96,23 +96,34 @@ final class DuitElement extends ElementTreeEntry {
     // Recursive processing of child elements (see method documentation for design pattern details)
     switch (element.type.childRelation) {
       case 1:
-        if (json.containsKey("child")) {
-          final child = (json["child"] as Map<String, dynamic>);
+        final child = JsonUtils.extractMap(
+          json,
+          "child",
+        );
+        if (child != null) {
           DuitElement.fromJson(child, driver);
         }
         return DuitElement._(element);
       case 2:
-        if (json.containsKey("children")) {
-          json["children"] =
-              List<Map<String, dynamic>>.from(json["children"] ?? []);
-          for (var child in json["children"]) {
-            DuitElement.fromJson(child as Map<String, dynamic>, driver);
+        final children = JsonUtils.extractList<Map<String, dynamic>>(
+          json,
+          "children",
+        );
+        if (children.isNotEmpty) {
+          for (final child in children) {
+            DuitElement.fromJson(child, driver);
           }
-          return DuitElement._(element);
         }
         return DuitElement._(element);
       case 3:
-        final providedData = Map<String, dynamic>.from(json["data"]);
+        if (element.tag == null) {
+          throw NullTagException(
+            "Component tag is null \n json: $json",
+          );
+        }
+
+        final providedData =
+            JsonUtils.extractMap(json, "data") ?? <String, dynamic>{};
 
         final model = DuitRegistry.getComponentDescription(element.tag!);
 
@@ -127,9 +138,27 @@ final class DuitElement extends ElementTreeEntry {
 
           return DuitElement._(element);
         }
+        return DuitElement._(element);
+      case 4:
+        if (element.tag == null) {
+          throw NullTagException(
+            "Fragment tag is null \n json: $json",
+          );
+        }
+
+        final fragment = DuitRegistry.getFragment(element.tag!);
+
+        if (fragment != null) {
+          final processedFragment = DuitElement.fromJson(
+            fragment,
+            driver,
+          );
+          element.overwrite(
+            processedFragment.element,
+          );
+        }
 
         return DuitElement._(element);
-
       default:
         return DuitElement._(element);
     }
