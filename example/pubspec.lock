@@ -85,8 +85,8 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: refactor-components
-      resolved-ref: "639828930a0236d1c6b2ce54a29606d0473c707e"
+      ref: v4
+      resolved-ref: "22763db86602a6a8a4c098b17013e9262332e609"
       url: "https://github.com/Duit-Foundation/duit_kernel.git"
     source: git
     version: "4.0.0"
