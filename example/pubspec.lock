@@ -85,8 +85,8 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: fragments
-      resolved-ref: "47fd9b67c237934f7bdbc4cb425dc727d73cbb23"
+      ref: v4
+      resolved-ref: "0c50fdeaf89cfdba24b3d2a55804378ecd9af9a2"
       url: "https://github.com/Duit-Foundation/duit_kernel.git"
     source: git
     version: "3.3.2"
