@@ -116,6 +116,12 @@ final class DuitElement extends ElementTreeEntry {
         }
         return DuitElement._(element);
       case 3:
+        if (element.tag == null) {
+          throw NullTagException(
+            "Component tag is null \n json: $json",
+          );
+        }
+
         final providedData =
             JsonUtils.extractMap(json, "data") ?? <String, dynamic>{};
 
@@ -134,6 +140,12 @@ final class DuitElement extends ElementTreeEntry {
         }
         return DuitElement._(element);
       case 4:
+        if (element.tag == null) {
+          throw NullTagException(
+            "Fragment tag is null \n json: $json",
+          );
+        }
+
         final fragment = DuitRegistry.getFragment(element.tag!);
 
         if (fragment != null) {
