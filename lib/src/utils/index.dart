@@ -10,4 +10,5 @@ export 'child_delegate_builder.dart';
 export 'gesture_interceptor.dart';
 export 'const.dart';
 export 'invoker.dart';
+export 'component_builder.dart';
 export 'errors.dart';

@@ -322,7 +322,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     final description = DuitRegistry.getComponentDescription(tag!);
 
     if (description != null) {
-      final component = JsonUtils.mergeWithDataSource(
+      final component = ComponentBuilder.build(
         description,
         json,
       );

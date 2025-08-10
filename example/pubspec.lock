@@ -86,10 +86,10 @@ packages:
     description:
       path: "."
       ref: v4
-      resolved-ref: "0c50fdeaf89cfdba24b3d2a55804378ecd9af9a2"
+      resolved-ref: "22763db86602a6a8a4c098b17013e9262332e609"
       url: "https://github.com/Duit-Foundation/duit_kernel.git"
     source: git
-    version: "3.3.2"
+    version: "4.0.0"
   fake_async:
     dependency: transitive
     description:

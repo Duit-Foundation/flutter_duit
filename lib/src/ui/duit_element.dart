@@ -128,7 +128,7 @@ final class DuitElement extends ElementTreeEntry {
         final model = DuitRegistry.getComponentDescription(element.tag!);
 
         if (model != null) {
-          final child = JsonUtils.mergeWithDataSource(
+          final child = ComponentBuilder.build(
             model,
             providedData,
           );
