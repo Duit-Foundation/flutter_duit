@@ -15,6 +15,7 @@ import 'package:flutter_duit/src/utils/index.dart';
 const _commandLookup = <String, RemoteCommand Function(RemoteCommand)>{
   "animation": AnimationCommand.fromRemoteCommand,
   "bottomSheet": BottomSheetCommand.fromRemoteCommand,
+  "dialog": DialogCommand.fromRemoteCommand,
 };
 
 /// An extension type that provides command specification functionality.
@@ -183,6 +184,61 @@ final class BottomSheetCommand extends RemoteCommand {
         key: "scrollControlDisabledMaxHeightRatio",
         defaultValue: defaultScrollControlDisabledMaxHeightRatio,
       ),
+      onClose: source.getAction("onClose"),
+      action: OverlayAction.parse(source.getString(key: 'action')),
+      // transitionAnimationController not supported
+      // sheetAnimationStyle not supported
+    );
+  }
+}
+
+final class DialogCommand extends RemoteCommand {
+  final bool barrierDismissible, useSafeArea, useRootNavigator;
+  final Color? barrierColor;
+  final String? barrierLabel;
+  final Offset? anchorPoint;
+  // Specific duit properties
+  final Map<String, dynamic> content;
+  final ServerAction? onClose;
+  final OverlayAction action;
+
+  const DialogCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+    required this.barrierDismissible,
+    required this.useSafeArea,
+    required this.useRootNavigator,
+    required this.barrierColor,
+    required this.barrierLabel,
+    required this.anchorPoint,
+    required this.content,
+    required this.onClose,
+    required this.action,
+  });
+
+  factory DialogCommand.fromRemoteCommand(RemoteCommand command) {
+    final source = DuitDataSource(command.commandData);
+    return DialogCommand(
+      content: source["content"] ?? const {},
+      commandData: command.commandData,
+      controllerId: overlayTriggerId,
+      type: "dialog",
+      barrierDismissible: source.getBool(
+        "barrierDismissible",
+        defaultValue: true,
+      ),
+      useSafeArea: source.getBool(
+        "useSafeArea",
+        defaultValue: true,
+      ),
+      useRootNavigator: source.getBool(
+        "useRootNavigator",
+        defaultValue: true,
+      ),
+      barrierColor: source.tryParseColor(key: "barrierColor"),
+      barrierLabel: source.getString(key: "barrierLabel"),
+      anchorPoint: source.offset(key: "anchorPoint"),
       onClose: source.getAction("onClose"),
       action: OverlayAction.parse(source.getString(key: 'action')),
       // transitionAnimationController not supported

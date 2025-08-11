@@ -47,7 +47,6 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
   }
 
   Future<void> _handleBottomSheetCommand(BottomSheetCommand command) async {
-    final content = command.commandData["content"] ?? const {};
     if (command.action == OverlayAction.open) {
       showModalBottomSheet(
         context: context,
@@ -68,7 +67,11 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
         // transitionAnimationController not supported
         // sheetAnimationStyle not supported
         builder: (context) {
-          final body = buildOutOfBoundWidget(content, widget.driver, null);
+          final body = buildOutOfBoundWidget(
+            command.content,
+            widget.driver,
+            null,
+          );
           if (body == null) {
             DuitViewContext.of(context).logger.error(
                   "Failed to build bottom sheet content, body is null",
@@ -78,7 +81,45 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
           }
           return body;
         },
-      ).whenComplete(() => _controller.performAction(command.onClose));
+      ).whenComplete(
+        () => _controller.performAction(
+          command.onClose,
+        ),
+      );
+    } else {
+      _handleClose();
+    }
+  }
+
+  Future<void> _handleDialogCommand(DialogCommand command) async {
+    if (command.action == OverlayAction.open) {
+      showDialog(
+          context: context,
+          barrierDismissible: command.barrierDismissible,
+          useSafeArea: command.useSafeArea,
+          useRootNavigator: command.useRootNavigator,
+          barrierColor: command.barrierColor,
+          barrierLabel: command.barrierLabel,
+          anchorPoint: command.anchorPoint,
+          builder: (context) {
+            final body = buildOutOfBoundWidget(
+              command.content,
+              widget.driver,
+              null,
+            );
+            if (body == null) {
+              DuitViewContext.of(context).logger.error(
+                    "Failed to build dialog content, body is null",
+                    stackTrace: StackTrace.current,
+                  );
+              return const SizedBox.shrink();
+            }
+            return body;
+          }).whenComplete(
+        () => _controller.performAction(
+          command.onClose,
+        ),
+      );
     } else {
       _handleClose();
     }
@@ -91,6 +132,8 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
       switch (command) {
         case BottomSheetCommand():
           _handleBottomSheetCommand(command);
+        case DialogCommand():
+          _handleDialogCommand(command);
         default:
           break;
       }
