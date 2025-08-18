@@ -66,7 +66,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   late ViewManager _viewManager;
 
-  final _dataSources = <StreamSubscription<ServerEvent>>{};
+  final _dataSources = <int, StreamSubscription<ServerEvent>>{};
 
   DuitDriver(
     this.source, {
@@ -254,7 +254,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     onDispose?.call();
     transport?.dispose();
     _eventStreamController.close();
-    for (final subscription in _dataSources) {
+    for (final subscription in _dataSources.values) {
       subscription.cancel();
     }
     _dataSources.clear();
@@ -468,19 +468,31 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// The stream subscription is stored in the internal [_dataSources] list for lifecycle management.
   ///
   /// [stream] - the stream of events coming from the server or another data source.
-  void addExternalEventStream(Stream<Map<String, dynamic>> stream) async {
-    final sub = stream.map(ServerEvent.parseEvent).listen((event) {
-      if (event is NullEvent) {
-        throw NullEventException("NullEvent received from data source");
-      } else {
-        eventResolver.resolveEvent(
-          // ignore: use_build_context_synchronously
-          buildContext,
-          event,
-        );
-      }
-    });
+  void addExternalEventStream(
+    Stream<Map<String, dynamic>> stream,
+  ) {
+    final id = DateTime.now().millisecondsSinceEpoch;
 
-    _dataSources.add(sub);
+    void cancelSub() {
+      _dataSources.remove(id);
+    }
+
+    final sub = stream.map(ServerEvent.parseEvent).listen(
+      (event) {
+        if (event is NullEvent) {
+          throw const NullEventException("NullEvent received from data source");
+        } else {
+          eventResolver.resolveEvent(
+            // ignore: use_build_context_synchronously
+            buildContext,
+            event,
+          );
+        }
+      },
+      onDone: cancelSub,
+      onError: (e, s) => cancelSub(),
+    );
+
+    _dataSources[id] = sub;
   }
 }

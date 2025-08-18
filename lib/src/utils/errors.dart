@@ -21,7 +21,7 @@ final class NullTagException implements Exception {
   final String message;
 
   /// Creates a new exception with the specified error message
-  NullTagException(this.message);
+  const NullTagException(this.message);
 
   @override
   String toString() => message;
@@ -54,7 +54,7 @@ final class NullEventException implements Exception {
   final String message;
 
   /// Creates a new exception with the specified error message
-  NullEventException(this.message);
+  const NullEventException(this.message);
 
   @override
   String toString() => message;
