@@ -346,4 +346,61 @@ void main() {
     expect(itemFirst, findsOneWidget);
     expect(driver.controllersCount == 10, false);
   });
+
+  testWidgets("must add children", (tester) async {
+    final driver = DuitDriver.static(
+      _createWidget(2),
+      transportOptions: EmptyTransportOptions(),
+    );
+
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: DuitViewHost(
+          driver: driver,
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    final scroll = find.byType(Scrollable);
+    final itemLast = find.byKey(const ValueKey("10"));
+
+    await tester.scrollUntilVisible(
+      itemLast,
+      1000,
+      scrollable: scroll,
+    );
+
+    expect(itemLast, findsOneWidget);
+
+    driver.updateTestAttributes("87b54621-ac6d-42c3-8d1f-397e3bd63bca", {
+      "children": List.generate(
+        10,
+        (i) => {
+          "controlled": true,
+          "action": null,
+          "id": "10$i",
+          "type": "Component",
+          "data": {
+            "come": "value",
+          },
+          "tag": "c"
+        },
+      ),
+    });
+
+    await tester.pumpAndSettle();
+
+    final newLast = find.byKey(const ValueKey("10"));
+
+    await tester.scrollUntilVisible(
+      newLast,
+      1000,
+      scrollable: scroll,
+    );
+
+    expect(newLast, findsOneWidget);
+  });
 }
