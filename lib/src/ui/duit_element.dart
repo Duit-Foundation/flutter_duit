@@ -105,13 +105,17 @@ final class DuitElement extends ElementTreeEntry {
         }
         return DuitElement._(element);
       case 2:
-        final children = JsonUtils.extractList<Map<String, dynamic>>(
+        final children = JsonUtils.extractList<Map<String, dynamic>?>(
           json,
           "children",
         );
         if (children.isNotEmpty) {
           for (final child in children) {
-            DuitElement.fromJson(child, driver);
+            //Safely handle null values at children list
+            //It`s important for some cases eg. as Scaffold sub-widgets passing
+            if (child != null) {
+              DuitElement.fromJson(child, driver);
+            }
           }
         }
         return DuitElement._(element);

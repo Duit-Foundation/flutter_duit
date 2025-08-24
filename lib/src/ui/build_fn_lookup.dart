@@ -22,7 +22,6 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.align: _buildAlign,
   ElementType.transform: _buildTransform,
   ElementType.appBar: _buildAppBar,
-  ElementType.scaffold: _buildScaffold,
   ElementType.inkWell: _buildInkWell,
   ElementType.subtree: _buildSubtree,
   ElementType.meta: _buildMeta,
@@ -84,4 +83,5 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.sliverList: _buildSliverList,
   ElementType.sliverGrid: _buildSliverGrid,
   ElementType.wrap: _buildWrap,
+  ElementType.scaffold: _buildScaffold,
 };

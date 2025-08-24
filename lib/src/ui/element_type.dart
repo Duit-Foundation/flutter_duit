@@ -264,8 +264,8 @@ enum ElementType {
   ),
   scaffold(
     name: "Scaffold",
-    isControlledByDefault: true,
-    childRelation: 1,
+    isControlledByDefault: false,
+    childRelation: 2,
   ),
   inkWell(
     name: "InkWell",
