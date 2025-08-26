@@ -20,12 +20,13 @@ final class DuitCarouselView extends StatelessWidget with AnimatedAttributes {
 
     return CarouselView(
       key: Key(attributes.id),
+      padding: attrs.edgeInsets(),
       itemExtent: attrs.getDouble(key: "itemExtent"),
       backgroundColor: attrs.tryParseColor(key: "backgroundColor"),
       elevation: attrs.tryGetDouble(key: "elevation"),
       shape: attrs.shapeBorder(),
       overlayColor: attrs.widgetStateProperty<Color>(key: "overlayColor"),
-      itemSnapping: attrs.getBool("itemSnapping", defaultValue: true),
+      itemSnapping: attrs.getBool("itemSnapping", defaultValue: false),
       shrinkExtent: attrs.getDouble(key: "shrinkExtent"),
       scrollDirection: attrs.axis(defaultValue: Axis.horizontal),
       reverse: attrs.getBool("reverse"),
@@ -67,6 +68,7 @@ class _DuitControlledCarouselViewState extends State<DuitControlledCarouselView>
 
     return CarouselView(
       key: Key(widget.controller.id),
+      padding: attrs.edgeInsets(),
       itemExtent: attrs.getDouble(key: "itemExtent"),
       backgroundColor: attrs.tryParseColor(key: "backgroundColor"),
       elevation: attrs.tryGetDouble(key: "elevation"),

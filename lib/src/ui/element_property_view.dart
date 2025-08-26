@@ -179,8 +179,8 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   ///     .toList();
   /// ```
   @preferInline
-  List<ElementPropertyView> get children =>
-      JsonUtils.extractList<ElementPropertyView>(
+  List<ElementPropertyView?> get children =>
+      JsonUtils.extractList<ElementPropertyView?>(
         json,
         "children",
       );
