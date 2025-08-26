@@ -185,16 +185,22 @@ Widget _buildAppBar(ElementPropertyView model) => DuitAppBar(
       controller: model.viewController,
     );
 
-Widget _buildScaffold(ElementPropertyView model) => switch (model.controlled) {
-      true => DuitControlledScaffold(
-          controller: model.viewController,
-          children: model.children.map(_buildWidget).toList(),
-        ),
-      false => DuitScaffold(
-          attributes: model.attributes,
-          children: model.children.map(_buildWidget).toList(),
-        ),
-    };
+Widget _buildScaffold(ElementPropertyView model) {
+  final children = model.children
+      .map<Widget?>((c) => c == null ? null : _buildWidget(c))
+      .toList();
+
+  return switch (model.controlled) {
+    true => DuitControlledScaffold(
+        controller: model.viewController,
+        children: children,
+      ),
+    false => DuitScaffold(
+        attributes: model.attributes,
+        children: children,
+      ),
+  };
+}
 
 Widget _buildPositioned(ElementPropertyView model) {
   return switch (model.controlled) {
