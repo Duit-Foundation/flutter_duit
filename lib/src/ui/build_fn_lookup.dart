@@ -62,7 +62,6 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.sliverToBoxAdapter: _buildSliverToBoxAdapter,
   ElementType.sliverFillViewport: _buildSliverFillViewport,
   ElementType.sliverOpacity: _buildSliverOpacity,
-  ElementType.sliverVisibility: _buildSliverVisibility,
   ElementType.sliverAnimatedOpacity: _buildSliverAnimatedOpacity,
   ElementType.sliverOffstage: _buildSliverOffstage,
   ElementType.sliverIgnorePointer: _buildSliverIgnorePointer,
@@ -84,4 +83,5 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.sliverGrid: _buildSliverGrid,
   ElementType.wrap: _buildWrap,
   ElementType.scaffold: _buildScaffold,
+  ElementType.sliverVisibility: _buildSliverVisibility,
 };

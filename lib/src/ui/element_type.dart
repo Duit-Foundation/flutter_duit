@@ -345,7 +345,7 @@ enum ElementType {
   sliverVisibility(
     name: "SliverVisibility",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: 2,
   ),
   sliverAnimatedOpacity(
     name: "SliverAnimatedOpacity",

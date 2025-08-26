@@ -644,14 +644,18 @@ Widget _buildSliverOpacity(ElementPropertyView model) {
 }
 
 Widget _buildSliverVisibility(ElementPropertyView model) {
+  final children = model.children
+      .map((e) => e == null ? const SliverToBoxAdapter() : _buildWidget(e))
+      .toList();
+
   return switch (model.controlled) {
     true => DuitControlledSliverVisibility(
         controller: model.viewController,
-        child: _buildWidget(model.child),
+        children: children,
       ),
     false => DuitSliverVisibility(
         attributes: model.attributes,
-        child: _buildWidget(model.child),
+        children: children,
       ),
   };
 }
