@@ -26,36 +26,10 @@ void main() {
                     "visible": false,
                     "needsBoxAdapter": true,
                   },
-                  "child": {
-                    "type": "Text",
-                    "id": "text",
-                    "controlled": false,
-                    "attributes": <String, dynamic>{
-                      "data": "Some text",
-                      "style": {
-                        "color": "#DCDCDC",
-                        "fontSize": 64.0,
-                        "fontWeight": 700,
-                      }
-                    },
-                  },
-                },
-                {
-                  "type": "SliverVisibility",
-                  "id": "sliver2",
-                  "controlled": false,
-                  "attributes": <String, dynamic>{
-                    "visible": false,
-                    "needsBoxAdapter": false,
-                  },
-                  "child": {
-                    "type": "SliverToBoxAdapter",
-                    "id": "adapter1",
-                    "controlled": false,
-                    "attributes": <String, dynamic>{},
-                    "child": {
+                  "children": [
+                    {
                       "type": "Text",
-                      "id": "text2",
+                      "id": "text",
                       "controlled": false,
                       "attributes": <String, dynamic>{
                         "data": "Some text",
@@ -66,7 +40,37 @@ void main() {
                         }
                       },
                     },
+                  ]
+                },
+                {
+                  "type": "SliverVisibility",
+                  "id": "sliver2",
+                  "controlled": false,
+                  "attributes": <String, dynamic>{
+                    "visible": false,
+                    "needsBoxAdapter": false,
                   },
+                  "children": [
+                    {
+                      "type": "SliverToBoxAdapter",
+                      "id": "adapter1",
+                      "controlled": false,
+                      "attributes": <String, dynamic>{},
+                      "child": {
+                        "type": "Text",
+                        "id": "text2",
+                        "controlled": false,
+                        "attributes": <String, dynamic>{
+                          "data": "Some text",
+                          "style": {
+                            "color": "#DCDCDC",
+                            "fontSize": 64.0,
+                            "fontWeight": 700,
+                          }
+                        },
+                      },
+                    },
+                  ],
                 },
               ],
             },
@@ -101,36 +105,10 @@ void main() {
                     "visible": false,
                     "needsBoxAdapter": true,
                   },
-                  "child": {
-                    "type": "Text",
-                    "id": "text",
-                    "controlled": false,
-                    "attributes": <String, dynamic>{
-                      "data": "Some text",
-                      "style": {
-                        "color": "#DCDCDC",
-                        "fontSize": 64.0,
-                        "fontWeight": 700,
-                      }
-                    },
-                  },
-                },
-                {
-                  "type": "SliverVisibility",
-                  "id": "sliver2",
-                  "controlled": true,
-                  "attributes": <String, dynamic>{
-                    "visible": false,
-                    "needsBoxAdapter": false,
-                  },
-                  "child": {
-                    "type": "SliverToBoxAdapter",
-                    "id": "adapter",
-                    "controlled": false,
-                    "attributes": <String, dynamic>{},
-                    "child": {
+                  "children": [
+                    {
                       "type": "Text",
-                      "id": "text2",
+                      "id": "text",
                       "controlled": false,
                       "attributes": <String, dynamic>{
                         "data": "Some text",
@@ -141,7 +119,37 @@ void main() {
                         }
                       },
                     },
+                  ],
+                },
+                {
+                  "type": "SliverVisibility",
+                  "id": "sliver2",
+                  "controlled": true,
+                  "attributes": <String, dynamic>{
+                    "visible": false,
+                    "needsBoxAdapter": false,
                   },
+                  "children": [
+                    {
+                      "type": "SliverToBoxAdapter",
+                      "id": "adapter",
+                      "controlled": false,
+                      "attributes": <String, dynamic>{},
+                      "child": {
+                        "type": "Text",
+                        "id": "text2",
+                        "controlled": false,
+                        "attributes": <String, dynamic>{
+                          "data": "Some text",
+                          "style": {
+                            "color": "#DCDCDC",
+                            "fontSize": 64.0,
+                            "fontWeight": 700,
+                          }
+                        },
+                      },
+                    },
+                  ],
                 },
               ],
             },

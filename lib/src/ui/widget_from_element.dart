@@ -644,14 +644,22 @@ Widget _buildSliverOpacity(ElementPropertyView model) {
 }
 
 Widget _buildSliverVisibility(ElementPropertyView model) {
+  final arr = model.children;
+  // SliverVisibility widget expects two children: sliver and replacementSliver
+  // This is necessary because the replacementSliver parameter requires a non-nullable widget
+  final children = List<Widget>.generate(2, (index) {
+    final child = arr.elementAtOrNull(index);
+    return child == null ? const SliverToBoxAdapter() : _buildWidget(child);
+  });
+
   return switch (model.controlled) {
     true => DuitControlledSliverVisibility(
         controller: model.viewController,
-        child: _buildWidget(model.child),
+        children: children,
       ),
     false => DuitSliverVisibility(
         attributes: model.attributes,
-        child: _buildWidget(model.child),
+        children: children,
       ),
   };
 }
