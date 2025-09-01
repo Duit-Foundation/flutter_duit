@@ -309,8 +309,8 @@ enum ElementType {
   ),
   flexibleSpaceBar(
     name: "FlexibleSpaceBar",
-    isControlledByDefault: true,
-    childRelation: 0,
+    isControlledByDefault: false,
+    childRelation: 2,
   ),
   sliverPadding(
     name: "SliverPadding",

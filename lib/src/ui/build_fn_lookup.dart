@@ -1,4 +1,4 @@
-part of 'element_property_view.dart';
+part of "element_property_view.dart";
 
 typedef BuildFn = Widget Function(ElementPropertyView);
 
@@ -55,7 +55,6 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.ignorePointer: _buildIgnorePointer,
   ElementType.opacity: _buildOpacity,
   ElementType.fittedBox: _buildFittedBox,
-  ElementType.flexibleSpaceBar: _buildFlexibleSpaceBar,
   ElementType.sliverPadding: _buildSliverPadding,
   ElementType.customScrollView: _buildCustomScrollView,
   ElementType.sliverFillRemaining: _buildSliverFillRemaining,
@@ -84,4 +83,5 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.scaffold: _buildScaffold,
   ElementType.sliverVisibility: _buildSliverVisibility,
   ElementType.sliverAppBar: _buildSliverAppBar,
+  ElementType.flexibleSpaceBar: _buildFlexibleSpaceBar,
 };
