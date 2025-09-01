@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/ui/widgets/utils.dart";
 
 const _kBodyIndex = 0,
     _kAppBarIndex = 1,
@@ -8,19 +9,14 @@ const _kBodyIndex = 0,
     _kBottomNavInvdex = 4,
     _kPersistentButtonsFirstIndex = 5;
 
-PreferredSizeWidget? _buildAppBar(List<Widget?> children) {
-  final appBar = children.elementAtOrNull(_kAppBarIndex);
-  return appBar is PreferredSizeWidget ? appBar : null;
-}
-
 final class DuitScaffold extends StatelessWidget {
   final ViewAttribute attributes;
   final List<Widget?> children;
 
   const DuitScaffold({
-    super.key,
     required this.attributes,
     required this.children,
+    super.key,
   });
 
   @override
@@ -29,12 +25,15 @@ final class DuitScaffold extends StatelessWidget {
     return Scaffold(
       key: Key(attributes.id),
       body: children.elementAtOrNull(_kBodyIndex),
-      appBar: _buildAppBar(children),
+      appBar: extractPreferredSizeWidget(children, _kAppBarIndex),
       floatingActionButton: children.elementAtOrNull(_kFabIndex),
       bottomSheet: children.elementAtOrNull(_kBottomSheetIndex),
       bottomNavigationBar: children.elementAtOrNull(_kBottomNavInvdex),
       persistentFooterButtons: children.length > _kPersistentButtonsFirstIndex
-          ? children.sublist(_kPersistentButtonsFirstIndex).whereType<Widget>().toList()
+          ? children
+              .sublist(_kPersistentButtonsFirstIndex)
+              .whereType<Widget>()
+              .toList()
           : null,
       floatingActionButtonLocation: attrs.fabLocation(),
       primary: attrs.getBool("primary", defaultValue: true),
@@ -55,9 +54,9 @@ final class DuitControlledScaffold extends StatefulWidget {
   final List<Widget?> children;
 
   const DuitControlledScaffold({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override
@@ -78,12 +77,15 @@ class _DuitControlledScaffoldState extends State<DuitControlledScaffold>
     return Scaffold(
       key: Key(widget.controller.id),
       body: children.elementAtOrNull(_kBodyIndex),
-      appBar: _buildAppBar(children),
+      appBar: extractPreferredSizeWidget(children, _kAppBarIndex),
       floatingActionButton: children.elementAtOrNull(_kFabIndex),
       bottomSheet: children.elementAtOrNull(_kBottomSheetIndex),
       bottomNavigationBar: children.elementAtOrNull(_kBottomNavInvdex),
       persistentFooterButtons: children.length > _kPersistentButtonsFirstIndex
-          ? children.sublist(_kPersistentButtonsFirstIndex).whereType<Widget>().toList()
+          ? children
+              .sublist(_kPersistentButtonsFirstIndex)
+              .whereType<Widget>()
+              .toList()
           : null,
       floatingActionButtonLocation: attributes.fabLocation(),
       primary: attributes.getBool("primary", defaultValue: true),

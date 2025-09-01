@@ -1,4 +1,11 @@
-part of 'element_property_view.dart';
+part of "element_property_view.dart";
+
+List<Widget?> _mapToNullableWidgetList(ElementPropertyView model) =>
+    model.children
+        .map<Widget?>(
+          (child) => child == null ? null : _buildWidget(child),
+        )
+        .toList();
 
 Widget _buildText(ElementPropertyView model) {
   return switch (model.controlled) {
@@ -186,9 +193,7 @@ Widget _buildAppBar(ElementPropertyView model) => DuitAppBar(
     );
 
 Widget _buildScaffold(ElementPropertyView model) {
-  final children = model.children
-      .map<Widget?>((c) => c == null ? null : _buildWidget(c))
-      .toList();
+  final children = _mapToNullableWidgetList(model);
 
   return switch (model.controlled) {
     true => DuitControlledScaffold(
@@ -709,9 +714,20 @@ Widget _buildSliverSafeArea(ElementPropertyView model) {
   };
 }
 
-Widget _buildSliverAppBar(ElementPropertyView model) => DuitSliverAppBar(
-      controller: model.viewController,
-    );
+Widget _buildSliverAppBar(ElementPropertyView model) {
+  final children = _mapToNullableWidgetList(model);
+
+  return switch (model.controlled) {
+    true => DuitControlledSliverAppBar(
+        controller: model.viewController,
+        children: children,
+      ),
+    false => DuitSliverAppBar(
+        attributes: model.attributes,
+        children: children,
+      ),
+  };
+}
 
 Widget _buildComponent(ElementPropertyView model) => DuitComponent(
       controller: model.viewController,
@@ -897,7 +913,7 @@ Widget _buildCustomWidget(DuitElement model) {
   return builder?.call(model, children) ?? const SizedBox.shrink();
 }
 
-Widget _buildWidget(dynamic widgetModel) {
+Widget _buildWidget(widgetModel) {
   return switch (widgetModel) {
     DuitElement(type: ElementType.custom) => _buildCustomWidget(widgetModel),
     DuitElement() => _buildFromElementPropertyView(widgetModel.element),

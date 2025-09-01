@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -60,8 +60,8 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          final CustomScrollView scrollView =
-              tester.widget(find.byKey(const ValueKey("custom_view")));
+          final scrollView = tester.widget<CustomScrollView>(
+              find.byKey(const ValueKey("custom_view")));
 
           expect(scrollView.scrollDirection, Axis.horizontal);
           expect(scrollView.shrinkWrap, true);
