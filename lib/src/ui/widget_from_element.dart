@@ -571,11 +571,20 @@ Widget _buildPhysicalModel(ElementPropertyView model) {
   };
 }
 
-// Sliver widgets - mostly controlled only
-Widget _buildFlexibleSpaceBar(ElementPropertyView model) =>
-    DuitFlexibleSpaceBar(
-      controller: model.viewController,
-    );
+Widget _buildFlexibleSpaceBar(ElementPropertyView model) {
+  final children = _mapToNullableWidgetList(model);
+
+  return switch (model.controlled) {
+    true => DuitControlledFlexibleSpaceBar(
+        controller: model.viewController,
+        children: children,
+      ),
+    false => DuitFlexibleSpaceBar(
+        attributes: model.attributes,
+        children: children,
+      ),
+  };
+}
 
 Widget _buildSliverPadding(ElementPropertyView model) {
   return switch (model.controlled) {

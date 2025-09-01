@@ -55,8 +55,8 @@ Map<String, dynamic> _createWidget({
               "type": "FlexibleSpaceBar",
               "id": "flexibleSpaceBarId",
               "controlled": controlledFlexibleSpaceBar,
-              "attributes": {
-                "title": {
+              "children": [
+                {
                   "type": "Text",
                   "id": "title",
                   "controlled": false,
@@ -69,26 +69,28 @@ Map<String, dynamic> _createWidget({
                     },
                   },
                 },
-                "background": {
+                {
                   "type": "Container",
                   "id": "background",
                   "controlled": false,
                   "attributes": {
                     "color": "#2196F3",
-                    "child": {
-                      "type": "Text",
-                      "id": "backgroundText",
-                      "controlled": false,
-                      "attributes": {
-                        "data": "Background",
-                        "style": {
-                          "color": "#FFFFFF",
-                          "fontSize": 16.0,
-                        },
+                  },
+                  "child": {
+                    "type": "Text",
+                    "id": "backgroundText",
+                    "controlled": false,
+                    "attributes": {
+                      "data": "Background",
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontSize": 16.0,
                       },
                     },
                   },
                 },
+              ],
+              "attributes": {
                 "centerTitle": true,
                 "expandedTitleScale": 1.5,
                 "collapseMode": "parallax",
@@ -191,6 +193,15 @@ void main() {
         final flexibleSpaceBar =
             find.byKey(const ValueKey("flexibleSpaceBarId"));
         expect(flexibleSpaceBar, findsOneWidget);
+
+        final title = find.byKey(const ValueKey("title"));
+        expect(title, findsOneWidget);
+
+        final background = find.byKey(const ValueKey("background"));
+        expect(background, findsOneWidget);
+
+        final backgroundText = find.text("Background");
+        expect(backgroundText, findsOneWidget);
       },
     );
 
