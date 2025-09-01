@@ -21,8 +21,9 @@ Map<String, dynamic> _createWidget({
           "type": "SliverAppBar",
           "id": "sliverAppBarId",
           "controlled": true,
-          "attributes": {
-            "title": {
+          "children": [
+            //title
+            {
               "type": "Text",
               "id": "sliverTitle",
               "controlled": false,
@@ -32,10 +33,11 @@ Map<String, dynamic> _createWidget({
                   "color": "#FFFFFF",
                   "fontSize": 20.0,
                   "fontWeight": 500,
-                }
-              }
+                },
+              },
             },
-            "leading": {
+            //leading
+            {
               "type": "Text",
               "id": "sliverLeading",
               "controlled": false,
@@ -45,36 +47,11 @@ Map<String, dynamic> _createWidget({
                   "color": "#FFFFFF",
                   "fontSize": 24.0,
                   "fontWeight": 400,
-                }
-              }
+                },
+              },
             },
-            "actions": [
-              {
-                "type": "Text",
-                "id": "sliverAction1",
-                "controlled": false,
-                "attributes": {
-                  "data": "⚙️",
-                  "style": {
-                    "color": "#FFFFFF",
-                    "fontSize": 20.0,
-                  }
-                },
-              },
-              {
-                "type": "Text",
-                "id": "sliverAction2",
-                "controlled": false,
-                "attributes": {
-                  "data": "🔍",
-                  "style": {
-                    "color": "#FFFFFF",
-                    "fontSize": 20.0,
-                  }
-                },
-              },
-            ],
-            "flexibleSpace": {
+            //flexibleSpace
+            {
               "type": "FlexibleSpaceBar",
               "id": "flexibleSpaceBarId",
               "controlled": controlledFlexibleSpaceBar,
@@ -107,10 +84,10 @@ Map<String, dynamic> _createWidget({
                         "style": {
                           "color": "#FFFFFF",
                           "fontSize": 16.0,
-                        }
-                      }
-                    }
-                  }
+                        },
+                      },
+                    },
+                  },
                 },
                 "centerTitle": true,
                 "expandedTitleScale": 1.5,
@@ -121,9 +98,38 @@ Map<String, dynamic> _createWidget({
                   "top": 16.0,
                   "right": 16.0,
                   "bottom": 16.0,
-                }
+                },
               },
             },
+            //bottom
+            null,
+            //actions
+            {
+              "type": "Text",
+              "id": "sliverAction1",
+              "controlled": false,
+              "attributes": {
+                "data": "⚙️",
+                "style": {
+                  "color": "#FFFFFF",
+                  "fontSize": 20.0,
+                },
+              },
+            },
+            {
+              "type": "Text",
+              "id": "sliverAction2",
+              "controlled": false,
+              "attributes": {
+                "data": "🔍",
+                "style": {
+                  "color": "#FFFFFF",
+                  "fontSize": 20.0,
+                },
+              },
+            },
+          ],
+          "attributes": {
             "backgroundColor": "#1976D2",
             "foregroundColor": "#FFFFFF",
             "elevation": 4.0,
@@ -216,7 +222,7 @@ void main() {
           "expandedTitleScale": 2.0,
           "collapseMode": "pin",
           "stretchModes": ["blurBackground"],
-          "titlePadding": [8.0, 8.0, 8.0, 8.0]
+          "titlePadding": [8.0, 8.0, 8.0, 8.0],
         });
 
         await tester.pumpAndSettle();
@@ -230,7 +236,9 @@ void main() {
         expect(flexibleSpaceBarWidget.expandedTitleScale, 2.0);
         expect(flexibleSpaceBarWidget.collapseMode, CollapseMode.pin);
         expect(
-            flexibleSpaceBarWidget.stretchModes, [StretchMode.blurBackground]);
+          flexibleSpaceBarWidget.stretchModes,
+          [StretchMode.blurBackground],
+        );
         expect(flexibleSpaceBarWidget.titlePadding, const EdgeInsets.all(8.0));
       },
     );

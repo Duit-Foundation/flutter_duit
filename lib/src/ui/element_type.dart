@@ -374,8 +374,8 @@ enum ElementType {
   ),
   sliverAppBar(
     name: "SliverAppBar",
-    isControlledByDefault: true,
-    childRelation: 0,
+    isControlledByDefault: false,
+    childRelation: 2,
   ),
   sliverGrid(
     name: "SliverGrid",
