@@ -2,12 +2,6 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/ui/widgets/utils.dart";
 
-const _kTitleIndex = 0,
-    _kLeadingIndex = 1,
-    _kFlexibleSpaceIndex = 2,
-    _kBottomIndex = 3,
-    _kActionsStartIndex = 4;
-
 class DuitSliverAppBar extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
   final List<Widget?> children;
@@ -26,12 +20,12 @@ class DuitSliverAppBar extends StatelessWidget with AnimatedAttributes {
     );
     return SliverAppBar(
       key: ValueKey(attributes.id),
-      leading: children.elementAtOrNull(_kLeadingIndex),
-      title: children.elementAtOrNull(_kTitleIndex),
-      flexibleSpace: children.elementAtOrNull(_kFlexibleSpaceIndex),
-      bottom: extractPreferredSizeWidget(children, _kBottomIndex),
-      actions: children.length > _kActionsStartIndex
-          ? children.sublist(_kActionsStartIndex).whereType<Widget>().toList()
+      leading: children.elementAtOrNull(kLeadingIndex),
+      title: children.elementAtOrNull(kTitleIndex),
+      flexibleSpace: children.elementAtOrNull(kFlexibleSpaceIndex),
+      bottom: extractPreferredSizeWidget(children, kBottomIndex),
+      actions: children.length > kActionsStartIndex
+          ? children.sublist(kActionsStartIndex).whereType<Widget>().toList()
           : null,
       automaticallyImplyLeading: attrs.getBool(
         "automaticallyImplyLeading",
@@ -96,13 +90,13 @@ class _DuitControlledSliverAppBarState extends State<DuitControlledSliverAppBar>
 
     return SliverAppBar(
       key: ValueKey(widget.controller.id),
-      leading: widget.children.elementAtOrNull(_kLeadingIndex),
-      title: widget.children.elementAtOrNull(_kTitleIndex),
-      flexibleSpace: widget.children.elementAtOrNull(_kFlexibleSpaceIndex),
-      bottom: extractPreferredSizeWidget(widget.children, _kBottomIndex),
-      actions: widget.children.length > _kActionsStartIndex
+      leading: widget.children.elementAtOrNull(kLeadingIndex),
+      title: widget.children.elementAtOrNull(kTitleIndex),
+      flexibleSpace: widget.children.elementAtOrNull(kFlexibleSpaceIndex),
+      bottom: extractPreferredSizeWidget(widget.children, kBottomIndex),
+      actions: widget.children.length > kActionsStartIndex
           ? widget.children
-              .sublist(_kActionsStartIndex)
+              .sublist(kActionsStartIndex)
               .whereType<Widget>()
               .toList()
           : null,

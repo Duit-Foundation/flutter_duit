@@ -7,8 +7,8 @@ Map<String, dynamic> _createWidget([bool controlled = true]) {
     "type": "AppBar",
     "id": "appBarId",
     "controlled": controlled,
-    "attributes": {
-      "title": {
+    "children": [
+      {
         "type": "Text",
         "id": "title",
         "controlled": false,
@@ -18,10 +18,10 @@ Map<String, dynamic> _createWidget([bool controlled = true]) {
             "color": "#000000",
             "fontSize": 20.0,
             "fontWeight": 500,
-          }
-        }
+          },
+        },
       },
-      "leading": {
+      {
         "type": "Text",
         "id": "leading",
         "controlled": false,
@@ -31,24 +31,26 @@ Map<String, dynamic> _createWidget([bool controlled = true]) {
             "color": "#000000",
             "fontSize": 20.0,
             "fontWeight": 500,
-          }
-        },
-      },
-      "actions": [
-        {
-          "type": "Text",
-          "id": "action1",
-          "controlled": false,
-          "attributes": {
-            "data": "Action",
-            "style": {
-              "color": "#000000",
-              "fontSize": 20.0,
-              "fontWeight": 500,
-            }
           },
         },
-      ],
+      },
+      null, //flexibleSpace
+      null, //bottom
+      {
+        "type": "Text",
+        "id": "action1",
+        "controlled": false,
+        "attributes": {
+          "data": "Action",
+          "style": {
+            "color": "#000000",
+            "fontSize": 20.0,
+            "fontWeight": 500,
+          },
+        },
+      },
+    ],
+    "attributes": {
       "backgroundColor": "#FF0000",
       "foregroundColor": "#FFFFFF",
       "elevation": 4.0,
@@ -58,7 +60,7 @@ Map<String, dynamic> _createWidget([bool controlled = true]) {
       "leadingWidth": 56.0,
       "titleSpacing": 16.0,
       "bottomOpacity": 1.0,
-      "toolbarOpacity": 1.0
+      "toolbarOpacity": 1.0,
     },
   };
 }
@@ -124,7 +126,7 @@ void main() {
         "backgroundColor": "#00FF00",
         "elevation": 8.0,
         "centerTitle": false,
-        "toolbarHeight": 64.0
+        "toolbarHeight": 64.0,
       });
 
       await tester.pumpAndSettle();
@@ -155,9 +157,17 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(find.text("Title"), findsOneWidget);
-      expect(find.text("Leading"), findsOneWidget);
-      expect(find.text("Action"), findsOneWidget);
+      final appBarWidget = tester.widget<AppBar>(
+        find.byKey(
+          const ValueKey("appBarId"),
+        ),
+      );
+
+      expect(appBarWidget.title, isNotNull);
+      expect(appBarWidget.leading, isNotNull);
+      expect(appBarWidget.actions, isNotNull);
+      expect(appBarWidget.flexibleSpace, isNull);
+      expect(appBarWidget.bottom, isNull);
     });
   });
 }

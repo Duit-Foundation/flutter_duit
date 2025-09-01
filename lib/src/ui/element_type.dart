@@ -13,6 +13,7 @@
 /// - **Single child (1)**: Wrapper widgets like Container, Padding, Center
 /// - **Multiple children (2)**: Layout widgets like Row, Column, Stack
 /// - **Component content (3)**: Special case for component-based elements
+/// - **Fragment content (4)**: Special case for fragment-based elements
 ///
 /// Some elements are controlled by default, meaning they have built-in state
 /// management capabilities and can respond to user interactions or programmatic updates.
@@ -259,8 +260,8 @@ enum ElementType {
   ),
   appBar(
     name: "AppBar",
-    isControlledByDefault: true,
-    childRelation: 0,
+    isControlledByDefault: false,
+    childRelation: 2,
   ),
   scaffold(
     name: "Scaffold",
