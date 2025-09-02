@@ -1,15 +1,16 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart'
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart"
     show Widget, SizedBox, SliverToBoxAdapter;
-import 'package:flutter_duit/src/controller/index.dart';
-import 'package:flutter_duit/src/ui/index.dart';
-import 'package:flutter_duit/src/ui/widgets/grid_constructor.dart';
-import 'package:flutter_duit/src/ui/widgets/index.dart';
-import 'package:flutter_duit/src/utils/index.dart';
-import 'package:meta/meta.dart';
+import "package:flutter_duit/src/controller/index.dart";
+import "package:flutter_duit/src/ui/index.dart";
+import "package:flutter_duit/src/ui/widgets/grid_constructor.dart";
+import "package:flutter_duit/src/ui/widgets/index.dart";
+import "package:flutter_duit/src/utils/env.dart";
+import "package:flutter_duit/src/utils/index.dart";
+import "package:meta/meta.dart";
 
-part 'widget_from_element.dart';
-part 'build_fn_lookup.dart';
+part "widget_from_element.dart";
+part "build_fn_lookup.dart";
 
 /// A typed view over a map representing a Duit UI element.
 ///
@@ -149,6 +150,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   /// final nestedData = element["nested"]["property"];
   /// ```
   @preferInline
+  // ignore: always_declare_return_types
   operator [](String key) => json[key];
 
   /// Checks if the element contains the specified key.
@@ -201,6 +203,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
 
   @internal
   @preferInline
+  // ignore: avoid_setters_without_getters
   set componentChild(ElementPropertyView child) => json["child"] = child;
 
   /// Overwrites this element's properties with another element's properties.

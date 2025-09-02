@@ -188,9 +188,20 @@ Widget _buildInkWell(ElementPropertyView model) => DuitInkWell(
       child: _buildWidget(model.child),
     );
 
-Widget _buildAppBar(ElementPropertyView model) => DuitAppBar(
+Widget _buildAppBar(ElementPropertyView model) {
+  final children = _mapToNullableWidgetList(model);
+
+  return switch (model.controlled) {
+    true => DuitControlledAppBar(
       controller: model.viewController,
-    );
+        children: children,
+      ),
+    false => DuitAppBar(
+        attributes: model.attributes,
+        children: children,
+      ),
+  };
+}
 
 Widget _buildScaffold(ElementPropertyView model) {
   final children = _mapToNullableWidgetList(model);
