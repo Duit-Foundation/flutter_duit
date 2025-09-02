@@ -150,7 +150,8 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   /// final nestedData = element["nested"]["property"];
   /// ```
   @preferInline
-  void operator [](String key) => json[key];
+  // ignore: always_declare_return_types
+  operator [](String key) => json[key];
 
   /// Checks if the element contains the specified key.
   ///
