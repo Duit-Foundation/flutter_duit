@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter_duit/src/utils/env.dart";
 import 'package:flutter_test/flutter_test.dart';
 
 import 'utils.dart';
@@ -47,7 +48,11 @@ void main() {
 
       await pumpDriver(tester, driver);
 
-      expect(find.byType(SizedBox), findsOneWidget);
+      if (throwOnUnspecifiedWidgetType) {
+        expect(tester.takeException(), isInstanceOf<ArgumentError>());
+      } else {
+        expect(find.byType(SizedBox), findsOneWidget);
+      }
     });
 
     testWidgets("must support nested fragments", (tester) async {

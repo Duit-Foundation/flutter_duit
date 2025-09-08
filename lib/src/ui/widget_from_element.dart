@@ -935,7 +935,6 @@ Widget _buildCustomWidget(DuitElement model) {
 
 Widget _buildWidget(widgetModel) {
   return switch (widgetModel) {
-    DuitElement(type: ElementType.custom) => _buildCustomWidget(widgetModel),
     DuitElement() => _buildFromElementPropertyView(widgetModel.element),
     ElementPropertyView() => _buildFromElementPropertyView(widgetModel),
     _ => const SizedBox.shrink(),
@@ -947,5 +946,14 @@ Widget _buildFromElementPropertyView(ElementPropertyView model) {
   if (model.type == ElementType.custom) {
     return _buildCustomWidget(DuitElement.wrap(model));
   }
-  return _buildFnLookup[model.type]?.call(model) ?? const SizedBox.shrink();
+
+  final buildFn = _buildFnLookup[model.type];
+
+  if (buildFn != null) {
+    return buildFn(model);
+  } else if (throwOnUnspecifiedWidgetType) {
+    throw ArgumentError("Unspecified widget type: ${model.type}");
+  } else {
+    return const SizedBox.shrink();
+  }
 }

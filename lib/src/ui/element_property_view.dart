@@ -389,6 +389,14 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
         break;
     }
 
+    if (element.type.mayHaveRelatedAction) {
+      final action = DuitDataSource(data).getAction("action");
+
+      if (action != null && action is ScriptAction) {
+        driver.evalScript(action.script.sourceCode);
+      }
+    }
+
     if (element.controlled || element.type.isControlledByDefault) {
       final id = element.id;
       final controller = element._createViewController(driver);

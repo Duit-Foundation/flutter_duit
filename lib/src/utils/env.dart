@@ -7,6 +7,6 @@
 ///
 /// This is useful for debugging and development purposes.
 const throwOnUnspecifiedWidgetType = bool.fromEnvironment(
-  "D_THROW_ON_UNSPECIFIED_WIDGET_TYPE",
-  defaultValue: false,
+  "DF_THROW_ON_UNSPECIFIED_WIDGET_TYPE",
+  defaultValue: true,
 );
