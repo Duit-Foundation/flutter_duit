@@ -77,6 +77,7 @@ enum ElementType {
     name: "TextField",
     isControlledByDefault: true,
     childRelation: 0,
+    mayHaveRelatedAction: true,
   ),
   padding(
     name: "Padding",
@@ -87,6 +88,7 @@ enum ElementType {
     name: "CheckBox",
     isControlledByDefault: true,
     childRelation: 0,
+    mayHaveRelatedAction: true,
   ),
   decoratedBox(
     name: "DecoratedBox",
@@ -102,6 +104,7 @@ enum ElementType {
     name: "ElevatedButton",
     isControlledByDefault: true,
     childRelation: 1,
+    mayHaveRelatedAction: true,
   ),
   positioned(
     name: "Positioned",
@@ -152,6 +155,7 @@ enum ElementType {
     name: "RadioGroupContext",
     isControlledByDefault: true,
     childRelation: 1,
+    mayHaveRelatedAction: true,
   ),
   ignorePointer(
     name: "IgnorePointer",
@@ -167,6 +171,7 @@ enum ElementType {
     name: "Slider",
     isControlledByDefault: true,
     childRelation: 1,
+    mayHaveRelatedAction: true,
   ),
   fittedBox(
     name: "FittedBox",
@@ -177,6 +182,7 @@ enum ElementType {
     name: "Switch",
     isControlledByDefault: true,
     childRelation: 0,
+    mayHaveRelatedAction: true,
   ),
   subtree(
     name: "Subtree",
@@ -192,6 +198,7 @@ enum ElementType {
     name: "ListView",
     isControlledByDefault: false,
     childRelation: 2,
+    mayHaveRelatedAction: true,
   ),
   repaintBoundary(
     name: "RepaintBoundary",
@@ -252,6 +259,7 @@ enum ElementType {
     name: "GridView",
     isControlledByDefault: false,
     childRelation: 2,
+    mayHaveRelatedAction: true,
   ),
   card(
     name: "Card",
@@ -372,6 +380,7 @@ enum ElementType {
     name: "SliverList",
     isControlledByDefault: false,
     childRelation: 2,
+    mayHaveRelatedAction: true,
   ),
   sliverAppBar(
     name: "SliverAppBar",
@@ -382,6 +391,7 @@ enum ElementType {
     name: "SliverGrid",
     isControlledByDefault: false,
     childRelation: 2,
+    mayHaveRelatedAction: true,
   ),
   absorbPointer(
     name: "AbsorbPointer",
@@ -446,10 +456,14 @@ enum ElementType {
   /// - `4`: Fragment content
   final int childRelation;
 
+  // Determines whether a widget of this type can have an associated action (which is passed in the widget model, not through attributes)
+  final bool mayHaveRelatedAction;
+
   const ElementType({
     required this.name,
     required this.isControlledByDefault,
     required this.childRelation,
+    this.mayHaveRelatedAction = false,
   });
 
   /// Converts a string name to the corresponding [ElementType].

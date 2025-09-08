@@ -5,7 +5,6 @@ import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/ui/widgets/grid_constructor.dart";
 import "package:flutter_duit/src/ui/widgets/index.dart";
-import "package:flutter_duit/src/utils/env.dart";
 import "package:flutter_duit/src/utils/index.dart";
 import "package:meta/meta.dart";
 
@@ -387,6 +386,14 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
         return;
       default:
         break;
+    }
+
+    if (element.type.mayHaveRelatedAction) {
+      final action = DuitDataSource(data).getAction("action");
+
+      if (action != null && action is ScriptAction) {
+        driver.evalScript(action.script.sourceCode);
+      }
     }
 
     if (element.controlled || element.type.isControlledByDefault) {

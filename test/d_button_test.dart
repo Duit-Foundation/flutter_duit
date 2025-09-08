@@ -18,10 +18,10 @@ Map<String, dynamic> _createWidget() {
             "style": {
               "fontSize": 24.0,
               "fontWeight": 800,
-            }
+            },
           },
-        }
-      }
+        },
+      },
     },
     "attributes": {
       "autofocus": false,
@@ -36,7 +36,7 @@ Map<String, dynamic> _createWidget() {
               "style": {
                 "fontSize": 48.0,
                 "fontWeight": 400,
-              }
+              },
             },
           },
         },
@@ -51,9 +51,9 @@ Map<String, dynamic> _createWidget() {
         "style": {
           "fontSize": 12.0,
           "fontWeight": 400,
-        }
+        },
       },
-    }
+    },
   };
 }
 
