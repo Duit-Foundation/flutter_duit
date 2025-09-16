@@ -1,31 +1,31 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
-  group('DuitDecoratedBox widget tests', () {
+  group("DuitDecoratedBox widget tests", () {
     testWidgets(
-      'must renders correctly',
+      "must renders correctly",
       (tester) async {
         final driver = DuitDriver.static(
           {
-            'type': 'DecoratedBox',
-            'id': 'decorated',
-            'attributes': {
-              'decoration': {
-                'color': '#933C3C',
+            "type": "DecoratedBox",
+            "id": "decorated",
+            "attributes": {
+              "decoration": <String, dynamic>{
+                "color": "#933C3C",
               },
             },
-            'child': {
-              'type': 'Container',
-              'id': 'child',
-              'attributes': {
-                'width': 100.0,
-                'height': 100.0,
+            "child": {
+              "type": "Container",
+              "id": "child",
+              "attributes": {
+                "width": 100.0,
+                "height": 100.0,
               },
-              'controlled': false,
+              "controlled": false,
             },
           },
           transportOptions: HttpTransportOptions(),
@@ -33,7 +33,7 @@ void main() {
 
         await pumpDriver(tester, driver);
 
-        final decoratedBox = find.byKey(const ValueKey('decorated'));
+        final decoratedBox = find.byKey(const ValueKey("decorated"));
         expect(decoratedBox, findsOneWidget);
         // Проверяем, что цвет применяется (через paints..rect)
         expect(decoratedBox, paints..rect(color: const Color(0xFF933C3C)));
@@ -41,26 +41,26 @@ void main() {
     );
 
     testWidgets(
-      'must update attributes',
+      "must update attributes",
       (tester) async {
         final driver = DuitDriver.static(
           {
-            'type': 'DecoratedBox',
-            'id': 'decorated',
-            'controlled': true,
-            'attributes': {
-              'decoration': {
-                'color': '#933C3C',
+            "type": "DecoratedBox",
+            "id": "decorated",
+            "controlled": true,
+            "attributes": {
+              "decoration": <String, dynamic>{
+                "color": "#933C3C",
               },
             },
-            'child': {
-              'type': 'Container',
-              'id': 'child',
-              'attributes': {
-                'width': 100.0,
-                'height': 100.0,
+            "child": {
+              "type": "Container",
+              "id": "child",
+              "attributes": {
+                "width": 100.0,
+                "height": 100.0,
               },
-              'controlled': false,
+              "controlled": false,
             },
           },
           transportOptions: HttpTransportOptions(),
@@ -68,18 +68,18 @@ void main() {
 
         await pumpDriver(tester, driver);
 
-        var decoratedBox = find.byKey(const ValueKey('decorated'));
+        var decoratedBox = find.byKey(const ValueKey("decorated"));
         expect(decoratedBox, findsOneWidget);
         expect(decoratedBox, paints..rect(color: const Color(0xFF933C3C)));
 
-        await driver.updateTestAttributes('decorated', {
-          'decoration': {
-            'color': '#075eeb',
+        await driver.updateTestAttributes("decorated", {
+          "decoration": <String, dynamic>{
+            "color": "#075eeb",
           },
         });
         await tester.pumpAndSettle();
 
-        decoratedBox = find.byKey(const ValueKey('decorated'));
+        decoratedBox = find.byKey(const ValueKey("decorated"));
         expect(decoratedBox, paints..rect(color: const Color(0xFF075eeb)));
       },
     );

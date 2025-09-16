@@ -1,12 +1,12 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:core';
-import 'dart:typed_data';
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:http/http.dart' as http;
+import "dart:async";
+import "dart:convert";
+import "dart:core";
+import "dart:typed_data";
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:http/http.dart" as http;
 
-import 'transport_utils.dart';
+import "package:flutter_duit/src/transport/transport_utils.dart";
 
 /// An HTTP transport implementation for making HTTP requests.
 ///
@@ -33,7 +33,7 @@ final class HttpTransport extends Transport {
   });
 
   String _prepareUrl(String url) {
-    String urlString = "";
+    var urlString = "";
     if (options.baseUrl != null) {
       urlString += options.baseUrl!;
     }
@@ -91,12 +91,15 @@ final class HttpTransport extends Transport {
   Future<Map<String, dynamic>?> _parseResponse(Uint8List data) async {
     if (options.decoder != null) {
       final decodingResult =
-          options.decoder!.convert(data) as Map<String, dynamic>;
+          options.decoder!.convert(data)! as Map<String, dynamic>;
       return decodingResult;
     }
 
     ///If concurrency is not enabled, run the task in main isolate
-    return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
+    return jsonDecode(
+      utf8.decode(data),
+      reviver: DuitDataSource.jsonReviver,
+    ) as Map<String, dynamic>;
   }
 
   @override
@@ -104,7 +107,7 @@ final class HttpTransport extends Transport {
     if (action is! TransportAction) return null;
 
     ///Prepare url and method
-    String method = switch (action.meta) {
+    var method = switch (action.meta) {
       null => "GET",
       HttpActionMetainfo() => action.meta!.method,
     };

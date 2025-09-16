@@ -6,14 +6,14 @@ final _t1 = <String, dynamic>{
   "type": "Text",
   "id": "tfgdfg1",
   "controlled": true,
-  "attributes": {"data": "Text 1"}
+  "attributes": {"data": "Text 1"},
 };
 
 final _t2 = <String, dynamic>{
   "type": "Text",
   "id": "fgfgfbcb",
   "controlled": false,
-  "attributes": {"data": "Text 2"}
+  "attributes": {"data": "Text 2"},
 };
 
 Map<String, dynamic> _createWidget() {
@@ -34,8 +34,8 @@ Map<String, dynamic> _createWidget() {
             "type": "update",
             "updates": {
               "subtree": _t1,
-            }
-          }
+            },
+          },
         },
         "attributes": {
           "autofocus": false,
@@ -46,12 +46,12 @@ Map<String, dynamic> _createWidget() {
           "controlled": true,
           "attributes": {
             "data": "Press me!",
-            "style": {
+            "style": <String, dynamic>{
               "fontSize": 12.0,
               "fontWeight": 400,
-            }
+            },
           },
-        }
+        },
       },
       {
         "type": "ElevatedButton",
@@ -64,8 +64,8 @@ Map<String, dynamic> _createWidget() {
             "type": "update",
             "updates": {
               "subtree": _t2,
-            }
-          }
+            },
+          },
         },
         "attributes": {
           "autofocus": false,
@@ -76,12 +76,12 @@ Map<String, dynamic> _createWidget() {
           "controlled": true,
           "attributes": {
             "data": "Press me!",
-            "style": {
+            "style": <String, dynamic>{
               "fontSize": 12.0,
               "fontWeight": 400,
-            }
+            },
           },
-        }
+        },
       },
       {
         "type": "Subtree",
@@ -91,10 +91,10 @@ Map<String, dynamic> _createWidget() {
         "child": {
           "type": "SizedBox",
           "id": "t1x",
-          "attributes": <String, dynamic>{}
-        }
+          "attributes": <String, dynamic>{},
+        },
       }
-    ]
+    ],
   };
 }
 

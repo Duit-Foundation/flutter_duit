@@ -40,6 +40,7 @@ final class DuitScaffold extends StatelessWidget {
       extendBody: attrs.getBool("extendBody"),
       extendBodyBehindAppBar: attrs.getBool("extendBodyBehindAppBar"),
       persistentFooterAlignment: attrs.alignmentDirectional(
+        key: "persistentFooterAlignment",
         defaultValue: AlignmentDirectional.centerEnd,
       )!,
       restorationId: attrs.tryGetString("restorationId"),
@@ -92,7 +93,9 @@ class _DuitControlledScaffoldState extends State<DuitControlledScaffold>
       extendBody: attributes.getBool("extendBody"),
       extendBodyBehindAppBar: attributes.getBool("extendBodyBehindAppBar"),
       persistentFooterAlignment: attributes.alignmentDirectional(
-          defaultValue: AlignmentDirectional.centerEnd)!,
+        key: "persistentFooterAlignment",
+        defaultValue: AlignmentDirectional.centerEnd,
+      )!,
       restorationId: attributes.tryGetString("restorationId"),
       resizeToAvoidBottomInset:
           attributes.tryGetBool("resizeToAvoidBottomInset"),

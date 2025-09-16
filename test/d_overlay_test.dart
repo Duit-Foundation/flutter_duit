@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -48,10 +48,10 @@ void main() {
                             "controlled": true,
                             "attributes": {
                               "data": "Dialog",
-                              "style": {
+                              "style": <String, dynamic>{
                                 "fontSize": 24.0,
                                 "fontWeight": 800,
-                              }
+                              },
                             },
                           },
                           {
@@ -69,9 +69,9 @@ void main() {
                                   "action": "close",
                                 },
                               },
-                            }
+                            },
                           }
-                        ]
+                        ],
                       },
                     },
                   },
@@ -85,10 +85,10 @@ void main() {
                   "controlled": true,
                   "attributes": {
                     "data": "Press me!",
-                    "style": {
+                    "style": <String, dynamic>{
                       "fontSize": 12.0,
                       "fontWeight": 400,
-                    }
+                    },
                   },
                 },
               },
@@ -171,10 +171,10 @@ void main() {
                               "controlled": true,
                               "attributes": {
                                 "data": "BottomSheet",
-                                "style": {
+                                "style": <String, dynamic>{
                                   "fontSize": 24.0,
                                   "fontWeight": 800,
-                                }
+                                },
                               },
                             },
                             {
@@ -192,9 +192,9 @@ void main() {
                                     "action": "close",
                                   },
                                 },
-                              }
+                              },
                             }
-                          ]
+                          ],
                         },
                       },
                     },
@@ -208,10 +208,10 @@ void main() {
                     "controlled": true,
                     "attributes": {
                       "data": "Press me!",
-                      "style": {
+                      "style": <String, dynamic>{
                         "fontSize": 12.0,
                         "fontWeight": 400,
-                      }
+                      },
                     },
                   },
                 },
