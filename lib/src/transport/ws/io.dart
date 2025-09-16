@@ -1,9 +1,10 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter_duit/src/transport/transport_utils.dart';
+import "dart:async";
+import "dart:convert";
+import "dart:io";
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter_duit/src/transport/transport_utils.dart";
 
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter_duit/flutter_duit.dart";
 
 /// A WebSocket transport implementation for streaming data.
 ///
@@ -36,7 +37,7 @@ final class WSTransport extends Transport implements Streamer {
   });
 
   String _prepareUrl(String url) {
-    String urlString = "";
+    var urlString = "";
     if (options.baseUrl != null) {
       urlString += options.baseUrl!;
     }
@@ -44,8 +45,10 @@ final class WSTransport extends Transport implements Streamer {
     return urlString += url;
   }
 
-  Future<Map<String, dynamic>> _parseJson(String data) async =>
-      jsonDecode(data) as Map<String, dynamic>;
+  Future<Map<String, dynamic>> _parseJson(String data) async => jsonDecode(
+        data,
+        reviver: DuitDataSource.jsonReviver,
+      ) as Map<String, dynamic>;
 
   @override
   Future<Map<String, dynamic>?> connect({

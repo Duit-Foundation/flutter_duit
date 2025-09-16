@@ -13,7 +13,7 @@ final _uncText = <String, dynamic>{
       "color": "#DCDCDC",
       "fontSize": 14.0,
       "fontWeight": 700,
-    }
+    },
   },
 };
 
@@ -26,7 +26,7 @@ final _uncTextWithoutData = <String, dynamic>{
     "style": {
       "fontSize": 24.0,
       "fontWeight": 700,
-    }
+    },
   },
 };
 
@@ -37,10 +37,10 @@ Map<String, dynamic> _cTextWithoutData() {
     "controlled": true,
     "attributes": {
       "data": "Good bye, World!",
-      "style": {
+      "style": <String, dynamic>{
         "fontSize": 12.0,
         "fontWeight": 200,
-      }
+      },
     },
   };
 }
@@ -72,7 +72,7 @@ final _textWithPropAnimation = <String, dynamic>{
       "parentBuilderId": "builder",
       "affectedProperties": {"style"},
     },
-  }
+  },
 };
 
 void main() {
@@ -138,7 +138,7 @@ void main() {
           "color": "#DCDCDC",
           "fontSize": 14.0,
           "fontWeight": 700,
-        }
+        },
       });
 
       await tester.pumpAndSettle();

@@ -1,35 +1,35 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/rendering.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:flutter/rendering.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
-  group('DuitOverflowBox widget tests', () {
-    testWidgets('renders with all attributes', (tester) async {
+  group("DuitOverflowBox widget tests", () {
+    testWidgets("renders with all attributes", (tester) async {
       final driver = DuitDriver.static(
         {
-          'type': 'OverflowBox',
-          'id': 'overflow',
-          'controlled': false,
-          'attributes': {
-            'minWidth': 50.0,
-            'maxWidth': 200.0,
-            'minHeight': 30.0,
-            'maxHeight': 150.0,
-            'fit': 'deferToChild',
-            'alignment': 'topLeft',
+          "type": "OverflowBox",
+          "id": "overflow",
+          "controlled": false,
+          "attributes": {
+            "minWidth": 50.0,
+            "maxWidth": 200.0,
+            "minHeight": 30.0,
+            "maxHeight": 150.0,
+            "overflowBoxFit": "deferToChild",
+            "alignment": "topLeft",
           },
-          'child': {
-            'type': 'Container',
-            'id': 'child',
-            'controlled': false,
-            'attributes': {
-              'width': 100.0,
-              'height': 100.0,
-              'decoration': {
-                'color': '#DCDCDC',
+          "child": {
+            "type": "Container",
+            "id": "child",
+            "controlled": false,
+            "attributes": {
+              "width": 100.0,
+              "height": 100.0,
+              "decoration": <String, dynamic>{
+                "color": "#DCDCDC",
               },
             },
           },
@@ -39,7 +39,7 @@ void main() {
 
       await pumpDriver(tester, driver);
 
-      final overflowFinder = find.byKey(const ValueKey('overflow'));
+      final overflowFinder = find.byKey(const ValueKey("overflow"));
       expect(overflowFinder, findsOneWidget);
 
       final overflowWidget = tester.widget<OverflowBox>(overflowFinder);
@@ -51,29 +51,29 @@ void main() {
       expect(overflowWidget.alignment, Alignment.topLeft);
     });
 
-    testWidgets('controlled: updates attributes', (tester) async {
+    testWidgets("controlled: updates attributes", (tester) async {
       final driver = DuitDriver.static(
         {
-          'type': 'OverflowBox',
-          'id': 'overflow',
-          'controlled': true,
-          'attributes': {
-            'minWidth': 10.0,
-            'maxWidth': 100.0,
-            'minHeight': 10.0,
-            'maxHeight': 100.0,
-            'fit': 'max',
-            'alignment': 'center',
+          "type": "OverflowBox",
+          "id": "overflow",
+          "controlled": true,
+          "attributes": {
+            "minWidth": 10.0,
+            "maxWidth": 100.0,
+            "minHeight": 10.0,
+            "maxHeight": 100.0,
+            "overflowBoxFit": "max",
+            "alignment": "center",
           },
-          'child': {
-            'type': 'Container',
-            'id': 'child',
-            'controlled': false,
-            'attributes': {
-              'width': 20.0,
-              'height': 20.0,
-              'decoration': {
-                'color': '#933C3C',
+          "child": {
+            "type": "Container",
+            "id": "child",
+            "controlled": false,
+            "attributes": {
+              "width": 20.0,
+              "height": 20.0,
+              "decoration": <String, dynamic>{
+                "color": "#933C3C",
               },
             },
           },
@@ -83,7 +83,7 @@ void main() {
 
       await pumpDriver(tester, driver);
 
-      final overflowFinder = find.byKey(const ValueKey('overflow'));
+      final overflowFinder = find.byKey(const ValueKey("overflow"));
       expect(overflowFinder, findsOneWidget);
 
       var overflowWidget = tester.widget<OverflowBox>(overflowFinder);
@@ -94,13 +94,13 @@ void main() {
       expect(overflowWidget.fit, OverflowBoxFit.max);
       expect(overflowWidget.alignment, Alignment.center);
 
-      await driver.updateTestAttributes('overflow', {
-        'minWidth': 5.0,
-        'maxWidth': 50.0,
-        'minHeight': 5.0,
-        'maxHeight': 50.0,
-        'fit': 'deferToChild',
-        'alignment': 'bottomRight',
+      await driver.updateTestAttributes("overflow", {
+        "minWidth": 5.0,
+        "maxWidth": 50.0,
+        "minHeight": 5.0,
+        "maxHeight": 50.0,
+        "overflowBoxFit": "deferToChild",
+        "alignment": "bottomRight",
       });
       await tester.pumpAndSettle();
 
