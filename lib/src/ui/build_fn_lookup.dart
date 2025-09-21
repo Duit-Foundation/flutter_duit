@@ -10,6 +10,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.switch_: _buildSwitch,
   ElementType.richText: _buildRichText,
   ElementType.checkbox: _buildCheckbox,
+  ElementType.viewConsumer: _buildViewConsumer,
   ElementType.radio: _buildRadio,
   // Single-child elements
   ElementType.elevatedButton: _buildElevatedButton,

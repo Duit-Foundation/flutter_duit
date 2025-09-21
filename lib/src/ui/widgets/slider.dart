@@ -36,7 +36,11 @@ class _DuitSliderState extends State<DuitSlider>
   }
 
   void _onChangeEndHandler(double value) {
-    attributes.update("value", (v) => value);
+    attributes.update(
+      "value",
+      (v) => value,
+      ifAbsent: () => value,
+    );
     widget.controller.performAction(attributes.getAction("onChangeEnd"));
   }
 

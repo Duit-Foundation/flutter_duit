@@ -432,6 +432,11 @@ enum ElementType {
     name: "Fragment",
     isControlledByDefault: false,
     childRelation: 4,
+  ),
+  viewConsumer(
+    name: "ViewConsumer",
+    isControlledByDefault: true,
+    childRelation: 0,
   );
 
   /// The string identifier name of the UI element type.
@@ -595,4 +600,5 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "AnimatedSlide": ElementType.animatedSlide,
   "AnimatedBuilder": ElementType.animatedBuilder,
   "Fragment": ElementType.fragment,
+  "ViewConsumer": ElementType.viewConsumer,
 };

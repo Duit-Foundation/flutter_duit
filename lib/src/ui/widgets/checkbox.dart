@@ -25,7 +25,11 @@ class _DuitCheckboxState extends State<DuitCheckbox>
   }
 
   void _onChange(bool? value) {
-    attributes.update("value", (value) => value ?? false);
+    attributes.update(
+      "value",
+      (value) => value ?? false,
+      ifAbsent: () => value ?? false,
+    );
     widget.controller.performRelatedAction();
     setState(() {
       _value = value;

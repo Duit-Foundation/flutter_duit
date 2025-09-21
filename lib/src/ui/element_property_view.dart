@@ -5,6 +5,7 @@ import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/ui/widgets/grid_constructor.dart";
 import "package:flutter_duit/src/ui/widgets/index.dart";
+import "package:flutter_duit/src/ui/widgets/view_consumer.dart";
 import "package:flutter_duit/src/utils/index.dart";
 import "package:meta/meta.dart";
 
