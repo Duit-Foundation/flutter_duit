@@ -1,9 +1,9 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_duit/src/utils/invoker.dart';
-import 'package:flutter_duit/src/controller/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/foundation.dart";
+import "package:flutter_duit/src/utils/invoker.dart";
+import "package:flutter_duit/src/controller/index.dart";
 
 /// The controller for a UI element.
 ///
@@ -112,7 +112,7 @@ final class ViewController<T>
         case ExecutionModifier.throttle:
           throttleWithArgs(
             action.eventName,
-            (arg) async => await driver.execute(arg),
+            (arg) async => driver.execute(arg),
             action,
             duration: opts.duration,
           );
@@ -120,7 +120,7 @@ final class ViewController<T>
         case ExecutionModifier.debounce:
           debounceWithArgs(
             action.eventName,
-            (arg) async => await driver.execute(arg),
+            (arg) async => driver.execute(arg),
             action,
             duration: opts.duration,
           );

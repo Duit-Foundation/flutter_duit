@@ -5,7 +5,6 @@ import "package:flutter_duit/src/controller/index.dart";
 import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/ui/widgets/grid_constructor.dart";
 import "package:flutter_duit/src/ui/widgets/index.dart";
-import "package:flutter_duit/src/ui/widgets/view_consumer.dart";
 import "package:flutter_duit/src/utils/index.dart";
 import "package:meta/meta.dart";
 
@@ -402,6 +401,11 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
       final controller = element._createViewController(driver);
 
       driver.attachController(id, controller);
+
+      final isSlotHost = controller.attributes.payload.getBool("isSlot");
+      if (isSlotHost) {
+        driver.attachSlotHost(id, json);
+      }
     } else {
       element._createAttributes();
     }
@@ -473,5 +477,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   /// ```
   ///
   /// Returns a [SizedBox.shrink] if no appropriate builder is found.
-  Widget renderView(DuitElement element) => _buildWidget(element);
+  Widget renderView() => _buildWidget(this);
+
+  operator []=(String key, value) => json[key] = value;
 }

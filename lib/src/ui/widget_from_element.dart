@@ -920,12 +920,6 @@ Widget _buildWrap(ElementPropertyView model) {
   };
 }
 
-Widget _buildViewConsumer(ElementPropertyView model) {
-  return DuitViewConsumer(
-    controller: model.viewController,
-  );
-}
-
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();

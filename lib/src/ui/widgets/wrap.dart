@@ -6,9 +6,9 @@ class DuitWrap extends StatelessWidget with AnimatedAttributes {
   final List<Widget> children;
 
   const DuitWrap({
-    super.key,
     required this.attributes,
-    this.children = const [],
+    required this.children,
+    super.key,
   });
 
   @override
@@ -45,8 +45,8 @@ class DuitControlledWrap extends StatefulWidget with AnimatedAttributes {
   final List<Widget> children;
 
   const DuitControlledWrap({
-    super.key,
     required this.controller,
+    super.key,
     this.children = const [],
   });
 
@@ -55,10 +55,11 @@ class DuitControlledWrap extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledWrapState extends State<DuitControlledWrap>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, SlotHost {
   @override
   void initState() {
     attachStateToController(widget.controller);
+    handleSlots(widget.controller, widget.children);
     super.initState();
   }
 
@@ -90,7 +91,7 @@ class _DuitControlledWrapState extends State<DuitControlledWrap>
       crossAxisAlignment: attrs.wrapCrossAlignment(
         defaultValue: WrapCrossAlignment.start,
       )!,
-      children: widget.children,
+      children: children,
     );
   }
 }

@@ -6,9 +6,9 @@ class DuitStack extends StatelessWidget with AnimatedAttributes {
   final List<Widget> children;
 
   const DuitStack({
-    super.key,
     required this.attributes,
-    this.children = const [],
+    required this.children,
+    super.key,
   });
 
   @override
@@ -35,9 +35,9 @@ class DuitControlledStack extends StatefulWidget with AnimatedAttributes {
   final List<Widget> children;
 
   const DuitControlledStack({
-    super.key,
     required this.children,
     required this.controller,
+    super.key,
   });
 
   @override
@@ -45,10 +45,11 @@ class DuitControlledStack extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledStackState extends State<DuitControlledStack>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, SlotHost {
   @override
   void initState() {
     attachStateToController(widget.controller);
+    handleSlots(widget.controller, widget.children);
     super.initState();
   }
 
@@ -65,7 +66,7 @@ class _DuitControlledStackState extends State<DuitControlledStack>
       textDirection: attrs.textDirection(),
       fit: attrs.stackFit(defaultValue: StackFit.loose)!,
       clipBehavior: attrs.clipBehavior()!,
-      children: widget.children,
+      children: children,
     );
   }
 }

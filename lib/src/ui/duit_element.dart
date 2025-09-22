@@ -189,7 +189,7 @@ final class DuitElement extends ElementTreeEntry {
   /// final widget = element.renderView();
   /// ```
   @override
-  Widget renderView() => _element.renderView(this);
+  Widget renderView() => _element.renderView();
 
   @override
   String toString() => _element.toString();

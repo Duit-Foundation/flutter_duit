@@ -1,11 +1,13 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/widgets.dart' show SizedBox, Widget, mustCallSuper;
-import 'package:flutter_duit/src/view_manager/view_manager.dart';
-import 'package:flutter_duit/src/view_manager/view_layout.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/widgets.dart" show SizedBox, Widget, mustCallSuper;
+import "package:flutter_duit/src/ui/element_property_view.dart";
+import "package:flutter_duit/src/view_manager/view_manager.dart";
+import "package:flutter_duit/src/view_manager/view_layout.dart";
 
 base class SimpleViewManager extends ViewManager {
   DuitViewLayout? _view;
   final Map<String, UIElementController> _viewControllers = {};
+  final Map<String, Map<String, dynamic>> _slotHosts = {};
 
   @override
   @mustCallSuper
@@ -99,4 +101,55 @@ base class SimpleViewManager extends ViewManager {
 
   @override
   int get controllersCount => _viewControllers.length;
+
+  @override
+  void attachSlotHost(String id, Map<String, dynamic> view) =>
+      _slotHosts[id] = view;
+
+  @override
+  void detachSlotHost(String id) => _slotHosts.remove(id);
+
+  @override
+  T? getSlotHostAs<T>(String id) => _slotHosts[id] as T?;
+
+  @override
+  void updateSlotHostContent(String id, Map<String, dynamic> data) {
+    final controller = getController(id);
+    if (controller != null) {
+      final view = getSlotHostAs<ElementPropertyView>(id);
+      if (view == null) return;
+
+      switch (view.type.childRelation) {
+        case 1:
+          view["child"] = ElementPropertyView.fromJson(data["child"], driver);
+          break;
+        case 2:
+          final rawChildren = (data["children"] as List?)
+                  ?.whereType<Map<String, dynamic>>()
+                  .map((e) => ElementPropertyView.fromJson(e, driver))
+                  .toList() ??
+              const <ElementPropertyView>[];
+
+          if (rawChildren.isEmpty) return;
+
+          final existing = view["children"];
+          if (existing is List<ElementPropertyView?>) {
+            existing.addAll(rawChildren);
+          } else if (existing is List) {
+            final existingViews = existing
+                .whereType<Map<String, dynamic>>()
+                .map((e) => ElementPropertyView.fromJson(e, driver))
+                .toList();
+            view["children"] = [...existingViews, ...rawChildren];
+          } else {
+            view["children"] = rawChildren;
+          }
+          break;
+        default:
+          break;
+      }
+
+      controller.updateState(const <String, dynamic>{});
+    }
+  }
 }

@@ -7,9 +7,9 @@ class DuitColumn extends StatelessWidget {
   final List<Widget> children;
 
   const DuitColumn({
-    super.key,
     required this.attributes,
     required this.children,
+    super.key,
   });
 
   @override
@@ -40,9 +40,9 @@ class DuitControlledColumn extends StatefulWidget {
   final List<Widget> children;
 
   const DuitControlledColumn({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override
@@ -50,10 +50,11 @@ class DuitControlledColumn extends StatefulWidget {
 }
 
 class _DuitControlledColumnState extends State<DuitControlledColumn>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, SlotHost {
   @override
   void initState() {
     attachStateToController(widget.controller);
+    handleSlots(widget.controller, widget.children);
     super.initState();
   }
 
@@ -74,7 +75,7 @@ class _DuitControlledColumnState extends State<DuitControlledColumn>
       verticalDirection: attributes.verticalDirection(
         defaultValue: VerticalDirection.down,
       ),
-      children: widget.children,
+      children: children,
     );
   }
 }

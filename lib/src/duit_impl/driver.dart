@@ -26,9 +26,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
   late BuildContext buildContext;
 
   @override
-  set context(BuildContext value) {
-    buildContext = value;
-  }
+  // ignore: avoid_setters_without_getters
+  set context(BuildContext value) => buildContext = value;
 
   final _eventStreamController = StreamController<UIDriverEvent>.broadcast();
 
@@ -144,6 +143,24 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   @protected
   @override
+  void attachSlotHost(String id, Map<String, dynamic> view) =>
+      _viewManager.attachSlotHost(id, view);
+
+  @protected
+  @override
+  void detachSlotHost(String id) => _viewManager.detachSlotHost(id);
+
+  @protected
+  @override
+  T? getSlotHostAs<T>(String id) => _viewManager.getSlotHostAs<T>(id);
+
+  @protected
+  @override
+  void updateSlotHostContent(String id, Map<String, dynamic> data) =>
+      _viewManager.updateSlotHostContent(id, data);
+
+  @protected
+  @override
   void detachController(String id) =>
       _viewManager.removeController(id)?.dispose();
 
@@ -152,7 +169,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   UIElementController? getController(String id) =>
       _viewManager.getController(id);
 
-  Future<Map<String, dynamic>> _connect() async {
+  Future<Map<String, dynamic>> _connect(Transport tr) async {
     Map<String, dynamic>? json;
 
     try {
@@ -160,7 +177,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         assert(content != null && content!.isNotEmpty);
         json = content!;
       } else {
-        json = await transport?.connect(
+        json = await tr.connect(
           initialData: initialRequestPayload,
         );
       }
@@ -173,9 +190,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
       _eventStreamController.sink.addError(e);
     }
 
-    if (transport is Streamer) {
-      final streamer = transport as Streamer;
-      streamer.eventStream.listen(
+    if (tr is Streamer) {
+      (tr as Streamer).eventStream.listen(
         (d) async {
           try {
             if (buildContext.mounted) {
@@ -193,7 +209,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
       );
     }
 
-    return json ?? {};
+    return json ?? const <String, dynamic>{};
   }
 
   @override
@@ -219,7 +235,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
     await scriptRunner?.initWithTransport(transport!);
 
-    final json = await _connect();
+    final json = await _connect(transport!);
 
     try {
       final view = await _viewManager.prepareLayout(json);
@@ -230,7 +246,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
         );
       } else {
         final err = FormatException(
-            "Invalid layout structure. Received map keys: ${json.keys}");
+          "Invalid layout structure. Received map keys: ${json.keys}",
+        );
         throw err;
       }
     } catch (e, s) {
@@ -402,7 +419,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   }
 
   @visibleForTesting
-  Future<void> resolveTestEvent(dynamic eventData) async {
+  Future<void> resolveTestEvent(eventData) async {
     await eventResolver.resolveEvent(buildContext, eventData);
   }
 
@@ -413,7 +430,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   Map<String, dynamic> preparePayload(
     Iterable<ActionDependency> dependencies,
   ) {
-    final Map<String, dynamic> payload = {};
+    final payload = <String, dynamic>{};
 
     if (dependencies.isNotEmpty) {
       for (final dependency in dependencies) {
@@ -477,7 +494,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
       _dataSources.remove(id);
     }
 
-    final sub = stream.map(ServerEvent.parseEvent).listen(
+    _dataSources[id] = stream.map(ServerEvent.parseEvent).listen(
       (event) {
         if (event is NullEvent) {
           throw const NullEventException("NullEvent received from data source");
@@ -492,7 +509,5 @@ final class DuitDriver with DriverHooks implements UIDriver {
       onDone: cancelSub,
       onError: (e, s) => cancelSub(),
     );
-
-    _dataSources[id] = sub;
   }
 }

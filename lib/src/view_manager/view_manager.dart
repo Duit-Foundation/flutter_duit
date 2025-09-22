@@ -1,5 +1,5 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
 
 /// The `ViewManager` class provides the foundational interface for preparing and building views.
 /// It holds a reference to a `UIDriver`, which is used to drive the rendering and interaction
@@ -13,7 +13,8 @@ import 'package:flutter/material.dart';
 ///
 /// - `build`: Constructs a Flutter `Widget` representation of the view. This method can be
 ///   overridden by subclasses to provide custom widget-building logic based on a tag.
-abstract base class ViewManager implements WidgetDisplayStateNotifier {
+abstract base class ViewManager
+    implements WidgetDisplayStateNotifier, SlotManager {
   late final UIDriver driver;
 
   Future<DuitView?> prepareLayout(Map<String, dynamic> json);

@@ -47,12 +47,13 @@ class DuitControlledContainer extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledContainerState extends State<DuitControlledContainer>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, SlotHost {
   @override
   void initState() {
     attachStateToController(
       widget.controller,
     );
+    handleSlots(widget.controller, widget.child);
     super.initState();
   }
 
@@ -74,7 +75,7 @@ class _DuitControlledContainerState extends State<DuitControlledContainer>
       clipBehavior: attrs.clipBehavior(defaultValue: Clip.none)!,
       decoration: attrs.decoration(),
       transformAlignment: attrs.alignment(key: "transformAlignment"),
-      child: widget.child,
+      child: child,
     );
   }
 }
