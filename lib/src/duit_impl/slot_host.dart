@@ -1,5 +1,5 @@
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
-import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/ui/element_property_view.dart";
 
 mixin SlotHost<T extends StatefulWidget> on State<T> {
@@ -35,25 +35,73 @@ mixin SlotHost<T extends StatefulWidget> on State<T> {
       case 1:
         final d = slot.child;
 
-        if (d != null) {
+        if (d != null && d.isDirty) {
           setState(() {
             _children[0] = d.renderView();
+            d.markAsClean();
           });
         }
       case 2:
-        final diffedArray = slot.children.sublist(_children.length);
+        final ops = slot.ops;
 
-        final newChildren = diffedArray.map((e) {
-          if (e != null) {
-            return e.renderView();
-          } else {
-            return const SizedBox.shrink();
+        if (ops.isNotEmpty) {
+          for (final op in ops) {
+            switch (op.code) {
+              case SlotOpCode.add:
+              case SlotOpCode.insert:
+                final index = op.index;
+                final kids = slot.children;
+                if (index >= 0 && index < kids.length) {
+                  final e = kids[index];
+                  final widget =
+                      e != null ? e.renderView() : const SizedBox.shrink();
+                  if (op.code == SlotOpCode.add && index >= _children.length) {
+                    _children.add(widget);
+                  } else {
+                    if (index <= _children.length) {
+                      _children.insert(index, widget);
+                    }
+                  }
+                  if (e != null) e.markAsClean();
+                }
+              case SlotOpCode.move:
+                final from = op.from;
+                var to = op.to;
+                if (from < 0 || from >= _children.length) break;
+                if (to < 0) to = 0;
+                if (to > _children.length) to = _children.length;
+                final item = _children.removeAt(from);
+                _children.insert(to, item);
+              case SlotOpCode.remove:
+                final index = op.index;
+                if (index < 0 || index >= _children.length) break;
+                _children.removeAt(index);
+              default:
+                break;
+            }
           }
-        }).toList();
+        }
 
-        setState(() {
-          _children.addAll(newChildren);
-        });
+        // Apply minimal re-render only for dirty children
+        final kids = slot.children;
+        final dirtyIndices = <int>[];
+        for (var i = 0; i < kids.length; i++) {
+          final e = kids[i];
+          if (e != null && e.isDirty) dirtyIndices.add(i);
+        }
+
+        if (dirtyIndices.isNotEmpty) {
+          setState(() {
+            for (final i in dirtyIndices) {
+              final e = kids[i];
+              _children[i] =
+                  e != null ? e.renderView() : const SizedBox.shrink();
+              e?.markAsClean();
+            }
+          });
+        }
+
+        slot.clearOps();
       default:
         break;
     }

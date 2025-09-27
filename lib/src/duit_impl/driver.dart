@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/duit_impl/hooks.dart";
+import "package:flutter_duit/src/duit_impl/slot_manager_impl.dart";
 import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
@@ -64,6 +65,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   DebugLogger? logger;
 
   late ViewManager _viewManager;
+  late SlotManager _slotManager;
 
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
 
@@ -93,6 +95,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         );
     isModule = false;
     _viewManager = shared ? MultiViewManager() : SimpleViewManager();
+    _slotManager = SlotManagerImpl(this);
   }
 
   /// Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
@@ -123,6 +126,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
           logger: logger,
         );
     _viewManager = shared ? MultiViewManager() : SimpleViewManager();
+    _slotManager = SlotManagerImpl(this);
   }
 
   /// Creates a new [DuitDriver] instance that is controlled from native code
@@ -134,7 +138,9 @@ final class DuitDriver with DriverHooks implements UIDriver {
         externalEventHandler = null,
         transportOptions = EmptyTransportOptions(),
         driverChannel = const MethodChannel("duit:driver"),
-        _viewManager = SimpleViewManager();
+        _viewManager = SimpleViewManager() {
+    _slotManager = SlotManagerImpl(this);
+  }
 
   @protected
   @override
@@ -144,20 +150,23 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @protected
   @override
   void attachSlotHost(String id, Map<String, dynamic> view) =>
-      _viewManager.attachSlotHost(id, view);
+      _slotManager.attachSlotHost(id, view);
 
   @protected
   @override
-  void detachSlotHost(String id) => _viewManager.detachSlotHost(id);
+  void detachSlotHost(String id) => _slotManager.detachSlotHost(id);
 
   @protected
   @override
-  T? getSlotHostAs<T>(String id) => _viewManager.getSlotHostAs<T>(id);
+  T? getSlotHostAs<T>(String id) => _slotManager.getSlotHostAs<T>(id);
 
   @protected
   @override
-  void updateSlotHostContent(String id, Map<String, dynamic> data) =>
-      _viewManager.updateSlotHostContent(id, data);
+  void updateSlotHostContent(String id, List<SlotOp> ops) =>
+      _slotManager.updateSlotHostContent(
+        id,
+        ops,
+      );
 
   @protected
   @override

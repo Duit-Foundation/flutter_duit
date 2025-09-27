@@ -26,4 +26,5 @@ export 'package:duit_kernel/duit_kernel.dart'
         DefaultThemeToken,
         DuitTheme,
         ThemePreprocessor,
-        TokenizationCallback;
+        TokenizationCallback,
+        SlotOp;

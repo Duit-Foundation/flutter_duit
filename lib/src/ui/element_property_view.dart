@@ -402,7 +402,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
 
       driver.attachController(id, controller);
 
-      final isSlotHost = controller.attributes.payload.getBool("isSlot");
+      final isSlotHost = controller.attributes.payload.getBool("_isSlot");
       if (isSlotHost) {
         driver.attachSlotHost(id, json);
       }
@@ -480,4 +480,11 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   Widget renderView() => _buildWidget(this);
 
   operator []=(String key, value) => json[key] = value;
+
+  void markAsDirty() => json["_dirty"] = true;
+  void markAsClean() => json["_dirty"] = false;
+  bool get isDirty => json["_dirty"] ?? false;
+
+  List<SlotOp> get ops => json["_ops"] ?? const <SlotOp>[];
+  void clearOps() => json.remove("_ops");
 }
