@@ -48,7 +48,7 @@ class DuitAppBar extends StatelessWidget
       flexibleSpace: children.elementAtOrNull(kFlexibleSpaceIndex),
       bottom: extractPreferredSizeWidget(children, kBottomIndex),
       actions: children.length > kActionsStartIndex
-          ? children.sublist(kActionsStartIndex).whereType<Widget>().toList()
+          ? children.sublist(kActionsStartIndex).cast<Widget>()
           : null,
       backgroundColor: attrs.tryParseColor(key: "backgroundColor"),
       foregroundColor: attrs.tryParseColor(key: "foregroundColor"),
@@ -129,7 +129,7 @@ class _DuitControlledAppBarState extends State<DuitControlledAppBar>
       flexibleSpace: children.elementAtOrNull(kFlexibleSpaceIndex),
       bottom: extractPreferredSizeWidget(children, kBottomIndex),
       actions: children.length > kActionsStartIndex
-          ? children.sublist(kActionsStartIndex).whereType<Widget>().toList()
+          ? children.sublist(kActionsStartIndex).cast<Widget>()
           : null,
       backgroundColor: attrs.tryParseColor(key: "backgroundColor"),
       foregroundColor: attrs.tryParseColor(key: "foregroundColor"),

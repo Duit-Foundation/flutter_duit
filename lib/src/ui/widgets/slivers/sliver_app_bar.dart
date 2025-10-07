@@ -25,7 +25,7 @@ class DuitSliverAppBar extends StatelessWidget with AnimatedAttributes {
       flexibleSpace: children.elementAtOrNull(kFlexibleSpaceIndex),
       bottom: extractPreferredSizeWidget(children, kBottomIndex),
       actions: children.length > kActionsStartIndex
-          ? children.sublist(kActionsStartIndex).whereType<Widget>().toList()
+          ? children.sublist(kActionsStartIndex).cast<Widget>()
           : null,
       automaticallyImplyLeading: attrs.getBool(
         "automaticallyImplyLeading",
@@ -95,10 +95,7 @@ class _DuitControlledSliverAppBarState extends State<DuitControlledSliverAppBar>
       flexibleSpace: widget.children.elementAtOrNull(kFlexibleSpaceIndex),
       bottom: extractPreferredSizeWidget(widget.children, kBottomIndex),
       actions: widget.children.length > kActionsStartIndex
-          ? widget.children
-              .sublist(kActionsStartIndex)
-              .whereType<Widget>()
-              .toList()
+          ? widget.children.sublist(kActionsStartIndex).cast<Widget>()
           : null,
       automaticallyImplyLeading: attrs.getBool(
         "automaticallyImplyLeading",

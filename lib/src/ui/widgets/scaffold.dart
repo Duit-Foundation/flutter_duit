@@ -32,8 +32,7 @@ final class DuitScaffold extends StatelessWidget {
       persistentFooterButtons: children.length > _kPersistentButtonsFirstIndex
           ? children
               .sublist(_kPersistentButtonsFirstIndex)
-              .whereType<Widget>()
-              .toList()
+              .cast<Widget>()
           : null,
       floatingActionButtonLocation: attrs.fabLocation(),
       primary: attrs.getBool("primary", defaultValue: true),
@@ -85,8 +84,7 @@ class _DuitControlledScaffoldState extends State<DuitControlledScaffold>
       persistentFooterButtons: children.length > _kPersistentButtonsFirstIndex
           ? children
               .sublist(_kPersistentButtonsFirstIndex)
-              .whereType<Widget>()
-              .toList()
+              .cast<Widget>()
           : null,
       floatingActionButtonLocation: attributes.fabLocation(),
       primary: attributes.getBool("primary", defaultValue: true),
