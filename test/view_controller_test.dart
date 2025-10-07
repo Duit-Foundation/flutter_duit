@@ -1,14 +1,14 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'dart:async';
+import "dart:async";
 
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_duit/src/controller/view_controller.dart';
-import 'package:flutter_duit/src/controller/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/services.dart";
+import "package:flutter/src/widgets/framework.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:flutter_duit/src/controller/view_controller.dart";
+import "package:flutter_duit/src/controller/index.dart";
 
 // Mock classes for testing
 class MockUIDriver implements UIDriver {
@@ -18,7 +18,7 @@ class MockUIDriver implements UIDriver {
   bool shouldThrowError = false;
 
   @override
-  String get source => 'mock_source';
+  String get source => "mock_source";
 
   @override
   TransportOptions get transportOptions => EmptyTransportOptions();
@@ -80,7 +80,7 @@ class MockUIDriver implements UIDriver {
   @override
   Future<ServerEvent?> execute(ServerAction action) async {
     if (shouldThrowError) {
-      throw Exception('Mock execution error');
+      throw Exception("Mock execution error");
     }
     executedActions.add(action);
     return null;
@@ -145,6 +145,27 @@ class MockUIDriver implements UIDriver {
 
   @override
   set streamController(StreamController<ElementTree?> _streamController) {}
+
+  @override
+  void attachSlotHost(String id, Map<String, dynamic> view) {
+    // TODO: implement attachSlotHost
+  }
+
+  @override
+  void detachSlotHost(String id) {
+    // TODO: implement detachSlotHost
+  }
+
+  @override
+  void updateSlotHostContent(String id, List<SlotOp> ops) {
+    // TODO: implement updateSlotHost
+  }
+
+  @override
+  T? getSlotHostAs<T>(String id) {
+    // TODO: implement getSlotHostAs
+    throw UnimplementedError();
+  }
 }
 
 class MockDebugLogger implements DebugLogger {
@@ -167,7 +188,7 @@ class MockDebugLogger implements DebugLogger {
 }
 
 void main() {
-  group('ViewController', () {
+  group("ViewController", () {
     late MockUIDriver mockDriver;
     late MockDebugLogger mockLogger;
     late ViewAttribute mockAttributes;
@@ -180,115 +201,115 @@ void main() {
       mockAttributes = ViewAttribute.from("Text", {}, "test_id");
     });
 
-    group('Constructor and initialization', () {
-      test('constructor_initializes_all_required_properties', () {
+    group("Constructor and initialization", () {
+      test("constructor_initializes_all_required_properties", () {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
 
-        expect(controller.id, 'test_id');
+        expect(controller.id, "test_id");
         expect(controller.driver, mockDriver);
-        expect(controller.type, 'test_type');
+        expect(controller.type, "test_type");
         expect(controller.attributes, mockAttributes);
         expect(controller.action, isNull);
         expect(controller.tag, isNull);
       });
 
-      test('constructor_with_optional_parameters', () {
+      test("constructor_with_optional_parameters", () {
         final mockAction = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
         );
 
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
           action: mockAction,
-          tag: 'test_tag',
+          tag: "test_tag",
         );
 
         expect(controller.action, mockAction);
-        expect(controller.tag, 'test_tag');
+        expect(controller.tag, "test_tag");
       });
     });
 
-    group('State management (updateState)', () {
+    group("State management (updateState)", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('updateState_merges_new_state_with_existing_attributes', () {
+      test("updateState_merges_new_state_with_existing_attributes", () {
         // Set initial attributes
-        mockAttributes.payload['existing_key'] = 'existing_value';
+        mockAttributes.payload["existing_key"] = "existing_value";
 
         final newState = {
-          'new_key': 'new_value',
-          'existing_key': 'updated_value'
+          "new_key": "new_value",
+          "existing_key": "updated_value"
         };
         controller.updateState(newState);
 
-        expect(mockAttributes.payload['existing_key'], 'updated_value');
-        expect(mockAttributes.payload['new_key'], 'new_value');
+        expect(mockAttributes.payload["existing_key"], "updated_value");
+        expect(mockAttributes.payload["new_key"], "new_value");
       });
 
-      test('updateState_notifies_listeners', () {
+      test("updateState_notifies_listeners", () {
         bool listenerCalled = false;
         controller.addListener(() {
           listenerCalled = true;
         });
 
-        controller.updateState({'test': 'value'});
+        controller.updateState({"test": "value"});
 
         expect(listenerCalled, true);
       });
 
-      test('updateState_with_empty_map', () {
-        mockAttributes.payload['existing_key'] = 'existing_value';
+      test("updateState_with_empty_map", () {
+        mockAttributes.payload["existing_key"] = "existing_value";
 
         controller.updateState({});
 
-        expect(mockAttributes.payload['existing_key'], 'existing_value');
+        expect(mockAttributes.payload["existing_key"], "existing_value");
         expect(mockAttributes.payload.length, 1);
       });
 
-      test('updateState_overwrites_existing_values', () {
-        mockAttributes.payload['key'] = 'old_value';
+      test("updateState_overwrites_existing_values", () {
+        mockAttributes.payload["key"] = "old_value";
 
-        controller.updateState({'key': 'new_value'});
+        controller.updateState({"key": "new_value"});
 
-        expect(mockAttributes.payload['key'], 'new_value');
+        expect(mockAttributes.payload["key"], "new_value");
       });
     });
 
-    group('Action execution (performRelatedAction)', () {
+    group("Action execution (performRelatedAction)", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('performRelatedAction_with_null_action_does_nothing', () {
+      test("performRelatedAction_with_null_action_does_nothing", () {
         controller.performRelatedAction();
 
         expect(mockDriver.executedActions, isEmpty);
       });
 
-      test('performRelatedAction_executes_action_directly', () {
+      test("performRelatedAction_executes_action_directly", () {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
         );
         controller.action = action;
@@ -298,9 +319,9 @@ void main() {
         expect(mockDriver.executedActions, contains(action));
       });
 
-      test('performRelatedAction_with_throttle_modifier', () async {
+      test("performRelatedAction_with_throttle_modifier", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -325,9 +346,9 @@ void main() {
         expect(mockDriver.executedActions.length, 2);
       });
 
-      test('performRelatedAction_with_debounce_modifier', () async {
+      test("performRelatedAction_with_debounce_modifier", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.debounce,
@@ -348,26 +369,26 @@ void main() {
       });
     });
 
-    group('Async action execution (performRelatedActionAsync)', () {
+    group("Async action execution (performRelatedActionAsync)", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('performRelatedActionAsync_with_null_action_returns_future',
+      test("performRelatedActionAsync_with_null_action_returns_future",
           () async {
         final future = controller.performRelatedActionAsync();
         expect(future, isA<Future<void>>());
         await future; // Should complete without error
       });
 
-      test('performRelatedActionAsync_executes_action_directly', () async {
+      test("performRelatedActionAsync_executes_action_directly", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
         );
         controller.action = action;
@@ -377,9 +398,9 @@ void main() {
         expect(mockDriver.executedActions, contains(action));
       });
 
-      test('performRelatedActionAsync_with_throttle_modifier', () async {
+      test("performRelatedActionAsync_with_throttle_modifier", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -404,9 +425,9 @@ void main() {
         expect(mockDriver.executedActions.length, 2);
       });
 
-      test('performRelatedActionAsync_with_debounce_modifier', () async {
+      test("performRelatedActionAsync_with_debounce_modifier", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.debounce,
@@ -428,25 +449,25 @@ void main() {
       });
     });
 
-    group('Action execution with passed action (performAction)', () {
+    group("Action execution with passed action (performAction)", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('performAction_with_null_action_does_nothing', () {
+      test("performAction_with_null_action_does_nothing", () {
         controller.performAction(null);
 
         expect(mockDriver.executedActions, isEmpty);
       });
 
-      test('performAction_executes_passed_action_directly', () {
+      test("performAction_executes_passed_action_directly", () {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
         );
 
@@ -455,9 +476,9 @@ void main() {
         expect(mockDriver.executedActions, contains(action));
       });
 
-      test('performAction_with_throttle_modifier', () async {
+      test("performAction_with_throttle_modifier", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -481,9 +502,9 @@ void main() {
         expect(mockDriver.executedActions.length, 2);
       });
 
-      test('performAction_with_debounce_modifier', () async {
+      test("performAction_with_debounce_modifier", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.debounce,
@@ -503,25 +524,25 @@ void main() {
       });
     });
 
-    group('Async action execution with passed action (performActionAsync)', () {
+    group("Async action execution with passed action (performActionAsync)", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('performActionAsync_with_null_action_returns_future', () async {
+      test("performActionAsync_with_null_action_returns_future", () async {
         final future = controller.performActionAsync(null);
         expect(future, isA<Future<void>>());
         await future; // Should complete without error
       });
 
-      test('performActionAsync_executes_passed_action_directly', () async {
+      test("performActionAsync_executes_passed_action_directly", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
         );
 
@@ -530,9 +551,9 @@ void main() {
         expect(mockDriver.executedActions, contains(action));
       });
 
-      test('performActionAsync_with_throttle_modifier', () async {
+      test("performActionAsync_with_throttle_modifier", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -556,9 +577,9 @@ void main() {
         expect(mockDriver.executedActions.length, 2);
       });
 
-      test('performActionAsync_with_debounce_modifier', () async {
+      test("performActionAsync_with_debounce_modifier", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.debounce,
@@ -579,22 +600,22 @@ void main() {
       });
     });
 
-    group('Command channel management', () {
+    group("Command channel management", () {
       setUp(() {
         Future<void> _listener(RemoteCommand command) async {}
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         )..listenCommand(_listener);
       });
 
-      test('emitCommand_specifies_and_adds_command_to_channel', () async {
+      test("emitCommand_specifies_and_adds_command_to_channel", () async {
         const command = RemoteCommand(
-          controllerId: 'test_command',
-          type: 'test_type',
-          commandData: {'test': 'data'},
+          controllerId: "test_command",
+          type: "test_type",
+          commandData: {"test": "data"},
         );
 
         await controller.emitCommand(command);
@@ -603,24 +624,24 @@ void main() {
         expect(controller.commandChannel.hasListener, true);
       });
 
-      test('emitCommand_handles_specification_errors', () async {
+      test("emitCommand_handles_specification_errors", () async {
         // Create an invalid command that will cause specification error
         const invalidCommand = RemoteCommand(
-          controllerId: '', // Invalid empty id
-          type: 'test_type',
+          controllerId: "", // Invalid empty id
+          type: "test_type",
           commandData: {},
         );
 
         await controller.emitCommand(invalidCommand);
 
         expect(
-            mockLogger.errorMessages, contains('Error while emitting command'));
+            mockLogger.errorMessages, contains("Error while emitting command"));
       });
 
-      test('emitCommand_logs_errors_to_driver_logger', () async {
+      test("emitCommand_logs_errors_to_driver_logger", () async {
         const invalidCommand = RemoteCommand(
-          controllerId: '',
-          type: 'test_type',
+          controllerId: "",
+          type: "test_type",
           commandData: {},
         );
 
@@ -630,33 +651,33 @@ void main() {
         expect(mockLogger.errorObjects, isNotEmpty);
       });
 
-      test('removeCommandListener_closes_command_channel', () {
+      test("removeCommandListener_closes_command_channel", () {
         controller.removeCommandListener();
 
         expect(controller.commandChannel.isClosed, true);
       });
     });
 
-    group('Detachment and cleanup (detach)', () {
+    group("Detachment and cleanup (detach)", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('detach_calls_driver_detachController', () {
+      test("detach_calls_driver_detachController", () {
         controller.detach();
 
-        expect(mockDriver.detachedControllers, contains('test_id'));
+        expect(mockDriver.detachedControllers, contains("test_id"));
       });
 
-      test('detach_cancels_all_optimizers', () {
+      test("detach_cancels_all_optimizers", () {
         // Set up an action with throttle to create timers
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -672,10 +693,10 @@ void main() {
         controller.detach();
 
         // Verify detach was called
-        expect(mockDriver.detachedControllers, contains('test_id'));
+        expect(mockDriver.detachedControllers, contains("test_id"));
       });
 
-      test('detach_does_not_dispose_change_notifier', () {
+      test("detach_does_not_dispose_change_notifier", () {
         bool listenerCalled = false;
         controller.addListener(() {
           listenerCalled = true;
@@ -689,19 +710,19 @@ void main() {
       });
     });
 
-    group('Integration with ActionCallbackOptimizer', () {
+    group("Integration with ActionCallbackOptimizer", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('throttle_functionality_prevents_rapid_executions', () async {
+      test("throttle_functionality_prevents_rapid_executions", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -726,9 +747,9 @@ void main() {
         expect(mockDriver.executedActions.length, 2);
       });
 
-      test('debounce_functionality_delays_execution', () async {
+      test("debounce_functionality_delays_execution", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.debounce,
@@ -752,9 +773,9 @@ void main() {
         expect(mockDriver.executedActions.length, 1);
       });
 
-      test('multiple_action_keys_work_independently', () async {
+      test("multiple_action_keys_work_independently", () async {
         final action1 = ServerAction(
-          eventName: 'test_event1',
+          eventName: "test_event1",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -762,7 +783,7 @@ void main() {
           ),
         );
         final action2 = ServerAction(
-          eventName: 'test_event2',
+          eventName: "test_event2",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -780,9 +801,9 @@ void main() {
         expect(mockDriver.executedActions, contains(action2));
       });
 
-      test('cancelAll_clears_all_timers', () async {
+      test("cancelAll_clears_all_timers", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.debounce,
@@ -805,26 +826,26 @@ void main() {
       });
     });
 
-    group('Integration tests', () {
+    group("Integration tests", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('full_action_execution_flow', () async {
+      test("full_action_execution_flow", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
         );
         controller.action = action;
 
         // Update state
-        controller.updateState({'key': 'value'});
-        expect(mockAttributes.payload['key'], 'value');
+        controller.updateState({"key": "value"});
+        expect(mockAttributes.payload["key"], "value");
 
         // Perform action
         controller.performRelatedAction();
@@ -832,20 +853,20 @@ void main() {
 
         // Emit command
         const command = RemoteCommand(
-          controllerId: 'test_command',
-          type: 'test_type',
-          commandData: {'test': 'data'},
+          controllerId: "test_command",
+          type: "test_type",
+          commandData: {"test": "data"},
         );
         await controller.emitCommand(command);
 
         // Detach
         controller.detach();
-        expect(mockDriver.detachedControllers, contains('test_id'));
+        expect(mockDriver.detachedControllers, contains("test_id"));
       });
 
-      test('state_update_and_action_execution_integration', () {
+      test("state_update_and_action_execution_integration", () {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
         );
         controller.action = action;
@@ -856,18 +877,18 @@ void main() {
         });
 
         // Update state and perform action
-        controller.updateState({'key': 'value'});
+        controller.updateState({"key": "value"});
         controller.performRelatedAction();
 
         expect(stateUpdated, true);
-        expect(mockAttributes.payload['key'], 'value');
+        expect(mockAttributes.payload["key"], "value");
         expect(mockDriver.executedActions, contains(action));
       });
 
-      test('command_emission_and_listening_integration', () async {
+      test("command_emission_and_listening_integration", () async {
         const receivedCommand = RemoteCommand(
-          controllerId: 'test',
-          type: 'test',
+          controllerId: "test",
+          type: "test",
           commandData: {},
         );
 
@@ -878,50 +899,50 @@ void main() {
         await controller.emitCommand(receivedCommand);
       });
 
-      test('controller_lifecycle_with_driver', () {
+      test("controller_lifecycle_with_driver", () {
         // Verify controller is properly attached
         expect(controller.driver, mockDriver);
 
         // Perform some operations
-        controller.updateState({'key': 'value'});
-        expect(mockAttributes.payload['key'], 'value');
+        controller.updateState({"key": "value"});
+        expect(mockAttributes.payload["key"], "value");
 
         // Detach from driver
         controller.detach();
-        expect(mockDriver.detachedControllers, contains('test_id'));
+        expect(mockDriver.detachedControllers, contains("test_id"));
 
         // Verify controller is still functional
-        expect(controller.id, 'test_id');
-        expect(controller.type, 'test_type');
+        expect(controller.id, "test_id");
+        expect(controller.type, "test_type");
       });
     });
 
-    group('Edge cases', () {
+    group("Edge cases", () {
       setUp(() {
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: mockAttributes,
         );
       });
 
-      test('controller_with_empty_attributes', () {
+      test("controller_with_empty_attributes", () {
         final emptyAttributes = ViewAttribute.from("Text", {}, "test_id");
         controller = ViewController(
-          id: 'test_id',
+          id: "test_id",
           driver: mockDriver,
-          type: 'test_type',
+          type: "test_type",
           attributes: emptyAttributes,
         );
 
-        controller.updateState({'key': 'value'});
-        expect(emptyAttributes.payload['key'], 'value');
+        controller.updateState({"key": "value"});
+        expect(emptyAttributes.payload["key"], "value");
       });
 
-      test('controller_with_complex_execution_options', () async {
+      test("controller_with_complex_execution_options", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -944,9 +965,9 @@ void main() {
         expect(mockDriver.executedActions.length, 2);
       });
 
-      test('controller_with_very_short_durations', () async {
+      test("controller_with_very_short_durations", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.throttle,
@@ -963,9 +984,9 @@ void main() {
         expect(mockDriver.executedActions.length, 1);
       });
 
-      test('controller_with_very_long_durations', () async {
+      test("controller_with_very_long_durations", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
           executionOptions: const ExecutionOptions(
             modifier: ExecutionModifier.debounce,
@@ -984,9 +1005,9 @@ void main() {
         expect(mockDriver.executedActions.length, 1);
       });
 
-      test('concurrent_action_executions', () async {
+      test("concurrent_action_executions", () async {
         final action = ServerAction(
-          eventName: 'test_event',
+          eventName: "test_event",
           executionType: 0,
         );
         controller.action = action;

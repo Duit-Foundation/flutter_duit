@@ -143,6 +143,27 @@ class MockUIDriver implements UIDriver {
   ) {}
 
   set streamController(StreamController<ElementTree?> _streamController) {}
+  
+  @override
+  void attachSlotHost(String id, Map<String, dynamic> view) {
+    // TODO: implement attachSlotHost
+  }
+
+  @override
+  void detachSlotHost(String id) {
+    // TODO: implement detachSlotHost
+  }
+
+  @override
+  T? getSlotHostAs<T>(String id) {
+    // TODO: implement getSlotHostAs
+    throw UnimplementedError();
+  }
+
+  @override
+  void updateSlotHostContent(String id, List<SlotOp> ops) {
+    // TODO: implement updateSlotHostContent
+  }
 }
 
 void main() {
