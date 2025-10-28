@@ -7,6 +7,6 @@
 ///
 /// This is useful for debugging and development purposes.
 const throwOnUnspecifiedWidgetType = bool.fromEnvironment(
-  "DF_THROW_ON_UNSPECIFIED_WIDGET_TYPE",
+  "duit:throw-on-unspecified-widget-type",
   defaultValue: true,
 );
