@@ -21,8 +21,9 @@ Map<String, dynamic> _createWidget({
           "type": "SliverAppBar",
           "id": "sliverAppBarId",
           "controlled": true,
-          "attributes": {
-            "title": {
+          "children": [
+            //title
+            {
               "type": "Text",
               "id": "sliverTitle",
               "controlled": false,
@@ -32,10 +33,11 @@ Map<String, dynamic> _createWidget({
                   "color": "#FFFFFF",
                   "fontSize": 20.0,
                   "fontWeight": 500,
-                }
-              }
+                },
+              },
             },
-            "leading": {
+            //leading
+            {
               "type": "Text",
               "id": "sliverLeading",
               "controlled": false,
@@ -45,41 +47,16 @@ Map<String, dynamic> _createWidget({
                   "color": "#FFFFFF",
                   "fontSize": 24.0,
                   "fontWeight": 400,
-                }
-              }
+                },
+              },
             },
-            "actions": [
-              {
-                "type": "Text",
-                "id": "sliverAction1",
-                "controlled": false,
-                "attributes": {
-                  "data": "⚙️",
-                  "style": {
-                    "color": "#FFFFFF",
-                    "fontSize": 20.0,
-                  }
-                },
-              },
-              {
-                "type": "Text",
-                "id": "sliverAction2",
-                "controlled": false,
-                "attributes": {
-                  "data": "🔍",
-                  "style": {
-                    "color": "#FFFFFF",
-                    "fontSize": 20.0,
-                  }
-                },
-              },
-            ],
-            "flexibleSpace": {
+            //flexibleSpace
+            {
               "type": "FlexibleSpaceBar",
               "id": "flexibleSpaceBarId",
               "controlled": controlledFlexibleSpaceBar,
-              "attributes": {
-                "title": {
+              "children": [
+                {
                   "type": "Text",
                   "id": "title",
                   "controlled": false,
@@ -92,26 +69,28 @@ Map<String, dynamic> _createWidget({
                     },
                   },
                 },
-                "background": {
+                {
                   "type": "Container",
                   "id": "background",
                   "controlled": false,
                   "attributes": {
                     "color": "#2196F3",
-                    "child": {
-                      "type": "Text",
-                      "id": "backgroundText",
-                      "controlled": false,
-                      "attributes": {
-                        "data": "Background",
-                        "style": {
-                          "color": "#FFFFFF",
-                          "fontSize": 16.0,
-                        }
-                      }
-                    }
-                  }
+                  },
+                  "child": {
+                    "type": "Text",
+                    "id": "backgroundText",
+                    "controlled": false,
+                    "attributes": {
+                      "data": "Background",
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontSize": 16.0,
+                      },
+                    },
+                  },
                 },
+              ],
+              "attributes": {
                 "centerTitle": true,
                 "expandedTitleScale": 1.5,
                 "collapseMode": "parallax",
@@ -121,9 +100,38 @@ Map<String, dynamic> _createWidget({
                   "top": 16.0,
                   "right": 16.0,
                   "bottom": 16.0,
-                }
+                },
               },
             },
+            //bottom
+            null,
+            //actions
+            {
+              "type": "Text",
+              "id": "sliverAction1",
+              "controlled": false,
+              "attributes": {
+                "data": "⚙️",
+                "style": {
+                  "color": "#FFFFFF",
+                  "fontSize": 20.0,
+                },
+              },
+            },
+            {
+              "type": "Text",
+              "id": "sliverAction2",
+              "controlled": false,
+              "attributes": {
+                "data": "🔍",
+                "style": {
+                  "color": "#FFFFFF",
+                  "fontSize": 20.0,
+                },
+              },
+            },
+          ],
+          "attributes": {
             "backgroundColor": "#1976D2",
             "foregroundColor": "#FFFFFF",
             "elevation": 4.0,
@@ -151,7 +159,6 @@ Map<String, dynamic> _createWidget({
           "type": "SliverToBoxAdapter",
           "id": "adatp",
           "controlled": false,
-          "attributes": <String, dynamic>{},
           "child": {
             "type": "Container",
             "id": "cont",
@@ -176,7 +183,6 @@ void main() {
             controlledFlexibleSpaceBar: false,
           ),
           transportOptions: EmptyTransportOptions(),
-          enableDevMetrics: false,
         );
 
         await pumpDriver(tester, driver);
@@ -187,6 +193,15 @@ void main() {
         final flexibleSpaceBar =
             find.byKey(const ValueKey("flexibleSpaceBarId"));
         expect(flexibleSpaceBar, findsOneWidget);
+
+        final title = find.byKey(const ValueKey("title"));
+        expect(title, findsOneWidget);
+
+        final background = find.byKey(const ValueKey("background"));
+        expect(background, findsOneWidget);
+
+        final backgroundText = find.text("Background");
+        expect(backgroundText, findsOneWidget);
       },
     );
 
@@ -197,8 +212,7 @@ void main() {
           _createWidget(
             controlledFlexibleSpaceBar: true,
           ),
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
 
         await tester.pumpWidget(
@@ -219,7 +233,7 @@ void main() {
           "expandedTitleScale": 2.0,
           "collapseMode": "pin",
           "stretchModes": ["blurBackground"],
-          "titlePadding": [8.0, 8.0, 8.0, 8.0]
+          "titlePadding": [8.0, 8.0, 8.0, 8.0],
         });
 
         await tester.pumpAndSettle();
@@ -233,7 +247,9 @@ void main() {
         expect(flexibleSpaceBarWidget.expandedTitleScale, 2.0);
         expect(flexibleSpaceBarWidget.collapseMode, CollapseMode.pin);
         expect(
-            flexibleSpaceBarWidget.stretchModes, [StretchMode.blurBackground]);
+          flexibleSpaceBarWidget.stretchModes,
+          [StretchMode.blurBackground],
+        );
         expect(flexibleSpaceBarWidget.titlePadding, const EdgeInsets.all(8.0));
       },
     );
@@ -244,7 +260,6 @@ void main() {
         final driver = DuitDriver.static(
           _createWidget(),
           transportOptions: EmptyTransportOptions(),
-          enableDevMetrics: false,
         );
 
         await pumpDriver(tester, driver);
@@ -284,7 +299,6 @@ void main() {
         final driver = DuitDriver.static(
           _createWidget(),
           transportOptions: EmptyTransportOptions(),
-          enableDevMetrics: false,
         );
 
         await pumpDriver(tester, driver);

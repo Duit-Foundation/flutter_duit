@@ -1,11 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/utils/index.dart";
 
 class DuitMetaWidget extends StatefulWidget {
   final Widget child;
-  final UIElementController<MetaAttributes> controller;
+  final UIElementController controller;
 
   const DuitMetaWidget({
     super.key,
@@ -18,7 +17,7 @@ class DuitMetaWidget extends StatefulWidget {
 }
 
 class _DuitMetaWidgetState extends State<DuitMetaWidget>
-    with ViewControllerChangeListener<DuitMetaWidget, MetaAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -29,7 +28,7 @@ class _DuitMetaWidgetState extends State<DuitMetaWidget>
   Widget build(BuildContext context) {
     return DuitMetaData(
       key: Key(widget.controller.id),
-      value: attributes.value,
+      value: Map<String, dynamic>.from(attributes["value"]),
       child: widget.child,
     );
   }

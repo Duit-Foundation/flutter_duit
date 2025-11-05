@@ -16,47 +16,22 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": false,
-              "attributes": {},
+              "attributes": <String, dynamic>{},
               "children": [
                 {
                   "type": "SliverVisibility",
                   "id": "sliver1",
                   "controlled": false,
-                  "attributes": {
+                  "attributes": <String, dynamic>{
                     "visible": false,
                     "needsBoxAdapter": true,
                   },
-                  "child": {
-                    "type": "Text",
-                    "id": "text",
-                    "controlled": false,
-                    "attributes": {
-                      "data": "Some text",
-                      "style": {
-                        "color": "#DCDCDC",
-                        "fontSize": 64.0,
-                        "fontWeight": 700,
-                      }
-                    },
-                  },
-                },
-                {
-                  "type": "SliverVisibility",
-                  "id": "sliver2",
-                  "controlled": false,
-                  "attributes": {
-                    "visible": false,
-                    "needsBoxAdapter": false,
-                  },
-                  "child": {
-                    "type": "SliverToBoxAdapter",
-                    "id": "adapter1",
-                    "controlled": false,
-                    "child": {
+                  "children": [
+                    {
                       "type": "Text",
-                      "id": "text2",
+                      "id": "text",
                       "controlled": false,
-                      "attributes": {
+                      "attributes": <String, dynamic>{
                         "data": "Some text",
                         "style": {
                           "color": "#DCDCDC",
@@ -65,7 +40,37 @@ void main() {
                         }
                       },
                     },
+                  ]
+                },
+                {
+                  "type": "SliverVisibility",
+                  "id": "sliver2",
+                  "controlled": false,
+                  "attributes": <String, dynamic>{
+                    "visible": false,
+                    "needsBoxAdapter": false,
                   },
+                  "children": [
+                    {
+                      "type": "SliverToBoxAdapter",
+                      "id": "adapter1",
+                      "controlled": false,
+                      "attributes": <String, dynamic>{},
+                      "child": {
+                        "type": "Text",
+                        "id": "text2",
+                        "controlled": false,
+                        "attributes": <String, dynamic>{
+                          "data": "Some text",
+                          "style": {
+                            "color": "#DCDCDC",
+                            "fontSize": 64.0,
+                            "fontWeight": 700,
+                          }
+                        },
+                      },
+                    },
+                  ],
                 },
               ],
             },
@@ -90,47 +95,22 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": false,
-              "attributes": {},
+              "attributes": <String, dynamic>{},
               "children": [
                 {
                   "type": "SliverVisibility",
                   "id": "sliver1",
                   "controlled": true,
-                  "attributes": {
+                  "attributes": <String, dynamic>{
                     "visible": false,
                     "needsBoxAdapter": true,
                   },
-                  "child": {
-                    "type": "Text",
-                    "id": "text",
-                    "controlled": false,
-                    "attributes": {
-                      "data": "Some text",
-                      "style": {
-                        "color": "#DCDCDC",
-                        "fontSize": 64.0,
-                        "fontWeight": 700,
-                      }
-                    },
-                  },
-                },
-                {
-                  "type": "SliverVisibility",
-                  "id": "sliver2",
-                  "controlled": true,
-                  "attributes": {
-                    "visible": false,
-                    "needsBoxAdapter": false,
-                  },
-                  "child": {
-                    "type": "SliverToBoxAdapter",
-                    "id": "adapter",
-                    "controlled": false,
-                    "child": {
+                  "children": [
+                    {
                       "type": "Text",
-                      "id": "text2",
+                      "id": "text",
                       "controlled": false,
-                      "attributes": {
+                      "attributes": <String, dynamic>{
                         "data": "Some text",
                         "style": {
                           "color": "#DCDCDC",
@@ -139,7 +119,37 @@ void main() {
                         }
                       },
                     },
+                  ],
+                },
+                {
+                  "type": "SliverVisibility",
+                  "id": "sliver2",
+                  "controlled": true,
+                  "attributes": <String, dynamic>{
+                    "visible": false,
+                    "needsBoxAdapter": false,
                   },
+                  "children": [
+                    {
+                      "type": "SliverToBoxAdapter",
+                      "id": "adapter",
+                      "controlled": false,
+                      "attributes": <String, dynamic>{},
+                      "child": {
+                        "type": "Text",
+                        "id": "text2",
+                        "controlled": false,
+                        "attributes": <String, dynamic>{
+                          "data": "Some text",
+                          "style": {
+                            "color": "#DCDCDC",
+                            "fontSize": 64.0,
+                            "fontWeight": 700,
+                          }
+                        },
+                      },
+                    },
+                  ],
                 },
               ],
             },

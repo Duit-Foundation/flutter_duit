@@ -1,11 +1,11 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:js_interop';
-import 'package:flutter_duit/src/transport/transport_utils.dart';
-import 'package:web/web.dart' as web;
+import "dart:async";
+import "dart:convert";
+import "dart:js_interop";
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter_duit/src/transport/transport_utils.dart";
+import "package:web/web.dart" as web;
 
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import "package:flutter_duit/flutter_duit.dart";
 
 /// A WebSocket transport implementation for streaming data.
 ///
@@ -37,7 +37,7 @@ final class WSTransport extends Transport implements Streamer {
   });
 
   String _prepareUrl(String url) {
-    String urlString = "";
+    var urlString = "";
     if (options.baseUrl != null) {
       urlString += options.baseUrl!;
     }
@@ -45,12 +45,14 @@ final class WSTransport extends Transport implements Streamer {
     return urlString += url;
   }
 
-  Future<Map<String, dynamic>> _parseJson(String data) async =>
-      jsonDecode(data) as Map<String, dynamic>;
+  Future<Map<String, dynamic>> _parseJson(String data) async => jsonDecode(
+        data,
+        reviver: DuitDataSource.jsonReviver,
+      ) as Map<String, dynamic>;
 
   @override
   Future<Map<String, dynamic>?> connect({
-    JSONObject? initialData,
+    Map<String, dynamic>? initialData,
   }) async {
     var urlString = _prepareUrl(url);
 
@@ -58,21 +60,26 @@ final class WSTransport extends Transport implements Streamer {
       urlString = objectToURLWithQueryParams(urlString, initialData).toString();
     }
 
-    assert(urlString.isNotEmpty && urlString.startsWith("ws"),
-        "Invalid url: $url}");
+    assert(
+      urlString.isNotEmpty && urlString.startsWith("ws"),
+      "Invalid url: $url}",
+    );
 
     ws = web.WebSocket(urlString);
 
-    ws.onMessage.listen((event) async {
-      final eventData = event.data.dartify();
-      if (eventData is String) {
-        final data = await _parseJson(eventData);
-        _controller.sink.add(data);
-      }
-    }, onError: (e) async {
-      final error = await _parseJson(e);
-      _controller.addError(error);
-    });
+    ws.onMessage.listen(
+      (event) async {
+        final eventData = event.data.dartify();
+        if (eventData is String) {
+          final data = await _parseJson(eventData);
+          _controller.sink.add(data);
+        }
+      },
+      onError: (e) async {
+        final error = await _parseJson(e);
+        _controller.addError(error);
+      },
+    );
 
     await for (final event in _controller.stream) {
       _controller.close();
@@ -84,7 +91,7 @@ final class WSTransport extends Transport implements Streamer {
   }
 
   @override
-  FutureOr<JSONObject?> execute(action, payload) {
+  FutureOr<Map<String, dynamic>?> execute(action, payload) {
     final data = {
       "event": action.eventName,
       "payload": payload,

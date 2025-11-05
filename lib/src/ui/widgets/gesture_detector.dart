@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitGestureDetector extends StatefulWidget {
   final Widget child;
-  final UIElementController<GestureDetectorAttributes> controller;
+  final UIElementController controller;
 
   const DuitGestureDetector({
     super.key,
@@ -17,10 +16,7 @@ class DuitGestureDetector extends StatefulWidget {
 }
 
 class _DuitGestureDetectorState extends State<DuitGestureDetector>
-    with
-        ViewControllerChangeListener<DuitGestureDetector,
-            GestureDetectorAttributes>,
-        ActionHandler {
+    with ViewControllerChangeListener, ActionHandler {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -34,108 +30,108 @@ class _DuitGestureDetectorState extends State<DuitGestureDetector>
       onTap: performAction(
         context,
         widget.controller,
-        attributes.onTap,
+        attributes.getAction("onTap"),
         type: GestureType.onTap,
       ),
       onTapUp: performAction(
         context,
         widget.controller,
-        attributes.onTapUp,
+        attributes.getAction("onTapUp"),
         type: GestureType.onTapUp,
       ),
       onTapDown: performAction(
         context,
         widget.controller,
-        attributes.onTapDown,
+        attributes.getAction("onTapDown"),
         type: GestureType.onTapDown,
       ),
       onTapCancel: performAction(
         context,
         widget.controller,
-        attributes.onTapCancel,
+        attributes.getAction("onTapCancel"),
         type: GestureType.onTapCancel,
       ),
       onDoubleTap: performAction(
         context,
         widget.controller,
-        attributes.onDoubleTap,
+        attributes.getAction("onDoubleTap"),
         type: GestureType.onDoubleTap,
       ),
       onDoubleTapDown: performAction(
         context,
         widget.controller,
-        attributes.onDoubleTap,
+        attributes.getAction("onDoubleTap"),
         type: GestureType.onDoubleTapDown,
       ),
       onDoubleTapCancel: performAction(
         context,
         widget.controller,
-        attributes.onDoubleTapCancel,
+        attributes.getAction("onDoubleTapCancel"),
         type: GestureType.onDoubleTapCancel,
       ),
       onLongPress: performAction(
         context,
         widget.controller,
-        attributes.onLongPress,
+        attributes.getAction("onLongPress"),
         type: GestureType.onLongPress,
       ),
       onLongPressStart: performAction(
         context,
         widget.controller,
-        attributes.onLongPressStart,
+        attributes.getAction("onLongPressStart"),
         type: GestureType.onLongPressStart,
       ),
       onLongPressMoveUpdate: performAction(
         context,
         widget.controller,
-        attributes.onLongPressMoveUpdate,
+        attributes.getAction("onLongPressMoveUpdate"),
         type: GestureType.onLongPressMoveUpdate,
       ),
       onLongPressUp: performAction(
         context,
         widget.controller,
-        attributes.onLongPressUp,
+        attributes.getAction("onLongPressUp"),
         type: GestureType.onLongPressUp,
       ),
       onLongPressEnd: performAction(
         context,
         widget.controller,
-        attributes.onLongPressEnd,
+        attributes.getAction("onLongPressEnd"),
         type: GestureType.onLongPressEnd,
       ),
       onPanStart: performAction(
         context,
         widget.controller,
-        attributes.onPanStart,
+        attributes.getAction("onPanStart"),
         type: GestureType.onPanStart,
       ),
       onPanDown: performAction(
         context,
         widget.controller,
-        attributes.onPanDown,
+        attributes.getAction("onPanDown"),
         type: GestureType.onPanDown,
       ),
       onPanUpdate: performAction(
         context,
         widget.controller,
-        attributes.onPanUpdate,
+        attributes.getAction("onPanUpdate"),
         type: GestureType.onPanUpdate,
       ),
       onPanEnd: performAction(
         context,
         widget.controller,
-        attributes.onPanEnd,
+        attributes.getAction("onPanEnd"),
         type: GestureType.onPanEnd,
       ),
       onPanCancel: performAction(
         context,
         widget.controller,
-        attributes.onPanCancel,
+        attributes.getAction("onPanCancel"),
         type: GestureType.onPanCancel,
       ),
-      behavior: attributes.behavior,
-      dragStartBehavior: attributes.dragStartBehavior,
-      excludeFromSemantics: attributes.excludeFromSemantics ?? false,
+      behavior: attributes.hitTestBehavior(),
+      dragStartBehavior: attributes.dragStartBehavior(),
+      excludeFromSemantics: attributes.getBool("excludeFromSemantics"),
       child: widget.child,
     );
   }

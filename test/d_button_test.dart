@@ -15,13 +15,13 @@ Map<String, dynamic> _createWidget() {
         "updates": {
           "t1": {
             "data": "Pressed!",
-            "style": {
+            "style": <String, dynamic>{
               "fontSize": 24.0,
               "fontWeight": 800,
-            }
+            },
           },
-        }
-      }
+        },
+      },
     },
     "attributes": {
       "autofocus": false,
@@ -33,10 +33,10 @@ Map<String, dynamic> _createWidget() {
           "updates": {
             "t1": {
               "data": "Long pressed!",
-              "style": {
+              "style": <String, dynamic>{
                 "fontSize": 48.0,
                 "fontWeight": 400,
-              }
+              },
             },
           },
         },
@@ -48,12 +48,12 @@ Map<String, dynamic> _createWidget() {
       "controlled": true,
       "attributes": {
         "data": "Press me!",
-        "style": {
+        "style": <String, dynamic>{
           "fontSize": 12.0,
           "fontWeight": 400,
-        }
+        },
       },
-    }
+    },
   };
 }
 
@@ -68,8 +68,7 @@ void main() {
             child: DuitViewHost(
               driver: DuitDriver.static(
                 _createWidget(),
-                transportOptions: HttpTransportOptions(),
-                enableDevMetrics: false,
+                transportOptions: EmptyTransportOptions(),
               ),
             ),
           ),
@@ -91,8 +90,7 @@ void main() {
       testWidgets("check action execution", (tester) async {
         final driver = DuitDriver.static(
           _createWidget(),
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
 
         await tester.pumpWidget(
@@ -115,7 +113,7 @@ void main() {
         var text = find.text("Pressed!");
         expect(text, findsOneWidget);
 
-        Text widget = tester.widget(text);
+        var widget = tester.widget<Text>(text);
 
         expect(widget.style?.fontWeight, equals(FontWeight.w800));
         expect(widget.style?.fontSize, equals(24.0));
@@ -126,7 +124,7 @@ void main() {
         text = find.text("Long pressed!");
         expect(text, findsOneWidget);
 
-        widget = tester.widget(text);
+        widget = tester.widget<Text>(text);
         expect(text, findsOneWidget);
         expect(widget.style?.fontWeight, equals(FontWeight.w400));
         expect(widget.style?.fontSize, equals(48.0));

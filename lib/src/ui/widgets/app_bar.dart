@@ -1,29 +1,97 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/ui/widgets/utils.dart";
 
-class DuitAppBar extends StatefulWidget
+class DuitAppBar extends StatelessWidget
     with AnimatedAttributes
     implements PreferredSizeWidget {
-  final UIElementController<AppBarAttributes> controller;
+  final ViewAttribute attributes;
+  final List<Widget?> children;
+
   const DuitAppBar({
+    required this.attributes,
+    required this.children,
     super.key,
-    required this.controller,
   });
 
   @override
-  State<DuitAppBar> createState() => _DuitAppBarState();
+  Size get preferredSize => Size.fromHeight(
+        attributes.payload.tryGetDouble(key: "toolbarHeight") ?? kToolbarHeight,
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    final attrs = mergeWithDataSource(
+      context,
+      attributes.payload,
+    );
+
+    return AppBar(
+      key: Key(attributes.id),
+      automaticallyImplyLeading: attrs.getBool(
+        "automaticallyImplyLeading",
+        defaultValue: true,
+      ),
+      excludeHeaderSemantics: attrs.getBool(
+        "excludeHeaderSemantics",
+        defaultValue: false,
+      ),
+      forceMaterialTransparency: attrs.getBool(
+        "forceMaterialTransparency",
+        defaultValue: false,
+      ),
+      primary: attrs.getBool("primary", defaultValue: true),
+      shape: attrs.shapeBorder(),
+      clipBehavior: attrs.clipBehavior(),
+      title: children.elementAtOrNull(kTitleIndex),
+      leading: children.elementAtOrNull(kLeadingIndex),
+      flexibleSpace: children.elementAtOrNull(kFlexibleSpaceIndex),
+      bottom: extractPreferredSizeWidget(children, kBottomIndex),
+      actions: children.length > kActionsStartIndex
+          ? children.sublist(kActionsStartIndex).cast<Widget>()
+          : null,
+      backgroundColor: attrs.tryParseColor(key: "backgroundColor"),
+      foregroundColor: attrs.tryParseColor(key: "foregroundColor"),
+      surfaceTintColor: attrs.tryParseColor(key: "surfaceTintColor"),
+      shadowColor: attrs.tryParseColor(key: "shadowColor"),
+      elevation: attrs.tryGetDouble(key: "elevation"),
+      scrolledUnderElevation: attrs.tryGetDouble(key: "scrolledUnderElevation"),
+      toolbarHeight: attrs.tryGetDouble(key: "toolbarHeight"),
+      leadingWidth: attrs.tryGetDouble(key: "leadingWidth"),
+      titleSpacing: attrs.tryGetDouble(key: "titleSpacing"),
+      bottomOpacity: attrs.getDouble(
+        key: "bottomOpacity",
+        defaultValue: 1.0,
+      ),
+      centerTitle: attrs.tryGetBool("centerTitle"),
+    );
+  }
+}
+
+class DuitControlledAppBar extends StatefulWidget
+    with AnimatedAttributes
+    implements PreferredSizeWidget {
+  final UIElementController controller;
+  final List<Widget?> children;
+
+  const DuitControlledAppBar({
+    required this.controller,
+    required this.children,
+    super.key,
+  });
+
+  @override
+  State<DuitControlledAppBar> createState() => _DuitControlledAppBarState();
 
   @override
   Size get preferredSize => Size.fromHeight(
-        controller.attributes.payload.toolbarHeight ?? kToolbarHeight,
+        controller.attributes.payload.tryGetDouble(key: "toolbarHeight") ??
+            kToolbarHeight,
       );
 }
 
-class _DuitAppBarState extends State<DuitAppBar>
-    with
-        ViewControllerChangeListener<DuitAppBar, AppBarAttributes>,
-        OutOfBoundWidgetBuilder {
+class _DuitControlledAppBarState extends State<DuitControlledAppBar>
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,62 +100,51 @@ class _DuitAppBarState extends State<DuitAppBar>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
-    final driver = widget.controller.driver;
+    final children = widget.children;
 
     return AppBar(
       key: Key(widget.controller.id),
-      automaticallyImplyLeading: attrs.automaticallyImplyLeading,
-      excludeHeaderSemantics: attrs.excludeHeaderSemantics,
-      forceMaterialTransparency: attrs.forceMaterialTransparency,
-      primary: attrs.primary,
-      shape: attrs.shape,
-      clipBehavior: attrs.clipBehavior,
-      leading: buildOutOfBoundWidget(
-        attrs.leading,
-        driver,
-        null,
+      automaticallyImplyLeading: attrs.getBool(
+        "automaticallyImplyLeading",
+        defaultValue: true,
       ),
-      title: buildOutOfBoundWidget(
-        attrs.title,
-        driver,
-        null,
+      excludeHeaderSemantics: attrs.getBool(
+        "excludeHeaderSemantics",
+        defaultValue: false,
       ),
-      flexibleSpace: buildOutOfBoundWidget(
-        attrs.flexibleSpace,
-        driver,
-        null,
+      forceMaterialTransparency: attrs.getBool(
+        "forceMaterialTransparency",
+        defaultValue: false,
       ),
-      actions: attrs.actions
-          ?.map(
-            (e) => buildOutOfBoundWidget(
-              e,
-              driver,
-              null,
-            ),
-          )
-          .whereType<Widget>()
-          .toList(),
-      bottom: buildOutOfBoundWidget<PreferredSizeWidget>(
-        attrs.bottom,
-        driver,
-        null,
+      primary: attrs.getBool("primary", defaultValue: true),
+      shape: attrs.shapeBorder(),
+      clipBehavior: attrs.clipBehavior(),
+      title: children.elementAtOrNull(kTitleIndex),
+      leading: children.elementAtOrNull(kLeadingIndex),
+      flexibleSpace: children.elementAtOrNull(kFlexibleSpaceIndex),
+      bottom: extractPreferredSizeWidget(children, kBottomIndex),
+      actions: children.length > kActionsStartIndex
+          ? children.sublist(kActionsStartIndex).cast<Widget>()
+          : null,
+      backgroundColor: attrs.tryParseColor(key: "backgroundColor"),
+      foregroundColor: attrs.tryParseColor(key: "foregroundColor"),
+      surfaceTintColor: attrs.tryParseColor(key: "surfaceTintColor"),
+      shadowColor: attrs.tryParseColor(key: "shadowColor"),
+      elevation: attrs.tryGetDouble(key: "elevation"),
+      scrolledUnderElevation: attrs.tryGetDouble(key: "scrolledUnderElevation"),
+      toolbarHeight: attrs.tryGetDouble(key: "toolbarHeight"),
+      leadingWidth: attrs.tryGetDouble(key: "leadingWidth"),
+      titleSpacing: attrs.tryGetDouble(key: "titleSpacing"),
+      bottomOpacity: attrs.getDouble(
+        key: "bottomOpacity",
+        defaultValue: 1.0,
       ),
-      backgroundColor: attrs.backgroundColor,
-      foregroundColor: attrs.foregroundColor,
-      surfaceTintColor: attrs.surfaceTintColor,
-      shadowColor: attrs.shadowColor,
-      elevation: attrs.elevation,
-      scrolledUnderElevation: attrs.scrolledUnderElevation,
-      toolbarHeight: attrs.toolbarHeight,
-      leadingWidth: attrs.leadingWidth,
-      titleSpacing: attrs.titleSpacing,
-      bottomOpacity: attrs.bottomOpacity,
-      centerTitle: attrs.centerTitle,
+      centerTitle: attrs.tryGetBool("centerTitle"),
     );
   }
 }

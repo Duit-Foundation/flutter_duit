@@ -1,10 +1,8 @@
 import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/src/ui/models/ui_tree.dart';
-
-import 'index.dart';
+import 'package:flutter_duit/src/ui/index.dart';
 
 Future<ElementTree> parseLayout(
-  JSONObject data,
+  Map<String, dynamic> data,
   UIDriver driver,
 ) async {
   return await DuitTree(
@@ -14,7 +12,7 @@ Future<ElementTree> parseLayout(
 }
 
 ElementTree parseLayoutSync(
-  JSONObject data,
+  Map<String, dynamic> data,
   UIDriver driver,
 ) {
   return DuitTree(

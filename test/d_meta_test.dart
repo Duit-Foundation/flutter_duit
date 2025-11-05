@@ -17,7 +17,7 @@ void main() {
               "type": "Meta",
               "id": "meta1",
               "controlled": true,
-              "attributes": {
+              "attributes": <String, dynamic>{
                 "value": {
                   "foo": "bar",
                 }
@@ -26,7 +26,6 @@ void main() {
                 "type": "Container",
                 "id": "container1",
                 "controlled": false,
-                "attributes": {},
                 "child": {
                   "type": "Text",
                   "id": "text1",
@@ -46,7 +45,7 @@ void main() {
 
           var meta = DuitMetaData.maybeOf(context);
 
-          var metaValue = meta!.value["value"];
+          var metaValue = meta!.value;
           expect(metaValue, isNotNull);
           expect(metaValue["foo"], "bar");
 
@@ -63,7 +62,7 @@ void main() {
 
           meta = DuitMetaData.maybeOf(context);
 
-          metaValue = meta!.value["value"];
+          metaValue = meta!.value;
           expect(metaValue, isNotNull);
           expect(metaValue["foo"], "baz");
           expect(metaValue["num"], 42);

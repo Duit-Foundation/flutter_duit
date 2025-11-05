@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -26,7 +26,7 @@ void main() {
                     "left": 12,
                   },
                 },
-              ]
+              ],
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -62,7 +62,7 @@ void main() {
                     "left": 12,
                   },
                 },
-              ]
+              ],
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -105,10 +105,10 @@ void main() {
               "id": "stack_ctrl",
               "controlled": true,
               "attributes": {
-                "fit": "loose",
-                "alignment": "center",
+                "stackFit": "loose",
+                "alignmentDirectional": "center",
                 "clipBehavior": "hardEdge",
-                "textDirection": "ltr"
+                "textDirection": "ltr",
               },
               "children": [
                 {
@@ -128,7 +128,7 @@ void main() {
                     },
                   },
                 },
-              ]
+              ],
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -144,10 +144,10 @@ void main() {
           expect(stackWidget.textDirection, TextDirection.ltr);
 
           await driver.updateTestAttributes("stack_ctrl", {
-            "fit": "expand",
-            "alignment": "bottomEnd",
+            "stackFit": "expand",
+            "alignmentDirectional": "bottomEnd",
             "clipBehavior": "none",
-            "textDirection": "rtl"
+            "textDirection": "rtl",
           });
           await tester.pumpAndSettle();
 

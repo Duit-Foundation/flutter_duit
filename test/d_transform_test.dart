@@ -49,8 +49,6 @@ void main() {
             'type': 'rotate',
             'data': {
               'angle': 1.57,
-              'parentBuilderId': '',
-              'affectedProperties': [],
             },
           },
           'child': {

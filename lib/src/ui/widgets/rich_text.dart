@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitRichText extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<RichTextAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitRichText({
     super.key,
@@ -12,33 +11,32 @@ class DuitRichText extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
-    assert(attrs.textSpan != null, "TextSpan cannot be null");
     return Text.rich(
       key: Key(attributes.id),
-      attrs.textSpan!,
-      textAlign: attrs.textAlign,
-      textDirection: attrs.textDirection,
-      softWrap: attrs.softWrap,
-      overflow: attrs.overflow,
-      maxLines: attrs.maxLines,
-      semanticsLabel: attrs.semanticsLabel,
-      textWidthBasis: attrs.textWidthBasis,
-      textHeightBehavior: attrs.textHeightBehavior,
-      selectionColor: attrs.selectionColor,
-      strutStyle: attrs.strutStyle,
-      style: attrs.style,
-      textScaler: attrs.textScaler,
+      attrs.textSpan(),
+      textAlign: attrs.textAlign(),
+      textDirection: attrs.textDirection(),
+      softWrap: attrs.tryGetBool("softWrap"),
+      overflow: attrs.textOverflow(),
+      maxLines: attrs.tryGetInt(key: "maxLines"),
+      semanticsLabel: attrs.tryGetString("semanticsLabel"),
+      textWidthBasis: attrs.textWidthBasis(),
+      textHeightBehavior: attrs.textHeightBehavior(),
+      selectionColor: attrs.tryParseColor(),
+      strutStyle: attrs.strutStyle(),
+      style: attrs.textStyle(),
+      textScaler: attrs.textScaler(),
     );
   }
 }
 
 class DuitControlledRichText extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<RichTextAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledRichText({
     super.key,
@@ -50,9 +48,7 @@ class DuitControlledRichText extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledRichTextState extends State<DuitControlledRichText>
-    with
-        ViewControllerChangeListener<DuitControlledRichText,
-            RichTextAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -61,27 +57,26 @@ class _DuitControlledRichTextState extends State<DuitControlledRichText>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
-    assert(attrs.textSpan != null, "TextSpan cannot be null");
     return Text.rich(
       key: Key(widget.controller.id),
-      attrs.textSpan!,
-      textAlign: attrs.textAlign,
-      textDirection: attrs.textDirection,
-      softWrap: attrs.softWrap,
-      overflow: attrs.overflow,
-      maxLines: attrs.maxLines,
-      semanticsLabel: attrs.semanticsLabel,
-      textWidthBasis: attrs.textWidthBasis,
-      textHeightBehavior: attrs.textHeightBehavior,
-      selectionColor: attrs.selectionColor,
-      strutStyle: attrs.strutStyle,
-      style: attrs.style,
-      textScaler: attrs.textScaler,
+      attrs.textSpan(),
+      textAlign: attrs.textAlign(),
+      textDirection: attrs.textDirection(),
+      softWrap: attrs.tryGetBool("softWrap"),
+      overflow: attrs.textOverflow(),
+      maxLines: attrs.tryGetInt(key: "maxLines"),
+      semanticsLabel: attrs.tryGetString("semanticsLabel"),
+      textWidthBasis: attrs.textWidthBasis(),
+      textHeightBehavior: attrs.textHeightBehavior(),
+      selectionColor: attrs.tryParseColor(),
+      strutStyle: attrs.strutStyle(),
+      style: attrs.textStyle(),
+      textScaler: attrs.textScaler(),
     );
   }
 }

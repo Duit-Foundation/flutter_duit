@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:dio/dio.dart';
 import 'package:example/src/custom/index.dart';
-import 'package:example/src/theme/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 
@@ -55,29 +52,27 @@ final class _Handler implements ExternalEventHandler {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final dio = Dio();
+  // final dio = Dio();
 
-  DuitRegistry.configure(
-    logger: DefaultLogger.instance,
-    themeLoader: HttpThemeLoader(
-      dio,
-      "http://localhost:8999/theme",
-    ),
-  );
+  // DuitRegistry.configure(
+  //   logger: DefaultLogger.instance,
+  //   themeLoader: HttpThemeLoader(
+  //     dio,
+  //     "http://localhost:8999/theme",
+  //   ),
+  // );
 
-  await DuitRegistry.initTheme();
+  // await DuitRegistry.initTheme();
 
   DuitRegistry.register(
     exampleCustomWidget,
-    modelFactory: exModelFactory,
-    buildFactory: exBuildFactory,
-    attributesFactory: exAttributeFactory,
+    buildFactory: exampleBuildFactory,
   );
 
-  final res = await dio.get<List>("http://localhost:8999/components");
+  // final res = await dio.get<List>("http://localhost:8999/components");
 
-  final comps = res.data!.cast<Map<String, dynamic>>();
-  await DuitRegistry.registerComponents(comps);
+  // final comps = res.data!.cast<Map<String, dynamic>>();
+  // await DuitRegistry.registerComponents(comps);
 
   runApp(const MyApp());
 }
@@ -109,15 +104,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    driver1 = DuitDriver(
-      "/example_screen",
-      transportOptions: HttpTransportOptions(
-        defaultHeaders: {
-          "Content-Type": "application/json",
+    driver1 = DuitDriver.static(
+      {
+        "type": "Text",
+        "id": "1",
+        "attributes": {
+          "data": "Hello, World!",
         },
-        baseUrl: "http://localhost:8999",
-        decoder: CustomDecoder(),
-      ),
+      },
+      transportOptions: EmptyTransportOptions(),
       externalEventHandler: const _Handler(),
     );
     super.initState();
@@ -136,8 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Center(
           child: DuitViewHost(
             driver: driver1,
-            errorWidgetBuilder: (context, error) => Text(error.toString()),
-            placeholder: const CircularProgressIndicator(),
           ),
         ),
       ),

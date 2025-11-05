@@ -1,7 +1,6 @@
 export 'package:duit_kernel/duit_kernel.dart'
     show
         DuitRegistry,
-        DuitAttributes,
         ElementTree,
         ElementTreeEntry,
         Transport,
@@ -22,12 +21,9 @@ export 'package:duit_kernel/duit_kernel.dart'
         EventResolver,
         ViewAttribute,
         ServerAction,
-        AssetThemeLoader,
-        StaticThemeLoader,
-        ResourceLoader,
         ThemeToken,
         UnknownThemeToken,
         DefaultThemeToken,
         DuitTheme,
         ThemePreprocessor,
-        CustomTokenizer;
+        TokenizationCallback;

@@ -1,12 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitPadding extends StatelessWidget with AnimatedAttributes {
   final Widget child;
-  final ViewAttribute<PaddingAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitPadding({
     super.key,
@@ -16,20 +15,20 @@ class DuitPadding extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(BuildContext context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
     return Padding(
       key: Key(attributes.id),
-      padding: attrs.padding,
+      padding: attrs.edgeInsets(defaultValue: EdgeInsets.zero)!,
       child: child,
     );
   }
 }
 
 class DuitControlledPadding extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<PaddingAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitControlledPadding({
@@ -43,8 +42,7 @@ class DuitControlledPadding extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledPaddingState extends State<DuitControlledPadding>
-    with
-        ViewControllerChangeListener<DuitControlledPadding, PaddingAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -53,14 +51,14 @@ class _DuitControlledPaddingState extends State<DuitControlledPadding>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
     return Padding(
       key: Key(widget.controller.id),
-      padding: attrs.padding,
+      padding: attrs.edgeInsets(defaultValue: EdgeInsets.zero)!,
       child: widget.child,
     );
   }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 import 'package:flutter_duit/src/ui/widgets/tile.dart';
 
 class DuitSliverListBuilder extends StatefulWidget {
-  final UIElementController<SliverListAttributes> controller;
+  final UIElementController controller;
 
   const DuitSliverListBuilder({
     super.key,
@@ -16,20 +15,16 @@ class DuitSliverListBuilder extends StatefulWidget {
 }
 
 class _DuitSliverListBuilderState extends State<DuitSliverListBuilder>
-    with
-        ViewControllerChangeListener<DuitSliverListBuilder,
-            SliverListAttributes>,
-        ScrollUtils,
-        OutOfBoundWidgetBuilder {
+    with ViewControllerChangeListener, ScrollUtils, OutOfBoundWidgetBuilder {
   @override
   void initState() {
     attachStateToController(widget.controller);
-    attachOnScrollCallback<SliverListAttributes>(widget.controller);
+    attachOnScrollCallback(widget.controller);
     super.initState();
   }
 
   Widget? _buildItem(BuildContext context, int index) {
-    final list = attributes.childObjects ?? const [];
+    final list = attributes.childObjects();
     final item = list[index];
 
     return buildOutOfBoundWidget(
@@ -45,10 +40,19 @@ class _DuitSliverListBuilderState extends State<DuitSliverListBuilder>
     return SliverList.builder(
       key: Key(widget.controller.id),
       itemBuilder: _buildItem,
-      itemCount: attributes.childObjects?.length ?? 0,
-      addAutomaticKeepAlives: attributes.addAutomaticKeepAlives,
-      addRepaintBoundaries: attributes.addRepaintBoundaries,
-      addSemanticIndexes: attributes.addSemanticIndexes,
+      itemCount: attributes.childObjects().length,
+      addAutomaticKeepAlives: attributes.getBool(
+        "addAutomaticKeepAlives",
+        defaultValue: true,
+      ),
+      addRepaintBoundaries: attributes.getBool(
+        "addRepaintBoundaries",
+        defaultValue: true,
+      ),
+      addSemanticIndexes: attributes.getBool(
+        "addSemanticIndexes",
+        defaultValue: true,
+      ),
     );
   }
 }

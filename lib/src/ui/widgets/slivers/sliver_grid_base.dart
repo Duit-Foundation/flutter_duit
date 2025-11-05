@@ -1,32 +1,34 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/view_context.dart";
+import "package:flutter_duit/src/ui/widgets/grid_constructor.dart";
 
 final class DuitSliverGrid extends StatelessWidget {
-  final ViewAttribute<SliverGridAttributes> attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
+  final GridConstructor constructor;
 
   const DuitSliverGrid({
     required this.attributes,
     required this.children,
+    required this.constructor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     final attrs = attributes.payload;
-    switch (attrs.constructor) {
+    switch (constructor) {
       case GridConstructor.common:
         SliverGridDelegate delegate;
         final viewCtx = DuitViewContext.of(context);
 
-        final delegateBuilder =
-            viewCtx.sliverGridDelegatesRegistry[attrs.sliverGridDelegateKey];
+        final delegateBuilder = viewCtx.sliverGridDelegatesRegistry[
+            attrs.getString(key: "sliverGridDelegateKey")];
 
         if (delegateBuilder != null) {
           delegate = delegateBuilder.call(
-            attrs.sliverGridDelegateOptions,
+            attrs["sliverGridDelegateOptions"] ?? const <String, dynamic>{},
           );
         } else {
           throw ArgumentError(
@@ -39,27 +41,54 @@ final class DuitSliverGrid extends StatelessWidget {
           gridDelegate: delegate,
           delegate: SliverChildListDelegate(
             children,
-            addAutomaticKeepAlives: attrs.addAutomaticKeepAlives,
-            addRepaintBoundaries: attrs.addRepaintBoundaries,
-            addSemanticIndexes: attrs.addSemanticIndexes,
+            addAutomaticKeepAlives: attrs.getBool(
+              "addAutomaticKeepAlives",
+              defaultValue: true,
+            ),
+            addRepaintBoundaries: attrs.getBool(
+              "addRepaintBoundaries",
+              defaultValue: true,
+            ),
+            addSemanticIndexes: attrs.getBool(
+              "addSemanticIndexes",
+              defaultValue: true,
+            ),
           ),
         );
       case GridConstructor.count:
         return SliverGrid.count(
           key: ValueKey(attributes.id),
-          crossAxisCount: attrs.crossAxisCount,
-          mainAxisSpacing: attrs.mainAxisSpacing,
-          crossAxisSpacing: attrs.crossAxisSpacing,
-          childAspectRatio: attrs.childAspectRatio,
+          crossAxisCount: attrs.getInt(
+            key: "crossAxisCount",
+            defaultValue: 2,
+          ),
+          mainAxisSpacing: attrs.getDouble(
+            key: "mainAxisSpacing",
+            defaultValue: 0,
+          ),
+          crossAxisSpacing: attrs.getDouble(key: "crossAxisSpacing"),
+          childAspectRatio: attrs.getDouble(
+            key: "childAspectRatio",
+            defaultValue: 1.0,
+          ),
           children: children,
         );
       case GridConstructor.extent:
         return SliverGrid.extent(
           key: ValueKey(attributes.id),
-          maxCrossAxisExtent: attrs.maxCrossAxisExtent,
-          mainAxisSpacing: attrs.mainAxisSpacing,
-          crossAxisSpacing: attrs.crossAxisSpacing,
-          childAspectRatio: attrs.childAspectRatio,
+          maxCrossAxisExtent: attrs.getDouble(
+            key: "maxCrossAxisExtent",
+            defaultValue: 0,
+          ),
+          mainAxisSpacing: attrs.getDouble(
+            key: "mainAxisSpacing",
+            defaultValue: 0,
+          ),
+          crossAxisSpacing: attrs.getDouble(key: "crossAxisSpacing"),
+          childAspectRatio: attrs.getDouble(
+            key: "childAspectRatio",
+            defaultValue: 1.0,
+          ),
           children: children,
         );
       default:
@@ -69,13 +98,15 @@ final class DuitSliverGrid extends StatelessWidget {
 }
 
 class DuitControlledSliverGrid extends StatefulWidget {
-  final UIElementController<SliverGridAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
+  final GridConstructor constructor;
 
   const DuitControlledSliverGrid({
     super.key,
     required this.controller,
     required this.children,
+    required this.constructor,
   });
 
   @override
@@ -84,9 +115,7 @@ class DuitControlledSliverGrid extends StatefulWidget {
 }
 
 class _DuitControlledSliverGridState extends State<DuitControlledSliverGrid>
-    with
-        ViewControllerChangeListener<DuitControlledSliverGrid,
-            SliverGridAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -96,20 +125,22 @@ class _DuitControlledSliverGridState extends State<DuitControlledSliverGrid>
   @override
   Widget build(BuildContext context) {
     final attrs = attributes;
-    switch (attrs.constructor) {
+    switch (widget.constructor) {
       case GridConstructor.common:
         SliverGridDelegate delegate;
         final viewCtx = DuitViewContext.of(context);
 
-        final delegateBuilder =
-            viewCtx.sliverGridDelegatesRegistry[attrs.sliverGridDelegateKey];
+        final delegateBuilder = viewCtx.sliverGridDelegatesRegistry[
+            attrs.getString(key: "sliverGridDelegateKey")];
 
         if (delegateBuilder != null) {
           delegate = delegateBuilder.call(
-            attrs.sliverGridDelegateOptions,
+            attrs["sliverGridDelegateOptions"] ?? const <String, dynamic>{},
           );
         } else {
-          throw UnimplementedError("SliverGridDelegate builder not found");
+          throw ArgumentError(
+            "SliverGridDelegate builder not found in DuitViewContext",
+          );
         }
 
         return SliverGrid(
@@ -117,27 +148,57 @@ class _DuitControlledSliverGridState extends State<DuitControlledSliverGrid>
           gridDelegate: delegate,
           delegate: SliverChildListDelegate(
             widget.children,
-            addAutomaticKeepAlives: attrs.addAutomaticKeepAlives,
-            addRepaintBoundaries: attrs.addRepaintBoundaries,
-            addSemanticIndexes: attrs.addSemanticIndexes,
+            addAutomaticKeepAlives: attributes.getBool(
+              "addAutomaticKeepAlives",
+              defaultValue: true,
+            ),
+            addRepaintBoundaries: attributes.getBool(
+              "addRepaintBoundaries",
+              defaultValue: true,
+            ),
+            addSemanticIndexes: attributes.getBool(
+              "addSemanticIndexes",
+              defaultValue: true,
+            ),
           ),
         );
       case GridConstructor.count:
         return SliverGrid.count(
           key: ValueKey(widget.controller.id),
-          crossAxisCount: attrs.crossAxisCount,
-          mainAxisSpacing: attrs.mainAxisSpacing,
-          crossAxisSpacing: attrs.crossAxisSpacing,
-          childAspectRatio: attrs.childAspectRatio,
+          crossAxisCount: attrs.getInt(
+            key: "crossAxisCount",
+            defaultValue: 2,
+          ),
+          mainAxisSpacing: attrs.getDouble(
+            key: "mainAxisSpacing",
+            defaultValue: 0,
+          ),
+          crossAxisSpacing: attrs.getDouble(
+            key: "crossAxisSpacing",
+            defaultValue: 0,
+          ),
+          childAspectRatio: attrs.getDouble(
+            key: "childAspectRatio",
+            defaultValue: 1.0,
+          ),
           children: widget.children,
         );
       case GridConstructor.extent:
         return SliverGrid.extent(
           key: ValueKey(widget.controller.id),
-          maxCrossAxisExtent: attrs.maxCrossAxisExtent,
-          mainAxisSpacing: attrs.mainAxisSpacing,
-          crossAxisSpacing: attrs.crossAxisSpacing,
-          childAspectRatio: attrs.childAspectRatio,
+          maxCrossAxisExtent: attrs.getDouble(
+            key: "maxCrossAxisExtent",
+            defaultValue: 0,
+          ),
+          mainAxisSpacing: attrs.getDouble(
+            key: "mainAxisSpacing",
+            defaultValue: 0,
+          ),
+          crossAxisSpacing: attrs.getDouble(key: "crossAxisSpacing"),
+          childAspectRatio: attrs.getDouble(
+            key: "childAspectRatio",
+            defaultValue: 1.0,
+          ),
           children: widget.children,
         );
       default:

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitAnimatedCrossFade extends StatefulWidget {
-  final UIElementController<AnimatedCrossFadeAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
 
   const DuitAnimatedCrossFade({
@@ -17,9 +16,7 @@ class DuitAnimatedCrossFade extends StatefulWidget {
 }
 
 class _DuitAnimatedCrossFadeState extends State<DuitAnimatedCrossFade>
-    with
-        ViewControllerChangeListener<DuitAnimatedCrossFade,
-            AnimatedCrossFadeAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,15 +29,18 @@ class _DuitAnimatedCrossFadeState extends State<DuitAnimatedCrossFade>
       key: ValueKey(widget.controller.id),
       firstChild: widget.children[0],
       secondChild: widget.children[1],
-      crossFadeState: attributes.crossFadeState == 0
+      crossFadeState: attributes.getInt(key: "crossFadeState") == 0
           ? CrossFadeState.showFirst
           : CrossFadeState.showSecond,
-      duration: attributes.duration,
-      firstCurve: attributes.firstCurve,
-      secondCurve: attributes.secondCurve,
-      alignment: attributes.alignment,
-      sizeCurve: attributes.sizeCurve,
-      excludeBottomFocus: attributes.excludeBottomFocus,
+      duration: attributes.duration(),
+      firstCurve: attributes.curve(defaultValue: Curves.linear)!,
+      secondCurve: attributes.curve(defaultValue: Curves.linear)!,
+      alignment: attributes.alignment(defaultValue: Alignment.topCenter)!,
+      sizeCurve: attributes.curve(defaultValue: Curves.linear)!,
+      excludeBottomFocus: attributes.getBool(
+        "excludeBottomFocus",
+        defaultValue: true,
+      ),
     );
   }
 }

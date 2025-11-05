@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
 void main() {
   group(
@@ -14,19 +14,18 @@ void main() {
             "attributes": {
               "width": 100,
               "height": 100,
-              "decoration": {
+              "decoration": <String, dynamic>{
                 "color": [
                   0,
                   0,
                   0,
                   1,
                 ],
-              }
+              },
             },
             "controlled": false,
           },
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
@@ -52,19 +51,18 @@ void main() {
             "attributes": {
               "width": 100,
               "height": 100,
-              "decoration": {
+              "decoration": <String, dynamic>{
                 "color": [
                   0,
                   0,
                   0,
                   1,
                 ],
-              }
+              },
             },
             "controlled": true,
           },
-          transportOptions: HttpTransportOptions(),
-          enableDevMetrics: false,
+          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
@@ -82,9 +80,9 @@ void main() {
         expect(box, paints..rect(color: Colors.black));
 
         await driver.updateTestAttributes("container", {
-          "decoration": {
+          "decoration": <String, dynamic>{
             "color": "#FFFFFF",
-          }
+          },
         });
 
         await tester.pumpAndSettle();
@@ -92,11 +90,12 @@ void main() {
         box = find.byKey(const ValueKey("container"));
 
         expect(
-            box,
-            paints
-              ..rect(
-                color: Colors.white,
-              ));
+          box,
+          paints
+            ..rect(
+              color: Colors.white,
+            ),
+        );
       });
     },
   );

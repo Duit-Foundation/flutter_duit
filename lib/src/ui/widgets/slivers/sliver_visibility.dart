@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitSliverVisibility extends StatelessWidget {
-  final ViewAttribute<SliverVisibilityAttributes> attributes;
-  final Widget child;
+  final ViewAttribute attributes;
+  final List<Widget> children;
 
   const DuitSliverVisibility({
     super.key,
     required this.attributes,
-    required this.child,
+    required this.children,
   });
 
   @override
   Widget build(BuildContext context) {
+    final attrs = attributes.payload;
+    final [sliver, replacementSliver] = children;
     return SliverVisibility(
       key: ValueKey(attributes.id),
-      visible: attributes.payload.visible,
-      maintainState: attributes.payload.maintainState,
-      maintainAnimation: attributes.payload.maintainAnimation,
-      maintainSize: attributes.payload.maintainSize,
-      maintainSemantics: attributes.payload.maintainSemantics,
-      maintainInteractivity: attributes.payload.maintainInteractivity,
-      sliver: attributes.payload.needsBoxAdapter
-          ? SliverToBoxAdapter(child: child)
-          : child,
+      visible: attrs.getBool(
+        "visible",
+        defaultValue: true,
+      ),
+      maintainState: attrs.getBool("maintainState"),
+      maintainAnimation: attrs.getBool("maintainAnimation"),
+      maintainSize: attrs.getBool("maintainSize"),
+      maintainSemantics: attrs.getBool("maintainSemantics"),
+      maintainInteractivity: attrs.getBool("maintainInteractivity"),
+      replacementSliver: replacementSliver,
+      sliver: attrs.getBool("needsBoxAdapter")
+          ? SliverToBoxAdapter(child: sliver)
+          : sliver,
     );
   }
 }
 
 class DuitControlledSliverVisibility extends StatefulWidget {
-  final UIElementController<SliverVisibilityAttributes> controller;
-  final Widget child;
+  final UIElementController controller;
+  final List<Widget> children;
 
   const DuitControlledSliverVisibility({
     super.key,
     required this.controller,
-    required this.child,
+    required this.children,
   });
 
   @override
@@ -46,10 +51,7 @@ class DuitControlledSliverVisibility extends StatefulWidget {
 
 class _DuitControlledSliverVisibilityState
     extends State<DuitControlledSliverVisibility>
-    with
-        ViewControllerChangeListener<DuitControlledSliverVisibility,
-            SliverVisibilityAttributes>,
-        OutOfBoundWidgetBuilder {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -58,20 +60,19 @@ class _DuitControlledSliverVisibilityState
 
   @override
   Widget build(BuildContext context) {
+    final [sliver, replacementSliver] = widget.children;
     return SliverVisibility(
       key: ValueKey(widget.controller.id),
-      visible: attributes.visible,
-      maintainState: attributes.maintainState,
-      maintainAnimation: attributes.maintainAnimation,
-      maintainSize: attributes.maintainSize,
-      maintainSemantics: attributes.maintainSemantics,
-      maintainInteractivity: attributes.maintainInteractivity,
-      replacementSliver: buildOutOfBoundWidget(
-              attributes.replacementSliver, widget.controller.driver, null) ??
-          const SliverToBoxAdapter(),
-      sliver: attributes.needsBoxAdapter
-          ? SliverToBoxAdapter(child: widget.child)
-          : widget.child,
+      visible: attributes.getBool("visible"),
+      maintainState: attributes.getBool("maintainState"),
+      maintainAnimation: attributes.getBool("maintainAnimation"),
+      maintainSize: attributes.getBool("maintainSize"),
+      maintainSemantics: attributes.getBool("maintainSemantics"),
+      maintainInteractivity: attributes.getBool("maintainInteractivity"),
+      replacementSliver: replacementSliver,
+      sliver: attributes.getBool("needsBoxAdapter")
+          ? SliverToBoxAdapter(child: sliver)
+          : sliver,
     );
   }
 }

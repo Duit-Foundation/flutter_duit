@@ -2,13 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/duit_impl/view_context.dart';
 
-extension type ActionUtils(Map<String, dynamic> json) {
-  ServerAction? parseAction(String key) {
-    final Map<String, dynamic>? action = json[key];
-    if (action == null) return null;
-    return ServerAction.parse(action);
-  }
-}
+/// Utility functions for handling actions in Flutter Duit.
+///
+/// This library provides utilities for managing and executing actions
+/// within the Flutter Duit framework. It includes functionality for
+/// action handling, gesture processing, and action execution.
+///
+/// Example usage:
+/// ```dart
+/// // Using ActionHandler mixin
+/// class MyWidget extends StatefulWidget with ActionHandler {
+///   @override
+///   Widget build(BuildContext context) {
+///     return GestureDetector(
+///       onTap: performAction(
+///         context,
+///         controller,
+///         action,
+///         type: GestureType.tap,
+///       ),
+///       child: Container(),
+///     );
+///   }
+/// }
+/// ```
+///
+/// The [ActionHandler] mixin provides a convenient way to handle actions
+/// with gesture interception and async execution support.
 
 mixin ActionHandler {
   void Function([Object? gestureInfo])? performAction(

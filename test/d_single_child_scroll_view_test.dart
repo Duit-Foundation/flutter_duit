@@ -5,12 +5,12 @@ import "package:flutter_test/flutter_test.dart";
 Map<String, dynamic> _createWidget1() {
   return {
     "type": "SingleChildScrollView",
-    "attributes": {},
+    "attributes": <String, dynamic>{},
     "controlled": false,
     "id": "scr",
     "child": {
       "type": "Column",
-      "attributes": {},
+      "attributes": <String, dynamic>{},
       "controlled": false,
       "id": "col",
       "children": List.generate(
@@ -35,8 +35,7 @@ void main() {
       (WidgetTester tester) async {
     final driver = DuitDriver.static(
       _createWidget1(),
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
 
     await tester.pumpWidget(
@@ -50,7 +49,8 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(driver.controllersCount, 50);
+    expect(
+        driver.controllersCount, 50 + 1); // +1 default controller for overlays
 
     final scrollView = find.byType(Scrollable);
 
@@ -75,7 +75,7 @@ void main() {
         "id": "scr_h",
         "child": {
           "type": "Row",
-          "attributes": {},
+          "attributes": <String, dynamic>{},
           "controlled": false,
           "id": "row_h",
           "children": List.generate(
@@ -93,8 +93,7 @@ void main() {
           ),
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
@@ -123,7 +122,7 @@ void main() {
         "id": "scr_r",
         "child": {
           "type": "Column",
-          "attributes": {},
+          "attributes": <String, dynamic>{},
           "controlled": false,
           "id": "col_r",
           "children": List.generate(
@@ -141,8 +140,7 @@ void main() {
           ),
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
@@ -182,8 +180,7 @@ void main() {
           },
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
@@ -209,7 +206,7 @@ void main() {
         "id": "scr_np",
         "child": {
           "type": "Column",
-          "attributes": {},
+          "attributes": <String, dynamic>{},
           "controlled": false,
           "id": "col_np",
           "children": List.generate(
@@ -227,8 +224,7 @@ void main() {
           ),
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
@@ -266,8 +262,7 @@ void main() {
           },
         },
       },
-      transportOptions: HttpTransportOptions(),
-      enableDevMetrics: false,
+      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(

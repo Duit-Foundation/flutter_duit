@@ -21,6 +21,7 @@ class _DuitRemoteSubtreeState extends State<DuitRemoteSubtree>
     attachStateToController(
       widget.controller,
       const SizedBox.shrink(),
+      remote: true,
     );
     super.initState();
   }

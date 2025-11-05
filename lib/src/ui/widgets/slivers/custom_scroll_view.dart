@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitCustomScrollView extends StatelessWidget {
-  final ViewAttribute<CustomScrollViewAttributes> attributes;
+  final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitCustomScrollView({
@@ -17,26 +16,26 @@ class DuitCustomScrollView extends StatelessWidget {
     final attrs = attributes.payload;
     return CustomScrollView(
       key: ValueKey(attributes.id),
-      scrollDirection: attrs.scrollDirection,
-      reverse: attrs.reverse,
-      primary: attrs.primary,
-      physics: attrs.physics,
-      shrinkWrap: attrs.shrinkWrap,
-      center: attrs.center,
-      anchor: attrs.anchor,
-      cacheExtent: attrs.cacheExtent,
-      semanticChildCount: attrs.semanticChildCount,
-      dragStartBehavior: attrs.dragStartBehavior,
-      keyboardDismissBehavior: attrs.keyboardDismissBehavior,
-      clipBehavior: attrs.clipBehavior,
-      hitTestBehavior: attrs.hitTestBehavior,
+      scrollDirection: attrs.axis(),
+      reverse: attrs.getBool("reverse"),
+      primary: attrs.tryGetBool("primary"),
+      physics: attrs.scrollPhysics(),
+      shrinkWrap: attrs.getBool("shrinkWrap"),
+      // center: attrs.tryGetBool("center"),
+      anchor: attrs.getDouble(key: "anchor"),
+      cacheExtent: attrs.tryGetDouble(key: "cacheExtent"),
+      semanticChildCount: attrs.tryGetInt(key: "semanticChildCount"),
+      dragStartBehavior: attrs.dragStartBehavior(),
+      keyboardDismissBehavior: attrs.keyboardDismissBehavior(),
+      clipBehavior: attrs.clipBehavior()!,
+      hitTestBehavior: attrs.hitTestBehavior(),
       slivers: children,
     );
   }
 }
 
 class DuitControlledCustomScrollView extends StatefulWidget {
-  final UIElementController<CustomScrollViewAttributes> controller;
+  final UIElementController controller;
   final List<Widget> children;
 
   const DuitControlledCustomScrollView({
@@ -52,9 +51,7 @@ class DuitControlledCustomScrollView extends StatefulWidget {
 
 class _DuitControlledCustomScrollViewState
     extends State<DuitControlledCustomScrollView>
-    with
-        ViewControllerChangeListener<DuitControlledCustomScrollView,
-            CustomScrollViewAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -65,19 +62,19 @@ class _DuitControlledCustomScrollViewState
   Widget build(BuildContext context) {
     return CustomScrollView(
       key: ValueKey(widget.controller.id),
-      scrollDirection: attributes.scrollDirection,
-      reverse: attributes.reverse,
-      primary: attributes.primary,
-      physics: attributes.physics,
-      shrinkWrap: attributes.shrinkWrap,
-      center: attributes.center,
-      anchor: attributes.anchor,
-      cacheExtent: attributes.cacheExtent,
-      semanticChildCount: attributes.semanticChildCount,
-      dragStartBehavior: attributes.dragStartBehavior,
-      keyboardDismissBehavior: attributes.keyboardDismissBehavior,
-      clipBehavior: attributes.clipBehavior,
-      hitTestBehavior: attributes.hitTestBehavior,
+      scrollDirection: attributes.axis(),
+      reverse: attributes.getBool("reverse"),
+      primary: attributes.tryGetBool("primary"),
+      physics: attributes.scrollPhysics(),
+      shrinkWrap: attributes.getBool("shrinkWrap"),
+      // center: attrs.tryGetBool("center"),
+      anchor: attributes.getDouble(key: "anchor"),
+      cacheExtent: attributes.tryGetDouble(key: "cacheExtent"),
+      semanticChildCount: attributes.tryGetInt(key: "semanticChildCount"),
+      dragStartBehavior: attributes.dragStartBehavior(),
+      keyboardDismissBehavior: attributes.keyboardDismissBehavior(),
+      clipBehavior: attributes.clipBehavior()!,
+      hitTestBehavior: attributes.hitTestBehavior(),
       slivers: widget.children,
     );
   }

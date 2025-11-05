@@ -1,4 +1,3 @@
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -9,7 +8,7 @@ void main() {
   group(
     "DuitGridView tests",
     () {
-      final arr = [];
+      final arr = <Map<String, dynamic>>[];
 
       for (var i = 0; i < 20; i++) {
         arr.add({
@@ -243,28 +242,7 @@ void main() {
               const ValueKey("firts_case"),
             );
 
-            expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
-
-            driver = DuitDriver.static(
-              {
-                "type": "GridView",
-                "controlled": true,
-                "id": "grid",
-                "children": arr,
-                "attributes": {
-                  "constructor": "count",
-                },
-              },
-              transportOptions: EmptyTransportOptions(),
-            );
-
-            await pumpDriver(
-              tester,
-              driver,
-              const ValueKey("second_case"),
-            );
-
-            expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
+            expect(tester.takeException(), isAssertionError);
           },
         );
       });
@@ -334,32 +312,6 @@ void main() {
               expect(grid, findsOneWidget);
             },
           );
-
-          testWidgets(
-            "must throw assertion error",
-            (tester) async {
-              final driver = DuitDriver.static(
-                {
-                  "type": "GridView",
-                  "controlled": true,
-                  "id": "grid",
-                  "children": arr,
-                  "attributes": {
-                    "constructor": "count",
-                  },
-                },
-                transportOptions: EmptyTransportOptions(),
-              );
-
-              await pumpDriver(
-                tester,
-                driver,
-              );
-
-              expect(
-                  tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
-            },
-          );
         },
       );
 
@@ -367,7 +319,7 @@ void main() {
         "GridView.builder constructor",
         () {
           setUpAll(() async {
-            await DuitRegistry.configure();
+            await DuitRegistry.initialize();
 
             await DuitRegistry.registerComponents([
               {

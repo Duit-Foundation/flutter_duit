@@ -5,10 +5,9 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/duit_impl/hooks.dart";
+import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
-import "package:flutter_duit/src/ui/models/element_type.dart";
-import "package:flutter_duit/src/utils/index.dart";
 
 final class DuitDriver with DriverHooks implements UIDriver {
   @protected
@@ -22,11 +21,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @override
   TransportOptions transportOptions;
 
-  @override
-  @Deprecated("Use eventStreamController instead")
-  StreamController<ElementTree?> streamController =
-      StreamController.broadcast();
-
   @protected
   @override
   late BuildContext buildContext;
@@ -36,23 +30,16 @@ final class DuitDriver with DriverHooks implements UIDriver {
     buildContext = value;
   }
 
-  @override
-  StreamController<UIDriverEvent> eventStreamController =
-      StreamController.broadcast();
+  final _eventStreamController = StreamController<UIDriverEvent>.broadcast();
 
   @override
-  Stream<UIDriverEvent> get eventStream => eventStreamController.stream;
+  Stream<UIDriverEvent> get eventStream => _eventStreamController.stream;
 
   @override
   ExternalEventHandler? externalEventHandler;
 
   @override
   ScriptRunner? scriptRunner;
-
-  @override
-  @Deprecated("Use eventStream instead")
-  Stream<ElementTree?> get stream =>
-      streamController.stream.asBroadcastStream();
 
   @protected
   final Map<String, dynamic>? initialRequestPayload;
@@ -75,9 +62,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
   late final bool isModule;
 
   @override
-  late DebugLogger? logger;
+  DebugLogger? logger;
 
   late ViewManager _viewManager;
+
+  final _dataSources = <int, StreamSubscription<ServerEvent>>{};
 
   DuitDriver(
     this.source, {
@@ -88,7 +77,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     EventResolver? customEventResolver,
     ActionExecutor? customActionExecutor,
     DebugLogger? customLogger,
-    bool enableDevMetrics = false,
     bool shared = false,
   }) {
     logger = customLogger ?? DefaultLogger.instance;
@@ -117,7 +105,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     EventResolver? customEventResolver,
     ActionExecutor? customActionExecutor,
     DebugLogger? customLogger,
-    bool enableDevMetrics = false,
     this.source = "",
     this.initialRequestPayload,
     bool shared = false,
@@ -150,9 +137,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
         driverChannel = const MethodChannel("duit:driver"),
         _viewManager = SimpleViewManager();
 
-  //</editor-fold">
-
-  //<editor-fold desc="Controller related methods">
   @protected
   @override
   void attachController(String id, UIElementController controller) =>
@@ -186,7 +170,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         error: e,
         stackTrace: s,
       );
-      eventStreamController.sink.addError(e);
+      _eventStreamController.sink.addError(e);
     }
 
     if (transport is Streamer) {
@@ -203,7 +187,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
               error: e,
               stackTrace: s,
             );
-            eventStreamController.sink.addError(e);
+            _eventStreamController.sink.addError(e);
           }
         },
       );
@@ -241,7 +225,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
       final view = await _viewManager.prepareLayout(json);
 
       if (view != null) {
-        eventStreamController.sink.add(
+        _eventStreamController.sink.add(
           UIDriverViewEvent(view),
         );
       } else {
@@ -255,7 +239,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         error: e,
         stackTrace: s,
       );
-      eventStreamController.addError(
+      _eventStreamController.addError(
         UIDriverErrorEvent(
           "Layout parse failed",
           error: e,
@@ -269,7 +253,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
   void dispose() {
     onDispose?.call();
     transport?.dispose();
-    eventStreamController.close();
+    _eventStreamController.close();
+    for (final subscription in _dataSources.values) {
+      subscription.cancel();
+    }
+    _dataSources.clear();
   }
 
   @override
@@ -279,7 +267,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   void _addParsers() {
     try {
-      ViewAttribute.attributeParser = const DefaultAttributeParser();
       ServerAction.setActionParser(const DefaultActionParser());
       ServerEvent.eventParser = const DefaultEventParser();
     } catch (e) {
@@ -290,10 +277,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
       );
     }
   }
-
-  //</editor-fold>
-
-  //<editor-fold desc="Actions & Events">
 
   @override
   Future<void> execute(ServerAction action) async {
@@ -319,36 +302,25 @@ final class DuitDriver with DriverHooks implements UIDriver {
 
   Future<void> _resolveComponentUpdate(
     UIElementController controller,
-    JSONObject json,
+    Map<String, dynamic> json,
   ) async {
     final tag = controller.tag;
     final description = DuitRegistry.getComponentDescription(tag!);
 
     if (description != null) {
-      final component = JsonUtils.mergeWithDataSource(
+      final component = ComponentBuilder.build(
         description,
         json,
       );
 
-      final attributes = ViewAttribute.createAttributes(
-        ElementType.subtree,
-        component,
-        tag,
-      );
-
-      controller.updateState(attributes);
+      controller.updateState(component);
     }
   }
 
   @protected
   @override
-  Future<void> evalScript(String source) async {
-    await scriptRunner?.eval(source);
-  }
+  Future<void> evalScript(String source) async => scriptRunner?.eval(source);
 
-  // </editor-fold>
-
-  //<editor-fold desc="Transport methods">
   /// Returns a transport based on the specified transport type.
   ///
   /// This method is used internally to create and return a transport object based
@@ -402,7 +374,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
           final json = call.arguments as Map<String, dynamic>;
           final view = await _viewManager.prepareLayout(json);
           if (view != null) {
-            eventStreamController.sink.add(
+            _eventStreamController.sink.add(
               UIDriverViewEvent(view),
             );
           }
@@ -414,9 +386,6 @@ final class DuitDriver with DriverHooks implements UIDriver {
     _isChannelInitialized = true;
   }
 
-  // </editor-fold">
-
-  //<editor-fold desc="Testing">
   @visibleForTesting
   Future<void> updateTestAttributes(
     String id,
@@ -451,9 +420,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
         final controller = _viewManager.getController(dependency.id);
         if (controller != null) {
           final attribute = controller.attributes.payload;
-          if (attribute is AttendedModel) {
-            payload[dependency.target] = attribute.collect();
-          }
+          payload[dependency.target] = attribute["value"];
         }
       }
     }
@@ -468,18 +435,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
   ) async {
     final controller = _viewManager.getController(controllerId);
     if (controller != null) {
-      if (controller.type == ElementType.component) {
+      if (controller.type == ElementType.component.name) {
         await _resolveComponentUpdate(controller, json);
         return;
       }
-
-      final attributes = ViewAttribute.createAttributes(
-        controller.type,
-        json,
-        controller.tag,
-      );
-
-      controller.updateState(attributes);
+      controller.updateState(json);
     }
   }
 
@@ -490,12 +450,49 @@ final class DuitDriver with DriverHooks implements UIDriver {
   ) {
     _viewManager.notifyWidgetDisplayStateChanged(viewTag, state);
     logger?.info(
-        "Widget with tag ${viewTag.isEmpty ? "*root*" : viewTag} state changed to $state");
+      "Widget with tag ${viewTag.isEmpty ? "*root*" : viewTag} state changed to $state",
+    );
   }
 
   @override
   bool isWidgetReady(String viewTag) {
     return _viewManager.isWidgetReady(viewTag);
   }
-//</editor-fold>
+
+  /// Adds an event stream to be listened to and processed by the driver.
+  ///
+  /// Each element of the stream must be a Map<String, dynamic>, which will be converted into a [ServerEvent].
+  /// If the event is a [NullEvent], a [NullEventException] will be thrown.
+  /// For all other events, [eventResolver.resolveEvent] is called with the current [buildContext].
+  ///
+  /// The stream subscription is stored in the internal [_dataSources] list for lifecycle management.
+  ///
+  /// [stream] - the stream of events coming from the server or another data source.
+  void addExternalEventStream(
+    Stream<Map<String, dynamic>> stream,
+  ) {
+    final id = DateTime.now().millisecondsSinceEpoch;
+
+    void cancelSub() {
+      _dataSources.remove(id);
+    }
+
+    final sub = stream.map(ServerEvent.parseEvent).listen(
+      (event) {
+        if (event is NullEvent) {
+          throw const NullEventException("NullEvent received from data source");
+        } else {
+          eventResolver.resolveEvent(
+            // ignore: use_build_context_synchronously
+            buildContext,
+            event,
+          );
+        }
+      },
+      onDone: cancelSub,
+      onError: (e, s) => cancelSub(),
+    );
+
+    _dataSources[id] = sub;
+  }
 }

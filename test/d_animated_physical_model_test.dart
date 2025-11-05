@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -15,7 +15,7 @@ void main() {
             "id": "animated_physical_model",
             "attributes": {
               "duration": 300,
-              "curve": "easeInOut",
+              "curve": "ease",
               "elevation": 4.0,
               "color": [255, 0, 0, 1],
               "shadowColor": [0, 0, 0, 1],
@@ -27,8 +27,8 @@ void main() {
               "attributes": {
                 "width": 100,
                 "height": 100,
-              }
-            }
+              },
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -46,8 +46,10 @@ void main() {
           ),
           isA<AnimatedPhysicalModel>(),
         );
-        expect(find.byKey(const ValueKey("animated_physical_model")),
-            findsOneWidget);
+        expect(
+          find.byKey(const ValueKey("animated_physical_model")),
+          findsOneWidget,
+        );
       });
 
       testWidgets("must animate elevation change", (tester) async {
@@ -69,8 +71,8 @@ void main() {
               "attributes": {
                 "width": 80,
                 "height": 80,
-              }
-            }
+              },
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -106,11 +108,11 @@ void main() {
               "shadowColor": [128, 128, 128, 1],
               "clipBehavior": "antiAlias",
               "borderRadius": {
-                "topLeft": {"radius": 20.0},
-                "topRight": {"radius": 20.0},
-                "bottomLeft": {"radius": 20.0},
-                "bottomRight": {"radius": 20.0}
-              }
+                "topLeft": <String, dynamic>{"radius": 20.0},
+                "topRight": <String, dynamic>{"radius": 20.0},
+                "bottomLeft": <String, dynamic>{"radius": 20.0},
+                "bottomRight": <String, dynamic>{"radius": 20.0},
+              },
             },
             "child": {
               "type": "Container",
@@ -118,8 +120,8 @@ void main() {
               "attributes": {
                 "width": 120,
                 "height": 120,
-              }
-            }
+              },
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -141,7 +143,9 @@ void main() {
         expect(widget.shadowColor, const Color.fromARGB(255, 128, 128, 128));
         expect(widget.clipBehavior, Clip.antiAlias);
         expect(
-            widget.borderRadius, const BorderRadius.all(Radius.circular(20)));
+          widget.borderRadius,
+          const BorderRadius.all(Radius.circular(20)),
+        );
       });
 
       testWidgets("must handle onEnd callback", (tester) async {
@@ -156,7 +160,7 @@ void main() {
               "color": [255, 255, 0, 1],
               "shadowColor": [0, 0, 0, 1],
               "clipBehavior": "none",
-              "onEnd": {"type": "action", "action": "test_action"}
+              "onEnd": {"type": "action", "action": "test_action"},
             },
             "child": {
               "type": "Container",
@@ -164,8 +168,8 @@ void main() {
               "attributes": {
                 "width": 60,
                 "height": 60,
-              }
-            }
+              },
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/animations/index.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitAnimatedSlide extends StatefulWidget {
-  final UIElementController<AnimatedSlideAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitAnimatedSlide({
@@ -18,10 +17,7 @@ class DuitAnimatedSlide extends StatefulWidget {
 }
 
 class _DuitAnimatedSlideState extends State<DuitAnimatedSlide>
-    with
-        ViewControllerChangeListener<DuitAnimatedSlide,
-            AnimatedSlideAttributes>,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,11 +28,11 @@ class _DuitAnimatedSlideState extends State<DuitAnimatedSlide>
   Widget build(BuildContext context) {
     return AnimatedSlide(
       key: ValueKey(widget.controller.id),
-      offset: attributes.offset,
-      duration: attributes.duration,
-      curve: attributes.curve,
+      offset: attributes.offset(defaultValue: Offset.zero)!,
+      duration: attributes.duration(),
+      curve: attributes.curve(defaultValue: Curves.linear)!,
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
       child: widget.child,

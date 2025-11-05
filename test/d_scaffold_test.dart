@@ -43,15 +43,17 @@ void main() {
             {
               "type": "Scaffold",
               "id": "scaffold",
-              "attributes": {},
-              "child": {
-                "type": "Text",
-                "id": "text",
-                "controlled": false,
-                "attributes": {
-                  "data": "Hello, world!",
+              "attributes": <String, dynamic>{},
+              "children": [
+                {
+                  "type": "Text",
+                  "id": "text",
+                  "controlled": false,
+                  "attributes": {
+                    "data": "Hello, world!",
+                  },
                 },
-              },
+              ],
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -75,14 +77,15 @@ void main() {
               {
                 "type": "Scaffold",
                 "id": "scaffold",
-                "attributes": {
-                  "appBar": {
+                "children": [
+                  null,
+                  {
                     "type": "AppBar",
                     "id": "appBar",
                     "controlled": true,
-                    "attributes": {},
+                    "attributes": <String, dynamic>{},
                   },
-                },
+                ]
               },
               transportOptions: EmptyTransportOptions(),
             ),
@@ -100,14 +103,17 @@ void main() {
             {
               "type": "Scaffold",
               "id": "scaffold",
-              "attributes": {
-                "bottomSheet": {
+              "children": [
+                null,
+                null,
+                null,
+                {
                   "type": "Container",
                   "id": "bottom",
                   "controlled": false,
                   "attributes": {"height": 100, "color": "#00FF00"},
                 },
-              },
+              ],
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -129,8 +135,10 @@ void main() {
             {
               "type": "Scaffold",
               "id": "scaffold",
-              "attributes": {
-                "floatingActionButton": {
+              "children": [
+                null,
+                null,
+                {
                   "type": "Container",
                   "id": "bottom",
                   "controlled": false,
@@ -140,7 +148,8 @@ void main() {
                     "color": "#00FF00",
                   },
                 },
-              },
+                null,
+              ],
             },
             transportOptions: EmptyTransportOptions(),
           );

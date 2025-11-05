@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
 import 'package:flutter_duit/src/animations/index.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitAnimatedPadding extends StatefulWidget {
-  final UIElementController<AnimatedPaddingAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitAnimatedPadding({
@@ -18,10 +17,7 @@ class DuitAnimatedPadding extends StatefulWidget {
 }
 
 class _DuitAnimatedPaddingState extends State<DuitAnimatedPadding>
-    with
-        ViewControllerChangeListener<DuitAnimatedPadding,
-            AnimatedPaddingAttributes>,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -32,11 +28,11 @@ class _DuitAnimatedPaddingState extends State<DuitAnimatedPadding>
   Widget build(BuildContext context) {
     return AnimatedPadding(
       key: ValueKey(widget.controller.id),
-      padding: attributes.padding,
-      duration: attributes.duration,
-      curve: attributes.curve,
+      padding: attributes.edgeInsets(defaultValue: EdgeInsets.zero)!,
+      duration: attributes.duration(),
+      curve: attributes.curve(defaultValue: Curves.linear)!,
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
       child: widget.child,

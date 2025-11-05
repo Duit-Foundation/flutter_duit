@@ -14,7 +14,6 @@ void main() {
               "type": "Row",
               "controlled": false,
               "id": "row",
-              "attributes": {},
               "children": [
                 {
                   "type": "Expanded",

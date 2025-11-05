@@ -1,9 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 
 class DuitSlider extends StatefulWidget {
-  final UIElementController<SliderAttributes> controller;
+  final UIElementController controller;
 
   const DuitSlider({
     super.key,
@@ -15,13 +14,13 @@ class DuitSlider extends StatefulWidget {
 }
 
 class _DuitSliderState extends State<DuitSlider>
-    with ViewControllerChangeListener<DuitSlider, SliderAttributes> {
+    with ViewControllerChangeListener {
   double _value = 0;
 
   @override
   void initState() {
     attachStateToController(widget.controller);
-    _value = attributes.value;
+    _value = attributes.getDouble(key: "value", defaultValue: 0);
     super.initState();
   }
 
@@ -29,16 +28,16 @@ class _DuitSliderState extends State<DuitSlider>
     setState(() {
       _value = value;
     });
-    widget.controller.performAction(attributes.onChanged);
+    widget.controller.performAction(attributes.getAction("onChanged"));
   }
 
   void _onChangeStartHandler(double _) {
-    widget.controller.performAction(attributes.onChangeStart);
+    widget.controller.performAction(attributes.getAction("onChangeStart"));
   }
 
   void _onChangeEndHandler(double value) {
-    attributes.update(value);
-    widget.controller.performAction(attributes.onChangeEnd);
+    attributes.update("value", (v) => value);
+    widget.controller.performAction(attributes.getAction("onChangeEnd"));
   }
 
   @override
@@ -49,18 +48,21 @@ class _DuitSliderState extends State<DuitSlider>
       onChanged: _onChangeHandler,
       onChangeStart: _onChangeStartHandler,
       onChangeEnd: _onChangeEndHandler,
-      min: attributes.min ?? 0,
-      max: attributes.max ?? 1,
-      divisions: attributes.divisions,
-      label: attributes.label,
-      activeColor: attributes.activeColor,
-      inactiveColor: attributes.inactiveColor,
-      secondaryActiveColor: attributes.secondaryActiveColor,
-      thumbColor: attributes.thumbColor,
-      overlayColor: attributes.overlayColor,
-      autofocus: attributes.autofocus,
-      secondaryTrackValue: attributes.secondaryTrackValue,
-      allowedInteraction: attributes.allowedInteraction,
+      min: attributes.getDouble(key: "min", defaultValue: 0),
+      max: attributes.getDouble(key: "max", defaultValue: 1),
+      divisions: attributes.tryGetInt(key: "divisions"),
+      label: attributes.tryGetString("label"),
+      activeColor: attributes.tryParseColor(key: "activeColor"),
+      inactiveColor: attributes.tryParseColor(key: "inactiveColor"),
+      secondaryActiveColor:
+          attributes.tryParseColor(key: "secondaryActiveColor"),
+      thumbColor: attributes.tryParseColor(key: "thumbColor"),
+      overlayColor: attributes.widgetStateProperty<Color>(key: "overlayColor"),
+      autofocus: attributes.getBool("autofocus"),
+      secondaryTrackValue: attributes.tryGetDouble(key: "secondaryTrackValue"),
+      allowedInteraction: attributes.sliderInteraction(
+        key: "allowedInteraction",
+      ),
     );
   }
 }

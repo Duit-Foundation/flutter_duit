@@ -1,11 +1,10 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/animation_attributes/animated_size_attributes.dart";
 
 class DuitAnimatedSize extends StatefulWidget {
   final Widget child;
-  final UIElementController<AnimatedSizeAttributes> controller;
+  final UIElementController controller;
 
   const DuitAnimatedSize({
     super.key,
@@ -18,9 +17,7 @@ class DuitAnimatedSize extends StatefulWidget {
 }
 
 class _DuitAnimatedSizeState extends State<DuitAnimatedSize>
-    with
-        ViewControllerChangeListener<DuitAnimatedSize, AnimatedSizeAttributes>,
-        OnAnimationEnd {
+    with ViewControllerChangeListener, OnAnimationEnd {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -31,13 +28,13 @@ class _DuitAnimatedSizeState extends State<DuitAnimatedSize>
   Widget build(BuildContext context) {
     return AnimatedSize(
       key: ValueKey(widget.controller.id),
-      duration: attributes.duration,
-      clipBehavior: attributes.clipBehavior ?? Clip.hardEdge,
-      alignment: attributes.alignment ?? Alignment.center,
-      curve: attributes.curve,
-      reverseDuration: attributes.reverseDuration,
+      duration: attributes.duration(),
+      clipBehavior: attributes.clipBehavior(defaultValue: Clip.hardEdge)!,
+      alignment: attributes.alignment(defaultValue: Alignment.center)!,
+      curve: attributes.curve(defaultValue: Curves.linear)!,
+      reverseDuration: attributes.duration(key: "reverseDuration"),
       onEnd: onEndHandler(
-        attributes.onEnd,
+        attributes.getAction("onEnd"),
         widget.controller.performAction,
       ),
       child: widget.child,

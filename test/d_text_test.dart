@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_test/flutter_test.dart";
 
 ///Create widget templates for testing
-const _uncText = {
+final _uncText = <String, dynamic>{
   "type": "Text",
   "id": "text",
   "controlled": false,
@@ -14,11 +13,11 @@ const _uncText = {
       "color": "#DCDCDC",
       "fontSize": 14.0,
       "fontWeight": 700,
-    }
+    },
   },
 };
 
-const _uncTextWithoutData = {
+final _uncTextWithoutData = <String, dynamic>{
   "type": "Text",
   "id": "1",
   "controlled": false,
@@ -27,24 +26,26 @@ const _uncTextWithoutData = {
     "style": {
       "fontSize": 24.0,
       "fontWeight": 700,
-    }
+    },
   },
 };
 
-const _cTextWithoutData = {
-  "type": "Text",
-  "id": "1",
-  "controlled": true,
-  "attributes": {
-    "data": "Good bye, World!",
-    "style": {
-      "fontSize": 12.0,
-      "fontWeight": 200,
-    }
-  },
-};
+Map<String, dynamic> _cTextWithoutData() {
+  return <String, dynamic>{
+    "type": "Text",
+    "id": "1",
+    "controlled": true,
+    "attributes": {
+      "data": "Good bye, World!",
+      "style": <String, dynamic>{
+        "fontSize": 12.0,
+        "fontWeight": 200,
+      },
+    },
+  };
+}
 
-const _textWithPropAnimation = {
+final _textWithPropAnimation = <String, dynamic>{
   "type": "AnimatedBuilder",
   "id": "builder",
   "controlled": true,
@@ -71,7 +72,7 @@ const _textWithPropAnimation = {
       "parentBuilderId": "builder",
       "affectedProperties": {"style"},
     },
-  }
+  },
 };
 
 void main() {
@@ -83,8 +84,7 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _uncText,
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
+              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -102,8 +102,7 @@ void main() {
           child: DuitViewHost(
             driver: DuitDriver.static(
               _uncTextWithoutData,
-              transportOptions: HttpTransportOptions(),
-              enableDevMetrics: false,
+              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -116,9 +115,8 @@ void main() {
 
     testWidgets("check text update process", (tester) async {
       final driver = DuitDriver.static(
-        _cTextWithoutData,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        _cTextWithoutData(),
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -140,7 +138,7 @@ void main() {
           "color": "#DCDCDC",
           "fontSize": 14.0,
           "fontWeight": 700,
-        }
+        },
       });
 
       await tester.pumpAndSettle();
@@ -151,8 +149,7 @@ void main() {
     testWidgets("check animation", (tester) async {
       final driver = DuitDriver.static(
         _textWithPropAnimation,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -175,33 +172,10 @@ void main() {
       expect(fWeight, FontWeight.w700);
     });
 
-    testWidgets("check widget key assignment", (tester) async {
-      final driver = DuitDriver.static(
-        _uncText,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
-      );
-
-      await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: DuitViewHost(
-            driver: driver,
-          ),
-        ),
-      );
-
-      await tester.pumpAndSettle();
-
-      final text = find.byKey(const Key("text"));
-      expect(text, findsOneWidget);
-    });
-
     testWidgets("check update when data prop is empty or null", (tester) async {
       final driver = DuitDriver.static(
-        _cTextWithoutData,
-        transportOptions: HttpTransportOptions(),
-        enableDevMetrics: false,
+        _cTextWithoutData(),
+        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -223,17 +197,6 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(text, findsOneWidget);
-    });
-
-    test("check attributes", () async {
-      final attrs = TextAttributes(
-        data: "",
-        parentBuilderId: null,
-        affectedProperties: null,
-      );
-
-      expect(() => attrs.dispatchInternalCall("invalid"),
-          throwsUnimplementedError);
     });
   });
 }

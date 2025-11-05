@@ -1,10 +1,9 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitElevatedButton extends StatefulWidget {
-  final UIElementController<ElevatedButtonAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitElevatedButton({
@@ -18,9 +17,7 @@ final class DuitElevatedButton extends StatefulWidget {
 }
 
 class _DuitElevatedButtonState extends State<DuitElevatedButton>
-    with
-        ViewControllerChangeListener<DuitElevatedButton,
-            ElevatedButtonAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -33,19 +30,18 @@ class _DuitElevatedButtonState extends State<DuitElevatedButton>
     }
   }
 
+  void _performAction() => widget.controller.performRelatedAction();
+
   @override
   Widget build(BuildContext context) {
+    final action = attributes.getAction("onLongPress");
     return ElevatedButton(
       key: Key(widget.controller.id),
-      autofocus: attributes.autofocus ?? false,
-      clipBehavior: attributes.clipBehavior ?? Clip.none,
-      onPressed: widget.controller.performRelatedAction,
-      style: attributes.style,
-      onLongPress: attributes.onLongPress != null
-          ? () => _onLongPress(
-                attributes.onLongPress,
-              )
-          : null,
+      autofocus: attributes.getBool("autofocus"),
+      clipBehavior: attributes.clipBehavior(defaultValue: Clip.none)!,
+      onPressed: _performAction,
+      style: attributes.buttonStyle(),
+      onLongPress: () => _onLongPress(action),
       child: widget.child,
     );
   }

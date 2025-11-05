@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/attributes/index.dart';
 
 class DuitInkWell extends StatefulWidget {
-  final UIElementController<InkWellAttributes> controller;
+  final UIElementController controller;
   final Widget child;
 
   const DuitInkWell({
@@ -17,9 +16,7 @@ class DuitInkWell extends StatefulWidget {
 }
 
 class _DuitInkWellState extends State<DuitInkWell>
-    with
-        ViewControllerChangeListener<DuitInkWell, InkWellAttributes>,
-        ActionHandler {
+    with ViewControllerChangeListener, ActionHandler {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -30,77 +27,83 @@ class _DuitInkWellState extends State<DuitInkWell>
   Widget build(BuildContext context) {
     return InkWell(
       key: Key(widget.controller.id),
-      focusColor: attributes.focusColor,
-      hoverColor: attributes.hoverColor,
-      highlightColor: attributes.highlightColor,
-      overlayColor: attributes.overlayColor,
-      splashColor: attributes.splashColor,
-      radius: attributes.radius,
-      borderRadius: attributes.borderRadius,
-      customBorder: attributes.customBorder,
-      hoverDuration: attributes.hoverDuration,
-      enableFeedback: attributes.enableFeedback,
-      excludeFromSemantics: attributes.excludeFromSemantics,
-      autofocus: attributes.autofocus,
-      canRequestFocus: attributes.canRequestFocus,
+      focusColor: attributes.tryParseColor(key: "focusColor"),
+      hoverColor: attributes.tryParseColor(key: "hoverColor"),
+      highlightColor: attributes.tryParseColor(key: "highlightColor"),
+      overlayColor: attributes.widgetStateProperty<Color>(key: "overlayColor"),
+      splashColor: attributes.tryParseColor(key: "splashColor"),
+      radius: attributes.tryGetDouble(key: "radius"),
+      borderRadius: attributes.borderRadius(),
+      customBorder: attributes.shapeBorder(key: "customBorder"),
+      hoverDuration: attributes.duration(key: "hoverDuration"),
+      enableFeedback: attributes.getBool(
+        "enableFeedback",
+        defaultValue: true,
+      ),
+      excludeFromSemantics: attributes.getBool("excludeFromSemantics"),
+      autofocus: attributes.getBool("autofocus"),
+      canRequestFocus: attributes.getBool(
+        "canRequestFocus",
+        defaultValue: true,
+      ),
       onTap: performAction(
         context,
         widget.controller,
-        attributes.onTap,
+        attributes.getAction("onTap"),
         type: GestureType.onTap,
       ),
       onDoubleTap: performAction(
         context,
         widget.controller,
-        attributes.onDoubleTap,
+        attributes.getAction("onDoubleTap"),
         type: GestureType.onDoubleTap,
       ),
       onLongPress: performAction(
         context,
         widget.controller,
-        attributes.onLongPress,
+        attributes.getAction("onLongPress"),
         type: GestureType.onLongPress,
       ),
       onTapDown: performAction(
         context,
         widget.controller,
-        attributes.onTapDown,
+        attributes.getAction("onTapDown"),
         type: GestureType.onTapDown,
       ),
       onTapUp: performAction(
         context,
         widget.controller,
-        attributes.onTapUp,
+        attributes.getAction("onTapUp"),
         type: GestureType.onTapUp,
       ),
       onTapCancel: performAction(
         context,
         widget.controller,
-        attributes.onTapCancel,
+        attributes.getAction("onTapCancel"),
         type: GestureType.onTapCancel,
       ),
       onSecondaryTapDown: performAction(
         context,
         widget.controller,
-        attributes.onSecondaryTapDown,
+        attributes.getAction("onSecondaryTapDown"),
         type: GestureType.onSecondaryTapDown,
       ),
       onSecondaryTapCancel: performAction(
         context,
         widget.controller,
-        attributes.onSecondaryTapCancel,
+        attributes.getAction("onSecondaryTapCancel"),
         type: GestureType.onSecondaryTapCancel,
       ),
       onSecondaryTap: performAction(
         context,
         widget.controller,
-        attributes.onSecondaryTap,
+        attributes.getAction("onSecondaryTap"),
         type: GestureType.onSecondaryTap,
       ),
       onSecondaryTapUp: performAction(
         context,
         widget.controller,
-        attributes.onSecondaryTapUp,
+        attributes.getAction("onSecondaryTapUp"),
         type: GestureType.onSecondaryTapUp,
       ),
       child: widget.child,

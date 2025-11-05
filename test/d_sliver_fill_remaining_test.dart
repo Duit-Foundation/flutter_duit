@@ -16,7 +16,7 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": false,
-              "attributes": {},
+              "attributes": <String, dynamic>{},
               "children": [
                 {
                   "type": "SliverFillRemaining",
@@ -62,7 +62,7 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": true,
-              "attributes": {},
+              "attributes": <String, dynamic>{},
               "children": [
                 {
                   "type": "SliverFillRemaining",

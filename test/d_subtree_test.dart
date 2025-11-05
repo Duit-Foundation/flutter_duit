@@ -2,24 +2,24 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
-const _t1 = {
+final _t1 = <String, dynamic>{
   "type": "Text",
   "id": "tfgdfg1",
   "controlled": true,
-  "attributes": {"data": "Text 1"}
+  "attributes": {"data": "Text 1"},
 };
 
-const _t2 = {
+final _t2 = <String, dynamic>{
   "type": "Text",
   "id": "fgfgfbcb",
   "controlled": false,
-  "attributes": {"data": "Text 2"}
+  "attributes": {"data": "Text 2"},
 };
 
 Map<String, dynamic> _createWidget() {
   return {
     "type": "Column",
-    "attributes": {},
+    "attributes": <String, dynamic>{},
     "controlled": false,
     "id": "col",
     "children": [
@@ -34,8 +34,8 @@ Map<String, dynamic> _createWidget() {
             "type": "update",
             "updates": {
               "subtree": _t1,
-            }
-          }
+            },
+          },
         },
         "attributes": {
           "autofocus": false,
@@ -46,12 +46,12 @@ Map<String, dynamic> _createWidget() {
           "controlled": true,
           "attributes": {
             "data": "Press me!",
-            "style": {
+            "style": <String, dynamic>{
               "fontSize": 12.0,
               "fontWeight": 400,
-            }
+            },
           },
-        }
+        },
       },
       {
         "type": "ElevatedButton",
@@ -64,8 +64,8 @@ Map<String, dynamic> _createWidget() {
             "type": "update",
             "updates": {
               "subtree": _t2,
-            }
-          }
+            },
+          },
         },
         "attributes": {
           "autofocus": false,
@@ -76,21 +76,25 @@ Map<String, dynamic> _createWidget() {
           "controlled": true,
           "attributes": {
             "data": "Press me!",
-            "style": {
+            "style": <String, dynamic>{
               "fontSize": 12.0,
               "fontWeight": 400,
-            }
+            },
           },
-        }
+        },
       },
       {
         "type": "Subtree",
         "id": "subtree",
         "controlled": true,
-        "attributes": {},
-        "child": {"type": "Empty", "id": "t1x", "attributes": {}}
+        "attributes": <String, dynamic>{},
+        "child": {
+          "type": "SizedBox",
+          "id": "t1x",
+          "attributes": <String, dynamic>{},
+        },
       }
-    ]
+    ],
   };
 }
 
@@ -107,8 +111,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),

@@ -3,7 +3,6 @@ import "package:flutter/rendering.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
-
 Map<String, dynamic> _createWidget(Map value, [bool? controlled = false]) {
   return {
     "type": "BackdropFilter",
@@ -13,15 +12,16 @@ Map<String, dynamic> _createWidget(Map value, [bool? controlled = false]) {
   };
 }
 
-const _blur1 = {
-  "filter": {
+final _blur1 = {
+  "filter": <String, dynamic>{
     "type": 0,
     "sigmaX": "6",
     "sigmaY": "6",
+    "tileMode": "clamp",
   },
 };
-const _blur2 = {
-  "filter": {
+final _blur2 = {
+  "filter": <String, dynamic>{
     "type": "blur",
     "sigmaX": "12",
     "sigmaY": "12",
@@ -29,54 +29,54 @@ const _blur2 = {
   },
 };
 
-const _compose1 = {
+final _compose1 = {
   "filter": {
     "type": 1,
     "outer": _blur1,
     "inner": _blur2,
-  }
+  },
 };
 
-const _compose2 = {
+final _compose2 = {
   "filter": {
     "type": "compose",
     "outer": _blur1,
-  }
+  },
 };
 
-const _dilate1 = {
+final _dilate1 = {
   "filter": {
     "type": 2,
     "radiusX": "12",
     "radiusY": "12",
-  }
+  },
 };
 
-const _dilate2 = {
+final _dilate2 = {
   "filter": {
     "type": "dilate",
     "radiusX": "12",
     "radiusY": "12",
-  }
+  },
 };
 
-const _erode1 = {
+final _erode1 = {
   "filter": {
     "type": 3,
     "radiusX": "12",
     "radiusY": "12",
-  }
+  },
 };
 
-const _erode2 = {
+final _erode2 = {
   "filter": {
     "type": "erode",
     "radiusX": "12",
     "radiusY": "12",
-  }
+  },
 };
 
-const _matrix1 = {
+final _matrix1 = {
   "filter": {
     "type": 4,
     "matrix4": [
@@ -95,12 +95,12 @@ const _matrix1 = {
       13.0,
       14.0,
       15.0,
-      16.0
+      16.0,
     ],
-  }
+  },
 };
 
-const _matrix2 = {
+final _matrix2 = {
   "filter": {
     "type": "matrix",
     "matrix4": [
@@ -119,9 +119,9 @@ const _matrix2 = {
       13.0,
       14.0,
       15.0,
-      16.0
+      16.0,
     ],
-  }
+  },
 };
 
 final _fRuntimeTypes = [
@@ -129,7 +129,7 @@ final _fRuntimeTypes = [
   "_DilateImageFilter",
   "_ErodeImageFilter",
   "_MatrixImageFilter",
-  "_ComposeImageFilter"
+  "_ComposeImageFilter",
 ];
 
 final _filters = [
@@ -158,8 +158,7 @@ void main() {
               child: DuitViewHost(
                 driver: DuitDriver.static(
                   _createWidget(_blur1),
-                  transportOptions: HttpTransportOptions(),
-                  enableDevMetrics: false,
+                  transportOptions: EmptyTransportOptions(),
                 ),
                 child: Container(color: Colors.red),
               ),
@@ -171,8 +170,10 @@ void main() {
           final RenderObject? renderObject =
               tester.element(find.byType(Stack)).renderObject;
           expect(renderObject, isA<RenderStack>());
-          expect((renderObject as RenderStack).firstChild,
-              isA<RenderBackdropFilter>());
+          expect(
+            (renderObject as RenderStack).firstChild,
+            isA<RenderBackdropFilter>(),
+          );
         },
       );
 
@@ -186,8 +187,7 @@ void main() {
                 child: DuitViewHost(
                   driver: DuitDriver.static(
                     _createWidget(filter.$1),
-                    transportOptions: HttpTransportOptions(),
-                    enableDevMetrics: false,
+                    transportOptions: EmptyTransportOptions(),
                   ),
                   child: Container(color: Colors.red),
                 ),
@@ -224,7 +224,7 @@ void main() {
                 "attributes": {
                   "color": "#933C3C",
                   "width": 10.0,
-                  "height": 10.0
+                  "height": 10.0,
                 },
                 "controlled": false,
               },
@@ -262,7 +262,7 @@ void main() {
                 "attributes": {
                   "color": "#933C3C",
                   "width": 10.0,
-                  "height": 10.0
+                  "height": 10.0,
                 },
                 "controlled": false,
               },

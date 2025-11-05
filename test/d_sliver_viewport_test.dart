@@ -16,7 +16,7 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": false,
-              "attributes": {},
+              "attributes": <String, dynamic>{},
               "children": [
                 {
                   "type": "SliverFillViewport",
@@ -79,7 +79,7 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": false,
-              "attributes": {},
+              "attributes": <String, dynamic>{},
               "children": [
                 {
                   "type": "SliverFillViewport",
@@ -152,7 +152,7 @@ void main() {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": false,
-              "attributes": {},
+              "attributes": <String, dynamic>{},
               "children": [
                 {
                   "type": "SliverFillViewport",

@@ -1,4 +1,3 @@
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -9,7 +8,7 @@ void main() {
   group(
     "DuitSliverGrid tests",
     () {
-      final arr = [];
+      final arr = <Map<String, dynamic>>[];
 
       for (var i = 0; i < 20; i++) {
         arr.add({
@@ -240,7 +239,7 @@ void main() {
               const ValueKey("firts_case"),
             );
 
-            expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
+            expect(tester.takeException(), isAssertionError);
 
             driver = DuitDriver.static(
               {
@@ -261,7 +260,7 @@ void main() {
               const ValueKey("second_case"),
             );
 
-            expect(tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
+            expect(tester.takeException(), isAssertionError);
           },
         );
       });
@@ -367,8 +366,7 @@ void main() {
                 driver,
               );
 
-              expect(
-                  tester.takeException(), isInstanceOf<UIDriverErrorEvent>());
+              expect(tester.takeException(), isAssertionError);
             },
           );
         },
@@ -378,7 +376,7 @@ void main() {
         "SliverGrid.builder constructor",
         () {
           setUpAll(() async {
-            await DuitRegistry.configure();
+            await DuitRegistry.initialize();
 
             await DuitRegistry.registerComponents([
               {

@@ -1,11 +1,10 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import "package:flutter_duit/src/attributes/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 final class DuitText extends StatelessWidget with AnimatedAttributes {
-  final ViewAttribute<TextAttributes> attributes;
+  final ViewAttribute attributes;
 
   const DuitText({
     super.key,
@@ -14,31 +13,37 @@ final class DuitText extends StatelessWidget with AnimatedAttributes {
 
   @override
   Widget build(context) {
-    final attrs = mergeWithAttributes(
+    final attrs = mergeWithDataSource(
       context,
       attributes.payload,
     );
 
-    if (attributes.payload.data == null || attributes.payload.data!.isEmpty) {
+    final data = attrs.tryGetString("data");
+
+    if (data == null || data.isEmpty) {
       return const SizedBox.shrink();
     }
 
     return Text(
-      key: Key(attributes.id),
-      attrs.data ?? "",
-      textAlign: attrs.textAlign,
-      textDirection: attrs.textDirection,
-      style: attrs.style,
-      maxLines: attrs.maxLines,
-      semanticsLabel: attrs.semanticsLabel,
-      overflow: attrs.overflow,
-      softWrap: attrs.softWrap,
+      key: ValueKey(attributes.id),
+      data,
+      textAlign: attrs.textAlign(),
+      textDirection: attrs.textDirection(),
+      style: attrs.textStyle(),
+      maxLines: attrs.tryGetInt(key: "maxLines"),
+      semanticsLabel: attrs.tryGetString("semanticsLabel"),
+      overflow: attrs.textOverflow(),
+      softWrap: attrs.tryGetBool("softWrap"),
+      textHeightBehavior: attrs.textHeightBehavior(),
+      textScaler: attrs.textScaler(),
+      textWidthBasis: attrs.textWidthBasis(),
+      selectionColor: attrs.tryParseColor(key: "selectionColor"),
     );
   }
 }
 
 final class DuitControlledText extends StatefulWidget with AnimatedAttributes {
-  final UIElementController<TextAttributes> controller;
+  final UIElementController controller;
 
   const DuitControlledText({
     super.key,
@@ -50,7 +55,7 @@ final class DuitControlledText extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledTextState extends State<DuitControlledText>
-    with ViewControllerChangeListener<DuitControlledText, TextAttributes> {
+    with ViewControllerChangeListener {
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -59,24 +64,31 @@ class _DuitControlledTextState extends State<DuitControlledText>
 
   @override
   Widget build(BuildContext context) {
-    final attrs = widget.mergeWithAttributes(
+    final attrs = widget.mergeWithDataSource(
       context,
       attributes,
     );
 
-    if (attrs.data == null || attrs.data!.isEmpty) {
+    final data = attrs.tryGetString("data");
+
+    if (data == null || data.isEmpty) {
       return const SizedBox.shrink();
     }
 
     return Text(
-      attrs.data!,
-      textAlign: attrs.textAlign,
-      textDirection: attrs.textDirection,
-      style: attrs.style,
-      maxLines: attrs.maxLines,
-      semanticsLabel: attrs.semanticsLabel,
-      overflow: attrs.overflow,
-      softWrap: attrs.softWrap,
+      data,
+      key: ValueKey(widget.controller.id),
+      textAlign: attrs.textAlign(),
+      textDirection: attrs.textDirection(),
+      style: attrs.textStyle(),
+      maxLines: attrs.tryGetInt(key: "maxLines"),
+      semanticsLabel: attrs.tryGetString("semanticsLabel"),
+      overflow: attrs.textOverflow(),
+      softWrap: attrs.tryGetBool("softWrap"),
+      textHeightBehavior: attrs.textHeightBehavior(),
+      textScaler: attrs.textScaler(),
+      textWidthBasis: attrs.textWidthBasis(),
+      selectionColor: attrs.tryParseColor(key: "selectionColor"),
     );
   }
 }

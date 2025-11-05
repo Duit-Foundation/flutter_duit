@@ -5,8 +5,6 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
-import "mocks/custom.dart";
-
 double getFateTransitionOpacity(WidgetTester tester, Finder finder) {
   return tester
       .widget<FadeTransition>(
@@ -75,37 +73,6 @@ final class MockTransport extends Transport {
 extension TransportExtension on UIDriver {
   void applyMockTransport(dynamic mustReturnThis) {
     transport = MockTransport("", mustReturnThis);
-  }
-}
-
-final class CustomWidgetThemeToken extends ThemeToken {
-  CustomWidgetThemeToken(Map<String, dynamic> themeData)
-      : super(
-          const {},
-          themeData,
-          exampleCustomWidget,
-        );
-}
-
-final class MockThemeLoader implements ResourceLoader<DuitTheme> {
-  final Map<String, dynamic> theme;
-
-  const MockThemeLoader(this.theme);
-
-  @override
-  Future<DuitTheme> load() async {
-    final tp = ThemePreprocessor(
-      customWidgetTokenizer: (type, themeData) {
-        final token = switch (type) {
-          exampleCustomWidget => CustomWidgetThemeToken(themeData),
-          _ => null,
-        };
-
-        return token;
-      },
-    );
-
-    return tp.tokenize(theme);
   }
 }
 
