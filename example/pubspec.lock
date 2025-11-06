@@ -84,11 +84,10 @@ packages:
   duit_kernel:
     dependency: transitive
     description:
-      path: "."
-      ref: v4
-      resolved-ref: "22763db86602a6a8a4c098b17013e9262332e609"
-      url: "https://github.com/Duit-Foundation/duit_kernel.git"
-    source: git
+      name: duit_kernel
+      sha256: "6e68a85a1af40628f9bd12429948de8896a3ab20b03014e392e36c4b4c5e68cd"
+      url: "https://pub.dev"
+    source: hosted
     version: "4.0.0"
   fake_async:
     dependency: transitive
@@ -109,7 +108,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "3.6.0"
+    version: "4.0.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -240,22 +239,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  talker:
-    dependency: transitive
-    description:
-      name: talker
-      sha256: "95ac627afecb6267507b7a720a4713dcab84ff82179dc5794b980235aeeb5254"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.9.2"
-  talker_logger:
-    dependency: transitive
-    description:
-      name: talker_logger
-      sha256: e3c5195fa3ef2af869bf5dad26f903bf38154dc937853df3ac1991a0747a67fd
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.9.2"
   term_glyph:
     dependency: transitive
     description:

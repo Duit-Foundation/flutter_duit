@@ -1,3 +1,13 @@
+## 4.0.0
+
+- Maintain new remote commands API and implement BottomSheet and Dialog commands
+- Rework themes and move it from kernel to framework
+- Implement action calls debounce and throttle
+- Added Fragment widget
+- Component merge with data refactor
+- Added external event source binding to driver
+- Optimized object-model tree handling up to 4x
+
 ## 3.6.0
 
 - New widgets: Offstage, AbsorbPointer, AnimatedCrossFade, AnimatedSlide, PhysicalModel, AnimatedPhysicalModel, CustomScrollView, SliverPadding, SliverFillRemaining, SliverToBoxAdapter, SliverFillViewport, SliverOpacity, SliverVisibility, SliverAnimatedOpacity, SliverSafeArea, SliverOffstage, SliverIgnorePointer, SliverList, SliverAppBar, FlexibleSpaceBar and SliverGrid (+21)
