@@ -77,6 +77,9 @@ DuitViewHost(
   <img src="https://contrib.rocks/image?repo=Duit-Foundation/flutter_duit" />
 </a>
 
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/Duit-Foundation/flutter_duit.svg?variant=adaptive)](https://starchart.cc/Duit-Foundation/flutter_duit)
+
 ## License
 
 MIT
