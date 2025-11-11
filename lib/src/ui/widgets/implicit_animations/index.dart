@@ -9,3 +9,4 @@ export "animated_scale.dart";
 export "animated_cross_fade.dart";
 export "animated_physical_model.dart";
 export "animated_slide.dart";
+export "animated_positioned_directional.dart";

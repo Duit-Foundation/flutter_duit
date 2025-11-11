@@ -1,8 +1,8 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/ui/element_property_view.dart';
-import 'package:flutter_duit/src/ui/element_type.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/src/ui/element_property_view.dart";
+import "package:flutter_duit/src/ui/element_type.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 /// A Duit element that represents a UI component in the element tree.
 ///

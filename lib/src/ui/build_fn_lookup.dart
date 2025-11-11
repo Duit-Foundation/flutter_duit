@@ -69,6 +69,8 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.physicalModel: _buildPhysicalModel,
   ElementType.animatedPhysicalModel: _buildAnimatedPhysicalModel,
   ElementType.animatedSlide: _buildAnimatedSlide,
+  ElementType.animatedPositionedDirectional:
+      _buildAnimatedPositionedDirectional,
   // Multi-child elements
   ElementType.column: _buildColumn,
   ElementType.row: _buildRow,

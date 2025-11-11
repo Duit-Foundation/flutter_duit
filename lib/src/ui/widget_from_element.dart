@@ -193,7 +193,7 @@ Widget _buildAppBar(ElementPropertyView model) {
 
   return switch (model.controlled) {
     true => DuitControlledAppBar(
-      controller: model.viewController,
+        controller: model.viewController,
         children: children,
       ),
     false => DuitAppBar(
@@ -393,6 +393,12 @@ Widget _buildAnimatedPhysicalModel(ElementPropertyView model) =>
     );
 
 Widget _buildAnimatedSlide(ElementPropertyView model) => DuitAnimatedSlide(
+      controller: model.viewController,
+      child: _buildWidget(model.child),
+    );
+
+Widget _buildAnimatedPositionedDirectional(ElementPropertyView model) =>
+    DuitAnimatedPositionedDirectionalState(
       controller: model.viewController,
       child: _buildWidget(model.child),
     );
