@@ -41,7 +41,7 @@ class _DuitAnimatedPositionedDirectionalStateState
       bottom: attrs.tryGetDouble(key: "bottom"),
       width: attrs.tryGetDouble(key: "width"),
       height: attrs.tryGetDouble(key: "height"),
-      curve: attrs.curve()!,
+      curve: attrs.curve(defaultValue: Curves.linear)!,
       duration: attrs.duration(),
       onEnd: onEndHandler(
         attributes.getAction("onEnd"),

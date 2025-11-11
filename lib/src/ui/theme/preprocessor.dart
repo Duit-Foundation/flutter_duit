@@ -96,7 +96,8 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
       ElementType.animatedSlide ||
       ElementType.animatedContainer ||
       ElementType.animatedCrossFade ||
-      ElementType.sliverAnimatedOpacity =>
+      ElementType.sliverAnimatedOpacity ||
+      ElementType.animatedPositionedDirectional =>
         ImplicitAnimatableThemeToken(
           themeData,
           widgetType,

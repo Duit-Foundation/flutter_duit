@@ -6,7 +6,7 @@ import "utils.dart";
 
 void main() {
   testWidgets(
-    "DuitAnimatedPositioned must renders correctly",
+    "DuitAnimatedPositionedDirectional must renders correctly",
     (tester) async {
       final driver = DuitDriver.static(
         {
