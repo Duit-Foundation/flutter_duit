@@ -53,3 +53,4 @@ export "absorb_pointer.dart";
 export "offstage.dart";
 export "physical_model.dart";
 export "animated_builder.dart";
+export "clip_rect.dart";

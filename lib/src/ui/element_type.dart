@@ -437,6 +437,11 @@ enum ElementType {
     name: "AnimatedPositionedDirectional",
     isControlledByDefault: true,
     childRelation: 1,
+  ),
+  clipRect(
+    name: "ClipRect",
+    isControlledByDefault: false,
+    childRelation: 1,
   );
 
   /// The string identifier name of the UI element type.
@@ -601,4 +606,5 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "AnimatedBuilder": ElementType.animatedBuilder,
   "Fragment": ElementType.fragment,
   "AnimatedPositionedDirectional": ElementType.animatedPositionedDirectional,
+  "ClipRect": ElementType.clipRect,
 };
