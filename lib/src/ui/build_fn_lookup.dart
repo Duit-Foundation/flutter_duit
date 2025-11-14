@@ -71,7 +71,8 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.animatedSlide: _buildAnimatedSlide,
   ElementType.animatedPositionedDirectional:
       _buildAnimatedPositionedDirectional,
-  ElementType.clipRect: _buildClipRectl,
+  ElementType.clipRect: _buildClipRect,
+  ElementType.clipOval: _buildClipOval,
   // Multi-child elements
   ElementType.column: _buildColumn,
   ElementType.row: _buildRow,
