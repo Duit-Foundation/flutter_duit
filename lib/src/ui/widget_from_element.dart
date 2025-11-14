@@ -403,6 +403,17 @@ Widget _buildAnimatedPositionedDirectional(ElementPropertyView model) =>
       child: _buildWidget(model.child),
     );
 
+Widget _buildClipRectl(ElementPropertyView model) => switch (model.controlled) {
+      true => DuitControlledClipRect(
+          controller: model.viewController,
+          child: _buildWidget(model.child),
+        ),
+      false => DuitClipRect(
+          attributes: model.attributes,
+          child: _buildWidget(model.child),
+        ),
+    };
+
 // Single child widgets with controlled/non-controlled versions
 Widget _buildIntrinsicHeight(ElementPropertyView model) {
   return switch (model.controlled) {
