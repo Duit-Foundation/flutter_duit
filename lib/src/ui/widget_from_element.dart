@@ -403,12 +403,23 @@ Widget _buildAnimatedPositionedDirectional(ElementPropertyView model) =>
       child: _buildWidget(model.child),
     );
 
-Widget _buildClipRectl(ElementPropertyView model) => switch (model.controlled) {
+Widget _buildClipRect(ElementPropertyView model) => switch (model.controlled) {
       true => DuitControlledClipRect(
           controller: model.viewController,
           child: _buildWidget(model.child),
         ),
       false => DuitClipRect(
+          attributes: model.attributes,
+          child: _buildWidget(model.child),
+        ),
+    };
+
+Widget _buildClipOval(ElementPropertyView model) => switch (model.controlled) {
+      true => DuitControlledClipOval(
+          controller: model.viewController,
+          child: _buildWidget(model.child),
+        ),
+      false => DuitClipOval(
           attributes: model.attributes,
           child: _buildWidget(model.child),
         ),
