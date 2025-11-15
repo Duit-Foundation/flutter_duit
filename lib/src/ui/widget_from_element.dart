@@ -852,6 +852,37 @@ Widget _buildGridView(ElementPropertyView model) {
   }
 }
 
+Widget _buildPageView(ElementPropertyView model) {
+  PageViewConstructor widgetType;
+
+  if (!model.controlled) {
+    widgetType = PageViewConstructor.fromValue(
+      model.attributes.payload.getString(key: "constructor"),
+    );
+  } else {
+    widgetType = PageViewConstructor.fromValue(
+      model.viewController.attributes.payload.getString(key: "constructor"),
+    );
+  }
+
+  switch (widgetType) {
+    case PageViewConstructor.common:
+      if (!model.controlled) {
+        return DuitPageViewCommon(
+          attributes: model.attributes,
+          children: model.children.map(_buildWidget).toList(),
+        );
+      } else {
+        return DuitControlledPageViewCommon(
+          controller: model.viewController,
+          children: model.children.map(_buildWidget).toList(),
+        );
+      }
+    default:
+      return const SizedBox.shrink();
+  }
+}
+
 Widget _buildCarouselView(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledCarouselView(
