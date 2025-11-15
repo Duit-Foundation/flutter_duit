@@ -55,3 +55,4 @@ export "physical_model.dart";
 export "animated_builder.dart";
 export "clip_rect.dart";
 export "clip_oval.dart";
+export "page_view/index.dart";

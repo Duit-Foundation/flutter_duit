@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import "package:flutter/cupertino.dart";
 
 // The widget acts as a wrapper that creates keys for components when using lists
 final class DuitTile extends StatelessWidget {
@@ -10,7 +10,5 @@ final class DuitTile extends StatelessWidget {
   }) : super(key: ValueKey(id));
 
   @override
-  Widget build(BuildContext context) {
-    return child;
-  }
+  Widget build(BuildContext context) => child;
 }

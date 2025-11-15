@@ -59,3 +59,14 @@ final class NullEventException implements Exception {
   @override
   String toString() => message;
 }
+
+final class UnrecognizedRemoteCommandExcepton implements Exception {
+  /// Error message describing the reason for the exception
+  final String commandName;
+
+  /// Creates a new exception with the specified error message
+  const UnrecognizedRemoteCommandExcepton(this.commandName);
+
+  @override
+  String toString() => "Remote command with name $commandName unspecified";
+}

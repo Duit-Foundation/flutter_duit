@@ -447,6 +447,11 @@ enum ElementType {
     name: "ClipOval",
     isControlledByDefault: false,
     childRelation: 1,
+  ),
+  pageView(
+    name: "PageView",
+    isControlledByDefault: false,
+    childRelation: 2,
   );
 
   /// The string identifier name of the UI element type.
@@ -613,4 +618,5 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "AnimatedPositionedDirectional": ElementType.animatedPositionedDirectional,
   "ClipRect": ElementType.clipRect,
   "ClipOval": ElementType.clipOval,
+  "PageView": ElementType.pageView
 };
