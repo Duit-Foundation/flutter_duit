@@ -66,26 +66,22 @@ class DuitControlledPageViewCommon extends StatefulWidget {
 class _DuitControlledPageViewCommonState
     extends State<DuitControlledPageViewCommon>
     with ViewControllerChangeListener, PageViewCommandHandler {
-  late final PageController _controller;
-
   @override
   void initState() {
     attachStateToController(widget.controller);
-    _controller = PageController();
+    initCommandHandler();
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    widget.controller.listenCommand(
-      (command) => handleCommand(command, _controller),
-    );
+    widget.controller.listenCommand(handleCommand);
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    disposeCommandHandler();
     super.dispose();
   }
 
@@ -117,7 +113,7 @@ class _DuitControlledPageViewCommonState
       ),
       // Related issue: https://github.com/Duit-Foundation/flutter_duit/issues/315
       // scrollBehavior: not implemented
-      controller: _controller,
+      controller: pageController,
       children: widget.children,
       // onPageChanged: _onChange,
     );

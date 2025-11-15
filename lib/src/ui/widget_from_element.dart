@@ -878,6 +878,10 @@ Widget _buildPageView(ElementPropertyView model) {
           children: model.children.map(_buildWidget).toList(),
         );
       }
+    case PageViewConstructor.builder:
+      return DuitPageViewBuilder(
+        controller: model.viewController,
+      );
     default:
       return const SizedBox.shrink();
   }

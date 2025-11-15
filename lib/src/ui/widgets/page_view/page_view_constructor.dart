@@ -1,7 +1,6 @@
 enum PageViewConstructor {
   common,
-  builder,
-  custom;
+  builder;
 
   static PageViewConstructor fromValue(value) {
     if (value is String) {
@@ -19,11 +18,9 @@ enum PageViewConstructor {
 const _stringLookup = {
   "common": PageViewConstructor.common,
   "builder": PageViewConstructor.builder,
-  "custom": PageViewConstructor.custom,
 };
 
 const _intLookup = {
   0: PageViewConstructor.common,
   1: PageViewConstructor.builder,
-  2: PageViewConstructor.custom,
 };
