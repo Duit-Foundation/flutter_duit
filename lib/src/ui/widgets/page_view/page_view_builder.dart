@@ -22,7 +22,6 @@ class _DuitPageViewBuilderState extends State<DuitPageViewBuilder>
         ViewControllerChangeListener,
         OutOfBoundWidgetBuilder,
         PageViewCommandHandler {
-
   @override
   void initState() {
     attachStateToController(widget.controller);
@@ -37,9 +36,9 @@ class _DuitPageViewBuilderState extends State<DuitPageViewBuilder>
   }
 
   @override
-  void disposeCommandHandler() {
+  void dispose() {
     disposeCommandHandler();
-    super.disposeCommandHandler();
+    super.dispose();
   }
 
   Widget? _buildItem(BuildContext context, int index) {

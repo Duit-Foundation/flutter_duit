@@ -20,37 +20,51 @@ mixin PageViewCommandHandler {
     RemoteCommand command,
   ) async {
     switch (command) {
-      case PageViewNextPageCommand():
+      case PageViewNextPageCommand(
+          :final duration,
+          :final curve,
+        ):
         _controller.nextPage(
-          duration: command.duration,
-          curve: command.curve,
+          duration: duration,
+          curve: curve,
         );
         break;
-      case PageViewPreviousPageCommand():
+      case PageViewPreviousPageCommand(
+          :final duration,
+          :final curve,
+        ):
         _controller.previousPage(
-          duration: command.duration,
-          curve: command.curve,
+          duration: duration,
+          curve: curve,
         );
         break;
-      case PageViewAnimateToCommand():
+      case PageViewAnimateToCommand(
+          :final duration,
+          :final curve,
+          :final offset,
+        ):
         _controller.animateTo(
-          command.offset,
-          duration: command.duration,
-          curve: command.curve,
+          offset,
+          duration: duration,
+          curve: curve,
         );
         break;
-      case PageViewAnimateToPageCommand():
+      case PageViewAnimateToPageCommand(
+          :final duration,
+          :final curve,
+          :final page,
+        ):
         _controller.animateToPage(
-          command.page,
-          duration: command.duration,
-          curve: command.curve,
+          page,
+          duration: duration,
+          curve: curve,
         );
         break;
-      case PageViewJumpToCommand():
-        _controller.jumpTo(command.value);
+      case PageViewJumpToCommand(:final value):
+        _controller.jumpTo(value);
         break;
-      case PageViewJumpToPageCommand():
-        _controller.jumpToPage(command.page);
+      case PageViewJumpToPageCommand(:final page):
+        _controller.jumpToPage(page);
         break;
     }
   }
