@@ -19,6 +19,7 @@ jobs:
           flutter-version: ${{ matrix.flutter-version }}
           channel: 'stable'
           cache: true
+          cache-key: flutter-stable-${{ matrix.flutter-version }}-${{ runner.os }}
       - run: flutter pub get
       - run: flutter test --no-pub --test-randomize-ordering-seed=random
     permissions:

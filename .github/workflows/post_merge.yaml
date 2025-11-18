@@ -23,6 +23,7 @@ jobs:
           flutter-version: ${{ matrix.flutter-version }}
           channel: 'stable'
           cache: true
+          cache-key: flutter-stable-${{ matrix.flutter-version }}-${{ runner.os }}
 
       - name: Install Dependencies
         run: flutter packages get
