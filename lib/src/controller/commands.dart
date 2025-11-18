@@ -1,7 +1,7 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/controller/data.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/src/controller/data.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 /// A lookup table that maps command types to their corresponding factory constructors.
 ///
@@ -16,6 +16,7 @@ const _commandLookup = <String, RemoteCommand Function(RemoteCommand)>{
   "animation": AnimationCommand.fromRemoteCommand,
   "bottomSheet": BottomSheetCommand.fromRemoteCommand,
   "dialog": DialogCommand.fromRemoteCommand,
+  "pageView": _PageViewCommand.fromRemoteCommand,
 };
 
 /// An extension type that provides command specification functionality.
@@ -24,7 +25,7 @@ const _commandLookup = <String, RemoteCommand Function(RemoteCommand)>{
 /// it into a specialized command instance based on its type. It uses the
 /// [_commandLookup] table to find the appropriate factory constructor for
 /// the command type.
-extension type SpecCommand(RemoteCommand command) {
+extension type SpecCommand(RemoteCommand _command) {
   /// Converts the generic [RemoteCommand] into a specialized command instance.
   ///
   /// This method looks up the command type in the [_commandLookup] table and
@@ -38,13 +39,12 @@ extension type SpecCommand(RemoteCommand command) {
   /// Throws an [ArgumentError] if the command type is not supported.
   @preferInline
   RemoteCommand specify() {
-    final type = command.commandData["type"] as String;
+    final type = _command.commandData["type"] as String;
     final ctor = _commandLookup[type];
     if (ctor == null) {
-      throw Exception("Unknown command type: $type");
+      throw UnrecognizedRemoteCommandExcepton(type);
     }
-
-    return ctor(command);
+    return ctor(_command);
   }
 }
 
@@ -185,7 +185,7 @@ final class BottomSheetCommand extends RemoteCommand {
         defaultValue: defaultScrollControlDisabledMaxHeightRatio,
       ),
       onClose: source.getAction("onClose"),
-      action: OverlayAction.parse(source.getString(key: 'action')),
+      action: OverlayAction.parse(source.getString(key: "action")),
       // transitionAnimationController not supported
       // sheetAnimationStyle not supported
     );
@@ -240,9 +240,149 @@ final class DialogCommand extends RemoteCommand {
       barrierLabel: source.getString(key: "barrierLabel"),
       anchorPoint: source.offset(key: "anchorPoint"),
       onClose: source.getAction("onClose"),
-      action: OverlayAction.parse(source.getString(key: 'action')),
+      action: OverlayAction.parse(source.getString(key: "action")),
       // transitionAnimationController not supported
       // sheetAnimationStyle not supported
     );
   }
+}
+
+base class _PageViewCommand extends RemoteCommand {
+  const _PageViewCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+  });
+
+  factory _PageViewCommand.fromRemoteCommand(RemoteCommand command) {
+    final source = DuitDataSource(command.commandData);
+
+    final action = PageViewAction.parse(source.getString(key: "action"));
+
+    return switch (action) {
+      PageViewAction.nextPage => PageViewNextPageCommand(
+          type: command.type,
+          commandData: command.commandData,
+          controllerId: command.controllerId,
+          duration: source.duration(),
+          curve: source.curve(defaultValue: Curves.linear)!,
+        ),
+      PageViewAction.prevPage => PageViewPreviousPageCommand(
+          type: command.type,
+          commandData: command.commandData,
+          controllerId: command.controllerId,
+          duration: source.duration(),
+          curve: source.curve(defaultValue: Curves.linear)!,
+        ),
+      PageViewAction.animateTo => PageViewAnimateToCommand(
+          type: command.type,
+          commandData: command.commandData,
+          controllerId: command.controllerId,
+          duration: source.duration(),
+          curve: source.curve(defaultValue: Curves.linear)!,
+          offset: source.getDouble(key: "offset"),
+        ),
+      PageViewAction.animateToPage => PageViewAnimateToPageCommand(
+          type: command.type,
+          commandData: command.commandData,
+          controllerId: command.controllerId,
+          duration: source.duration(),
+          curve: source.curve(defaultValue: Curves.linear)!,
+          page: source.getInt(key: "page"),
+        ),
+      PageViewAction.jumpTo => PageViewJumpToCommand(
+          type: command.type,
+          commandData: command.commandData,
+          controllerId: command.controllerId,
+          value: source.getDouble(key: "value"),
+        ),
+      PageViewAction.jumpToPage => PageViewJumpToPageCommand(
+          type: command.type,
+          commandData: command.commandData,
+          controllerId: command.controllerId,
+          page: source.getInt(key: "page"),
+        ),
+    };
+  }
+}
+
+base class _PageViewAnimatedCommand extends _PageViewCommand {
+  final Duration duration;
+  final Curve curve;
+
+  const _PageViewAnimatedCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+    required this.duration,
+    required this.curve,
+  });
+}
+
+final class PageViewPreviousPageCommand extends _PageViewAnimatedCommand {
+  const PageViewPreviousPageCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+    required super.duration,
+    required super.curve,
+  });
+}
+
+final class PageViewNextPageCommand extends _PageViewAnimatedCommand {
+  const PageViewNextPageCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+    required super.duration,
+    required super.curve,
+  });
+}
+
+final class PageViewAnimateToCommand extends _PageViewAnimatedCommand {
+  final double offset;
+
+  const PageViewAnimateToCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+    required super.duration,
+    required super.curve,
+    required this.offset,
+  });
+}
+
+final class PageViewAnimateToPageCommand extends _PageViewAnimatedCommand {
+  final int page;
+
+  const PageViewAnimateToPageCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+    required super.duration,
+    required super.curve,
+    required this.page,
+  });
+}
+
+final class PageViewJumpToCommand extends _PageViewCommand {
+  final double value;
+
+  const PageViewJumpToCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+    required this.value,
+  });
+}
+
+final class PageViewJumpToPageCommand extends _PageViewCommand {
+  final int page;
+
+  const PageViewJumpToPageCommand({
+    required super.commandData,
+    required super.controllerId,
+    required super.type,
+    required this.page,
+  });
 }
