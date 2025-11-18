@@ -3,6 +3,32 @@ import "package:flutter/widgets.dart";
 import "package:flutter_duit/src/controller/commands.dart";
 import "package:meta/meta.dart";
 
+/// A mixin to provide command handling capabilities for widgets that use a [PageController].
+///
+/// `PageViewCommandHandler` encapsulates the initialization and disposal of the internal
+/// [PageController], and provides a [handleCommand] method for interpreting remote
+/// commands related to page view navigation (such as next/previous page, animating to
+/// a particular offset or page).
+///
+/// Classes mixing in this handler must call [initCommandHandler] to initialize the
+/// controller, and [disposeCommandHandler] when the controller is no longer needed.
+///
+/// Example usage:
+/// ```dart
+/// class MyWidgetState extends State<MyWidget> with PageViewCommandHandler {
+///   @override
+///   void initState() {
+///     super.initState();
+///     initCommandHandler();
+///   }
+///
+///   @override
+///   void dispose() {
+///     disposeCommandHandler();
+///     super.dispose();
+///   }
+/// }
+/// ```
 mixin PageViewCommandHandler {
   late final PageController _controller;
 
