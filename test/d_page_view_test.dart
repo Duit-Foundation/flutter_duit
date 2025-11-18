@@ -76,6 +76,14 @@ void main() {
             () => PageViewConstructor.fromValue(true),
             throwsArgumentError,
           );
+          expect(
+            () => PageViewConstructor.fromValue("dsfdsbvsdf"),
+            throwsArgumentError,
+          );
+          expect(
+            () => PageViewConstructor.fromValue(123123),
+            throwsArgumentError,
+          );
         },
       );
     },

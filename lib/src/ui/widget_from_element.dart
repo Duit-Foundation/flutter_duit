@@ -854,8 +854,9 @@ Widget _buildGridView(ElementPropertyView model) {
 
 Widget _buildPageView(ElementPropertyView model) {
   PageViewConstructor widgetType;
+  final isControlled = model.controlled;
 
-  if (!model.controlled) {
+  if (!isControlled) {
     widgetType = PageViewConstructor.fromValue(
       model.attributes.payload.getString(key: "constructor"),
     );
@@ -867,7 +868,7 @@ Widget _buildPageView(ElementPropertyView model) {
 
   switch (widgetType) {
     case PageViewConstructor.common:
-      if (!model.controlled) {
+      if (!isControlled) {
         return DuitPageViewCommon(
           attributes: model.attributes,
           children: model.children.map(_buildWidget).toList(),
@@ -882,8 +883,6 @@ Widget _buildPageView(ElementPropertyView model) {
       return DuitPageViewBuilder(
         controller: model.viewController,
       );
-    default:
-      return const SizedBox.shrink();
   }
 }
 

@@ -4,11 +4,13 @@ enum PageViewConstructor {
 
   static PageViewConstructor fromValue(value) {
     if (value is String) {
-      return _stringLookup[value]!;
+      return _stringLookup[value] ??
+          (throw ArgumentError("Invalid page view constructor value: $value"));
     }
 
     if (value is int) {
-      return _intLookup[value]!;
+      return _intLookup[value] ??
+          (throw ArgumentError("Invalid page view constructor value: $value"));
     }
 
     throw ArgumentError("Invalid page view constructor value: $value");

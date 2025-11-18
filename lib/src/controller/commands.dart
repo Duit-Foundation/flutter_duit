@@ -257,7 +257,7 @@ base class _PageViewCommand extends RemoteCommand {
   factory _PageViewCommand.fromRemoteCommand(RemoteCommand command) {
     final source = DuitDataSource(command.commandData);
 
-    final action = PageViewAction.parse(source["action"]);
+    final action = PageViewAction.parse(source.getString(key: "action"));
 
     return switch (action) {
       PageViewAction.nextPage => PageViewNextPageCommand(
