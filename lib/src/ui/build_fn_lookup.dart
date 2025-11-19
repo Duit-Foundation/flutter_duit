@@ -89,4 +89,5 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.sliverAppBar: _buildSliverAppBar,
   ElementType.flexibleSpaceBar: _buildFlexibleSpaceBar,
   ElementType.pageView: _buildPageView,
+  ElementType.badge: _buildBadge,
 };

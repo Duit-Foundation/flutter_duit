@@ -452,6 +452,11 @@ enum ElementType {
     name: "PageView",
     isControlledByDefault: false,
     childRelation: 2,
+  ),
+  badge(
+    name: "Badge",
+    isControlledByDefault: false,
+    childRelation: 2,
   );
 
   /// The string identifier name of the UI element type.

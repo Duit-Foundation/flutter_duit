@@ -982,6 +982,20 @@ Widget _buildWrap(ElementPropertyView model) {
   };
 }
 
+Widget _buildBadge(ElementPropertyView model) {
+  final children = _mapToNullableWidgetList(model);
+  return switch (model.controlled) {
+    true => DuitControlledBadge(
+        controller: model.viewController,
+        children: children,
+      ),
+    false => DuitBadge(
+        attributes: model.attributes,
+        children: children,
+      )
+  };
+}
+
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();
