@@ -623,5 +623,6 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "AnimatedPositionedDirectional": ElementType.animatedPositionedDirectional,
   "ClipRect": ElementType.clipRect,
   "ClipOval": ElementType.clipOval,
-  "PageView": ElementType.pageView
+  "PageView": ElementType.pageView,
+  "Badge": ElementType.badge,
 };

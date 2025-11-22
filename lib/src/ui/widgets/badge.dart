@@ -56,8 +56,8 @@ class DuitBadge extends StatelessWidget with AnimatedAttributes {
             "isLabelVisible",
             defaultValue: true,
           ),
-          label: children.elementAt(1),
-          child: children.elementAt(0),
+          label: children.elementAtOrNull(1),
+          child: children.elementAtOrNull(0),
         ),
       BadgeVariant.count => Badge.count(
           key: ValueKey(attributes.id),
@@ -75,7 +75,7 @@ class DuitBadge extends StatelessWidget with AnimatedAttributes {
             defaultValue: true,
           ),
           //TODO: Implement maxCount prop on Flutter version bump
-          child: children.elementAt(0),
+          child: children.elementAtOrNull(0),
         ),
     };
   }
@@ -125,8 +125,8 @@ class _DuitControlledBadgeState extends State<DuitControlledBadge>
             "isLabelVisible",
             defaultValue: true,
           ),
-          label: widget.children.elementAt(1),
-          child: widget.children.elementAt(0),
+          label: widget.children.elementAtOrNull(1),
+          child: widget.children.elementAtOrNull(0),
         ),
       BadgeVariant.count => Badge.count(
           key: ValueKey(widget.controller.id),
@@ -144,7 +144,7 @@ class _DuitControlledBadgeState extends State<DuitControlledBadge>
             defaultValue: true,
           ),
           //TODO: Implement maxCount prop on Flutter version bump
-          child: widget.children.elementAt(0),
+          child: widget.children.elementAtOrNull(0),
         ),
     };
   }
