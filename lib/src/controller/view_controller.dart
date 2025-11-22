@@ -96,9 +96,6 @@ final class ViewController<T>
             duration: opts.duration,
           );
           break;
-        default:
-          driver.execute(action);
-          break;
       }
     } else {
       driver.execute(action);
@@ -125,9 +122,6 @@ final class ViewController<T>
             duration: opts.duration,
           );
           break;
-        default:
-          await driver.execute(action);
-          break;
       }
     } else {
       await driver.execute(action);
@@ -140,61 +134,29 @@ final class ViewController<T>
   /// server action is not null. It executes the server action using the driver.
   @override
   void performRelatedAction() {
-    try {
-      if (action != null) {
-        _perform(action!);
-      }
-    } catch (e, s) {
-      driver.logger?.error(
-        "Error while perform performRelatedAction method",
-        error: e,
-        stackTrace: s,
-      );
+    if (action != null) {
+      _perform(action!);
     }
   }
 
   @override
   Future<void> performRelatedActionAsync() async {
-    try {
-      if (action != null) {
-        await _performAsync(action!);
-      }
-    } catch (e, s) {
-      driver.logger?.error(
-        "Error while perform performRelatedActionAsync method",
-        error: e,
-        stackTrace: s,
-      );
+    if (action != null) {
+      await _performAsync(action!);
     }
   }
 
   @override
   void performAction(ServerAction? action) {
-    try {
-      if (action != null) {
-        _perform(action);
-      }
-    } catch (e, s) {
-      driver.logger?.error(
-        "Error while performing performAction method",
-        error: e,
-        stackTrace: s,
-      );
+    if (action != null) {
+      _perform(action);
     }
   }
 
   @override
   Future<void> performActionAsync(ServerAction? action) async {
-    try {
-      if (action != null) {
-        await _performAsync(action);
-      }
-    } catch (e, s) {
-      driver.logger?.error(
-        "Error while performing performActionAsync method",
-        error: e,
-        stackTrace: s,
-      );
+    if (action != null) {
+      await _performAsync(action);
     }
   }
 
@@ -213,8 +175,11 @@ final class ViewController<T>
       final specifiedCommand = SpecCommand(command).specify();
       commandChannel.add(specifiedCommand);
     } catch (e, s) {
-      driver.logger
-          ?.error("Error while emitting command", error: e, stackTrace: s);
+      driver.logger?.error(
+        "Error while emitting command",
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 

@@ -1,8 +1,8 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/widgets.dart' show SizedBox, Widget;
-import 'package:flutter_duit/src/view_manager/view_manager.dart';
-import 'package:flutter_duit/src/view_manager/multiview_layout.dart';
-import 'package:flutter_duit/src/view_manager/simple_manager.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/widgets.dart" show SizedBox, Widget;
+import "package:flutter_duit/src/view_manager/view_manager.dart";
+import "package:flutter_duit/src/view_manager/multiview_layout.dart";
+import "package:flutter_duit/src/view_manager/simple_manager.dart";
 
 /// A [ViewManager] for managing multiple views. Provides backward compatibility with [SimpleViewManager].
 final class MultiViewManager extends SimpleViewManager {
