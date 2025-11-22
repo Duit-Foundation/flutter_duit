@@ -1,10 +1,10 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/widgets.dart' show SizedBox, Widget, mustCallSuper;
-import 'package:flutter_duit/src/view_manager/view_manager.dart';
-import 'package:flutter_duit/src/view_manager/view_layout.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/widgets.dart" show SizedBox, Widget, mustCallSuper;
+import "package:flutter_duit/src/view_manager/view_manager.dart";
+import "package:flutter_duit/src/view_manager/view_layout.dart";
 
 base class SimpleViewManager extends ViewManager {
-  DuitViewLayout? _view;
+  late DuitViewLayout _view;
   final Map<String, UIElementController> _viewControllers = {};
 
   @override

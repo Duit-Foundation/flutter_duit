@@ -10,9 +10,9 @@ class DuitAnimatedBuilder extends StatefulWidget {
   final UIElementController controller;
 
   const DuitAnimatedBuilder({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override
@@ -40,7 +40,7 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
         _controllers[description.groupId] = controller;
 
         for (var groupMember in description.tweens) {
-          final tween = createTween(groupMember);
+          final tween = createTweenFrom(groupMember);
 
           final animation = animate(
             tween,
@@ -51,14 +51,17 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
 
           _animations[groupMember.animatedPropKey] = animation;
 
-          launch(
-            description,
-            controller,
-          );
+          if (description.trigger.needsRunImmediently) {
+            execAnimation(
+              description.method,
+              controller,
+              description.reverseOnRepeat,
+            );
+          }
         }
       } else {
         //Handle single tween description
-        final tween = createTween(description);
+        final tween = createTweenFrom(description);
 
         _controllers[description.animatedPropKey] = controller;
 
@@ -71,10 +74,13 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
 
         _animations[description.animatedPropKey] = animation;
 
-        launch(
-          description,
-          controller,
-        );
+        if (description.trigger.needsRunImmediently) {
+          execAnimation(
+            description.method,
+            controller,
+            description.reverseOnRepeat,
+          );
+        }
       }
     }
     super.didChangeDependencies();
@@ -90,28 +96,14 @@ class _DuitAnimatedBuilderState extends State<DuitAnimatedBuilder>
   }
 
   Future<void> _handleCommand(RemoteCommand command) async {
-    switch (command) {
-      case AnimationCommand():
-        final controller = _controllers[command.animatedPropKey];
-        if (controller != null) {
-          switch (command.method) {
-            case AnimationMethod.forward:
-              await controller.forward();
-              break;
-            case AnimationMethod.repeat:
-              await controller.repeat();
-              break;
-            case AnimationMethod.reverse:
-              await controller.reverse();
-              break;
-            case AnimationMethod.toggle:
-              await handleToggleMethod(controller);
-              break;
-          }
-        }
-        break;
-      default:
-        break;
+    if (command is AnimationCommand) {
+      final controller = _controllers[command.animatedPropKey];
+      if (controller != null) {
+        execAnimation(
+          command.method,
+          controller,
+        );
+      }
     }
   }
 

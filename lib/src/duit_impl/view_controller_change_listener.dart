@@ -1,5 +1,5 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
 
 /// A mixin that listens for changes in a UI element controller and updates the state accordingly.
 ///
