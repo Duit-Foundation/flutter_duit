@@ -1,5 +1,6 @@
 part of "element_property_view.dart";
 
+@preferInline
 List<Widget?> _mapToNullableWidgetList(ElementPropertyView model) =>
     model.children
         .map<Widget?>(
@@ -979,6 +980,20 @@ Widget _buildWrap(ElementPropertyView model) {
         attributes: model.attributes,
         children: model.children.map(_buildWidget).toList(),
       ),
+  };
+}
+
+Widget _buildBadge(ElementPropertyView model) {
+  final children = _mapToNullableWidgetList(model);
+  return switch (model.controlled) {
+    true => DuitControlledBadge(
+        controller: model.viewController,
+        children: children,
+      ),
+    false => DuitBadge(
+        attributes: model.attributes,
+        children: children,
+      )
   };
 }
 

@@ -145,7 +145,8 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
       ElementType.physicalModel ||
       ElementType.sliverOffstage ||
       ElementType.sliverIgnorePointer ||
-      ElementType.sliverSafeArea =>
+      ElementType.sliverSafeArea ||
+      ElementType.badge =>
         DefaultThemeToken(
           themeData,
           widgetType,

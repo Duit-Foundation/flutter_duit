@@ -1,5 +1,5 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/src/ui/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter_duit/src/ui/index.dart";
 
 const _animatedOwnerExcludedFields = {
   "parentBuilderId",
