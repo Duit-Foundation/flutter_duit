@@ -1,5 +1,6 @@
 part of "element_property_view.dart";
 
+@preferInline
 List<Widget?> _mapToNullableWidgetList(ElementPropertyView model) =>
     model.children
         .map<Widget?>(
