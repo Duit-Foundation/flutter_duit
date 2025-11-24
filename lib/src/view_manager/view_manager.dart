@@ -1,5 +1,5 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
 
 /// The `ViewManager` class provides the foundational interface for preparing and building views.
 /// It holds a reference to a `UIDriver`, which is used to drive the rendering and interaction
