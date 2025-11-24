@@ -84,10 +84,11 @@ packages:
   duit_kernel:
     dependency: transitive
     description:
-      name: duit_kernel
-      sha256: "6e68a85a1af40628f9bd12429948de8896a3ab20b03014e392e36c4b4c5e68cd"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: c1a0a391cf14c188dfb99545c0e88a653baa0f31
+      url: "https://github.com/Duit-Foundation/duit_kernel"
+    source: git
     version: "4.0.0"
   fake_async:
     dependency: transitive
