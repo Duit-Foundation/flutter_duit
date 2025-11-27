@@ -36,9 +36,9 @@ class DuitLifecycleStateListener extends InheritedWidget
   }
 
   static DuitLifecycleStateListener of(BuildContext context) {
-    final DuitLifecycleStateListener? result = context
+    final result = context
         .dependOnInheritedWidgetOfExactType<DuitLifecycleStateListener>();
-    assert(result != null, 'No LifecycleStateListener found in context');
+    assert(result != null, "No LifecycleStateListener found in context");
     return result!;
   }
 

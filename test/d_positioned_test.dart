@@ -78,7 +78,7 @@ void main() {
           expect(posWidget.top, 12);
           expect(posWidget.left, 12);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "w1",
             {
               "right": 12,
@@ -143,7 +143,7 @@ void main() {
           expect(stackWidget.clipBehavior, Clip.hardEdge);
           expect(stackWidget.textDirection, TextDirection.ltr);
 
-          await driver.updateTestAttributes("stack_ctrl", {
+          await driver.updateAttributes("stack_ctrl", {
             "stackFit": "expand",
             "alignmentDirectional": "bottomEnd",
             "clipBehavior": "none",

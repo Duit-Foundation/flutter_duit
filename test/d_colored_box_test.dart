@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group("DuitColoredBox widget tests", () {
@@ -110,7 +110,7 @@ void main() {
         expect(coloredFinder, findsOneWidget);
         expect(coloredWidget.color, Colors.red);
 
-        await driver.updateTestAttributes("colored", {
+        await driver.updateAttributes("colored", {
           "color": Colors.black,
         });
 

@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 class DuitInkWell extends StatefulWidget {
   final UIElementController controller;
   final Widget child;
 
   const DuitInkWell({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

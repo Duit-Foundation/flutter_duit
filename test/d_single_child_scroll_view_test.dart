@@ -18,7 +18,7 @@ Map<String, dynamic> _createWidget1() {
         (i) => {
           "type": "Container",
           "id": "c$i",
-          "controlled": i % 2 == 0 ? true : false,
+          "controlled": i % 2 == 0,
           "attributes": {
             "height": "150",
             "width": "150",
@@ -31,7 +31,7 @@ Map<String, dynamic> _createWidget1() {
 }
 
 void main() {
-  testWidgets('SingleChildScrollView scrolls correctly',
+  testWidgets("SingleChildScrollView scrolls correctly",
       (WidgetTester tester) async {
     final driver = DuitDriver.static(
       _createWidget1(),
@@ -50,7 +50,9 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-        driver.controllersCount, 50 + 1); // +1 default controller for overlays
+      driver.controllersCount,
+      50 + 1,
+    ); // +1 default controller for overlays
 
     final scrollView = find.byType(Scrollable);
 
@@ -65,7 +67,7 @@ void main() {
     expect(find.byKey(const ValueKey("c50")), findsOneWidget);
   });
 
-  testWidgets('SingleChildScrollView scrolls horizontally',
+  testWidgets("SingleChildScrollView scrolls horizontally",
       (WidgetTester tester) async {
     final driver = DuitDriver.static(
       {
@@ -112,7 +114,7 @@ void main() {
     expect(find.byKey(const ValueKey("hc29")), findsOneWidget);
   });
 
-  testWidgets('SingleChildScrollView reverse: true',
+  testWidgets("SingleChildScrollView reverse: true",
       (WidgetTester tester) async {
     final driver = DuitDriver.static(
       {
@@ -159,13 +161,13 @@ void main() {
     expect(find.byKey(const ValueKey("rc0")), findsOneWidget);
   });
 
-  testWidgets('SingleChildScrollView with padding',
+  testWidgets("SingleChildScrollView with padding",
       (WidgetTester tester) async {
     final driver = DuitDriver.static(
       {
         "type": "SingleChildScrollView",
         "attributes": {
-          "padding": [20, 10, 20, 10]
+          "padding": [20, 10, 20, 10],
         },
         "controlled": false,
         "id": "scr_p",
@@ -196,7 +198,7 @@ void main() {
     expect(offset.dy, greaterThanOrEqualTo(10));
   });
 
-  testWidgets('SingleChildScrollView with NeverScrollableScrollPhysics',
+  testWidgets("SingleChildScrollView with NeverScrollableScrollPhysics",
       (WidgetTester tester) async {
     final driver = DuitDriver.static(
       {
@@ -241,7 +243,7 @@ void main() {
     expect(before, equals(after));
   });
 
-  testWidgets('SingleChildScrollView controlled: updates padding',
+  testWidgets("SingleChildScrollView controlled: updates padding",
       (WidgetTester tester) async {
     final driver = DuitDriver.static(
       {
@@ -276,8 +278,8 @@ void main() {
     var offset = box.localToGlobal(Offset.zero);
     expect(offset.dx, 0);
     expect(offset.dy, 0);
-    await driver.updateTestAttributes('scr_ctrl', {
-      "padding": [30, 15, 0, 0]
+    await driver.updateAttributes("scr_ctrl", {
+      "padding": [30, 15, 0, 0],
     });
     await tester.pumpAndSettle();
     box = tester.renderObject<RenderBox>(find.byKey(const ValueKey("ctrlc1")));

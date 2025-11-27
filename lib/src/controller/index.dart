@@ -1,2 +1,2 @@
-export 'view_controller.dart';
-export 'commands.dart';
+export "view_controller.dart";
+export "commands.dart";

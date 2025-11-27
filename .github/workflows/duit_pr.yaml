@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flutter-version: [ '3.24.3', '3.27.4', '3.29.3', '3.32.7' ]
+        flutter-version: ["3.24.3", "3.27.4", "3.29.3", "3.32.7"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -17,10 +17,19 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.flutter-version }}
-          channel: 'stable'
+          channel: "stable"
           cache: true
           cache-key: flutter-stable-${{ matrix.flutter-version }}-${{ runner.os }}
-      - run: flutter pub get
-      - run: flutter test --no-pub --test-randomize-ordering-seed=random
+
+      - name: Disable animations
+        run: flutter config --no-cli-animations
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Lint
+        run: flutter analyze .
+      - name: Run test
+        run: flutter test --no-pub --test-randomize-ordering-seed=random
     permissions:
       id-token: write

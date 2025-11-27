@@ -27,7 +27,7 @@ void main() {
                   "width": 100,
                   "height": 100,
                 },
-              }
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -36,8 +36,8 @@ void main() {
 
           expect(find.byKey(const ValueKey("ClipOval")), findsOneWidget);
 
-          final clipWidget = tester
-              .widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
+          final clipWidget =
+              tester.widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
 
           expect(clipWidget.clipBehavior, Clip.none);
         },
@@ -62,7 +62,7 @@ void main() {
                   "width": 100,
                   "height": 100,
                 },
-              }
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -71,12 +71,12 @@ void main() {
 
           expect(find.byKey(const ValueKey("ClipOval")), findsOneWidget);
 
-          var clipWidget = tester
-              .widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
+          var clipWidget =
+              tester.widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
 
           expect(clipWidget.clipBehavior, Clip.none);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "ClipOval",
             {
               "clipBehavior": "hardEdge",
@@ -85,8 +85,8 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          clipWidget = tester
-              .widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
+          clipWidget =
+              tester.widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
 
           expect(clipWidget.clipBehavior, Clip.hardEdge);
         },

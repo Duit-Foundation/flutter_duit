@@ -21,9 +21,9 @@ class DuitTransform extends StatelessWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitTransform({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -99,9 +99,9 @@ class DuitControlledTransform extends StatefulWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitControlledTransform({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

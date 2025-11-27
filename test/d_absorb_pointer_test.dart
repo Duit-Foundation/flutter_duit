@@ -1,36 +1,36 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 Map<String, dynamic> _createWidget([bool val = false]) {
   return {
-    'type': 'AbsorbPointer',
-    'id': 'absorb',
-    'controlled': val,
-    'attributes': {
-      'absorbing': true,
+    "type": "AbsorbPointer",
+    "id": "absorb",
+    "controlled": val,
+    "attributes": {
+      "absorbing": true,
     },
-    'child': {
-      'type': 'Container',
-      'id': 'con',
-      'controlled': false,
-      'attributes': {
-        'color': '#DCDCDC',
-        'width': 50,
-        'height': 50,
-      }
-    }
+    "child": {
+      "type": "Container",
+      "id": "con",
+      "controlled": false,
+      "attributes": {
+        "color": "#DCDCDC",
+        "width": 50,
+        "height": 50,
+      },
+    },
   };
 }
 
 void main() {
   group(
-    'DuitAbsorbPointer widget tests',
+    "DuitAbsorbPointer widget tests",
     () {
       testWidgets(
-        'must renders correctly',
+        "must renders correctly",
         (tester) async {
           final driver = DuitDriver.static(
             _createWidget(),
@@ -49,7 +49,7 @@ void main() {
       );
 
       testWidgets(
-        'must update attributes',
+        "must update attributes",
         (tester) async {
           final driver = DuitDriver.static(
             _createWidget(true),
@@ -69,7 +69,7 @@ void main() {
 
           expect(absorbWidget.absorbing, true);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "absorb",
             {
               "absorbing": false,

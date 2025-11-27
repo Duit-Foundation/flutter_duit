@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/animations/index.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/animations/index.dart";
 
 class DuitAnimatedRotation extends StatefulWidget {
   final UIElementController controller;
   final Widget child;
 
   const DuitAnimatedRotation({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

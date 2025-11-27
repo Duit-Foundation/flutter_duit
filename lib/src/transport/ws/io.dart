@@ -60,8 +60,10 @@ final class WSTransport extends Transport implements Streamer {
       urlString = objectToURLWithQueryParams(urlString, initialData).toString();
     }
 
-    assert(urlString.isNotEmpty && urlString.startsWith("ws"),
-        "Invalid url: $url}");
+    assert(
+      urlString.isNotEmpty && urlString.startsWith("ws"),
+      "Invalid url: $url}",
+    );
 
     ws = await WebSocket.connect(
       urlString,

@@ -76,8 +76,8 @@ class DuitImage extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitImage({
-    super.key,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -101,8 +101,8 @@ class DuitControlledImage extends StatefulWidget with AnimatedAttributes {
   final UIElementController controller;
 
   const DuitControlledImage({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

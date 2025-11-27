@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -27,7 +27,7 @@ void main() {
                   "width": 100,
                   "height": 100,
                 },
-              }
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -62,7 +62,7 @@ void main() {
                   "width": 100,
                   "height": 100,
                 },
-              }
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -76,7 +76,7 @@ void main() {
 
           expect(ignoreWidget.ignoring, true);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "ignore",
             {
               "ignoring": false,

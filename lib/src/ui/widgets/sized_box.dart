@@ -8,9 +8,9 @@ class DuitSizedBox extends StatelessWidget with AnimatedAttributes {
   final Widget? child;
 
   const DuitSizedBox({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -33,9 +33,9 @@ class DuitControlledSizedBox extends StatefulWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitControlledSizedBox({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

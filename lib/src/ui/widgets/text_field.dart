@@ -6,8 +6,8 @@ class DuitTextField extends StatefulWidget {
   final UIElementController controller;
 
   const DuitTextField({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

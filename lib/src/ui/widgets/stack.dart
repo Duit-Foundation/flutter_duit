@@ -6,8 +6,8 @@ class DuitStack extends StatelessWidget with AnimatedAttributes {
   final List<Widget> children;
 
   const DuitStack({
-    super.key,
     required this.attributes,
+    super.key,
     this.children = const [],
   });
 
@@ -21,7 +21,8 @@ class DuitStack extends StatelessWidget with AnimatedAttributes {
     return Stack(
       key: ValueKey(attributes.id),
       alignment: attrs.alignmentDirectional(
-          defaultValue: AlignmentDirectional.topStart)!,
+        defaultValue: AlignmentDirectional.topStart,
+      )!,
       textDirection: attrs.textDirection(),
       fit: attrs.stackFit(defaultValue: StackFit.loose)!,
       clipBehavior: attrs.clipBehavior()!,
@@ -35,9 +36,9 @@ class DuitControlledStack extends StatefulWidget with AnimatedAttributes {
   final List<Widget> children;
 
   const DuitControlledStack({
-    super.key,
     required this.children,
     required this.controller,
+    super.key,
   });
 
   @override
@@ -61,7 +62,8 @@ class _DuitControlledStackState extends State<DuitControlledStack>
     return Stack(
       key: ValueKey(widget.controller.id),
       alignment: attrs.alignmentDirectional(
-          defaultValue: AlignmentDirectional.topStart)!,
+        defaultValue: AlignmentDirectional.topStart,
+      )!,
       textDirection: attrs.textDirection(),
       fit: attrs.stackFit(defaultValue: StackFit.loose)!,
       clipBehavior: attrs.clipBehavior()!,

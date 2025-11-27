@@ -1,7 +1,7 @@
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 Map<String, dynamic> widget = {
   "type": "InkWell",
@@ -13,7 +13,7 @@ Map<String, dynamic> widget = {
     "id": "target_text",
     "attributes": {
       "data": "Hello, world!",
-    }
+    },
   },
   "attributes": {
     "onTap": {
@@ -25,8 +25,8 @@ Map<String, dynamic> widget = {
           "target_text": {
             "data": "onTap",
           },
-        }
-      }
+        },
+      },
     },
     "onLongPress": {
       "executionType": 1, //local
@@ -37,10 +37,10 @@ Map<String, dynamic> widget = {
           "target_text": {
             "data": "onLongPress",
           },
-        }
-      }
+        },
+      },
     },
-  }
+  },
 };
 
 void main() {

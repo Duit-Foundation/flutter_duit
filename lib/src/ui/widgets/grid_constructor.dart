@@ -4,7 +4,7 @@ enum GridConstructor {
   count,
   extent;
 
-  static GridConstructor fromValue(dynamic value) {
+  static GridConstructor fromValue(value) {
     if (value is String) {
       return _stringLookup[value]!;
     }

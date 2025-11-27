@@ -5,8 +5,8 @@ class DuitRichText extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitRichText({
-    super.key,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -39,8 +39,8 @@ class DuitControlledRichText extends StatefulWidget with AnimatedAttributes {
   final UIElementController controller;
 
   const DuitControlledRichText({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

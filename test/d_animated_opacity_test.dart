@@ -100,7 +100,7 @@ void main() {
             0.5,
           );
 
-          await driver.updateTestAttributes("op1", {"opacity": 1.0});
+          await driver.updateAttributes("op1", {"opacity": 1.0});
 
           await t.pumpAndSettle();
 

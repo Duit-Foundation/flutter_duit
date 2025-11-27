@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -36,7 +36,7 @@ void main() {
                     "data": "Test widget",
                     "style": {
                       "fontSize": 50.0,
-                    }
+                    },
                   },
                 },
               },
@@ -81,7 +81,7 @@ void main() {
                     "data": "Test widget",
                     "style": {
                       "fontSize": 50.0,
-                    }
+                    },
                   },
                 },
               },
@@ -99,7 +99,7 @@ void main() {
           expect(box, findsOneWidget);
           expect(boxW.fit, BoxFit.fitWidth);
 
-          await driver.updateTestAttributes("fited", {"fit": "contain"});
+          await driver.updateAttributes("fited", {"fit": "contain"});
 
           await tester.pumpAndSettle();
 

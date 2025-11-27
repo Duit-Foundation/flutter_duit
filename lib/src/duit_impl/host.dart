@@ -1,8 +1,8 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/duit_impl/view_context.dart';
-import 'package:flutter_duit/src/ui/widgets/overlay_trigger_listener.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/src/duit_impl/view_context.dart";
+import "package:flutter_duit/src/ui/widgets/overlay_trigger_listener.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 /// A widget that hosts a DUIT view.
 ///
@@ -59,8 +59,8 @@ class DuitViewHost extends StatefulWidget {
   /// The [context] parameter is required and should be the build context of the parent widget.
   /// The [placeholder] parameter is optional and specifies a widget to be displayed while the DUIT view is loading or if there is no data to render.
   const DuitViewHost({
-    super.key,
     required this.driver,
+    super.key,
     this.child,
     this.invertStack = false,
     this.showChildInsteadOfPlaceholder = false,
@@ -71,6 +71,7 @@ class DuitViewHost extends StatefulWidget {
     this.viewTag = "",
     this.sliverGridDelegatesRegistry = const {},
   }) : assert(
+          // ignore: avoid_bool_literals_in_conditional_expressions
           showChildInsteadOfPlaceholder == true ? child != null : true,
           "Child must not be null if showChildInsteadOfPlaceholder property is set to true",
         );
@@ -94,10 +95,11 @@ class _DuitViewHostState extends State<DuitViewHost> {
 
   @override
   Widget build(BuildContext context) {
+    final driver = widget.driver;
     return StreamBuilder(
-      stream: widget.driver.eventStream,
+      stream: driver.eventStream,
       builder: (context, snapshot) {
-        widget.driver.context = context;
+        driver.context = context;
 
         if (snapshot.hasError && widget.errorWidgetBuilder != null) {
           return widget.errorWidgetBuilder!.call(context, snapshot.error);
@@ -107,19 +109,19 @@ class _DuitViewHostState extends State<DuitViewHost> {
 
         if (snapshot.hasData) {
           final content =
-              (snapshot.data as UIDriverViewEvent).model.build(widget.viewTag);
+              (snapshot.data! as UIDriverViewEvent).model.build(widget.viewTag);
 
-          widget.driver.notifyWidgetDisplayStateChanged(widget.viewTag, 1);
+          driver.notifyWidgetDisplayStateChanged(widget.viewTag, 1);
 
           return DuitViewContext(
-            logger: widget.driver.logger!,
+            logger: driver.logger!,
             gestureInterceptor: widget.gestureInterceptor,
             gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
             sliverGridDelegatesRegistry: widget.sliverGridDelegatesRegistry,
             child: _StackWrapper(
               invertStack: widget.invertStack,
               content: DuitOverlayTriggerListener(
-                driver: widget.driver,
+                driver: driver,
                 child: content,
               ),
               child: widget.child,

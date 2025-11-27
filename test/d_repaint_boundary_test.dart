@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
-Map<String, dynamic> _createWidget(
-    {bool isControlled = false, int? childIndex}) {
+Map<String, dynamic> _createWidget({
+  bool isControlled = false,
+  int? childIndex,
+}) {
   return {
     "type": "RepaintBoundary",
     "id": "repaintBoundaryId",
@@ -20,7 +22,7 @@ Map<String, dynamic> _createWidget(
       "attributes": {
         "color": "#075eeb",
       },
-    }
+    },
   };
 }
 
@@ -36,7 +38,9 @@ void main() {
       final repaintBoundaries = find.byType(RepaintBoundary);
       expect(repaintBoundaries, findsWidgets);
       expect(
-          tester.widgetList(repaintBoundaries).length, greaterThanOrEqualTo(1));
+        tester.widgetList(repaintBoundaries).length,
+        greaterThanOrEqualTo(1),
+      );
     });
 
     testWidgets(
@@ -52,7 +56,7 @@ void main() {
         final widget = find.byKey(const ValueKey("repaintBoundaryId"));
         expect(widget, findsOneWidget);
 
-        await driver.updateTestAttributes(
+        await driver.updateAttributes(
           "repaintBoundaryId",
           {
             "childIndex": 0,
@@ -63,8 +67,10 @@ void main() {
 
         final repaintBoundaries = find.byType(RepaintBoundary);
         expect(repaintBoundaries, findsWidgets);
-        expect(tester.widgetList(repaintBoundaries).length,
-            greaterThanOrEqualTo(1));
+        expect(
+          tester.widgetList(repaintBoundaries).length,
+          greaterThanOrEqualTo(1),
+        );
       },
     );
   });

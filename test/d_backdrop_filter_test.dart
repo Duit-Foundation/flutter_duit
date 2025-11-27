@@ -167,11 +167,10 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          final RenderObject? renderObject =
-              tester.element(find.byType(Stack)).renderObject;
+          final renderObject = tester.element(find.byType(Stack)).renderObject;
           expect(renderObject, isA<RenderStack>());
           expect(
-            (renderObject as RenderStack).firstChild,
+            (renderObject! as RenderStack).firstChild,
             isA<RenderBackdropFilter>(),
           );
         },
@@ -196,16 +195,18 @@ void main() {
 
             await tester.pumpAndSettle();
 
-            final RenderObject? renderObject =
+            final renderObject =
                 tester.element(find.byType(Stack)).renderObject;
             expect(renderObject, isA<RenderStack>());
 
-            final f = (renderObject as RenderStack).firstChild;
+            final f = (renderObject! as RenderStack).firstChild;
 
             expect(f, isA<RenderBackdropFilter>());
 
-            f as RenderBackdropFilter;
-            expect(f.filter.runtimeType.toString(), equals(filter.$2));
+            expect(
+              (f! as RenderBackdropFilter).filter.runtimeType.toString(),
+              equals(filter.$2),
+            );
           },
         );
       }

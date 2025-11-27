@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 class DuitPhysicalModel extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
   final Widget child;
 
   const DuitPhysicalModel({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -36,9 +36,9 @@ class DuitControlledPhysicalModel extends StatefulWidget
   final Widget child;
 
   const DuitControlledPhysicalModel({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

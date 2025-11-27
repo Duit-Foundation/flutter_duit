@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -37,10 +37,10 @@ void main() {
                           "color": "#DCDCDC",
                           "fontSize": 64.0,
                           "fontWeight": 700,
-                        }
+                        },
                       },
                     },
-                  ]
+                  ],
                 },
                 {
                   "type": "SliverVisibility",
@@ -66,7 +66,7 @@ void main() {
                             "color": "#DCDCDC",
                             "fontSize": 64.0,
                             "fontWeight": 700,
-                          }
+                          },
                         },
                       },
                     },
@@ -116,7 +116,7 @@ void main() {
                           "color": "#DCDCDC",
                           "fontSize": 64.0,
                           "fontWeight": 700,
-                        }
+                        },
                       },
                     },
                   ],
@@ -145,7 +145,7 @@ void main() {
                             "color": "#DCDCDC",
                             "fontSize": 64.0,
                             "fontWeight": 700,
-                          }
+                          },
                         },
                       },
                     },
@@ -164,14 +164,14 @@ void main() {
           expect(find.byKey(const ValueKey("sliver1")), findsNothing);
           expect(find.byKey(const ValueKey("text")), findsNothing);
 
-          await driver.updateTestAttributes("sliver1", {
+          await driver.updateAttributes("sliver1", {
             "visible": true,
           });
 
           await tester.pumpAndSettle();
 
-          final SliverVisibility sliver =
-              tester.widget(find.byKey(const ValueKey("sliver1")));
+          final sliver = tester
+              .widget<SliverVisibility>(find.byKey(const ValueKey("sliver1")));
           expect(
             sliver.visible,
             true,

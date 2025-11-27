@@ -219,7 +219,7 @@ void main() {
 
             expect(pageViewWidget.pageSnapping, true);
 
-            await driver.updateTestAttributes("PageView", {
+            await driver.updateAttributes("PageView", {
               "pageSnapping": false,
             });
 
@@ -273,7 +273,7 @@ void main() {
 
             expect(pageViewWidget.pageSnapping, true);
 
-            await driver.updateTestAttributes("PageView", {
+            await driver.updateAttributes("PageView", {
               "pageSnapping": false,
             });
 

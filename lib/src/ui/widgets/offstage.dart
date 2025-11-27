@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 class DuitOffstage extends StatelessWidget {
   final Widget child;
   final ViewAttribute attributes;
 
   const DuitOffstage({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -30,9 +30,9 @@ class DuitControlledOffstage extends StatefulWidget {
   final UIElementController controller;
 
   const DuitControlledOffstage({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

@@ -79,7 +79,7 @@ void main() {
 
         expect(box, paints..rect(color: Colors.black));
 
-        await driver.updateTestAttributes("container", {
+        await driver.updateAttributes("container", {
           "decoration": <String, dynamic>{
             "color": "#FFFFFF",
           },

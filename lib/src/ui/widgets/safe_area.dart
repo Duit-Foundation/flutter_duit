@@ -6,9 +6,9 @@ class DuitSafeArea extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitSafeArea({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -35,9 +35,9 @@ class DuitControlledSafeArea extends StatefulWidget with AnimatedAttributes {
   final UIElementController controller;
 
   const DuitControlledSafeArea({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

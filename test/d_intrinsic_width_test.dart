@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 Map<String, dynamic> _createWidget([bool isControlled = false]) {
   return {
@@ -19,7 +19,7 @@ Map<String, dynamic> _createWidget([bool isControlled = false]) {
       "attributes": {
         "color": "#075eeb",
       },
-    }
+    },
   };
 }
 
@@ -58,7 +58,7 @@ void main() {
         var widget = find.byKey(const ValueKey("intrinsicWidthId"));
         expect(widget, findsOneWidget);
 
-        await driver.updateTestAttributes(
+        await driver.updateAttributes(
           "intrinsicWidthId",
           {
             "stepWidth": 12.0,

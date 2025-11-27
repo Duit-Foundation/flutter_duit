@@ -7,9 +7,9 @@ class DuitMetaWidget extends StatefulWidget {
   final UIElementController controller;
 
   const DuitMetaWidget({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

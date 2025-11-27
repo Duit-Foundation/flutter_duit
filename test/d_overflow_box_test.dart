@@ -94,7 +94,7 @@ void main() {
       expect(overflowWidget.fit, OverflowBoxFit.max);
       expect(overflowWidget.alignment, Alignment.center);
 
-      await driver.updateTestAttributes("overflow", {
+      await driver.updateAttributes("overflow", {
         "minWidth": 5.0,
         "maxWidth": 50.0,
         "minHeight": 5.0,

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 Map<String, dynamic> _createWidget({
   bool isControlled = false,
@@ -44,7 +44,7 @@ void main() {
       expect(find.byKey(const Key("richTextId")), findsOneWidget);
       expect(find.text("Hello, RichText!"), findsOneWidget);
 
-      await driver.updateTestAttributes(
+      await driver.updateAttributes(
         "richTextId",
         {
           "textSpan": {
@@ -73,15 +73,15 @@ void main() {
                     "text": "Level 3",
                     "style": {"color": "#ff0000", "fontSize": 10.0},
                   }
-                ]
+                ],
               }
-            ]
+            ],
           },
           {
             "text": "Sibling 1",
             "style": {"color": "#00ff00", "fontSize": 14.0},
           }
-        ]
+        ],
       };
 
       final driver = DuitDriver.static(
@@ -110,9 +110,11 @@ void main() {
 
       collectTexts(rootSpan);
       expect(
-          texts,
-          containsAll(
-              ["Root ", "Level 1 ", "Level 2 ", "Level 3", "Sibling 1"]));
+        texts,
+        containsAll(
+          ["Root ", "Level 1 ", "Level 2 ", "Level 3", "Sibling 1"],
+        ),
+      );
     });
   });
 }

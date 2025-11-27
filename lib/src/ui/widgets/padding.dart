@@ -8,9 +8,9 @@ class DuitPadding extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitPadding({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -32,9 +32,9 @@ class DuitControlledPadding extends StatefulWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitControlledPadding({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

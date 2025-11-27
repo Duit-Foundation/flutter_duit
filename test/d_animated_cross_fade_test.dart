@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   testWidgets(
@@ -49,7 +49,7 @@ void main() {
           tester.widget<AnimatedCrossFade>(find.byType(AnimatedCrossFade));
       expect(animatedCrossFade.crossFadeState, CrossFadeState.showFirst);
 
-      await driver.updateTestAttributes("crossfade", {
+      await driver.updateAttributes("crossfade", {
         "crossFadeState": 1,
       });
 

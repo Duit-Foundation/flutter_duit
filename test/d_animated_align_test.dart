@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/foundation.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   testWidgets(
@@ -22,7 +22,7 @@ void main() {
             "attributes": {
               "data": "Some text",
             },
-          }
+          },
         },
         transportOptions: EmptyTransportOptions(),
       );
@@ -54,7 +54,7 @@ void main() {
                 "text": {
                   "data": "END",
                 },
-              }
+              },
             },
           },
         },
@@ -65,7 +65,7 @@ void main() {
           "attributes": {
             "data": "Some text",
           },
-        }
+        },
       },
       transportOptions: EmptyTransportOptions(),
     );
@@ -75,7 +75,7 @@ void main() {
       driver,
     );
 
-    await driver.updateTestAttributes("align", {
+    await driver.updateAttributes("align", {
       "alignment": "bottomLeft",
     });
 

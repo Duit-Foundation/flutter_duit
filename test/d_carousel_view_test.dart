@@ -1,12 +1,12 @@
-import 'package:flutter/widgets.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/widgets.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
-    'DuitCarouselView tests',
+    "DuitCarouselView tests",
     () {
       final arr = <Map<String, dynamic>>[];
 

@@ -132,7 +132,7 @@ void main() {
 
       expect(find.text("Good bye, World!"), findsOneWidget);
 
-      await driver.updateTestAttributes("1", {
+      await driver.updateAttributes("1", {
         "data": "Hello, World!",
         "style": {
           "color": "#DCDCDC",
@@ -192,7 +192,7 @@ void main() {
       final text = find.text("Good bye, World!");
       expect(text, findsOneWidget);
 
-      await driver.updateTestAttributes("1", {});
+      await driver.updateAttributes("1", {});
 
       await tester.pumpAndSettle();
 

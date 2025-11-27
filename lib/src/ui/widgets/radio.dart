@@ -7,18 +7,18 @@ class DuitRadio extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitRadio({
-    super.key,
     required this.attributes,
+    super.key,
   });
 
-  void _onChangeHandler(BuildContext context, dynamic value) {
+  void _onChangeHandler(BuildContext context, value) {
     RadioGroupContext.maybeOf(context)?.updateGroupValue(value);
   }
 
   @override
   Widget build(BuildContext context) {
     final groupContext = RadioGroupContext.maybeOf(context);
-    assert(groupContext != null, 'RadioGroupContext not found in context');
+    assert(groupContext != null, "RadioGroupContext not found in context");
     final attrs = mergeWithDataSource(
       context,
       attributes.payload,
@@ -46,8 +46,8 @@ final class DuitControlledRadio extends StatefulWidget with AnimatedAttributes {
   final UIElementController controller;
 
   const DuitControlledRadio({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override
@@ -62,14 +62,14 @@ class _DuitControlledRadioState extends State<DuitControlledRadio>
     super.initState();
   }
 
-  void _onChangeHandler(dynamic value) {
+  void _onChangeHandler(value) {
     RadioGroupContext.maybeOf(context)?.updateGroupValue(value);
   }
 
   @override
   Widget build(BuildContext context) {
     final groupContext = RadioGroupContext.maybeOf(context);
-    assert(groupContext != null, 'RadioGroupContext not found in context');
+    assert(groupContext != null, "RadioGroupContext not found in context");
     final attrs = widget.mergeWithDataSource(
       context,
       attributes,
@@ -79,7 +79,7 @@ class _DuitControlledRadioState extends State<DuitControlledRadio>
       key: Key(widget.controller.id),
       value: attrs["value"],
       groupValue: groupContext?.groupValue,
-      onChanged: (value) => _onChangeHandler(value),
+      onChanged: _onChangeHandler,
       toggleable: attrs.getBool("toggleable"),
       autofocus: attrs.getBool("autofocus"),
       activeColor: attrs.tryParseColor(key: "activeColor"),
@@ -96,22 +96,23 @@ class _DuitControlledRadioState extends State<DuitControlledRadio>
 
 final class RadioGroupContext extends InheritedWidget {
   final dynamic groupValue;
+  // ignore: avoid_annotating_with_dynamic
   final Function(dynamic value) updater;
 
   const RadioGroupContext({
-    super.key,
     required super.child,
     required this.groupValue,
     required this.updater,
+    super.key,
   });
 
   static RadioGroupContext? maybeOf(BuildContext context) {
-    final RadioGroupContext? result =
+    final result =
         context.dependOnInheritedWidgetOfExactType<RadioGroupContext>();
     return result;
   }
 
-  void updateGroupValue(dynamic value) {
+  void updateGroupValue(value) {
     updater(value);
   }
 
@@ -126,9 +127,9 @@ class DuitRadioGroupContextProvider extends StatefulWidget {
   final Widget child;
 
   const DuitRadioGroupContextProvider({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override
@@ -145,7 +146,7 @@ class _DuitRadioGroupContextProviderState
     super.initState();
   }
 
-  void _onChangeHandler(dynamic value) {
+  void _onChangeHandler(value) {
     updateStateManually(<String, dynamic>{
       "value": value,
       "groupValue": value,

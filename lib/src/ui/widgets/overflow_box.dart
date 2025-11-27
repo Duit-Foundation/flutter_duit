@@ -9,9 +9,9 @@ final class DuitOverflowBox extends StatelessWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitOverflowBox({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -40,9 +40,9 @@ final class DuitControlledOverflowBox extends StatefulWidget
   final Widget child;
 
   const DuitControlledOverflowBox({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

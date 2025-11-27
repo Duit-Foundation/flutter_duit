@@ -1,6 +1,6 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter_duit/flutter_duit.dart";
 
 final class EmptyTransport implements Transport {
   @override
@@ -13,13 +13,18 @@ final class EmptyTransport implements Transport {
 
   @override
   FutureOr<Map<String, dynamic>?> execute(
-      ServerAction action, Map<String, dynamic> payload) {
+    ServerAction action,
+    Map<String, dynamic> payload,
+  ) {
     throw UnimplementedError();
   }
 
   @override
   FutureOr<Map<String, dynamic>?> request(
-      String url, Map<String, dynamic> meta, Map<String, dynamic> body) {
+    String url,
+    Map<String, dynamic> meta,
+    Map<String, dynamic> body,
+  ) {
     throw UnimplementedError();
   }
 

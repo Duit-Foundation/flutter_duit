@@ -3,7 +3,7 @@ name: post-merge
 on:
   push:
     branches:
-      - 'main'
+      - "main"
 
 env:
   IS_CI: true
@@ -14,22 +14,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flutter-version: [ '3.24.3', '3.27.4', '3.29.3', '3.32.7' ]
+        flutter-version: ["3.24.3", "3.27.4", "3.29.3", "3.32.7"]
     steps:
       - uses: actions/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.flutter-version }}
-          channel: 'stable'
+          channel: "stable"
           cache: true
           cache-key: flutter-stable-${{ matrix.flutter-version }}-${{ runner.os }}
 
-      - name: Install Dependencies
-        run: flutter packages get
-
       - name: Disable animations
         run: flutter config --no-cli-animations
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Lint
+        run: flutter analyze .
 
       - name: Run tests
         run: |

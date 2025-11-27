@@ -5,8 +5,8 @@ class DuitSwitch extends StatefulWidget {
   final UIElementController controller;
 
   const DuitSwitch({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

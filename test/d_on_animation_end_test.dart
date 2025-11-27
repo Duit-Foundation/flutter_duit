@@ -1,8 +1,8 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/ui/widgets/index.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/ui/widgets/index.dart";
+import "package:flutter_test/flutter_test.dart";
 
 final _action = {
   "executionType": 1, //local

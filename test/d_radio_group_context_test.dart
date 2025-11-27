@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -37,8 +37,8 @@ void main() {
                     "controlled": false,
                     "attributes": {"value": "b"},
                   },
-                ]
-              }
+                ],
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -51,8 +51,8 @@ void main() {
           expect(radioAFinder, findsOneWidget);
           expect(radioBFinder, findsOneWidget);
 
-          Radio radioA = tester.widget<Radio>(radioAFinder);
-          Radio radioB = tester.widget<Radio>(radioBFinder);
+          var radioA = tester.widget<Radio>(radioAFinder);
+          var radioB = tester.widget<Radio>(radioBFinder);
 
           expect(radioA.groupValue, "a");
           expect(radioA.value, "a");
@@ -87,7 +87,7 @@ void main() {
                 "id": "radioA",
                 "controlled": true,
                 "attributes": {"value": "a", "activeColor": "#075eeb"},
-              }
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -97,10 +97,10 @@ void main() {
           final radioFinder = find.byKey(const ValueKey("radioA"));
           expect(radioFinder, findsOneWidget);
 
-          Radio radio = tester.widget<Radio>(radioFinder);
+          var radio = tester.widget<Radio>(radioFinder);
           expect(radio.activeColor, const Color(0xFF075EEB));
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "radioA",
             {"activeColor": "#03fcc2", "value": "a"},
           );

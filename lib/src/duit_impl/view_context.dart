@@ -15,18 +15,18 @@ class DuitViewContext extends InheritedWidget
   final DebugLogger logger;
 
   const DuitViewContext({
-    super.key,
     required Widget child,
     required this.gestureInterceptorBehavior,
     required this.sliverGridDelegatesRegistry,
     required this.logger,
+    super.key,
     this.gestureInterceptor,
   }) : super(child: child);
 
   static DuitViewContext of(BuildContext context) {
-    final DuitViewContext? result =
+    final result =
         context.dependOnInheritedWidgetOfExactType<DuitViewContext>();
-    assert(result != null, 'No ViewContext found in context');
+    assert(result != null, "No ViewContext found in context");
     return result!;
   }
 

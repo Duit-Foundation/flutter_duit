@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -64,7 +64,7 @@ void main() {
           expect(wrap.spacing, 12);
           expect(wrap.runSpacing, 24);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "w1",
             {
               "spacing": 24,

@@ -16,7 +16,7 @@ Map<String, dynamic> _createWidget(int type) {
         "id": "sep1",
         "controlled": true,
         "data": {},
-        "tag": "sep"
+        "tag": "sep",
       },
       "childObjects": [
         {
@@ -27,7 +27,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -37,7 +37,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -47,7 +47,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -57,7 +57,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -67,7 +67,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -77,7 +77,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -87,7 +87,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -97,7 +97,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -107,7 +107,7 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
         {
           "controlled": true,
@@ -117,11 +117,11 @@ Map<String, dynamic> _createWidget(int type) {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         }
       ],
-      "shrinkWrap": true
-    }
+      "shrinkWrap": true,
+    },
   };
 }
 
@@ -174,17 +174,18 @@ void main() {
           "itemExtent": 100.0,
         },
         "children": List.generate(
-            100,
-            (i) => <String, dynamic>{
-                  "type": "Container",
-                  "id": i.toString(),
-                  "controlled": false,
-                  "attributes": {
-                    "height": 100.0,
-                    "width": 100.0,
-                    "color": "#DCDCDC",
-                  },
-                }),
+          100,
+          (i) => <String, dynamic>{
+            "type": "Container",
+            "id": i.toString(),
+            "controlled": false,
+            "attributes": {
+              "height": 100.0,
+              "width": 100.0,
+              "color": "#DCDCDC",
+            },
+          },
+        ),
       },
       transportOptions: EmptyTransportOptions(),
     );
@@ -228,17 +229,18 @@ void main() {
           "itemExtent": 100.0,
         },
         "children": List.generate(
-            100,
-            (i) => <String, dynamic>{
-                  "type": "Container",
-                  "id": i.toString(),
-                  "controlled": false,
-                  "attributes": {
-                    "height": 100.0,
-                    "width": 100.0,
-                    "color": "#DCDCDC",
-                  },
-                }),
+          100,
+          (i) => <String, dynamic>{
+            "type": "Container",
+            "id": i.toString(),
+            "controlled": false,
+            "attributes": {
+              "height": 100.0,
+              "width": 100.0,
+              "color": "#DCDCDC",
+            },
+          },
+        ),
       },
       transportOptions: EmptyTransportOptions(),
     );
@@ -248,11 +250,11 @@ void main() {
       driver,
     );
 
-    ListView list = tester.widget(find.byKey(const ValueKey("list1")));
+    var list = tester.widget<ListView>(find.byKey(const ValueKey("list1")));
 
     expect(list.itemExtent, 100.0);
 
-    await driver.updateTestAttributes("list1", {
+    await driver.updateAttributes("list1", {
       "type": 0,
       "itemExtent": 200.0,
     });
@@ -375,7 +377,7 @@ void main() {
 
     expect(itemLast, findsOneWidget);
 
-    driver.updateTestAttributes("87b54621-ac6d-42c3-8d1f-397e3bd63bca", {
+    driver.updateAttributes("87b54621-ac6d-42c3-8d1f-397e3bd63bca", {
       "children": List.generate(
         10,
         (i) => {
@@ -386,7 +388,7 @@ void main() {
           "data": {
             "come": "value",
           },
-          "tag": "c"
+          "tag": "c",
         },
       ),
     });

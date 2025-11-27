@@ -30,9 +30,7 @@ final class DuitScaffold extends StatelessWidget {
       bottomSheet: children.elementAtOrNull(_kBottomSheetIndex),
       bottomNavigationBar: children.elementAtOrNull(_kBottomNavInvdex),
       persistentFooterButtons: children.length > _kPersistentButtonsFirstIndex
-          ? children
-              .sublist(_kPersistentButtonsFirstIndex)
-              .cast<Widget>()
+          ? children.sublist(_kPersistentButtonsFirstIndex).cast<Widget>()
           : null,
       floatingActionButtonLocation: attrs.fabLocation(),
       primary: attrs.getBool("primary", defaultValue: true),
@@ -82,9 +80,7 @@ class _DuitControlledScaffoldState extends State<DuitControlledScaffold>
       bottomSheet: children.elementAtOrNull(_kBottomSheetIndex),
       bottomNavigationBar: children.elementAtOrNull(_kBottomNavInvdex),
       persistentFooterButtons: children.length > _kPersistentButtonsFirstIndex
-          ? children
-              .sublist(_kPersistentButtonsFirstIndex)
-              .cast<Widget>()
+          ? children.sublist(_kPersistentButtonsFirstIndex).cast<Widget>()
           : null,
       floatingActionButtonLocation: attributes.fabLocation(),
       primary: attributes.getBool("primary", defaultValue: true),

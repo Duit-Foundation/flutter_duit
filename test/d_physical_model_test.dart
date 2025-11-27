@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
 void main() {
   group(
@@ -20,8 +20,8 @@ void main() {
                 "topLeft": {"x": 10, "y": 10},
                 "topRight": {"x": 10, "y": 10},
                 "bottomLeft": {"x": 10, "y": 10},
-                "bottomRight": {"x": 10, "y": 10}
-              }
+                "bottomRight": {"x": 10, "y": 10},
+              },
             },
             "controlled": false,
             "child": {
@@ -30,8 +30,8 @@ void main() {
               "attributes": <String, dynamic>{
                 "width": 100,
                 "height": 100,
-              }
-            }
+              },
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -85,8 +85,8 @@ void main() {
               "attributes": <String, dynamic>{
                 "width": 100,
                 "height": 100,
-              }
-            }
+              },
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -113,7 +113,7 @@ void main() {
           const Color.fromARGB(255, 0, 255, 0),
         );
 
-        await driver.updateTestAttributes("physical_model", {
+        await driver.updateAttributes("physical_model", {
           "elevation": 12.0,
           "color": [0, 0, 255, 1],
         });
@@ -150,8 +150,8 @@ void main() {
               "attributes": <String, dynamic>{
                 "width": 50,
                 "height": 50,
-              }
-            }
+              },
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );

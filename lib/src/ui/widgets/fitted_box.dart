@@ -6,9 +6,9 @@ final class DuitFittedBox extends StatelessWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitFittedBox({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -33,9 +33,9 @@ class DuitControlledFittedBox extends StatefulWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitControlledFittedBox({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

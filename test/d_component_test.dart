@@ -121,7 +121,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await driver.updateTestAttributes(
+      await driver.updateAttributes(
         "testId",
         componentUpdateTemplateData,
       );
@@ -182,15 +182,15 @@ void main() {
       expect(container, findsWidgets);
     });
 
-    testWidgets('instances must be independent (no sticky state)',
+    testWidgets("instances must be independent (no sticky state)",
         (tester) async {
       // First instance with full data
       var driver = DuitDriver.static(
         {
-          'type': 'Component',
-          'id': 'compA',
-          'tag': 'x',
-          'data': {
+          "type": "Component",
+          "id": "compA",
+          "tag": "x",
+          "data": {
             "secColor": [
               255,
               255,
@@ -203,50 +203,50 @@ void main() {
         transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver, const ValueKey('iter1'));
+      await pumpDriver(tester, driver, const ValueKey("iter1"));
 
       final containerNested1 =
-          tester.firstWidget(find.byKey(const Key('container2'))) as Container;
+          tester.firstWidget(find.byKey(const Key("container2"))) as Container;
 
       expect(containerNested1.color, const Color.fromRGBO(255, 255, 255, 1));
 
       // Now render second instance with missing secColor -> should use default
       final driver2 = DuitDriver.static(
         {
-          'type': 'Component',
-          'id': 'compB',
-          'tag': 'x',
-          'data': {
+          "type": "Component",
+          "id": "compB",
+          "tag": "x",
+          "data": {
             "mainColor": "#fcba03",
           }, // only mainColor
         },
         transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver2, const ValueKey('iter2'));
+      await pumpDriver(tester, driver2, const ValueKey("iter2"));
 
       final containerNested2 =
-          tester.firstWidget(find.byKey(const Key('container2'))) as Container;
+          tester.firstWidget(find.byKey(const Key("container2"))) as Container;
 
       expect(containerNested2.color, const Color(0xffdcdcdc));
     });
 
     testWidgets(
-        'writeOps path for children index is applied (embedded component)',
+        "writeOps path for children index is applied (embedded component)",
         (tester) async {
       final driver = DuitDriver.static(
         {
-          'embedded': [componentTemplate2],
-          'type': 'Column',
-          'id': 'column1',
-          'controlled': false,
-          'children': [
+          "embedded": [componentTemplate2],
+          "type": "Column",
+          "id": "column1",
+          "controlled": false,
+          "children": [
             {
-              'type': 'Component',
-              'id': 'child1',
-              'controlled': true,
-              'tag': 'y',
-              'data':
+              "type": "Component",
+              "id": "child1",
+              "controlled": true,
+              "tag": "y",
+              "data":
                   const <String, dynamic>{}, // no data -> default must be used
             }
           ],
@@ -262,7 +262,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final target = find.byKey(const ValueKey('target_container'));
+      final target = find.byKey(const ValueKey("target_container"));
       expect(target, findsOneWidget);
       final color = (tester.firstWidget(target) as Container).color;
       expect(color, const Color.fromRGBO(220, 220, 220, 1));

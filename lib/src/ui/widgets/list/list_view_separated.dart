@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/ui/widgets/tile.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/ui/widgets/tile.dart";
 
 final class DuitListViewSeparated extends StatefulWidget {
   final UIElementController controller;
 
-  const DuitListViewSeparated({super.key, required this.controller});
+  const DuitListViewSeparated({required this.controller, super.key});
 
   @override
   State<DuitListViewSeparated> createState() => _DuitListViewSeparatedState();

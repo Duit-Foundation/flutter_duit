@@ -6,9 +6,9 @@ class DuitIgnorePointer extends StatelessWidget {
   final Widget child;
 
   const DuitIgnorePointer({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -27,9 +27,9 @@ class DuitControlledIgnorePointer extends StatefulWidget {
   final Widget child;
 
   const DuitControlledIgnorePointer({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

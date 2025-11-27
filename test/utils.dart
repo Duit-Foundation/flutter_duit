@@ -1,7 +1,11 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import "dart:async";
 import "dart:math";
 
+import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
 
@@ -71,7 +75,7 @@ final class MockTransport extends Transport {
 }
 
 extension TransportExtension on UIDriver {
-  void applyMockTransport(dynamic mustReturnThis) {
+  void applyMockTransport(mustReturnThis) {
     transport = MockTransport("", mustReturnThis);
   }
 }
@@ -94,4 +98,140 @@ Future<void> pumpDriver(
     ),
   );
   await tester.pumpAndSettle();
+}
+
+// Mock UIDriver для тестирования
+class MockUIDriver implements UIDriver {
+  final List<String> evaluatedScripts = [];
+  bool shouldThrowError = false;
+
+  @override
+  String get source => "mock_source";
+
+  @override
+  TransportOptions get transportOptions => EmptyTransportOptions();
+
+  @override
+  Transport? transport;
+
+  @override
+  BuildContext get buildContext => throw UnimplementedError();
+
+  StreamController<ElementTree?> get streamController =>
+      throw UnimplementedError();
+
+  StreamController<UIDriverEvent> get eventStreamController =>
+      throw UnimplementedError();
+
+  @override
+  ScriptRunner? scriptRunner;
+
+  @override
+  EventResolver get eventResolver => throw UnimplementedError();
+
+  @override
+  ActionExecutor get actionExecutor => throw UnimplementedError();
+
+  @override
+  ExternalEventHandler? externalEventHandler;
+
+  @override
+  MethodChannel? driverChannel;
+
+  @override
+  bool get isModule => false;
+
+  @override
+  DebugLogger? get logger => DefaultLogger.instance;
+
+  @override
+  void attachController(String id, UIElementController controller) {}
+
+  @override
+  void detachController(String id) {}
+
+  @override
+  UIElementController? getController(String id) => null;
+
+  @override
+  void dispose() {}
+
+  @override
+  Map<String, dynamic> preparePayload(
+    Iterable<ActionDependency> dependencies,
+  ) =>
+      {};
+
+  @override
+  Future<ServerEvent?> execute(ServerAction action) async {
+    if (shouldThrowError) {
+      throw Exception("Mock execution error");
+    }
+    return null;
+  }
+
+  @override
+  late Stream<UIDriverEvent> eventStream;
+
+  late Stream<ElementTree?> stream;
+
+  @override
+  set actionExecutor(ActionExecutor _actionExecutor) {}
+
+  @override
+  Widget? build() {
+    throw UnimplementedError();
+  }
+
+  @override
+  set buildContext(BuildContext _buildContext) {}
+
+  @override
+  // ignore: avoid_setters_without_getters
+  set context(BuildContext value) {}
+
+  @override
+  Future<void> evalScript(String source) {
+    if (shouldThrowError) {
+      throw Exception("Mock eval error");
+    }
+    evaluatedScripts.add(source);
+    return Future.value();
+  }
+
+  @override
+  set eventResolver(EventResolver _eventResolver) {}
+
+  @override
+  Future<void> init() {
+    throw UnimplementedError();
+  }
+
+  @override
+  set isModule(bool _isModule) {}
+
+  @override
+  bool isWidgetReady(String viewTag) {
+    throw UnimplementedError();
+  }
+
+  @override
+  set logger(DebugLogger? _logger) {}
+
+  @override
+  void notifyWidgetDisplayStateChanged(String viewTag, int state) {}
+
+  @override
+  Future<void> updateAttributes(
+    String controllerId,
+    Map<String, dynamic> json,
+  ) {
+    throw UnimplementedError();
+  }
+
+  set eventStreamController(
+    StreamController<UIDriverEvent> _eventStreamController,
+  ) {}
+
+  set streamController(StreamController<ElementTree?> _streamController) {}
 }

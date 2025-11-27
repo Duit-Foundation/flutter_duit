@@ -6,8 +6,8 @@ class DuitWrap extends StatelessWidget with AnimatedAttributes {
   final List<Widget> children;
 
   const DuitWrap({
-    super.key,
     required this.attributes,
+    super.key,
     this.children = const [],
   });
 
@@ -45,8 +45,8 @@ class DuitControlledWrap extends StatefulWidget with AnimatedAttributes {
   final List<Widget> children;
 
   const DuitControlledWrap({
-    super.key,
     required this.controller,
+    super.key,
     this.children = const [],
   });
 

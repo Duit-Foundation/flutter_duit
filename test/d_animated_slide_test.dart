@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart' show AnimatedSlide, ValueKey, Container;
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart" show AnimatedSlide, ValueKey, Container;
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
-  group('DuitAnimatedSlide', () {
+  group("DuitAnimatedSlide", () {
     testWidgets(
       "DuitAnimatedSlide must renders correctly",
       (tester) async {
@@ -65,7 +65,7 @@ void main() {
               "attributes": {
                 "data": "Some text",
               },
-            }
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -79,7 +79,7 @@ void main() {
         expect(find.text("Some text"), findsOneWidget);
 
         // Update the offset
-        await driver.updateTestAttributes("slide", {
+        await driver.updateAttributes("slide", {
           "offset": {"dx": 0.5, "dy": 0.0},
         });
 
@@ -110,7 +110,7 @@ void main() {
                     "text": {
                       "data": "ANIMATION_ENDED",
                     },
-                  }
+                  },
                 },
               },
             },
@@ -121,7 +121,7 @@ void main() {
               "attributes": {
                 "data": "Some text",
               },
-            }
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -134,7 +134,7 @@ void main() {
         expect(find.text("Some text"), findsOneWidget);
 
         // Update the offset to trigger animation
-        await driver.updateTestAttributes("slide", {
+        await driver.updateAttributes("slide", {
           "offset": {"dx": 0.5, "dy": 0.0},
         });
 
@@ -166,7 +166,7 @@ void main() {
                 "height": 50,
                 "color": "#FF0000",
               },
-            }
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -188,7 +188,7 @@ void main() {
         ];
 
         for (final offset in testOffsets) {
-          await driver.updateTestAttributes("slide", {
+          await driver.updateAttributes("slide", {
             "offset": offset,
           });
 
@@ -219,7 +219,7 @@ void main() {
               "attributes": {
                 "data": "Test text",
               },
-            }
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -236,7 +236,7 @@ void main() {
         final testCurves = ["ease", "bounceIn", "bounceOut"];
 
         for (final curve in testCurves) {
-          await driver.updateTestAttributes("slide", {
+          await driver.updateAttributes("slide", {
             "offset": {"dx": 0.5, "dy": 0.0},
             "curve": curve,
           });

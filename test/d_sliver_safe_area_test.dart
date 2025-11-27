@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group("DuitSliverSafeArea widget tests", () {
@@ -27,7 +27,7 @@ void main() {
                   "top": 10.0,
                   "left": 10.0,
                   "right": 10.0,
-                  "bottom": 10.0
+                  "bottom": 10.0,
                 },
                 "needsBoxAdapter": true,
               },
@@ -90,7 +90,7 @@ void main() {
       expect(find.byKey(const ValueKey("sliverSafeAreaId")), findsOneWidget);
       expect(find.text("Controlled Test Text"), findsOneWidget);
 
-      await driver.updateTestAttributes(
+      await driver.updateAttributes(
         "sliverSafeAreaId",
         {
           "left": true,

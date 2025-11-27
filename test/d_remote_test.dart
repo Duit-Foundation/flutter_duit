@@ -36,7 +36,7 @@ void main() {
                     "color": "#DCDCDC",
                     "fontSize": 14.0,
                     "fontWeight": 700,
-                  }
+                  },
                 },
               },
             );
@@ -88,7 +88,7 @@ void main() {
                     "color": "#DCDCDC",
                     "fontSize": 14.0,
                     "fontWeight": 700,
-                  }
+                  },
                 },
               },
             );
@@ -110,7 +110,7 @@ void main() {
 
           expect(find.byKey(const Key("text")), findsOneWidget);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "remote",
             {
               "data": {
@@ -123,7 +123,7 @@ void main() {
                     "color": "#DCDCDC",
                     "fontSize": 14.0,
                     "fontWeight": 700,
-                  }
+                  },
                 },
               },
             },

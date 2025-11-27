@@ -7,9 +7,9 @@ class DuitAnimatedSize extends StatefulWidget {
   final UIElementController controller;
 
   const DuitAnimatedSize({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

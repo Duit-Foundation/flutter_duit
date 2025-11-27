@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 class DuitCustomScrollView extends StatelessWidget {
   final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitCustomScrollView({
-    super.key,
     required this.attributes,
     required this.children,
+    super.key,
   });
 
   @override
@@ -39,9 +39,9 @@ class DuitControlledCustomScrollView extends StatefulWidget {
   final List<Widget> children;
 
   const DuitControlledCustomScrollView({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override

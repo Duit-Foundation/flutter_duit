@@ -5,8 +5,8 @@ class DuitSlider extends StatefulWidget {
   final UIElementController controller;
 
   const DuitSlider({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

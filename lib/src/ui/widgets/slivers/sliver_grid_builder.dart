@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/duit_impl/view_context.dart';
-import 'package:flutter_duit/src/ui/widgets/tile.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/duit_impl/view_context.dart";
+import "package:flutter_duit/src/ui/widgets/tile.dart";
 
 class DuitSliverGridBuilder extends StatefulWidget {
   final UIElementController controller;
 
   const DuitSliverGridBuilder({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

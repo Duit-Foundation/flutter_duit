@@ -76,6 +76,42 @@ void main() {
               textDirection: TextDirection.ltr,
               child: DuitViewHost(
                 driver: DuitDriver.static(
+                  _createWidget(false),
+                  transportOptions: EmptyTransportOptions(),
+                ),
+              ),
+            ),
+          ),
+        );
+
+        await tester.pumpAndSettle();
+
+        final appBar = find.byKey(const ValueKey("appBarId"));
+        expect(appBar, findsOneWidget);
+
+        final appBarWidget = tester.widget<AppBar>(appBar);
+        expect(appBarWidget.backgroundColor, const Color(0xFFFF0000));
+        expect(appBarWidget.foregroundColor, const Color(0xFFFFFFFF));
+        expect(appBarWidget.elevation, 4.0);
+        expect(appBarWidget.centerTitle, true);
+        expect(appBarWidget.automaticallyImplyLeading, true);
+        expect(appBarWidget.toolbarHeight, 56.0);
+        expect(appBarWidget.leadingWidth, 56.0);
+        expect(appBarWidget.titleSpacing, 16.0);
+        expect(appBarWidget.bottomOpacity, 1.0);
+        expect(appBarWidget.toolbarOpacity, 1.0);
+      },
+    );
+
+    testWidgets(
+      "must build widget with default attributes",
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Directionality(
+              textDirection: TextDirection.ltr,
+              child: DuitViewHost(
+                driver: DuitDriver.static(
                   _createWidget(),
                   transportOptions: EmptyTransportOptions(),
                 ),
@@ -122,7 +158,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await driver.updateTestAttributes("appBarId", {
+      await driver.updateAttributes("appBarId", {
         "backgroundColor": "#00FF00",
         "elevation": 8.0,
         "centerTitle": false,

@@ -7,7 +7,7 @@ import "package:flutter_test/flutter_test.dart";
 import "utils.dart";
 
 void main() {
-  group('DuitDriver addDataSource tests', () {
+  group("DuitDriver addDataSource tests", () {
     testWidgets("should successfully process valid events from data source",
         (tester) async {
       final driver = DuitDriver.static(
@@ -17,14 +17,14 @@ void main() {
           "controlled": false,
           "children": [
             {
-              'type': 'TextField',
-              'id': 'textField1',
-              'controlled': true,
-              'attributes': {
-                'value': 'Initial',
+              "type": "TextField",
+              "id": "textField1",
+              "controlled": true,
+              "attributes": {
+                "value": "Initial",
               },
             }
-          ]
+          ],
         },
         transportOptions: EmptyTransportOptions(),
       );
@@ -44,8 +44,8 @@ void main() {
         "updates": {
           "textField1": {
             "value": "Updated from data source",
-          }
-        }
+          },
+        },
       });
 
       await tester.pumpAndSettle();
@@ -79,7 +79,7 @@ void main() {
 
       await runZonedGuarded(() async {
         driver.addExternalEventStream(streamController.stream);
-        streamController.add({'type': 'null'});
+        streamController.add({"type": "null"});
       }, (error, stack) {
         expect(error, isA<NullEventException>());
       });
@@ -97,22 +97,22 @@ void main() {
           "controlled": false,
           "children": [
             {
-              'type': 'TextField',
-              'id': 'textField1',
-              'controlled': true,
-              'attributes': {
-                'value': 'Initial1',
+              "type": "TextField",
+              "id": "textField1",
+              "controlled": true,
+              "attributes": {
+                "value": "Initial1",
               },
             },
             {
-              'type': 'TextField',
-              'id': 'textField2',
-              'controlled': true,
-              'attributes': {
-                'value': 'Initial2',
+              "type": "TextField",
+              "id": "textField2",
+              "controlled": true,
+              "attributes": {
+                "value": "Initial2",
               },
             }
-          ]
+          ],
         },
         transportOptions: EmptyTransportOptions(),
       );
@@ -131,15 +131,15 @@ void main() {
       streamController1.add({
         "type": "update",
         "updates": {
-          "textField1": {"value": "Updated from source 1"}
-        }
+          "textField1": {"value": "Updated from source 1"},
+        },
       });
 
       streamController2.add({
         "type": "update",
         "updates": {
-          "textField2": {"value": "Updated from source 2"}
-        }
+          "textField2": {"value": "Updated from source 2"},
+        },
       });
 
       await tester.pumpAndSettle();
@@ -168,14 +168,14 @@ void main() {
           "controlled": false,
           "children": [
             {
-              'type': 'TextField',
-              'id': 'textField1',
-              'controlled': true,
-              'attributes': {
-                'value': 'Initial',
+              "type": "TextField",
+              "id": "textField1",
+              "controlled": true,
+              "attributes": {
+                "value": "Initial",
               },
             }
-          ]
+          ],
         },
         transportOptions: EmptyTransportOptions(),
       );
@@ -192,7 +192,7 @@ void main() {
       streamController.add({
         "type": "custom",
         "key": "test_key",
-        "extra": {"data": "test_data"}
+        "extra": {"data": "test_data"},
       });
 
       await tester.pumpAndSettle();
@@ -201,8 +201,8 @@ void main() {
       streamController.add({
         "type": "update",
         "updates": {
-          "textField1": {"value": "Updated by custom event"}
-        }
+          "textField1": {"value": "Updated by custom event"},
+        },
       });
 
       await tester.pumpAndSettle();
@@ -227,30 +227,30 @@ void main() {
         "controlled": false,
         "children": [
           {
-            'type': 'TextField',
-            'id': 'textField1',
-            'controlled': true,
-            'attributes': {
-              'value': 'Hello',
-              'autofocus': false,
-              'enabled': true,
-              'readOnly': false,
-              'maxLength': 20,
+            "type": "TextField",
+            "id": "textField1",
+            "controlled": true,
+            "attributes": {
+              "value": "Hello",
+              "autofocus": false,
+              "enabled": true,
+              "readOnly": false,
+              "maxLength": 20,
             },
           },
           {
-            'type': 'TextField',
-            'id': 'textField2',
-            'controlled': true,
-            'attributes': {
-              'value': 'World',
-              'autofocus': false,
-              'enabled': true,
-              'readOnly': false,
-              'maxLength': 20,
+            "type": "TextField",
+            "id": "textField2",
+            "controlled": true,
+            "attributes": {
+              "value": "World",
+              "autofocus": false,
+              "enabled": true,
+              "readOnly": false,
+              "maxLength": 20,
             },
           }
-        ]
+        ],
       },
       transportOptions: EmptyTransportOptions(),
     );

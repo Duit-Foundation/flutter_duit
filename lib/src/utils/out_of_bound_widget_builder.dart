@@ -1,6 +1,6 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 /// A mixin for creating widgets outside the standard widget tree building process.
 ///

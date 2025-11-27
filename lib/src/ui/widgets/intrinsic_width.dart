@@ -6,9 +6,9 @@ class DuitIntrinsicWidth extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitIntrinsicWidth({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -29,9 +29,9 @@ class DuitControlledIntrinsicWidth extends StatefulWidget
   final UIElementController controller;
 
   const DuitControlledIntrinsicWidth({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

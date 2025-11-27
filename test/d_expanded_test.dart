@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
 void main() {
   group(
@@ -88,7 +88,7 @@ void main() {
           expect(renderObject2.size.width, 400);
           expect(renderObject3.size.width, 200);
 
-          await driver.updateTestAttributes("ex2", {
+          await driver.updateAttributes("ex2", {
             "flex": 6,
           });
 

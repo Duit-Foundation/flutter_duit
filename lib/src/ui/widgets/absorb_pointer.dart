@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 class DuitAbsorbPointer extends StatelessWidget {
   final Widget child;
   final ViewAttribute attributes;
 
   const DuitAbsorbPointer({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -27,9 +27,9 @@ class DuitControlledAbsorbPointer extends StatefulWidget {
   final UIElementController controller;
 
   const DuitControlledAbsorbPointer({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

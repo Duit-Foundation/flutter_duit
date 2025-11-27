@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 class DuitSliverIgnorePointer extends StatelessWidget {
   final ViewAttribute attributes;
   final Widget child;
 
   const DuitSliverIgnorePointer({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -32,9 +32,9 @@ class DuitControlledSliverIgnorePointer extends StatefulWidget {
   final Widget child;
 
   const DuitControlledSliverIgnorePointer({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override
