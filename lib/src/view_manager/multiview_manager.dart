@@ -15,39 +15,30 @@ final class MultiViewManager extends SimpleViewManager {
 
   @override
   Future<DuitView?> prepareLayout(Map<String, dynamic> json) async {
-    try {
-      final compatView = await super.prepareLayout(json);
+    final compatView = await super.prepareLayout(json);
 
-      if (compatView == null) {
-        _layout = DuitMultiViewLayout();
+    if (compatView == null) {
+      _layout = DuitMultiViewLayout();
 
-        if (json
-            case {
-              "widgets": Map collection,
-            }) {
-          final widgets = collection.entries.cast<MapEntry<String, dynamic>>();
+      if (json
+          case {
+            "widgets": Map collection,
+          }) {
+        final widgets = collection.entries.cast<MapEntry<String, dynamic>>();
 
-          for (final widget in widgets) {
-            await _layout.prepareModel(
-              <String, dynamic>{
-                widget.key: widget.value,
-              },
-              driver,
-            );
-          }
-          return _layout;
+        for (final widget in widgets) {
+          await _layout.prepareModel(
+            <String, dynamic>{
+              widget.key: widget.value,
+            },
+            driver,
+          );
         }
-        return null;
+        return _layout;
       }
-      return compatView;
-    } catch (e, s) {
-      driver.logger?.error(
-        "Failed to resolve tree",
-        error: e,
-        stackTrace: s,
-      );
-      rethrow;
+      return null;
     }
+    return compatView;
   }
 
   @override
@@ -62,7 +53,7 @@ final class MultiViewManager extends SimpleViewManager {
     if (_layout[viewTag] == null) {
       return false;
     } else {
-      return _layout[viewTag]!.isReady ?? false;
+      return _layout[viewTag]!.$2;
     }
   }
 }

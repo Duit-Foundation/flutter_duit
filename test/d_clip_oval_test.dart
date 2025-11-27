@@ -36,8 +36,8 @@ void main() {
 
           expect(find.byKey(const ValueKey("ClipOval")), findsOneWidget);
 
-          final clipWidget = tester
-              .widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
+          final clipWidget =
+              tester.widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
 
           expect(clipWidget.clipBehavior, Clip.none);
         },
@@ -71,8 +71,8 @@ void main() {
 
           expect(find.byKey(const ValueKey("ClipOval")), findsOneWidget);
 
-          var clipWidget = tester
-              .widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
+          var clipWidget =
+              tester.widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
 
           expect(clipWidget.clipBehavior, Clip.none);
 
@@ -85,8 +85,8 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          clipWidget = tester
-              .widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
+          clipWidget =
+              tester.widget<ClipOval>(find.byKey(const ValueKey("ClipOval")));
 
           expect(clipWidget.clipBehavior, Clip.hardEdge);
         },

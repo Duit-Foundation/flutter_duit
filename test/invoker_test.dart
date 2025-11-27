@@ -49,7 +49,7 @@ void main() {
     group('Debounce functionality', () {
       test('should execute callback after delay when called once', () async {
         final completer = Completer<void>();
-        
+
         widgetState.debounce(
           'test',
           () {
@@ -60,14 +60,14 @@ void main() {
         );
 
         expect(widgetState.debounceCallCount, 0);
-        
+
         await completer.future;
         expect(widgetState.debounceCallCount, 1);
       });
 
       test('should reset timer when called multiple times', () async {
         final completer = Completer<void>();
-        
+
         // First call
         widgetState.debounce(
           'test',
@@ -80,7 +80,7 @@ void main() {
 
         // Wait a bit and call again
         await Future.delayed(const Duration(milliseconds: 100));
-        
+
         widgetState.debounce(
           'test',
           () {
@@ -91,7 +91,7 @@ void main() {
         );
 
         expect(widgetState.debounceCallCount, 0);
-        
+
         await completer.future;
         expect(widgetState.debounceCallCount, 1);
       });
@@ -99,7 +99,7 @@ void main() {
       test('should handle multiple debounce keys independently', () async {
         final completer1 = Completer<void>();
         final completer2 = Completer<void>();
-        
+
         widgetState.debounce(
           'key1',
           () {
@@ -120,13 +120,13 @@ void main() {
 
         await completer1.future;
         await completer2.future;
-        
+
         expect(widgetState.debounceCallCount, 2);
       });
 
       test('should capture arguments correctly in debounceWithArgs', () async {
         final completer = Completer<void>();
-        
+
         widgetState.debounceWithArgs(
           'test',
           (String value) {
@@ -139,14 +139,16 @@ void main() {
         );
 
         await completer.future;
-        
+
         expect(widgetState.debounceCallCount, 1);
         expect(widgetState.lastDebounceValue, 'test_value');
       });
 
-      test('should update arguments when debounceWithArgs is called multiple times', () async {
+      test(
+          'should update arguments when debounceWithArgs is called multiple times',
+          () async {
         final completer = Completer<void>();
-        
+
         // First call
         widgetState.debounceWithArgs(
           'test',
@@ -161,7 +163,7 @@ void main() {
 
         // Wait and call again with different value
         await Future.delayed(const Duration(milliseconds: 100));
-        
+
         widgetState.debounceWithArgs(
           'test',
           (String value) {
@@ -174,14 +176,14 @@ void main() {
         );
 
         await completer.future;
-        
+
         expect(widgetState.debounceCallCount, 1);
         expect(widgetState.lastDebounceValue, 'second_value');
       });
 
       test('should cancel all debounce timers', () async {
         final completer = Completer<void>();
-        
+
         widgetState.debounce(
           'key1',
           () {
@@ -201,10 +203,10 @@ void main() {
 
         // Cancel all before they execute
         widgetState.cancelAllDebounce();
-        
+
         // Wait for the original duration
         await Future.delayed(const Duration(milliseconds: 250));
-        
+
         expect(widgetState.debounceCallCount, 0);
       });
     });
@@ -303,7 +305,9 @@ void main() {
         expect(widgetState.lastThrottleValue, 'test_value');
       });
 
-      test('should ignore subsequent calls with different arguments within throttle period', () async {
+      test(
+          'should ignore subsequent calls with different arguments within throttle period',
+          () async {
         widgetState.throttleWithArgs(
           'test',
           (String value) {
@@ -367,7 +371,7 @@ void main() {
     group('Combined functionality', () {
       test('should cancel all timers with cancelAll', () async {
         final debounceCompleter = Completer<void>();
-        
+
         widgetState.debounce(
           'debounce_key',
           () {
@@ -392,39 +396,39 @@ void main() {
 
         // Wait for the original duration
         await Future.delayed(const Duration(milliseconds: 250));
-        
+
         expect(widgetState.debounceCallCount, 0);
       });
 
       test('should clean up timers on dispose', () async {
-         final debounceCompleter = Completer<void>();
-         
-         widgetState.debounce(
-           'debounce_key',
-           () {
-             widgetState.debounceCallCount++;
-             debounceCompleter.complete();
-           },
-           duration: const Duration(milliseconds: 200),
-         );
+        final debounceCompleter = Completer<void>();
 
-         widgetState.throttle(
-           'throttle_key',
-           () {
-             widgetState.throttleCallCount++;
-           },
-           duration: const Duration(milliseconds: 200),
-         );
+        widgetState.debounce(
+          'debounce_key',
+          () {
+            widgetState.debounceCallCount++;
+            debounceCompleter.complete();
+          },
+          duration: const Duration(milliseconds: 200),
+        );
 
-         expect(widgetState.throttleCallCount, 1);
+        widgetState.throttle(
+          'throttle_key',
+          () {
+            widgetState.throttleCallCount++;
+          },
+          duration: const Duration(milliseconds: 200),
+        );
 
-         // Test that dispose cleans up timers (ActionInvoker should handle this)
-         widgetState.cancelAll();
+        expect(widgetState.throttleCallCount, 1);
 
-         // Wait for the original duration
-         await Future.delayed(const Duration(milliseconds: 250));
-         
-         expect(widgetState.debounceCallCount, 0);
+        // Test that dispose cleans up timers (ActionInvoker should handle this)
+        widgetState.cancelAll();
+
+        // Wait for the original duration
+        await Future.delayed(const Duration(milliseconds: 250));
+
+        expect(widgetState.debounceCallCount, 0);
       });
     });
 
@@ -432,18 +436,18 @@ void main() {
       test('should not create timer maps until first use', () {
         // Access private fields through reflection or test the behavior
         // Since we can't directly access private fields, we test the behavior
-        
+
         // Initially, no timers should be active
         widgetState.cancelAllDebounce();
         widgetState.cancelAllThrottle();
-        
+
         // This should not throw any errors
         expect(() => widgetState.cancelAll(), returnsNormally);
       });
 
       test('should handle multiple rapid calls efficiently', () async {
         final completer = Completer<void>();
-        
+
         // Make multiple rapid debounce calls
         for (int i = 0; i < 10; i++) {
           widgetState.debounce(
@@ -454,12 +458,12 @@ void main() {
             },
             duration: const Duration(milliseconds: 100),
           );
-          
+
           await Future.delayed(const Duration(milliseconds: 10));
         }
 
         await completer.future;
-        
+
         // Should only execute once
         expect(widgetState.debounceCallCount, 1);
       });
@@ -468,7 +472,7 @@ void main() {
     group('Edge cases', () {
       test('should handle zero duration', () async {
         final completer = Completer<void>();
-        
+
         widgetState.debounce(
           'zero_duration',
           () {
@@ -507,7 +511,7 @@ void main() {
 
       test('should handle empty string keys', () async {
         final completer = Completer<void>();
-        
+
         widgetState.debounce(
           '',
           () {
@@ -522,20 +526,20 @@ void main() {
       });
 
       test('should handle special characters in keys', () async {
-         final completer = Completer<void>();
-         
-         widgetState.debounce(
-           'special_chars',
-           () {
-             widgetState.debounceCallCount++;
-             completer.complete();
-           },
-           duration: const Duration(milliseconds: 100),
-         );
+        final completer = Completer<void>();
 
-         await completer.future;
-         expect(widgetState.debounceCallCount, 1);
+        widgetState.debounce(
+          'special_chars',
+          () {
+            widgetState.debounceCallCount++;
+            completer.complete();
+          },
+          duration: const Duration(milliseconds: 100),
+        );
+
+        await completer.future;
+        expect(widgetState.debounceCallCount, 1);
       });
-     });
-   });
-} 
+    });
+  });
+}

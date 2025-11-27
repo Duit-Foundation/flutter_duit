@@ -10,46 +10,37 @@ base class SimpleViewManager extends ViewManager {
   @override
   @mustCallSuper
   Future<DuitView?> prepareLayout(Map<String, dynamic> json) async {
-    try {
-      _view = DuitViewLayout();
+    _view = DuitViewLayout();
 
-      if (json.containsKey("embedded")) {
-        final embedded = json["embedded"];
-        if (embedded is List) {
-          await DuitRegistry.registerComponents(
-            embedded.cast<Map<String, dynamic>>(),
-          );
-        }
+    if (json.containsKey("embedded")) {
+      final embedded = json["embedded"];
+      if (embedded is List) {
+        await DuitRegistry.registerComponents(
+          embedded.cast<Map<String, dynamic>>(),
+        );
       }
+    }
 
-      switch (json) {
-        case {
-            "type": String _,
-            "id": String _,
-          }:
-          await _view.prepareModel(
-            json,
-            driver,
-          );
-          return _view;
-        case {
-            "root": Map<String, dynamic> widget,
-          }:
-          await _view.prepareModel(
-            widget,
-            driver,
-          );
-          return _view;
-        default:
-          return null;
-      }
-    } catch (e, s) {
-      driver.logger?.error(
-        "Failed to resolve tree",
-        error: e,
-        stackTrace: s,
-      );
-      rethrow;
+    switch (json) {
+      case {
+          "type": String _,
+          "id": String _,
+        }:
+        await _view.prepareModel(
+          json,
+          driver,
+        );
+        return _view;
+      case {
+          "root": Map<String, dynamic> widget,
+        }:
+        await _view.prepareModel(
+          widget,
+          driver,
+        );
+        return _view;
+      default:
+        return null;
     }
   }
 

@@ -32,10 +32,12 @@ final class DuitMultiViewLayout implements DuitView {
       json: json.values.first,
       driver: driver,
     ).parse();
-
     _views[json.keys.first] = _StatefullElement(tree, false);
   }
 
+  @Deprecated(
+    "The method is not used and will be removed in the next major release",
+  )
   @override
   ElementTree getElementTree([String tag = ""]) {
     if (tag.isEmpty || !_views.containsKey(tag)) {
@@ -54,7 +56,7 @@ final class DuitMultiViewLayout implements DuitView {
     }
   }
 
-  operator [](String tag) {
+  (ElementTree, bool)? operator [](String tag) {
     final elem = _views[tag];
 
     if (elem != null) {

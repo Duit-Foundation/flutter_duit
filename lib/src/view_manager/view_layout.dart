@@ -20,6 +20,9 @@ final class DuitViewLayout implements DuitView {
     ).parse();
   }
 
+  @Deprecated(
+    "The method is not used and will be removed in the next major release",
+  )
   @override
   ElementTree getElementTree([String tag = ""]) => _layout;
 }

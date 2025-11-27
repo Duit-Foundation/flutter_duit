@@ -27,6 +27,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   late BuildContext buildContext;
 
   @override
+  // ignore: avoid_setters_without_getters
   set context(BuildContext value) {
     buildContext = value;
   }
@@ -239,7 +240,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
         );
       } else {
         final err = FormatException(
-            "Invalid layout structure. Received map keys: ${json.keys}");
+          "Invalid layout structure. Received map keys: ${json.keys}",
+        );
         throw err;
       }
     } catch (e, s) {
