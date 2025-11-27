@@ -6,9 +6,9 @@ class DuitIntrinsicHeight extends StatelessWidget {
   final Widget child;
 
   const DuitIntrinsicHeight({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -25,9 +25,9 @@ class DuitControlledIntrinsicHeight extends StatefulWidget {
   final Widget child;
 
   const DuitControlledIntrinsicHeight({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

@@ -7,9 +7,9 @@ final class DuitElevatedButton extends StatefulWidget {
   final Widget child;
 
   const DuitElevatedButton({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

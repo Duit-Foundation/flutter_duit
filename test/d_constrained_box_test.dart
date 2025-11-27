@@ -17,7 +17,7 @@ Map<String, dynamic> _createWidget(
         "minWidth": value.minWidth,
         "minHeight": value.minHeight,
         "maxWidth": value.maxWidth,
-        "maxHeight": value.maxHeight
+        "maxHeight": value.maxHeight,
       },
     },
     "child": {
@@ -28,7 +28,7 @@ Map<String, dynamic> _createWidget(
         "width": 1000,
         "height": 100,
       },
-    }
+    },
   };
 }
 

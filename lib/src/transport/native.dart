@@ -1,7 +1,7 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 final class NativeTransport extends Transport {
   final UIDriver driver;

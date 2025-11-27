@@ -1,10 +1,10 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
+import "dart:async";
+import "dart:convert";
+import "dart:io";
 
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter_duit/flutter_duit.dart";
 
-import 'transport_utils.dart';
+import "package:flutter_duit/src/transport/transport_utils.dart";
 
 /// A WebSocket transport implementation for streaming data.
 ///
@@ -37,7 +37,7 @@ final class WSTransport extends Transport implements Streamer {
   });
 
   String _prepareUrl(String url) {
-    String urlString = "";
+    var urlString = "";
     if (options.baseUrl != null) {
       urlString += options.baseUrl!;
     }
@@ -58,8 +58,10 @@ final class WSTransport extends Transport implements Streamer {
       urlString = objectToURLWithQueryParams(urlString, initialData).toString();
     }
 
-    assert(urlString.isNotEmpty && urlString.startsWith("ws"),
-        "Invalid url: $url}");
+    assert(
+      urlString.isNotEmpty && urlString.startsWith("ws"),
+      "Invalid url: $url}",
+    );
 
     ws = await WebSocket.connect(
       urlString,

@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 final class DuitCarouselView extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitCarouselView({
-    super.key,
     required this.attributes,
     required this.children,
+    super.key,
   });
 
   @override
@@ -41,9 +41,9 @@ class DuitControlledCarouselView extends StatefulWidget
   final List<Widget> children;
 
   const DuitControlledCarouselView({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override

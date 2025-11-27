@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 const exampleCustomWidget = "ExampleCustomWidget";
 
@@ -18,8 +18,8 @@ class ExampleWidget extends StatefulWidget {
   final UIElementController controller;
 
   const ExampleWidget({
-    super.key,
     required this.controller,
+    super.key,
     this.child,
   });
 
@@ -78,8 +78,8 @@ Future<void> regCustom() async {
         "type": exampleCustomWidget,
         "data": {
           "random": "100500",
-        }
-      }
+        },
+      },
     },
   );
   await DuitRegistry.initialize(

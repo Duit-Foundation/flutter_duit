@@ -8,9 +8,9 @@ class DuitSingleChildScrollView extends StatelessWidget {
   final Widget child;
 
   const DuitSingleChildScrollView({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -41,9 +41,9 @@ class DuitControlledSingleChildScrollView extends StatefulWidget {
   final Widget child;
 
   const DuitControlledSingleChildScrollView({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

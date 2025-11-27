@@ -6,22 +6,22 @@ import "utils.dart";
 
 Map<String, dynamic> _createWidget([bool isControlled = false]) {
   return {
-    'type': 'Offstage',
-    'id': 'offstage_test',
-    'controlled': isControlled,
-    'attributes': {'offstage': true},
-    'child': {
-      'type': 'Container',
-      'id': 'con',
-      'controlled': false,
-      'attributes': {'color': '#DCDCDC', 'width': 50, 'height': 50}
-    }
+    "type": "Offstage",
+    "id": "offstage_test",
+    "controlled": isControlled,
+    "attributes": {"offstage": true},
+    "child": {
+      "type": "Container",
+      "id": "con",
+      "controlled": false,
+      "attributes": {"color": "#DCDCDC", "width": 50, "height": 50},
+    },
   };
 }
 
 void main() {
-  group('DuitOffstage widget tests', () {
-    testWidgets('check widget', (tester) async {
+  group("DuitOffstage widget tests", () {
+    testWidgets("check widget", (tester) async {
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
@@ -35,7 +35,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final widget = find.byKey(const ValueKey('offstage_test'));
+      final widget = find.byKey(const ValueKey("offstage_test"));
 
       expect(widget, findsOneWidget);
     });
@@ -50,7 +50,7 @@ void main() {
 
         await pumpDriver(tester, driver);
 
-        final widget = find.byKey(const ValueKey('offstage_test'));
+        final widget = find.byKey(const ValueKey("offstage_test"));
         expect(widget, findsOneWidget);
 
         await driver.updateAttributes(

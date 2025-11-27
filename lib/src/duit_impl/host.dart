@@ -1,8 +1,8 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/src/duit_impl/view_context.dart';
-import 'package:flutter_duit/src/ui/widgets/overlay_trigger_listener.dart';
-import 'package:flutter_duit/src/utils/index.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/src/duit_impl/view_context.dart";
+import "package:flutter_duit/src/ui/widgets/overlay_trigger_listener.dart";
+import "package:flutter_duit/src/utils/index.dart";
 
 /// A widget that hosts a DUIT view.
 ///
@@ -71,6 +71,7 @@ class DuitViewHost extends StatefulWidget {
     this.viewTag = "",
     this.sliverGridDelegatesRegistry = const {},
   }) : assert(
+          // ignore: avoid_bool_literals_in_conditional_expressions
           showChildInsteadOfPlaceholder == true ? child != null : true,
           "Child must not be null if showChildInsteadOfPlaceholder property is set to true",
         );

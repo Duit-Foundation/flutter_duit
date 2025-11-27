@@ -7,9 +7,9 @@ class DuitCenter extends StatelessWidget {
   final Widget child;
 
   const DuitCenter({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -29,9 +29,9 @@ class DuitControlledCenter extends StatefulWidget {
   final Widget child;
 
   const DuitControlledCenter({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

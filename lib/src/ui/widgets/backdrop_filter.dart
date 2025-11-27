@@ -8,9 +8,9 @@ final class DuitBackdropFilter extends StatelessWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitBackdropFilter({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -37,9 +37,9 @@ class DuitControlledBackdropFilter extends StatefulWidget
   final Widget child;
 
   const DuitControlledBackdropFilter({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

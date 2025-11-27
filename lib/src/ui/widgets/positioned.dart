@@ -8,9 +8,9 @@ class DuitPositioned extends StatelessWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitPositioned({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -35,9 +35,9 @@ class DuitControlledPositioned extends StatefulWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitControlledPositioned({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

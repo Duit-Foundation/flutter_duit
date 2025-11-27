@@ -6,9 +6,9 @@ class DuitConstrainedBox extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitConstrainedBox({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -34,9 +34,9 @@ class DuitControlledConstrainedBox extends StatefulWidget
   final UIElementController controller;
 
   const DuitControlledConstrainedBox({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

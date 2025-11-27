@@ -5,8 +5,8 @@ class DuitCheckbox extends StatefulWidget {
   final UIElementController controller;
 
   const DuitCheckbox({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

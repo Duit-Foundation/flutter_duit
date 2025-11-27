@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 final class DuitSliverList extends StatelessWidget {
   final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitSliverList({
-    super.key,
     required this.attributes,
     required this.children,
+    super.key,
   });
 
   @override
@@ -38,9 +38,9 @@ final class DuitControlledSliverList extends StatefulWidget {
   final List<Widget> children;
 
   const DuitControlledSliverList({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override

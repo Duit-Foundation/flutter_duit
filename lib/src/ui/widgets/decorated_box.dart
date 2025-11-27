@@ -8,9 +8,9 @@ class DuitDecoratedBox extends StatelessWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitDecoratedBox({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -34,9 +34,9 @@ class DuitControlledDecoratedBox extends StatefulWidget
   final Widget child;
 
   const DuitControlledDecoratedBox({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

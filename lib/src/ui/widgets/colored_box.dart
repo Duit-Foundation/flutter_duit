@@ -1,16 +1,16 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
-import 'package:flutter_duit/src/duit_impl/index.dart';
+import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitColoredBox extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
   final Widget child;
 
   const DuitColoredBox({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -29,9 +29,9 @@ class DuitControlledColoredBox extends StatefulWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitControlledColoredBox({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

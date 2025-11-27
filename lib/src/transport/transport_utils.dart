@@ -1,5 +1,5 @@
 Uri objectToURLWithQueryParams(String url, Map<String, dynamic>? params) {
-  String result = url;
+  var result = url;
   Uri uri;
 
   if (params != null && params.isNotEmpty) {

@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
-    'DuitScaffold tests',
+    "DuitScaffold tests",
     () {
       testWidgets(
-        'must build with default attributes',
+        "must build with default attributes",
         (tester) async {
           final driver = DuitDriver.static(
             {
@@ -85,7 +85,7 @@ void main() {
                     "controlled": true,
                     "attributes": <String, dynamic>{},
                   },
-                ]
+                ],
               },
               transportOptions: EmptyTransportOptions(),
             ),

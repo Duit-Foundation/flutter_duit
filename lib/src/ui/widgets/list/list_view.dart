@@ -6,9 +6,9 @@ final class DuitListView extends StatelessWidget {
   final List<Widget> children;
 
   const DuitListView({
-    super.key,
     required this.attributes,
     required this.children,
+    super.key,
   });
 
   @override
@@ -51,9 +51,9 @@ final class DuitControlledListView extends StatefulWidget {
   final List<Widget> children;
 
   const DuitControlledListView({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 Map<String, dynamic> _createWidget({
   bool top = true,
@@ -29,7 +29,7 @@ Map<String, dynamic> _createWidget({
       "attributes": <String, dynamic>{
         "color": "#075eeb",
       },
-    }
+    },
   };
 }
 
@@ -98,13 +98,14 @@ void main() {
         expect(safeAreaWidget.right, isFalse);
         expect(safeAreaWidget.bottom, isFalse);
         expect(
-            safeAreaWidget.minimum,
-            const EdgeInsets.only(
-              left: 10.0,
-              top: 20.0,
-              right: 30.0,
-              bottom: 40.0,
-            ));
+          safeAreaWidget.minimum,
+          const EdgeInsets.only(
+            left: 10.0,
+            top: 20.0,
+            right: 30.0,
+            bottom: 40.0,
+          ),
+        );
       },
     );
 
@@ -130,8 +131,10 @@ void main() {
       final safeArea = find.byKey(const ValueKey("safeAreaId"));
       expect(safeArea, findsOneWidget);
       final safeAreaWidget = tester.widget<SafeArea>(safeArea);
-      expect(safeAreaWidget.minimum,
-          const EdgeInsets.only(left: 5.0, top: 6.0, right: 7.0, bottom: 8.0));
+      expect(
+        safeAreaWidget.minimum,
+        const EdgeInsets.only(left: 5.0, top: 6.0, right: 7.0, bottom: 8.0),
+      );
       expect(safeAreaWidget.maintainBottomViewPadding, isTrue);
     });
   });

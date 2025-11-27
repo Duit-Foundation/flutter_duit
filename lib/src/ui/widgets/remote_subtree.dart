@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/duit_impl/subtree_holder.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/duit_impl/subtree_holder.dart";
 
 class DuitRemoteSubtree extends StatefulWidget {
   final UIElementController controller;
 
   const DuitRemoteSubtree({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

@@ -6,9 +6,9 @@ class DuitRotatedBox extends StatelessWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitRotatedBox({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -31,9 +31,9 @@ class DuitControlledRotatedBox extends StatefulWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitControlledRotatedBox({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

@@ -1,4 +1,4 @@
-import 'package:duit_kernel/duit_kernel.dart';
+import "package:duit_kernel/duit_kernel.dart";
 
 sealed class JsonUtils {
   /// Safely extracts a child map from JSON data.

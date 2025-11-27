@@ -8,9 +8,9 @@ class DuitComponent extends StatefulWidget {
   final Widget child;
 
   const DuitComponent({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

@@ -1,18 +1,18 @@
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_duit/src/controller/data.dart';
-import 'package:flutter_duit/src/controller/index.dart';
-import 'package:flutter_duit/src/duit_impl/view_context.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/controller/data.dart";
+import "package:flutter_duit/src/controller/index.dart";
+import "package:flutter_duit/src/duit_impl/view_context.dart";
 
 class DuitOverlayTriggerListener extends StatefulWidget {
   final UIDriver driver;
   final Widget? child;
 
   const DuitOverlayTriggerListener({
-    super.key,
     required this.driver,
     required this.child,
+    super.key,
   });
 
   @override
@@ -94,28 +94,29 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
   Future<void> _handleDialogCommand(DialogCommand command) async {
     if (command.action == OverlayAction.open) {
       showDialog(
-          context: context,
-          barrierDismissible: command.barrierDismissible,
-          useSafeArea: command.useSafeArea,
-          useRootNavigator: command.useRootNavigator,
-          barrierColor: command.barrierColor,
-          barrierLabel: command.barrierLabel,
-          anchorPoint: command.anchorPoint,
-          builder: (context) {
-            final body = buildOutOfBoundWidget(
-              command.content,
-              widget.driver,
-              null,
-            );
-            if (body == null) {
-              DuitViewContext.of(context).logger.error(
-                    "Failed to build dialog content, body is null",
-                    stackTrace: StackTrace.current,
-                  );
-              return const SizedBox.shrink();
-            }
-            return body;
-          }).whenComplete(
+        context: context,
+        barrierDismissible: command.barrierDismissible,
+        useSafeArea: command.useSafeArea,
+        useRootNavigator: command.useRootNavigator,
+        barrierColor: command.barrierColor,
+        barrierLabel: command.barrierLabel,
+        anchorPoint: command.anchorPoint,
+        builder: (context) {
+          final body = buildOutOfBoundWidget(
+            command.content,
+            widget.driver,
+            null,
+          );
+          if (body == null) {
+            DuitViewContext.of(context).logger.error(
+                  "Failed to build dialog content, body is null",
+                  stackTrace: StackTrace.current,
+                );
+            return const SizedBox.shrink();
+          }
+          return body;
+        },
+      ).whenComplete(
         () => _controller.performAction(
           command.onClose,
         ),

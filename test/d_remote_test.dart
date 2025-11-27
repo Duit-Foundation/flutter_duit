@@ -36,7 +36,7 @@ void main() {
                     "color": "#DCDCDC",
                     "fontSize": 14.0,
                     "fontWeight": 700,
-                  }
+                  },
                 },
               },
             );
@@ -88,7 +88,7 @@ void main() {
                     "color": "#DCDCDC",
                     "fontSize": 14.0,
                     "fontWeight": 700,
-                  }
+                  },
                 },
               },
             );
@@ -123,7 +123,7 @@ void main() {
                     "color": "#DCDCDC",
                     "fontSize": 14.0,
                     "fontWeight": 700,
-                  }
+                  },
                 },
               },
             },

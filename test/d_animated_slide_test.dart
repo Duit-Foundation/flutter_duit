@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart' show AnimatedSlide, ValueKey, Container;
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart" show AnimatedSlide, ValueKey, Container;
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
-  group('DuitAnimatedSlide', () {
+  group("DuitAnimatedSlide", () {
     testWidgets(
       "DuitAnimatedSlide must renders correctly",
       (tester) async {
@@ -65,7 +65,7 @@ void main() {
               "attributes": {
                 "data": "Some text",
               },
-            }
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -110,7 +110,7 @@ void main() {
                     "text": {
                       "data": "ANIMATION_ENDED",
                     },
-                  }
+                  },
                 },
               },
             },
@@ -121,7 +121,7 @@ void main() {
               "attributes": {
                 "data": "Some text",
               },
-            }
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -166,7 +166,7 @@ void main() {
                 "height": 50,
                 "color": "#FF0000",
               },
-            }
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );
@@ -219,7 +219,7 @@ void main() {
               "attributes": {
                 "data": "Test text",
               },
-            }
+            },
           },
           transportOptions: EmptyTransportOptions(),
         );

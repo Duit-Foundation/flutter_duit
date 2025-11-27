@@ -1,20 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 final class DuitSliverFillViewport extends StatelessWidget
     with ChildDelegateBuilder {
   final ViewAttribute attributes;
   final List<Widget> children;
   const DuitSliverFillViewport({
-    super.key,
     required this.attributes,
     required this.children,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    assert(attributes.payload.getBool("isBuilderDelegate") == false,
-        "Builder delegate not supported for uncontrolled widget variant");
+    assert(
+      attributes.payload.getBool("isBuilderDelegate") == false,
+      "Builder delegate not supported for uncontrolled widget variant",
+    );
     return SliverFillViewport(
       key: ValueKey(attributes.id),
       delegate: buildDelegate(
@@ -49,9 +51,9 @@ final class DuitControlledSliverFillViewport extends StatefulWidget {
   final List<Widget> children;
 
   const DuitControlledSliverFillViewport({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override

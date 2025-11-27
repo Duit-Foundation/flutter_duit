@@ -26,7 +26,7 @@ Map<String, dynamic> _createSliverListWidget() {
               "data": {
                 "come": "value",
               },
-              "tag": "c"
+              "tag": "c",
             },
             {
               "controlled": true,
@@ -36,7 +36,7 @@ Map<String, dynamic> _createSliverListWidget() {
               "data": {
                 "come": "value",
               },
-              "tag": "c"
+              "tag": "c",
             },
             {
               "controlled": true,
@@ -46,7 +46,7 @@ Map<String, dynamic> _createSliverListWidget() {
               "data": {
                 "come": "value",
               },
-              "tag": "c"
+              "tag": "c",
             },
             {
               "controlled": true,
@@ -56,7 +56,7 @@ Map<String, dynamic> _createSliverListWidget() {
               "data": {
                 "come": "value",
               },
-              "tag": "c"
+              "tag": "c",
             },
             {
               "controlled": true,
@@ -66,15 +66,15 @@ Map<String, dynamic> _createSliverListWidget() {
               "data": {
                 "come": "value",
               },
-              "tag": "c"
+              "tag": "c",
             }
           ],
           "addAutomaticKeepAlives": true,
           "addRepaintBoundaries": true,
           "addSemanticIndexes": true,
-        }
+        },
       }
-    ]
+    ],
   };
 }
 
@@ -126,9 +126,9 @@ Map<String, dynamic> _createSliverListCommonWidget([bool isControlled = true]) {
               "height": 50,
             },
           },
-        ]
+        ],
       }
-    ]
+    ],
   };
 }
 
@@ -170,9 +170,9 @@ Map<String, dynamic> _createSliverListControlledWidget() {
               "height": 50,
             },
           },
-        ]
+        ],
       }
-    ]
+    ],
   };
 }
 
@@ -198,7 +198,7 @@ Map<String, dynamic> _createSliverListSeparatedWidget() {
               "data": {
                 "come": "value",
               },
-              "tag": "c"
+              "tag": "c",
             },
             {
               "controlled": true,
@@ -208,7 +208,7 @@ Map<String, dynamic> _createSliverListSeparatedWidget() {
               "data": {
                 "come": "value",
               },
-              "tag": "c"
+              "tag": "c",
             },
             {
               "controlled": true,
@@ -218,7 +218,7 @@ Map<String, dynamic> _createSliverListSeparatedWidget() {
               "data": {
                 "come": "value",
               },
-              "tag": "c"
+              "tag": "c",
             }
           ],
           "separator": {
@@ -234,9 +234,9 @@ Map<String, dynamic> _createSliverListSeparatedWidget() {
           "addAutomaticKeepAlives": true,
           "addRepaintBoundaries": true,
           "addSemanticIndexes": true,
-        }
+        },
       }
-    ]
+    ],
   };
 }
 
@@ -281,7 +281,9 @@ void main() {
           );
 
           expect(
-              find.byKey(const ValueKey("sliver_list_common")), findsOneWidget);
+            find.byKey(const ValueKey("sliver_list_common")),
+            findsOneWidget,
+          );
           expect(find.byKey(const ValueKey("item1")), findsOneWidget);
           expect(find.byKey(const ValueKey("item2")), findsOneWidget);
           expect(find.byKey(const ValueKey("item3")), findsOneWidget);
@@ -302,7 +304,9 @@ void main() {
           );
 
           expect(
-              find.byKey(const ValueKey("sliver_list_common")), findsOneWidget);
+            find.byKey(const ValueKey("sliver_list_common")),
+            findsOneWidget,
+          );
           expect(find.byKey(const ValueKey("item1")), findsOneWidget);
           expect(find.byKey(const ValueKey("item2")), findsOneWidget);
           expect(find.byKey(const ValueKey("item3")), findsOneWidget);
@@ -322,12 +326,18 @@ void main() {
             driver,
           );
 
-          expect(find.byKey(const ValueKey("sliver_list_controlled")),
-              findsOneWidget);
           expect(
-              find.byKey(const ValueKey("controlled_item1")), findsOneWidget);
+            find.byKey(const ValueKey("sliver_list_controlled")),
+            findsOneWidget,
+          );
           expect(
-              find.byKey(const ValueKey("controlled_item2")), findsOneWidget);
+            find.byKey(const ValueKey("controlled_item1")),
+            findsOneWidget,
+          );
+          expect(
+            find.byKey(const ValueKey("controlled_item2")),
+            findsOneWidget,
+          );
         },
       );
 

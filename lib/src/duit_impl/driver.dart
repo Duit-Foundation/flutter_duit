@@ -392,7 +392,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @visibleForTesting
   int get controllersCount => _viewManager.controllersCount;
 
-  @protected
+  @visibleForTesting
   @override
   Map<String, dynamic> preparePayload(
     Iterable<ActionDependency> dependencies,

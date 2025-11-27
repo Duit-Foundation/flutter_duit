@@ -166,10 +166,10 @@ class DuitControlledGridView extends StatefulWidget {
   final GridConstructor constructor;
 
   const DuitControlledGridView({
-    super.key,
     required this.controller,
     required this.children,
     required this.constructor,
+    super.key,
   });
 
   @override

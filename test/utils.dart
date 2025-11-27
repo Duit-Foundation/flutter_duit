@@ -75,7 +75,7 @@ final class MockTransport extends Transport {
 }
 
 extension TransportExtension on UIDriver {
-  void applyMockTransport(dynamic mustReturnThis) {
+  void applyMockTransport(mustReturnThis) {
     transport = MockTransport("", mustReturnThis);
   }
 }

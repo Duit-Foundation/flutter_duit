@@ -19,7 +19,7 @@ Map<String, dynamic> _createWidget(String value, [bool? controlled = false]) {
         "width": 50,
         "height": 50,
       },
-    }
+    },
   };
 }
 

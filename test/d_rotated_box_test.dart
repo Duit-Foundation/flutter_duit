@@ -19,7 +19,7 @@ Map<String, dynamic> _createWidget([bool controlled = false, int turns = 0]) {
         "width": 200,
         "height": 100,
       },
-    }
+    },
   };
 }
 
@@ -42,8 +42,8 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final RenderBox box =
-          tester.renderObject(find.byKey(const ValueKey("c1")));
+      final box =
+          tester.renderObject<RenderBox>(find.byKey(const ValueKey("c1")));
 
       await tester.pumpAndSettle();
 
@@ -67,8 +67,8 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final RenderBox box =
-          tester.renderObject(find.byKey(const ValueKey("c1")));
+      final box =
+          tester.renderObject<RenderBox>(find.byKey(const ValueKey("c1")));
 
       expect(box.size, equals(const Size(800, 600)));
 

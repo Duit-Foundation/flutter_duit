@@ -6,9 +6,9 @@ class DuitGestureDetector extends StatefulWidget {
   final UIElementController controller;
 
   const DuitGestureDetector({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

@@ -61,7 +61,8 @@ void main() {
           await tester.pumpAndSettle();
 
           final scrollView = tester.widget<CustomScrollView>(
-              find.byKey(const ValueKey("custom_view")));
+            find.byKey(const ValueKey("custom_view")),
+          );
 
           expect(scrollView.scrollDirection, Axis.horizontal);
           expect(scrollView.shrinkWrap, true);

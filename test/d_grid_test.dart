@@ -367,7 +367,7 @@ void main() {
                           "data": {
                             "come": "value",
                           },
-                          "tag": "c"
+                          "tag": "c",
                         };
                       },
                     ),
@@ -391,7 +391,7 @@ void main() {
                             "data": {
                               "come": "value",
                             },
-                            "tag": "c"
+                            "tag": "c",
                           },
                         ),
                       },

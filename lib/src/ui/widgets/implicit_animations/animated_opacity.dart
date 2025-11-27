@@ -7,9 +7,9 @@ class DuitAnimatedOpacity extends StatefulWidget {
   final Widget child;
 
   const DuitAnimatedOpacity({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

@@ -1,15 +1,15 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
-import 'package:flutter_duit/src/duit_impl/index.dart';
+import "package:flutter_duit/src/duit_impl/index.dart";
 
 class DuitRow extends StatelessWidget {
   final ViewAttribute attributes;
   final List<Widget> children;
 
   const DuitRow({
-    super.key,
     required this.attributes,
     required this.children,
+    super.key,
   });
 
   @override
@@ -39,9 +39,9 @@ class DuitControlledRow extends StatefulWidget {
   final List<Widget> children;
 
   const DuitControlledRow({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override

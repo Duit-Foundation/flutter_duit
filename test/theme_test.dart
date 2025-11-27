@@ -9,7 +9,7 @@ final class _SomeWidgetThemeToken extends ThemeToken {
   ) : super(
           const {},
           data,
-          'SomeCustomWidget',
+          "SomeCustomWidget",
         );
 }
 
@@ -22,7 +22,7 @@ final class _OverridedTextThemeToken extends ThemeToken {
             "style",
           },
           data,
-          'Text',
+          "Text",
         );
 }
 
@@ -37,8 +37,8 @@ void main() {
             "style": {
               "fontSize": 32.0,
               "color": "#FF0000",
-            }
-          }
+            },
+          },
         },
         "text_2": {
           "type": "Text",
@@ -46,14 +46,14 @@ void main() {
             "style": {
               "fontSize": 12.0,
               "color": "#DCDCDC",
-            }
-          }
+            },
+          },
         },
         "text_3": {
           "type": "Text",
           "data": {
             "textAlign": "end",
-          }
+          },
         },
       },
     );
@@ -141,8 +141,8 @@ void main() {
                   "type": "Text",
                   "data": {
                     "data": "Hi!",
-                  }
-                }
+                  },
+                },
               },
             ),
             throwsA(
@@ -174,8 +174,8 @@ void main() {
                 "type": "SomeCustomWidget",
                 "data": {
                   "data": "Hi!",
-                }
-              }
+                },
+              },
             },
           );
 
@@ -190,8 +190,8 @@ void main() {
                 "type": "Custom",
                 "data": {
                   "data": "Hi!",
-                }
-              }
+                },
+              },
             },
           );
 
@@ -227,8 +227,8 @@ void main() {
                     "style": {
                       "color": "#DCDCDC",
                     },
-                  }
-                }
+                  },
+                },
               },
             ),
             throwsA(
@@ -242,8 +242,8 @@ void main() {
                 "type": "Text",
                 "data": {
                   "textAlign": "end",
-                }
-              }
+                },
+              },
             },
           );
 

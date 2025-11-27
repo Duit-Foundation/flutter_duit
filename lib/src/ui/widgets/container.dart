@@ -6,9 +6,9 @@ class DuitContainer extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitContainer({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -36,9 +36,9 @@ class DuitControlledContainer extends StatefulWidget with AnimatedAttributes {
   final UIElementController controller;
 
   const DuitControlledContainer({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

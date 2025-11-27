@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_duit/src/utils/meta_data.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:flutter_duit/src/utils/meta_data.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -20,7 +20,7 @@ void main() {
               "attributes": <String, dynamic>{
                 "value": {
                   "foo": "bar",
-                }
+                },
               },
               "child": {
                 "type": "Container",
@@ -32,9 +32,9 @@ void main() {
                   "controlled": false,
                   "attributes": {
                     "data": "text",
-                  }
-                }
-              }
+                  },
+                },
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -52,7 +52,7 @@ void main() {
           await driver.updateAttributes(
             "meta1",
             {
-              "value": {"foo": "baz", "num": 42}
+              "value": {"foo": "baz", "num": 42},
             },
           );
 

@@ -1,10 +1,10 @@
-import 'dart:convert';
-import 'dart:typed_data';
+import "dart:convert";
+import "dart:typed_data";
 
-import 'package:duit_kernel/duit_kernel.dart';
-import 'package:flutter_duit/src/transport/index.dart';
-import 'package:flutter_duit/src/transport/parsable.dart';
-import 'package:http/http.dart';
+import "package:duit_kernel/duit_kernel.dart";
+import "package:flutter_duit/src/transport/index.dart";
+import "package:flutter_duit/src/transport/parsable.dart";
+import "package:http/http.dart";
 
 final class EmptyTransportOptions extends TransportOptions {
   @override

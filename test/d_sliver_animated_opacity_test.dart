@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   group(
@@ -78,7 +78,7 @@ void main() {
                           "c_text": {
                             "data": "END",
                           },
-                        }
+                        },
                       },
                     },
                   },
@@ -92,7 +92,7 @@ void main() {
                         "color": "#DCDCDC",
                         "fontSize": 64.0,
                         "fontWeight": 700,
-                      }
+                      },
                     },
                   },
                 },
@@ -114,8 +114,9 @@ void main() {
 
           await tester.pumpAndSettle();
 
-          final SliverAnimatedOpacity sliver =
-              tester.widget(find.byKey(const ValueKey("sliver1")));
+          final sliver = tester.widget<SliverAnimatedOpacity>(
+            find.byKey(const ValueKey("sliver1")),
+          );
           expect(
             sliver.opacity,
             1.0,

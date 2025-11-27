@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 
 class DuitAnimatedCrossFade extends StatefulWidget {
   final UIElementController controller;
   final List<Widget> children;
 
   const DuitAnimatedCrossFade({
-    super.key,
     required this.controller,
     required this.children,
+    super.key,
   });
 
   @override

@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
-import 'utils.dart';
+import "utils.dart";
 
 void main() {
   testWidgets(
-    'DuitAnimatedPadding must renders correctly',
+    "DuitAnimatedPadding must renders correctly",
     (tester) async {
       final driver = DuitDriver.static(
         {
@@ -27,7 +27,7 @@ void main() {
             "attributes": {
               "data": "Some text",
             },
-          }
+          },
         },
         transportOptions: EmptyTransportOptions(),
       );

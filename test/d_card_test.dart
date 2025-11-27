@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_duit/flutter_duit.dart';
-import 'package:flutter_test/flutter_test.dart';
+import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_test/flutter_test.dart";
 
 void main() {
   group(
@@ -18,8 +18,8 @@ void main() {
                 "attributes": {
                   "data": "Test Card",
                 },
-                "controlled": false
-              }
+                "controlled": false,
+              },
             },
             "controlled": false,
           },
@@ -62,12 +62,12 @@ void main() {
                       "color": "#000000",
                       "width": 2.0,
                       "style": "solid",
-                    }
+                    },
                   },
                   "bottomRight": {
                     "radius": 8.0,
-                  }
-                }
+                  },
+                },
               },
               "child": {
                 "type": "Text",
@@ -75,8 +75,8 @@ void main() {
                 "attributes": {
                   "data": "Custom Card",
                 },
-                "controlled": false
-              }
+                "controlled": false,
+              },
             },
             "controlled": false,
           },
@@ -111,8 +111,8 @@ void main() {
                 "attributes": {
                   "data": "Card",
                 },
-                "controlled": false
-              }
+                "controlled": false,
+              },
             },
             "controlled": true,
           },

@@ -7,8 +7,8 @@ final class DuitText extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
 
   const DuitText({
-    super.key,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -46,8 +46,8 @@ final class DuitControlledText extends StatefulWidget with AnimatedAttributes {
   final UIElementController controller;
 
   const DuitControlledText({
-    super.key,
     required this.controller,
+    super.key,
   });
 
   @override

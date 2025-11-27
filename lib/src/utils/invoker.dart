@@ -1,4 +1,4 @@
-import 'dart:async';
+import "dart:async";
 
 /// A mixin that provides debounce and throttle functionality for optimizing callback execution.
 ///

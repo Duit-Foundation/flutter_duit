@@ -6,9 +6,9 @@ class DuitOpacity extends StatelessWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitOpacity({
-    super.key,
     required this.attributes,
     required this.child,
+    super.key,
   });
 
   @override
@@ -34,9 +34,9 @@ class DuitControlledOpacity extends StatefulWidget with AnimatedAttributes {
   final Widget child;
 
   const DuitControlledOpacity({
-    super.key,
     required this.controller,
     required this.child,
+    super.key,
   });
 
   @override

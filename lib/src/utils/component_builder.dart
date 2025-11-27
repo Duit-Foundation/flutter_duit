@@ -1,4 +1,4 @@
-import 'package:duit_kernel/duit_kernel.dart';
+import "package:duit_kernel/duit_kernel.dart";
 
 /// Builds a concrete component instance JSON by applying precomputed
 /// write operations to the immutable base layout using JSON Patch.

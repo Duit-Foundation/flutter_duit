@@ -6,9 +6,9 @@ class DuitExpanded extends StatelessWidget {
   final Widget child;
 
   const DuitExpanded({
-    super.key,
     required this.child,
     required this.attributes,
+    super.key,
   });
 
   @override
@@ -29,9 +29,9 @@ class DuitControlledExpanded extends StatefulWidget {
   final UIElementController controller;
 
   const DuitControlledExpanded({
-    super.key,
     required this.child,
     required this.controller,
+    super.key,
   });
 
   @override

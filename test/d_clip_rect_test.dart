@@ -27,7 +27,7 @@ void main() {
                   "width": 100,
                   "height": 100,
                 },
-              }
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
@@ -62,7 +62,7 @@ void main() {
                   "width": 100,
                   "height": 100,
                 },
-              }
+              },
             },
             transportOptions: EmptyTransportOptions(),
           );
