@@ -228,7 +228,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        await driver.updateTestAttributes("flexibleSpaceBarId", {
+        await driver.updateAttributes("flexibleSpaceBarId", {
           "centerTitle": false,
           "expandedTitleScale": 2.0,
           "collapseMode": "pin",
@@ -266,7 +266,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        await driver.updateTestAttributes("sliverAppBarId", {
+        await driver.updateAttributes("sliverAppBarId", {
           "backgroundColor": "#FF5722",
           "elevation": 8.0,
           "floating": false,
@@ -312,7 +312,7 @@ void main() {
         ];
 
         for (final testCase in testCases) {
-          await driver.updateTestAttributes("sliverAppBarId", testCase);
+          await driver.updateAttributes("sliverAppBarId", testCase);
 
           await tester.pumpAndSettle();
 

@@ -76,7 +76,7 @@ void main() {
 
           expect(ignoreWidget.ignoring, true);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "ignore",
             {
               "ignoring": false,

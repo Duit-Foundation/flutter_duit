@@ -53,7 +53,7 @@ void main() {
         final widget = find.byKey(const ValueKey('offstage_test'));
         expect(widget, findsOneWidget);
 
-        await driver.updateTestAttributes(
+        await driver.updateAttributes(
           "offstage_test",
           {
             "offstage": false,

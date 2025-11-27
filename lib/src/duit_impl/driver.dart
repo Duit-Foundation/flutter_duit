@@ -10,18 +10,19 @@ import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 
 final class DuitDriver with DriverHooks implements UIDriver {
-  @protected
+  @visibleForTesting
   @override
   final String source;
 
+  @visibleForTesting
   @override
   Transport? transport;
 
-  @protected
+  @visibleForTesting
   @override
   TransportOptions transportOptions;
 
-  @protected
+  @visibleForTesting
   @override
   late BuildContext buildContext;
 
@@ -35,32 +36,40 @@ final class DuitDriver with DriverHooks implements UIDriver {
   @override
   Stream<UIDriverEvent> get eventStream => _eventStreamController.stream;
 
+  @visibleForTesting
   @override
   ExternalEventHandler? externalEventHandler;
 
+  @visibleForTesting
   @override
   ScriptRunner? scriptRunner;
 
-  @protected
+  @visibleForTesting
   final Map<String, dynamic>? initialRequestPayload;
 
   late final bool _useStaticContent;
   bool _isChannelInitialized = false, _isDriverInitialized = false;
 
+  @visibleForTesting
   late final Map<String, dynamic>? content;
 
+  @visibleForTesting
   @override
   late final ActionExecutor actionExecutor;
 
+  @visibleForTesting
   @override
   late final EventResolver eventResolver;
 
+  @visibleForTesting
   @override
   MethodChannel? driverChannel;
 
+  @visibleForTesting
   @override
   late final bool isModule;
 
+  @visibleForTesting
   @override
   DebugLogger? logger;
 
@@ -170,11 +179,11 @@ final class DuitDriver with DriverHooks implements UIDriver {
         error: e,
         stackTrace: s,
       );
-      _eventStreamController.sink.addError(e);
+      _eventStreamController.addError(e);
     }
 
     if (transport is Streamer) {
-      final streamer = transport as Streamer;
+      final streamer = transport! as Streamer;
       streamer.eventStream.listen(
         (d) async {
           try {
@@ -187,7 +196,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
               error: e,
               stackTrace: s,
             );
-            _eventStreamController.sink.addError(e);
+            _eventStreamController.addError(e);
           }
         },
       );
@@ -225,7 +234,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
       final view = await _viewManager.prepareLayout(json);
 
       if (view != null) {
-        _eventStreamController.sink.add(
+        _eventStreamController.add(
           UIDriverViewEvent(view),
         );
       } else {
@@ -278,6 +287,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     }
   }
 
+  @visibleForTesting
   @override
   Future<void> execute(ServerAction action) async {
     beforeActionCallback?.call(action);
@@ -317,7 +327,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     }
   }
 
-  @protected
+  @visibleForTesting
   @override
   Future<void> evalScript(String source) async => scriptRunner?.eval(source);
 
@@ -338,26 +348,17 @@ final class DuitDriver with DriverHooks implements UIDriver {
       return NativeTransport(this);
     }
 
-    switch (type) {
-      case TransportType.http:
-        {
-          return HttpTransport(
-            source,
-            options: transportOptions as HttpTransportOptions,
-          );
-        }
-      case TransportType.ws:
-        {
-          return WSTransport(
-            source,
-            options: transportOptions as WebSocketTransportOptions,
-          );
-        }
-      default:
-        {
-          return EmptyTransport();
-        }
-    }
+    return switch (type) {
+      TransportType.http => HttpTransport(
+          source,
+          options: transportOptions as HttpTransportOptions,
+        ),
+      TransportType.ws => WSTransport(
+          source,
+          options: transportOptions as WebSocketTransportOptions,
+        ),
+      _ => EmptyTransport(),
+    };
   }
 
   /// Initializes the driver as a module.
@@ -374,7 +375,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
           final json = call.arguments as Map<String, dynamic>;
           final view = await _viewManager.prepareLayout(json);
           if (view != null) {
-            _eventStreamController.sink.add(
+            _eventStreamController.add(
               UIDriverViewEvent(view),
             );
           }
@@ -387,33 +388,14 @@ final class DuitDriver with DriverHooks implements UIDriver {
   }
 
   @visibleForTesting
-  Future<void> updateTestAttributes(
-    String id,
-    Map<String, dynamic> json,
-  ) =>
-      updateAttributes(
-        id,
-        json,
-      );
-
-  @visibleForTesting
-  Future<void> executeTestAction(ServerAction action) async {
-    await execute(action);
-  }
-
-  @visibleForTesting
-  Future<void> resolveTestEvent(dynamic eventData) async {
-    await eventResolver.resolveEvent(buildContext, eventData);
-  }
-
-  @visibleForTesting
   int get controllersCount => _viewManager.controllersCount;
 
+  @protected
   @override
   Map<String, dynamic> preparePayload(
     Iterable<ActionDependency> dependencies,
   ) {
-    final Map<String, dynamic> payload = {};
+    final payload = <String, dynamic>{};
 
     if (dependencies.isNotEmpty) {
       for (final dependency in dependencies) {
@@ -428,6 +410,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
     return payload;
   }
 
+  @visibleForTesting
   @override
   Future<void> updateAttributes(
     String controllerId,
@@ -471,28 +454,25 @@ final class DuitDriver with DriverHooks implements UIDriver {
   void addExternalEventStream(
     Stream<Map<String, dynamic>> stream,
   ) {
-    final id = DateTime.now().millisecondsSinceEpoch;
+    final id = stream.hashCode;
 
-    void cancelSub() {
-      _dataSources.remove(id);
-    }
-
-    final sub = stream.map(ServerEvent.parseEvent).listen(
+    _dataSources[id] = stream.map(ServerEvent.parseEvent).listen(
       (event) {
         if (event is NullEvent) {
           throw const NullEventException("NullEvent received from data source");
-        } else {
-          eventResolver.resolveEvent(
-            // ignore: use_build_context_synchronously
-            buildContext,
-            event,
-          );
         }
+        eventResolver.resolveEvent(
+          // ignore: use_build_context_synchronously
+          buildContext,
+          event,
+        );
       },
-      onDone: cancelSub,
-      onError: (e, s) => cancelSub(),
+      onDone: () => _cancelSub(id),
+      onError: (e, s) => _cancelSub(id),
     );
+  }
 
-    _dataSources[id] = sub;
+  void _cancelSub(int code) {
+    _dataSources.remove(code)?.cancel();
   }
 }

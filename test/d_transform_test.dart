@@ -171,7 +171,7 @@ void main() {
       expect(transformFinder, findsOneWidget);
       var widget = tester.widget<Transform>(transformFinder);
       expect(widget.transform.getMaxScaleOnAxis(), 1.0);
-      await driver.updateTestAttributes('transform5', {
+      await driver.updateAttributes('transform5', {
         'type': 'scale',
         'data': {
           'scale': 3.0,

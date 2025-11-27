@@ -72,7 +72,7 @@ void main() {
 
       expect(box.size, equals(const Size(800, 600)));
 
-      await driver.updateTestAttributes("r1", {
+      await driver.updateAttributes("r1", {
         "quarterTurns": 1,
       });
 

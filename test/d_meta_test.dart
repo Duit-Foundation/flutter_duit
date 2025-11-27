@@ -49,7 +49,7 @@ void main() {
           expect(metaValue, isNotNull);
           expect(metaValue["foo"], "bar");
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "meta1",
             {
               "value": {"foo": "baz", "num": 42}

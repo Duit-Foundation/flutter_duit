@@ -72,7 +72,7 @@ void main() {
         expect(decoratedBox, findsOneWidget);
         expect(decoratedBox, paints..rect(color: const Color(0xFF933C3C)));
 
-        await driver.updateTestAttributes("decorated", {
+        await driver.updateAttributes("decorated", {
           "decoration": <String, dynamic>{
             "color": "#075eeb",
           },

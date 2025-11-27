@@ -75,7 +75,7 @@ void main() {
       driver,
     );
 
-    await driver.updateTestAttributes("align", {
+    await driver.updateAttributes("align", {
       "alignment": "bottomLeft",
     });
 

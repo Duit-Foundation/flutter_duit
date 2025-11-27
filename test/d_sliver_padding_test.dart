@@ -100,7 +100,7 @@ void main() {
           expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
           expect(find.byKey(const ValueKey("text")), findsOneWidget);
 
-          await driver.updateTestAttributes("sliver1", {
+          await driver.updateAttributes("sliver1", {
             "padding": [
               12,
               24,

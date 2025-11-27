@@ -104,7 +104,7 @@ void main() {
 
           expect(find.byType(Text), findsOneWidget);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "custom",
             {
               "random": "value",

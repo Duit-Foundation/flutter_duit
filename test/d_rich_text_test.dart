@@ -44,7 +44,7 @@ void main() {
       expect(find.byKey(const Key("richTextId")), findsOneWidget);
       expect(find.text("Hello, RichText!"), findsOneWidget);
 
-      await driver.updateTestAttributes(
+      await driver.updateAttributes(
         "richTextId",
         {
           "textSpan": {

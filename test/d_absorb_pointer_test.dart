@@ -69,7 +69,7 @@ void main() {
 
           expect(absorbWidget.absorbing, true);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "absorb",
             {
               "absorbing": false,

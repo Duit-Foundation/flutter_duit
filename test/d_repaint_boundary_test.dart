@@ -52,7 +52,7 @@ void main() {
         final widget = find.byKey(const ValueKey("repaintBoundaryId"));
         expect(widget, findsOneWidget);
 
-        await driver.updateTestAttributes(
+        await driver.updateAttributes(
           "repaintBoundaryId",
           {
             "childIndex": 0,

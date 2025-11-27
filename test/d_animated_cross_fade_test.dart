@@ -49,7 +49,7 @@ void main() {
           tester.widget<AnimatedCrossFade>(find.byType(AnimatedCrossFade));
       expect(animatedCrossFade.crossFadeState, CrossFadeState.showFirst);
 
-      await driver.updateTestAttributes("crossfade", {
+      await driver.updateAttributes("crossfade", {
         "crossFadeState": 1,
       });
 

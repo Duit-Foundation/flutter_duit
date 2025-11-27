@@ -69,7 +69,7 @@ void main() {
             ),
           );
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "w1",
             {
               "padding": [

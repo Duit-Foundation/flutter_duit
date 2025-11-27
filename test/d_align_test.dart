@@ -78,7 +78,7 @@ void main() {
         for (var i = 1; i < alignments.length; i++) {
           final v = alignments[i];
 
-          await driver.updateTestAttributes("alignId", {
+          await driver.updateAttributes("alignId", {
             "alignment": v,
           });
           await tester.pumpAndSettle();
@@ -127,7 +127,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        await driver.updateTestAttributes("alignId", {
+        await driver.updateAttributes("alignId", {
           "alignment": "bottomRight",
         });
 

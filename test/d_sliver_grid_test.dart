@@ -126,7 +126,7 @@ void main() {
 
             expect(grid, findsOneWidget);
 
-            await driver.updateTestAttributes("grid", {
+            await driver.updateAttributes("grid", {
               "sliverGridDelegateKey": "delegate2",
               "constructor": "common",
             });
@@ -203,7 +203,7 @@ void main() {
               driver,
             );
 
-            await driver.updateTestAttributes("grid", {
+            await driver.updateAttributes("grid", {
               "crossAxisCount": 2,
               "constructor": "count",
             });
@@ -332,7 +332,7 @@ void main() {
                 driver,
               );
 
-              await driver.updateTestAttributes("grid", {
+              await driver.updateAttributes("grid", {
                 "maxCrossAxisExtent": 30.0,
                 "constructor": "extent",
               });

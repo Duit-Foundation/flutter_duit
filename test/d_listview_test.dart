@@ -252,7 +252,7 @@ void main() {
 
     expect(list.itemExtent, 100.0);
 
-    await driver.updateTestAttributes("list1", {
+    await driver.updateAttributes("list1", {
       "type": 0,
       "itemExtent": 200.0,
     });
@@ -375,7 +375,7 @@ void main() {
 
     expect(itemLast, findsOneWidget);
 
-    driver.updateTestAttributes("87b54621-ac6d-42c3-8d1f-397e3bd63bca", {
+    driver.updateAttributes("87b54621-ac6d-42c3-8d1f-397e3bd63bca", {
       "children": List.generate(
         10,
         (i) => {

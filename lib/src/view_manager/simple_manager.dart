@@ -1,5 +1,5 @@
 import "package:duit_kernel/duit_kernel.dart";
-import "package:flutter/widgets.dart" show SizedBox, Widget, mustCallSuper;
+import "package:flutter/widgets.dart" show Widget, mustCallSuper;
 import "package:flutter_duit/src/view_manager/view_manager.dart";
 import "package:flutter_duit/src/view_manager/view_layout.dart";
 
@@ -27,7 +27,7 @@ base class SimpleViewManager extends ViewManager {
             "type": String _,
             "id": String _,
           }:
-          await _view?.prepareModel(
+          await _view.prepareModel(
             json,
             driver,
           );
@@ -35,7 +35,7 @@ base class SimpleViewManager extends ViewManager {
         case {
             "root": Map<String, dynamic> widget,
           }:
-          await _view?.prepareModel(
+          await _view.prepareModel(
             widget,
             driver,
           );
@@ -61,17 +61,22 @@ base class SimpleViewManager extends ViewManager {
       );
     }
 
-    return _view?.build(tag) ?? const SizedBox.shrink();
+    return _view.build(tag);
   }
 
   @override
   void notifyWidgetDisplayStateChanged(String viewTag, int state) {
-    _view?.isReady = state == 1;
+    _view.isReady = state == 1;
   }
 
   @override
   bool isWidgetReady(String viewTag) {
-    return _view?.isReady ?? false;
+    if (viewTag.isNotEmpty) {
+      driver.logger?.warn(
+        "Tag is not supported in SimpleViewManager and will be ignored",
+      );
+    }
+    return _view.isReady;
   }
 
   @override

@@ -81,7 +81,7 @@ void main() {
         expect(safeAreaWidget.bottom, isTrue);
 
         // Обновляем атрибуты
-        await driver.updateTestAttributes("safeAreaId", {
+        await driver.updateAttributes("safeAreaId", {
           "top": true,
           "left": true,
           "right": false,

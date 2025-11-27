@@ -70,7 +70,7 @@ void main() {
         true,
       );
 
-      await driver.updateTestAttributes('sliver_ignore', {
+      await driver.updateAttributes('sliver_ignore', {
         "ignoring": false,
         "needsBoxAdapter": true,
       });

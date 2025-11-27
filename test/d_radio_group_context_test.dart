@@ -100,7 +100,7 @@ void main() {
           Radio radio = tester.widget<Radio>(radioFinder);
           expect(radio.activeColor, const Color(0xFF075EEB));
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "radioA",
             {"activeColor": "#03fcc2", "value": "a"},
           );

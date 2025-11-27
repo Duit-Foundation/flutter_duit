@@ -276,7 +276,7 @@ void main() {
     var offset = box.localToGlobal(Offset.zero);
     expect(offset.dx, 0);
     expect(offset.dy, 0);
-    await driver.updateTestAttributes('scr_ctrl', {
+    await driver.updateAttributes('scr_ctrl', {
       "padding": [30, 15, 0, 0]
     });
     await tester.pumpAndSettle();

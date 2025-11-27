@@ -58,7 +58,7 @@ void main() {
         var widget = find.byKey(const ValueKey("intrinsicWidthId"));
         expect(widget, findsOneWidget);
 
-        await driver.updateTestAttributes(
+        await driver.updateAttributes(
           "intrinsicWidthId",
           {
             "stepWidth": 12.0,

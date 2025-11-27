@@ -164,7 +164,7 @@ void main() {
           expect(find.byKey(const ValueKey("sliver1")), findsNothing);
           expect(find.byKey(const ValueKey("text")), findsNothing);
 
-          await driver.updateTestAttributes("sliver1", {
+          await driver.updateAttributes("sliver1", {
             "visible": true,
           });
 

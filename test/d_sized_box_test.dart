@@ -62,7 +62,7 @@ void main() {
           expect(sb.width, 100.0);
           expect(sb.height, 50.0);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "sb1",
             {
               "width": 200.0,

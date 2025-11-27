@@ -392,7 +392,7 @@ void main() {
 
               expect(text, findsOneWidget);
 
-              await driver.updateTestAttributes(
+              await driver.updateAttributes(
                 "text1",
                 {
                   "data": "Two of us",

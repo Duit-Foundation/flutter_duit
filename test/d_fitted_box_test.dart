@@ -99,7 +99,7 @@ void main() {
           expect(box, findsOneWidget);
           expect(boxW.fit, BoxFit.fitWidth);
 
-          await driver.updateTestAttributes("fited", {"fit": "contain"});
+          await driver.updateAttributes("fited", {"fit": "contain"});
 
           await tester.pumpAndSettle();
 

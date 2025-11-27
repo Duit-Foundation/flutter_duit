@@ -1,19 +1,17 @@
 import "package:duit_kernel/duit_kernel.dart";
-import "package:flutter/widgets.dart" show SizedBox, Widget;
+import "package:flutter/widgets.dart" show Widget;
 import "package:flutter_duit/src/view_manager/view_manager.dart";
 import "package:flutter_duit/src/view_manager/multiview_layout.dart";
 import "package:flutter_duit/src/view_manager/simple_manager.dart";
 
 /// A [ViewManager] for managing multiple views. Provides backward compatibility with [SimpleViewManager].
 final class MultiViewManager extends SimpleViewManager {
-  DuitMultiViewLayout? _layout;
+  late DuitMultiViewLayout _layout;
 
   MultiViewManager();
 
   @override
-  Widget build([String tag = ""]) {
-    return _layout?.build(tag) ?? const SizedBox.shrink();
-  }
+  Widget build([String tag = ""]) => _layout.build(tag);
 
   @override
   Future<DuitView?> prepareLayout(Map<String, dynamic> json) async {
@@ -30,7 +28,7 @@ final class MultiViewManager extends SimpleViewManager {
           final widgets = collection.entries.cast<MapEntry<String, dynamic>>();
 
           for (final widget in widgets) {
-            await _layout?.prepareModel(
+            await _layout.prepareModel(
               <String, dynamic>{
                 widget.key: widget.value,
               },
@@ -57,14 +55,14 @@ final class MultiViewManager extends SimpleViewManager {
     String viewTag,
     int state,
   ) =>
-      _layout?.changeViewState(viewTag, state);
+      _layout.changeViewState(viewTag, state);
 
   @override
   bool isWidgetReady(String viewTag) {
-    if (_layout?[viewTag] == null) {
+    if (_layout[viewTag] == null) {
       return false;
     } else {
-      return _layout?[viewTag]!.isReady ?? false;
+      return _layout[viewTag]!.isReady ?? false;
     }
   }
 }

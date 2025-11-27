@@ -110,7 +110,7 @@ void main() {
 
           expect(find.byKey(const Key("text")), findsOneWidget);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "remote",
             {
               "data": {

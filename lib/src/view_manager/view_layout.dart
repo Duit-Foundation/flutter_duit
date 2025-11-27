@@ -7,9 +7,7 @@ final class DuitViewLayout implements DuitView {
   bool isReady = false;
 
   @override
-  Widget build([String _ = ""]) {
-    return _layout.render();
-  }
+  Widget build([String _ = ""]) => _layout.render();
 
   @override
   Future<void> prepareModel(
@@ -23,7 +21,5 @@ final class DuitViewLayout implements DuitView {
   }
 
   @override
-  ElementTree getElementTree([String tag = ""]) {
-    return _layout;
-  }
+  ElementTree getElementTree([String tag = ""]) => _layout;
 }

@@ -121,7 +121,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await driver.updateTestAttributes(
+      await driver.updateAttributes(
         "testId",
         componentUpdateTemplateData,
       );

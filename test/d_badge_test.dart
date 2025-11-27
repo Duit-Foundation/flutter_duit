@@ -198,7 +198,7 @@ void main() {
 
               expect(badgeWidget.padding, null);
 
-              await driver.updateTestAttributes("Badge", {
+              await driver.updateAttributes("Badge", {
                 "padding": [12, 12],
               });
 
@@ -314,7 +314,7 @@ void main() {
 
               expect(badgeWidget.padding, null);
 
-              await driver.updateTestAttributes("Badge", {
+              await driver.updateAttributes("Badge", {
                 "padding": [12, 12],
               });
 

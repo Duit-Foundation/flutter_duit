@@ -113,7 +113,7 @@ void main() {
           const Color.fromARGB(255, 0, 255, 0),
         );
 
-        await driver.updateTestAttributes("physical_model", {
+        await driver.updateAttributes("physical_model", {
           "elevation": 12.0,
           "color": [0, 0, 255, 1],
         });

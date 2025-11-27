@@ -50,7 +50,7 @@ void main() {
 
           expect(find.byKey(const ValueKey("custom_view")), findsOneWidget);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "custom_view",
             {
               "scrollDirection": "horizontal",

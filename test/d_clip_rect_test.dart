@@ -76,7 +76,7 @@ void main() {
 
           expect(clipWidget.clipBehavior, Clip.none);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "clipRect",
             {
               "clipBehavior": "hardEdge",

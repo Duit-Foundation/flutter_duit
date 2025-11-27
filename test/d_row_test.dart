@@ -56,7 +56,7 @@ void main() {
 
           expect(row.mainAxisAlignment, MainAxisAlignment.start);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "w1",
             {
               "mainAxisAlignment": "spaceBetween",

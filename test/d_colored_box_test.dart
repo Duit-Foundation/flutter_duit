@@ -110,7 +110,7 @@ void main() {
         expect(coloredFinder, findsOneWidget);
         expect(coloredWidget.color, Colors.red);
 
-        await driver.updateTestAttributes("colored", {
+        await driver.updateAttributes("colored", {
           "color": Colors.black,
         });
 

@@ -87,7 +87,7 @@ void main() {
         final constrBoxFinder = find.byKey(const ValueKey("constraint"));
         expect(constrBoxFinder, findsOneWidget);
 
-        await driver.updateTestAttributes("constraint", {
+        await driver.updateAttributes("constraint", {
           "constraints": {
             "minWidth": 100,
             "minHeight": 100,

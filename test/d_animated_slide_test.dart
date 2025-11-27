@@ -79,7 +79,7 @@ void main() {
         expect(find.text("Some text"), findsOneWidget);
 
         // Update the offset
-        await driver.updateTestAttributes("slide", {
+        await driver.updateAttributes("slide", {
           "offset": {"dx": 0.5, "dy": 0.0},
         });
 
@@ -134,7 +134,7 @@ void main() {
         expect(find.text("Some text"), findsOneWidget);
 
         // Update the offset to trigger animation
-        await driver.updateTestAttributes("slide", {
+        await driver.updateAttributes("slide", {
           "offset": {"dx": 0.5, "dy": 0.0},
         });
 
@@ -188,7 +188,7 @@ void main() {
         ];
 
         for (final offset in testOffsets) {
-          await driver.updateTestAttributes("slide", {
+          await driver.updateAttributes("slide", {
             "offset": offset,
           });
 
@@ -236,7 +236,7 @@ void main() {
         final testCurves = ["ease", "bounceIn", "bounceOut"];
 
         for (final curve in testCurves) {
-          await driver.updateTestAttributes("slide", {
+          await driver.updateAttributes("slide", {
             "offset": {"dx": 0.5, "dy": 0.0},
             "curve": curve,
           });

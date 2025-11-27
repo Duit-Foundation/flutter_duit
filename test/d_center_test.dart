@@ -48,7 +48,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await driver.updateTestAttributes("centerId", {
+      await driver.updateAttributes("centerId", {
         "widthFactor": 0.5,
         "heightFactor": 1.5,
       });

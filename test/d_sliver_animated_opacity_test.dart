@@ -108,7 +108,7 @@ void main() {
 
           expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
 
-          await driver.updateTestAttributes("sliver1", {
+          await driver.updateAttributes("sliver1", {
             "opacity": 1.0,
           });
 

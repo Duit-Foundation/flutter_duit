@@ -64,7 +64,7 @@ void main() {
           expect(wrap.spacing, 12);
           expect(wrap.runSpacing, 24);
 
-          await driver.updateTestAttributes(
+          await driver.updateAttributes(
             "w1",
             {
               "spacing": 24,

@@ -90,7 +90,7 @@ void main() {
       expect(find.byKey(const ValueKey("sliverSafeAreaId")), findsOneWidget);
       expect(find.text("Controlled Test Text"), findsOneWidget);
 
-      await driver.updateTestAttributes(
+      await driver.updateAttributes(
         "sliverSafeAreaId",
         {
           "left": true,

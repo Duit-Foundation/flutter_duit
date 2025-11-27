@@ -132,7 +132,7 @@ void main() {
         var card = find.byKey(const ValueKey("card"));
         expect(card, findsOneWidget);
 
-        await driver.updateTestAttributes("card", {
+        await driver.updateAttributes("card", {
           "color": "#00FF00",
           "elevation": 8.0,
         });

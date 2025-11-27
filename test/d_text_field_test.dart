@@ -54,7 +54,7 @@ void main() {
       expect(tester.widget<TextField>(textFieldFinder).controller?.text,
           'Initial');
 
-      await driver.updateTestAttributes('textField3', {'value': 'Updated'});
+      await driver.updateAttributes('textField3', {'value': 'Updated'});
       await tester.pumpAndSettle();
       expect(tester.widget<TextField>(textFieldFinder).controller?.text,
           'Updated');
