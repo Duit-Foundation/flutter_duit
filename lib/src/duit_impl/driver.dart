@@ -4,12 +4,13 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/duit_impl/focus_delegate_impl.dart";
 import "package:flutter_duit/src/duit_impl/hooks.dart";
 import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 
-final class DuitDriver with DriverHooks implements UIDriver {
+final class DuitDriver extends UIDriver with DriverHooks {
   @visibleForTesting
   @override
   final String source;
@@ -77,6 +78,8 @@ final class DuitDriver with DriverHooks implements UIDriver {
   late ViewManager _viewManager;
 
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
+
+  final _focusNodeDelegate = DuitFocusDelegate();
 
   DuitDriver(
     this.source, {
@@ -447,7 +450,7 @@ final class DuitDriver with DriverHooks implements UIDriver {
   /// Adds an event stream to be listened to and processed by the driver.
   ///
   /// Each element of the stream must be a Map<String, dynamic>, which will be converted into a [ServerEvent].
-  /// If the event is a [NullEvent], a [NullEventException] will be thrown.
+  /// If the event is a [NullEvent], a [MissingFocusNodeException] will be thrown.
   /// For all other events, [eventResolver.resolveEvent] is called with the current [buildContext].
   ///
   /// The stream subscription is stored in the internal [_dataSources] list for lifecycle management.
@@ -477,4 +480,41 @@ final class DuitDriver with DriverHooks implements UIDriver {
   void _cancelSub(int code) {
     _dataSources.remove(code)?.cancel();
   }
+
+  @override
+  @preferInline
+  void attachNode(String nodeId, FocusNode node) =>
+      _focusNodeDelegate.attachNode(nodeId, node);
+
+  @override
+  @preferInline
+  void detachNode(String nodeId) => _focusNodeDelegate.detachNode(nodeId);
+
+  @override
+  @preferInline
+  bool focusInDirection(String nodeId, TraversalDirection direction) =>
+      _focusNodeDelegate.focusInDirection(nodeId, direction);
+
+  @override
+  @preferInline
+  bool nextFocus(String nodeId) => _focusNodeDelegate.nextFocus(nodeId);
+
+  @override
+  @preferInline
+  bool previousFocus(String nodeId) => _focusNodeDelegate.previousFocus(nodeId);
+
+  @override
+  @preferInline
+  void requestFocus(String nodeId) => _focusNodeDelegate.requestFocus(nodeId);
+
+  @override
+  @preferInline
+  void unfocus(
+    String nodeId, {
+    UnfocusDisposition disposition = UnfocusDisposition.scope,
+  }) =>
+      _focusNodeDelegate.unfocus(
+        nodeId,
+        disposition: disposition,
+      );
 }
