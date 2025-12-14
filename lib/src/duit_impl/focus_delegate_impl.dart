@@ -2,15 +2,16 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
-final class DuitFocusDelegate with FocusDelegate {
+final class DuitFocusNodeManager with FocusDelegate {
   final _nodeRegistry = <String, FocusNode>{};
 
   @override
-  void attachNode(String nodeId, FocusNode node) =>
+  void attachFocusNode(String nodeId, FocusNode node) =>
       _nodeRegistry[nodeId] = node;
 
   @override
-  void detachNode(String nodeId) => _nodeRegistry.remove(nodeId)?.dispose();
+  void detachFocusNode(String nodeId) =>
+      _nodeRegistry.remove(nodeId)?.dispose();
 
   @override
   bool focusInDirection(String nodeId, TraversalDirection direction) =>
@@ -43,8 +44,10 @@ final class DuitFocusDelegate with FocusDelegate {
       if (targetNodeId != null) {
         final targetNode = _nodeRegistry[targetNodeId];
         node.requestFocus(targetNode);
+        return;
       } else {
         node.requestFocus();
+        return;
       }
     }
     throw MissingFocusNodeException(
@@ -62,10 +65,21 @@ final class DuitFocusDelegate with FocusDelegate {
 
     if (node != null) {
       node.unfocus(disposition: disposition);
+      return;
     }
     throw MissingFocusNodeException(
       nodeId,
       "unfocus",
     );
   }
+
+  void dispose() {
+    for (var node in _nodeRegistry.entries) {
+      node.value.dispose();
+    }
+    _nodeRegistry.clear();
+  }
+
+  @override
+  FocusNode? getNode(Object? key) => _nodeRegistry[key];
 }

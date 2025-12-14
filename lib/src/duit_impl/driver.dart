@@ -79,7 +79,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
 
-  final _focusNodeDelegate = DuitFocusDelegate();
+  final _focusNodeManager = DuitFocusNodeManager();
 
   DuitDriver(
     this.source, {
@@ -268,6 +268,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
     onDispose?.call();
     transport?.dispose();
     _eventStreamController.close();
+    _focusNodeManager.dispose();
     for (final subscription in _dataSources.values) {
       subscription.cancel();
     }
@@ -483,29 +484,30 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @override
   @preferInline
-  void attachNode(String nodeId, FocusNode node) =>
-      _focusNodeDelegate.attachNode(nodeId, node);
+  void attachFocusNode(String nodeId, FocusNode node) =>
+      _focusNodeManager.attachFocusNode(nodeId, node);
 
   @override
   @preferInline
-  void detachNode(String nodeId) => _focusNodeDelegate.detachNode(nodeId);
+  void detachFocusNode(String nodeId) =>
+      _focusNodeManager.detachFocusNode(nodeId);
 
   @override
   @preferInline
   bool focusInDirection(String nodeId, TraversalDirection direction) =>
-      _focusNodeDelegate.focusInDirection(nodeId, direction);
+      _focusNodeManager.focusInDirection(nodeId, direction);
 
   @override
   @preferInline
-  bool nextFocus(String nodeId) => _focusNodeDelegate.nextFocus(nodeId);
+  bool nextFocus(String nodeId) => _focusNodeManager.nextFocus(nodeId);
 
   @override
   @preferInline
-  bool previousFocus(String nodeId) => _focusNodeDelegate.previousFocus(nodeId);
+  bool previousFocus(String nodeId) => _focusNodeManager.previousFocus(nodeId);
 
   @override
   @preferInline
-  void requestFocus(String nodeId) => _focusNodeDelegate.requestFocus(nodeId);
+  void requestFocus(String nodeId) => _focusNodeManager.requestFocus(nodeId);
 
   @override
   @preferInline
@@ -513,8 +515,12 @@ final class DuitDriver extends UIDriver with DriverHooks {
     String nodeId, {
     UnfocusDisposition disposition = UnfocusDisposition.scope,
   }) =>
-      _focusNodeDelegate.unfocus(
+      _focusNodeManager.unfocus(
         nodeId,
         disposition: disposition,
       );
+
+  @override
+  @preferInline
+  FocusNode? getNode(Object? key) => _focusNodeManager.getNode(key);
 }

@@ -34,3 +34,24 @@ const _pageViewActionMap = {
   "jumpTo": PageViewAction.jumpTo,
   "jumpToPage": PageViewAction.jumpToPage,
 };
+
+enum FocusNodeAction {
+  focusInDirection,
+  nextFocus,
+  previousFocus,
+  requestFocus,
+  unfocus;
+
+  static FocusNodeAction parse(String value) {
+    return _focusNodeActionMap[value] ??
+        (throw ArgumentError("Undefined focus node action key $value"));
+  }
+}
+
+const _focusNodeActionMap = {
+  "focusInDirection": FocusNodeAction.focusInDirection,
+  "nextFocus": FocusNodeAction.nextFocus,
+  "previousFocus": FocusNodeAction.previousFocus,
+  "requestFocus": FocusNodeAction.requestFocus,
+  "unfocus": FocusNodeAction.unfocus,
+};

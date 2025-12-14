@@ -17,6 +17,7 @@ const _commandLookup = <String, RemoteCommand Function(RemoteCommand)>{
   "bottomSheet": BottomSheetCommand.fromRemoteCommand,
   "dialog": DialogCommand.fromRemoteCommand,
   "pageView": _PageViewCommand.fromRemoteCommand,
+  "focusNode": GenericFocusNodeCommand.fromRemoteCommand,
 };
 
 /// An extension type that provides command specification functionality.
@@ -384,5 +385,100 @@ final class PageViewJumpToPageCommand extends _PageViewCommand {
     required super.controllerId,
     required super.type,
     required this.page,
+  });
+}
+
+base class GenericFocusNodeCommand extends RemoteCommand {
+  const GenericFocusNodeCommand({
+    required super.controllerId,
+    required super.type,
+    required super.commandData,
+  });
+
+  factory GenericFocusNodeCommand.fromRemoteCommand(RemoteCommand command) {
+    final source = DuitDataSource(command.commandData);
+    final action = FocusNodeAction.parse(source.getString(key: "action"));
+
+    return switch (action) {
+      FocusNodeAction.focusInDirection => FocusNodeFocusInDirectionCommand(
+          commandData: command.commandData,
+          type: command.type,
+          controllerId: command.controllerId,
+          direction: source.traversalDirection(
+            defaultValue: TraversalDirection.up,
+          )!,
+        ),
+      FocusNodeAction.nextFocus => FocusNodeNextFocusCommand(
+          commandData: command.commandData,
+          type: command.type,
+          controllerId: command.controllerId,
+        ),
+      FocusNodeAction.previousFocus => FocusNodePreviousFocusCommand(
+          commandData: command.commandData,
+          type: command.type,
+          controllerId: command.controllerId,
+        ),
+      FocusNodeAction.requestFocus => FocusNodeRequestFocusCommand(
+          commandData: command.commandData,
+          type: command.type,
+          controllerId: command.controllerId,
+          nodeId: source.tryGetString("nodeId"),
+        ),
+      FocusNodeAction.unfocus => FocusNodeUnfocusCommand(
+          commandData: command.commandData,
+          type: command.type,
+          controllerId: command.controllerId,
+          disposition: source.unfocusDisposition(),
+        ),
+    };
+  }
+}
+
+final class FocusNodeNextFocusCommand extends GenericFocusNodeCommand {
+  const FocusNodeNextFocusCommand({
+    required super.controllerId,
+    required super.commandData,
+    required super.type,
+  });
+}
+
+final class FocusNodePreviousFocusCommand extends GenericFocusNodeCommand {
+  const FocusNodePreviousFocusCommand({
+    required super.controllerId,
+    required super.commandData,
+    required super.type,
+  });
+}
+
+final class FocusNodeRequestFocusCommand extends GenericFocusNodeCommand {
+  final String? nodeId;
+
+  const FocusNodeRequestFocusCommand({
+    required super.controllerId,
+    required super.commandData,
+    required super.type,
+    required this.nodeId,
+  });
+}
+
+final class FocusNodeUnfocusCommand extends GenericFocusNodeCommand {
+  final UnfocusDisposition disposition;
+
+  const FocusNodeUnfocusCommand({
+    required super.controllerId,
+    required super.commandData,
+    required super.type,
+    required this.disposition,
+  });
+}
+
+final class FocusNodeFocusInDirectionCommand extends GenericFocusNodeCommand {
+  final TraversalDirection direction;
+
+  const FocusNodeFocusInDirectionCommand({
+    required super.controllerId,
+    required super.commandData,
+    required super.type,
+    required this.direction,
   });
 }

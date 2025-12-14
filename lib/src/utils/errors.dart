@@ -70,3 +70,15 @@ final class UnrecognizedRemoteCommandExcepton implements Exception {
   @override
   String toString() => "Remote command with name $commandName unspecified";
 }
+
+final class MissingFocusNodeException implements Exception {
+  /// Error message describing the reason for the exception
+  final String nodeId, methodName;
+
+  /// Creates a new exception with the specified error message
+  const MissingFocusNodeException(this.nodeId, this.methodName);
+
+  @override
+  String toString() =>
+      "FocusNode with id $nodeId is missing, can`t perform $methodName method";
+}
