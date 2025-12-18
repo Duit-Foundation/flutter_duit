@@ -507,7 +507,11 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @override
   @preferInline
-  void requestFocus(String nodeId) => _focusNodeManager.requestFocus(nodeId);
+  void requestFocus(String nodeId, {String? targetNodeId}) =>
+      _focusNodeManager.requestFocus(
+        nodeId,
+        targetNodeId: targetNodeId,
+      );
 
   @override
   @preferInline

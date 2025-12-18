@@ -2,6 +2,7 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
+import "package:flutter_duit/src/ui/widgets/focus_node_helper.dart";
 
 class DuitRadio extends StatelessWidget with AnimatedAttributes {
   final ViewAttribute attributes;
@@ -55,11 +56,29 @@ final class DuitControlledRadio extends StatefulWidget with AnimatedAttributes {
 }
 
 class _DuitControlledRadioState extends State<DuitControlledRadio>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, FocusNodeCommandHandler {
   @override
   void initState() {
+    controller = widget.controller;
     attachStateToController(widget.controller);
+
+    focusNode = attributes.focusNode(
+      defaultValue: FocusNode(),
+    )!;
+
+    controller.driver.attachFocusNode(
+      widget.controller.id,
+      focusNode,
+    );
+
+    controller.listenCommand(handleCommand);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.driver.detachFocusNode(controller.id);
+    super.dispose();
   }
 
   void _onChangeHandler(value) {
@@ -78,6 +97,7 @@ class _DuitControlledRadioState extends State<DuitControlledRadio>
     return Radio(
       key: Key(widget.controller.id),
       value: attrs["value"],
+      focusNode: focusNode,
       groupValue: groupContext?.groupValue,
       onChanged: _onChangeHandler,
       toggleable: attrs.getBool("toggleable"),

@@ -187,6 +187,12 @@ final class MockUIDriver extends UIDriver {
       {UnfocusDisposition disposition = UnfocusDisposition.scope}) {
     // TODO: implement unfocus
   }
+
+  @override
+  FocusNode? getNode(Object? key) {
+    // TODO: implement getNode
+    throw UnimplementedError();
+  }
 }
 
 class MockDebugLogger implements DebugLogger {

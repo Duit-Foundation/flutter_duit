@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/ui/widgets/focus_node_helper.dart";
 
 class DuitSwitch extends StatefulWidget {
   final UIElementController controller;
@@ -14,19 +15,42 @@ class DuitSwitch extends StatefulWidget {
 }
 
 class _DuitSwitchState extends State<DuitSwitch>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, FocusNodeCommandHandler {
   bool? _value;
 
   @override
   void initState() {
+    controller = widget.controller;
     attachStateToController(widget.controller);
     _value = attributes.tryGetBool("value");
+
+    focusNode = attributes.focusNode(
+      defaultValue: FocusNode(),
+    )!;
+
+    controller.driver.attachFocusNode(
+      widget.controller.id,
+      focusNode,
+    );
+
+    controller.listenCommand(handleCommand);
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.driver.detachFocusNode(controller.id);
+    super.dispose();
   }
 
   void _onChange(bool val) {
     final data = widget.controller.attributes.payload;
-    data.update("value", (v) => val);
+    data.update(
+      "value",
+      (v) => val,
+      ifAbsent: () => data["attributes"] = val,
+    );
     widget.controller.performRelatedAction();
     setState(() {
       _value = val;
@@ -39,6 +63,7 @@ class _DuitSwitchState extends State<DuitSwitch>
       key: Key(widget.controller.id),
       value: _value!,
       onChanged: _onChange,
+      focusNode: focusNode,
       activeColor: attributes.tryParseColor(key: "activeColor"),
       focusColor: attributes.tryParseColor(key: "focusColor"),
       hoverColor: attributes.tryParseColor(key: "hoverColor"),

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/ui/widgets/focus_node_helper.dart";
 
 class DuitInkWell extends StatefulWidget {
   final UIElementController controller;
@@ -16,17 +17,36 @@ class DuitInkWell extends StatefulWidget {
 }
 
 class _DuitInkWellState extends State<DuitInkWell>
-    with ViewControllerChangeListener, ActionHandler {
+    with ViewControllerChangeListener, ActionHandler, FocusNodeCommandHandler {
   @override
   void initState() {
+    controller = widget.controller;
     attachStateToController(widget.controller);
+
+    focusNode = attributes.focusNode(
+      defaultValue: FocusNode(),
+    )!;
+
+    controller.driver.attachFocusNode(
+      widget.controller.id,
+      focusNode,
+    );
+
+    controller.listenCommand(handleCommand);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.driver.detachFocusNode(controller.id);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       key: Key(widget.controller.id),
+      focusNode: focusNode,
       focusColor: attributes.tryParseColor(key: "focusColor"),
       hoverColor: attributes.tryParseColor(key: "hoverColor"),
       highlightColor: attributes.tryParseColor(key: "highlightColor"),

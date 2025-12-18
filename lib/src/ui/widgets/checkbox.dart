@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/ui/widgets/focus_node_helper.dart";
 
 class DuitCheckbox extends StatefulWidget {
   final UIElementController controller;
@@ -14,14 +15,31 @@ class DuitCheckbox extends StatefulWidget {
 }
 
 class _DuitCheckboxState extends State<DuitCheckbox>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, FocusNodeCommandHandler {
   bool? _value;
 
   @override
   void initState() {
+    controller = widget.controller;
     attachStateToController(widget.controller);
     _value = attributes.tryGetBool("value");
+
+    focusNode = attributes.focusNode(
+      defaultValue: FocusNode(),
+    )!;
+
+    controller.driver.attachFocusNode(
+      widget.controller.id,
+      focusNode,
+    );
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.driver.detachFocusNode(controller.id);
+    super.dispose();
   }
 
   void _onChange(bool? value) {
@@ -37,6 +55,7 @@ class _DuitCheckboxState extends State<DuitCheckbox>
     return Checkbox(
       key: Key(widget.controller.id),
       value: _value,
+      focusNode: focusNode,
       tristate: attributes.getBool("tristate"),
       autofocus: attributes.getBool("autofocus"),
       checkColor: attributes.tryParseColor(key: "checkColor"),

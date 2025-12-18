@@ -234,7 +234,7 @@ class MockUIDriver extends UIDriver {
   ) {}
 
   set streamController(StreamController<ElementTree?> _streamController) {}
-  
+
   @override
   void attachFocusNode(String nodeId, FocusNode node) {
     // TODO: implement attachNode
@@ -275,4 +275,9 @@ class MockUIDriver extends UIDriver {
     // TODO: implement unfocus
   }
 
+  @override
+  FocusNode? getNode(Object? key) {
+    // TODO: implement getNode
+    throw UnimplementedError();
+  }
 }
