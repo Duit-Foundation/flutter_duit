@@ -4,7 +4,7 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_duit/src/duit_impl/focus_delegate_impl.dart";
+import "package:flutter_duit/src/capabilities/index.dart";
 import "package:flutter_duit/src/duit_impl/hooks.dart";
 import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";

@@ -49,7 +49,7 @@ class _DuitSwitchState extends State<DuitSwitch>
     data.update(
       "value",
       (v) => val,
-      ifAbsent: () => data["attributes"] = val,
+      ifAbsent: () => val,
     );
     widget.controller.performRelatedAction();
     setState(() {

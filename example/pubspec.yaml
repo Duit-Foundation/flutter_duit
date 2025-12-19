@@ -30,7 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_duit: ^4.0.0
+  flutter_duit:
+    path: ../
 
 
   # The following adds the Cupertino Icons font to your application.

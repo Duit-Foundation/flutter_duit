@@ -2,12 +2,24 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
-final class DuitFocusNodeManager with FocusDelegate {
+final class DuitFocusNodeManager with FocusCapabilityDelegate {
   final _nodeRegistry = <String, FocusNode>{};
 
   @override
-  void attachFocusNode(String nodeId, FocusNode node) =>
+  void attachFocusNode(String nodeId, FocusNode node) {
+    final existing = _nodeRegistry[nodeId];
+    if (allowFocusNodeOverride) {
+      if (existing != null) {
+        existing.dispose();
+      }
       _nodeRegistry[nodeId] = node;
+    } else {
+      if (existing != null) {
+        throw StateError("FocusNode with id $nodeId is already attached");
+      }
+      _nodeRegistry[nodeId] = node;
+    }
+  }
 
   @override
   void detachFocusNode(String nodeId) =>
@@ -44,11 +56,10 @@ final class DuitFocusNodeManager with FocusDelegate {
       if (targetNodeId != null) {
         final targetNode = _nodeRegistry[targetNodeId];
         node.requestFocus(targetNode);
-        return;
       } else {
         node.requestFocus();
-        return;
       }
+      return;
     }
     throw MissingFocusNodeException(
       nodeId,

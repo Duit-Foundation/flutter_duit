@@ -41,7 +41,7 @@ class _DuitTextFieldState extends State<DuitTextField>
       attributes.update(
         "value",
         (_) => text,
-        ifAbsent: () => attributes["value"] = text,
+        ifAbsent: () => text,
       );
       controller.performRelatedAction();
     });
