@@ -10,3 +10,8 @@ const throwOnUnspecifiedWidgetType = bool.fromEnvironment(
   "duit:throw-on-unspecified-widget-type",
   defaultValue: true,
 );
+
+const allowFocusNodeOverride = bool.fromEnvironment(
+  "duit:allow-focus-node-override",
+  defaultValue: false,
+);

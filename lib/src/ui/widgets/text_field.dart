@@ -1,6 +1,7 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
+import "package:flutter_duit/src/ui/widgets/focus_node_helper.dart";
 
 class DuitTextField extends StatefulWidget {
   final UIElementController controller;
@@ -15,22 +16,38 @@ class DuitTextField extends StatefulWidget {
 }
 
 class _DuitTextFieldState extends State<DuitTextField>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, FocusNodeCommandHandler {
   late final TextEditingController _textEditingController;
-  late final FocusNode _focusNode;
 
   @override
   void initState() {
-    attachStateToController(widget.controller);
+    controller = widget.controller;
+    attachStateToController(controller);
     _textEditingController = TextEditingController(
       text: attributes.getString(key: "value"),
     );
-    _focusNode = FocusNode();
+
+    focusNode = attributes.focusNode(
+      defaultValue: FocusNode(),
+    )!;
+
+    controller.driver.attachFocusNode(
+      widget.controller.id,
+      focusNode,
+    );
+
     _textEditingController.addListener(() {
       final text = _textEditingController.text;
-      attributes.update("value", (v) => text);
-      widget.controller.performRelatedAction();
+      attributes.update(
+        "value",
+        (_) => text,
+        ifAbsent: () => text,
+      );
+      controller.performRelatedAction();
     });
+
+    controller.listenCommand(handleCommand);
+
     super.initState();
   }
 
@@ -47,7 +64,7 @@ class _DuitTextFieldState extends State<DuitTextField>
   }
 
   @override
-  void setState(VoidCallback fn) {
+  void setState(_) {
     if (mounted) {
       _syncControllerWithValue();
     }
@@ -56,18 +73,15 @@ class _DuitTextFieldState extends State<DuitTextField>
   @override
   void dispose() {
     _textEditingController.dispose();
-    _focusNode.dispose();
+    widget.controller.driver.detachFocusNode(widget.controller.id);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      focusNode: _focusNode,
-      onTapOutside: (_) {
-        _focusNode.unfocus();
-      },
       key: Key(widget.controller.id),
+      focusNode: focusNode,
       controller: _textEditingController,
       decoration: attributes.inputDecoration(),
       style: attributes.textStyle(),

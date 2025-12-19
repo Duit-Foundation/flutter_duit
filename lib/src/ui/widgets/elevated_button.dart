@@ -18,10 +18,29 @@ final class DuitElevatedButton extends StatefulWidget {
 
 class _DuitElevatedButtonState extends State<DuitElevatedButton>
     with ViewControllerChangeListener {
+  late final FocusNode _focusNode;
+
   @override
   void initState() {
-    attachStateToController(widget.controller);
+    final controller = widget.controller;
+    attachStateToController(controller);
+
+    _focusNode = attributes.focusNode(
+      defaultValue: FocusNode(),
+    )!;
+
+    controller.driver.attachFocusNode(
+      widget.controller.id,
+      _focusNode,
+    );
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.controller.driver.detachFocusNode(widget.controller.id);
+    super.dispose();
   }
 
   void _onLongPress(ServerAction? action) {
@@ -37,6 +56,7 @@ class _DuitElevatedButtonState extends State<DuitElevatedButton>
     final action = attributes.getAction("onLongPress");
     return ElevatedButton(
       key: Key(widget.controller.id),
+      focusNode: _focusNode,
       autofocus: attributes.getBool("autofocus"),
       clipBehavior: attributes.clipBehavior(defaultValue: Clip.none)!,
       onPressed: _performAction,

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/ui/widgets/focus_node_helper.dart";
 
 class DuitSlider extends StatefulWidget {
   final UIElementController controller;
@@ -14,14 +15,32 @@ class DuitSlider extends StatefulWidget {
 }
 
 class _DuitSliderState extends State<DuitSlider>
-    with ViewControllerChangeListener {
+    with ViewControllerChangeListener, FocusNodeCommandHandler {
   double _value = 0;
 
   @override
   void initState() {
+    controller = widget.controller;
     attachStateToController(widget.controller);
     _value = attributes.getDouble(key: "value", defaultValue: 0);
+
+    focusNode = attributes.focusNode(
+      defaultValue: FocusNode(),
+    )!;
+
+    controller.driver.attachFocusNode(
+      widget.controller.id,
+      focusNode,
+    );
+
+    controller.listenCommand(handleCommand);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.driver.detachFocusNode(controller.id);
+    super.dispose();
   }
 
   void _onChangeHandler(double value) {
@@ -36,7 +55,11 @@ class _DuitSliderState extends State<DuitSlider>
   }
 
   void _onChangeEndHandler(double value) {
-    attributes.update("value", (v) => value);
+    attributes.update(
+      "value",
+      (v) => value,
+      ifAbsent: () => value,
+    );
     widget.controller.performAction(attributes.getAction("onChangeEnd"));
   }
 
@@ -45,6 +68,7 @@ class _DuitSliderState extends State<DuitSlider>
     return Slider(
       key: Key(widget.controller.id),
       value: _value,
+      focusNode: focusNode,
       onChanged: _onChangeHandler,
       onChangeStart: _onChangeStartHandler,
       onChangeEnd: _onChangeEndHandler,

@@ -4,6 +4,8 @@ import "dart:async";
 
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/services.dart";
+import "package:flutter/src/widgets/focus_manager.dart";
+import "package:flutter/src/widgets/focus_traversal.dart";
 import "package:flutter/src/widgets/framework.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_test/flutter_test.dart";
@@ -11,7 +13,7 @@ import "package:flutter_duit/src/controller/view_controller.dart";
 import "package:flutter_duit/src/controller/index.dart";
 
 // Mock classes for testing
-class MockUIDriver implements UIDriver {
+final class MockUIDriver extends UIDriver {
   final List<ServerAction> executedActions = [];
   final List<String> detachedControllers = [];
   DebugLogger? mockLogger;
@@ -145,6 +147,54 @@ class MockUIDriver implements UIDriver {
   ) {}
 
   set streamController(StreamController<ElementTree?> _streamController) {}
+
+  @override
+  void attachFocusNode(String nodeId, FocusNode node) {
+    // TODO: implement attachNode
+  }
+
+  @override
+  void detachFocusNode(String nodeId) {
+    // TODO: implement detachNode
+    throw UnimplementedError();
+  }
+
+  @override
+  bool focusInDirection(String nodeId, TraversalDirection direction) {
+    // TODO: implement focusInDirection
+    throw UnimplementedError();
+  }
+
+  @override
+  bool nextFocus(String nodeId) {
+    // TODO: implement nextFocus
+    throw UnimplementedError();
+  }
+
+  @override
+  bool previousFocus(String nodeId) {
+    // TODO: implement previousFocus
+    throw UnimplementedError();
+  }
+
+  @override
+  void requestFocus(String nodeId) {
+    // TODO: implement requestFocus
+  }
+
+  @override
+  void unfocus(
+    String nodeId, {
+    UnfocusDisposition disposition = UnfocusDisposition.scope,
+  }) {
+    // TODO: implement unfocus
+  }
+
+  @override
+  FocusNode? getNode(Object? key) {
+    // TODO: implement getNode
+    throw UnimplementedError();
+  }
 }
 
 class MockDebugLogger implements DebugLogger {
