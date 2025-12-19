@@ -183,8 +183,10 @@ final class MockUIDriver extends UIDriver {
   }
 
   @override
-  void unfocus(String nodeId,
-      {UnfocusDisposition disposition = UnfocusDisposition.scope}) {
+  void unfocus(
+    String nodeId, {
+    UnfocusDisposition disposition = UnfocusDisposition.scope,
+  }) {
     // TODO: implement unfocus
   }
 
