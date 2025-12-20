@@ -1,3 +1,8 @@
+## 4.1.0
+
+- Added new widgets: AnimatedPositionedDirectional, ClipRect, ClipOval, PageView, Badge
+- Implemented focus management capability and API
+
 ## 4.0.0
 
 - Maintain new remote commands API and implement BottomSheet and Dialog commands

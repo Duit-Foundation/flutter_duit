@@ -1,6 +1,6 @@
 name: flutter_duit
 description: Server driver UI framework for Flutter. Allows you to update your cool UI without updating the app!
-version: 4.0.0
+version: 4.1.0
 repository: https://github.com/Duit-Foundation/flutter_duit
 issue_tracker: https://github.com/Duit-Foundation/flutter_duit/issues
 homepage: https://duit.pro/en/
@@ -12,10 +12,7 @@ environment:
   flutter: ">=3.24.0"
 
 dependencies:
-  duit_kernel:
-    git: 
-      url: https://github.com/Duit-Foundation/duit_kernel
-      ref: main
+  duit_kernel: ^4.1.0
   flutter:
     sdk: flutter
   http: ^1.3.0
