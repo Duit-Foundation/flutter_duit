@@ -12,43 +12,6 @@ class CustomDecoder extends Converter<Uint8List, Map<String, dynamic>> {
   }
 }
 
-final class _Handler implements ExternalEventHandler {
-  const _Handler();
-
-  @override
-  FutureOr<void> handleCustomEvent(
-      BuildContext context, String key, Object? extra) {
-    switch (key) {
-      case "event1":
-        {
-          debugPrint("Event 1");
-          break;
-        }
-      case "event2":
-        {
-          debugPrint("Event 2");
-          break;
-        }
-    }
-  }
-
-  @override
-  FutureOr<void> handleNavigation(
-    BuildContext context,
-    String path,
-    Object? extra,
-  ) {
-    // TODO: implement handleNavigation
-    throw UnimplementedError();
-  }
-
-  @override
-  FutureOr<void> handleOpenUrl(String url) {
-    // TODO: implement handleOpenUrl
-    throw UnimplementedError();
-  }
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
