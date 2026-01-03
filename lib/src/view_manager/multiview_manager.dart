@@ -5,6 +5,7 @@ import "package:flutter_duit/src/view_manager/multiview_layout.dart";
 import "package:flutter_duit/src/view_manager/simple_manager.dart";
 
 /// A [ViewManager] for managing multiple views. Provides backward compatibility with [SimpleViewManager].
+@Deprecated("Will be removed in the next major release")
 final class MultiViewManager extends SimpleViewManager {
   late DuitMultiViewLayout _layout;
 

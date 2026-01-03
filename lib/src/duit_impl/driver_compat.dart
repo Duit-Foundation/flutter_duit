@@ -1,5 +1,3 @@
-// ignore_for_file: annotate_overrides, deprecated_member_use_from_same_package, missing_override_of_must_be_overridden
-
 import "dart:async";
 
 import "package:duit_kernel/duit_kernel.dart";
@@ -7,11 +5,10 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/capabilities/index.dart";
-import "package:flutter_duit/src/ui/index.dart";
-import "package:flutter_duit/src/view_manager/index.dart";
+import "package:flutter_duit/src/capabilities/view_capability_impl.dart";
 import "package:flutter_duit/src/transport/index.dart";
 
-final class DuitDriver extends UIDriver with DriverHooks {
+final class DuitDriver2 extends UIDriver with DriverHooks {
   @visibleForTesting
   @override
   final String source;
@@ -26,21 +23,17 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @visibleForTesting
   @override
-  late BuildContext buildContext;
+  BuildContext get buildContext => _viewManager.buildContext;
 
   @override
-  // ignore: avoid_setters_without_getters
-  set context(BuildContext value) {
-    buildContext = value;
-  }
-
-  final _eventStreamController = StreamController<UIDriverEvent>.broadcast();
+  set context(BuildContext value) => _viewManager.context = value;
 
   @override
-  Stream<UIDriverEvent> get eventStream => _eventStreamController.stream;
+  Stream<UIDriverEvent> get eventStream => _viewManager.eventStream;
 
   @visibleForTesting
   @override
+  @Deprecated("Will be removed in the next major release.")
   ExternalEventHandler? externalEventHandler;
 
   @visibleForTesting
@@ -58,10 +51,12 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @visibleForTesting
   @override
+  @Deprecated("Will be removed in the next major release.")
   late final ActionExecutor actionExecutor;
 
   @visibleForTesting
   @override
+  @Deprecated("Will be removed in the next major release.")
   late final EventResolver eventResolver;
 
   @visibleForTesting
@@ -76,95 +71,99 @@ final class DuitDriver extends UIDriver with DriverHooks {
   @override
   DebugLogger? logger;
 
-  late ViewManager _viewManager;
+  final FocusCapabilityDelegate _focusNodeManager;
+  final ServerActionExecutionCapabilityDelegate _actionManager;
+  final UIControllerCapabilityDelegate _controllerManager;
+  final ViewModelCapabilityDelegate _viewManager;
 
-  final _dataSources = <int, StreamSubscription<ServerEvent>>{};
-
-  final _focusNodeManager = DuitFocusNodeManager();
-
-  DuitDriver(
+  DuitDriver2(
     this.source, {
     required this.transportOptions,
     this.externalEventHandler,
     this.initialRequestPayload,
     this.logger,
+    @Deprecated(
+      "Will be removed in the next major release. Use [ServerActionExecutionCapabilityDelegate] instead",
+    )
     EventResolver? customEventResolver,
+    @Deprecated(
+      "Will be removed in the next major release. Use [ServerActionExecutionCapabilityDelegate] instead",
+    )
     ActionExecutor? customActionExecutor,
     DebugLogger? customLogger,
-    bool shared = false,
-  }) {
+    @Deprecated("") bool shared = false,
+    FocusCapabilityDelegate? focusCap,
+    ServerActionExecutionCapabilityDelegate? actionCap,
+    UIControllerCapabilityDelegate? controllerCap,
+    ViewModelCapabilityDelegate? viewManager,
+  })  : _actionManager = actionCap ?? DuitActionManager(),
+        _controllerManager = controllerCap ?? DuitControllerManager(),
+        _focusNodeManager = focusCap ?? DuitFocusNodeManager(),
+        _viewManager = viewManager ?? DuitViewManager() {
     logger = customLogger ?? DefaultLogger.instance;
 
     _useStaticContent = false;
-    actionExecutor = customActionExecutor ??
-        DefaultActionExecutor(
-          driver: this,
-          logger: logger,
-        );
-    eventResolver = customEventResolver ??
-        DefaultEventResolver(
-          driver: this,
-          logger: logger,
-        );
     isModule = false;
-    _viewManager = shared ? MultiViewManager() : SimpleViewManager();
+
+    _focusNodeManager.driver = this;
+    _actionManager.driver = this;
+    _controllerManager.driver = this;
+    _viewManager.driver = this;
   }
 
   /// Creates a new instance of [DuitDriver] with the specified [content] without establishing a initial transport connection.
-  DuitDriver.static(
+  DuitDriver2.static(
     this.content, {
     required this.transportOptions,
     this.externalEventHandler,
     this.logger,
+    @Deprecated(
+      "Will be removed in the next major release. Use [ServerActionExecutionCapabilityDelegate] instead",
+    )
     EventResolver? customEventResolver,
+    @Deprecated(
+      "Will be removed in the next major release. Use [ServerActionExecutionCapabilityDelegate] instead",
+    )
     ActionExecutor? customActionExecutor,
     DebugLogger? customLogger,
     this.source = "",
     this.initialRequestPayload,
-    bool shared = false,
-  }) {
+    @Deprecated("") bool shared = false,
+    FocusCapabilityDelegate? focusCap,
+    ServerActionExecutionCapabilityDelegate? actionCap,
+    UIControllerCapabilityDelegate? controllerCap,
+    ViewModelCapabilityDelegate? viewManager,
+  })  : _actionManager = actionCap ?? DuitActionManager(),
+        _controllerManager = controllerCap ?? DuitControllerManager(),
+        _focusNodeManager = focusCap ?? DuitFocusNodeManager(),
+        _viewManager = viewManager ?? DuitViewManager() {
     logger = customLogger ?? DefaultLogger.instance;
 
     _useStaticContent = true;
     isModule = false;
-    eventResolver = customEventResolver ??
-        DefaultEventResolver(
-          driver: this,
-          logger: logger,
-        );
-    actionExecutor = customActionExecutor ??
-        DefaultActionExecutor(
-          driver: this,
-          logger: logger,
-        );
-    _viewManager = shared ? MultiViewManager() : SimpleViewManager();
+    _focusNodeManager.driver = this;
+    _actionManager.driver = this;
+    _controllerManager.driver = this;
+    _viewManager.driver = this;
   }
 
   /// Creates a new [DuitDriver] instance that is controlled from native code
-  DuitDriver.module()
+  DuitDriver2.module()
       : _useStaticContent = false,
         source = "",
         initialRequestPayload = null,
         isModule = true,
-        externalEventHandler = null,
         transportOptions = EmptyTransportOptions(),
         driverChannel = const MethodChannel("duit:driver"),
-        _viewManager = SimpleViewManager();
-
-  @protected
-  @override
-  void attachController(String id, UIElementController controller) =>
-      _viewManager.addController(id, controller);
-
-  @protected
-  @override
-  void detachController(String id) =>
-      _viewManager.removeController(id)?.dispose();
-
-  @protected
-  @override
-  UIElementController? getController(String id) =>
-      _viewManager.getController(id);
+        _actionManager = DuitActionManager(),
+        _controllerManager = DuitControllerManager(),
+        _focusNodeManager = DuitFocusNodeManager(),
+        _viewManager = DuitViewManager() {
+    _focusNodeManager.driver = this;
+    _actionManager.driver = this;
+    _controllerManager.driver = this;
+    _viewManager.driver = this;
+  }
 
   Future<Map<String, dynamic>> _connect() async {
     Map<String, dynamic>? json;
@@ -184,7 +183,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
         error: e,
         stackTrace: s,
       );
-      _eventStreamController.addError(e);
+      _viewManager.addUIDriverError(e, s);
     }
 
     if (transport is Streamer) {
@@ -193,7 +192,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
         (d) async {
           try {
             if (buildContext.mounted) {
-              await eventResolver.resolveEvent(buildContext, d);
+              await resolveEvent(buildContext, d);
             }
           } catch (e, s) {
             logger?.error(
@@ -201,7 +200,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
               error: e,
               stackTrace: s,
             );
-            _eventStreamController.addError(e);
+            _viewManager.addUIDriverError(e, s);
           }
         },
       );
@@ -218,7 +217,6 @@ final class DuitDriver extends UIDriver with DriverHooks {
       return;
     }
 
-    _viewManager.driver = this;
     _addParsers();
 
     onInit?.call();
@@ -239,7 +237,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
       final view = await _viewManager.prepareLayout(json);
 
       if (view != null) {
-        _eventStreamController.add(
+        _viewManager.addUIDriverEvent(
           UIDriverViewEvent(view),
         );
       } else {
@@ -254,7 +252,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
         error: e,
         stackTrace: s,
       );
-      _eventStreamController.addError(
+      _viewManager.addUIDriverError(
         UIDriverErrorEvent(
           "Layout parse failed",
           error: e,
@@ -265,20 +263,23 @@ final class DuitDriver extends UIDriver with DriverHooks {
   }
 
   @override
-  void dispose() {
-    onDispose?.call();
-    transport?.dispose();
-    _eventStreamController.close();
-    for (final subscription in _dataSources.values) {
-      subscription.cancel();
-    }
-    _dataSources.clear();
+  void releaseResources() {
+    _focusNodeManager.releaseResources();
+    _controllerManager.releaseResources();
+    _actionManager.releaseResources();
+    _viewManager.releaseResources();
   }
 
   @override
-  Widget? build() {
-    return _viewManager.build();
+  void dispose() {
+    onDispose?.call();
+    transport?.dispose();
+    releaseResources();
   }
+
+  @override
+  @Deprecated("")
+  Widget? build() => null;
 
   void _addParsers() {
     try {
@@ -290,46 +291,6 @@ final class DuitDriver extends UIDriver with DriverHooks {
       logger?.warn(
         e.toString(),
       );
-    }
-  }
-
-  @visibleForTesting
-  @override
-  Future<void> execute(ServerAction action) async {
-    beforeActionCallback?.call(action);
-
-    try {
-      final event = await actionExecutor.executeAction(
-        action,
-      );
-
-      if (event != null && buildContext.mounted) {
-        eventResolver.resolveEvent(buildContext, event);
-      }
-    } catch (e) {
-      logger?.error(
-        "Error executing action",
-        error: e,
-      );
-    } finally {
-      afterActionCallback?.call();
-    }
-  }
-
-  Future<void> _resolveComponentUpdate(
-    UIElementController controller,
-    Map<String, dynamic> json,
-  ) async {
-    final tag = controller.tag;
-    final description = DuitRegistry.getComponentDescription(tag!);
-
-    if (description != null) {
-      final component = ComponentBuilder.build(
-        description,
-        json,
-      );
-
-      controller.updateState(component);
     }
   }
 
@@ -372,7 +333,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
     driverChannel?.setMethodCallHandler((call) async {
       switch (call.method) {
         case "duit_event":
-          await eventResolver.resolveEvent(
+          await resolveEvent(
             buildContext,
             call.arguments as Map<String, dynamic>,
           );
@@ -381,7 +342,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
           final json = call.arguments as Map<String, dynamic>;
           final view = await _viewManager.prepareLayout(json);
           if (view != null) {
-            _eventStreamController.add(
+            _viewManager.addUIDriverEvent(
               UIDriverViewEvent(view),
             );
           }
@@ -393,94 +354,17 @@ final class DuitDriver extends UIDriver with DriverHooks {
     _isChannelInitialized = true;
   }
 
-  @visibleForTesting
-  int get controllersCount => _viewManager.controllersCount;
-
-  @visibleForTesting
   @override
-  Map<String, dynamic> preparePayload(
-    Iterable<ActionDependency> dependencies,
-  ) {
-    final payload = <String, dynamic>{};
-
-    if (dependencies.isNotEmpty) {
-      for (final dependency in dependencies) {
-        final controller = _viewManager.getController(dependency.id);
-        if (controller != null) {
-          final attribute = controller.attributes.payload;
-          payload[dependency.target] = attribute["value"];
-        }
-      }
-    }
-
-    return payload;
-  }
-
-  @visibleForTesting
-  @override
-  Future<void> updateAttributes(
-    String controllerId,
-    Map<String, dynamic> json,
-  ) async {
-    final controller = _viewManager.getController(controllerId);
-    if (controller != null) {
-      if (controller.type == ElementType.component.name) {
-        await _resolveComponentUpdate(controller, json);
-        return;
-      }
-      controller.updateState(json);
-    }
-  }
-
-  @override
+  @preferInline
   void notifyWidgetDisplayStateChanged(
     String viewTag,
     int state,
-  ) {
-    _viewManager.notifyWidgetDisplayStateChanged(viewTag, state);
-    logger?.info(
-      "Widget with tag ${viewTag.isEmpty ? "*root*" : viewTag} state changed to $state",
-    );
-  }
+  ) =>
+      _viewManager.notifyWidgetDisplayStateChanged(viewTag, state);
 
   @override
-  bool isWidgetReady(String viewTag) {
-    return _viewManager.isWidgetReady(viewTag);
-  }
-
-  /// Adds an event stream to be listened to and processed by the driver.
-  ///
-  /// Each element of the stream must be a Map<String, dynamic>, which will be converted into a [ServerEvent].
-  /// If the event is a [NullEvent], a [MissingFocusNodeException] will be thrown.
-  /// For all other events, [eventResolver.resolveEvent] is called with the current [buildContext].
-  ///
-  /// The stream subscription is stored in the internal [_dataSources] list for lifecycle management.
-  ///
-  /// [stream] - the stream of events coming from the server or another data source.
-  void addExternalEventStream(
-    Stream<Map<String, dynamic>> stream,
-  ) {
-    final id = stream.hashCode;
-
-    _dataSources[id] = stream.map(ServerEvent.parseEvent).listen(
-      (event) {
-        if (event is NullEvent) {
-          throw const NullEventException("NullEvent received from data source");
-        }
-        eventResolver.resolveEvent(
-          // ignore: use_build_context_synchronously
-          buildContext,
-          event,
-        );
-      },
-      onDone: () => _cancelSub(id),
-      onError: (e, s) => _cancelSub(id),
-    );
-  }
-
-  void _cancelSub(int code) {
-    _dataSources.remove(code)?.cancel();
-  }
+  @preferInline
+  bool isWidgetReady(String viewTag) => _viewManager.isWidgetReady(viewTag);
 
   @override
   @preferInline
@@ -527,4 +411,114 @@ final class DuitDriver extends UIDriver with DriverHooks {
   @override
   @preferInline
   FocusNode? getNode(Object? key) => _focusNodeManager.getNode(key);
+
+  @visibleForTesting
+  @override
+  Future<void> execute(ServerAction action) async {
+    beforeActionCallback?.call(action);
+
+    try {
+      await _actionManager.execute(action);
+    } catch (e) {
+      logger?.error(
+        "Error executing action",
+        error: e,
+      );
+    } finally {
+      afterActionCallback?.call();
+    }
+  }
+
+  @visibleForTesting
+  @override
+  Future<void> resolveEvent(BuildContext context, eventData) async =>
+      _actionManager.resolveEvent(
+        context,
+        eventData,
+      );
+
+  @override
+  @preferInline
+  Map<String, dynamic> preparePayload(
+    Iterable<ActionDependency> dependencies,
+  ) =>
+      _actionManager.preparePayload(
+        dependencies,
+      );
+
+  /// Adds an event stream to be listened to and processed by the driver.
+  ///
+  /// Each element of the stream must be a Map<String, dynamic>, which will be converted into a [ServerEvent].
+  /// If the event is a [NullEvent], a [MissingFocusNodeException] will be thrown.
+  /// For all other events, eventResolver.resolveEvent is called with the current [buildContext].
+  ///
+  /// The stream subscription is stored in the internal [_dataSources] list for lifecycle management.
+  ///
+  /// [stream] - the stream of events coming from the server or another data source.
+  @override
+  @preferInline
+  void addExternalEventStream(
+    Stream<Map<String, dynamic>> stream,
+  ) =>
+      _actionManager.addExternalEventStream(
+        stream,
+      );
+
+  @override
+  @preferInline
+  Future<void> updateAttributes(
+    String controllerId,
+    Map<String, dynamic> json,
+  ) async =>
+      _controllerManager.updateAttributes(
+        controllerId,
+        json,
+      );
+
+  @override
+  @preferInline
+  void attachController(String id, UIElementController controller) =>
+      _controllerManager.attachController(id, controller);
+
+  @override
+  @preferInline
+  void detachController(String id) => _controllerManager.detachController(id);
+
+  @override
+  @preferInline
+  UIElementController? getController(String id) =>
+      _controllerManager.getController(id);
+
+  @override
+  @preferInline
+  int get controllersCount => _controllerManager.controllersCount;
+
+  @override
+  @preferInline
+  void attachExternalHandler(
+    UserDefinedHandlerKind type,
+    UserDefinedEventHandler handle,
+  ) =>
+      _actionManager.attachExternalHandler(
+        type,
+        handle,
+      );
+
+  @override
+  @preferInline
+  void addUIDriverError(Object error, [StackTrace? stackTrace]) =>
+      _viewManager.addUIDriverError(
+        error,
+        stackTrace,
+      );
+
+  @override
+  @preferInline
+  void addUIDriverEvent(UIDriverEvent event) =>
+      _viewManager.addUIDriverEvent(event);
+
+  @override
+  @preferInline
+  Future<DuitView?> prepareLayout(Map<String, dynamic> json) =>
+      _viewManager.prepareLayout(json);
 }

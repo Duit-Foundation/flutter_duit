@@ -85,8 +85,8 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: main
-      resolved-ref: "9c331752d4cb6d9d3df52230c0ba311fd74dddbc"
+      ref: "feat/capability-api-migration-pt2"
+      resolved-ref: "424eecc27909d27b032539695ae52b7e1bf32916"
       url: "https://github.com/Duit-Foundation/duit_kernel"
     source: git
     version: "4.1.0"

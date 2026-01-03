@@ -1,10 +1,11 @@
 import "package:duit_kernel/duit_kernel.dart";
-import "package:flutter/widgets.dart" show Widget;
+import "package:flutter/widgets.dart";
 import "package:flutter_duit/src/ui/index.dart";
+import "package:flutter_duit/src/view/view.dart";
 
-@Deprecated("Will be removed in the next major release")
-final class DuitViewLayout implements DuitView {
+final class CommonDuitView extends DuitViewModel {
   late ElementTree _layout;
+  @Deprecated("Will be removed in the next major release")
   bool isReady = false;
 
   @override
@@ -22,5 +23,9 @@ final class DuitViewLayout implements DuitView {
   }
 
   @override
-  ElementTree getElementTree([String tag = ""]) => _layout;
+  void changeViewState(String tag, int state) {}
+
+  @override
+  @preferInline
+  bool isWidgetReady(String viewTag) => true;
 }

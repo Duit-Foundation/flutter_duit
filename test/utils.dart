@@ -187,7 +187,6 @@ class MockUIDriver extends UIDriver {
     throw UnimplementedError();
   }
 
-  @override
   set buildContext(BuildContext _buildContext) {}
 
   @override
@@ -314,5 +313,21 @@ class MockUIDriver extends UIDriver {
   @override
   void releaseResources() {
     // TODO: implement releaseResources
+  }
+  
+  @override
+  void addUIDriverError(Object error, [StackTrace? stackTrace]) {
+    // TODO: implement addUIDriverError
+  }
+
+  @override
+  void addUIDriverEvent(UIDriverEvent event) {
+    // TODO: implement addUIDriverEvent
+  }
+
+  @override
+  Future<DuitView?> prepareLayout(Map<String, dynamic> json) {
+    // TODO: implement prepareLayout
+    throw UnimplementedError();
   }
 }

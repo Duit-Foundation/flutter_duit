@@ -1,6 +1,7 @@
 import "package:duit_kernel/duit_kernel.dart";
-import "package:flutter/widgets.dart" show Widget;
+import "package:flutter/widgets.dart";
 import "package:flutter_duit/src/ui/index.dart";
+import "package:flutter_duit/src/view/view.dart";
 
 final class _StatefullElement {
   final ElementTree root;
@@ -12,8 +13,7 @@ final class _StatefullElement {
   );
 }
 
-@Deprecated("Will be removed in the next major release")
-final class DuitMultiViewLayout implements DuitView {
+final class SharedDuitView extends DuitViewModel {
   final _views = <String, _StatefullElement>{};
 
   @override
@@ -36,6 +36,7 @@ final class DuitMultiViewLayout implements DuitView {
     _views[json.keys.first] = _StatefullElement(tree, false);
   }
 
+  @override
   void changeViewState(String tag, int state) {
     if (_views.containsKey(tag)) {
       final elem = _views[tag];
@@ -46,6 +47,7 @@ final class DuitMultiViewLayout implements DuitView {
     }
   }
 
+  @Deprecated("")
   (ElementTree, bool)? operator [](String tag) {
     final elem = _views[tag];
 
@@ -56,10 +58,6 @@ final class DuitMultiViewLayout implements DuitView {
   }
 
   @override
-  ElementTree getElementTree([String tag = ""]) {
-    if (tag.isEmpty || !_views.containsKey(tag)) {
-      return _views.values.first.root;
-    }
-    return _views[tag]!.root;
-  }
+  @preferInline
+  bool isWidgetReady(String viewTag) => _views[viewTag]?.isReady ?? false;
 }

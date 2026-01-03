@@ -3,6 +3,7 @@ import "package:flutter/widgets.dart" show Widget, mustCallSuper;
 import "package:flutter_duit/src/view_manager/view_manager.dart";
 import "package:flutter_duit/src/view_manager/view_layout.dart";
 
+@Deprecated("Will be removed in the next major release")
 base class SimpleViewManager extends ViewManager {
   late DuitViewLayout _view;
   final Map<String, UIElementController> _viewControllers = {};
