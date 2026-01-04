@@ -25,6 +25,7 @@ export "package:duit_kernel/duit_kernel.dart"
         FocusCapabilityDelegate,
         ServerActionExecutionCapabilityDelegate,
         UIControllerCapabilityDelegate,
+        ViewModelCapabilityDelegate,
         UserDefinedHandlerKind;
 
 // Legacy API exports for backward compatibility
