@@ -7,7 +7,7 @@ import "package:flutter_duit/flutter_duit.dart";
 class DuitActionManager with ServerActionExecutionCapabilityDelegate {
   late final UIDriver _driver;
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
-  late final UserDefinedEventHandler _navigationHander,
+  UserDefinedEventHandler? _navigationHandler,
       _openUrlHandler,
       _customEventHandler;
 
@@ -39,16 +39,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
       case LocalAction(
           :final event,
         ):
-        try {
-          return event;
-        } catch (e, s) {
-          _driver.logger?.error(
-            "[Error while executing local action]",
-            error: e,
-            stackTrace: s,
-          );
-        }
-        break;
+        return event;
       //script
       case ScriptAction(
           :final dependsOn,
@@ -122,20 +113,24 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
             :final path,
             :final extra,
           ):
-          await _navigationHander(
-            context,
-            path,
-            extra,
-          );
+          if (_navigationHandler != null) {
+            await _navigationHandler!(context, path, extra);
+          } else {
+            _driver.logger?.warn(
+              "NavigationEvent received but no handler attached",
+            );
+          }
           break;
         case OpenUrlEvent(
             :final url,
           ):
-          await _openUrlHandler(
-            context,
-            url,
-            const {},
-          );
+          if (_openUrlHandler != null) {
+            await _openUrlHandler!(context, url, const {});
+          } else {
+            _driver.logger?.warn(
+              "OpenUrlEvent received but no handler attached",
+            );
+          }
           break;
         case CustomEvent(
             :final key,
@@ -147,11 +142,13 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
               extra,
             );
           } else {
-            await _customEventHandler(
-              context,
-              key,
-              extra,
-            );
+            if (_customEventHandler != null) {
+              await _customEventHandler!(context, key, extra);
+            } else {
+              _driver.logger?.warn(
+                "CustomEvent received but no handler attached",
+              );
+            }
           }
           break;
         case SequencedEventGroup(
@@ -261,7 +258,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
   ) {
     switch (type) {
       case UserDefinedHandlerKind.navigation:
-        _navigationHander = handle;
+        _navigationHandler = handle;
         break;
       case UserDefinedHandlerKind.openUrl:
         _openUrlHandler = handle;
