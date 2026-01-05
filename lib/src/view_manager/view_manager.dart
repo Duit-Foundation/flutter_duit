@@ -13,7 +13,6 @@ import "package:flutter/material.dart";
 ///
 /// - `build`: Constructs a Flutter `Widget` representation of the view. This method can be
 ///   overridden by subclasses to provide custom widget-building logic based on a tag.
-@Deprecated("Will be removed in the next major release")
 abstract base class ViewManager implements WidgetDisplayStateNotifier {
   late final UIDriver driver;
 

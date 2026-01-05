@@ -3,13 +3,14 @@ import "package:flutter_duit/src/ui/index.dart";
 
 final class DuitControllerManager with UIControllerCapabilityDelegate {
   final Map<String, UIElementController> _viewControllers = {};
+  late final UIDriver _driver;
 
   @override
   void attachController(String id, UIElementController controller) {
     final alreadyContains = _viewControllers.containsKey(id);
 
     if (alreadyContains) {
-      driver.logger?.warn(
+      _driver.logger?.warn(
         "Controller with id=$id already exists and it will be overriden \n This could happen because two or more controlled widgets have the same id parameter",
       );
     }
@@ -65,4 +66,7 @@ final class DuitControllerManager with UIControllerCapabilityDelegate {
     }
     _viewControllers.clear();
   }
+
+  @override
+  void linkDriver(UIDriver driver) => _driver = driver;
 }

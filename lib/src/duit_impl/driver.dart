@@ -1,5 +1,3 @@
-// ignore_for_file: annotate_overrides, deprecated_member_use_from_same_package, missing_override_of_must_be_overridden
-
 import "dart:async";
 
 import "package:duit_kernel/duit_kernel.dart";
@@ -11,6 +9,7 @@ import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 
+// ignore: missing_override_of_must_be_overridden
 final class DuitDriver extends UIDriver with DriverHooks {
   @visibleForTesting
   @override
@@ -393,6 +392,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
     _isChannelInitialized = true;
   }
 
+  @override
   @visibleForTesting
   int get controllersCount => _viewManager.controllersCount;
 
@@ -457,6 +457,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
   /// The stream subscription is stored in the internal [_dataSources] list for lifecycle management.
   ///
   /// [stream] - the stream of events coming from the server or another data source.
+  @override
   void addExternalEventStream(
     Stream<Map<String, dynamic>> stream,
   ) {

@@ -95,4 +95,9 @@ final class DuitFocusNodeManager with FocusCapabilityDelegate {
   @override
   @preferInline
   FocusNode? getNode(Object? key) => _nodeRegistry[key];
+
+  @override
+  void linkDriver(UIDriver driver) {
+    //void method
+  }
 }

@@ -6,6 +6,8 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/view/view.dart";
 
 final class DuitViewManager with ViewModelCapabilityDelegate {
+  late final UIDriver _driver;
+
   final _eventStreamController = StreamController<UIDriverEvent>.broadcast();
 
   late final DuitViewModel _view;
@@ -37,7 +39,7 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
         _view.changeViewState(viewTag, state);
       }
     } catch (e) {
-      driver.logger?.error("View not initialized and can`t be disposed");
+      _driver.logger?.error("View not initialized and can`t be disposed");
     }
   }
 
@@ -54,7 +56,7 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
         _view = CommonDuitView();
         await _view.prepareModel(
           json,
-          driver,
+          _driver,
         );
         return _view;
       case {
@@ -63,7 +65,7 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
         _view = CommonDuitView();
         await _view.prepareModel(
           widget,
-          driver,
+          _driver,
         );
         return _view;
       default:
@@ -98,7 +100,7 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
             <String, dynamic>{
               widget.key: widget.value,
             },
-            driver,
+            _driver,
           );
         }
         return _view;
@@ -115,4 +117,7 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
 
   @override
   bool isWidgetReady(String viewTag) => _view.isWidgetReady(viewTag);
+
+  @override
+  void linkDriver(UIDriver driver) => _driver = driver;
 }

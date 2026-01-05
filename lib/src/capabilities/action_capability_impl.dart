@@ -5,6 +5,7 @@ import "package:flutter/widgets.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
 class DuitActionManager with ServerActionExecutionCapabilityDelegate {
+  late final UIDriver _driver;
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
   late final UserDefinedEventHandler _navigationHander,
       _openUrlHandler,
@@ -19,15 +20,15 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           :final dependsOn,
         ):
         try {
-          final payload = driver.preparePayload(dependsOn);
-          final res = await driver.transport?.execute(action, payload);
+          final payload = _driver.preparePayload(dependsOn);
+          final res = await _driver.transport?.execute(action, payload);
 
           if (res != null) {
             return ServerEvent.parseEvent(res);
           }
           return null;
         } catch (e, s) {
-          driver.logger?.error(
+          _driver.logger?.error(
             "[Error while executing transport action]",
             error: e,
             stackTrace: s,
@@ -41,7 +42,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
         try {
           return event;
         } catch (e, s) {
-          driver.logger?.error(
+          _driver.logger?.error(
             "[Error while executing local action]",
             error: e,
             stackTrace: s,
@@ -55,9 +56,9 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           :final eventName,
         ):
         try {
-          final body = driver.preparePayload(dependsOn);
+          final body = _driver.preparePayload(dependsOn);
 
-          final scriptInvocationResult = await driver.scriptRunner?.runScript(
+          final scriptInvocationResult = await _driver.scriptRunner?.runScript(
             script.functionName,
             url: eventName,
             meta: action.script.meta,
@@ -69,7 +70,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           }
           return null;
         } catch (e, s) {
-          driver.logger?.error(
+          _driver.logger?.error(
             "[Error while executing script action]",
             error: e,
             stackTrace: s,
@@ -88,7 +89,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
 
     if (dependencies.isNotEmpty) {
       for (final dependency in dependencies) {
-        final controller = driver.getController(dependency.id);
+        final controller = _driver.getController(dependency.id);
         if (controller != null) {
           final attribute = controller.attributes.payload;
           payload[dependency.target] = attribute["value"];
@@ -114,7 +115,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
             :final updates,
           ):
           for (final MapEntry(:key, :value) in updates.entries) {
-            driver.updateAttributes(key, value);
+            _driver.updateAttributes(key, value);
           }
           break;
         case NavigationEvent(
@@ -140,8 +141,8 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
             :final key,
             :final extra,
           ):
-          if (driver.isModule) {
-            await driver.driverChannel?.invokeMethod<Map<String, dynamic>>(
+          if (_driver.isModule) {
+            await _driver.driverChannel?.invokeMethod<Map<String, dynamic>>(
               key,
               extra,
             );
@@ -173,7 +174,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
         case CommandEvent(
             :final command,
           ):
-          final c = driver.getController(command.controllerId);
+          final c = _driver.getController(command.controllerId);
           await c?.emitCommand(command);
           break;
         case TimerEvent(
@@ -193,7 +194,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           break;
       }
     } catch (e, s) {
-      driver.logger?.error(
+      _driver.logger?.error(
         "Error while resolving ${event.type} event",
         error: e,
         stackTrace: s,
@@ -208,12 +209,12 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
         action,
       );
 
-      final ctx = driver.buildContext;
+      final ctx = _driver.buildContext;
       if (event != null && ctx.mounted) {
         resolveEvent(ctx, event);
       }
     } catch (e) {
-      driver.logger?.error(
+      _driver.logger?.error(
         "Error executing action",
         error: e,
       );
@@ -233,7 +234,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
         }
         resolveEvent(
           // ignore: use_build_context_synchronously
-          driver.buildContext,
+          _driver.buildContext,
           event,
         );
       },
@@ -270,4 +271,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
         break;
     }
   }
+
+  @override
+  void linkDriver(UIDriver driver) => _driver = driver;
 }
