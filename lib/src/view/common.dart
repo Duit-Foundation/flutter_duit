@@ -5,7 +5,6 @@ import "package:flutter_duit/src/view/view.dart";
 
 final class CommonDuitView extends DuitViewModel {
   late ElementTree _layout;
-  @Deprecated("Will be removed in the next major release")
   bool isReady = false;
 
   @override
@@ -23,9 +22,9 @@ final class CommonDuitView extends DuitViewModel {
   }
 
   @override
-  void changeViewState(String tag, int state) {}
+  void changeViewState(String tag, int state) => isReady = state == 1;
 
   @override
   @preferInline
-  bool isWidgetReady(String viewTag) => true;
+  bool isWidgetReady(String viewTag) => isReady;
 }

@@ -330,4 +330,9 @@ class MockUIDriver extends UIDriver {
     // TODO: implement prepareLayout
     throw UnimplementedError();
   }
+  
+  @override
+  void linkDriver(UIDriver driver) {
+    // TODO: implement linkDriver
+  }
 }

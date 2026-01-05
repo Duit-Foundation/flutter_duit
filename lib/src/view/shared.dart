@@ -47,16 +47,6 @@ final class SharedDuitView extends DuitViewModel {
     }
   }
 
-  @Deprecated("")
-  (ElementTree, bool)? operator [](String tag) {
-    final elem = _views[tag];
-
-    if (elem != null) {
-      return (elem.root, elem.isReady);
-    }
-    return null;
-  }
-
   @override
   @preferInline
   bool isWidgetReady(String viewTag) => _views[viewTag]?.isReady ?? false;

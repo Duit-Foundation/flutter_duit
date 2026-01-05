@@ -227,7 +227,7 @@ final class MockUIDriver extends UIDriver {
   void releaseResources() {
     // TODO: implement releaseResources
   }
-  
+
   @override
   void addUIDriverError(Object error, [StackTrace? stackTrace]) {
     // TODO: implement addUIDriverError
@@ -242,6 +242,11 @@ final class MockUIDriver extends UIDriver {
   Future<DuitView?> prepareLayout(Map<String, dynamic> json) {
     // TODO: implement prepareLayout
     throw UnimplementedError();
+  }
+
+  @override
+  void linkDriver(UIDriver driver) {
+    // TODO: implement linkDriver
   }
 }
 

@@ -35,11 +35,13 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
   @override
   void notifyWidgetDisplayStateChanged(String viewTag, int state) {
     try {
-      if (_view is SharedDuitView) {
-        _view.changeViewState(viewTag, state);
-      }
-    } catch (e) {
-      _driver.logger?.error("View not initialized and can`t be disposed");
+      _view.changeViewState(viewTag, state);
+    } catch (e, s) {
+      _driver.logger?.error(
+        "View not initialized and can`t be disposed",
+        error: e,
+        stackTrace: s,
+      );
     }
   }
 
