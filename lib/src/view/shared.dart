@@ -18,6 +18,10 @@ final class SharedDuitView extends DuitViewModel {
 
   @override
   Widget build([String tag = ""]) {
+    if (_views.isEmpty) {
+      throw StateError("No views prepared");
+    }
+
     if (tag.isEmpty || !_views.containsKey(tag)) {
       return _views.values.first.root.render();
     }
@@ -29,6 +33,10 @@ final class SharedDuitView extends DuitViewModel {
     Map<String, dynamic> json,
     UIDriver driver,
   ) async {
+    if (json.isEmpty) {
+      throw ArgumentError("JSON must not be empty");
+    }
+
     final tree = await DuitTree(
       json: json.values.first,
       driver: driver,
