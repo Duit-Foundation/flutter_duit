@@ -15,3 +15,8 @@ const allowFocusNodeOverride = bool.fromEnvironment(
   "duit:allow-focus-node-override",
   defaultValue: false,
 );
+
+const enableSharedDrivers = bool.fromEnvironment(
+  "duit:enable-shared-drivers",
+  defaultValue: false,
+);

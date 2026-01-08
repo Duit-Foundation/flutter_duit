@@ -84,10 +84,11 @@ packages:
   duit_kernel:
     dependency: transitive
     description:
-      name: duit_kernel
-      sha256: dfa8a5ff421cab7bd3f6f2e08bbe7c8386d485b1d2c725a847f808f0921b44af
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: b1348d3d1589465443395c8009d3a1daa925bbf7
+      url: "https://github.com/Duit-Foundation/duit_kernel"
+    source: git
     version: "4.1.0"
   fake_async:
     dependency: transitive
@@ -108,7 +109,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "4.0.0"
+    version: "4.1.0"
   flutter_lints:
     dependency: "direct dev"
     description:

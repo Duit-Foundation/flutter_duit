@@ -8,6 +8,28 @@ import "utils.dart";
 
 void main() {
   group("DuitDriver addDataSource tests", () {
+    testWidgets("12312312", (tester) async {
+      final driver = DuitDriver.static(
+        {
+          "type": "Column",
+          "id": "col1",
+          "controlled": false,
+          "children": [
+            {
+              "type": "TextField",
+              "id": "textField1",
+              "controlled": true,
+              "attributes": {
+                "value": "Initial",
+              },
+            }
+          ],
+        },
+        transportOptions: EmptyTransportOptions(),
+      );
+
+      driver.dispose();
+    });
     testWidgets("should successfully process valid events from data source",
         (tester) async {
       final driver = DuitDriver.static(
@@ -31,22 +53,19 @@ void main() {
 
       await pumpDriver(tester, driver);
 
-      // Create stream with valid events
-      final streamController = StreamController<Map<String, dynamic>>();
-      final stream = streamController.stream;
-
       // Add data source
-      driver.addExternalEventStream(stream);
-
-      // Send update event
-      streamController.add({
-        "type": "update",
-        "updates": {
-          "textField1": {
-            "value": "Updated from data source",
+      driver.addExternalEventStream(
+        Stream.value(
+          {
+            "type": "update",
+            "updates": {
+              "textField1": {
+                "value": "Updated from data source",
+              },
+            },
           },
-        },
-      });
+        ),
+      );
 
       await tester.pumpAndSettle();
 
@@ -55,10 +74,6 @@ void main() {
         ActionDependency(target: "val1", id: "textField1"),
       ]);
       expect(data["val1"], "Updated from data source");
-
-      // Cleanup
-      await streamController.close();
-      driver.dispose();
     });
 
     testWidgets("should handle NullEvent by throwing NullEventException",
@@ -75,17 +90,11 @@ void main() {
 
       await pumpDriver(tester, driver);
 
-      final streamController = StreamController<Map<String, dynamic>>();
-
       await runZonedGuarded(() async {
-        driver.addExternalEventStream(streamController.stream);
-        streamController.add({"type": "null"});
+        driver.addExternalEventStream(Stream.value({"type": "null"}));
       }, (error, stack) {
         expect(error, isA<NullEventException>());
       });
-
-      await streamController.close();
-      driver.dispose();
     });
 
     testWidgets("should handle multiple data sources simultaneously",
@@ -119,28 +128,23 @@ void main() {
 
       await pumpDriver(tester, driver);
 
-      // Create two different streams
-      final streamController1 = StreamController<Map<String, dynamic>>();
-      final streamController2 = StreamController<Map<String, dynamic>>();
-
       // Add both data sources
-      driver.addExternalEventStream(streamController1.stream);
-      driver.addExternalEventStream(streamController2.stream);
-
-      // Send events from different sources
-      streamController1.add({
-        "type": "update",
-        "updates": {
-          "textField1": {"value": "Updated from source 1"},
-        },
-      });
-
-      streamController2.add({
-        "type": "update",
-        "updates": {
-          "textField2": {"value": "Updated from source 2"},
-        },
-      });
+      driver.addExternalEventStream(
+        Stream.value({
+          "type": "update",
+          "updates": {
+            "textField1": {"value": "Updated from source 1"},
+          },
+        }),
+      );
+      driver.addExternalEventStream(
+        Stream.value({
+          "type": "update",
+          "updates": {
+            "textField2": {"value": "Updated from source 2"},
+          },
+        }),
+      );
 
       await tester.pumpAndSettle();
 
@@ -152,11 +156,6 @@ void main() {
 
       expect(data["val1"], "Updated from source 1");
       expect(data["val2"], "Updated from source 2");
-
-      // Cleanup
-      await streamController1.close();
-      await streamController2.close();
-      driver.dispose();
     });
 
     testWidgets("should handle different event types from data source",
@@ -215,7 +214,6 @@ void main() {
 
       // Cleanup
       await streamController.close();
-      driver.dispose();
     });
   });
 

@@ -127,12 +127,15 @@ class MockUIDriver extends UIDriver {
   ScriptRunner? scriptRunner;
 
   @override
+  @Deprecated("")
   EventResolver get eventResolver => throw UnimplementedError();
 
   @override
+  @Deprecated("")
   ActionExecutor get actionExecutor => throw UnimplementedError();
 
   @override
+  @Deprecated("")
   ExternalEventHandler? externalEventHandler;
 
   @override
@@ -176,6 +179,7 @@ class MockUIDriver extends UIDriver {
   late Stream<ElementTree?> stream;
 
   @override
+  @Deprecated("")
   set actionExecutor(ActionExecutor _actionExecutor) {}
 
   @override
@@ -183,7 +187,6 @@ class MockUIDriver extends UIDriver {
     throw UnimplementedError();
   }
 
-  @override
   set buildContext(BuildContext _buildContext) {}
 
   @override
@@ -200,6 +203,7 @@ class MockUIDriver extends UIDriver {
   }
 
   @override
+  @Deprecated("")
   set eventResolver(EventResolver _eventResolver) {}
 
   @override
@@ -265,7 +269,7 @@ class MockUIDriver extends UIDriver {
   }
 
   @override
-  void requestFocus(String nodeId) {
+  void requestFocus(String nodeId, {String? targetNodeId}) {
     // TODO: implement requestFocus
   }
 
@@ -281,5 +285,54 @@ class MockUIDriver extends UIDriver {
   FocusNode? getNode(Object? key) {
     // TODO: implement getNode
     throw UnimplementedError();
+  }
+
+  @override
+  void addExternalEventStream(Stream<Map<String, dynamic>> stream) {
+    // TODO: implement addExternalEventStream
+  }
+
+  @override
+  void attachExternalHandler(
+    UserDefinedHandlerKind type,
+    UserDefinedEventHandler handle,
+  ) {
+    // TODO: implement attacExternalHandler
+  }
+
+  @override
+  // TODO: implement controllersCount
+  int get controllersCount => throw UnimplementedError();
+
+  @override
+  Future<void> resolveEvent(BuildContext context, eventData) {
+    // TODO: implement resolveEvent
+    throw UnimplementedError();
+  }
+
+  @override
+  void releaseResources() {
+    // TODO: implement releaseResources
+  }
+  
+  @override
+  void addUIDriverError(Object error, [StackTrace? stackTrace]) {
+    // TODO: implement addUIDriverError
+  }
+
+  @override
+  void addUIDriverEvent(UIDriverEvent event) {
+    // TODO: implement addUIDriverEvent
+  }
+
+  @override
+  Future<DuitView?> prepareLayout(Map<String, dynamic> json) {
+    // TODO: implement prepareLayout
+    throw UnimplementedError();
+  }
+  
+  @override
+  void linkDriver(UIDriver driver) {
+    // TODO: implement linkDriver
   }
 }

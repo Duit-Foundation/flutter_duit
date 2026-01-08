@@ -16,6 +16,7 @@ linter:
     - avoid_js_rounded_ints
     - cast_nullable_to_non_nullable
     - conditional_uri_does_not_exist
+    - annotate_redeclares
 
     # Style rules
     - require_trailing_commas

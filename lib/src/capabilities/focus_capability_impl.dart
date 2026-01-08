@@ -84,7 +84,8 @@ final class DuitFocusNodeManager with FocusCapabilityDelegate {
     );
   }
 
-  void dispose() {
+  @override
+  void releaseResources() {
     for (var node in _nodeRegistry.entries) {
       node.value.dispose();
     }
@@ -92,5 +93,11 @@ final class DuitFocusNodeManager with FocusCapabilityDelegate {
   }
 
   @override
+  @preferInline
   FocusNode? getNode(Object? key) => _nodeRegistry[key];
+
+  @override
+  void linkDriver(UIDriver driver) {
+    //void method
+  }
 }

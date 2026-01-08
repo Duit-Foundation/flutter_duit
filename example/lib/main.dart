@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:example/src/custom/index.dart';
@@ -9,43 +8,6 @@ class CustomDecoder extends Converter<Uint8List, Map<String, dynamic>> {
   @override
   Map<String, dynamic> convert(Uint8List input) {
     return jsonDecode(utf8.decode(input));
-  }
-}
-
-final class _Handler implements ExternalEventHandler {
-  const _Handler();
-
-  @override
-  FutureOr<void> handleCustomEvent(
-      BuildContext context, String key, Object? extra) {
-    switch (key) {
-      case "event1":
-        {
-          debugPrint("Event 1");
-          break;
-        }
-      case "event2":
-        {
-          debugPrint("Event 2");
-          break;
-        }
-    }
-  }
-
-  @override
-  FutureOr<void> handleNavigation(
-    BuildContext context,
-    String path,
-    Object? extra,
-  ) {
-    // TODO: implement handleNavigation
-    throw UnimplementedError();
-  }
-
-  @override
-  FutureOr<void> handleOpenUrl(String url) {
-    // TODO: implement handleOpenUrl
-    throw UnimplementedError();
   }
 }
 
@@ -113,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       },
       transportOptions: EmptyTransportOptions(),
-      externalEventHandler: const _Handler(),
     );
     super.initState();
   }

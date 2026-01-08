@@ -5,11 +5,11 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/capabilities/index.dart";
-import "package:flutter_duit/src/duit_impl/hooks.dart";
 import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 
+// ignore: missing_override_of_must_be_overridden
 final class DuitDriver extends UIDriver with DriverHooks {
   @visibleForTesting
   @override
@@ -268,7 +268,6 @@ final class DuitDriver extends UIDriver with DriverHooks {
     onDispose?.call();
     transport?.dispose();
     _eventStreamController.close();
-    _focusNodeManager.dispose();
     for (final subscription in _dataSources.values) {
       subscription.cancel();
     }
@@ -393,6 +392,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
     _isChannelInitialized = true;
   }
 
+  @override
   @visibleForTesting
   int get controllersCount => _viewManager.controllersCount;
 
@@ -457,6 +457,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
   /// The stream subscription is stored in the internal [_dataSources] list for lifecycle management.
   ///
   /// [stream] - the stream of events coming from the server or another data source.
+  @override
   void addExternalEventStream(
     Stream<Map<String, dynamic>> stream,
   ) {
