@@ -21,7 +21,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
         ):
         try {
           final payload = _driver.preparePayload(dependsOn);
-          final res = await _driver.transport?.execute(action, payload);
+          final res = await _driver.executeRemoteAction(action, payload);
 
           if (res != null) {
             return ServerEvent.parseEvent(res);

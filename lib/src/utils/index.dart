@@ -13,3 +13,4 @@ export "invoker.dart";
 export "component_builder.dart";
 export "errors.dart";
 export "env.dart";
+export "layout_struct_validator.dart";

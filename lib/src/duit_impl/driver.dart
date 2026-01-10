@@ -80,6 +80,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
 
   final _focusNodeManager = DuitFocusNodeManager();
+  final LoggingCapabilityDelegate _loggingManager;
 
   DuitDriver(
     this.source, {
@@ -91,7 +92,8 @@ final class DuitDriver extends UIDriver with DriverHooks {
     ActionExecutor? customActionExecutor,
     DebugLogger? customLogger,
     bool shared = false,
-  }) {
+    LoggingCapabilityDelegate? loggingManager,
+  }) : _loggingManager = loggingManager ?? const LoggingManager() {
     logger = customLogger ?? DefaultLogger.instance;
 
     _useStaticContent = false;
@@ -121,7 +123,8 @@ final class DuitDriver extends UIDriver with DriverHooks {
     this.source = "",
     this.initialRequestPayload,
     bool shared = false,
-  }) {
+    LoggingCapabilityDelegate? loggingManager,
+  }) : _loggingManager = loggingManager ?? const LoggingManager() {
     logger = customLogger ?? DefaultLogger.instance;
 
     _useStaticContent = true;
@@ -148,22 +151,20 @@ final class DuitDriver extends UIDriver with DriverHooks {
         externalEventHandler = null,
         transportOptions = EmptyTransportOptions(),
         driverChannel = const MethodChannel("duit:driver"),
-        _viewManager = SimpleViewManager();
+        _viewManager = SimpleViewManager(),
+        _loggingManager = const LoggingManager();
 
   @protected
   @override
-  void attachController(String id, UIElementController controller) =>
-      _viewManager.addController(id, controller);
+  void attachController(String id, UIElementController controller) => _viewManager.addController(id, controller);
 
   @protected
   @override
-  void detachController(String id) =>
-      _viewManager.removeController(id)?.dispose();
+  void detachController(String id) => _viewManager.removeController(id)?.dispose();
 
   @protected
   @override
-  UIElementController? getController(String id) =>
-      _viewManager.getController(id);
+  UIElementController? getController(String id) => _viewManager.getController(id);
 
   Future<Map<String, dynamic>> _connect() async {
     Map<String, dynamic>? json;
@@ -178,10 +179,10 @@ final class DuitDriver extends UIDriver with DriverHooks {
         );
       }
     } catch (e, s) {
-      logger?.error(
+      error(
         "Failed conneting to server",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
       _eventStreamController.addError(e);
     }
@@ -195,10 +196,10 @@ final class DuitDriver extends UIDriver with DriverHooks {
               await eventResolver.resolveEvent(buildContext, d);
             }
           } catch (e, s) {
-            logger?.error(
+            error(
               "Error while processing event from transport stream",
-              error: e,
-              stackTrace: s,
+              e,
+              s,
             );
             _eventStreamController.addError(e);
           }
@@ -248,10 +249,10 @@ final class DuitDriver extends UIDriver with DriverHooks {
         throw err;
       }
     } catch (e, s) {
-      logger?.error(
+      error(
         "Layout parse failed",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
       _eventStreamController.addError(
         UIDriverErrorEvent(
@@ -286,9 +287,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
     } catch (e) {
       //Safely handle the case of assigning parsers during
       //multiple driver initializations as part of running tests
-      logger?.warn(
-        e.toString(),
-      );
+      warning(e);
     }
   }
 
@@ -305,10 +304,11 @@ final class DuitDriver extends UIDriver with DriverHooks {
       if (event != null && buildContext.mounted) {
         eventResolver.resolveEvent(buildContext, event);
       }
-    } catch (e) {
-      logger?.error(
+    } catch (e, s) {
+      error(
         "Error executing action",
-        error: e,
+        e,
+        s,
       );
     } finally {
       afterActionCallback?.call();
@@ -438,7 +438,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
     int state,
   ) {
     _viewManager.notifyWidgetDisplayStateChanged(viewTag, state);
-    logger?.info(
+    info(
       "Widget with tag ${viewTag.isEmpty ? "*root*" : viewTag} state changed to $state",
     );
   }
@@ -485,13 +485,11 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @override
   @preferInline
-  void attachFocusNode(String nodeId, FocusNode node) =>
-      _focusNodeManager.attachFocusNode(nodeId, node);
+  void attachFocusNode(String nodeId, FocusNode node) => _focusNodeManager.attachFocusNode(nodeId, node);
 
   @override
   @preferInline
-  void detachFocusNode(String nodeId) =>
-      _focusNodeManager.detachFocusNode(nodeId);
+  void detachFocusNode(String nodeId) => _focusNodeManager.detachFocusNode(nodeId);
 
   @override
   @preferInline
@@ -508,8 +506,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @override
   @preferInline
-  void requestFocus(String nodeId, {String? targetNodeId}) =>
-      _focusNodeManager.requestFocus(
+  void requestFocus(String nodeId, {String? targetNodeId}) => _focusNodeManager.requestFocus(
         nodeId,
         targetNodeId: targetNodeId,
       );
@@ -528,4 +525,34 @@ final class DuitDriver extends UIDriver with DriverHooks {
   @override
   @preferInline
   FocusNode? getNode(Object? key) => _focusNodeManager.getNode(key);
+
+  @override
+  @preferInline
+  void critical(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.critical(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void debug(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.debug(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void error(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.error(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void info(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.info(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void verbose(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.verbose(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void warning(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.warning(message, exception, stackTrace);
 }
