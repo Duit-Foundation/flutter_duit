@@ -15,7 +15,7 @@ final class StubTransportManager with TransportCapabilityDelegate {
     ServerAction action,
     Map<String, dynamic> payload,
   ) async {
-    _driver.logger?.warn(
+    _driver.logWarning(
       "executeRemoteAction method is not implemented for stub transport",
     );
     return Future.value(const {});
@@ -26,7 +26,7 @@ final class StubTransportManager with TransportCapabilityDelegate {
     Map<String, dynamic>? initialRequestData,
     Map<String, dynamic>? staticContent,
   }) async* {
-    _driver.logger?.warn(
+    _driver.logWarning(
       "connect method is not implemented for stub transport",
     );
     yield staticContent ?? const {};
@@ -38,7 +38,7 @@ final class StubTransportManager with TransportCapabilityDelegate {
     Map<String, dynamic> meta,
     Map<String, dynamic> body,
   ) async {
-    _driver.logger?.warn(
+    _driver.logWarning(
       "request method is not implemented for stub transport",
     );
     return Future.value(const {});

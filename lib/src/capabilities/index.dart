@@ -5,3 +5,4 @@ export "hooks.dart";
 export "transport/index.dart";
 export "view_capability_impl.dart";
 export "scripting_capability_impl.dart";
+export "native_module_impl.dart";

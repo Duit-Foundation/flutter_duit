@@ -39,10 +39,10 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
           });
         }
       } catch (e, s) {
-        driver.logger?.error(
+        driver.logError(
           "Failed to handle remote subtree update",
-          error: e,
-          stackTrace: s,
+          e,
+          s,
         );
         rethrow;
       }
@@ -58,10 +58,10 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
           subtreeChild = newChild;
         });
       } catch (e, s) {
-        driver.logger?.error(
+        driver.logError(
           "Failed to handle subtree update",
-          error: e,
-          stackTrace: s,
+          e,
+          s,
         );
       }
     }
@@ -94,10 +94,10 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
         });
       }
     } catch (e, s) {
-      driver.logger?.error(
+      driver.logError(
         "Failed to load remote widget",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
     }
   }

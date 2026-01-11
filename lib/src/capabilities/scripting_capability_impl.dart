@@ -5,7 +5,7 @@ final class DuitStubScriptingManager with ScriptingCapabilityDelegate {
 
   @override
   Future<void> evalScript(String source) async {
-    _driver.logger?.warn(
+    _driver.logWarning(
       "evalScript method is not implemented for stub scripting",
     );
   }
@@ -17,7 +17,7 @@ final class DuitStubScriptingManager with ScriptingCapabilityDelegate {
     Map<String, dynamic>? meta,
     Map<String, dynamic>? body,
   }) async {
-    _driver.logger?.warn(
+    _driver.logWarning(
       "execScript method is not implemented for stub scripting",
     );
     return null;
@@ -25,7 +25,7 @@ final class DuitStubScriptingManager with ScriptingCapabilityDelegate {
 
   @override
   Future<void> initScriptingCapability() async {
-    _driver.logger?.info(
+    _driver.logInfo(
       "used stub scripting capability, scripts execution is disabled",
     );
   }

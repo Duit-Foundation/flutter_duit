@@ -37,10 +37,10 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
     try {
       _view.changeViewState(viewTag, state);
     } catch (e, s) {
-      _driver.logger?.error(
+      _driver.logError(
         "View not initialized and can`t be disposed",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
     }
   }

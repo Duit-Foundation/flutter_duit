@@ -175,10 +175,10 @@ final class ViewController<T>
       final specifiedCommand = SpecCommand(command).specify();
       commandChannel.add(specifiedCommand);
     } catch (e, s) {
-      driver.logger?.error(
+      driver.logError(
         "Error while emitting command",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
     }
   }

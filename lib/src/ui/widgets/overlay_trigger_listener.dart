@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/controller/data.dart";
 import "package:flutter_duit/src/controller/index.dart";
-import "package:flutter_duit/src/duit_impl/view_context.dart";
 
 class DuitOverlayTriggerListener extends StatefulWidget {
   final UIDriver driver;
@@ -16,8 +15,7 @@ class DuitOverlayTriggerListener extends StatefulWidget {
   });
 
   @override
-  State<DuitOverlayTriggerListener> createState() =>
-      _DuitOverlayTriggerListenerState();
+  State<DuitOverlayTriggerListener> createState() => _DuitOverlayTriggerListenerState();
 }
 
 class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
@@ -62,8 +60,7 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
         showDragHandle: command.showDragHandle,
         constraints: command.constraints,
         anchorPoint: command.anchorPoint,
-        scrollControlDisabledMaxHeightRatio:
-            command.scrollControlDisabledMaxHeightRatio,
+        scrollControlDisabledMaxHeightRatio: command.scrollControlDisabledMaxHeightRatio,
         // transitionAnimationController not supported
         // sheetAnimationStyle not supported
         builder: (context) {
@@ -73,10 +70,11 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
             null,
           );
           if (body == null) {
-            DuitViewContext.of(context).logger.error(
-                  "Failed to build bottom sheet content, body is null",
-                  stackTrace: StackTrace.current,
-                );
+            _controller.driver.logError(
+              "Failed to build bottom sheet content, body is null",
+              null,
+              StackTrace.current,
+            );
             return const SizedBox.shrink();
           }
           return body;
@@ -108,10 +106,11 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
             null,
           );
           if (body == null) {
-            DuitViewContext.of(context).logger.error(
-                  "Failed to build dialog content, body is null",
-                  stackTrace: StackTrace.current,
-                );
+            _controller.driver.logError(
+              "Failed to build dialog content, body is null",
+              null,
+              StackTrace.current,
+            );
             return const SizedBox.shrink();
           }
           return body;
@@ -139,11 +138,11 @@ class _DuitOverlayTriggerListenerState extends State<DuitOverlayTriggerListener>
           break;
       }
     } catch (e, s) {
-      DuitViewContext.of(context).logger.error(
-            "Error handling overlay command",
-            error: e,
-            stackTrace: s,
-          );
+      _controller.driver.logError(
+        "Error handling overlay command",
+        e,
+        s,
+      );
     }
   }
 

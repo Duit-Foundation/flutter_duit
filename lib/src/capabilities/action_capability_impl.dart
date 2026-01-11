@@ -28,10 +28,10 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           }
           return null;
         } catch (e, s) {
-          _driver.logger?.error(
+          _driver.logError(
             "[Error while executing transport action]",
-            error: e,
-            stackTrace: s,
+            e,
+            s,
           );
         }
         break;
@@ -61,10 +61,10 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           }
           return null;
         } catch (e, s) {
-          _driver.logger?.error(
+          _driver.logError(
             "[Error while executing script action]",
-            error: e,
-            stackTrace: s,
+            e,
+            s,
           );
         }
         break;
@@ -116,7 +116,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           if (_navigationHandler != null) {
             await _navigationHandler!(context, path, extra);
           } else {
-            _driver.logger?.warn(
+            _driver.logWarning(
               "NavigationEvent received but no handler attached",
             );
           }
@@ -127,7 +127,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           if (_openUrlHandler != null) {
             await _openUrlHandler!(context, url, const {});
           } else {
-            _driver.logger?.warn(
+            _driver.logWarning(
               "OpenUrlEvent received but no handler attached",
             );
           }
@@ -145,7 +145,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
             if (_customEventHandler != null) {
               await _customEventHandler!(context, key, extra);
             } else {
-              _driver.logger?.warn(
+              _driver.logWarning(
                 "CustomEvent received but no handler attached",
               );
             }
@@ -191,10 +191,10 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           break;
       }
     } catch (e, s) {
-      _driver.logger?.error(
+      _driver.logError(
         "Error while resolving ${event.type} event",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
     }
   }
@@ -210,10 +210,11 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
       if (event != null && ctx.mounted) {
         resolveEvent(ctx, event);
       }
-    } catch (e) {
-      _driver.logger?.error(
+    } catch (e, s) {
+      _driver.logError(
         "Error executing action",
-        error: e,
+        e,
+        s,
       );
     }
   }

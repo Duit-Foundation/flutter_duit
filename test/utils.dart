@@ -117,11 +117,9 @@ class MockUIDriver extends UIDriver {
   @override
   BuildContext get buildContext => throw UnimplementedError();
 
-  StreamController<ElementTree?> get streamController =>
-      throw UnimplementedError();
+  StreamController<ElementTree?> get streamController => throw UnimplementedError();
 
-  StreamController<UIDriverEvent> get eventStreamController =>
-      throw UnimplementedError();
+  StreamController<UIDriverEvent> get eventStreamController => throw UnimplementedError();
 
   @override
   ScriptRunner? scriptRunner;
@@ -314,7 +312,7 @@ class MockUIDriver extends UIDriver {
   void releaseResources() {
     // TODO: implement releaseResources
   }
-  
+
   @override
   void addUIDriverError(Object error, [StackTrace? stackTrace]) {
     // TODO: implement addUIDriverError
@@ -330,9 +328,77 @@ class MockUIDriver extends UIDriver {
     // TODO: implement prepareLayout
     throw UnimplementedError();
   }
-  
+
   @override
   void linkDriver(UIDriver driver) {
     // TODO: implement linkDriver
+  }
+
+  @override
+  Stream<Map<String, dynamic>> connect({
+    Map<String, dynamic>? initialRequestData,
+    Map<String, dynamic>? staticContent,
+  }) {
+    // TODO: implement connect
+    throw UnimplementedError();
+  }
+
+  @override
+  void logCritical(message, [Object? exception, StackTrace? stackTrace]) {
+    // TODO: implement critical
+  }
+
+  @override
+  void logDebug(message, [Object? exception, StackTrace? stackTrace]) {
+    // TODO: implement debug
+  }
+
+  @override
+  void logError(message, [Object? exception, StackTrace? stackTrace]) {
+    // TODO: implement error
+  }
+
+  @override
+  Future<Map<String, dynamic>?> execScript(
+    String functionName, {
+    String? url,
+    Map<String, dynamic>? meta,
+    Map<String, dynamic>? body,
+  }) {
+    // TODO: implement execScript
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, dynamic>?> executeRemoteAction(ServerAction action, Map<String, dynamic> payload) {
+    // TODO: implement executeRemoteAction
+    throw UnimplementedError();
+  }
+
+  @override
+  void logInfo(message, [Object? exception, StackTrace? stackTrace]) {
+    // TODO: implement info
+  }
+
+  @override
+  Future<void> initScriptingCapability() {
+    // TODO: implement initScriptingCapability
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Map<String, dynamic>?> request(String url, Map<String, dynamic> meta, Map<String, dynamic> body) {
+    // TODO: implement request
+    throw UnimplementedError();
+  }
+
+  @override
+  void logVerbose(message, [Object? exception, StackTrace? stackTrace]) {
+    // TODO: implement verbose
+  }
+
+  @override
+  void logWarning(message, [Object? exception, StackTrace? stackTrace]) {
+    // TODO: implement warning
   }
 }

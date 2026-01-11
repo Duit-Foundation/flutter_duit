@@ -10,7 +10,7 @@ final class DuitControllerManager with UIControllerCapabilityDelegate {
     final alreadyContains = _viewControllers.containsKey(id);
 
     if (alreadyContains) {
-      _driver.logger?.warn(
+      _driver.logWarning(
         "Controller with id=$id already exists and it will be overriden \n This could happen because two or more controlled widgets have the same id parameter",
       );
     }
