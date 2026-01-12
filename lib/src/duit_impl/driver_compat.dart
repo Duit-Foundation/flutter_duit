@@ -158,7 +158,14 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
             e,
             s,
           );
-          _viewManager.addUIDriverError(e, s);
+          _viewManager.addUIDriverError(
+            UIDriverErrorEvent(
+              "Error while processing event from transport stream",
+              error: e,
+              stackTrace: s,
+            ),
+            s,
+          );
         }
       },
       onError: (e, s) {
@@ -168,7 +175,11 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
           s,
         );
         _viewManager.addUIDriverError(
-          e,
+          UIDriverErrorEvent(
+            "Failed conneting to server",
+            error: e,
+            stackTrace: s,
+          ),
           s,
         );
       },
@@ -188,7 +199,9 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
     _viewManager.releaseResources();
     _transportManager.releaseResources();
     _scriptingManager.releaseResources();
-    _nativeModuleManager.releaseResources();
+    if (isModule) {
+      _nativeModuleManager.releaseResources();
+    }
   }
 
   @override
