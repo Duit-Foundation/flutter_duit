@@ -32,4 +32,8 @@ final class DuitStubScriptingManager with ScriptingCapabilityDelegate {
 
   @override
   void linkDriver(UIDriver driver) => _driver = driver;
+
+  @override
+  @preferInline
+  void releaseResources() {}
 }

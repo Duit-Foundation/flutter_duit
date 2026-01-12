@@ -91,7 +91,8 @@ final class DuitDriver extends UIDriver with DriverHooks {
     this.logger,
     EventResolver? customEventResolver,
     ActionExecutor? customActionExecutor,
-    @Deprecated("Use [LoggingCapabilityDelegate] instead") DebugLogger? customLogger,
+    @Deprecated("Use [LoggingCapabilityDelegate] instead")
+    DebugLogger? customLogger,
     bool shared = false,
     LoggingCapabilityDelegate? loggingManager,
   }) : _loggingManager = loggingManager ?? const LoggingManager() {
@@ -99,11 +100,13 @@ final class DuitDriver extends UIDriver with DriverHooks {
     actionExecutor = customActionExecutor ??
         DefaultActionExecutor(
           driver: this,
+          // ignore: deprecated_member_use_from_same_package
           logger: logger,
         );
     eventResolver = customEventResolver ??
         DefaultEventResolver(
           driver: this,
+          // ignore: deprecated_member_use_from_same_package
           logger: logger,
         );
     isModule = false;
@@ -118,7 +121,8 @@ final class DuitDriver extends UIDriver with DriverHooks {
     this.logger,
     EventResolver? customEventResolver,
     ActionExecutor? customActionExecutor,
-    @Deprecated("Use [LoggingCapabilityDelegate] instead") DebugLogger? customLogger,
+    @Deprecated("Use [LoggingCapabilityDelegate] instead")
+    DebugLogger? customLogger,
     this.source = "",
     this.initialRequestPayload,
     bool shared = false,
@@ -129,11 +133,13 @@ final class DuitDriver extends UIDriver with DriverHooks {
     eventResolver = customEventResolver ??
         DefaultEventResolver(
           driver: this,
+          // ignore: deprecated_member_use_from_same_package
           logger: logger,
         );
     actionExecutor = customActionExecutor ??
         DefaultActionExecutor(
           driver: this,
+          // ignore: deprecated_member_use_from_same_package
           logger: logger,
         );
     _viewManager = shared ? MultiViewManager() : SimpleViewManager();
@@ -153,15 +159,18 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @protected
   @override
-  void attachController(String id, UIElementController controller) => _viewManager.addController(id, controller);
+  void attachController(String id, UIElementController controller) =>
+      _viewManager.addController(id, controller);
 
   @protected
   @override
-  void detachController(String id) => _viewManager.removeController(id)?.dispose();
+  void detachController(String id) =>
+      _viewManager.removeController(id)?.dispose();
 
   @protected
   @override
-  UIElementController? getController(String id) => _viewManager.getController(id);
+  UIElementController? getController(String id) =>
+      _viewManager.getController(id);
 
   Future<Map<String, dynamic>> _connect() async {
     Map<String, dynamic>? json;
@@ -482,11 +491,13 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @override
   @preferInline
-  void attachFocusNode(String nodeId, FocusNode node) => _focusNodeManager.attachFocusNode(nodeId, node);
+  void attachFocusNode(String nodeId, FocusNode node) =>
+      _focusNodeManager.attachFocusNode(nodeId, node);
 
   @override
   @preferInline
-  void detachFocusNode(String nodeId) => _focusNodeManager.detachFocusNode(nodeId);
+  void detachFocusNode(String nodeId) =>
+      _focusNodeManager.detachFocusNode(nodeId);
 
   @override
   @preferInline
@@ -503,7 +514,8 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @override
   @preferInline
-  void requestFocus(String nodeId, {String? targetNodeId}) => _focusNodeManager.requestFocus(
+  void requestFocus(String nodeId, {String? targetNodeId}) =>
+      _focusNodeManager.requestFocus(
         nodeId,
         targetNodeId: targetNodeId,
       );

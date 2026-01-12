@@ -34,4 +34,17 @@ final class DuitNativeModuleManager with NativeModuleCapabilityDelegate {
       }
     });
   }
+
+  @override
+  @preferInline
+  Future<T?> invokeNativeMethod<T>(
+    String method, [
+    arguments,
+  ]) async =>
+      _driverChannel.invokeMethod<T>(method, arguments);
+
+  @override
+  void releaseResources() {
+    _driverChannel.setMethodCallHandler(null);
+  }
 }

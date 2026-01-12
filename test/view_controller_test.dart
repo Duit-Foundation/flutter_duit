@@ -1,4 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, deprecated_member_use
 
 import "dart:async";
 
@@ -30,9 +30,11 @@ final class MockUIDriver extends UIDriver {
   @override
   BuildContext get buildContext => throw UnimplementedError();
 
-  StreamController<ElementTree?> get streamController => throw UnimplementedError();
+  StreamController<ElementTree?> get streamController =>
+      throw UnimplementedError();
 
-  StreamController<UIDriverEvent> get eventStreamController => throw UnimplementedError();
+  StreamController<UIDriverEvent> get eventStreamController =>
+      throw UnimplementedError();
 
   @override
   ScriptRunner? scriptRunner;
@@ -279,7 +281,10 @@ final class MockUIDriver extends UIDriver {
   }
 
   @override
-  Future<Map<String, dynamic>?> executeRemoteAction(ServerAction action, Map<String, dynamic> payload) {
+  Future<Map<String, dynamic>?> executeRemoteAction(
+    ServerAction action,
+    Map<String, dynamic> payload,
+  ) {
     // TODO: implement executeRemoteAction
     throw UnimplementedError();
   }
@@ -296,7 +301,11 @@ final class MockUIDriver extends UIDriver {
   }
 
   @override
-  Future<Map<String, dynamic>?> request(String url, Map<String, dynamic> meta, Map<String, dynamic> body) {
+  Future<Map<String, dynamic>?> request(
+    String url,
+    Map<String, dynamic> meta,
+    Map<String, dynamic> body,
+  ) {
     // TODO: implement request
     throw UnimplementedError();
   }
@@ -320,6 +329,12 @@ final class MockUIDriver extends UIDriver {
   @override
   // TODO: implement logger
   DebugLogger? get logger => throw UnimplementedError();
+
+  @override
+  Future<T?> invokeNativeMethod<T>(String method, [arguments]) {
+    // TODO: implement invokeNativeMethod
+    throw UnimplementedError();
+  }
 }
 
 class MockDebugLogger implements DebugLogger {
@@ -344,13 +359,11 @@ class MockDebugLogger implements DebugLogger {
 void main() {
   group("ViewController", () {
     late MockUIDriver mockDriver;
-    late MockDebugLogger mockLogger;
     late ViewAttribute mockAttributes;
     late ViewController controller;
 
     setUp(() {
       mockDriver = MockUIDriver();
-      mockLogger = MockDebugLogger();
       // mockDriver.mockLogger = mockLogger;
       mockAttributes = ViewAttribute.from("Text", {}, "test_id");
     });
@@ -533,7 +546,8 @@ void main() {
         );
       });
 
-      test("performRelatedActionAsync_with_null_action_returns_future", () async {
+      test("performRelatedActionAsync_with_null_action_returns_future",
+          () async {
         final future = controller.performRelatedActionAsync();
         expect(future, isA<Future<void>>());
         await future; // Should complete without error

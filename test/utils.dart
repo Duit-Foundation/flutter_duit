@@ -143,6 +143,7 @@ class MockUIDriver extends UIDriver {
   bool get isModule => false;
 
   @override
+  // ignore: deprecated_member_use
   DebugLogger? get logger => DefaultLogger.instance;
 
   @override
@@ -218,6 +219,7 @@ class MockUIDriver extends UIDriver {
   }
 
   @override
+  // ignore: deprecated_member_use
   set logger(DebugLogger? _logger) {}
 
   @override
@@ -400,5 +402,17 @@ class MockUIDriver extends UIDriver {
   @override
   void logWarning(message, [Object? exception, StackTrace? stackTrace]) {
     // TODO: implement warning
+  }
+  
+  @override
+  Future<void> initNativeModule() {
+    // TODO: implement initNativeModule
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<T?> invokeNativeMethod<T>(String method, [arguments]) {
+    // TODO: implement invokeNativeMethod
+    throw UnimplementedError();
   }
 }
