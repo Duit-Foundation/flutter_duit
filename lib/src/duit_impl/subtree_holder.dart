@@ -76,7 +76,7 @@ mixin SubtreeHolder<T extends StatefulWidget> on State<T> {
         remoteWidgetData.getActionDependencies(),
       );
 
-      final layout = await driver.transport?.request(
+      final layout = await driver.request(
         remoteWidgetData.getString(key: "downloadPath"),
         remoteWidgetData["meta"] ?? const {},
         body,

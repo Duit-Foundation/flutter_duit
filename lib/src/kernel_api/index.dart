@@ -3,11 +3,7 @@ export "package:duit_kernel/duit_kernel.dart"
         DuitRegistry,
         ElementTree,
         ElementTreeEntry,
-        Transport,
-        TransportOptions,
-        Streamer,
         AnimatedPropertyOwner,
-        ScriptRunner,
         UIDriver,
         UIElementController,
         DefaultActionParser,
@@ -44,5 +40,13 @@ export "package:duit_kernel/duit_kernel.dart"
         DefaultLogger,
         // ignore: deprecated_member_use
         DebugLogger,
+        // ignore: deprecated_member_use
+        ScriptRunner,
+        // ignore: deprecated_member_use
+        Transport,
+        // ignore: deprecated_member_use
+        TransportOptions,
+        // ignore: deprecated_member_use
+        Streamer,
         // ignore: deprecated_member_use
         EventResolver;

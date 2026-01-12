@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:flutter_duit/flutter_duit.dart";
 
+@Deprecated("Will be removed in the next major release.")
 final class EmptyTransport implements Transport {
   @override
   Future<Map<String, dynamic>?> connect({Map<String, dynamic>? initialData}) {

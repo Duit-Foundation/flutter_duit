@@ -3,6 +3,7 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
+@Deprecated("Will be removed in the next major release.")
 final class NativeTransport extends Transport {
   final UIDriver driver;
 

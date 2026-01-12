@@ -23,6 +23,7 @@ import "package:flutter_duit/src/transport/transport_utils.dart";
 ///   options: HttpTransportOptions(),
 /// );
 /// ```
+@Deprecated("Will be removed in the next major release.")
 final class HttpTransport extends Transport {
   final client = http.Client();
   final HttpTransportOptions options;

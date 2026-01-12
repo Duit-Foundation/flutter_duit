@@ -6,6 +6,7 @@ import "package:flutter_duit/src/transport/index.dart";
 import "package:flutter_duit/src/transport/parsable.dart";
 import "package:http/http.dart";
 
+@Deprecated("Will be removed in the next major release.")
 final class EmptyTransportOptions extends TransportOptions {
   @override
   String type = TransportType.none;
@@ -18,6 +19,7 @@ final class EmptyTransportOptions extends TransportOptions {
 }
 
 /// The options for configuring the HTTP transport.
+@Deprecated("Will be removed in the next major release.")
 final class HttpTransportOptions extends TransportOptions implements Parsable {
   /// The type of the transport, which is always [TransportType.http].
   @override
@@ -69,6 +71,7 @@ final class HttpTransportOptions extends TransportOptions implements Parsable {
 }
 
 /// The options for configuring the WebSocket transport.
+@Deprecated("Will be removed in the next major release.")
 final class WebSocketTransportOptions extends TransportOptions {
   /// The type of the transport, which is always [TransportType.ws].
   @override

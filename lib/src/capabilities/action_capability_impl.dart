@@ -49,7 +49,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
         try {
           final body = _driver.preparePayload(dependsOn);
 
-          final scriptInvocationResult = await _driver.scriptRunner?.runScript(
+          final scriptInvocationResult = await _driver.execScript(
             script.functionName,
             url: eventName,
             meta: action.script.meta,
@@ -137,7 +137,7 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
             :final extra,
           ):
           if (_driver.isModule) {
-            await _driver.driverChannel?.invokeMethod<Map<String, dynamic>>(
+            await _driver.invokeNativeMethod<Map<String, dynamic>>(
               key,
               extra,
             );

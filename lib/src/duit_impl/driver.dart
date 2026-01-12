@@ -9,6 +9,7 @@ import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 
+@Deprecated("Will be removed in the next major release. Use [XDriver] instead")
 // ignore: missing_override_of_must_be_overridden
 final class DuitDriver extends UIDriver with DriverHooks {
   @visibleForTesting

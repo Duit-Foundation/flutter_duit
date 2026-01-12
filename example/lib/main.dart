@@ -14,27 +14,10 @@ class CustomDecoder extends Converter<Uint8List, Map<String, dynamic>> {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // final dio = Dio();
-
-  // DuitRegistry.configure(
-  //   logger: DefaultLogger.instance,
-  //   themeLoader: HttpThemeLoader(
-  //     dio,
-  //     "http://localhost:8999/theme",
-  //   ),
-  // );
-
-  // await DuitRegistry.initTheme();
-
   DuitRegistry.register(
     exampleCustomWidget,
     buildFactory: exampleBuildFactory,
   );
-
-  // final res = await dio.get<List>("http://localhost:8999/components");
-
-  // final comps = res.data!.cast<Map<String, dynamic>>();
-  // await DuitRegistry.registerComponents(comps);
 
   runApp(const MyApp());
 }
@@ -62,11 +45,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late final DuitDriver driver1;
+  late final XDriver driver1;
 
   @override
   void initState() {
-    driver1 = DuitDriver.static(
+    driver1 = XDriver.static(
       {
         "type": "Text",
         "id": "1",
@@ -74,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
           "data": "Hello, World!",
         },
       },
-      transportOptions: EmptyTransportOptions(),
+      transportManager: StubTransportManager(),
     );
     super.initState();
   }
@@ -90,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver1,
           ),
         ),

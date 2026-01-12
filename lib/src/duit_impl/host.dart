@@ -1,8 +1,8 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
+import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/duit_impl/view_context.dart";
 import "package:flutter_duit/src/ui/widgets/overlay_trigger_listener.dart";
-import "package:flutter_duit/src/utils/index.dart";
 
 /// A widget that hosts a DUIT view.
 ///
@@ -19,12 +19,12 @@ import "package:flutter_duit/src/utils/index.dart";
 ///   placeholder: CircularProgressIndicator(),
 /// )
 /// ```
-class DuitViewHost extends StatefulWidget {
+final class DuitViewHost extends StatefulWidget {
   /// A widget to be displayed while the DUIT view is loading or if there is no data to render.
   final Widget? placeholder;
 
   /// The UIDriver that handles the DUIT view.
-  final UIDriver driver;
+  final XDriver driver;
 
   ///An interceptor function for processing gesture events received using the [GestureDetector] widget.
   ///The handler is triggered for any callback, even if a description of the user action has not
@@ -58,8 +58,8 @@ class DuitViewHost extends StatefulWidget {
   /// The [driver] parameter is required and should be an instance of `UIDriver`.
   /// The [context] parameter is required and should be the build context of the parent widget.
   /// The [placeholder] parameter is optional and specifies a widget to be displayed while the DUIT view is loading or if there is no data to render.
-  const DuitViewHost({
-    required this.driver,
+  DuitViewHost({
+    required UIDriver driver,
     super.key,
     this.child,
     this.invertStack = false,
@@ -68,6 +68,25 @@ class DuitViewHost extends StatefulWidget {
     this.gestureInterceptor,
     this.gestureInterceptorBehavior = GestureInterceptorBehavior.onlyWithAction,
     this.errorWidgetBuilder,
+    this.viewTag = "",
+    this.sliverGridDelegatesRegistry = const {},
+  })  : assert(
+          // ignore: avoid_bool_literals_in_conditional_expressions
+          showChildInsteadOfPlaceholder == true ? child != null : true,
+          "Child must not be null if showChildInsteadOfPlaceholder property is set to true",
+        ),
+        driver = XDriver.from(driver);
+
+  const DuitViewHost.withDriver({
+    required this.driver,
+    super.key,
+    this.child,
+    this.invertStack = false,
+    this.showChildInsteadOfPlaceholder = false,
+    this.placeholder,
+    this.gestureInterceptor,
+    this.errorWidgetBuilder,
+    this.gestureInterceptorBehavior = GestureInterceptorBehavior.onlyWithAction,
     this.viewTag = "",
     this.sliverGridDelegatesRegistry = const {},
   }) : assert(
@@ -89,13 +108,16 @@ class _DuitViewHostState extends State<DuitViewHost> {
 
   @override
   void dispose() {
-    widget.driver.notifyWidgetDisplayStateChanged(widget.viewTag, 0);
+    widget.driver.asInternalDriver.notifyWidgetDisplayStateChanged(
+      widget.viewTag,
+      0,
+    );
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final driver = widget.driver;
+    final driver = widget.driver.asInternalDriver;
     return StreamBuilder(
       stream: driver.eventStream,
       builder: (context, snapshot) {
@@ -108,13 +130,13 @@ class _DuitViewHostState extends State<DuitViewHost> {
         }
 
         if (snapshot.hasData) {
-          final content =
-              (snapshot.data! as UIDriverViewEvent).model.build(widget.viewTag);
+          final content = (snapshot.data as UIDriverViewEvent?)
+              ?.model
+              .build(widget.viewTag);
 
           driver.notifyWidgetDisplayStateChanged(widget.viewTag, 1);
 
           return DuitViewContext(
-            logger: driver.logger!,
             gestureInterceptor: widget.gestureInterceptor,
             gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
             sliverGridDelegatesRegistry: widget.sliverGridDelegatesRegistry,
