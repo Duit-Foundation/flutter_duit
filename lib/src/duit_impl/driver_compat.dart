@@ -394,6 +394,10 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
       _viewManager.prepareLayout(json);
 
   @override
+  @preferInline
+  DuitView? get currentView => _viewManager.currentView;
+
+  @override
   void linkDriver(UIDriver driver) => throw UnimplementedError();
 
   @override

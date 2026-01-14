@@ -118,4 +118,7 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
 
   @override
   void linkDriver(UIDriver driver) => _driver = driver;
+
+  @override
+  DuitView? get currentView => _view;
 }

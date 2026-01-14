@@ -193,4 +193,7 @@ final class DuitElement extends ElementTreeEntry {
 
   @override
   String toString() => _element.toString();
+
+  @override
+  bool get isControlled => _element.controlled;
 }

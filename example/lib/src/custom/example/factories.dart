@@ -6,8 +6,11 @@ Widget exampleBuildFactory(
   ElementTreeEntry model, [
   Iterable<Widget> subviews = const [],
 ]) {
-  return ExampleWidget(
-    controller: model.viewController,
-    child: model.child?.renderView(),
-  );
+  if (model.isControlled) {
+    return ExampleWidget(
+      controller: model.viewController,
+      child: model.child?.renderView(),
+    );
+  }
+  return const Text("No-op");
 }
