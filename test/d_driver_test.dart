@@ -7,9 +7,9 @@ import "package:flutter_test/flutter_test.dart";
 import "utils.dart";
 
 void main() {
-  group("DuitDriver addDataSource tests", () {
-    testWidgets("12312312", (tester) async {
-      final driver = DuitDriver.static(
+  group("XDriver addDataSource tests", () {
+    testWidgets("dispose", (tester) async {
+      final driver = XDriver.static(
         {
           "type": "Column",
           "id": "col1",
@@ -25,14 +25,15 @@ void main() {
             }
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
+
+      await driver.init();
 
       driver.dispose();
     });
     testWidgets("should successfully process valid events from data source",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Column",
           "id": "col1",
@@ -48,10 +49,9 @@ void main() {
             }
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       // Add data source
       driver.addExternalEventStream(
@@ -70,7 +70,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check that the value was updated through payload
-      final data = driver.preparePayload([
+      final data = driver.asInternalDriver.preparePayload([
         ActionDependency(target: "val1", id: "textField1"),
       ]);
       expect(data["val1"], "Updated from data source");
@@ -78,17 +78,16 @@ void main() {
 
     testWidgets("should handle NullEvent by throwing NullEventException",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Column",
           "id": "col1",
           "controlled": false,
           "children": [],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       await runZonedGuarded(() async {
         driver.addExternalEventStream(Stream.value({"type": "null"}));
@@ -99,7 +98,7 @@ void main() {
 
     testWidgets("should handle multiple data sources simultaneously",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Column",
           "id": "col1",
@@ -123,10 +122,9 @@ void main() {
             }
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       // Add both data sources
       driver.addExternalEventStream(
@@ -149,7 +147,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check that both fields were updated
-      final data = driver.preparePayload([
+      final data = driver.asInternalDriver.preparePayload([
         ActionDependency(target: "val1", id: "textField1"),
         ActionDependency(target: "val2", id: "textField2"),
       ]);
@@ -160,7 +158,7 @@ void main() {
 
     testWidgets("should handle different event types from data source",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Column",
           "id": "col1",
@@ -176,10 +174,9 @@ void main() {
             }
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       // Create stream
       final streamController = StreamController<Map<String, dynamic>>();
@@ -207,7 +204,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Check that update worked
-      final data = driver.preparePayload([
+      final data = driver.asInternalDriver.preparePayload([
         ActionDependency(target: "val1", id: "textField1"),
       ]);
       expect(data["val1"], "Updated by custom event");
@@ -218,7 +215,7 @@ void main() {
   });
 
   testWidgets("must prepare valid payload", (tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "type": "Column",
         "id": "col1",
@@ -250,12 +247,11 @@ void main() {
           }
         ],
       },
-      transportOptions: EmptyTransportOptions(),
     );
 
-    await pumpDriver(tester, driver);
+    await pumpDriver(tester, driver.asInternalDriver);
 
-    final data = driver.preparePayload([
+    final data = driver.asInternalDriver.preparePayload([
       ActionDependency(target: "val1", id: "textField1"),
       ActionDependency(target: "val2", id: "textField2"),
     ]);

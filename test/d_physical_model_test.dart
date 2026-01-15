@@ -7,7 +7,7 @@ void main() {
     "DuitPhysicalModel widget tests",
     () {
       testWidgets("must build widget", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "PhysicalModel",
             "id": "physical_model",
@@ -33,12 +33,11 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -68,7 +67,7 @@ void main() {
       });
 
       testWidgets("must update widget", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "PhysicalModel",
             "id": "physical_model",
@@ -88,12 +87,11 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -113,7 +111,7 @@ void main() {
           const Color.fromARGB(255, 0, 255, 0),
         );
 
-        await driver.updateAttributes("physical_model", {
+        await driver.asInternalDriver.updateAttributes("physical_model", {
           "elevation": 12.0,
           "color": [0, 0, 255, 1],
         });
@@ -133,7 +131,7 @@ void main() {
       });
 
       testWidgets("must handle clipBehavior", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "PhysicalModel",
             "id": "physical_model",
@@ -153,12 +151,11 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),

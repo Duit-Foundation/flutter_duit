@@ -7,7 +7,7 @@ import "utils.dart";
 void main() {
   group("DuitTransform widget tests", () {
     testWidgets("renders scale transform", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform1",
@@ -30,9 +30,8 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform1"));
       expect(transformFinder, findsOneWidget);
       final widget = tester.widget<Transform>(transformFinder);
@@ -40,7 +39,7 @@ void main() {
     });
 
     testWidgets("renders rotate transform", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform2",
@@ -61,9 +60,8 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform2"));
       expect(transformFinder, findsOneWidget);
       final widget = tester.widget<Transform>(transformFinder);
@@ -72,7 +70,7 @@ void main() {
     });
 
     testWidgets("renders translate transform", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform3",
@@ -95,9 +93,8 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform3"));
       expect(transformFinder, findsOneWidget);
       final widget = tester.widget<Transform>(transformFinder);
@@ -106,7 +103,7 @@ void main() {
     });
 
     testWidgets("renders flip transform", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform4",
@@ -130,9 +127,8 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform4"));
       expect(transformFinder, findsOneWidget);
       final widget = tester.widget<Transform>(transformFinder);
@@ -141,7 +137,7 @@ void main() {
     });
 
     testWidgets("controlled: updates transform attributes", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform5",
@@ -164,14 +160,13 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform5"));
       expect(transformFinder, findsOneWidget);
       var widget = tester.widget<Transform>(transformFinder);
       expect(widget.transform.getMaxScaleOnAxis(), 1.0);
-      await driver.updateAttributes("transform5", {
+      await driver.asInternalDriver.updateAttributes("transform5", {
         "type": "scale",
         "data": {
           "scale": 3.0,
@@ -185,7 +180,7 @@ void main() {
     });
 
     testWidgets("renders scale transform (controlled: false)", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform_nc1",
@@ -208,9 +203,8 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform_nc1"));
       expect(transformFinder, findsOneWidget);
       final widget = tester.widget<Transform>(transformFinder);
@@ -218,7 +212,7 @@ void main() {
     });
 
     testWidgets("renders rotate transform (controlled: false)", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform_nc2",
@@ -241,9 +235,8 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform_nc2"));
       expect(transformFinder, findsOneWidget);
       final widget = tester.widget<Transform>(transformFinder);
@@ -252,7 +245,7 @@ void main() {
 
     testWidgets("renders translate transform (controlled: false)",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform_nc3",
@@ -275,9 +268,8 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform_nc3"));
       expect(transformFinder, findsOneWidget);
       final widget = tester.widget<Transform>(transformFinder);
@@ -286,7 +278,7 @@ void main() {
     });
 
     testWidgets("renders flip transform (controlled: false)", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Transform",
           "id": "transform_nc4",
@@ -310,9 +302,8 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       final transformFinder = find.byKey(const ValueKey("transform_nc4"));
       expect(transformFinder, findsOneWidget);
       final widget = tester.widget<Transform>(transformFinder);

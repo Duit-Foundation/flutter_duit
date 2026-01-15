@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "manager methods",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Container",
               "id": "pdng",
@@ -72,7 +72,6 @@ void main() {
                 ],
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await tester.pumpWidget(
@@ -81,7 +80,7 @@ void main() {
                 textDirection: TextDirection.ltr,
                 child: Material(
                   child: FocusScope(
-                    child: DuitViewHost(
+                    child: DuitViewHost.withDriver(
                       driver: driver,
                     ),
                   ),
@@ -127,7 +126,7 @@ void main() {
       testWidgets(
         "focus commands",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Container",
               "id": "pdng",
@@ -188,7 +187,6 @@ void main() {
                 ],
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await tester.pumpWidget(
@@ -197,7 +195,7 @@ void main() {
                 textDirection: TextDirection.ltr,
                 child: Material(
                   child: FocusScope(
-                    child: DuitViewHost(
+                    child: DuitViewHost.withDriver(
                       driver: driver,
                     ),
                   ),
@@ -289,27 +287,27 @@ void main() {
           expect(node, isA<FocusNode>());
           expect(node2, isA<FocusNode>());
 
-          await driver.execute(nextFocus);
+          await driver.asInternalDriver.execute(nextFocus);
           await tester.pump();
           expect(node!.hasFocus, true);
           expect(node2!.hasFocus, false);
 
-          await driver.execute(prevFocus);
+          await driver.asInternalDriver.execute(prevFocus);
           await tester.pump();
           expect(node.hasFocus, false);
           expect(node2.hasFocus, true);
 
-          await driver.execute(unfocus);
+          await driver.asInternalDriver.execute(unfocus);
           await tester.pump();
           expect(node.hasFocus, false);
           expect(node2.hasFocus, false);
 
-          await driver.execute(inDir);
+          await driver.asInternalDriver.execute(inDir);
           await tester.pump();
           expect(node.hasFocus, false);
           expect(node2.hasFocus, true);
 
-          await driver.execute(reqFocus);
+          await driver.asInternalDriver.execute(reqFocus);
           await tester.pump();
           expect(node.hasFocus, true);
           expect(node2.hasFocus, false);

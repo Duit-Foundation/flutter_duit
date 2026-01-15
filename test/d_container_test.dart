@@ -7,7 +7,7 @@ void main() {
     "DuitContainer widget tests",
     () {
       testWidgets("must build widget", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "Container",
             "id": "container",
@@ -25,12 +25,11 @@ void main() {
             },
             "controlled": false,
           },
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -44,7 +43,7 @@ void main() {
       });
 
       testWidgets("must update widget", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "Container",
             "id": "container",
@@ -62,12 +61,11 @@ void main() {
             },
             "controlled": true,
           },
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -79,7 +77,7 @@ void main() {
 
         expect(box, paints..rect(color: Colors.black));
 
-        await driver.updateAttributes("container", {
+        await driver.asInternalDriver.updateAttributes("container", {
           "decoration": <String, dynamic>{
             "color": "#FFFFFF",
           },

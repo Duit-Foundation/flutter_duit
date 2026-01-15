@@ -8,7 +8,7 @@ void main() {
   testWidgets(
     "DuitAnimatedSize must renders correctly",
     (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "AnimatedSize",
           "id": "rotation",
@@ -23,12 +23,10 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await pumpDriver(
-        tester,
-        driver,
+        tester, driver.asInternalDriver,
       );
 
       expect(find.byKey(const ValueKey("rotation")), findsOneWidget);

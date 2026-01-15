@@ -27,7 +27,7 @@ void main() {
         testWidgets(
           "must renders correctly",
           (WidgetTester tester) async {
-            final driver = DuitDriver.static(
+            final driver = XDriver.static(
               {
                 "type": "CustomScrollView",
                 "controlled": false,
@@ -45,13 +45,12 @@ void main() {
                   },
                 ],
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
             await tester.pumpWidget(
               Directionality(
                 textDirection: TextDirection.ltr,
-                child: DuitViewHost(
+                child: DuitViewHost.withDriver(
                   driver: driver,
                   sliverGridDelegatesRegistry: {
                     "delegate1": (_) =>
@@ -76,7 +75,7 @@ void main() {
         testWidgets(
           "must update attributes correctly",
           (WidgetTester tester) async {
-            final driver = DuitDriver.static(
+            final driver = XDriver.static(
               {
                 "type": "CustomScrollView",
                 "controlled": false,
@@ -94,13 +93,12 @@ void main() {
                   },
                 ],
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
             await tester.pumpWidget(
               Directionality(
                 textDirection: TextDirection.ltr,
-                child: DuitViewHost(
+                child: DuitViewHost.withDriver(
                   driver: driver,
                   sliverGridDelegatesRegistry: {
                     "delegate1": (_) =>
@@ -126,7 +124,7 @@ void main() {
 
             expect(grid, findsOneWidget);
 
-            await driver.updateAttributes("grid", {
+            await driver.asInternalDriver.updateAttributes("grid", {
               "sliverGridDelegateKey": "delegate2",
               "constructor": "common",
             });
@@ -142,7 +140,7 @@ void main() {
         testWidgets(
           "must renders correctly",
           (WidgetTester tester) async {
-            final driver = DuitDriver.static(
+            final driver = XDriver.static(
               {
                 "type": "CustomScrollView",
                 "controlled": false,
@@ -160,12 +158,10 @@ void main() {
                   },
                 ],
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
             await pumpDriver(
-              tester,
-              driver,
+              tester, driver.asInternalDriver,
             );
 
             final grid = find.byKey(const ValueKey("grid"));
@@ -177,7 +173,7 @@ void main() {
         testWidgets(
           "must update attributes correctly",
           (WidgetTester tester) async {
-            final driver = DuitDriver.static(
+            final driver = XDriver.static(
               {
                 "type": "CustomScrollView",
                 "controlled": false,
@@ -195,15 +191,13 @@ void main() {
                   },
                 ],
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
             await pumpDriver(
-              tester,
-              driver,
+              tester, driver.asInternalDriver,
             );
 
-            await driver.updateAttributes("grid", {
+            await driver.asInternalDriver.updateAttributes("grid", {
               "crossAxisCount": 2,
               "constructor": "count",
             });
@@ -219,7 +213,7 @@ void main() {
         testWidgets(
           "must throw assertion error",
           (tester) async {
-            var driver = DuitDriver.static(
+            var driver = XDriver.static(
               {
                 "type": "SliverGrid",
                 "controlled": true,
@@ -230,18 +224,16 @@ void main() {
                   "crossAxisCount": -1,
                 },
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
             await pumpDriver(
-              tester,
-              driver,
+              tester, driver.asInternalDriver,
               const ValueKey("firts_case"),
             );
 
             expect(tester.takeException(), isAssertionError);
 
-            driver = DuitDriver.static(
+            driver = XDriver.static(
               {
                 "type": "SliverGrid",
                 "controlled": true,
@@ -251,12 +243,10 @@ void main() {
                   "constructor": "count",
                 },
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
             await pumpDriver(
-              tester,
-              driver,
+              tester, driver.asInternalDriver,
               const ValueKey("second_case"),
             );
 
@@ -271,7 +261,7 @@ void main() {
           testWidgets(
             "must renders correctly",
             (tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "CustomScrollView",
                   "controlled": false,
@@ -289,12 +279,10 @@ void main() {
                     },
                   ],
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
               await pumpDriver(
-                tester,
-                driver,
+                tester, driver.asInternalDriver,
               );
 
               final grid = find.byKey(const ValueKey("grid"));
@@ -306,7 +294,7 @@ void main() {
           testWidgets(
             "must update attributes correctly",
             (WidgetTester tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "CustomScrollView",
                   "controlled": false,
@@ -324,15 +312,13 @@ void main() {
                     },
                   ],
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
               await pumpDriver(
-                tester,
-                driver,
+                tester, driver.asInternalDriver,
               );
 
-              await driver.updateAttributes("grid", {
+              await driver.asInternalDriver.updateAttributes("grid", {
                 "maxCrossAxisExtent": 30.0,
                 "constructor": "extent",
               });
@@ -348,7 +334,7 @@ void main() {
           testWidgets(
             "must throw assertion error",
             (tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "SliverGrid",
                   "controlled": true,
@@ -358,12 +344,10 @@ void main() {
                     "constructor": "count",
                   },
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
               await pumpDriver(
-                tester,
-                driver,
+                tester, driver.asInternalDriver,
               );
 
               expect(tester.takeException(), isAssertionError);
@@ -400,7 +384,7 @@ void main() {
             "must render correctly",
             (tester) async {
               var startIndex = 0;
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "CustomScrollView",
                   "controlled": false,
@@ -437,12 +421,10 @@ void main() {
                     },
                   ],
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
               await pumpDriver(
-                tester,
-                driver,
+                tester, driver.asInternalDriver,
                 const ValueKey("builder_case"),
                 {
                   "delegate1": (_) =>

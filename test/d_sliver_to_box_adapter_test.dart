@@ -8,7 +8,7 @@ void main() {
   testWidgets(
     "SliverToBoxAdapter test",
     (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "CustomScrollView",
           "id": "custom_view",
@@ -34,12 +34,11 @@ void main() {
             },
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await pumpDriver(
         tester,
-        driver,
+        driver.asInternalDriver,
       );
 
       expect(find.byKey(const ValueKey("text")), findsOneWidget);

@@ -65,10 +65,9 @@ void main() {
         await t.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
-              driver: DuitDriver.static(
+            child: DuitViewHost.withDriver(
+              driver: XDriver.static(
                 _createWidget(),
-                transportOptions: EmptyTransportOptions(),
               ),
             ),
           ),
@@ -88,15 +87,14 @@ void main() {
       });
 
       testWidgets("check action execution", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(),
-          transportOptions: EmptyTransportOptions(),
         );
 
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),

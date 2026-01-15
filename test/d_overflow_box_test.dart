@@ -8,7 +8,7 @@ import "utils.dart";
 void main() {
   group("DuitOverflowBox widget tests", () {
     testWidgets("renders with all attributes", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "OverflowBox",
           "id": "overflow",
@@ -34,10 +34,9 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final overflowFinder = find.byKey(const ValueKey("overflow"));
       expect(overflowFinder, findsOneWidget);
@@ -52,7 +51,7 @@ void main() {
     });
 
     testWidgets("controlled: updates attributes", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "OverflowBox",
           "id": "overflow",
@@ -78,10 +77,9 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final overflowFinder = find.byKey(const ValueKey("overflow"));
       expect(overflowFinder, findsOneWidget);
@@ -94,7 +92,7 @@ void main() {
       expect(overflowWidget.fit, OverflowBoxFit.max);
       expect(overflowWidget.alignment, Alignment.center);
 
-      await driver.updateAttributes("overflow", {
+      await driver.asInternalDriver.updateAttributes("overflow", {
         "minWidth": 5.0,
         "maxWidth": 50.0,
         "minHeight": 5.0,

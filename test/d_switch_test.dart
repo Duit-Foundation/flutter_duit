@@ -11,17 +11,16 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Switch",
               "id": "sw1",
               "controlled": true,
               "attributes": {"value": false},
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final swFinder = find.byKey(const ValueKey("sw1"));
 
@@ -36,17 +35,16 @@ void main() {
       testWidgets(
         "must update value",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Switch",
               "id": "sw1",
               "controlled": true,
               "attributes": {"value": false},
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           expect(find.byKey(const ValueKey("sw1")), findsOneWidget);
 

@@ -9,7 +9,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Row",
               "controlled": false,
@@ -65,12 +65,11 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await tester.pumpWidget(
             MaterialApp(
-              home: DuitViewHost(driver: driver),
+              home: DuitViewHost.withDriver(driver: driver),
             ),
           );
 
@@ -88,7 +87,7 @@ void main() {
           expect(renderObject2.size.width, 400);
           expect(renderObject3.size.width, 200);
 
-          await driver.updateAttributes("ex2", {
+          await driver.asInternalDriver.updateAttributes("ex2", {
             "flex": 6,
           });
 

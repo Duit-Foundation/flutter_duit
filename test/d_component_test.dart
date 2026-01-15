@@ -16,20 +16,19 @@ void main() {
 
   group("DuitComponent widget tests", () {
     testWidgets("must merge with data correctly", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Component",
           "id": "comp1",
           "tag": "x",
           "data": componentTemplateData,
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -42,20 +41,19 @@ void main() {
     });
 
     testWidgets("must use default value", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Component",
           "id": "comp1",
           "tag": "x",
           "data": componentTemplateData2,
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -73,20 +71,19 @@ void main() {
     });
 
     testWidgets("must return empty view when tag is invalid", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Component",
           "id": "comp1",
           "tag": "invalid_tag",
           "data": componentTemplateData2,
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -99,7 +96,7 @@ void main() {
     });
 
     testWidgets("must update component state", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Component",
           "id": "testId",
@@ -107,13 +104,12 @@ void main() {
           "tag": "x",
           "data": componentTemplateData,
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -121,7 +117,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await driver.updateAttributes(
+      await driver.asInternalDriver.updateAttributes(
         "testId",
         componentUpdateTemplateData,
       );
@@ -138,7 +134,7 @@ void main() {
     });
 
     testWidgets("must register embedded component", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "embedded": [
             componentTemplate2,
@@ -163,13 +159,12 @@ void main() {
             }
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -185,7 +180,7 @@ void main() {
     testWidgets("instances must be independent (no sticky state)",
         (tester) async {
       // First instance with full data
-      var driver = DuitDriver.static(
+      var driver = XDriver.static(
         {
           "type": "Component",
           "id": "compA",
@@ -200,10 +195,10 @@ void main() {
             "mainColor": "#075eeb",
           }, // both mainColor and secColor
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver, const ValueKey("iter1"));
+      await pumpDriver(
+          tester, driver.asInternalDriver, const ValueKey("iter1"));
 
       final containerNested1 =
           tester.firstWidget(find.byKey(const Key("container2"))) as Container;
@@ -211,7 +206,7 @@ void main() {
       expect(containerNested1.color, const Color.fromRGBO(255, 255, 255, 1));
 
       // Now render second instance with missing secColor -> should use default
-      final driver2 = DuitDriver.static(
+      final driver2 = XDriver.static(
         {
           "type": "Component",
           "id": "compB",
@@ -220,10 +215,10 @@ void main() {
             "mainColor": "#fcba03",
           }, // only mainColor
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver2, const ValueKey("iter2"));
+      await pumpDriver(
+          tester, driver2.asInternalDriver, const ValueKey("iter2"));
 
       final containerNested2 =
           tester.firstWidget(find.byKey(const Key("container2"))) as Container;
@@ -234,7 +229,7 @@ void main() {
     testWidgets(
         "writeOps path for children index is applied (embedded component)",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "embedded": [componentTemplate2],
           "type": "Column",
@@ -251,13 +246,14 @@ void main() {
             }
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(driver: driver),
+          child: DuitViewHost.withDriver(
+            driver: driver,
+          ),
         ),
       );
       await tester.pumpAndSettle();

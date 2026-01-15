@@ -7,7 +7,7 @@ void main() {
     "DuitCard widget tests",
     () {
       testWidgets("must build widget with default attributes", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "Card",
             "id": "card",
@@ -23,12 +23,11 @@ void main() {
             },
             "controlled": false,
           },
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -45,7 +44,7 @@ void main() {
       });
 
       testWidgets("must build widget with custom attributes", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "Card",
             "id": "card",
@@ -80,12 +79,11 @@ void main() {
             },
             "controlled": false,
           },
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -98,7 +96,7 @@ void main() {
       });
 
       testWidgets("must update controlled widget", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "Card",
             "id": "card",
@@ -116,12 +114,11 @@ void main() {
             },
             "controlled": true,
           },
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -132,7 +129,7 @@ void main() {
         var card = find.byKey(const ValueKey("card"));
         expect(card, findsOneWidget);
 
-        await driver.updateAttributes("card", {
+        await driver.asInternalDriver.updateAttributes("card", {
           "color": "#00FF00",
           "elevation": 8.0,
         });

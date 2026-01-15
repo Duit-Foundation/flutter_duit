@@ -38,11 +38,10 @@ Map<String, Object> generateSliverIgnorePointerJson({
 void main() {
   group("DuitSliverIgnorePointer tests", () {
     testWidgets("must renders correctly", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         generateSliverIgnorePointerJson(ignoring: true, needsBoxAdapter: true),
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       expect(find.byKey(const ValueKey("sliver_ignore")), findsOneWidget);
       expect(find.byKey(const ValueKey("text")), findsOneWidget);
       // Проверяем, что IgnorePointer реально блокирует pointer events
@@ -53,15 +52,14 @@ void main() {
     });
 
     testWidgets("must update attributes", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         generateSliverIgnorePointerJson(
           ignoring: true,
           needsBoxAdapter: true,
           controlled: true,
         ),
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(
         tester
@@ -72,7 +70,7 @@ void main() {
         true,
       );
 
-      await driver.updateAttributes("sliver_ignore", {
+      await driver.asInternalDriver.updateAttributes("sliver_ignore", {
         "ignoring": false,
         "needsBoxAdapter": true,
       });

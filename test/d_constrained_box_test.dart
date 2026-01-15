@@ -35,7 +35,7 @@ Map<String, dynamic> _createWidget(
 void main() {
   group("ConstrainedBox tests", () {
     testWidgets("check constraints works", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(
           const BoxConstraints(
             maxHeight: 500,
@@ -44,14 +44,13 @@ void main() {
             minWidth: 100,
           ),
         ),
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Center(
           child: Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -69,7 +68,7 @@ void main() {
     testWidgets(
       "must update attributes",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(
             const BoxConstraints(
               maxHeight: 500,
@@ -79,15 +78,14 @@ void main() {
             ),
             true,
           ),
-          transportOptions: EmptyTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         final constrBoxFinder = find.byKey(const ValueKey("constraint"));
         expect(constrBoxFinder, findsOneWidget);
 
-        await driver.updateAttributes("constraint", {
+        await driver.asInternalDriver.updateAttributes("constraint", {
           "constraints": {
             "minWidth": 100,
             "minHeight": 100,

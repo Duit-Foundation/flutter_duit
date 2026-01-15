@@ -9,7 +9,7 @@ void main() {
     "DuitAnimatedPhysicalModel widget tests",
     () {
       testWidgets("must render correctly", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "AnimatedPhysicalModel",
             "id": "animated_physical_model",
@@ -30,12 +30,10 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         expect(
@@ -53,7 +51,7 @@ void main() {
       });
 
       testWidgets("must animate elevation change", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "AnimatedPhysicalModel",
             "id": "animated_physical_model",
@@ -74,12 +72,10 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         final animatedPhysicalModel =
@@ -97,7 +93,7 @@ void main() {
       });
 
       testWidgets("must handle borderRadius", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "AnimatedPhysicalModel",
             "id": "animated_physical_model",
@@ -123,12 +119,10 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         final animatedPhysicalModel =
@@ -149,7 +143,7 @@ void main() {
       });
 
       testWidgets("must handle onEnd callback", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "AnimatedPhysicalModel",
             "id": "animated_physical_model",
@@ -171,12 +165,10 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         final animatedPhysicalModel =

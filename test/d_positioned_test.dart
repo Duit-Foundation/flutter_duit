@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Stack",
               "id": "stack",
@@ -28,10 +28,9 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final wFinder = find.byKey(const ValueKey("w1"));
 
@@ -47,7 +46,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Stack",
               "id": "stack",
@@ -64,10 +63,9 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           var wFinder = find.byKey(const ValueKey("w1"));
 
@@ -78,7 +76,7 @@ void main() {
           expect(posWidget.top, 12);
           expect(posWidget.left, 12);
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "w1",
             {
               "right": 12,
@@ -99,7 +97,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Stack",
               "id": "stack_ctrl",
@@ -130,10 +128,9 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           var stackFinder = find.byKey(const ValueKey("stack_ctrl"));
           expect(stackFinder, findsOneWidget);
@@ -143,7 +140,7 @@ void main() {
           expect(stackWidget.clipBehavior, Clip.hardEdge);
           expect(stackWidget.textDirection, TextDirection.ltr);
 
-          await driver.updateAttributes("stack_ctrl", {
+          await driver.asInternalDriver.updateAttributes("stack_ctrl", {
             "stackFit": "expand",
             "alignmentDirectional": "bottomEnd",
             "clipBehavior": "none",

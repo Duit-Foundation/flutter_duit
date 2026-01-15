@@ -9,7 +9,7 @@ void main() {
     testWidgets(
       "must renders correctly",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "DecoratedBox",
             "id": "decorated",
@@ -28,10 +28,9 @@ void main() {
               "controlled": false,
             },
           },
-          transportOptions: HttpTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         final decoratedBox = find.byKey(const ValueKey("decorated"));
         expect(decoratedBox, findsOneWidget);
@@ -43,7 +42,7 @@ void main() {
     testWidgets(
       "must update attributes",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "DecoratedBox",
             "id": "decorated",
@@ -63,16 +62,15 @@ void main() {
               "controlled": false,
             },
           },
-          transportOptions: HttpTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         var decoratedBox = find.byKey(const ValueKey("decorated"));
         expect(decoratedBox, findsOneWidget);
         expect(decoratedBox, paints..rect(color: const Color(0xFF933C3C)));
 
-        await driver.updateAttributes("decorated", {
+        await driver.asInternalDriver.updateAttributes("decorated", {
           "decoration": <String, dynamic>{
             "color": "#075eeb",
           },

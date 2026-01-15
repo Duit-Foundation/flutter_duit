@@ -7,7 +7,7 @@ import "utils.dart";
 void main() {
   group("DuitSlider widget tests", () {
     testWidgets("renders with all attributes", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Slider",
           "id": "slider1",
@@ -25,10 +25,9 @@ void main() {
             "allowedInteraction": "tapAndSlide",
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final sliderFinder = find.byKey(const ValueKey("slider1"));
       expect(sliderFinder, findsOneWidget);
@@ -47,7 +46,7 @@ void main() {
     });
 
     testWidgets("user interaction changes value", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Slider",
           "id": "slider3",
@@ -58,10 +57,9 @@ void main() {
             "max": 1.0,
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final sliderFinder = find.byKey(const ValueKey("slider3"));
       expect(sliderFinder, findsOneWidget);

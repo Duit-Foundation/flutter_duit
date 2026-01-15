@@ -26,7 +26,7 @@ void main() {
         (tester) async {
           const extent = 240.0;
 
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CarouselView",
               "controlled": false,
@@ -37,12 +37,10 @@ void main() {
                 "itemExtent": extent,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("car")), findsOneWidget);
@@ -62,7 +60,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CarouselView",
               "controlled": true,
@@ -99,12 +97,10 @@ void main() {
                 "reverse": true,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("car_ctrl")), findsOneWidget);
@@ -116,7 +112,7 @@ void main() {
       testWidgets(
         "must render with empty children",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CarouselView",
               "controlled": false,
@@ -127,12 +123,10 @@ void main() {
                 "itemExtent": 100.0,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("car_empty")), findsOneWidget);
@@ -142,7 +136,7 @@ void main() {
       testWidgets(
         "must render with one child",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CarouselView",
               "controlled": false,
@@ -160,12 +154,10 @@ void main() {
                 "itemExtent": 100.0,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("car_one")), findsOneWidget);
@@ -176,7 +168,7 @@ void main() {
       testWidgets(
         "must render with reverse and vertical scroll",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CarouselView",
               "controlled": false,
@@ -202,12 +194,10 @@ void main() {
                 "reverse": true,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("car_vert")), findsOneWidget);
@@ -217,7 +207,7 @@ void main() {
       testWidgets(
         "must render with itemSnapping and shrinkExtent",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CarouselView",
               "controlled": false,
@@ -243,12 +233,10 @@ void main() {
                 "shrinkExtent": 50.0,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("car_snap")), findsOneWidget);

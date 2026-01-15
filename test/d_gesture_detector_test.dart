@@ -50,14 +50,12 @@ void main() {
       testWidgets(
         "must perform actions as expected",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             widget,
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           var target = find.text("Hello, world!");

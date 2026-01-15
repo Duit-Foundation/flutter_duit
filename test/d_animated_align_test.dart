@@ -8,7 +8,7 @@ void main() {
   testWidgets(
     "DuitAnimatedAlign must renders correctly",
     (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "AnimatedAlign",
           "id": "align",
@@ -24,12 +24,10 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await pumpDriver(
-        tester,
-        driver,
+        tester, driver.asInternalDriver,
       );
 
       expect(find.byKey(const ValueKey("align")), findsOneWidget);
@@ -38,7 +36,7 @@ void main() {
   );
 
   testWidgets("DuitAnimatedAlign must call onEnd", (tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "type": "AnimatedAlign",
         "id": "align",
@@ -67,15 +65,13 @@ void main() {
           },
         },
       },
-      transportOptions: EmptyTransportOptions(),
     );
 
     await pumpDriver(
-      tester,
-      driver,
+      tester, driver.asInternalDriver,
     );
 
-    await driver.updateAttributes("align", {
+    await driver.asInternalDriver.updateAttributes("align", {
       "alignment": "bottomLeft",
     });
 

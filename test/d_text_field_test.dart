@@ -7,7 +7,7 @@ import "utils.dart";
 void main() {
   group("DuitTextField widget tests", () {
     testWidgets("renders with all attributes", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "TextField",
           "id": "textField1",
@@ -20,10 +20,9 @@ void main() {
             "maxLength": 20,
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final textFieldFinder = find.byKey(const ValueKey("textField1"));
       expect(textFieldFinder, findsOneWidget);
@@ -35,7 +34,7 @@ void main() {
     });
 
     testWidgets("controlled: updates value", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "TextField",
           "id": "textField3",
@@ -44,10 +43,9 @@ void main() {
             "value": "Initial",
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final textFieldFinder = find.byKey(const ValueKey("textField3"));
       expect(textFieldFinder, findsOneWidget);
@@ -56,7 +54,7 @@ void main() {
         "Initial",
       );
 
-      await driver.updateAttributes("textField3", {"value": "Updated"});
+      await driver.asInternalDriver.updateAttributes("textField3", {"value": "Updated"});
       await tester.pumpAndSettle();
       expect(
         tester.widget<TextField>(textFieldFinder).controller?.text,

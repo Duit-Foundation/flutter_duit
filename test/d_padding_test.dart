@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Padding",
               "id": "w1",
@@ -20,10 +20,9 @@ void main() {
                 "padding": 12,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final wFinder = find.byKey(const ValueKey("w1"));
 
@@ -38,7 +37,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Padding",
               "id": "w1",
@@ -50,10 +49,9 @@ void main() {
                 ],
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final wFinder = find.byKey(const ValueKey("w1"));
 
@@ -69,7 +67,7 @@ void main() {
             ),
           );
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "w1",
             {
               "padding": [

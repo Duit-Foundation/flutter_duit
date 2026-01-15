@@ -81,10 +81,9 @@ void main() {
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
-            driver: DuitDriver.static(
+          child: DuitViewHost.withDriver(
+            driver: XDriver.static(
               _uncText,
-              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -99,10 +98,9 @@ void main() {
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
-            driver: DuitDriver.static(
+          child: DuitViewHost.withDriver(
+            driver: XDriver.static(
               _uncTextWithoutData,
-              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -114,15 +112,14 @@ void main() {
     });
 
     testWidgets("check text update process", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _cTextWithoutData(),
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -132,7 +129,7 @@ void main() {
 
       expect(find.text("Good bye, World!"), findsOneWidget);
 
-      await driver.updateAttributes("1", {
+      await driver.asInternalDriver.updateAttributes("1", {
         "data": "Hello, World!",
         "style": {
           "color": "#DCDCDC",
@@ -147,15 +144,14 @@ void main() {
     });
 
     testWidgets("check animation", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _textWithPropAnimation,
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -173,15 +169,14 @@ void main() {
     });
 
     testWidgets("check update when data prop is empty or null", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _cTextWithoutData(),
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -192,7 +187,7 @@ void main() {
       final text = find.text("Good bye, World!");
       expect(text, findsOneWidget);
 
-      await driver.updateAttributes("1", {});
+      await driver.asInternalDriver.updateAttributes("1", {});
 
       await tester.pumpAndSettle();
 

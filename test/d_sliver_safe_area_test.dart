@@ -7,7 +7,7 @@ import "utils.dart";
 void main() {
   group("DuitSliverSafeArea widget tests", () {
     testWidgets("DuitSliverSafeArea must renders correctly", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "CustomScrollView",
           "id": "custom_view",
@@ -42,10 +42,9 @@ void main() {
             },
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(find.byKey(const ValueKey("sliverSafeAreaId")), findsOneWidget);
       expect(find.text("Test Text"), findsOneWidget);
@@ -53,7 +52,7 @@ void main() {
 
     testWidgets("DuitControlledSliverSafeArea must renders correctly",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "CustomScrollView",
           "id": "custom_view",
@@ -82,15 +81,14 @@ void main() {
             },
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(find.byKey(const ValueKey("sliverSafeAreaId")), findsOneWidget);
       expect(find.text("Controlled Test Text"), findsOneWidget);
 
-      await driver.updateAttributes(
+      await driver.asInternalDriver.updateAttributes(
         "sliverSafeAreaId",
         {
           "left": true,
@@ -112,7 +110,7 @@ void main() {
     testWidgets(
         "SliverSafeArea with needsBoxAdapter should wrap child in SliverToBoxAdapter",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "CustomScrollView",
           "id": "custom_view",
@@ -141,10 +139,9 @@ void main() {
             },
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(find.byKey(const ValueKey("sliverSafeAreaId")), findsOneWidget);
       expect(find.byType(SliverToBoxAdapter), findsOneWidget);

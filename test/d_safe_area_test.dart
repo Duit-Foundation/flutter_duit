@@ -39,10 +39,9 @@ void main() {
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
-            driver: DuitDriver.static(
+          child: DuitViewHost.withDriver(
+            driver: XDriver.static(
               _createWidget(),
-              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -58,7 +57,7 @@ void main() {
     testWidgets(
       "must update attributes correctly",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(
             top: false,
             left: false,
@@ -66,10 +65,9 @@ void main() {
             bottom: true,
             controlled: true,
           ),
-          transportOptions: EmptyTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         // Проверяем начальные значения
         var safeArea = find.byKey(const ValueKey("safeAreaId"));
@@ -81,7 +79,7 @@ void main() {
         expect(safeAreaWidget.bottom, isTrue);
 
         // Обновляем атрибуты
-        await driver.updateAttributes("safeAreaId", {
+        await driver.asInternalDriver.updateAttributes("safeAreaId", {
           "top": true,
           "left": true,
           "right": false,
@@ -117,14 +115,13 @@ void main() {
         "minimum": [5.0, 6.0, 7.0, 8.0],
         "maintainBottomViewPadding": true,
       };
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         widgetMap,
-        transportOptions: EmptyTransportOptions(),
       );
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(driver: driver),
+          child: DuitViewHost.withDriver(driver: driver),
         ),
       );
       await tester.pumpAndSettle();

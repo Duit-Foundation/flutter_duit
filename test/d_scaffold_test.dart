@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must build with default attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Scaffold",
               "id": "scaffold",
@@ -19,10 +19,9 @@ void main() {
                 "backgroundColor": "#00FF00",
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final scaffold = find.byType(Scaffold);
           expect(scaffold, findsOneWidget);
@@ -39,7 +38,7 @@ void main() {
       testWidgets(
         "must build with body widget",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Scaffold",
               "id": "scaffold",
@@ -55,10 +54,9 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final text = find.byKey(const Key("text"));
           expect(text, findsOneWidget);
@@ -73,7 +71,7 @@ void main() {
         (tester) async {
           await pumpDriver(
             tester,
-            DuitDriver.static(
+            XDriver.static(
               {
                 "type": "Scaffold",
                 "id": "scaffold",
@@ -87,8 +85,7 @@ void main() {
                   },
                 ],
               },
-              transportOptions: EmptyTransportOptions(),
-            ),
+            ).asInternalDriver,
           );
 
           final appBar = find.byKey(const Key("appBar"));
@@ -99,7 +96,7 @@ void main() {
       testWidgets(
         "must build with bottomsheet widget",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Scaffold",
               "id": "scaffold",
@@ -115,10 +112,9 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final container = find.byKey(const Key("bottom"));
           expect(container, findsOneWidget);
@@ -131,7 +127,7 @@ void main() {
       testWidgets(
         "must build with FAB widget",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Scaffold",
               "id": "scaffold",
@@ -151,10 +147,9 @@ void main() {
                 null,
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final container = find.byKey(const Key("bottom"));
           expect(container, findsOneWidget);

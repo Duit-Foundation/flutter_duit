@@ -7,13 +7,12 @@ import "utils.dart";
 void main() {
   group("Fragment rendering", () {
     testWidgets("must render simple fragment", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Fragment",
           "tag": "test",
           "id": "some_id",
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       DuitRegistry.registerFragment(
@@ -28,7 +27,7 @@ void main() {
         },
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(find.text("Hello, world!"), findsOneWidget);
       // Fragment must overwrite id with inner element id
@@ -36,16 +35,15 @@ void main() {
     });
 
     testWidgets("must render empty when invalid tag provided", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Fragment",
           "tag": "unknown",
           "id": "frag_invalid",
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       if (throwOnUnspecifiedWidgetType) {
         expect(tester.takeException(), isInstanceOf<ArgumentError>());
@@ -55,13 +53,12 @@ void main() {
     });
 
     testWidgets("must support nested fragments", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Fragment",
           "tag": "outer",
           "id": "root",
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       // inner -> Text("OK")
@@ -85,7 +82,7 @@ void main() {
         },
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(find.text("OK"), findsOneWidget);
     });
@@ -104,7 +101,7 @@ void main() {
         },
       );
 
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Row",
           "id": "row_root",
@@ -122,10 +119,9 @@ void main() {
             },
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(find.text("Hello"), findsNWidgets(2));
     });

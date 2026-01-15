@@ -29,11 +29,10 @@ Map<String, dynamic> _createWidget({
 void main() {
   group("DuitRepaintBoundary widget tests", () {
     testWidgets("check widget", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(),
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final repaintBoundaries = find.byType(RepaintBoundary);
       expect(repaintBoundaries, findsWidgets);
@@ -46,17 +45,16 @@ void main() {
     testWidgets(
       "controlled widget renders and updates childIndex",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(isControlled: true),
-          transportOptions: EmptyTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         final widget = find.byKey(const ValueKey("repaintBoundaryId"));
         expect(widget, findsOneWidget);
 
-        await driver.updateAttributes(
+        await driver.asInternalDriver.updateAttributes(
           "repaintBoundaryId",
           {
             "childIndex": 0,

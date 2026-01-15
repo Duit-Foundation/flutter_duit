@@ -12,7 +12,7 @@ void main() {
         testWidgets(
           "must open, close and evaluate action on Dialog close",
           (tester) async {
-            final driver = DuitDriver.static(
+            final driver = XDriver.static(
               {
                 "type": "ElevatedButton",
                 "id": "bId",
@@ -92,10 +92,9 @@ void main() {
                   },
                 },
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
-            await pumpDriver(tester, driver);
+            await pumpDriver(tester, driver.asInternalDriver);
 
             var dialogContentKey = find.byKey(const ValueKey("bs_text"));
             var dialogText = find.text("Dialog");
@@ -135,7 +134,7 @@ void main() {
           testWidgets(
             "must open, close and evaluate action on BottomSheet close",
             (tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "ElevatedButton",
                   "id": "bId",
@@ -215,10 +214,9 @@ void main() {
                     },
                   },
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
-              await pumpDriver(tester, driver);
+              await pumpDriver(tester, driver.asInternalDriver);
 
               var bottomSheetContentKey = find.byKey(const ValueKey("bs_text"));
               var bottomSheetText = find.text("BottomSheet");

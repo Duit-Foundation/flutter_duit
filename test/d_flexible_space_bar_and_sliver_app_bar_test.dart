@@ -178,14 +178,13 @@ void main() {
     testWidgets(
       "FlexibleSpaceBar must build with all attributes correctly",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(
             controlledFlexibleSpaceBar: false,
           ),
-          transportOptions: EmptyTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         final sliverAppBar = find.byKey(const ValueKey("sliverAppBarId"));
         expect(sliverAppBar, findsOneWidget);
@@ -208,18 +207,17 @@ void main() {
     testWidgets(
       "FlexibleSpaceBar must update attributes correctly",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(
             controlledFlexibleSpaceBar: true,
           ),
-          transportOptions: EmptyTransportOptions(),
         );
 
         await tester.pumpWidget(
           MaterialApp(
             home: Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),
@@ -228,7 +226,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        await driver.updateAttributes("flexibleSpaceBarId", {
+        await driver.asInternalDriver.updateAttributes("flexibleSpaceBarId", {
           "centerTitle": false,
           "expandedTitleScale": 2.0,
           "collapseMode": "pin",
@@ -257,16 +255,15 @@ void main() {
     testWidgets(
       "SliverAppBar must update attributes correctly",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(),
-          transportOptions: EmptyTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         await tester.pumpAndSettle();
 
-        await driver.updateAttributes("sliverAppBarId", {
+        await driver.asInternalDriver.updateAttributes("sliverAppBarId", {
           "backgroundColor": "#FF5722",
           "elevation": 8.0,
           "floating": false,
@@ -296,12 +293,11 @@ void main() {
     testWidgets(
       "SliverAppBar with different boolean properties must work correctly",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(),
-          transportOptions: EmptyTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         // Test different boolean combinations
         final testCases = [
@@ -312,7 +308,8 @@ void main() {
         ];
 
         for (final testCase in testCases) {
-          await driver.updateAttributes("sliverAppBarId", testCase);
+          await driver.asInternalDriver
+              .updateAttributes("sliverAppBarId", testCase);
 
           await tester.pumpAndSettle();
 

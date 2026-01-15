@@ -15,20 +15,19 @@ void main() {
       testWidgets(
         "must create custom widget",
         (t) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Custom",
               "tag": exampleCustomWidget,
               "id": "custom",
               "controlled": true,
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),
@@ -43,7 +42,7 @@ void main() {
       testWidgets(
         "must render child",
         (t) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Custom",
               "tag": exampleCustomWidget,
@@ -60,13 +59,12 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),
@@ -81,20 +79,19 @@ void main() {
       testWidgets(
         "must update custom widget",
         (t) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Custom",
               "tag": exampleCustomWidget,
               "id": "custom",
               "controlled": true,
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),
@@ -104,7 +101,7 @@ void main() {
 
           expect(find.byType(Text), findsOneWidget);
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "custom",
             {
               "random": "value",
@@ -120,20 +117,19 @@ void main() {
       testWidgets(
         "must create empty view when invalid tag provided",
         (t) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Custom",
               "tag": "invalid_tag",
               "id": "custom",
               "controlled": true,
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),
@@ -148,7 +144,7 @@ void main() {
       testWidgets(
         "must use provided theme",
         (t) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Custom",
               "tag": exampleCustomWidget,
@@ -158,13 +154,12 @@ void main() {
               "id": "custom",
               "controlled": true,
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),

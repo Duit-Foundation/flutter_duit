@@ -74,10 +74,9 @@ void main() {
           MaterialApp(
             home: Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
-                driver: DuitDriver.static(
+              child: DuitViewHost.withDriver(
+                driver: XDriver.static(
                   _createWidget(false),
-                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -110,10 +109,9 @@ void main() {
           MaterialApp(
             home: Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
-                driver: DuitDriver.static(
+              child: DuitViewHost.withDriver(
+                driver: XDriver.static(
                   _createWidget(),
-                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -140,16 +138,15 @@ void main() {
     );
 
     testWidgets("must update widget attributes", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(true),
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         MaterialApp(
           home: Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -158,7 +155,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await driver.updateAttributes("appBarId", {
+      await driver.asInternalDriver.updateAttributes("appBarId", {
         "backgroundColor": "#00FF00",
         "elevation": 8.0,
         "centerTitle": false,
@@ -181,10 +178,9 @@ void main() {
         MaterialApp(
           home: Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
-              driver: DuitDriver.static(
+            child: DuitViewHost.withDriver(
+              driver: XDriver.static(
                 _createWidget(),
-                transportOptions: EmptyTransportOptions(),
               ),
             ),
           ),

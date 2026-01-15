@@ -26,15 +26,14 @@ Map<String, dynamic> _createWidget([bool controlled = false, int turns = 0]) {
 void main() {
   group("DuitRotatedBox test", () {
     testWidgets("check widget stateless variant", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(false, 1),
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -51,15 +50,14 @@ void main() {
     });
 
     testWidgets("check rotation", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(true),
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -72,7 +70,7 @@ void main() {
 
       expect(box.size, equals(const Size(800, 600)));
 
-      await driver.updateAttributes("r1", {
+      await driver.asInternalDriver.updateAttributes("r1", {
         "quarterTurns": 1,
       });
 

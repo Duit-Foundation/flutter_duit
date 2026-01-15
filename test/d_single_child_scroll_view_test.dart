@@ -33,15 +33,14 @@ Map<String, dynamic> _createWidget1() {
 void main() {
   testWidgets("SingleChildScrollView scrolls correctly",
       (WidgetTester tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       _createWidget1(),
-      transportOptions: EmptyTransportOptions(),
     );
 
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(
+        child: DuitViewHost.withDriver(
           driver: driver,
         ),
       ),
@@ -50,7 +49,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      driver.controllersCount,
+      driver.asInternalDriver.controllersCount,
       50 + 1,
     ); // +1 default controller for overlays
 
@@ -69,7 +68,7 @@ void main() {
 
   testWidgets("SingleChildScrollView scrolls horizontally",
       (WidgetTester tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "type": "SingleChildScrollView",
         "attributes": {"scrollDirection": "horizontal"},
@@ -95,12 +94,11 @@ void main() {
           ),
         },
       },
-      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(driver: driver),
+        child: DuitViewHost.withDriver(driver: driver),
       ),
     );
     await tester.pumpAndSettle();
@@ -116,7 +114,7 @@ void main() {
 
   testWidgets("SingleChildScrollView reverse: true",
       (WidgetTester tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "type": "SingleChildScrollView",
         "attributes": {"reverse": true},
@@ -142,12 +140,11 @@ void main() {
           ),
         },
       },
-      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(driver: driver),
+        child: DuitViewHost.withDriver(driver: driver),
       ),
     );
     await tester.pumpAndSettle();
@@ -163,7 +160,7 @@ void main() {
 
   testWidgets("SingleChildScrollView with padding",
       (WidgetTester tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "type": "SingleChildScrollView",
         "attributes": {
@@ -182,12 +179,11 @@ void main() {
           },
         },
       },
-      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(driver: driver),
+        child: DuitViewHost.withDriver(driver: driver),
       ),
     );
     await tester.pumpAndSettle();
@@ -200,7 +196,7 @@ void main() {
 
   testWidgets("SingleChildScrollView with NeverScrollableScrollPhysics",
       (WidgetTester tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "type": "SingleChildScrollView",
         "attributes": {"physics": "NeverScrollableScrollPhysics"},
@@ -226,12 +222,11 @@ void main() {
           ),
         },
       },
-      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(driver: driver),
+        child: DuitViewHost.withDriver(driver: driver),
       ),
     );
     await tester.pumpAndSettle();
@@ -245,7 +240,7 @@ void main() {
 
   testWidgets("SingleChildScrollView controlled: updates padding",
       (WidgetTester tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "type": "SingleChildScrollView",
         "id": "scr_ctrl",
@@ -264,12 +259,11 @@ void main() {
           },
         },
       },
-      transportOptions: EmptyTransportOptions(),
     );
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(driver: driver),
+        child: DuitViewHost.withDriver(driver: driver),
       ),
     );
     await tester.pumpAndSettle();
@@ -278,7 +272,7 @@ void main() {
     var offset = box.localToGlobal(Offset.zero);
     expect(offset.dx, 0);
     expect(offset.dy, 0);
-    await driver.updateAttributes("scr_ctrl", {
+    await driver.asInternalDriver.updateAttributes("scr_ctrl", {
       "padding": [30, 15, 0, 0],
     });
     await tester.pumpAndSettle();

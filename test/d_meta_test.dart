@@ -12,7 +12,7 @@ void main() {
       testWidgets(
         "must provide meta to subtree and update it",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Meta",
               "id": "meta1",
@@ -36,10 +36,9 @@ void main() {
                 },
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           var context = tester.element(find.byType(Container));
 
@@ -49,7 +48,7 @@ void main() {
           expect(metaValue, isNotNull);
           expect(metaValue["foo"], "bar");
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "meta1",
             {
               "value": {"foo": "baz", "num": 42},
