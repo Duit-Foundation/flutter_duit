@@ -1,3 +1,7 @@
+## 4.2.0-rc.1
+
+- Migrate to capability-based API
+
 ## 4.1.0
 
 - Added new widgets: AnimatedPositionedDirectional, ClipRect, ClipOval, PageView, Badge
