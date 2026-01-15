@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
@@ -42,12 +42,10 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
@@ -59,7 +57,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
@@ -90,19 +88,17 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
           expect(find.byKey(const ValueKey("text")), findsOneWidget);
           expect(find.text("Controlled text"), findsOneWidget);
 
-          driver.updateAttributes(
+          driver.asInternalDriver.updateAttributes(
             "sliver1",
             {
               "offstage": true,

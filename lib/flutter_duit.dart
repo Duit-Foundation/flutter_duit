@@ -6,6 +6,8 @@ export "package:flutter_duit/src/transport/transport_type.dart";
 export "package:flutter_duit/src/transport/options.dart";
 export "package:flutter_duit/src/kernel_api/index.dart";
 export "package:flutter_duit/src/animations/index.dart" show AnimatedAttributes;
+export "package:flutter_duit/src/capabilities/index.dart"
+    show HttpTransportManager, WSTransportManager, StubTransportManager;
 export "package:flutter_duit/src/utils/index.dart"
     hide
         GestureInterceptionLogic,

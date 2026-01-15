@@ -25,10 +25,9 @@ void main() {
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
-            driver: DuitDriver.static(
+          child: DuitViewHost.withDriver(
+            driver: XDriver.static(
               _createWidget(),
-              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),
@@ -43,17 +42,16 @@ void main() {
     testWidgets(
       "must update attributes",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(true),
-          transportOptions: EmptyTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         final widget = find.byKey(const ValueKey("offstage_test"));
         expect(widget, findsOneWidget);
 
-        await driver.updateAttributes(
+        await driver.asInternalDriver.updateAttributes(
           "offstage_test",
           {
             "offstage": false,

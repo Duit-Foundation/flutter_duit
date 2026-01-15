@@ -270,14 +270,12 @@ void main() {
       testWidgets(
         "DuitControlledSliverList must render correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createSliverListCommonWidget(),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(
@@ -293,14 +291,12 @@ void main() {
       testWidgets(
         "DuitSliverList must render correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createSliverListCommonWidget(false),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(
@@ -316,14 +312,12 @@ void main() {
       testWidgets(
         "DuitControlledSliverList must render correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createSliverListControlledWidget(),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(
@@ -344,14 +338,12 @@ void main() {
       testWidgets(
         "DuitSliverListBuilder must render correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createSliverListWidget(),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("sliver_list")), findsOneWidget);
@@ -363,14 +355,12 @@ void main() {
       testWidgets(
         "DuitSliverListSeparated must render correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createSliverListSeparatedWidget(),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("1")), findsOneWidget);
@@ -381,14 +371,12 @@ void main() {
       testWidgets(
         "DuitSliverList must handle scrolling correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createSliverListCommonWidget(),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           final scroll = find.byType(Scrollable);
@@ -416,14 +404,12 @@ void main() {
       testWidgets(
         "DuitSliverListBuilder must handle scrolling correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createSliverListWidget(),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           final scroll = find.byType(Scrollable);

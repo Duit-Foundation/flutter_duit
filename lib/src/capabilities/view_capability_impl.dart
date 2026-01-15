@@ -37,10 +37,10 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
     try {
       _view.changeViewState(viewTag, state);
     } catch (e, s) {
-      _driver.logger?.error(
+      _driver.logError(
         "View not initialized and can`t be disposed",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
     }
   }
@@ -50,28 +50,25 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
   set context(BuildContext value) => buildContext = value;
 
   Future<DuitView?> _parseSingeLayoutModel(Map<String, dynamic> json) async {
-    switch (json) {
-      case {
-          "type": String _,
-          "id": String _,
-        }:
-        _view = CommonDuitView();
-        await _view.prepareModel(
-          json,
-          _driver,
-        );
-        return _view;
-      case {
-          "root": Map<String, dynamic> widget,
-        }:
-        _view = CommonDuitView();
-        await _view.prepareModel(
-          widget,
-          _driver,
-        );
-        return _view;
-      default:
-        return null;
+    if (LayoutStructValidator.isWidgetStruct(json)) {
+      _view = CommonDuitView();
+      await _view.prepareModel(
+        json,
+        _driver,
+      );
+      return _view;
+    } else if (LayoutStructValidator.isRootStruct(json)) {
+      _view = CommonDuitView();
+      final widget = Map<String, dynamic>.from(json["root"]);
+      await _view.prepareModel(
+        widget,
+        _driver,
+      );
+      return _view;
+    } else if (LayoutStructValidator.isWidgetsStruct(json)) {
+      return null;
+    } else {
+      return null;
     }
   }
 
@@ -89,11 +86,10 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
     final compatView = await _parseSingeLayoutModel(json);
 
     if (enableSharedDrivers && compatView == null) {
-      if (json
-          case {
-            "widgets": Map collection,
-          }) {
+      if (LayoutStructValidator.isWidgetStruct(json)) {
         _view = SharedDuitView();
+
+        final collection = Map.from(json["widgets"]);
 
         final widgets = collection.entries.cast<MapEntry<String, dynamic>>();
 
@@ -122,4 +118,7 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
 
   @override
   void linkDriver(UIDriver driver) => _driver = driver;
+
+  @override
+  DuitView? get currentView => _view;
 }

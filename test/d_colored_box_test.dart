@@ -7,7 +7,7 @@ import "utils.dart";
 void main() {
   group("DuitColoredBox widget tests", () {
     testWidgets("check color", (WidgetTester tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "ColoredBox",
           "id": "colored",
@@ -15,13 +15,12 @@ void main() {
             "color": "#933C3C",
           },
         },
-        transportOptions: HttpTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -36,7 +35,7 @@ void main() {
     });
 
     testWidgets("check animation", (WidgetTester tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "AnimatedBuilder",
           "id": "animated",
@@ -66,13 +65,12 @@ void main() {
             },
           },
         },
-        transportOptions: HttpTransportOptions(),
       );
 
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
+          child: DuitViewHost.withDriver(
             driver: driver,
           ),
         ),
@@ -88,7 +86,7 @@ void main() {
     testWidgets(
       "must update attributes",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "ColoredBox",
             "id": "colored",
@@ -97,12 +95,11 @@ void main() {
               "color": Colors.red,
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
           tester,
-          driver,
+          driver.asInternalDriver,
         );
 
         var coloredFinder = find.byKey(const ValueKey("colored"));
@@ -110,7 +107,7 @@ void main() {
         expect(coloredFinder, findsOneWidget);
         expect(coloredWidget.color, Colors.red);
 
-        await driver.updateAttributes("colored", {
+        await driver.asInternalDriver.updateAttributes("colored", {
           "color": Colors.black,
         });
 

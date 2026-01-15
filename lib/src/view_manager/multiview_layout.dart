@@ -12,6 +12,7 @@ final class _StatefullElement {
   );
 }
 
+@Deprecated("Will be removed in the next major release.")
 final class DuitMultiViewLayout implements DuitView {
   final _views = <String, _StatefullElement>{};
 

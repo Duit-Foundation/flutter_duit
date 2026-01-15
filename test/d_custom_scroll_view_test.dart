@@ -11,19 +11,17 @@ void main() {
       testWidgets(
         "DuitCustomScrollView must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": false,
               "children": <Map<String, dynamic>>[],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("custom_view")), findsOneWidget);
@@ -33,24 +31,22 @@ void main() {
       testWidgets(
         "DuitCustomScrollView update test",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
               "controlled": true,
               "children": <Map<String, dynamic>>[],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("custom_view")), findsOneWidget);
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "custom_view",
             {
               "scrollDirection": "horizontal",

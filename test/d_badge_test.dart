@@ -114,7 +114,7 @@ void main() {
           testWidgets(
             "must renders correctly",
             (tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "Badge",
                   "id": "Badge",
@@ -138,10 +138,9 @@ void main() {
                     },
                   ],
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
-              await pumpDriver(tester, driver);
+              await pumpDriver(tester, driver.asInternalDriver);
 
               final badge = find.byKey(const ValueKey("Badge"));
               final child = find.byKey(const ValueKey("child"));
@@ -156,7 +155,7 @@ void main() {
           testWidgets(
             "must update attributes correctly",
             (tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "Badge",
                   "id": "Badge",
@@ -181,10 +180,9 @@ void main() {
                     },
                   ],
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
-              await pumpDriver(tester, driver);
+              await pumpDriver(tester, driver.asInternalDriver);
 
               final badge = find.byKey(const ValueKey("Badge"));
               final child = find.byKey(const ValueKey("child"));
@@ -198,7 +196,7 @@ void main() {
 
               expect(badgeWidget.padding, null);
 
-              await driver.updateAttributes("Badge", {
+              await driver.asInternalDriver.updateAttributes("Badge", {
                 "padding": [12, 12],
               });
 
@@ -220,7 +218,7 @@ void main() {
           testWidgets(
             "must renders correctly",
             (tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "Badge",
                   "id": "Badge",
@@ -247,10 +245,9 @@ void main() {
                     },
                   ],
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
-              await pumpDriver(tester, driver);
+              await pumpDriver(tester, driver.asInternalDriver);
 
               final badge = find.byKey(const ValueKey("Badge"));
               final badgeCount = find.text("100");
@@ -267,7 +264,7 @@ void main() {
           testWidgets(
             "must update attributes correctly",
             (tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "type": "Badge",
                   "id": "Badge",
@@ -295,10 +292,9 @@ void main() {
                     },
                   ],
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
-              await pumpDriver(tester, driver);
+              await pumpDriver(tester, driver.asInternalDriver);
 
               final badge = find.byKey(const ValueKey("Badge"));
               final badgeCount = find.text("100");
@@ -314,7 +310,7 @@ void main() {
 
               expect(badgeWidget.padding, null);
 
-              await driver.updateAttributes("Badge", {
+              await driver.asInternalDriver.updateAttributes("Badge", {
                 "padding": [12, 12],
               });
 

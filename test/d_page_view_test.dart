@@ -96,7 +96,7 @@ void main() {
         testWidgets(
           "must renders correctly",
           (tester) async {
-            final driver = DuitDriver.static(
+            final driver = XDriver.static(
               {
                 "type": "PageView",
                 "id": "PageView",
@@ -142,10 +142,9 @@ void main() {
                   },
                 ],
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
-            await pumpDriver(tester, driver);
+            await pumpDriver(tester, driver.asInternalDriver);
 
             final pager = find.byKey(const ValueKey("PageView"));
             final c1 = find.byKey(const ValueKey("c1"));
@@ -171,7 +170,7 @@ void main() {
         testWidgets(
           "must update attributes correctly",
           (tester) async {
-            final driver = DuitDriver.static(
+            final driver = XDriver.static(
               {
                 "type": "PageView",
                 "id": "PageView",
@@ -206,10 +205,9 @@ void main() {
                   },
                 ],
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
-            await pumpDriver(tester, driver);
+            await pumpDriver(tester, driver.asInternalDriver);
 
             var pager = find.byKey(const ValueKey("PageView"));
             var pageViewWidget = tester.widget<PageView>(pager);
@@ -219,7 +217,7 @@ void main() {
 
             expect(pageViewWidget.pageSnapping, true);
 
-            await driver.updateAttributes("PageView", {
+            await driver.asInternalDriver.updateAttributes("PageView", {
               "pageSnapping": false,
             });
 
@@ -240,7 +238,7 @@ void main() {
         testWidgets(
           "must renders and update attributes correctly",
           (tester) async {
-            final driver = DuitDriver.static(
+            final driver = XDriver.static(
               {
                 "type": "PageView",
                 "id": "PageView",
@@ -260,10 +258,9 @@ void main() {
                   }),
                 },
               },
-              transportOptions: EmptyTransportOptions(),
             );
 
-            await pumpDriver(tester, driver);
+            await pumpDriver(tester, driver.asInternalDriver);
 
             var pager = find.byKey(const ValueKey("PageView"));
             var pageViewWidget = tester.widget<PageView>(pager);
@@ -273,7 +270,7 @@ void main() {
 
             expect(pageViewWidget.pageSnapping, true);
 
-            await driver.updateAttributes("PageView", {
+            await driver.asInternalDriver.updateAttributes("PageView", {
               "pageSnapping": false,
             });
 
@@ -291,7 +288,7 @@ void main() {
     testWidgets(
       "PageView remote commands must work as expected",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "PageView",
             "id": "PageView",
@@ -311,10 +308,9 @@ void main() {
               }),
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
-        await pumpDriver(tester, driver);
+        await pumpDriver(tester, driver.asInternalDriver);
 
         final pager = find.byKey(const ValueKey("PageView"));
         var c0 = find.byKey(const ValueKey("i0"));
@@ -322,7 +318,7 @@ void main() {
         expect(c0, findsOneWidget);
 
         // Next page
-        await driver.execute(
+        await driver.asInternalDriver.execute(
           ServerAction.parse(
             {
               "executionType": 1, //local
@@ -348,7 +344,7 @@ void main() {
         expect(c1, findsOneWidget);
 
         // Previous page
-        await driver.execute(
+        await driver.asInternalDriver.execute(
           ServerAction.parse(
             {
               "executionType": 1, //local
@@ -374,7 +370,7 @@ void main() {
         expect(c1, findsNothing);
 
         // Jump to page
-        await driver.execute(
+        await driver.asInternalDriver.execute(
           ServerAction.parse(
             {
               "executionType": 1, //local
@@ -400,7 +396,7 @@ void main() {
         expect(c0, findsNothing);
 
         // Jump to offset
-        await driver.execute(
+        await driver.asInternalDriver.execute(
           ServerAction.parse(
             {
               "executionType": 1, //local
@@ -426,7 +422,7 @@ void main() {
         expect(c0, findsOneWidget);
 
         // Animate to offset
-        await driver.execute(
+        await driver.asInternalDriver.execute(
           ServerAction.parse(
             {
               "executionType": 1, //local
@@ -453,7 +449,7 @@ void main() {
         expect(c0, findsNothing);
 
         // Animate to offset
-        await driver.execute(
+        await driver.asInternalDriver.execute(
           ServerAction.parse(
             {
               "executionType": 1, //local

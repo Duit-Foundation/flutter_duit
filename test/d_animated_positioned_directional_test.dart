@@ -8,7 +8,7 @@ void main() {
   testWidgets(
     "DuitAnimatedPositionedDirectional must renders correctly",
     (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "Stack",
           "id": "stack",
@@ -34,12 +34,10 @@ void main() {
             },
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await pumpDriver(
-        tester,
-        driver,
+        tester, driver.asInternalDriver,
       );
 
       expect(find.byKey(const ValueKey("positioned")), findsOneWidget);

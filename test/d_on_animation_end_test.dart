@@ -54,10 +54,9 @@ void main() {
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
-                driver: DuitDriver.static(
+              child: DuitViewHost.withDriver(
+                driver: XDriver.static(
                   w,
-                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -91,10 +90,9 @@ void main() {
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
-                driver: DuitDriver.static(
+              child: DuitViewHost.withDriver(
+                driver: XDriver.static(
                   _createWidget(0.5),
-                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),

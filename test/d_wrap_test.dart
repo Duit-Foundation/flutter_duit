@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Wrap",
               "id": "w1",
@@ -22,10 +22,9 @@ void main() {
               },
               "children": <Map<String, dynamic>>[],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final wFinder = find.byKey(const ValueKey("w1"));
 
@@ -41,7 +40,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Wrap",
               "id": "w1",
@@ -52,10 +51,9 @@ void main() {
               },
               "children": <Map<String, dynamic>>[],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           expect(find.byKey(const ValueKey("w1")), findsOneWidget);
 
@@ -64,7 +62,7 @@ void main() {
           expect(wrap.spacing, 12);
           expect(wrap.runSpacing, 24);
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "w1",
             {
               "spacing": 24,

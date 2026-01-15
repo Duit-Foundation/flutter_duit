@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "DuitSliverPadding must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
@@ -42,12 +42,10 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
@@ -58,7 +56,7 @@ void main() {
       testWidgets(
         "DuitControlledSliverPadding must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
@@ -89,18 +87,16 @@ void main() {
                 },
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("sliver1")), findsOneWidget);
           expect(find.byKey(const ValueKey("text")), findsOneWidget);
 
-          await driver.updateAttributes("sliver1", {
+          await driver.asInternalDriver.updateAttributes("sliver1", {
             "padding": [
               12,
               24,

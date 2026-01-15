@@ -8,7 +8,7 @@ void main() {
   testWidgets(
     "DuitAnimatedCrossFade must renders correctly",
     (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "AnimatedCrossFade",
           "id": "crossfade",
@@ -33,12 +33,10 @@ void main() {
             },
           ],
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await pumpDriver(
-        tester,
-        driver,
+        tester, driver.asInternalDriver,
       );
 
       expect(find.byKey(const ValueKey("crossfade")), findsOneWidget);
@@ -49,7 +47,7 @@ void main() {
           tester.widget<AnimatedCrossFade>(find.byType(AnimatedCrossFade));
       expect(animatedCrossFade.crossFadeState, CrossFadeState.showFirst);
 
-      await driver.updateAttributes("crossfade", {
+      await driver.asInternalDriver.updateAttributes("crossfade", {
         "crossFadeState": 1,
       });
 

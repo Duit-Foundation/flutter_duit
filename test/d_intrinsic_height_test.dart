@@ -23,23 +23,21 @@ Map<String, dynamic> _createWidget([bool isControlled = false]) {
 void main() {
   group("DuitIntrinsicHeight widget tests", () {
     testWidgets("check widget", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(),
-        transportOptions: HttpTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(find.byKey(const ValueKey("intrinsicHeightId")), findsOneWidget);
     });
 
     testWidgets("controlled variant", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(true),
-        transportOptions: HttpTransportOptions(),
       );
 
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       expect(find.byKey(const ValueKey("intrinsicHeightId")), findsOneWidget);
     });

@@ -4,21 +4,18 @@ import "package:flutter_duit/flutter_duit.dart";
 
 final class DuitFocusNodeManager with FocusCapabilityDelegate {
   final _nodeRegistry = <String, FocusNode>{};
+  late final UIDriver _driver;
 
   @override
   void attachFocusNode(String nodeId, FocusNode node) {
     final existing = _nodeRegistry[nodeId];
-    if (allowFocusNodeOverride) {
-      if (existing != null) {
-        existing.dispose();
-      }
-      _nodeRegistry[nodeId] = node;
-    } else {
-      if (existing != null) {
-        throw StateError("FocusNode with id $nodeId is already attached");
-      }
-      _nodeRegistry[nodeId] = node;
+    if (existing != null) {
+      existing.dispose();
+      _driver.logWarning(
+        "Focus node with id=$nodeId already exists and it will be overriden \n This could happen because two or more controlled widgets have the same id parameter",
+      );
     }
+    _nodeRegistry[nodeId] = node;
   }
 
   @override
@@ -97,7 +94,5 @@ final class DuitFocusNodeManager with FocusCapabilityDelegate {
   FocusNode? getNode(Object? key) => _nodeRegistry[key];
 
   @override
-  void linkDriver(UIDriver driver) {
-    //void method
-  }
+  void linkDriver(UIDriver driver) => _driver = driver;
 }

@@ -155,10 +155,9 @@ void main() {
           await tester.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
-                driver: DuitDriver.static(
+              child: DuitViewHost.withDriver(
+                driver: XDriver.static(
                   _createWidget(_blur1),
-                  transportOptions: EmptyTransportOptions(),
                 ),
                 child: Container(color: Colors.red),
               ),
@@ -183,10 +182,9 @@ void main() {
             await tester.pumpWidget(
               Directionality(
                 textDirection: TextDirection.ltr,
-                child: DuitViewHost(
-                  driver: DuitDriver.static(
+                child: DuitViewHost.withDriver(
+                  driver: XDriver.static(
                     _createWidget(filter.$1),
-                    transportOptions: EmptyTransportOptions(),
                   ),
                   child: Container(color: Colors.red),
                 ),
@@ -214,7 +212,7 @@ void main() {
       testWidgets(
         "renders child under filter",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "BackdropFilter",
               "id": "filter_child",
@@ -230,13 +228,12 @@ void main() {
                 "controlled": false,
               },
             },
-            transportOptions: HttpTransportOptions(),
           );
 
           await tester.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(driver: driver),
+              child: DuitViewHost.withDriver(driver: driver),
             ),
           );
           await tester.pumpAndSettle();
@@ -249,7 +246,7 @@ void main() {
       testWidgets(
         "clipBehavior: hardEdge",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "BackdropFilter",
               "id": "filter_clip",
@@ -268,13 +265,12 @@ void main() {
                 "controlled": false,
               },
             },
-            transportOptions: HttpTransportOptions(),
           );
 
           await tester.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(driver: driver),
+              child: DuitViewHost.withDriver(driver: driver),
             ),
           );
           await tester.pumpAndSettle();

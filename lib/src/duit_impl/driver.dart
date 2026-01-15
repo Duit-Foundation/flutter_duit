@@ -9,6 +9,7 @@ import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_duit/src/view_manager/index.dart";
 import "package:flutter_duit/src/transport/index.dart";
 
+@Deprecated("Will be removed in the next major release. Use [XDriver] instead")
 // ignore: missing_override_of_must_be_overridden
 final class DuitDriver extends UIDriver with DriverHooks {
   @visibleForTesting
@@ -73,6 +74,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
 
   @visibleForTesting
   @override
+  @Deprecated("Use [LoggingCapabilityDelegate] instead")
   DebugLogger? logger;
 
   late ViewManager _viewManager;
@@ -80,6 +82,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
 
   final _focusNodeManager = DuitFocusNodeManager();
+  final LoggingCapabilityDelegate _loggingManager;
 
   DuitDriver(
     this.source, {
@@ -89,20 +92,22 @@ final class DuitDriver extends UIDriver with DriverHooks {
     this.logger,
     EventResolver? customEventResolver,
     ActionExecutor? customActionExecutor,
+    @Deprecated("Use [LoggingCapabilityDelegate] instead")
     DebugLogger? customLogger,
     bool shared = false,
-  }) {
-    logger = customLogger ?? DefaultLogger.instance;
-
+    LoggingCapabilityDelegate? loggingManager,
+  }) : _loggingManager = loggingManager ?? const LoggingManager() {
     _useStaticContent = false;
     actionExecutor = customActionExecutor ??
         DefaultActionExecutor(
           driver: this,
+          // ignore: deprecated_member_use_from_same_package
           logger: logger,
         );
     eventResolver = customEventResolver ??
         DefaultEventResolver(
           driver: this,
+          // ignore: deprecated_member_use_from_same_package
           logger: logger,
         );
     isModule = false;
@@ -117,23 +122,25 @@ final class DuitDriver extends UIDriver with DriverHooks {
     this.logger,
     EventResolver? customEventResolver,
     ActionExecutor? customActionExecutor,
+    @Deprecated("Use [LoggingCapabilityDelegate] instead")
     DebugLogger? customLogger,
     this.source = "",
     this.initialRequestPayload,
     bool shared = false,
-  }) {
-    logger = customLogger ?? DefaultLogger.instance;
-
+    LoggingCapabilityDelegate? loggingManager,
+  }) : _loggingManager = loggingManager ?? const LoggingManager() {
     _useStaticContent = true;
     isModule = false;
     eventResolver = customEventResolver ??
         DefaultEventResolver(
           driver: this,
+          // ignore: deprecated_member_use_from_same_package
           logger: logger,
         );
     actionExecutor = customActionExecutor ??
         DefaultActionExecutor(
           driver: this,
+          // ignore: deprecated_member_use_from_same_package
           logger: logger,
         );
     _viewManager = shared ? MultiViewManager() : SimpleViewManager();
@@ -148,7 +155,8 @@ final class DuitDriver extends UIDriver with DriverHooks {
         externalEventHandler = null,
         transportOptions = EmptyTransportOptions(),
         driverChannel = const MethodChannel("duit:driver"),
-        _viewManager = SimpleViewManager();
+        _viewManager = SimpleViewManager(),
+        _loggingManager = const LoggingManager();
 
   @protected
   @override
@@ -178,10 +186,10 @@ final class DuitDriver extends UIDriver with DriverHooks {
         );
       }
     } catch (e, s) {
-      logger?.error(
+      logError(
         "Failed conneting to server",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
       _eventStreamController.addError(e);
     }
@@ -195,10 +203,10 @@ final class DuitDriver extends UIDriver with DriverHooks {
               await eventResolver.resolveEvent(buildContext, d);
             }
           } catch (e, s) {
-            logger?.error(
+            logError(
               "Error while processing event from transport stream",
-              error: e,
-              stackTrace: s,
+              e,
+              s,
             );
             _eventStreamController.addError(e);
           }
@@ -248,10 +256,10 @@ final class DuitDriver extends UIDriver with DriverHooks {
         throw err;
       }
     } catch (e, s) {
-      logger?.error(
+      logError(
         "Layout parse failed",
-        error: e,
-        stackTrace: s,
+        e,
+        s,
       );
       _eventStreamController.addError(
         UIDriverErrorEvent(
@@ -286,9 +294,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
     } catch (e) {
       //Safely handle the case of assigning parsers during
       //multiple driver initializations as part of running tests
-      logger?.warn(
-        e.toString(),
-      );
+      logWarning(e);
     }
   }
 
@@ -305,10 +311,11 @@ final class DuitDriver extends UIDriver with DriverHooks {
       if (event != null && buildContext.mounted) {
         eventResolver.resolveEvent(buildContext, event);
       }
-    } catch (e) {
-      logger?.error(
+    } catch (e, s) {
+      logError(
         "Error executing action",
-        error: e,
+        e,
+        s,
       );
     } finally {
       afterActionCallback?.call();
@@ -438,7 +445,7 @@ final class DuitDriver extends UIDriver with DriverHooks {
     int state,
   ) {
     _viewManager.notifyWidgetDisplayStateChanged(viewTag, state);
-    logger?.info(
+    logInfo(
       "Widget with tag ${viewTag.isEmpty ? "*root*" : viewTag} state changed to $state",
     );
   }
@@ -528,4 +535,34 @@ final class DuitDriver extends UIDriver with DriverHooks {
   @override
   @preferInline
   FocusNode? getNode(Object? key) => _focusNodeManager.getNode(key);
+
+  @override
+  @preferInline
+  void logCritical(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.logCritical(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void logDebug(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.logDebug(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void logError(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.logError(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void logInfo(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.logInfo(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void logVerbose(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.logVerbose(message, exception, stackTrace);
+
+  @override
+  @preferInline
+  void logWarning(message, [Object? exception, StackTrace? stackTrace]) =>
+      _loggingManager.logWarning(message, exception, stackTrace);
 }

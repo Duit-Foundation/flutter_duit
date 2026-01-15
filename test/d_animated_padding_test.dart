@@ -8,7 +8,7 @@ void main() {
   testWidgets(
     "DuitAnimatedPadding must renders correctly",
     (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "AnimatedPadding",
           "id": "padding",
@@ -29,12 +29,10 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await pumpDriver(
-        tester,
-        driver,
+        tester, driver.asInternalDriver,
       );
 
       expect(find.byKey(const ValueKey("padding")), findsOneWidget);

@@ -3,6 +3,7 @@ import "package:flutter/widgets.dart" show Widget, mustCallSuper;
 import "package:flutter_duit/src/view_manager/view_manager.dart";
 import "package:flutter_duit/src/view_manager/view_layout.dart";
 
+@Deprecated("Will be removed in the next major release.")
 base class SimpleViewManager extends ViewManager {
   late DuitViewLayout _view;
   final Map<String, UIElementController> _viewControllers = {};
@@ -47,7 +48,7 @@ base class SimpleViewManager extends ViewManager {
   @override
   Widget build([String tag = ""]) {
     if (tag.isNotEmpty) {
-      driver.logger?.warn(
+      driver.logWarning(
         "Tag is not supported in SimpleViewManager and will be ignored",
       );
     }
@@ -63,7 +64,7 @@ base class SimpleViewManager extends ViewManager {
   @override
   bool isWidgetReady(String viewTag) {
     if (viewTag.isNotEmpty) {
-      driver.logger?.warn(
+      driver.logWarning(
         "Tag is not supported in SimpleViewManager and will be ignored",
       );
     }
@@ -75,7 +76,7 @@ base class SimpleViewManager extends ViewManager {
     final alreadyContains = _viewControllers.containsKey(id);
 
     if (alreadyContains) {
-      driver.logger?.warn(
+      driver.logWarning(
         "Controller with id=$id already exists and it will be overriden \n This could happen because two or more controlled widgets have the same id parameter",
       );
     }

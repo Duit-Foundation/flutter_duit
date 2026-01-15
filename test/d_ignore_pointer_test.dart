@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "IgnorePointer",
               "id": "ignore",
@@ -29,10 +29,9 @@ void main() {
                 },
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           expect(find.byKey(const ValueKey("ignore")), findsOneWidget);
 
@@ -46,7 +45,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "IgnorePointer",
               "id": "ignore",
@@ -64,10 +63,9 @@ void main() {
                 },
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           expect(find.byKey(const ValueKey("ignore")), findsOneWidget);
 
@@ -76,7 +74,7 @@ void main() {
 
           expect(ignoreWidget.ignoring, true);
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "ignore",
             {
               "ignoring": false,

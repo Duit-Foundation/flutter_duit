@@ -25,26 +25,24 @@ Map<String, dynamic> _createWidget({
 void main() {
   group("DuitRichText widget tests", () {
     testWidgets("check widget", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(),
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       expect(find.byKey(const Key("richTextId")), findsOneWidget);
       expect(find.text("Hello, RichText!"), findsOneWidget);
     });
 
     testWidgets("controlled widget renders and updates textSpan",
         (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(isControlled: true),
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
       expect(find.byKey(const Key("richTextId")), findsOneWidget);
       expect(find.text("Hello, RichText!"), findsOneWidget);
 
-      await driver.updateAttributes(
+      await driver.asInternalDriver.updateAttributes(
         "richTextId",
         {
           "textSpan": {
@@ -84,11 +82,10 @@ void main() {
         ],
       };
 
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(textSpan: nestedSpan),
-        transportOptions: EmptyTransportOptions(),
       );
-      await pumpDriver(tester, driver);
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final textWidget =
           tester.widget<Text>(find.byKey(const Key("richTextId")));

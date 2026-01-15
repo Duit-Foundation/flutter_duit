@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must update groupValue and sync all radios",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "RadioGroupContext",
               "id": "group1",
@@ -40,10 +40,9 @@ void main() {
                 ],
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final radioAFinder = find.byKey(const ValueKey("radioA"));
           final radioBFinder = find.byKey(const ValueKey("radioB"));
@@ -76,7 +75,7 @@ void main() {
       testWidgets(
         "must update Radio attributes (activeColor)",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "RadioGroupContext",
               "id": "group1",
@@ -89,10 +88,9 @@ void main() {
                 "attributes": {"value": "a", "activeColor": "#075eeb"},
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final radioFinder = find.byKey(const ValueKey("radioA"));
           expect(radioFinder, findsOneWidget);
@@ -100,7 +98,7 @@ void main() {
           var radio = tester.widget<Radio>(radioFinder);
           expect(radio.activeColor, const Color(0xFF075EEB));
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "radioA",
             {"activeColor": "#03fcc2", "value": "a"},
           );

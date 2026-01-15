@@ -2,8 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/utils/gesture_interceptor.dart";
 
-class DuitViewContext extends InheritedWidget
-    implements GestureInterceptionLogic {
+class DuitViewContext extends InheritedWidget implements GestureInterceptionLogic {
   @override
   final GestureInterceptor? gestureInterceptor;
 
@@ -12,20 +11,16 @@ class DuitViewContext extends InheritedWidget
 
   final SliverGridDelegatesRegistry sliverGridDelegatesRegistry;
 
-  final DebugLogger logger;
-
   const DuitViewContext({
     required Widget child,
     required this.gestureInterceptorBehavior,
     required this.sliverGridDelegatesRegistry,
-    required this.logger,
     super.key,
     this.gestureInterceptor,
   }) : super(child: child);
 
   static DuitViewContext of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<DuitViewContext>();
+    final result = context.dependOnInheritedWidgetOfExactType<DuitViewContext>();
     assert(result != null, "No ViewContext found in context");
     return result!;
   }

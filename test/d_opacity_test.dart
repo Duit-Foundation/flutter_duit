@@ -38,10 +38,9 @@ void main() {
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
-                driver: DuitDriver.static(
+              child: DuitViewHost.withDriver(
+                driver: XDriver.static(
                   _createWidget(0.5),
-                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -62,10 +61,9 @@ void main() {
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
-                driver: DuitDriver.static(
+              child: DuitViewHost.withDriver(
+                driver: XDriver.static(
                   _createWidget(null),
-                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),
@@ -83,15 +81,14 @@ void main() {
       testWidgets(
         "check child widget opacity changed",
         (t) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createWidget(0.5, true),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await t.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),
@@ -104,7 +101,7 @@ void main() {
             0.5,
           );
 
-          await driver.updateAttributes("op1", {"opacity": 1.0});
+          await driver.asInternalDriver.updateAttributes("op1", {"opacity": 1.0});
 
           await t.pumpAndSettle();
 

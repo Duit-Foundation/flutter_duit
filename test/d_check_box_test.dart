@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must change value",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CheckBox",
               "id": "box",
@@ -19,10 +19,9 @@ void main() {
                 "value": true,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           expect(find.byKey(const ValueKey("box")), findsOneWidget);
 

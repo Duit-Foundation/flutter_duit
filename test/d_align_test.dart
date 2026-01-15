@@ -54,9 +54,8 @@ void main() {
       ];
 
       testWidgets("check element alignment", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget(alignments.first, true),
-          transportOptions: EmptyTransportOptions(),
         );
 
         await tester.pumpWidget(
@@ -64,7 +63,7 @@ void main() {
             textDirection: TextDirection.ltr,
             child: SizedBox.square(
               dimension: dim,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),
@@ -78,7 +77,7 @@ void main() {
         for (var i = 1; i < alignments.length; i++) {
           final v = alignments[i];
 
-          await driver.updateAttributes("alignId", {
+          await driver.asInternalDriver.updateAttributes("alignId", {
             "alignment": v,
           });
           await tester.pumpAndSettle();
@@ -93,10 +92,9 @@ void main() {
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
-              driver: DuitDriver.static(
+            child: DuitViewHost.withDriver(
+              driver: XDriver.static(
                 _createWidget("topLeft"),
-                transportOptions: EmptyTransportOptions(),
               ),
             ),
           ),
@@ -112,14 +110,13 @@ void main() {
       });
 
       testWidgets("must update attributes", (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           _createWidget("topLeft", true),
-          transportOptions: EmptyTransportOptions(),
         );
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -127,7 +124,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        await driver.updateAttributes("alignId", {
+        await driver.asInternalDriver.updateAttributes("alignId", {
           "alignment": "bottomRight",
         });
 

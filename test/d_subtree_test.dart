@@ -108,10 +108,9 @@ void main() {
           await tester.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
-                driver: DuitDriver.static(
+              child: DuitViewHost.withDriver(
+                driver: XDriver.static(
                   _createWidget(),
-                  transportOptions: EmptyTransportOptions(),
                 ),
               ),
             ),

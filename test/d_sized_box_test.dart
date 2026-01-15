@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "SizedBox",
               "id": "sb1",
@@ -21,10 +21,9 @@ void main() {
                 "height": 50.0,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final sbFinder = find.byKey(const ValueKey("sb1"));
 
@@ -40,7 +39,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "SizedBox",
               "id": "sb1",
@@ -50,10 +49,9 @@ void main() {
                 "height": 50.0,
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           expect(find.byKey(const ValueKey("sb1")), findsOneWidget);
 
@@ -62,7 +60,7 @@ void main() {
           expect(sb.width, 100.0);
           expect(sb.height, 50.0);
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "sb1",
             {
               "width": 200.0,

@@ -3,6 +3,7 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
+@Deprecated("Will be removed in the next major release.")
 final class NativeTransport extends Transport {
   final UIDriver driver;
 
@@ -20,8 +21,7 @@ final class NativeTransport extends Transport {
         },
       );
     } catch (e, s) {
-      driver.logger
-          ?.error("NativeTransport connect error", error: e, stackTrace: s);
+      driver.logError("NativeTransport connect error", e, s);
       rethrow;
     }
   }
@@ -31,8 +31,7 @@ final class NativeTransport extends Transport {
     try {
       driver.driverChannel?.invokeMethod("duit_dispose");
     } catch (e, s) {
-      driver.logger
-          ?.error("NativeTransport dispose error", error: e, stackTrace: s);
+      driver.logError("NativeTransport dispose error", e, s);
       rethrow;
     }
   }

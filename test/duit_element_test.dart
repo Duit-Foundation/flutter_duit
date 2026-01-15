@@ -2,23 +2,21 @@ import "package:flutter_duit/flutter_duit.dart";
 import "package:flutter_duit/src/ui/index.dart";
 import "package:flutter_test/flutter_test.dart";
 
-import "utils.dart";
-
 void main() {
   group(
     "DuitElement tests",
     () {
-      late MockUIDriver mockDriver;
+      late XDriver mockDriver;
 
       setUp(() {
-        mockDriver = MockUIDriver();
+        mockDriver = XDriver.static({});
         ServerAction.setActionParser(const DefaultActionParser());
       });
       test("must throw NullTagException on component handling", () {
         expect(
           () => DuitElement.fromJson(
             {"type": ElementType.component, "id": "id"},
-            mockDriver,
+            mockDriver.asInternalDriver,
           ),
           throwsA(isA<NullTagException>()),
         );
@@ -31,7 +29,7 @@ void main() {
               "type": ElementType.fragment,
               "id": "id",
             },
-            mockDriver,
+            mockDriver.asInternalDriver,
           ),
           throwsA(isA<NullTagException>()),
         );
@@ -47,7 +45,7 @@ void main() {
               "controlled": false,
               "attributes": <String, dynamic>{},
             },
-            mockDriver,
+            mockDriver.asInternalDriver,
           );
 
           expect(element.attributes, isA<ViewAttribute>());
@@ -63,7 +61,7 @@ void main() {
               "attributes": <String, dynamic>{},
               "children": <ElementTreeEntry>[],
             },
-            mockDriver,
+            mockDriver.asInternalDriver,
           );
 
           expect(element2.children, isA<List>());

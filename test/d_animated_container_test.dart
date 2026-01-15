@@ -8,7 +8,7 @@ void main() {
   testWidgets(
     "DuitAnimatedContainer must renders correctly",
     (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         {
           "type": "AnimatedContainer",
           "id": "cont",
@@ -25,12 +25,10 @@ void main() {
             },
           },
         },
-        transportOptions: EmptyTransportOptions(),
       );
 
       await pumpDriver(
-        tester,
-        driver,
+        tester, driver.asInternalDriver,
       );
 
       expect(

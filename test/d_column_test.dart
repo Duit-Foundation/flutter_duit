@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Column",
               "id": "w1",
@@ -19,10 +19,9 @@ void main() {
               "attributes": <String, dynamic>{},
               "children": <Map<String, dynamic>>[],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           final colFinder = find.byKey(const ValueKey("w1"));
 
@@ -37,7 +36,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Column",
               "id": "w1",
@@ -45,10 +44,9 @@ void main() {
               "attributes": <String, dynamic>{},
               "children": <Map<String, dynamic>>[],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
-          await pumpDriver(tester, driver);
+          await pumpDriver(tester, driver.asInternalDriver);
 
           expect(find.byKey(const ValueKey("w1")), findsOneWidget);
 
@@ -56,7 +54,7 @@ void main() {
 
           expect(column.mainAxisAlignment, MainAxisAlignment.start);
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "w1",
             {
               "mainAxisAlignment": "spaceBetween",

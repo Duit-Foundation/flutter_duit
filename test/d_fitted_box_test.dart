@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Container",
               "id": "sized",
@@ -41,12 +41,10 @@ void main() {
                 },
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("text")), findsOneWidget);
@@ -56,7 +54,7 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "Container",
               "id": "sized",
@@ -86,12 +84,10 @@ void main() {
                 },
               },
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           var box = find.byKey(const ValueKey("fited"));
@@ -99,7 +95,7 @@ void main() {
           expect(box, findsOneWidget);
           expect(boxW.fit, BoxFit.fitWidth);
 
-          await driver.updateAttributes("fited", {"fit": "contain"});
+          await driver.asInternalDriver.updateAttributes("fited", {"fit": "contain"});
 
           await tester.pumpAndSettle();
 

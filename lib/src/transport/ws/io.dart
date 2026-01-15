@@ -21,6 +21,7 @@ import "package:flutter_duit/flutter_duit.dart";
 ///   options: WebSocketTransportOptions(),
 /// );
 /// ```
+@Deprecated("Will be removed in the next major release.")
 final class WSTransport extends Transport implements Streamer {
   StreamController<Map<String, dynamic>> _controller =
       StreamController<Map<String, dynamic>>();

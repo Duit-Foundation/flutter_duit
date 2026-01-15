@@ -164,7 +164,7 @@ void main() {
   );
 
   testWidgets("ListView must renders correctly", (tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "controlled": false,
         "id": "list1",
@@ -187,12 +187,11 @@ void main() {
           },
         ),
       },
-      transportOptions: EmptyTransportOptions(),
     );
 
     await pumpDriver(
       tester,
-      driver,
+      driver.asInternalDriver,
     );
 
     expect(find.byKey(const ValueKey("list1")), findsOneWidget);
@@ -219,7 +218,7 @@ void main() {
   });
 
   testWidgets("ListView must update attributes", (tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       {
         "controlled": true,
         "id": "list1",
@@ -242,19 +241,18 @@ void main() {
           },
         ),
       },
-      transportOptions: EmptyTransportOptions(),
     );
 
     await pumpDriver(
       tester,
-      driver,
+      driver.asInternalDriver,
     );
 
     var list = tester.widget<ListView>(find.byKey(const ValueKey("list1")));
 
     expect(list.itemExtent, 100.0);
 
-    await driver.updateAttributes("list1", {
+    await driver.asInternalDriver.updateAttributes("list1", {
       "type": 0,
       "itemExtent": 200.0,
     });
@@ -269,15 +267,14 @@ void main() {
   testWidgets(
       "Checking the correct creation and destruction of component controllers when scrolling in ListView.builder",
       (tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       _createWidget(1),
-      transportOptions: EmptyTransportOptions(),
     );
 
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(
+        child: DuitViewHost.withDriver(
           driver: driver,
         ),
       ),
@@ -295,7 +292,7 @@ void main() {
     );
 
     expect(find.byKey(const ValueKey("10")), findsOneWidget);
-    expect(driver.controllersCount == 10, false);
+    expect(driver.asInternalDriver.controllersCount == 10, false);
 
     await tester.scrollUntilVisible(
       itemFirst,
@@ -304,21 +301,20 @@ void main() {
     );
 
     expect(itemFirst, findsOneWidget);
-    expect(driver.controllersCount == 10, false);
+    expect(driver.asInternalDriver.controllersCount == 10, false);
   });
 
   testWidgets(
       "Checking the correct creation and destruction of component controllers when scrolling in ListView.separated",
       (tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       _createWidget(2),
-      transportOptions: EmptyTransportOptions(),
     );
 
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(
+        child: DuitViewHost.withDriver(
           driver: driver,
         ),
       ),
@@ -337,7 +333,7 @@ void main() {
     );
 
     expect(itemLast, findsOneWidget);
-    expect(driver.controllersCount == 10, false);
+    expect(driver.asInternalDriver.controllersCount == 10, false);
 
     await tester.scrollUntilVisible(
       itemFirst,
@@ -346,19 +342,18 @@ void main() {
     );
 
     expect(itemFirst, findsOneWidget);
-    expect(driver.controllersCount == 10, false);
+    expect(driver.asInternalDriver.controllersCount == 10, false);
   });
 
   testWidgets("must add children", (tester) async {
-    final driver = DuitDriver.static(
+    final driver = XDriver.static(
       _createWidget(2),
-      transportOptions: EmptyTransportOptions(),
     );
 
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
-        child: DuitViewHost(
+        child: DuitViewHost.withDriver(
           driver: driver,
         ),
       ),
@@ -377,7 +372,8 @@ void main() {
 
     expect(itemLast, findsOneWidget);
 
-    driver.updateAttributes("87b54621-ac6d-42c3-8d1f-397e3bd63bca", {
+    driver.asInternalDriver
+        .updateAttributes("87b54621-ac6d-42c3-8d1f-397e3bd63bca", {
       "children": List.generate(
         10,
         (i) => {

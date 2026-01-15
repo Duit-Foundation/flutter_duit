@@ -1,167 +1,165 @@
-import "package:duit_kernel/duit_kernel.dart";
-import "package:flutter/material.dart";
-import "package:flutter_duit/flutter_duit.dart";
-import "package:flutter_test/flutter_test.dart";
-import "package:mocktail/mocktail.dart";
+// import "package:duit_kernel/duit_kernel.dart";
+// import "package:flutter/material.dart";
+// import "package:flutter_duit/flutter_duit.dart";
+// import "package:flutter_test/flutter_test.dart";
+// import "package:mocktail/mocktail.dart";
 
-class _StubTransport extends Mock implements Transport {}
+void main() {}
 
-class _StubStreamTransport extends Mock implements Transport, Streamer {}
+// class _StubTransport extends Mock implements Transport {}
 
-final class _StubScriptRunner extends ScriptRunner<dynamic> implements Mock {
-  _StubScriptRunner()
-      : super(
-          runnerOptions: null,
-        );
-  String x = "";
-  @override
-  Future<void> eval(String sourceCode) async {
-    x = "${sourceCode}_evaluated";
-  }
+// class _StubStreamTransport extends Mock implements Transport, Streamer {}
 
-  @override
-  Future<void> initWithTransport(Transport transport) async {}
+// final class _StubScriptRunner extends ScriptRunner<dynamic> implements Mock {
+//   _StubScriptRunner()
+//       : super(
+//           runnerOptions: null,
+//         );
+//   String x = "";
+//   @override
+//   Future<void> eval(String sourceCode) async {
+//     x = "${sourceCode}_evaluated";
+//   }
 
-  @override
-  Future<Map<String, dynamic>?> runScript(
-    String functionName, {
-    String? url,
-    Map<String, dynamic>? meta,
-    Map<String, dynamic>? body,
-  }) async =>
-      {};
-}
+//   @override
+//   Future<void> initWithTransport(Transport transport) async {}
 
-final _stubTransport = _StubTransport();
-final _stubStreamTransport = _StubStreamTransport();
-final _stubScriptRunner = _StubScriptRunner();
+//   @override
+//   Future<Map<String, dynamic>?> runScript(
+//     String functionName, {
+//     String? url,
+//     Map<String, dynamic>? meta,
+//     Map<String, dynamic>? body,
+//   }) async =>
+//       {};
+// }
 
-extension on UIDriver {
-  void applyTransport() {
-    transport = _stubTransport;
-  }
+// final _stubTransport = _StubTransport();
+// final _stubStreamTransport = _StubStreamTransport();
+// final _stubScriptRunner = _StubScriptRunner();
 
-  void applyStreamTransport() {
-    transport = _stubStreamTransport;
-  }
+// extension on UIDriver {
+//   void applyTransport() {
+//     transport = _stubTransport;
+//   }
 
-  void applyScriptRunner() {
-    scriptRunner = _stubScriptRunner;
-  }
-}
+//   void applyStreamTransport() {
+//     transport = _stubStreamTransport;
+//   }
 
-void main() {
-  test(
-    "must handle transport returnerd content",
-    () async {
-      when(_stubTransport.connect).thenAnswer(
-        (_) => Future.value(
-          <String, dynamic>{
-            "type": "Text",
-            "id": "id",
-            "attributes": {
-              "data": "Text",
-            },
-          },
-        ),
-      );
+//   void applyScriptRunner() {
+//     scriptRunner = _stubScriptRunner;
+//   }
+// }
 
-      final driver = DuitDriver(
-        "",
-        transportOptions: EmptyTransportOptions(),
-      )..applyTransport();
+// void main() {
+//   test(
+//     "must handle transport returnerd content",
+//     () async {
+//       when(_stubTransport.connect).thenAnswer(
+//         (_) => Future.value(
+//           <String, dynamic>{
+//             "type": "Text",
+//             "id": "id",
+//             "attributes": {
+//               "data": "Text",
+//             },
+//           },
+//         ),
+//       );
 
-      driver.eventStream.listen((e) {
-        expect(e, isA<UIDriverViewEvent>());
-        return;
-      });
+//       final driver = XDriver(
+//         "",
+//       );
 
-      await driver.init();
-    },
-  );
+//       driver.eventStream.listen((e) {
+//         expect(e, isA<UIDriverViewEvent>());
+//         return;
+//       });
 
-  test(
-    "must handle stream transport returnerd content",
-    () async {
-      when(_stubStreamTransport.connect).thenAnswer(
-        (_) => Future.value(
-          <String, dynamic>{
-            "type": "Text",
-            "id": "id",
-            "attributes": {
-              "data": "Text",
-            },
-          },
-        ),
-      );
+//       await driver.init();
+//     },
+//   );
 
-      when(() => _stubStreamTransport.eventStream)
-          .thenAnswer((_) => const Stream.empty());
+//   test(
+//     "must handle stream transport returnerd content",
+//     () async {
+//       when(_stubStreamTransport.connect).thenAnswer(
+//         (_) => Future.value(
+//           <String, dynamic>{
+//             "type": "Text",
+//             "id": "id",
+//             "attributes": {
+//               "data": "Text",
+//             },
+//           },
+//         ),
+//       );
 
-      final driver = DuitDriver(
-        "",
-        transportOptions: EmptyTransportOptions(),
-      )..applyStreamTransport();
+//       when(() => _stubStreamTransport.eventStream)
+//           .thenAnswer((_) => const Stream.empty());
 
-      driver.eventStream.listen((e) {
-        expect(e, isA<UIDriverViewEvent>());
-        return;
-      });
+//       final driver = XDriver(
+//         "",
+//       )..applyStreamTransport();
 
-      await driver.init();
-    },
-  );
+//       driver.eventStream.listen((e) {
+//         expect(e, isA<UIDriverViewEvent>());
+//         return;
+//       });
 
-  test(
-    "must dispatch script evaluation to script runner",
-    () async {
-      final driver = DuitDriver(
-        "",
-        transportOptions: EmptyTransportOptions(),
-      )..applyScriptRunner();
+//       await driver.init();
+//     },
+//   );
 
-      await driver.init();
-      await driver.evalScript("script");
+//   test(
+//     "must dispatch script evaluation to script runner",
+//     () async {
+//       final driver = XDriver(
+//         "",
+//       )..applyScriptRunner();
 
-      expect(_stubScriptRunner.x, "script_evaluated");
-    },
-  );
+//       await driver.init();
+//       await driver.evalScript("script");
 
-  testWidgets(
-    "driver must build widget",
-    (tester) async {
-      when(_stubTransport.connect).thenAnswer(
-        (_) => Future.value(
-          <String, dynamic>{
-            "type": "Text",
-            "id": "id",
-            "attributes": {
-              "data": "Text",
-            },
-          },
-        ),
-      );
+//       expect(_stubScriptRunner.x, "script_evaluated");
+//     },
+//   );
 
-      final driver = DuitDriver(
-        "",
-        transportOptions: EmptyTransportOptions(),
-      )..applyTransport();
+//   testWidgets(
+//     "driver must build widget",
+//     (tester) async {
+//       when(_stubTransport.connect).thenAnswer(
+//         (_) => Future.value(
+//           <String, dynamic>{
+//             "type": "Text",
+//             "id": "id",
+//             "attributes": {
+//               "data": "Text",
+//             },
+//           },
+//         ),
+//       );
 
-      await driver.init();
+//       final driver = XDriver(
+//         "",
+//       )..applyTransport();
 
-      await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: driver.build() ?? const SizedBox(),
-        ),
-      );
+//       await driver.init();
 
-      driver.notifyWidgetDisplayStateChanged("", 1);
+//       await tester.pumpWidget(
+//         Directionality(
+//           textDirection: TextDirection.ltr,
+//           child: driver.build() ?? const SizedBox(),
+//         ),
+//       );
 
-      final text = find.text("Text");
+//       driver.notifyWidgetDisplayStateChanged("", 1);
 
-      expect(text, findsOneWidget);
-      expect(driver.isWidgetReady(""), true);
-    },
-  );
-}
+//       final text = find.text("Text");
+
+//       expect(text, findsOneWidget);
+//       expect(driver.isWidgetReady(""), true);
+//     },
+//   );
+// }

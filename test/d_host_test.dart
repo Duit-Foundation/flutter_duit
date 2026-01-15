@@ -14,18 +14,17 @@ void main() {
     () {
       group("Host error builder tests", () {
         testWidgets("Host must show error text", (WidgetTester tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "invalid_type",
               "id": "1",
             },
-            transportOptions: HttpTransportOptions(),
           );
 
           await tester.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
                 errorWidgetBuilder: (context, error) {
                   return Text(error.toString());
@@ -43,18 +42,17 @@ void main() {
           expect(errorText, findsOneWidget);
         });
         testWidgets("Host must rethrow error", (WidgetTester tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "invalid_type",
               "id": "1",
             },
-            transportOptions: HttpTransportOptions(),
           );
 
           await tester.pumpWidget(
             Directionality(
               textDirection: TextDirection.ltr,
-              child: DuitViewHost(
+              child: DuitViewHost.withDriver(
                 driver: driver,
               ),
             ),
@@ -68,7 +66,7 @@ void main() {
 
       testWidgets("Host must show child instead of placeholder",
           (WidgetTester tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "Container",
             "id": "1",
@@ -78,7 +76,6 @@ void main() {
               "height": 250,
             },
           },
-          transportOptions: HttpTransportOptions(),
         );
 
         const childKey = ValueKey("child");
@@ -86,7 +83,7 @@ void main() {
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
               showChildInsteadOfPlaceholder: true,
               placeholder: const CircularProgressIndicator(),
@@ -104,7 +101,7 @@ void main() {
 
       testWidgets("Host must show placeholder correctly",
           (WidgetTester tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "Container",
             "id": "1",
@@ -114,7 +111,6 @@ void main() {
               "height": 250,
             },
           },
-          transportOptions: HttpTransportOptions(),
         );
 
         const childKey = ValueKey("child");
@@ -122,7 +118,7 @@ void main() {
         await tester.pumpWidget(
           Directionality(
             textDirection: TextDirection.ltr,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
               showChildInsteadOfPlaceholder: false,
               placeholder: const CircularProgressIndicator(),
@@ -144,7 +140,7 @@ void main() {
           testWidgets(
             "shared driver must create two widgets",
             (WidgetTester tester) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "widgets": {
                     "first": {
@@ -175,8 +171,6 @@ void main() {
                     },
                   },
                 },
-                transportOptions: EmptyTransportOptions(),
-                shared: true,
               );
 
               await tester.pumpWidget(
@@ -184,12 +178,12 @@ void main() {
                   textDirection: TextDirection.ltr,
                   child: Column(
                     children: [
-                      DuitViewHost(
+                      DuitViewHost.withDriver(
                         driver: driver,
                         viewTag: "first",
                       ),
                       const Text("Flutter view between Duit views"),
-                      DuitViewHost(
+                      DuitViewHost.withDriver(
                         driver: driver,
                         viewTag: "second",
                       ),
@@ -209,12 +203,13 @@ void main() {
               expect(ch1, findsOneWidget);
               expect(ch2, findsOneWidget);
             },
+            skip: !enableSharedDrivers,
           );
 
           testWidgets(
             "Host must show first view when viewTag not specified",
             (t) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "widgets": {
                     "first": {
@@ -245,8 +240,6 @@ void main() {
                     },
                   },
                 },
-                transportOptions: EmptyTransportOptions(),
-                shared: true,
               );
 
               await t.pumpWidget(
@@ -254,10 +247,10 @@ void main() {
                   textDirection: TextDirection.ltr,
                   child: Column(
                     children: [
-                      DuitViewHost(
+                      DuitViewHost.withDriver(
                         driver: driver,
                       ),
-                      DuitViewHost(
+                      DuitViewHost.withDriver(
                         driver: driver,
                       ),
                     ],
@@ -276,12 +269,13 @@ void main() {
               expect(ch1, findsExactly(2));
               expect(ch2, findsNothing);
             },
+            skip: !enableSharedDrivers,
           );
 
           testWidgets(
             "Host must throw error when non shared driver receive multiple views",
             (t) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "widgets": {
                     "first": {
@@ -312,13 +306,12 @@ void main() {
                     },
                   },
                 },
-                transportOptions: EmptyTransportOptions(),
               );
 
               await t.pumpWidget(
                 Directionality(
                   textDirection: TextDirection.ltr,
-                  child: DuitViewHost(
+                  child: DuitViewHost.withDriver(
                     driver: driver,
                   ),
                 ),
@@ -333,7 +326,7 @@ void main() {
           testWidgets(
             "Shared driver must update single view correctly",
             (t) async {
-              final driver = DuitDriver.static(
+              final driver = XDriver.static(
                 {
                   "widgets": {
                     "first": {
@@ -364,8 +357,6 @@ void main() {
                     },
                   },
                 },
-                transportOptions: EmptyTransportOptions(),
-                shared: true,
               );
 
               await t.pumpWidget(
@@ -373,11 +364,11 @@ void main() {
                   textDirection: TextDirection.ltr,
                   child: Column(
                     children: [
-                      DuitViewHost(
+                      DuitViewHost.withDriver(
                         driver: driver,
                         viewTag: "first",
                       ),
-                      DuitViewHost(
+                      DuitViewHost.withDriver(
                         driver: driver,
                         viewTag: "second",
                       ),
@@ -392,7 +383,7 @@ void main() {
 
               expect(text, findsOneWidget);
 
-              await driver.updateAttributes(
+              await driver.asInternalDriver.updateAttributes(
                 "text1",
                 {
                   "data": "Two of us",
@@ -405,6 +396,7 @@ void main() {
 
               expect(text, findsOneWidget);
             },
+            skip: !enableSharedDrivers,
           );
         },
       );

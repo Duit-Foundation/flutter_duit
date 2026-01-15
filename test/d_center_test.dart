@@ -27,9 +27,8 @@ Map<String, dynamic> _createWidget([bool? controlled = false]) {
 void main() {
   group("DuitCenter widget tests", () {
     testWidgets("check center", (tester) async {
-      final driver = DuitDriver.static(
+      final driver = XDriver.static(
         _createWidget(true),
-        transportOptions: EmptyTransportOptions(),
       );
 
       await tester.pumpWidget(
@@ -39,7 +38,7 @@ void main() {
             key: const ValueKey("box"),
             width: 1000,
             height: 1000,
-            child: DuitViewHost(
+            child: DuitViewHost.withDriver(
               driver: driver,
             ),
           ),
@@ -48,7 +47,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      await driver.updateAttributes("centerId", {
+      await driver.asInternalDriver.updateAttributes("centerId", {
         "widthFactor": 0.5,
         "heightFactor": 1.5,
       });
@@ -76,10 +75,9 @@ void main() {
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: DuitViewHost(
-            driver: DuitDriver.static(
+          child: DuitViewHost.withDriver(
+            driver: XDriver.static(
               _createWidget(),
-              transportOptions: EmptyTransportOptions(),
             ),
           ),
         ),

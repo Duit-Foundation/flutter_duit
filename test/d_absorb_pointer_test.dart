@@ -32,14 +32,13 @@ void main() {
       testWidgets(
         "must renders correctly",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createWidget(),
-            transportOptions: HttpTransportOptions(),
           );
 
           await pumpDriver(
             tester,
-            driver,
+            driver.asInternalDriver,
           );
 
           final widget = find.byKey(const ValueKey("absorb"));
@@ -51,14 +50,13 @@ void main() {
       testWidgets(
         "must update attributes",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             _createWidget(true),
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
             tester,
-            driver,
+            driver.asInternalDriver,
           );
 
           var widget = find.byKey(const ValueKey("absorb"));
@@ -69,7 +67,7 @@ void main() {
 
           expect(absorbWidget.absorbing, true);
 
-          await driver.updateAttributes(
+          await driver.asInternalDriver.updateAttributes(
             "absorb",
             {
               "absorbing": false,

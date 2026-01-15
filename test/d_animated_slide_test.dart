@@ -9,7 +9,7 @@ void main() {
     testWidgets(
       "DuitAnimatedSlide must renders correctly",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "Stack",
             "id": "stack",
@@ -33,12 +33,10 @@ void main() {
               },
             ],
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         expect(find.byKey(const ValueKey("slide")), findsOneWidget);
@@ -50,7 +48,7 @@ void main() {
     testWidgets(
       "DuitAnimatedSlide must update attributes correctly",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "AnimatedSlide",
             "id": "slide",
@@ -67,19 +65,17 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         expect(find.byKey(const ValueKey("slide")), findsOneWidget);
         expect(find.text("Some text"), findsOneWidget);
 
         // Update the offset
-        await driver.updateAttributes("slide", {
+        await driver.asInternalDriver.updateAttributes("slide", {
           "offset": {"dx": 0.5, "dy": 0.0},
         });
 
@@ -93,7 +89,7 @@ void main() {
     testWidgets(
       "DuitAnimatedSlide must call onEnd callback",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "AnimatedSlide",
             "id": "slide",
@@ -123,18 +119,16 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         expect(find.text("Some text"), findsOneWidget);
 
         // Update the offset to trigger animation
-        await driver.updateAttributes("slide", {
+        await driver.asInternalDriver.updateAttributes("slide", {
           "offset": {"dx": 0.5, "dy": 0.0},
         });
 
@@ -149,7 +143,7 @@ void main() {
     testWidgets(
       "DuitAnimatedSlide must handle different offset values",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "AnimatedSlide",
             "id": "slide",
@@ -168,12 +162,10 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         expect(find.byKey(const ValueKey("slide")), findsOneWidget);
@@ -188,7 +180,7 @@ void main() {
         ];
 
         for (final offset in testOffsets) {
-          await driver.updateAttributes("slide", {
+          await driver.asInternalDriver.updateAttributes("slide", {
             "offset": offset,
           });
 
@@ -203,7 +195,7 @@ void main() {
     testWidgets(
       "DuitAnimatedSlide must handle different curves",
       (tester) async {
-        final driver = DuitDriver.static(
+        final driver = XDriver.static(
           {
             "type": "AnimatedSlide",
             "id": "slide",
@@ -221,12 +213,10 @@ void main() {
               },
             },
           },
-          transportOptions: EmptyTransportOptions(),
         );
 
         await pumpDriver(
-          tester,
-          driver,
+          tester, driver.asInternalDriver,
         );
 
         expect(find.byKey(const ValueKey("slide")), findsOneWidget);
@@ -236,7 +226,7 @@ void main() {
         final testCurves = ["ease", "bounceIn", "bounceOut"];
 
         for (final curve in testCurves) {
-          await driver.updateAttributes("slide", {
+          await driver.asInternalDriver.updateAttributes("slide", {
             "offset": {"dx": 0.5, "dy": 0.0},
             "curve": curve,
           });

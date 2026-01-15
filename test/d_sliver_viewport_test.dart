@@ -11,7 +11,7 @@ void main() {
       testWidgets(
         "must renders correctry",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
@@ -42,12 +42,10 @@ void main() {
                 }
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("viewport_sliver")), findsOneWidget);
@@ -74,7 +72,7 @@ void main() {
       testWidgets(
         "must renders correctry (simple delegate)",
         (tester) async {
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
@@ -105,12 +103,10 @@ void main() {
                 }
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("viewport_sliver")), findsOneWidget);
@@ -147,7 +143,7 @@ void main() {
             },
           );
 
-          final driver = DuitDriver.static(
+          final driver = XDriver.static(
             {
               "type": "CustomScrollView",
               "id": "custom_view",
@@ -167,12 +163,10 @@ void main() {
                 }
               ],
             },
-            transportOptions: EmptyTransportOptions(),
           );
 
           await pumpDriver(
-            tester,
-            driver,
+            tester, driver.asInternalDriver,
           );
 
           expect(find.byKey(const ValueKey("viewport_sliver")), findsOneWidget);
