@@ -137,134 +137,140 @@ void main() {
       group(
         "Shared driver tests",
         () {
-          testWidgets("shared driver must create two widgets",
-              (WidgetTester tester) async {
-            final driver = XDriver.static(
-              {
-                "widgets": {
-                  "first": {
-                    "type": "Container",
-                    "id": "Container1",
-                    "controlled": false,
-                    "attributes": {
-                      "width": 250,
-                      "height": 250,
-                      "color": "#DCDCDC",
-                    },
-                    "child": {
-                      "type": "Text",
-                      "id": "2",
+          testWidgets(
+            "shared driver must create two widgets",
+            (WidgetTester tester) async {
+              final driver = XDriver.static(
+                {
+                  "widgets": {
+                    "first": {
+                      "type": "Container",
+                      "id": "Container1",
                       "controlled": false,
-                      "attributes": {"data": "One of us"},
+                      "attributes": {
+                        "width": 250,
+                        "height": 250,
+                        "color": "#DCDCDC",
+                      },
+                      "child": {
+                        "type": "Text",
+                        "id": "2",
+                        "controlled": false,
+                        "attributes": {"data": "One of us"},
+                      },
                     },
-                  },
-                  "second": {
-                    "type": "Container",
-                    "id": "Container2",
-                    "controlled": false,
-                    "attributes": {
-                      "width": 250,
-                      "height": 250,
-                      "color": "#933C3C",
+                    "second": {
+                      "type": "Container",
+                      "id": "Container2",
+                      "controlled": false,
+                      "attributes": {
+                        "width": 250,
+                        "height": 250,
+                        "color": "#933C3C",
+                      },
                     },
                   },
                 },
-              },
-            );
+              );
 
-            await tester.pumpWidget(
-              Directionality(
-                textDirection: TextDirection.ltr,
-                child: Column(
-                  children: [
-                    DuitViewHost.withDriver(
-                      driver: driver,
-                      viewTag: "first",
-                    ),
-                    const Text("Flutter view between Duit views"),
-                    DuitViewHost.withDriver(
-                      driver: driver,
-                      viewTag: "second",
-                    ),
-                  ],
+              await tester.pumpWidget(
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Column(
+                    children: [
+                      DuitViewHost.withDriver(
+                        driver: driver,
+                        viewTag: "first",
+                      ),
+                      const Text("Flutter view between Duit views"),
+                      DuitViewHost.withDriver(
+                        driver: driver,
+                        viewTag: "second",
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
 
-            await tester.pumpAndSettle();
+              await tester.pumpAndSettle();
 
-            const c1 = ValueKey("Container1");
-            const c2 = ValueKey("Container2");
+              const c1 = ValueKey("Container1");
+              const c2 = ValueKey("Container2");
 
-            final ch1 = find.byKey(c1);
-            final ch2 = find.byKey(c2);
+              final ch1 = find.byKey(c1);
+              final ch2 = find.byKey(c2);
 
-            expect(ch1, findsOneWidget);
-            expect(ch2, findsOneWidget);
-          }, skip: !enableSharedDrivers);
+              expect(ch1, findsOneWidget);
+              expect(ch2, findsOneWidget);
+            },
+            skip: !enableSharedDrivers,
+          );
 
-          testWidgets("Host must show first view when viewTag not specified",
-              (t) async {
-            final driver = XDriver.static(
-              {
-                "widgets": {
-                  "first": {
-                    "type": "Container",
-                    "id": "Container1",
-                    "controlled": false,
-                    "attributes": {
-                      "width": 250,
-                      "height": 250,
-                      "color": "#DCDCDC",
-                    },
-                    "child": {
-                      "type": "Text",
-                      "id": "2",
+          testWidgets(
+            "Host must show first view when viewTag not specified",
+            (t) async {
+              final driver = XDriver.static(
+                {
+                  "widgets": {
+                    "first": {
+                      "type": "Container",
+                      "id": "Container1",
                       "controlled": false,
-                      "attributes": {"data": "One of us"},
+                      "attributes": {
+                        "width": 250,
+                        "height": 250,
+                        "color": "#DCDCDC",
+                      },
+                      "child": {
+                        "type": "Text",
+                        "id": "2",
+                        "controlled": false,
+                        "attributes": {"data": "One of us"},
+                      },
                     },
-                  },
-                  "second": {
-                    "type": "Container",
-                    "id": "Container2",
-                    "controlled": false,
-                    "attributes": {
-                      "width": 250,
-                      "height": 250,
-                      "color": "#933C3C",
+                    "second": {
+                      "type": "Container",
+                      "id": "Container2",
+                      "controlled": false,
+                      "attributes": {
+                        "width": 250,
+                        "height": 250,
+                        "color": "#933C3C",
+                      },
                     },
                   },
                 },
-              },
-            );
+              );
 
-            await t.pumpWidget(
-              Directionality(
-                textDirection: TextDirection.ltr,
-                child: Column(
-                  children: [
-                    DuitViewHost.withDriver(
-                      driver: driver,
-                    ),
-                    DuitViewHost.withDriver(
-                      driver: driver,
-                    ),
-                  ],
+              await t.pumpWidget(
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Column(
+                    children: [
+                      DuitViewHost.withDriver(
+                        driver: driver,
+                      ),
+                      DuitViewHost.withDriver(
+                        driver: driver,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
 
-            await t.pumpAndSettle();
+              await t.pumpAndSettle();
 
-            const c1 = ValueKey("Container1");
-            const c2 = ValueKey("Container2");
+              const c1 = ValueKey("Container1");
+              const c2 = ValueKey("Container2");
 
-            final ch1 = find.byKey(c1);
-            final ch2 = find.byKey(c2);
+              final ch1 = find.byKey(c1);
+              final ch2 = find.byKey(c2);
 
-            expect(ch1, findsExactly(2));
-            expect(ch2, findsNothing);
-          }, skip: !enableSharedDrivers);
+              expect(ch1, findsExactly(2));
+              expect(ch2, findsNothing);
+            },
+            skip: !enableSharedDrivers,
+          );
 
           testWidgets(
             "Host must throw error when non shared driver receive multiple views",
@@ -317,78 +323,81 @@ void main() {
             },
           );
 
-          testWidgets("Shared driver must update single view correctly",
-              (t) async {
-            final driver = XDriver.static(
-              {
-                "widgets": {
-                  "first": {
-                    "type": "Container",
-                    "id": "Container1",
-                    "controlled": false,
-                    "attributes": {
-                      "width": 250,
-                      "height": 250,
-                      "color": "#DCDCDC",
+          testWidgets(
+            "Shared driver must update single view correctly",
+            (t) async {
+              final driver = XDriver.static(
+                {
+                  "widgets": {
+                    "first": {
+                      "type": "Container",
+                      "id": "Container1",
+                      "controlled": false,
+                      "attributes": {
+                        "width": 250,
+                        "height": 250,
+                        "color": "#DCDCDC",
+                      },
+                      "child": {
+                        "type": "Text",
+                        "id": "text1",
+                        "controlled": true,
+                        "attributes": {"data": "One of us"},
+                      },
                     },
-                    "child": {
-                      "type": "Text",
-                      "id": "text1",
-                      "controlled": true,
-                      "attributes": {"data": "One of us"},
-                    },
-                  },
-                  "second": {
-                    "type": "Container",
-                    "id": "Container2",
-                    "controlled": false,
-                    "attributes": {
-                      "width": 250,
-                      "height": 250,
-                      "color": "#933C3C",
+                    "second": {
+                      "type": "Container",
+                      "id": "Container2",
+                      "controlled": false,
+                      "attributes": {
+                        "width": 250,
+                        "height": 250,
+                        "color": "#933C3C",
+                      },
                     },
                   },
                 },
-              },
-            );
+              );
 
-            await t.pumpWidget(
-              Directionality(
-                textDirection: TextDirection.ltr,
-                child: Column(
-                  children: [
-                    DuitViewHost.withDriver(
-                      driver: driver,
-                      viewTag: "first",
-                    ),
-                    DuitViewHost.withDriver(
-                      driver: driver,
-                      viewTag: "second",
-                    ),
-                  ],
+              await t.pumpWidget(
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Column(
+                    children: [
+                      DuitViewHost.withDriver(
+                        driver: driver,
+                        viewTag: "first",
+                      ),
+                      DuitViewHost.withDriver(
+                        driver: driver,
+                        viewTag: "second",
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
 
-            await t.pumpAndSettle();
+              await t.pumpAndSettle();
 
-            var text = find.text("One of us");
+              var text = find.text("One of us");
 
-            expect(text, findsOneWidget);
+              expect(text, findsOneWidget);
 
-            await driver.asInternalDriver.updateAttributes(
-              "text1",
-              {
-                "data": "Two of us",
-              },
-            );
+              await driver.asInternalDriver.updateAttributes(
+                "text1",
+                {
+                  "data": "Two of us",
+                },
+              );
 
-            await t.pumpAndSettle();
+              await t.pumpAndSettle();
 
-            text = find.text("Two of us");
+              text = find.text("Two of us");
 
-            expect(text, findsOneWidget);
-          }, skip: !enableSharedDrivers);
+              expect(text, findsOneWidget);
+            },
+            skip: !enableSharedDrivers,
+          );
         },
       );
     },

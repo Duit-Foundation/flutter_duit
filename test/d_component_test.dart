@@ -198,7 +198,10 @@ void main() {
       );
 
       await pumpDriver(
-          tester, driver.asInternalDriver, const ValueKey("iter1"));
+        tester,
+        driver.asInternalDriver,
+        const ValueKey("iter1"),
+      );
 
       final containerNested1 =
           tester.firstWidget(find.byKey(const Key("container2"))) as Container;
@@ -218,7 +221,10 @@ void main() {
       );
 
       await pumpDriver(
-          tester, driver2.asInternalDriver, const ValueKey("iter2"));
+        tester,
+        driver2.asInternalDriver,
+        const ValueKey("iter2"),
+      );
 
       final containerNested2 =
           tester.firstWidget(find.byKey(const Key("container2"))) as Container;
