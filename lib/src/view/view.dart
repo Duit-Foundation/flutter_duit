@@ -4,6 +4,8 @@ export "package:flutter_duit/src/view/common.dart";
 export "package:flutter_duit/src/view/shared.dart";
 
 abstract class DuitViewModel implements DuitView {
+  const DuitViewModel();
+
   @Deprecated(
     "The method is not used and will be removed in the next major release",
   )

@@ -29,10 +29,10 @@ String prepareUrl(String baseUrl, String url) {
   return "$urlString$url";
 }
 
-Future<Map<String, dynamic>> parseResponse(
+Map<String, dynamic> parseResponse(
   data, {
   required Converter<Uint8List, Object?>? customDecoder,
-}) async {
+}) {
   if (customDecoder != null) {
     final decodingResult = customDecoder.convert(data)! as Map<String, dynamic>;
     return decodingResult;
