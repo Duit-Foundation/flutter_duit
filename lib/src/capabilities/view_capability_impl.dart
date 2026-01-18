@@ -3,6 +3,7 @@ import "dart:async";
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_duit/flutter_duit.dart";
+import "package:flutter_duit/src/view/stub.dart";
 import "package:flutter_duit/src/view/view.dart";
 
 final class DuitViewManager with ViewModelCapabilityDelegate {
@@ -10,7 +11,7 @@ final class DuitViewManager with ViewModelCapabilityDelegate {
 
   final _eventStreamController = StreamController<UIDriverEvent>.broadcast();
 
-  late final DuitViewModel _view;
+  DuitViewModel _view = const StubDuitView();
 
   @override
   late BuildContext buildContext;
