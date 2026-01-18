@@ -137,7 +137,9 @@ final class HttpTransportManager with TransportCapabilityDelegate {
     Uri uri;
 
     try {
-      if (initialRequestData != null && initialRequestData.isNotEmpty) {
+      if (initialRequestMethod != "POST" &&
+          initialRequestData != null &&
+          initialRequestData.isNotEmpty) {
         uri = objectToURLWithQueryParams(urlString, initialRequestData);
       } else {
         uri = Uri.parse(urlString);
