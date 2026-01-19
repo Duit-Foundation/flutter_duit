@@ -23,7 +23,8 @@ export "package:duit_kernel/duit_kernel.dart"
         LoggingCapabilityDelegate,
         NativeModuleCapabilityDelegate,
         ScriptingCapabilityDelegate,
-        UserDefinedHandlerKind;
+        UserDefinedHandlerKind,
+        TransportCapabilityDelegate;
 
 // Legacy API exports for backward compatibility
 export "package:duit_kernel/duit_kernel.dart"
