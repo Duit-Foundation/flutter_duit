@@ -37,11 +37,11 @@ class DuitAnimationContext extends InheritedWidget {
   final String parentId;
 
   const DuitAnimationContext({
-    required Widget child,
+    required super.child,
     required this.streams,
     required this.parentId,
     super.key,
-  }) : super(child: child);
+  });
 
   static DuitAnimationContext? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<DuitAnimationContext>();

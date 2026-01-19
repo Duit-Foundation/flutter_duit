@@ -6,12 +6,9 @@ final class DuitTree extends ElementTree {
   Widget? _root;
 
   DuitTree({
-    required Map<String, dynamic> json,
-    required UIDriver driver,
-  }) : super(
-          json: json,
-          driver: driver,
-        );
+    required super.json,
+    required super.driver,
+  });
 
   @override
   Future<ElementTree> parse() async {

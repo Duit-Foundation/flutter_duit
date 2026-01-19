@@ -12,12 +12,12 @@ class DuitViewContext extends InheritedWidget implements GestureInterceptionLogi
   final SliverGridDelegatesRegistry sliverGridDelegatesRegistry;
 
   const DuitViewContext({
-    required Widget child,
+    required super.child,
     required this.gestureInterceptorBehavior,
     required this.sliverGridDelegatesRegistry,
     super.key,
     this.gestureInterceptor,
-  }) : super(child: child);
+  });
 
   static DuitViewContext of(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<DuitViewContext>();

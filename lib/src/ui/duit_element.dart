@@ -21,6 +21,9 @@ final class DuitElement extends ElementTreeEntry {
   /// Use [DuitElement.fromJson] to create instances.
   DuitElement._(this._element);
 
+  /// Wraps an [ElementPropertyView] in a [DuitElement].
+  ///
+  /// It`s needs to use elemets as part of DuitElement tree as independent widget.
   factory DuitElement.wrap(ElementPropertyView element) =>
       DuitElement._(element);
 

@@ -1,5 +1,3 @@
-library flutter_duit;
-
 export "package:flutter_duit/src/duit_impl/index.dart";
 export "package:flutter_duit/src/ui/index.dart" show DuitThemePreprocessor;
 export "package:flutter_duit/src/transport/transport_type.dart";

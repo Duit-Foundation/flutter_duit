@@ -1,21 +1,35 @@
 export "package:duit_kernel/duit_kernel.dart"
     show
+        // ================================================== Registry API ==================================================
         DuitRegistry,
+        // ================================================== Element Tree API ==================================================
         ElementTree,
         ElementTreeEntry,
         AnimatedPropertyOwner,
         UIDriver,
         UIElementController,
+        ViewAttribute,
+        // ================================================== Action & Event API ==================================================
+        Parser,
         DefaultActionParser,
         DefaultEventParser,
-        ViewAttribute,
         ServerAction,
+        ServerEvent,
+        UpdateEvent,
+        NavigationEvent,
+        CommandEvent,
+        TimerEvent,
+        CommonEventGroup,
+        SequencedEventGroup,
+        CustomEvent,
+        // ================================================== Theme API ==================================================
         ThemeToken,
         UnknownThemeToken,
         DefaultThemeToken,
         DuitTheme,
         ThemePreprocessor,
         TokenizationCallback,
+        // ================================================== Capabilities API ==================================================
         FocusCapabilityDelegate,
         ServerActionExecutionCapabilityDelegate,
         UIControllerCapabilityDelegate,
@@ -26,7 +40,7 @@ export "package:duit_kernel/duit_kernel.dart"
         UserDefinedHandlerKind,
         TransportCapabilityDelegate;
 
-// Legacy API exports for backward compatibility
+// ================================================== Legacy API ==================================================
 export "package:duit_kernel/duit_kernel.dart"
     show
         // ignore: deprecated_member_use

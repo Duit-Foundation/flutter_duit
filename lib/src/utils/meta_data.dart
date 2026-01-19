@@ -4,10 +4,10 @@ final class DuitMetaData extends InheritedWidget {
   final Map<String, dynamic> value;
 
   const DuitMetaData({
-    required Widget child,
+    required super.child,
     required this.value,
     super.key,
-  }) : super(child: child);
+  });
 
   static DuitMetaData? maybeOf(BuildContext context) {
     final result = context.dependOnInheritedWidgetOfExactType<DuitMetaData>();
