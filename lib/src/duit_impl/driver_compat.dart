@@ -86,6 +86,8 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
     ScriptingCapabilityDelegate? scriptingManager,
     LoggingCapabilityDelegate? loggingManager,
     NativeModuleCapabilityDelegate? nativeModuleManager,
+    Parser<ServerAction>? actionParser,
+    Parser<ServerEvent>? eventParser,
   })  : _actionManager = actionManager ?? DuitActionManager(),
         _controllerManager = controllerManager ?? DuitControllerManager(),
         _focusNodeManager = focusManager ?? DuitFocusNodeManager(),
@@ -93,6 +95,9 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
         _transportManager = transportManager,
         _scriptingManager = scriptingManager ?? DuitStubScriptingManager(),
         _loggingManager = loggingManager ?? const LoggingManager() {
+    ServerAction.setActionParser(actionParser ?? const DefaultActionParser());
+    ServerEvent.eventParser = eventParser ?? const DefaultEventParser();
+
     _focusNodeManager.linkDriver(this);
     _actionManager.linkDriver(this);
     _controllerManager.linkDriver(this);
@@ -113,8 +118,6 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
     } else {
       return;
     }
-
-    _addParsers();
 
     onInit?.call();
 
@@ -214,21 +217,6 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
   @override
   @Deprecated("Will be removed in the next major release.")
   Widget? build() => null;
-
-  void _addParsers() {
-    try {
-      ServerAction.setActionParser(const DefaultActionParser());
-      ServerEvent.eventParser = const DefaultEventParser();
-    } catch (e, s) {
-      //Safely handle the case of assigning parsers during
-      //multiple driver initializations as part of running tests
-      logWarning(
-        "Error adding parsers",
-        e,
-        s,
-      );
-    }
-  }
 
   @override
   @preferInline

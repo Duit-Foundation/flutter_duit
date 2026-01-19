@@ -52,6 +52,10 @@ extension type XDriver._(UIDriver _driver) implements FocusCapabilityDelegate {
   ///   Manages widget state (e.g., TextField).
   /// - [viewManager] - delegate for managing view models.
   ///   Manages view state and data.
+  /// - [actionParser] - parser for server actions.
+  ///   Parses server actions from JSON.
+  /// - [eventParser] - parser for server events.
+  ///   Parses server events from JSON.
   ///
   /// Example:
   /// ```dart
@@ -76,6 +80,8 @@ extension type XDriver._(UIDriver _driver) implements FocusCapabilityDelegate {
     ServerActionExecutionCapabilityDelegate? actionManager,
     UIControllerCapabilityDelegate? controllerManager,
     ViewModelCapabilityDelegate? viewManager,
+    Parser<ServerAction>? actionParser,
+    Parser<ServerEvent>? eventParser,
   }) =>
       XDriver._(
         DuitDriverCompat(
@@ -89,6 +95,8 @@ extension type XDriver._(UIDriver _driver) implements FocusCapabilityDelegate {
           actionManager: actionManager,
           controllerManager: controllerManager,
           viewManager: viewManager,
+          actionParser: actionParser,
+          eventParser: eventParser,
         ),
       );
 
@@ -117,6 +125,10 @@ extension type XDriver._(UIDriver _driver) implements FocusCapabilityDelegate {
   /// - [actionManager] - delegate for executing actions.
   /// - [controllerManager] - delegate for managing UI controllers.
   /// - [viewManager] - delegate for managing view models.
+  /// - [actionParser] - parser for server actions.
+  ///   Parses server actions from JSON.
+  /// - [eventParser] - parser for server events.
+  ///   Parses server events from JSON.
   ///
   /// **Throws:**
   /// - [StateError] if [content] is empty.
@@ -145,28 +157,26 @@ extension type XDriver._(UIDriver _driver) implements FocusCapabilityDelegate {
     ServerActionExecutionCapabilityDelegate? actionManager,
     UIControllerCapabilityDelegate? controllerManager,
     ViewModelCapabilityDelegate? viewManager,
-  }) {
-    if (content.isEmpty) {
-      // throw StateError(
-      //   "[content] property must be valid Duit json struct",
-      // );
-    }
-    return XDriver._(
-      DuitDriverCompat(
-        content: content,
-        initialRequestPayload: initialRequestPayload,
-        isModule: false,
-        transportManager: transportManager ?? StubTransportManager(),
-        nativeModuleManager: nativeModuleManager,
-        scriptingManager: scriptingManager,
-        loggingManager: loggingManager,
-        focusManager: focusManager,
-        actionManager: actionManager,
-        controllerManager: controllerManager,
-        viewManager: viewManager,
-      ),
-    );
-  }
+    Parser<ServerAction>? actionParser,
+    Parser<ServerEvent>? eventParser,
+  }) =>
+      XDriver._(
+        DuitDriverCompat(
+          content: content,
+          initialRequestPayload: initialRequestPayload,
+          isModule: false,
+          transportManager: transportManager ?? StubTransportManager(),
+          nativeModuleManager: nativeModuleManager,
+          scriptingManager: scriptingManager,
+          loggingManager: loggingManager,
+          focusManager: focusManager,
+          actionManager: actionManager,
+          controllerManager: controllerManager,
+          viewManager: viewManager,
+          actionParser: actionParser,
+          eventParser: eventParser,
+        ),
+      );
 
   /// Creates a driver for native module mode.
   ///
@@ -194,6 +204,10 @@ extension type XDriver._(UIDriver _driver) implements FocusCapabilityDelegate {
   ///   Can handle specific commands from the host application.
   /// - [controllerManager] - delegate for managing UI controllers.
   /// - [viewManager] - delegate for managing view models.
+  /// - [actionParser] - parser for server actions.
+  ///   Parses server actions from JSON.
+  /// - [eventParser] - parser for server events.
+  ///   Parses server events from JSON.
   ///
   /// Example:
   /// ```dart
@@ -215,6 +229,8 @@ extension type XDriver._(UIDriver _driver) implements FocusCapabilityDelegate {
     ServerActionExecutionCapabilityDelegate? actionManager,
     UIControllerCapabilityDelegate? controllerManager,
     ViewModelCapabilityDelegate? viewManager,
+    Parser<ServerAction>? actionParser,
+    Parser<ServerEvent>? eventParser,
   }) =>
       XDriver._(
         DuitDriverCompat(
@@ -228,6 +244,8 @@ extension type XDriver._(UIDriver _driver) implements FocusCapabilityDelegate {
           actionManager: actionManager,
           controllerManager: controllerManager,
           viewManager: viewManager,
+          actionParser: actionParser,
+          eventParser: eventParser,
         ),
       );
 
