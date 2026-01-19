@@ -6,9 +6,9 @@ class DuitLifecycleStateListener extends InheritedWidget
   final UIElementController controller;
 
   DuitLifecycleStateListener({
-    required Widget child,
+    required super.child,
     required this.controller,
-  }) : super(child: child, key: Key(controller.id));
+  }) : super(key: Key(controller.id));
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
