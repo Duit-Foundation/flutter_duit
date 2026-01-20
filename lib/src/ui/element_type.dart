@@ -487,6 +487,16 @@ enum ElementType {
     name: "FractionalTranslation",
     isControlledByDefault: false,
     childRelation: 1,
+  ),
+  unconstrainedBox(
+    name: "UnconstrainedBox",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  semantics(
+    name: "Semantics",
+    isControlledByDefault: false,
+    childRelation: 1,
   );
 
   /// The string identifier name of the UI element type.
@@ -661,4 +671,6 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "FractionallySizedBox": ElementType.fractionallySizedBox,
   "SizedOverflowBox": ElementType.sizedOverflowBox,
   "FractionalTranslation": ElementType.fractionalTranslation,
+  "UnconstrainedBox": ElementType.unconstrainedBox,
+  "Semantics": ElementType.semantics,
 };

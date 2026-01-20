@@ -1075,6 +1075,32 @@ Widget _buildFractionalTranslation(ElementPropertyView model) {
   };
 }
 
+Widget _buildUnconstrainedBox(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledUnconstrainedBox(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitUnconstrainedBox(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildSemantics(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledSemantics(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitSemantics(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();
