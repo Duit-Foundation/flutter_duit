@@ -1062,6 +1062,19 @@ Widget _buildSizedOverflowBox(ElementPropertyView model) {
   };
 }
 
+Widget _buildFractionalTranslation(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledFractionalTranslation(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitFractionalTranslation(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();

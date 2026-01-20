@@ -482,6 +482,11 @@ enum ElementType {
     name: "AspectRatio",
     isControlledByDefault: false,
     childRelation: 1,
+  ),
+  fractionalTranslation(
+    name: "FractionalTranslation",
+    isControlledByDefault: false,
+    childRelation: 1,
   );
 
   /// The string identifier name of the UI element type.
@@ -655,4 +660,5 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "LimitedBox": ElementType.limitedBox,
   "FractionallySizedBox": ElementType.fractionallySizedBox,
   "SizedOverflowBox": ElementType.sizedOverflowBox,
+  "FractionalTranslation": ElementType.fractionalTranslation,
 };
