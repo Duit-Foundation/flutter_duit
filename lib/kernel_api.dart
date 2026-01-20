@@ -5,7 +5,6 @@ export "package:duit_kernel/duit_kernel.dart"
         // ================================================== Element Tree API ==================================================
         ElementTree,
         ElementTreeEntry,
-        AnimatedPropertyOwner,
         UIDriver,
         UIElementController,
         ViewAttribute,
