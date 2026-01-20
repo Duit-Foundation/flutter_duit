@@ -57,3 +57,8 @@ export "clip_rect.dart";
 export "clip_oval.dart";
 export "page_view/index.dart";
 export "badge.dart";
+export "aspect_ratio.dart";
+export "baseline.dart";
+export "limited_box.dart";
+export "fractionally_sized_box.dart";
+export "sized_overflow_box.dart";

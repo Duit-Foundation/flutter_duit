@@ -73,6 +73,11 @@ const _buildFnLookup = <ElementType, BuildFn>{
       _buildAnimatedPositionedDirectional,
   ElementType.clipRect: _buildClipRect,
   ElementType.clipOval: _buildClipOval,
+  ElementType.aspectRatio: _buildAspectRatio,
+  ElementType.baseline: _buildBaseline,
+  ElementType.limitedBox: _buildLimitedBox,
+  ElementType.fractionallySizedBox: _buildFractionalySizedBox,
+  ElementType.sizedOverflowBox: _buildSizedOverflowBox,
   // Multi-child elements
   ElementType.column: _buildColumn,
   ElementType.row: _buildRow,
