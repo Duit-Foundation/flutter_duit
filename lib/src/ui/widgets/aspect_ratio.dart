@@ -25,23 +25,23 @@ class DuitAspectRatio extends StatelessWidget with AnimatedAttributes {
   }
 }
 
-class DuitControlledAspectRation extends StatefulWidget
+class DuitControlledAspectRatio extends StatefulWidget
     with AnimatedAttributes {
   final UIElementController controller;
   final Widget child;
 
-  const DuitControlledAspectRation({
+  const DuitControlledAspectRatio({
     required this.controller,
     required this.child,
     super.key,
   });
 
   @override
-  State<DuitControlledAspectRation> createState() =>
-      _DuitControlledAspectRationState();
+  State<DuitControlledAspectRatio> createState() =>
+      _DuitControlledAspectRatioState();
 }
 
-class _DuitControlledAspectRationState extends State<DuitControlledAspectRation>
+class _DuitControlledAspectRatioState extends State<DuitControlledAspectRatio>
     with ViewControllerChangeListener {
   @override
   void initState() {

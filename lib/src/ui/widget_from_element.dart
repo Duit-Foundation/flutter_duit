@@ -999,7 +999,7 @@ Widget _buildBadge(ElementPropertyView model) {
 
 Widget _buildAspectRatio(ElementPropertyView model) {
   return switch (model.controlled) {
-    true => DuitControlledAspectRation(
+    true => DuitControlledAspectRatio(
         controller: model.viewController,
         child: _buildWidget(model.child),
       ),
@@ -1036,7 +1036,7 @@ Widget _buildLimitedBox(ElementPropertyView model) {
   };
 }
 
-Widget _buildFractionalySizedBox(ElementPropertyView model) {
+Widget _buildFractionallySizedBox(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledFractionallySizedBox(
         controller: model.viewController,

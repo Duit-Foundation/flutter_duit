@@ -76,7 +76,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.aspectRatio: _buildAspectRatio,
   ElementType.baseline: _buildBaseline,
   ElementType.limitedBox: _buildLimitedBox,
-  ElementType.fractionallySizedBox: _buildFractionalySizedBox,
+  ElementType.fractionallySizedBox: _buildFractionallySizedBox,
   ElementType.sizedOverflowBox: _buildSizedOverflowBox,
   ElementType.fractionalTranslation: _buildFractionalTranslation,
   ElementType.unconstrainedBox: _buildUnconstrainedBox,
