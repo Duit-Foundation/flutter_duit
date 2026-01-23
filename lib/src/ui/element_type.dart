@@ -457,6 +457,46 @@ enum ElementType {
     name: "Badge",
     isControlledByDefault: false,
     childRelation: 2,
+  ),
+  baseline(
+    name: "Baseline",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  limitedBox(
+    name: "LimitedBox",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  fractionallySizedBox(
+    name: "FractionallySizedBox",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  sizedOverflowBox(
+    name: "SizedOverflowBox",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  aspectRatio(
+    name: "AspectRatio",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  fractionalTranslation(
+    name: "FractionalTranslation",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  unconstrainedBox(
+    name: "UnconstrainedBox",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  semantics(
+    name: "Semantics",
+    isControlledByDefault: false,
+    childRelation: 1,
   );
 
   /// The string identifier name of the UI element type.
@@ -625,4 +665,12 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "ClipOval": ElementType.clipOval,
   "PageView": ElementType.pageView,
   "Badge": ElementType.badge,
+  "AspectRatio": ElementType.aspectRatio,
+  "Baseline": ElementType.baseline,
+  "LimitedBox": ElementType.limitedBox,
+  "FractionallySizedBox": ElementType.fractionallySizedBox,
+  "SizedOverflowBox": ElementType.sizedOverflowBox,
+  "FractionalTranslation": ElementType.fractionalTranslation,
+  "UnconstrainedBox": ElementType.unconstrainedBox,
+  "Semantics": ElementType.semantics,
 };

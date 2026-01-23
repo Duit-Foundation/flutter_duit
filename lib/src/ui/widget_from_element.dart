@@ -997,6 +997,110 @@ Widget _buildBadge(ElementPropertyView model) {
   };
 }
 
+Widget _buildAspectRatio(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledAspectRatio(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitAspectRatio(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildBaseline(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledBaseline(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitBaseline(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildLimitedBox(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledLimitedBox(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitLimitedBox(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildFractionallySizedBox(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledFractionallySizedBox(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitFractionallySizedBox(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildSizedOverflowBox(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledSizedOverflowBox(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitSizedOverflowBox(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildFractionalTranslation(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledFractionalTranslation(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitFractionalTranslation(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildUnconstrainedBox(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledUnconstrainedBox(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitUnconstrainedBox(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
+Widget _buildSemantics(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledSemantics(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitSemantics(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();
