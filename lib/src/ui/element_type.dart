@@ -453,6 +453,11 @@ enum ElementType {
     isControlledByDefault: false,
     childRelation: 2,
   ),
+  mergeSemantics(
+    name: "MergeSemantics",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
   badge(
     name: "Badge",
     isControlledByDefault: false,
@@ -485,6 +490,11 @@ enum ElementType {
   ),
   fractionalTranslation(
     name: "FractionalTranslation",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
+  excludeSemantics(
+    name: "ExcludeSemantics",
     isControlledByDefault: false,
     childRelation: 1,
   ),
@@ -673,4 +683,6 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "FractionalTranslation": ElementType.fractionalTranslation,
   "UnconstrainedBox": ElementType.unconstrainedBox,
   "Semantics": ElementType.semantics,
+  "ExcludeSemantics": ElementType.excludeSemantics,
+  "MergeSemantics": ElementType.mergeSemantics,
 };

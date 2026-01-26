@@ -81,6 +81,8 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.fractionalTranslation: _buildFractionalTranslation,
   ElementType.unconstrainedBox: _buildUnconstrainedBox,
   ElementType.semantics: _buildSemantics,
+  ElementType.mergeSemantics: _buildMergeSemantics,
+  ElementType.excludeSemantics: _buildExcludeSemantics,
   // Multi-child elements
   ElementType.column: _buildColumn,
   ElementType.row: _buildRow,
