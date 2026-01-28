@@ -1101,6 +1101,26 @@ Widget _buildSemantics(ElementPropertyView model) {
   };
 }
 
+Widget _buildMergeSemantics(ElementPropertyView model) {
+  return MergeSemantics(
+    key: ValueKey(model.id),
+    child: _buildWidget(model.child),
+  );
+}
+
+Widget _buildExcludeSemantics(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledExcludeSemantics(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitExcludeSemantics(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();
