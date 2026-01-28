@@ -100,4 +100,5 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.flexibleSpaceBar: _buildFlexibleSpaceBar,
   ElementType.pageView: _buildPageView,
   ElementType.badge: _buildBadge,
+  ElementType.visibility: _buildVisibility,
 };

@@ -66,3 +66,4 @@ export "fractional_translation.dart";
 export "unconstrained_box.dart";
 export "semantics.dart";
 export "exclude_semantics.dart";
+export "visibility.dart";
