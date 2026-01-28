@@ -1121,6 +1121,20 @@ Widget _buildExcludeSemantics(ElementPropertyView model) {
   };
 }
 
+Widget _buildVisibility(ElementPropertyView model) {
+  final children = _mapToNullableWidgetList(model);
+  return switch (model.controlled) {
+    true => DuitControlledVisibility(
+        controller: model.viewController,
+        children: children,
+      ),
+    false => DuitVisibility(
+        attributes: model.attributes,
+        children: children,
+      ),
+  };
+}
+
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();
