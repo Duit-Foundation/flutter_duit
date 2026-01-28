@@ -62,14 +62,19 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
           themeData,
         ),
       ElementType.align ||
+      ElementType.aspectRatio ||
       ElementType.backdropFilter ||
+      ElementType.baseline ||
       ElementType.coloredBox ||
       ElementType.constrainedBox ||
       ElementType.decoratedBox ||
       ElementType.expanded ||
       ElementType.fittedBox ||
+      ElementType.fractionallySizedBox ||
+      ElementType.fractionalTranslation ||
       ElementType.row ||
       ElementType.column ||
+      ElementType.limitedBox ||
       ElementType.sizedBox ||
       ElementType.container ||
       ElementType.overflowBox ||
@@ -77,6 +82,7 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
       ElementType.positioned ||
       ElementType.opacity ||
       ElementType.rotatedBox ||
+      ElementType.sizedOverflowBox ||
       ElementType.stack ||
       ElementType.wrap ||
       ElementType.transform ||
@@ -117,6 +123,7 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
         ),
       ElementType.gridView ||
       ElementType.listView ||
+      ElementType.pageView ||
       ElementType.sliverList ||
       ElementType.sliverAppBar ||
       ElementType.sliverGrid =>
@@ -126,6 +133,8 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
         ),
       ElementType.elevatedButton ||
       ElementType.center ||
+      ElementType.clipRect ||
+      ElementType.clipOval ||
       ElementType.ignorePointer ||
       ElementType.repaintBoundary ||
       ElementType.singleChildScrollview ||
@@ -143,6 +152,7 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
       ElementType.absorbPointer ||
       ElementType.offstage ||
       ElementType.physicalModel ||
+      ElementType.semantics ||
       ElementType.sliverOffstage ||
       ElementType.sliverIgnorePointer ||
       ElementType.sliverSafeArea ||
