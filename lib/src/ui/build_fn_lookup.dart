@@ -14,6 +14,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   // Single-child elements
   ElementType.elevatedButton: _buildElevatedButton,
   ElementType.outlinedButton: _buildOutlinedButton,
+  ElementType.filledButton: _buildFilledButton,
   ElementType.animatedBuilder: _buildAnimatedBuilder,
   ElementType.absorbPointer: _buildAbsorbPointer,
   ElementType.offstage: _buildOffstage,

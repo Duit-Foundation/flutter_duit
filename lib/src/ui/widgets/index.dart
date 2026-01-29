@@ -1,5 +1,7 @@
 export "text.dart";
 export "elevated_button.dart";
+export "outlined_button.dart";
+export "filled_button.dart";
 export "row.dart";
 export "column.dart";
 export "sized_box.dart";
@@ -24,7 +26,6 @@ export "single_child_scrollview.dart";
 export "radio.dart";
 export "ignore_pointer.dart";
 export "opacity.dart";
-export "outlined_button.dart";
 export "slider.dart";
 export "fitted_box.dart";
 export "switch.dart";
