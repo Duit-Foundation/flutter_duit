@@ -2,21 +2,21 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/material.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
-final class DuitElevatedButton extends StatefulWidget {
+final class DuitOutlinedButton extends StatefulWidget {
   final UIElementController controller;
   final Widget child;
 
-  const DuitElevatedButton({
+  const DuitOutlinedButton({
     required this.controller,
     required this.child,
     super.key,
   });
 
   @override
-  State<DuitElevatedButton> createState() => _DuitElevatedButtonState();
+  State<DuitOutlinedButton> createState() => _DuitOutlinedButtonState();
 }
 
-class _DuitElevatedButtonState extends State<DuitElevatedButton>
+class _DuitOutlinedButtonState extends State<DuitOutlinedButton>
     with ViewControllerChangeListener {
   late final FocusNode _focusNode;
 
@@ -43,21 +43,20 @@ class _DuitElevatedButtonState extends State<DuitElevatedButton>
     super.dispose();
   }
 
-  void _onLongPress() {
-    final action = attributes.getAction("onLongPress");
+  void _onLongPress(ServerAction? action) {
     if (action != null) {
       widget.controller.performAction(action);
     }
   }
 
-  void _onFocusChange(bool _) {
+  void _onFocusChange(bool hasFocus) {
     final action = attributes.getAction("onFocusChange");
     if (action != null) {
       widget.controller.performAction(action);
     }
   }
 
-  void _onHover(bool _) {
+  void _onHover(bool isHovering) {
     final action = attributes.getAction("onHover");
     if (action != null) {
       widget.controller.performAction(action);
@@ -66,14 +65,15 @@ class _DuitElevatedButtonState extends State<DuitElevatedButton>
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    final action = attributes.getAction("onLongPress");
+    return OutlinedButton(
       key: ValueKey(widget.controller.id),
       focusNode: _focusNode,
       autofocus: attributes.getBool("autofocus"),
-      clipBehavior: attributes.clipBehavior(defaultValue: Clip.none)!,
+      clipBehavior: attributes.clipBehavior(),
       onPressed: widget.controller.performRelatedAction,
       style: attributes.buttonStyle(),
-      onLongPress: _onLongPress,
+      onLongPress: () => _onLongPress(action),
       onFocusChange: _onFocusChange,
       onHover: _onHover,
       child: widget.child,

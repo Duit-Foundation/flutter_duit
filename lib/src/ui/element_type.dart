@@ -106,6 +106,12 @@ enum ElementType {
     childRelation: 1,
     mayHaveRelatedAction: true,
   ),
+  outlinedButton(
+    name: "OutlinedButton",
+    isControlledByDefault: true,
+    childRelation: 1,
+    mayHaveRelatedAction: true,
+  ),
   positioned(
     name: "Positioned",
     isControlledByDefault: false,
@@ -611,6 +617,7 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "DecoratedBox": ElementType.decoratedBox,
   "Center": ElementType.center,
   "ElevatedButton": ElementType.elevatedButton,
+  "OutlinedButton": ElementType.outlinedButton,
   "Positioned": ElementType.positioned,
   "Align": ElementType.align,
   "Transform": ElementType.transform,
