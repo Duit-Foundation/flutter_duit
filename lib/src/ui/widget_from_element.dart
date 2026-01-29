@@ -48,6 +48,14 @@ Widget _buildElevatedButton(ElementPropertyView model) {
   );
 }
 
+Widget _buildOutlinedButton(ElementPropertyView model) {
+  return DuitOutlinedButton(
+    controller: model.viewController,
+    child: _buildWidget(model.child),
+  );
+}
+
+
 Widget _buildTextField(ElementPropertyView model) => DuitTextField(
       controller: model.viewController,
     );

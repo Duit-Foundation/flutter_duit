@@ -13,6 +13,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.radio: _buildRadio,
   // Single-child elements
   ElementType.elevatedButton: _buildElevatedButton,
+  ElementType.outlinedButton: _buildOutlinedButton,
   ElementType.animatedBuilder: _buildAnimatedBuilder,
   ElementType.absorbPointer: _buildAbsorbPointer,
   ElementType.offstage: _buildOffstage,

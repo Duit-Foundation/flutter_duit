@@ -24,6 +24,7 @@ export "single_child_scrollview.dart";
 export "radio.dart";
 export "ignore_pointer.dart";
 export "opacity.dart";
+export "outlined_button.dart";
 export "slider.dart";
 export "fitted_box.dart";
 export "switch.dart";
