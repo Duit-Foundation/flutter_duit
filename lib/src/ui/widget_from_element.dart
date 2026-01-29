@@ -55,6 +55,13 @@ Widget _buildOutlinedButton(ElementPropertyView model) {
   );
 }
 
+Widget _buildFilledButton(ElementPropertyView model) {
+  return DuitFilledButton(
+    controller: model.viewController,
+    child: _buildWidget(model.child),
+  );
+}
+
 
 Widget _buildTextField(ElementPropertyView model) => DuitTextField(
       controller: model.viewController,

@@ -133,6 +133,7 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
         ),
       ElementType.elevatedButton ||
       ElementType.outlinedButton ||
+      ElementType.filledButton ||
       ElementType.center ||
       ElementType.clipRect ||
       ElementType.clipOval ||
