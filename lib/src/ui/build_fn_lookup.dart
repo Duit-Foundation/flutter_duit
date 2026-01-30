@@ -15,6 +15,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.elevatedButton: _buildElevatedButton,
   ElementType.outlinedButton: _buildOutlinedButton,
   ElementType.filledButton: _buildFilledButton,
+  ElementType.textButton: _buildTextButton,
   ElementType.animatedBuilder: _buildAnimatedBuilder,
   ElementType.absorbPointer: _buildAbsorbPointer,
   ElementType.offstage: _buildOffstage,
