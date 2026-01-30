@@ -2,6 +2,7 @@ export "text.dart";
 export "elevated_button.dart";
 export "outlined_button.dart";
 export "filled_button.dart";
+export "text_button.dart";
 export "row.dart";
 export "column.dart";
 export "sized_box.dart";
