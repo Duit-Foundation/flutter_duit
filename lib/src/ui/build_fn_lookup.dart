@@ -47,6 +47,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.animatedPositioned: _buildAnimatedPositioned,
   ElementType.animatedScale: _buildAnimatedScale,
   ElementType.expanded: _buildExpanded,
+  ElementType.flexible: _buildFlexible,
   ElementType.sizedBox: _buildSizedBox,
   ElementType.container: _buildContainer,
   ElementType.gestureDetector: _buildGestureDetector,

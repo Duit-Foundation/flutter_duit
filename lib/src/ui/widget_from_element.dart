@@ -556,6 +556,19 @@ Widget _buildExpanded(ElementPropertyView model) {
   };
 }
 
+Widget _buildFlexible(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledFlexible(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitFlexible(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
 Widget _buildGestureDetector(ElementPropertyView model) => DuitGestureDetector(
       controller: model.viewController,
       child: _buildWidget(model.child),

@@ -38,6 +38,11 @@ enum ElementType {
     isControlledByDefault: false,
     childRelation: 1,
   ),
+  flexible(
+    name: "Flexible",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
   sizedBox(
     name: "SizedBox",
     isControlledByDefault: false,
@@ -616,6 +621,7 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "Column": ElementType.column,
   "Stack": ElementType.stack,
   "Expanded": ElementType.expanded,
+  "Flexible": ElementType.flexible,
   "SizedBox": ElementType.sizedBox,
   "Text": ElementType.text,
   "Image": ElementType.image,

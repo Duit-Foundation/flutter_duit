@@ -11,6 +11,7 @@ export "colored_box.dart";
 export "text_field.dart";
 export "stack.dart";
 export "expanded.dart";
+export "flexible.dart";
 export "padding.dart";
 export "decorated_box.dart";
 export "container.dart";
