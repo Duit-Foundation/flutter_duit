@@ -71,3 +71,4 @@ export "unconstrained_box.dart";
 export "semantics.dart";
 export "exclude_semantics.dart";
 export "visibility.dart";
+export "interactive_viewer.dart";

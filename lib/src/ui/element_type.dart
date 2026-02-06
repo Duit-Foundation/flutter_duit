@@ -535,6 +535,11 @@ enum ElementType {
     name: "Visibility",
     isControlledByDefault: false,
     childRelation: 2,
+  ),
+  interactiveViewer(
+    name: "InteractiveViewer",
+    isControlledByDefault: true,
+    childRelation: 1,
   );
 
   /// The string identifier name of the UI element type.
@@ -718,4 +723,5 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "ExcludeSemantics": ElementType.excludeSemantics,
   "MergeSemantics": ElementType.mergeSemantics,
   "Visibility": ElementType.visibility,
+  "InteractiveViewer": ElementType.interactiveViewer,
 };

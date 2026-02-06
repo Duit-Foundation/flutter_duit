@@ -1169,6 +1169,13 @@ Widget _buildVisibility(ElementPropertyView model) {
   };
 }
 
+Widget _buildInteractiveViewer(ElementPropertyView model) {
+  return DuitControlledInteractiveViewer(
+    controller: model.viewController,
+    child: _buildWidget(model.child),
+  );
+}
+
 Widget _buildCustomWidget(DuitElement model) {
   final tag = model.tag;
   if (tag == null) return const SizedBox.shrink();
