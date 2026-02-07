@@ -87,6 +87,7 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.semantics: _buildSemantics,
   ElementType.mergeSemantics: _buildMergeSemantics,
   ElementType.excludeSemantics: _buildExcludeSemantics,
+  ElementType.interactiveViewer: _buildInteractiveViewer,
   // Multi-child elements
   ElementType.column: _buildColumn,
   ElementType.row: _buildRow,
