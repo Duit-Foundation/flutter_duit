@@ -20,3 +20,8 @@ const enableSharedDrivers = bool.fromEnvironment(
   "duit:enable-shared-drivers",
   defaultValue: false,
 );
+
+const enableActionCaching = bool.fromEnvironment(
+  "duit:enable-action-caching",
+  defaultValue: false,
+);
