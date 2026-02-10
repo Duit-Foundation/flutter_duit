@@ -14,16 +14,9 @@ final class _CacheEntry {
   });
 }
 
-class DuitActionManager with ServerActionExecutionCapabilityDelegate {
+final class DuitActionManager with ServerActionExecutionCapabilityDelegate {
   static const _hashMask = 0xffffffff;
-
-  late final Map<String, _CacheEntry> _actionHashes;
-
-  DuitActionManager() {
-    if (enableActionCaching) {
-      _actionHashes = <String, _CacheEntry>{};
-    }
-  }
+  final Map<String, _CacheEntry> _actionHashes = <String, _CacheEntry>{};
 
   late final UIDriver _driver;
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
@@ -40,20 +33,20 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
 
     Map<String, dynamic> payload;
 
-    if (enableActionCaching) {
+    if (action.idempotent) {
       var hash = 0;
       (payload, hash) = preparePayloadWithDataHash(action.dependsOn);
 
       final entry = _actionHashes[action.eventName];
 
       if (entry != null) {
-        final cacheTtl = action.cacheTTL;
-        if (cacheTtl != null) {
+        final ttl = action.suppressionTTL;
+        if (ttl != null) {
           final now = DateTime.now();
           final lastExecuted = entry.timestamp;
 
           // If the difference between current time and last execution time is greater than TTL, update hash and last execution time
-          if (now.difference(lastExecuted) >= cacheTtl) {
+          if (now.difference(lastExecuted) >= ttl) {
             // TTL expired - update cache and execute action
             _actionHashes[action.eventName] = _CacheEntry(
               hash: hash,
