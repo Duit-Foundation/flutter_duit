@@ -305,6 +305,15 @@ final class DuitDriverCompat extends UIDriver with DriverHooks {
         dependencies,
       );
 
+  @override
+  @preferInline
+  (Map<String, dynamic>, int) preparePayloadWithDataHash(
+    Iterable<ActionDependency> dependencies,
+  ) =>
+      _actionManager.preparePayloadWithDataHash(
+        dependencies,
+      );
+
   /// Adds an event stream to be listened to and processed by the driver.
   ///
   /// Each element of the stream must be a Map<String, dynamic>, which will be converted into a [ServerEvent].

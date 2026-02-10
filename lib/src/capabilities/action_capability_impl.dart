@@ -4,7 +4,20 @@ import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
-class DuitActionManager with ServerActionExecutionCapabilityDelegate {
+final class _CacheEntry {
+  final int hash;
+  final DateTime timestamp;
+
+  const _CacheEntry({
+    required this.hash,
+    required this.timestamp,
+  });
+}
+
+final class DuitActionManager with ServerActionExecutionCapabilityDelegate {
+  static const _hashMask = 0xffffffff;
+  final Map<String, _CacheEntry> _actionHashes = <String, _CacheEntry>{};
+
   late final UIDriver _driver;
   final _dataSources = <int, StreamSubscription<ServerEvent>>{};
   UserDefinedEventHandler? _navigationHandler,
@@ -14,13 +27,70 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
   Future<ServerEvent?> _executeAction(
     ServerAction action,
   ) async {
+    if (action is LocalAction) {
+      return action.event;
+    }
+
+    Map<String, dynamic> payload;
+
+    if (action.idempotent) {
+      var hash = 0;
+      (payload, hash) = preparePayloadWithDataHash(action.dependsOn);
+
+      final entry = _actionHashes[action.eventName];
+
+      if (entry != null) {
+        final ttl = action.suppressionTTL;
+        if (ttl != null) {
+          final now = DateTime.now();
+          final lastExecuted = entry.timestamp;
+
+          // If the difference between current time and last execution time is greater than TTL, update hash and last execution time
+          if (now.difference(lastExecuted) >= ttl) {
+            // TTL expired - update cache and execute action
+            _actionHashes[action.eventName] = _CacheEntry(
+              hash: hash,
+              timestamp: now,
+            );
+          } else {
+            // TTL not expired - check hash
+            if (entry.hash == hash) {
+              // Data hasn't changed - use cache
+              return null;
+            }
+            // Hash changed - update cache and execute action
+            _actionHashes[action.eventName] = _CacheEntry(
+              hash: hash,
+              timestamp: now,
+            );
+          }
+        } else {
+          // TTL not set - check hash only
+          if (entry.hash == hash) {
+            // Data hasn't changed - use cache
+            return null;
+          }
+          // Hash changed - update cache and execute action
+          _actionHashes[action.eventName] = _CacheEntry(
+            hash: hash,
+            timestamp: DateTime.now(),
+          );
+        }
+      } else {
+        // First execution - create cache entry
+        _actionHashes[action.eventName] = _CacheEntry(
+          hash: hash,
+          timestamp: DateTime.now(),
+        );
+      }
+    } else {
+      payload = preparePayload(action.dependsOn);
+    }
+
     switch (action) {
       //transport
-      case TransportAction(
-          :final dependsOn,
-        ):
+      case TransportAction():
         try {
-          final payload = _driver.preparePayload(dependsOn);
           final res = await _driver.executeRemoteAction(action, payload);
 
           if (res != null) {
@@ -35,25 +105,16 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
           );
         }
         break;
-      //local execution
-      case LocalAction(
-          :final event,
-        ):
-        return event;
-      //script
       case ScriptAction(
-          :final dependsOn,
           :final script,
           :final eventName,
         ):
         try {
-          final body = _driver.preparePayload(dependsOn);
-
           final scriptInvocationResult = await _driver.execScript(
             script.functionName,
             url: eventName,
             meta: action.script.meta,
-            body: body,
+            body: payload,
           );
 
           if (scriptInvocationResult != null) {
@@ -88,6 +149,34 @@ class DuitActionManager with ServerActionExecutionCapabilityDelegate {
       }
     }
     return payload;
+  }
+
+  @override
+  (Map<String, dynamic>, int) preparePayloadWithDataHash(
+    Iterable<ActionDependency> dependencies,
+  ) {
+    final payload = <String, dynamic>{};
+    var hash = 0;
+
+    if (dependencies.isNotEmpty) {
+      for (final dependency in dependencies) {
+        final controller = _driver.getController(dependency.id);
+        if (controller != null) {
+          final attribute = controller.attributes.payload;
+          final value = attribute["value"];
+
+          hash = (hash + 3 * dependency.target.hashCode + 7 * value.hashCode) &
+              _hashMask;
+
+          hash = (hash + (hash << 3)) & _hashMask;
+          hash ^= hash >> 11;
+          hash = (hash + (hash << 15)) & _hashMask;
+
+          payload[dependency.target] = value;
+        }
+      }
+    }
+    return (payload, hash);
   }
 
   @override
