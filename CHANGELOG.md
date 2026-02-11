@@ -1,3 +1,8 @@
+## 4.3.0
+
+- New widgets: AspectRatio, Baseline, LimitedBox, FractionallySizedBox, SizedOverflowBox, FractionalTranslation, UnconstrainedBox, Semantics, MergeSemantics, ExcludeSemantics, Visibility, OutlinedButton, FilledButton, TextButton,Flexible, InteractiveViewer
+- Value-based action idempotency check
+
 ## 4.2.0-rc.2
 
 - Migrate to capability-based API
