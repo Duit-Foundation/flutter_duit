@@ -855,11 +855,11 @@ Widget _buildGridView(ElementPropertyView model) {
 
   if (!model.controlled) {
     widgetType = GridConstructor.fromValue(
-      model.attributes.payload.getString(key: "constructor"),
+      model.attributes.payload["constructor"],
     );
   } else {
     widgetType = GridConstructor.fromValue(
-      model.viewController.attributes.payload.getString(key: "constructor"),
+      model.viewController.attributes.payload["constructor"],
     );
   }
 
