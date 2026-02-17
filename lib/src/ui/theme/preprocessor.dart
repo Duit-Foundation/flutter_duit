@@ -86,7 +86,8 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
       ElementType.stack ||
       ElementType.wrap ||
       ElementType.transform ||
-      ElementType.card =>
+      ElementType.card ||
+      ElementType.icon =>
         AnimatedPropOwnerThemeToken(
           themeData,
           widgetType,

@@ -346,7 +346,13 @@ Widget _buildOverflowBox(ElementPropertyView model) {
   };
 }
 
-// Image widget
+Widget _buildIcon(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledIcon(controller: model.viewController),
+    false => DuitIcon(attributes: model.attributes),
+  };
+}
+
 Widget _buildImage(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledImage(
@@ -447,7 +453,6 @@ Widget _buildClipOval(ElementPropertyView model) => switch (model.controlled) {
         ),
     };
 
-// Single child widgets with controlled/non-controlled versions
 Widget _buildIntrinsicHeight(ElementPropertyView model) {
   return switch (model.controlled) {
     true => DuitControlledIntrinsicHeight(

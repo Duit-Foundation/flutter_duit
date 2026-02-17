@@ -58,6 +58,11 @@ enum ElementType {
     isControlledByDefault: false,
     childRelation: 0,
   ),
+  icon(
+    name: "Icon",
+    isControlledByDefault: false,
+    childRelation: 0,
+  ),
   container(
     name: "Container",
     isControlledByDefault: false,
@@ -630,6 +635,7 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "SizedBox": ElementType.sizedBox,
   "Text": ElementType.text,
   "Image": ElementType.image,
+  "Icon": ElementType.icon,
   "Container": ElementType.container,
   "GestureDetector": ElementType.gestureDetector,
   "Custom": ElementType.custom,
