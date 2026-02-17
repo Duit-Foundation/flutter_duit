@@ -2,6 +2,7 @@ export "package:duit_kernel/duit_kernel.dart"
     show
         // ================================================== Registry API ==================================================
         DuitRegistry,
+        DuitDataSource,
         // ================================================== Element Tree API ==================================================
         ElementTree,
         ElementTreeEntry,
