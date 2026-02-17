@@ -1189,6 +1189,10 @@ Widget _buildCustomWidget(DuitElement model) {
   return builder?.call(model, children) ?? const SizedBox.shrink();
 }
 
+Widget _buildSkeletonBox(ElementPropertyView model) => DuitSkeletonBox(
+      attributes: model.attributes,
+    );
+
 Widget _buildWidget(widgetModel) {
   return switch (widgetModel) {
     DuitElement() => _buildFromElementPropertyView(widgetModel.element),

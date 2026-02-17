@@ -72,3 +72,4 @@ export "semantics.dart";
 export "exclude_semantics.dart";
 export "visibility.dart";
 export "interactive_viewer.dart";
+export "skeleton_box.dart";

@@ -540,6 +540,11 @@ enum ElementType {
     name: "InteractiveViewer",
     isControlledByDefault: true,
     childRelation: 1,
+  ),
+  skeletonBox(
+    name: "SkeletonBox",
+    isControlledByDefault: true,
+    childRelation: 0,
   );
 
   /// The string identifier name of the UI element type.
@@ -724,4 +729,5 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "MergeSemantics": ElementType.mergeSemantics,
   "Visibility": ElementType.visibility,
   "InteractiveViewer": ElementType.interactiveViewer,
+  "SkeletonBox": ElementType.skeletonBox,
 };

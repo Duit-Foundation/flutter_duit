@@ -53,6 +53,8 @@ final class DuitViewHost extends StatefulWidget {
 
   final SliverGridDelegatesRegistry sliverGridDelegatesRegistry;
 
+  final CustomSkeletonBuilder? customSkeletonBuilder;
+
   /// Creates a new `DuitViewHost` widget.
   ///
   /// The [driver] parameter is required and should be an instance of `UIDriver`.
@@ -70,6 +72,7 @@ final class DuitViewHost extends StatefulWidget {
     this.errorWidgetBuilder,
     this.viewTag = "",
     this.sliverGridDelegatesRegistry = const {},
+    this.customSkeletonBuilder,
   })  : assert(
           // ignore: avoid_bool_literals_in_conditional_expressions
           showChildInsteadOfPlaceholder == true ? child != null : true,
@@ -89,6 +92,7 @@ final class DuitViewHost extends StatefulWidget {
     this.gestureInterceptorBehavior = GestureInterceptorBehavior.onlyWithAction,
     this.viewTag = "",
     this.sliverGridDelegatesRegistry = const {},
+    this.customSkeletonBuilder,
   }) : assert(
           // ignore: avoid_bool_literals_in_conditional_expressions
           showChildInsteadOfPlaceholder == true ? child != null : true,
@@ -140,6 +144,7 @@ class _DuitViewHostState extends State<DuitViewHost> {
             gestureInterceptor: widget.gestureInterceptor,
             gestureInterceptorBehavior: widget.gestureInterceptorBehavior,
             sliverGridDelegatesRegistry: widget.sliverGridDelegatesRegistry,
+            customSkeletonBuilder: widget.customSkeletonBuilder,
             child: _StackWrapper(
               invertStack: widget.invertStack,
               content: DuitOverlayTriggerListener(

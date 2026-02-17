@@ -164,7 +164,6 @@ final class DuitElement extends ElementTreeEntry {
             processedFragment.element,
           );
         }
-
         return DuitElement._(element);
       default:
         return DuitElement._(element);
