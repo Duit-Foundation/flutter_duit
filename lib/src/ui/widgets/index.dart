@@ -16,6 +16,7 @@ export "padding.dart";
 export "decorated_box.dart";
 export "container.dart";
 export "checkbox.dart";
+export "icon.dart";
 export "image.dart";
 export "gesture_detector.dart";
 export "positioned.dart";

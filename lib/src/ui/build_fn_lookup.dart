@@ -4,6 +4,7 @@ typedef BuildFn = Widget Function(ElementPropertyView);
 
 const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.text: _buildText,
+  ElementType.icon: _buildIcon,
   ElementType.image: _buildImage,
   ElementType.textField: _buildTextField,
   ElementType.slider: _buildSlider,
