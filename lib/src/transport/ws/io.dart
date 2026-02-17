@@ -1,7 +1,6 @@
 import "dart:async";
 import "dart:convert";
 import "dart:io";
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter_duit/src/transport/transport_utils.dart";
 
 import "package:flutter_duit/flutter_duit.dart";

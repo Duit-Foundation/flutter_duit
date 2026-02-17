@@ -1,7 +1,6 @@
 import "dart:async";
 import "dart:convert";
 import "dart:js_interop";
-import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter_duit/src/transport/transport_utils.dart";
 import "package:web/web.dart" as web;
 
