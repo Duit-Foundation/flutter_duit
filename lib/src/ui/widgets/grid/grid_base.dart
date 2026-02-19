@@ -187,11 +187,8 @@ class _DuitControlledGridViewState extends State<DuitControlledGridView>
   @override
   Widget build(BuildContext context) {
     final attrs = attributes;
-    final constructor = GridConstructor.fromValue(
-      attrs.getString(key: "constructor"),
-    );
 
-    switch (constructor) {
+    switch (widget.constructor) {
       case GridConstructor.common:
         SliverGridDelegate delegate;
         final viewCtx = DuitViewContext.of(context);

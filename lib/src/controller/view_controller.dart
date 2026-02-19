@@ -136,6 +136,8 @@ final class ViewController<T>
   void performRelatedAction() {
     if (action != null) {
       _perform(action!);
+    } else {
+      driver.logWarning("An attempt was made to call an action, but the action is missing.", null, StackTrace.current,);
     }
   }
 
@@ -143,6 +145,8 @@ final class ViewController<T>
   Future<void> performRelatedActionAsync() async {
     if (action != null) {
       await _performAsync(action!);
+    } else {
+      driver.logWarning("An attempt was made to call an action, but the action is missing.", null, StackTrace.current,);
     }
   }
 
@@ -150,6 +154,8 @@ final class ViewController<T>
   void performAction(ServerAction? action) {
     if (action != null) {
       _perform(action);
+    } else {
+      driver.logWarning("An attempt was made to call an action, but the action is missing.", null, StackTrace.current,);
     }
   }
 
@@ -157,6 +163,8 @@ final class ViewController<T>
   Future<void> performActionAsync(ServerAction? action) async {
     if (action != null) {
       await _performAsync(action);
+    } else {
+      driver.logWarning("An attempt was made to call an action, but the action is missing.", null, StackTrace.current,);
     }
   }
 
