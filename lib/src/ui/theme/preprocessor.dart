@@ -164,6 +164,7 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
       ElementType.mergeSemantics ||
       ElementType.semantics ||
       ElementType.visibility ||
+      ElementType.tooltip ||
       ElementType.badge =>
         DefaultThemeToken(
           themeData,

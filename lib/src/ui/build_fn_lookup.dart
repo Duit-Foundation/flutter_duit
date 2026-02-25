@@ -108,4 +108,5 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.badge: _buildBadge,
   ElementType.visibility: _buildVisibility,
   ElementType.skeletonBox: _buildSkeletonBox,
+  ElementType.tooltip: _buildTooltip,
 };
