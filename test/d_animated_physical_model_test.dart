@@ -17,8 +17,8 @@ void main() {
               "duration": 300,
               "curve": "ease",
               "elevation": 4.0,
-              "color": [255, 0, 0, 1],
-              "shadowColor": [0, 0, 0, 1],
+              "color": [255, 0, 0, 255],
+              "shadowColor": [0, 0, 0, 255],
               "clipBehavior": "antiAlias",
             },
             "child": {
@@ -59,8 +59,8 @@ void main() {
               "duration": 200,
               "curve": "linear",
               "elevation": 2.0,
-              "color": [0, 255, 0, 1],
-              "shadowColor": [0, 0, 0, 1],
+              "color": [0, 255, 0, 255],
+              "shadowColor": [0, 0, 0, 255],
               "clipBehavior": "hardEdge",
             },
             "child": {
@@ -100,8 +100,8 @@ void main() {
             "attributes": {
               "duration": 150,
               "elevation": 6.0,
-              "color": [0, 0, 255, 1],
-              "shadowColor": [128, 128, 128, 1],
+              "color": [0, 0, 255, 255],
+              "shadowColor": [128, 128, 128, 255],
               "clipBehavior": "antiAlias",
               "borderRadius": {
                 "topLeft": <String, dynamic>{"radius": 20.0},
@@ -151,8 +151,8 @@ void main() {
               "duration": 100,
               "curve": "easeIn",
               "elevation": 3.0,
-              "color": [255, 255, 0, 1],
-              "shadowColor": [0, 0, 0, 1],
+              "color": [255, 255, 0, 255],
+              "shadowColor": [0, 0, 0, 255],
               "clipBehavior": "none",
               "onEnd": {"type": "action", "action": "test_action"},
             },

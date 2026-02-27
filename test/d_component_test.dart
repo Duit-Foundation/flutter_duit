@@ -190,7 +190,7 @@ void main() {
               255,
               255,
               255,
-              1,
+              255,
             ],
             "mainColor": "#075eeb",
           }, // both mainColor and secColor
