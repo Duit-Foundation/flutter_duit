@@ -1,15 +1,13 @@
 import "package:flutter/material.dart";
 import "package:flutter_duit/kernel_api.dart";
-import "package:flutter_duit/src/duit_impl/subtree_holder.dart";
 import "package:flutter_duit/src/duit_impl/view_context.dart";
 
 class DuitSkeletonBox extends StatelessWidget {
   final ViewAttribute attributes;
 
-  const DuitSkeletonBox({
+  DuitSkeletonBox({
     required this.attributes,
-    super.key,
-  });
+  }) : super(key: ValueKey(attributes.id));
 
   @override
   Widget build(BuildContext context) {
@@ -17,56 +15,26 @@ class DuitSkeletonBox extends StatelessWidget {
         DuitViewContext.of(context).customSkeletonBuilder;
 
     if (customSkeletonBuilder != null) {
-      return customSkeletonBuilder(
-        attributes.payload.tryGetDouble(key: "width") ?? 0,
-        attributes.payload.tryGetDouble(key: "height") ?? 0,
+      return customSkeletonBuilder.build(
+        attributes.payload.toEnum(
+          key: "type",
+          typeArg: customSkeletonBuilder.underlayingTypeArgument,
+        ),
+        attributes.payload,
       );
     }
 
     return Placeholder(
-      color: Colors.red,
       child: SizedBox(
-        width: attributes.payload.tryGetDouble(key: "width"),
-        height: attributes.payload.tryGetDouble(key: "height"),
-        child: const Center(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text("Default skeleton"),
-          ),
+        width: attributes.payload.tryGetDouble(
+          key: "width",
+          defaultValue: 100,
+        ),
+        height: attributes.payload.tryGetDouble(
+          key: "height",
+          defaultValue: 100,
         ),
       ),
-    );
-  }
-}
-
-class DuitSkeletonizedContent extends StatefulWidget {
-  final UIElementController controller;
-  final Widget child;
-
-  const DuitSkeletonizedContent({
-    required this.controller,
-    required this.child,
-    super.key,
-  });
-
-  @override
-  State<DuitSkeletonizedContent> createState() =>
-      _DuitSkeletonizedContentState();
-}
-
-class _DuitSkeletonizedContentState extends State<DuitSkeletonizedContent>
-    with SubtreeHolder {
-  @override
-  void initState() {
-    attachStateToController(widget.controller, widget.child);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 450),
-      child: subtreeChild,
     );
   }
 }

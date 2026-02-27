@@ -543,7 +543,7 @@ enum ElementType {
   ),
   skeletonBox(
     name: "SkeletonBox",
-    isControlledByDefault: true,
+    isControlledByDefault: false,
     childRelation: 0,
   );
 

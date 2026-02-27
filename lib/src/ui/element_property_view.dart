@@ -382,6 +382,7 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
         return;
       case ElementType.skeletonBox:
         // Force attributes creation for skeleton box to avoid null controlled property error
+        // SkeletonBox always uncontrolled
         element._createAttributes();
         return;
       default:

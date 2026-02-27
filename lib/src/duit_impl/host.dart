@@ -53,6 +53,9 @@ final class DuitViewHost extends StatefulWidget {
 
   final SliverGridDelegatesRegistry sliverGridDelegatesRegistry;
 
+  ///A builder for custom skeleton widgets.
+  ///
+  ///If not provided, the default skeleton widget will be used.
   final CustomSkeletonBuilder? customSkeletonBuilder;
 
   /// Creates a new `DuitViewHost` widget.
