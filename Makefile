@@ -17,3 +17,8 @@ lint:
 
 format:
 	fvm dart format .
+
+.PHONY: deps
+
+deps:
+	fvm flutter pub get
