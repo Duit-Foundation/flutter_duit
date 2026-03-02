@@ -16,10 +16,15 @@ class DuitTooltip extends StatelessWidget {
     final attrs = attributes.payload;
     return Tooltip(
       key: ValueKey(attributes.id),
-      message: attrs.getString(key: "message"),
-      richMessage: attrs.textSpan(key: "richMessage"),
+      message: attrs.tryGetString("message"),
+      richMessage: attrs.tryParseIfNotNull<TextSpan>(
+        key: "richMessage",
+        defaultValue: null,
+        converter: attrs.textSpan,
+      ),
       padding: attrs.edgeInsets(key: "padding"),
       margin: attrs.edgeInsets(key: "margin"),
+      height: attrs.tryGetDouble(key: "height"),
       verticalOffset: attrs.getDouble(
         key: "verticalOffset",
         defaultValue: 24.0,
@@ -39,7 +44,12 @@ class DuitTooltip extends StatelessWidget {
         "enableTapToDismiss",
         defaultValue: true,
       ),
+      enableFeedback: attrs.tryGetBool("enableFeedback"),
       triggerMode: attrs.tooltipTriggerMode(key: "triggerMode"),
+      //TODO: implement this props when migrate to Flutter version 3.30+
+
+      // ignorePointer: attrs.tryGetBool("ignorePointer"),
+      // constraints: attrs.boxConstraints(key: "constraints"),
       child: child,
     );
   }
@@ -71,10 +81,15 @@ class _DuitControlledTooltipState extends State<DuitControlledTooltip>
   Widget build(BuildContext context) {
     return Tooltip(
       key: ValueKey(widget.controller.id),
-      message: attributes.getString(key: "message"),
-      richMessage: attributes.textSpan(key: "richMessage"),
+      message: attributes.tryGetString("message"),
+      richMessage: attributes.tryParseIfNotNull<TextSpan>(
+        key: "richMessage",
+        converter: attributes.textSpan,
+        defaultValue: null,
+      ),
       padding: attributes.edgeInsets(key: "padding"),
       margin: attributes.edgeInsets(key: "margin"),
+      height: attributes.getDouble(key: "height"),
       verticalOffset: attributes.getDouble(
         key: "verticalOffset",
         defaultValue: 24.0,
@@ -94,7 +109,12 @@ class _DuitControlledTooltipState extends State<DuitControlledTooltip>
         "enableTapToDismiss",
         defaultValue: true,
       ),
+      enableFeedback: attributes.tryGetBool("enableFeedback"),
       triggerMode: attributes.tooltipTriggerMode(key: "triggerMode"),
+      //TODO: implement this props when migrate to Flutter version 3.30+
+
+      // constraints: attributes.boxConstraints(key: "constraints"),
+      // ignorePointer: attributes.tryGetBool("ignorePointer"),
       child: widget.child,
     );
   }
