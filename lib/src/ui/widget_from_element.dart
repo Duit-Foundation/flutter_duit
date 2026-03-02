@@ -1174,6 +1174,19 @@ Widget _buildVisibility(ElementPropertyView model) {
   };
 }
 
+Widget _buildTooltip(ElementPropertyView model) {
+  return switch (model.controlled) {
+    true => DuitControlledTooltip(
+        controller: model.viewController,
+        child: _buildWidget(model.child),
+      ),
+    false => DuitTooltip(
+        attributes: model.attributes,
+        child: _buildWidget(model.child),
+      ),
+  };
+}
+
 Widget _buildInteractiveViewer(ElementPropertyView model) {
   return DuitControlledInteractiveViewer(
     controller: model.viewController,

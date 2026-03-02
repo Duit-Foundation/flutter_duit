@@ -77,10 +77,10 @@ packages:
     dependency: transitive
     description:
       name: duit_kernel
-      sha256: "2f817ddd3d3e2c7ede6cd011596ffdabcbdc2a6424423a0683172eac4c1d968e"
+      sha256: "9d8bef38840efec1ff2c41f409952ca1c1ac7755ce8b1e531ba0228e3f3a2c00"
       url: "https://pub.dev"
     source: hosted
-    version: "4.3.0"
+    version: "4.3.1"
   fake_async:
     dependency: transitive
     description:

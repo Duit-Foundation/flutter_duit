@@ -541,6 +541,11 @@ enum ElementType {
     isControlledByDefault: false,
     childRelation: 2,
   ),
+  tooltip(
+    name: "Tooltip",
+    isControlledByDefault: false,
+    childRelation: 1,
+  ),
   interactiveViewer(
     name: "InteractiveViewer",
     isControlledByDefault: true,
@@ -734,6 +739,7 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "ExcludeSemantics": ElementType.excludeSemantics,
   "MergeSemantics": ElementType.mergeSemantics,
   "Visibility": ElementType.visibility,
+  "Tooltip": ElementType.tooltip,
   "InteractiveViewer": ElementType.interactiveViewer,
   "SkeletonBox": ElementType.skeletonBox,
 };
