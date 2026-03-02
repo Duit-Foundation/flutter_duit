@@ -13,8 +13,8 @@ void main() {
             "id": "physical_model",
             "attributes": {
               "elevation": 8.0,
-              "color": [255, 0, 0, 1],
-              "shadowColor": [0, 0, 0, 1],
+              "color": [255, 0, 0, 255],
+              "shadowColor": [0, 0, 0, 255],
               "clipBehavior": "antiAlias",
               "borderRadius": {
                 "topLeft": {"x": 10, "y": 10},
@@ -73,8 +73,8 @@ void main() {
             "id": "physical_model",
             "attributes": {
               "elevation": 4.0,
-              "color": [0, 255, 0, 1],
-              "shadowColor": [0, 0, 0, 1],
+              "color": [0, 255, 0, 255],
+              "shadowColor": [0, 0, 0, 255],
               "clipBehavior": "hardEdge",
             },
             "controlled": true,
@@ -113,7 +113,7 @@ void main() {
 
         await driver.asInternalDriver.updateAttributes("physical_model", {
           "elevation": 12.0,
-          "color": [0, 0, 255, 1],
+          "color": [0, 0, 255, 255],
         });
 
         await tester.pumpAndSettle();
@@ -137,8 +137,8 @@ void main() {
             "id": "physical_model",
             "attributes": {
               "elevation": 2.0,
-              "color": [128, 128, 128, 1],
-              "shadowColor": [0, 0, 0, 1],
+              "color": [128, 128, 128, 255],
+              "shadowColor": [0, 0, 0, 255],
               "clipBehavior": "none",
             },
             "controlled": false,

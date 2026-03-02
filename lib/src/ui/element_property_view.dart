@@ -378,10 +378,12 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
 
     //corner case handling when neither attribute creation nor controller is required
     switch (element.type) {
-      // case ElementType.someWidget1:
-      // case ElementType.someWidget2:
-      // case ElementType.someWidget3:
       case ElementType.fragment:
+        return;
+      case ElementType.skeletonBox:
+        // Force attributes creation for skeleton box to avoid null controlled property error
+        // SkeletonBox always uncontrolled
+        element._createAttributes();
         return;
       default:
         break;

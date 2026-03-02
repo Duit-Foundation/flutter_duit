@@ -107,4 +107,5 @@ const _buildFnLookup = <ElementType, BuildFn>{
   ElementType.pageView: _buildPageView,
   ElementType.badge: _buildBadge,
   ElementType.visibility: _buildVisibility,
+  ElementType.skeletonBox: _buildSkeletonBox,
 };
