@@ -28,17 +28,11 @@ Map<String, dynamic> _createWidget([bool isControlled = false]) {
 void main() {
   group("DuitTooltip widget tests", () {
     testWidgets("check widget", (tester) async {
-      await tester.pumpWidget(
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: DuitViewHost.withDriver(
-            driver: XDriver.static(
-              _createWidget(),
-            ),
-          ),
-        ),
+      final driver = XDriver.static(
+        _createWidget(),
       );
-      await tester.pumpAndSettle();
+      
+      await pumpDriver(tester, driver.asInternalDriver);
 
       final widget = find.byKey(const ValueKey("tooltip_test"));
       expect(widget, findsOneWidget);
