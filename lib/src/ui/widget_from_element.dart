@@ -1022,6 +1022,20 @@ Widget _buildWrap(ElementPropertyView model) {
   };
 }
 
+Widget _buildDismissible(ElementPropertyView model) {
+  final children = _mapToNullableWidgetList(model);
+  return switch (model.controlled) {
+    true => DuitControlledDismissible(
+        controller: model.viewController,
+        children: children,
+      ),
+    false => DuitDismissible(
+        attributes: model.attributes,
+        children: children,
+      ),
+  };
+}
+
 Widget _buildBadge(ElementPropertyView model) {
   final children = _mapToNullableWidgetList(model);
   return switch (model.controlled) {

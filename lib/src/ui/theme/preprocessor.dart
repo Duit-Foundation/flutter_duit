@@ -110,7 +110,8 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
           widgetType,
         ),
       ElementType.gestureDetector ||
-      ElementType.inkWell =>
+      ElementType.inkWell ||
+      ElementType.dismissible =>
         ExcludeGestureCallbacksThemeToken(
           themeData,
           widgetType,
