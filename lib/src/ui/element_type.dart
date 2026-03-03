@@ -551,6 +551,11 @@ enum ElementType {
     isControlledByDefault: true,
     childRelation: 1,
   ),
+  dismissible(
+    name: "Dismissible",
+    isControlledByDefault: false,
+    childRelation: 2,
+  ),
   skeletonBox(
     name: "SkeletonBox",
     isControlledByDefault: false,
@@ -741,5 +746,6 @@ const _stringToTypeLookupTable = <String, ElementType>{
   "Visibility": ElementType.visibility,
   "Tooltip": ElementType.tooltip,
   "InteractiveViewer": ElementType.interactiveViewer,
+  "Dismissible": ElementType.dismissible,
   "SkeletonBox": ElementType.skeletonBox,
 };
