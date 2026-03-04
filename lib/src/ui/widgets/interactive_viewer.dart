@@ -1,6 +1,6 @@
 import "package:duit_kernel/duit_kernel.dart";
 import "package:flutter/gestures.dart";
-import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 
 const _kDrag = 0.0000135;

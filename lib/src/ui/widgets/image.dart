@@ -1,5 +1,5 @@
 import "package:duit_kernel/duit_kernel.dart";
-import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_duit/src/animations/index.dart";
 import "package:flutter_duit/src/duit_impl/index.dart";
 import "package:flutter_duit/src/utils/image_type.dart";

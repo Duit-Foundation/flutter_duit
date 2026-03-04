@@ -1,4 +1,4 @@
-import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
 final class DuitSliverFillViewport extends StatelessWidget
