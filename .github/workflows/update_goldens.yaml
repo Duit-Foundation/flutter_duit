@@ -8,7 +8,7 @@ on:
       flutter_version:
         description: 'Flutter version to use'
         required: true
-        default: '3.22.3'
+        default: '3.27.4'
 permissions:
   contents: write
 
@@ -55,9 +55,12 @@ jobs:
       - name: Disable animations
         run: flutter config --no-cli-animations
 
+      - name: Install Dependencies
+        run: flutter pub get
+
       - name: Update Goldens
-        run: |
-          flutter test --update-goldens
+        working-directory: packages/flutter_duit
+        run: flutter test --no-pub --update-goldens
         continue-on-error: true
 
       - name: Commit Changes

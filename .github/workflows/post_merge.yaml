@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flutter-version: ["3.24.3", "3.27.4", "3.29.3", "3.32.7"]
+        flutter-version: ["3.27.4", "3.29.3", "3.32.7"]
     steps:
       - uses: actions/checkout@v3
 
@@ -35,14 +35,14 @@ jobs:
         run: flutter analyze .
 
       - name: Run tests
-        run: |
-          flutter test --no-pub --coverage --test-randomize-ordering-seed=random
+        working-directory: packages/flutter_duit
+        run: flutter test --no-pub --coverage --test-randomize-ordering-seed=random
 
       - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.FLUTTER_DUIT_COVERALLS_REPO_TOKEN }}
-          path-to-lcov: coverage/lcov.info
+          path-to-lcov: packages/flutter_duit/coverage/lcov.info
           flag-name: flutter-${{ matrix.flutter-version }}-UNIT
           parallel: true
           fail-on-error: false
