@@ -1,5 +1,5 @@
 import "package:duit_kernel/duit_kernel.dart";
-import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_duit/src/duit_impl/subtree_holder.dart";
 
 ///Wraps a subtree of component widgets and controls its updating]

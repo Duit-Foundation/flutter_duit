@@ -1,4 +1,4 @@
-import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_duit/kernel_api.dart";
 import "package:flutter_duit/src/duit_impl/view_context.dart";
 

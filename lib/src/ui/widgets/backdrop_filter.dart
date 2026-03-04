@@ -1,6 +1,6 @@
 import "dart:ui";
 
-import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_duit/flutter_duit.dart";
 
 final class DuitBackdropFilter extends StatelessWidget with AnimatedAttributes {
