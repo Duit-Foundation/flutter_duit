@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:example/src/custom/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duit/flutter_duit.dart';
+import 'src/custom/index.dart';
 
 class CustomDecoder extends Converter<Uint8List, Map<String, dynamic>> {
   @override

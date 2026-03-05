@@ -60,14 +60,6 @@ DuitViewHost.withDriver(
 ),
 ```
 
-## Monorepo structure
-
-| Package | Description | Path |
-|---------|-------------|------|
-| `flutter_duit` | Core framework and widget collection | `packages/flutter_duit` |
-| `flutter_duit_material` | Material Design widget collection for flutter_duit | `packages/flutter_duit_material` |
-| `flutter_duit_cupertino` | Cupertino widget collection for flutter_duit | `packages/flutter_duit_cupertino` |
-
 ## Project roadmap
 
 - New event types

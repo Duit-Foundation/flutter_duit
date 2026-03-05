@@ -1,24 +1,24 @@
-.PHONY: cov
+.PHONY: deps lint format test cov publish-dry publish
 
-cov:
-	fvm flutter test -j=10 --coverage && genhtml coverage/lcov.info --output=coverage/html && open coverage/html/index.html
-
-.PHONY: test
-
-test:
-	fvm flutter test -j=10
-
-.PHONY: lint
+deps:
+	fvm flutter pub get
 
 lint:
 	fvm flutter analyze .
 
-.PHONY: format
-
 format:
 	fvm dart format .
 
-.PHONY: deps
+test:
+	cd packages/flutter_duit && fvm flutter test -j=10
 
-deps:
-	fvm flutter pub get
+cov:
+	cd packages/flutter_duit && fvm flutter test -j=10 --coverage \
+		&& genhtml coverage/lcov.info --output=coverage/html \
+		&& open coverage/html/index.html
+
+publish-dry:
+	cd packages/flutter_duit && fvm flutter pub publish --dry-run
+
+publish:
+	cd packages/flutter_duit && fvm flutter pub publish
