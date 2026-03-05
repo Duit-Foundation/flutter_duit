@@ -5,9 +5,6 @@ on:
     branches:
       - "main"
 
-env:
-  IS_CI: true
-
 jobs:
   post-merge-test:
     runs-on: ubuntu-latest
@@ -45,7 +42,6 @@ jobs:
           path-to-lcov: packages/flutter_duit/coverage/lcov.info
           flag-name: flutter-${{ matrix.flutter-version }}-UNIT
           parallel: true
-          fail-on-error: false
 
   finish:
     needs: post-merge-test
@@ -56,4 +52,3 @@ jobs:
         with:
           github-token: ${{ secrets.FLUTTER_DUIT_COVERALLS_REPO_TOKEN }}
           parallel-finished: true
-          fail-on-error: false

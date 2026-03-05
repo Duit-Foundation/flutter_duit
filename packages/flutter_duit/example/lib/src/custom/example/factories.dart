@@ -1,6 +1,6 @@
-import 'package:example/src/custom/example/widget.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_duit/flutter_duit.dart';
+import "./widget.dart";
 
 Widget exampleBuildFactory(
   ElementTreeEntry model, [
