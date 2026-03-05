@@ -371,39 +371,35 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   /// This method is typically called during element construction in factory
   /// methods like `fromJson`.
   void _processElement(
-    Map<String, dynamic> data,
     UIDriver driver,
   ) {
-    final element = ElementPropertyView._(data);
-
     //corner case handling when neither attribute creation nor controller is required
-    switch (element.type) {
+    switch (type) {
       case ElementType.fragment:
         return;
       case ElementType.skeletonBox:
         // Force attributes creation for skeleton box to avoid null controlled property error
         // SkeletonBox always uncontrolled
-        element._createAttributes();
+        _createAttributes();
         return;
       default:
         break;
     }
 
-    if (element.type.mayHaveRelatedAction) {
-      final action = DuitDataSource(data).getAction("action");
+    if (type.mayHaveRelatedAction) {
+      final action = DuitDataSource(json).getAction("action");
 
       if (action != null && action is ScriptAction) {
         driver.evalScript(action.script.sourceCode);
       }
     }
 
-    if (element.controlled || element.type.isControlledByDefault) {
-      final id = element.id;
-      final controller = element._createViewController(driver);
+    if (controlled || type.isControlledByDefault) {
+      final controller = _createViewController(driver);
 
       driver.attachController(id, controller);
     } else {
-      element._createAttributes();
+      _createAttributes();
     }
   }
 
@@ -445,7 +441,6 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
       ElementPropertyView._(
         data,
       ).._processElement(
-          data,
           driver,
         );
 
