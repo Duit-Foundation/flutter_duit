@@ -14,7 +14,7 @@ environment:
 resolution: workspace
 
 dependencies:
-  duit_kernel: ^4.3.1
+  duit_kernel: ^4.4.0
   flutter:
     sdk: flutter
   http: ^1.6.0

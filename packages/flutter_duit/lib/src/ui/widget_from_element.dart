@@ -1239,6 +1239,20 @@ Widget _buildFromElementPropertyView(ElementPropertyView model) {
     return _buildCustomWidget(DuitElement.wrap(model));
   }
 
+  if (enableExternalLibrarySupport) {
+    if (model.type == ElementType.external) {
+      final name = model.externalTypeName;
+
+      if (name != null) {
+        final descriptor = DuitRegistry.getDescriptor(name);
+
+        if (descriptor != null) {
+          return descriptor.widgetBuilder(DuitElement.wrap(model));
+        }
+      }
+    }
+  }
+
   final buildFn = _buildFnLookup[model.type];
 
   if (buildFn != null) {

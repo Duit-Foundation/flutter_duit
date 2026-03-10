@@ -1,3 +1,5 @@
+import "package:duit_kernel/duit_kernel.dart";
+
 /// Defines the types of UI elements that can be rendered in the Duit framework.
 ///
 /// This enum represents all supported Flutter widget types that can be created
@@ -556,6 +558,11 @@ enum ElementType {
     isControlledByDefault: false,
     childRelation: 2,
   ),
+  external(
+    name: "External",
+    isControlledByDefault: false,
+    childRelation: 0,
+  ),
   skeletonBox(
     name: "SkeletonBox",
     isControlledByDefault: false,
@@ -611,11 +618,44 @@ enum ElementType {
   /// final elementType = ElementType.value("Row");
   /// // Returns ElementType.row
   /// ```
-  static ElementType value(String name) =>
-      _stringToTypeLookupTable[name] ??
-      (throw ArgumentError(
-        "Unknown element type: $name",
-      ));
+  static ElementType value(String name) {
+    if (enableExternalLibrarySupport) {
+      if (enableCoreWidgetsOveeride) {
+        if (DuitRegistry.hasDescriptor(name)) {
+          return ElementType.external;
+        } else {
+          final elementType = _stringToTypeLookupTable[name];
+          if (elementType != null) {
+            return elementType;
+          }
+          throw ArgumentError(
+            "Unknown element type: $name",
+          );
+        }
+      } else {
+        final elementType = _stringToTypeLookupTable[name];
+
+        if (elementType != null) {
+          return elementType;
+        } else if (DuitRegistry.hasDescriptor(name)) {
+          return ElementType.external;
+        } else {
+          throw ArgumentError(
+            "Unknown element type: $name",
+          );
+        }
+      }
+    } else {
+      final elementType = _stringToTypeLookupTable[name];
+      if (elementType != null) {
+        return elementType;
+      } else {
+        throw ArgumentError(
+          "Unknown element type: $name",
+        );
+      }
+    }
+  }
 
   /// Converts a string name to the corresponding [ElementType], or returns null.
   ///
@@ -637,8 +677,37 @@ enum ElementType {
   /// final unknownType = ElementType.valueOrNull("UnknownWidget");
   /// // Returns null
   /// ```
-  static ElementType? valueOrNull(String name) =>
-      _stringToTypeLookupTable[name];
+  static ElementType? valueOrNull(String name) {
+    if (enableExternalLibrarySupport) {
+      if (enableCoreWidgetsOveeride) {
+        if (DuitRegistry.hasDescriptor(name)) {
+          return ElementType.external;
+        } else {
+          final elementType = _stringToTypeLookupTable[name];
+          if (elementType != null) {
+            return elementType;
+          }
+          throw ArgumentError(
+            "Unknown element type: $name",
+          );
+        }
+      } else {
+        final elementType = _stringToTypeLookupTable[name];
+
+        if (elementType != null) {
+          return elementType;
+        } else if (DuitRegistry.hasDescriptor(name)) {
+          return ElementType.external;
+        } else {
+          throw ArgumentError(
+            "Unknown element type: $name",
+          );
+        }
+      }
+    } else {
+      return _stringToTypeLookupTable[name];
+    }
+  }
 }
 
 const _stringToTypeLookupTable = <String, ElementType>{

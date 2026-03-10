@@ -54,6 +54,17 @@ final class DuitThemePreprocessor extends ThemePreprocessor {
     Map<String, dynamic> themeData,
   ) {
     final type = ElementType.valueOrNull(widgetType);
+
+    if (enableExternalLibrarySupport) {
+      if (type == ElementType.external) {
+        final descriptor = DuitRegistry.getDescriptor(widgetType);
+        if (descriptor != null && descriptor.themeTokenBuilder != null) {
+          return descriptor.themeTokenBuilder!(widgetType, themeData);
+        }
+        return const UnknownThemeToken();
+      }
+    }
+
     return switch (type) {
       ElementType.text => TextThemeToken(
           themeData,

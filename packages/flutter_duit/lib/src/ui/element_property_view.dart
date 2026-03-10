@@ -115,12 +115,26 @@ extension type ElementPropertyView._(Map<String, dynamic> json) {
   /// ```
   @preferInline
   ElementType get type {
-    final type = json["type"];
-    if (type is ElementType) {
-      return type;
+    final raw = json["type"];
+    if (raw is ElementType) {
+      return raw;
     }
-    return json["type"] = ElementType.value(type);
+
+    if (enableExternalLibrarySupport) {
+      final resolvedType = ElementType.value(raw);
+
+      if (resolvedType == ElementType.external) {
+        json["_externalTypeName"] = raw;
+      }
+      return resolvedType;
+    } else {
+      return ElementType.value(raw);
+    }
   }
+
+  @preferInline
+  @experimental
+  String? get externalTypeName => json["_externalTypeName"];
 
   /// Gets the optional tag of this UI element.
   ///
