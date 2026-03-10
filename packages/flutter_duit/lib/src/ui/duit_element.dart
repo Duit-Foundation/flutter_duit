@@ -24,8 +24,7 @@ final class DuitElement extends ElementTreeEntry {
   /// Wraps an [ElementPropertyView] in a [DuitElement].
   ///
   /// It`s needs to use elemets as part of DuitElement tree as independent widget.
-  factory DuitElement.wrap(ElementPropertyView element) =>
-      DuitElement._(element);
+  factory DuitElement.wrap(ElementPropertyView element) => DuitElement._(element);
 
   @override
   UIElementController get viewController => _element.viewController;
@@ -97,7 +96,7 @@ final class DuitElement extends ElementTreeEntry {
     final element = ElementPropertyView.fromJson(json, driver);
 
     // Recursive processing of child elements (see method documentation for design pattern details)
-    switch (element.type.childRelation) {
+    switch (_resolveChildRelation(element)) {
       case 1:
         final child = JsonUtils.extractMap(
           json,
@@ -129,8 +128,7 @@ final class DuitElement extends ElementTreeEntry {
           );
         }
 
-        final providedData =
-            JsonUtils.extractMap(json, "data") ?? <String, dynamic>{};
+        final providedData = JsonUtils.extractMap(json, "data") ?? <String, dynamic>{};
 
         final model = DuitRegistry.getComponentDescription(element.tag!);
 
@@ -168,6 +166,16 @@ final class DuitElement extends ElementTreeEntry {
       default:
         return DuitElement._(element);
     }
+  }
+
+  static int _resolveChildRelation(ElementPropertyView element) {
+    if (element.type == ElementType.external) {
+      final name = element.externalTypeName;
+
+      return DuitRegistry.getDescriptor(name!)!.childRelation;
+    }
+
+    return element.type.childRelation;
   }
 
   /// Returns the rendered Flutter [Widget] for this [DuitElement].
