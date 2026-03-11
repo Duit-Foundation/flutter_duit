@@ -6,19 +6,17 @@ import "package:flutter_duit/src/ui/widgets/grid_constructor.dart";
 final class DuitGridView extends StatelessWidget {
   final ViewAttribute attributes;
   final List<Widget> children;
-  final GridConstructor constructor;
 
   const DuitGridView({
     required this.attributes,
     required this.children,
-    required this.constructor,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     final attrs = attributes.payload;
-
+    final constructor = attrs.toEnum<GridConstructor>(key: "constructor");
     switch (constructor) {
       case GridConstructor.common:
         SliverGridDelegate delegate;

@@ -1,5 +1,11 @@
 part of "element_property_view.dart";
 
+final _gridConstructorLazyRegistar = () {
+  DuitRegistry.registerCustomEnumFactory<GridConstructor>(
+    GridConstructor.fromValue,
+  );
+}();
+
 @preferInline
 List<Widget?> _mapToNullableWidgetList(ElementPropertyView model) =>
     model.children
@@ -856,16 +862,15 @@ Widget _buildListView(ElementPropertyView model) {
 }
 
 Widget _buildGridView(ElementPropertyView model) {
+  _gridConstructorLazyRegistar;
   GridConstructor widgetType;
 
   if (!model.controlled) {
-    widgetType = GridConstructor.fromValue(
-      model.attributes.payload["constructor"],
-    );
+    widgetType =
+        model.attributes.payload.toEnum<GridConstructor>(key: "constructor");
   } else {
-    widgetType = GridConstructor.fromValue(
-      model.viewController.attributes.payload["constructor"],
-    );
+    widgetType = model.viewController.attributes.payload
+        .toEnum<GridConstructor>(key: "constructor");
   }
 
   switch (widgetType) {
@@ -874,7 +879,6 @@ Widget _buildGridView(ElementPropertyView model) {
     case GridConstructor.extent:
       if (!model.controlled) {
         return DuitGridView(
-          constructor: widgetType,
           attributes: model.attributes,
           children: model.children.map(_buildWidget).toList(),
         );

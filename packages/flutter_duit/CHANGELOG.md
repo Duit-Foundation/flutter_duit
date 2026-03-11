@@ -1,3 +1,11 @@
+## 4.4.0
+
+- New widgets: Icon, Tooltip, Dismissible, SkeletonBox.
+- Bump minimal Dart version to 3.6 and Flutter version to 3.27
+- Monorepo setup
+- Experimental feature — external widget libraries support
+- Fixed issue with GridView `constructor` property parsing
+
 ## 4.3.0
 
 - New widgets: AspectRatio, Baseline, LimitedBox, FractionallySizedBox, SizedOverflowBox, FractionalTranslation, UnconstrainedBox, Semantics, MergeSemantics, ExcludeSemantics, Visibility, OutlinedButton, FilledButton, TextButton,Flexible, InteractiveViewer
