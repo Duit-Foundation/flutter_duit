@@ -61,7 +61,7 @@ final class DuitControllerManager with UIControllerCapabilityDelegate {
 
   @override
   void releaseResources() {
-    for (var controller in _viewControllers.values) {
+    for (var controller in _viewControllers.values.toList()) {
       controller.detach();
     }
     _viewControllers.clear();
