@@ -22,6 +22,9 @@ export "package:duit_kernel/duit_kernel.dart"
         CommonEventGroup,
         SequencedEventGroup,
         CustomEvent,
+        LocalAction,
+        TransportAction,
+        ScriptAction,
         // ================================================== Theme API ==================================================
         ThemeToken,
         UnknownThemeToken,

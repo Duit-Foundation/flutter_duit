@@ -1,3 +1,7 @@
+## 4.4.1
+
+- Update kernel re-export. Added LocalAction, TransportAction and ScriptAction to kernel_api.dart
+
 ## 4.4.0
 
 - New widgets: Icon, Tooltip, Dismissible, SkeletonBox.
