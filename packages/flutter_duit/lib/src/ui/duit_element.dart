@@ -64,15 +64,16 @@ final class DuitElement extends ElementTreeEntry {
   /// [DuitElement] instance with all its child elements recursively
   /// processed based on the element's child relationship type.
   ///
-  /// The method handles three types of child relationships:
-  /// - **Single child (case 1)**: Processes a single child element
-  /// - **Multiple children (case 2)**: Processes a list of child elements
-  /// - **Component with data (case 3)**: Processes a component with
-  ///   associated data that gets merged with the component's model
+  /// The method handles child relationships per [ElementChildRelation]:
+  /// - **single**: Processes a single child element
+  /// - **multi**: Processes a list of child elements
+  /// - **component**: Processes a component with associated data that gets
+  ///   merged with the component's model
   ///
   /// **Important Design Pattern Note:**
   ///
-  /// The recursive calls to `DuitElement.fromJson()` in cases 1 and 2 are made
+  /// The recursive calls to `DuitElement.fromJson()` for [ElementChildRelation.single]
+  /// and [ElementChildRelation.multi] are made
   /// solely for their side effects. The returned `DuitElement` instances are
   /// intentionally ignored because:
   /// - `ElementPropertyView.fromJson()` already processes and stores child
@@ -97,7 +98,7 @@ final class DuitElement extends ElementTreeEntry {
 
     // Recursive processing of child elements (see method documentation for design pattern details)
     switch (_resolveChildRelation(element)) {
-      case 1:
+      case ElementChildRelation.single:
         final child = JsonUtils.extractMap(
           json,
           "child",
@@ -106,7 +107,7 @@ final class DuitElement extends ElementTreeEntry {
           DuitElement.fromJson(child, driver);
         }
         return DuitElement._(element);
-      case 2:
+      case ElementChildRelation.multi:
         final children = JsonUtils.extractList<Map<String, dynamic>?>(
           json,
           "children",
@@ -121,7 +122,7 @@ final class DuitElement extends ElementTreeEntry {
           }
         }
         return DuitElement._(element);
-      case 3:
+      case ElementChildRelation.component:
         if (element.tag == null) {
           throw NullTagException(
             "Component tag is null \n json: $json",
@@ -144,7 +145,7 @@ final class DuitElement extends ElementTreeEntry {
           return DuitElement._(element);
         }
         return DuitElement._(element);
-      case 4:
+      case ElementChildRelation.fragment:
         if (element.tag == null) {
           throw NullTagException(
             "Fragment tag is null \n json: $json",
