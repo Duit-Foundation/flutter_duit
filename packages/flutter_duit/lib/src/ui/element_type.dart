@@ -10,12 +10,13 @@ import "package:duit_kernel/duit_kernel.dart";
 /// the corresponding element types, enabling dynamic widget creation based on
 /// configuration data.
 ///
-/// Element types are categorized by their child relationship patterns:
-/// - **No children (0)**: Leaf widgets like Text, Image, TextField
-/// - **Single child (1)**: Wrapper widgets like Container, Padding, Center
-/// - **Multiple children (2)**: Layout widgets like Row, Column, Stack
-/// - **Component content (3)**: Special case for component-based elements
-/// - **Fragment content (4)**: Special case for fragment-based elements
+/// Element types are categorized by their child relationship patterns
+/// ([ElementChildRelation] codes):
+/// - **none (0)**: Leaf widgets like Text, Image, TextField
+/// - **single (1)**: Wrapper widgets like Container, Padding, Center
+/// - **multi (2)**: Layout widgets like Row, Column, Stack
+/// - **component (3)**: Component-based elements
+/// - **fragment (4)**: Fragment-based elements
 ///
 /// Some elements are controlled by default, meaning they have built-in state
 /// management capabilities and can respond to user interactions or programmatic updates.
@@ -23,550 +24,550 @@ enum ElementType {
   row(
     name: "Row",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   column(
     name: "Column",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   stack(
     name: "Stack",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   expanded(
     name: "Expanded",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   flexible(
     name: "Flexible",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sizedBox(
     name: "SizedBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   text(
     name: "Text",
     isControlledByDefault: false,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
   ),
   image(
     name: "Image",
     isControlledByDefault: false,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
   ),
   icon(
     name: "Icon",
     isControlledByDefault: false,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
   ),
   container(
     name: "Container",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   gestureDetector(
     name: "GestureDetector",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   custom(
     name: "Custom",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   coloredBox(
     name: "ColoredBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   textField(
     name: "TextField",
     isControlledByDefault: true,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
     mayHaveRelatedAction: true,
   ),
   padding(
     name: "Padding",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   checkbox(
     name: "CheckBox",
     isControlledByDefault: true,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
     mayHaveRelatedAction: true,
   ),
   decoratedBox(
     name: "DecoratedBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   center(
     name: "Center",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   elevatedButton(
     name: "ElevatedButton",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
     mayHaveRelatedAction: true,
   ),
   outlinedButton(
     name: "OutlinedButton",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
     mayHaveRelatedAction: true,
   ),
   filledButton(
     name: "FilledButton",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
     mayHaveRelatedAction: true,
   ),
   textButton(
     name: "TextButton",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
     mayHaveRelatedAction: true,
   ),
   positioned(
     name: "Positioned",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   align(
     name: "Align",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   transform(
     name: "Transform",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   richText(
     name: "RichText",
     isControlledByDefault: false,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
   ),
   wrap(
     name: "Wrap",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   lifecycleStateListener(
     name: "LifecycleStateListener",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   component(
     name: "Component",
     isControlledByDefault: true,
-    childRelation: 3,
+    childRelation: ElementChildRelation.component,
   ),
   singleChildScrollview(
     name: "SingleChildScrollView",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   radio(
     name: "Radio",
     isControlledByDefault: false,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
   ),
   radioGroupContext(
     name: "RadioGroupContext",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
     mayHaveRelatedAction: true,
   ),
   ignorePointer(
     name: "IgnorePointer",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   opacity(
     name: "Opacity",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   slider(
     name: "Slider",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
     mayHaveRelatedAction: true,
   ),
   fittedBox(
     name: "FittedBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   switch_(
     name: "Switch",
     isControlledByDefault: true,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
     mayHaveRelatedAction: true,
   ),
   subtree(
     name: "Subtree",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   meta(
     name: "Meta",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   listView(
     name: "ListView",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
     mayHaveRelatedAction: true,
   ),
   repaintBoundary(
     name: "RepaintBoundary",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   overflowBox(
     name: "OverflowBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedSize(
     name: "AnimatedSize",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   intrinsicHeight(
     name: "IntrinsicHeight",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   intrinsicWidth(
     name: "IntrinsicWidth",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   rotatedBox(
     name: "RotatedBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   constrainedBox(
     name: "ConstrainedBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   backdropFilter(
     name: "BackdropFilter",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedOpacity(
     name: "AnimatedOpacity",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   remoteSubtree(
     name: "RemoteSubtree",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   safeArea(
     name: "SafeArea",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   gridView(
     name: "GridView",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
     mayHaveRelatedAction: true,
   ),
   card(
     name: "Card",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   appBar(
     name: "AppBar",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   scaffold(
     name: "Scaffold",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   inkWell(
     name: "InkWell",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   carouselView(
     name: "CarouselView",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   animatedContainer(
     name: "AnimatedContainer",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedAlign(
     name: "AnimatedAlign",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedRotation(
     name: "AnimatedRotation",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedPadding(
     name: "AnimatedPadding",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedPositioned(
     name: "AnimatedPositioned",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedScale(
     name: "AnimatedScale",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   flexibleSpaceBar(
     name: "FlexibleSpaceBar",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   sliverPadding(
     name: "SliverPadding",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   customScrollView(
     name: "CustomScrollView",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   sliverFillRemaining(
     name: "SliverFillRemaining",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sliverToBoxAdapter(
     name: "SliverToBoxAdapter",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sliverFillViewport(
     name: "SliverFillViewport",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   sliverOpacity(
     name: "SliverOpacity",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sliverVisibility(
     name: "SliverVisibility",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   sliverAnimatedOpacity(
     name: "SliverAnimatedOpacity",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sliverOffstage(
     name: "SliverOffstage",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sliverIgnorePointer(
     name: "SliverIgnorePointer",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sliverSafeArea(
     name: "SliverSafeArea",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sliverList(
     name: "SliverList",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
     mayHaveRelatedAction: true,
   ),
   sliverAppBar(
     name: "SliverAppBar",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   sliverGrid(
     name: "SliverGrid",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
     mayHaveRelatedAction: true,
   ),
   absorbPointer(
     name: "AbsorbPointer",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   offstage(
     name: "Offstage",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedCrossFade(
     name: "AnimatedCrossFade",
     isControlledByDefault: true,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   physicalModel(
     name: "PhysicalModel",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedPhysicalModel(
     name: "AnimatedPhysicalModel",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedBuilder(
     name: "AnimatedBuilder",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   animatedSlide(
     name: "AnimatedSlide",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   fragment(
     name: "Fragment",
     isControlledByDefault: false,
-    childRelation: 4,
+    childRelation: ElementChildRelation.fragment,
   ),
   animatedPositionedDirectional(
     name: "AnimatedPositionedDirectional",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   clipRect(
     name: "ClipRect",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   clipOval(
     name: "ClipOval",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   pageView(
     name: "PageView",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   mergeSemantics(
     name: "MergeSemantics",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   badge(
     name: "Badge",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   baseline(
     name: "Baseline",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   limitedBox(
     name: "LimitedBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   fractionallySizedBox(
     name: "FractionallySizedBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   sizedOverflowBox(
     name: "SizedOverflowBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   aspectRatio(
     name: "AspectRatio",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   fractionalTranslation(
     name: "FractionalTranslation",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   excludeSemantics(
     name: "ExcludeSemantics",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   unconstrainedBox(
     name: "UnconstrainedBox",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   semantics(
     name: "Semantics",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   visibility(
     name: "Visibility",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   tooltip(
     name: "Tooltip",
     isControlledByDefault: false,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   interactiveViewer(
     name: "InteractiveViewer",
     isControlledByDefault: true,
-    childRelation: 1,
+    childRelation: ElementChildRelation.single,
   ),
   dismissible(
     name: "Dismissible",
     isControlledByDefault: false,
-    childRelation: 2,
+    childRelation: ElementChildRelation.multi,
   ),
   external(
     name: "External",
     isControlledByDefault: false,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
   ),
   skeletonBox(
     name: "SkeletonBox",
     isControlledByDefault: false,
-    childRelation: 0,
+    childRelation: ElementChildRelation.none,
   );
 
   /// The string identifier name of the UI element type.
@@ -584,11 +585,7 @@ enum ElementType {
 
   /// Defines the child relationship pattern for this element type.
   ///
-  /// - `0`: No child elements (leaf widgets like Text, Image)
-  /// - `1`: Single child element (wrapper widgets like Container, Padding)
-  /// - `2`: Multiple child elements (layout widgets like Row, Column, Stack)
-  /// - `3`: Component content
-  /// - `4`: Fragment content
+  /// Prefer [ElementChildRelation] constants; values match [WidgetDescriptor.childRelation].
   final int childRelation;
 
   // Determines whether a widget of this type can have an associated action (which is passed in the widget model, not through attributes)

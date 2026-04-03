@@ -3,6 +3,9 @@ export "package:duit_kernel/duit_kernel.dart"
         // ================================================== Registry API ==================================================
         DuitRegistry,
         DuitDataSource,
+        LibraryDescriptor,
+        WidgetDescriptor,
+        ElementChildRelation,
         // ================================================== Element Tree API ==================================================
         ElementTree,
         ElementTreeEntry,
